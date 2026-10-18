@@ -1,0 +1,739 @@
+# M02 Scenario, fleet calendar and mission generator: model parameters (format phalanx.params/1).
+# Plan-level values marked 'calibrated' were set on the calibration scenario (scenario key 'cal') to bring the
+# plan-level usage gates inside their bands (AD-28: accept a configuration only if fleet statistics fall in
+# the gates); the gate tests run on an independent scenario key. See the W1.1 report.
+format: phalanx.params/1
+module: M02
+sets:
+  calendar:
+    peace_rate:
+      value: 1.5
+      units: '1'
+      description: 'Planned sorties per available aircraft per flying day, peacetime'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator); research_notes/.../iaf_usage_and_validation_gap_closure.md Q1 (1-2 peace; CAG 17/2015 ~1 per flown aircraft-day in development)'}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.1-20
+    surge_rate:
+      value: 5.0
+      units: '1'
+      description: 'Planned sorties per available aircraft per flying day, surge'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator); Gagan Shakti 2018: Tejas 6 sorties per aircraft per day (PIB; ANI)'}
+      sweep: [4.0, 6.0]
+      assumption_id: A-W1.1-20
+    day_wave_hours:
+      value: [3.0, 6.5, 9.5]
+      units: hour
+      description: 'Day-wave take-off times (UTC; 08:30, 12:00, 15:00 IST)'
+      evidence: {tag: 'ASSUMPTION', source: 'No IAF wave structure in the evidence base'}
+      sweep: [0.0, 12.0]
+      assumption_id: A-W1.1-20
+    night_wave_hour:
+      value: 14.5
+      units: hour
+      description: 'Night-wave take-off time (UTC; 20:00 IST)'
+      evidence: {tag: 'ASSUMPTION', source: 'All 52 bases night-capable (18th LS 2nd Report); timing not in the evidence base'}
+      sweep: [13.0, 17.0]
+      assumption_id: A-W1.1-29
+    night_wave_prob:
+      value: 0.6
+      units: '1'
+      description: 'Probability that a flying day has a night wave (calibrated: night share 10-20 %)'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator) (night 10-20 % [ASSUMPTION])'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-29
+    surge_wave_hours:
+      value: [1.0, 3.5, 6.0, 8.5, 11.0, 14.5]
+      units: hour
+      description: 'Surge wave take-off times (UTC)'
+      evidence: {tag: 'ASSUMPTION', source: 'Surge generates maximum sorties per 24 h (PIB Gagan Shakti 2018); wave times not public'}
+      sweep: [0.0, 18.0]
+      assumption_id: A-W1.1-20
+    flying_weekdays:
+      value: [1, 1, 1, 1, 1, 0, 0]
+      units: '1'
+      description: 'Flying days Monday..Sunday (1 = flying) outside surge'
+      evidence: {tag: 'ASSUMPTION', source: 'No IAF weekly pattern in the evidence base'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-20
+    ground_run_day_prob:
+      value: 0.16
+      units: '1'
+      description: 'Probability that an aircraft-day includes a maintenance ground run'
+      evidence: {tag: 'TRANSFER: Gripen RM12', source: 'Chalmers 2014 §5.1: 16 % of flying days started with a ground mission; research_notes/.../flight_profiles_and_usage.md Q2'}
+    ground_run_duration:
+      value: 4.6
+      units: minute
+      description: 'Mean ground-run engine time'
+      evidence: {tag: 'TRANSFER: Gripen RM12', source: 'Chalmers 2014 §5.1 (average ground mission 4.6 min); research_notes/.../flight_profiles_and_usage.md Q2'}
+    cancel_fog:
+      value: 0.8
+      units: '1'
+      description: 'Weather-cancel probability: morning waves on a fog day'
+      evidence: {tag: 'ASSUMPTION', source: "IMD day counts give the phenomenon; cancel-given-phenomenon not in the evidence base (research_notes/.../iaf_usage_and_validation_gap_closure.md Q1: 'a daily weather-cancel probability can be drawn from these monthly day counts')"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-21
+    cancel_thunder:
+      value: 0.6
+      units: '1'
+      description: 'Weather-cancel probability: afternoon/night waves on a thunder day'
+      evidence: {tag: 'ASSUMPTION', source: "IMD day counts give the phenomenon; cancel-given-phenomenon not in the evidence base (research_notes/.../iaf_usage_and_validation_gap_closure.md Q1: 'a daily weather-cancel probability can be drawn from these monthly day counts')"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-21
+    cancel_dust:
+      value: 0.7
+      units: '1'
+      description: 'Weather-cancel probability: every wave on a dust-storm day'
+      evidence: {tag: 'ASSUMPTION', source: "IMD day counts give the phenomenon; cancel-given-phenomenon not in the evidence base (research_notes/.../iaf_usage_and_validation_gap_closure.md Q1: 'a daily weather-cancel probability can be drawn from these monthly day counts')"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-21
+    cancel_precip:
+      value: 0.15
+      units: '1'
+      description: 'Weather-cancel probability: any wave on a precipitation day'
+      evidence: {tag: 'ASSUMPTION', source: "IMD day counts give the phenomenon; cancel-given-phenomenon not in the evidence base (research_notes/.../iaf_usage_and_validation_gap_closure.md Q1: 'a daily weather-cancel probability can be drawn from these monthly day counts')"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-21
+    pilots_per_aircraft:
+      value: 1.25
+      units: '1'
+      description: 'Sanctioned fighter pilot-to-cockpit ratio'
+      evidence: {tag: 'DIRECT', source: '16th LS 47th Report, Pilot-Cockpit Ratio (printed 1:25, read as 1:1.25); research_notes/.../iaf_usage_and_validation_gap_closure.md Q1'}
+    hot_refuel_prob_surge:
+      value: 0.5
+      units: '1'
+      description: 'Probability of a hot (engine-running) refuel turn in surge'
+      evidence: {tag: 'ASSUMPTION', source: 'Hot refuelling demonstrated (ADA AR 2018-19, LSP-8 trial 2018); frequency not public'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-24
+  sortie:
+    duration_median:
+      value: 47.4
+      units: minute
+      description: 'Median flight time (lognormal; geometric mean of the P5-P95 25-90 min)'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator): median 45-55 min, P5-P95 25-90 min [ASSUMPTION, Tejas-anchored]'}
+      sweep: [45.0, 55.0]
+      assumption_id: A-W1.1-23
+    duration_sig:
+      value: 0.33
+      units: '1'
+      description: 'Within-mission-type lognormal sigma of flight time (calibrated so the mix spans P5-P95 25-90 min)'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator)'}
+      sweep: [0.25, 0.45]
+      assumption_id: A-W1.1-23
+    drop_tank_shift:
+      value: [15.0, 30.0]
+      units: minute
+      description: 'Flight-time increase with drop tanks or AAR (uniform)'
+      evidence: {tag: 'ASSUMPTION', source: "report §4 (Tejas sorties, usage gates, six-layer generator): 'shifted up by 15-30 min with drop tanks or air-to-air refuelling'"}
+      sweep: [10.0, 35.0]
+      assumption_id: A-W1.1-23
+    takeoff_roll_ab:
+      value: 20.0
+      units: s
+      description: 'Ground roll with AB take-off'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public (lift-off 290-325 km/h at 9.8 t is [ASSUMPTION: physics], R§4 table)'}
+      sweep: [12.0, 35.0]
+      assumption_id: A-W1.1-24
+    takeoff_roll_mil:
+      value: 30.0
+      units: s
+      description: 'Ground roll with MIL take-off'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public (R§4 table)'}
+      sweep: [18.0, 45.0]
+      assumption_id: A-W1.1-24
+    hot_day_temperature:
+      value: 308.15
+      units: K
+      description: 'Station temperature above which an AB take-off becomes more likely (35 C)'
+      evidence: {tag: 'ASSUMPTION', source: 'Hot/high take-off performance (R§3 density altitude 4,000-5,200 ft); threshold not public'}
+      sweep: [303.15, 313.15]
+      assumption_id: A-W1.1-24
+  grammar:
+    preflight:
+      value: 6.0
+      units: minute
+      description: 'Median power-up/BIT/alignment time before engine start (engine off)'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator) phase table (prototype FBW diagnostic ~10 min; modern LRUs faster [ASSUMPTION])'}
+      sweep: [3.0, 12.0]
+      assumption_id: A-W1.1-24
+    engine_start:
+      value: 40.0
+      units: s
+      description: 'Engine start to stable idle'
+      evidence: {tag: 'TRANSFER: F404-102 (T-50)', source: 'report §4 (Tejas sorties, usage gates, six-layer generator) phase table: T-50 FADEC timeline, idle ~63-70 % N2 at ~40 s (KSAS 2006); f404_in20_engine_model.md Q7 (KSAS Fig. 2 graph-read: rotation ~14 s, idle ~40 s, i.e. ~26 s rotation-to-idle; Phalanx start [ASSUMPTION]: idle at ~40 s from JFS engagement on a standard day, longer at altitude and in cold soak). Value 45 -> 40 s to match the evidence (E1 verifier §7, E1-HY). Sweep: 26 s (T-50 rotation-to-idle) to 60 s (x1.5 for cold-soak and altitude starts: no released number, ASSUMPTION). Restricted-manual start timings (report App. A1) are not used'}
+      sweep: [26.0, 60.0]
+      assumption_id: A-W1.1-24
+    ground_idle:
+      value: 3.0
+      units: minute
+      description: 'Median post-start checks at ground idle'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 (Tejas sorties, usage gates, six-layer generator) / research_notes/.../flight_profiles_and_usage.md (b) row 3: ~2-10 min'}
+      sweep: [2.0, 10.0]
+      assumption_id: A-W1.1-24
+    taxi_out:
+      value: 9.0
+      units: minute
+      description: 'Median taxi-out (calibrated to EOT/EFH 1.56; USAF default 18.5 min)'
+      evidence: {tag: 'ASSUMPTION', source: 'USAF Air Emissions Guide (taxi-out 18.5 min, TRANSFER); research_notes/.../flight_profiles_and_usage.md (b) row 4: ~3-15 min'}
+      sweep: [3.0, 18.5]
+      assumption_id: A-W1.1-24
+    taxi_sig:
+      value: 0.4
+      units: '1'
+      description: 'Lognormal sigma of taxi times'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b)'}
+      sweep: [0.2, 0.6]
+      assumption_id: A-W1.1-24
+    runup_prob:
+      value: 0.5
+      units: '1'
+      description: 'Probability of a static run-up check against the brakes before take-off (at pla_runup; rolling take-off otherwise)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b) row 5 (optional; rolling take-off allowed)'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-24
+    cold_soak_temperature:
+      value: 258.15
+      units: K
+      description: 'Station temperature at or below which a sortie power-up is a cold-soak start (ops.power_up cold_soak = 1)'
+      evidence: {tag: 'DIRECT', source: "reports/Virtual fighter telemetry layer research.md Engine start row: the JFS start requirement demonstrated at -15 degC after an 18-42 h soak (85 % battery); using the station temperature at the sortie as the soak temperature is an ASSUMPTION"}
+      sweep: [248.15, 273.15]
+      assumption_id: A-W2.1-11
+    runup:
+      value: 30.0
+      units: s
+      description: 'Run-up duration (at pla_runup, against the brakes)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b) row 5 (~1-5 min including checks)'}
+      sweep: [15.0, 60.0]
+      assumption_id: A-W1.1-24
+    taxi_in:
+      value: 7.0
+      units: minute
+      description: 'Median taxi-in (calibrated to EOT/EFH 1.56; USAF default 11.3 min)'
+      evidence: {tag: 'ASSUMPTION', source: 'USAF Air Emissions Guide (taxi-in 11.3 min, TRANSFER); research_notes/.../flight_profiles_and_usage.md (b) row 15'}
+      sweep: [3.0, 11.3]
+      assumption_id: A-W1.1-24
+    cooldown:
+      value: 259.0
+      units: s
+      description: "Median idle before shutdown (scaled by the pilot's cooldown discipline)"
+      evidence: {tag: 'TRANSFER: Gripen RM12', source: 'Chalmers 2014 (recorded average idle before shutdown 259 s); report §4 (Tejas sorties, usage gates, six-layer generator) phase table'}
+    pattern:
+      value: 4.0
+      units: minute
+      description: 'Median pattern/break time'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b) row 11 (~2-6 min)'}
+      sweep: [2.0, 6.0]
+      assumption_id: A-W1.1-24
+    approach:
+      value: 2.0
+      units: minute
+      description: 'Final approach time'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b) row 12 (~1-3 min)'}
+      sweep: [1.0, 3.0]
+      assumption_id: A-W1.1-24
+    landing:
+      value: 40.0
+      units: s
+      description: 'Touchdown to taxi speed'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b) row 13 (~20-60 s)'}
+      sweep: [20.0, 60.0]
+      assumption_id: A-W1.1-24
+    touch_and_go_cycle:
+      value: 4.0
+      units: minute
+      description: 'One touch-and-go circuit (approach, touch, MIL re-acceleration, downwind)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md (b) row 14 (+5-10 min per circuit [ASSUMPTION])'}
+      sweep: [3.0, 10.0]
+      assumption_id: A-W1.1-24
+    climb_rate:
+      value: 50.0
+      units: m/s
+      description: 'Mean climb rate at IRP (plan level)'
+      evidence: {tag: 'ASSUMPTION', source: 'Tejas climb rate not public (tejas_airframe_aero_fcs.md Gaps)'}
+      sweep: [30.0, 150.0]
+      assumption_id: A-W1.1-24
+    descent_rate:
+      value: 40.0
+      units: m/s
+      description: 'Mean descent rate at flight idle (plan level)'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public'}
+      sweep: [20.0, 80.0]
+      assumption_id: A-W1.1-24
+    cruise_pla:
+      value: 72.0
+      units: deg
+      description: 'Cruise power-lever angle (transit)'
+      evidence: {tag: 'ASSUMPTION', source: 'Between FI 31 deg and IRP 87 deg (TM-4240 PLA map); not public'}
+      sweep: [55.0, 85.0]
+      assumption_id: A-W1.1-25
+    cruise_band:
+      value: [60.0, 82.0]
+      units: deg
+      description: 'PLA trim band for speed holding in cruise'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public'}
+      sweep: [50.0, 86.0]
+      assumption_id: A-W1.1-25
+    hot_refuel:
+      value: 12.0
+      units: minute
+      description: 'Hot-refuel turn with engine running'
+      evidence: {tag: 'ASSUMPTION', source: 'Gripen turnaround 10/20 min (secondary, research_notes/.../flight_profiles_and_usage.md Q2); not public for Tejas'}
+      sweep: [8.0, 20.0]
+      assumption_id: A-W1.1-24
+  pilots:
+    throttle_sd:
+      value: 0.25
+      units: '1'
+      description: 'Lognormal SD of the throttle-activity multiplier'
+      evidence: {tag: 'ASSUMPTION', source: "report §4 (Tejas sorties, usage gates, six-layer generator) layer 5 (latent traits: throttle activity, g-onset aggressiveness, AB propensity, cooldown discipline, AAR closure); RTO-TR-028 'two pilots ... very different amounts of engine life'"}
+      sweep: [0.1, 0.5]
+      assumption_id: A-W1.1-26
+    g_sd:
+      value: 0.08
+      units: '1'
+      description: 'Lognormal SD of the g-aggressiveness multiplier'
+      evidence: {tag: 'ASSUMPTION', source: "report §4 (Tejas sorties, usage gates, six-layer generator) layer 5 (latent traits: throttle activity, g-onset aggressiveness, AB propensity, cooldown discipline, AAR closure); RTO-TR-028 'two pilots ... very different amounts of engine life'"}
+      sweep: [0.03, 0.15]
+      assumption_id: A-W1.1-26
+    ab_sd:
+      value: 0.3
+      units: '1'
+      description: 'Lognormal SD of the AB-propensity multiplier'
+      evidence: {tag: 'ASSUMPTION', source: "report §4 (Tejas sorties, usage gates, six-layer generator) layer 5 (latent traits: throttle activity, g-onset aggressiveness, AB propensity, cooldown discipline, AAR closure); RTO-TR-028 'two pilots ... very different amounts of engine life'"}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.1-26
+    cooldown_sd:
+      value: 0.25
+      units: '1'
+      description: 'Lognormal SD of the cooldown-discipline multiplier'
+      evidence: {tag: 'ASSUMPTION', source: "report §4 (Tejas sorties, usage gates, six-layer generator) layer 5 (latent traits: throttle activity, g-onset aggressiveness, AB propensity, cooldown discipline, AAR closure); RTO-TR-028 'two pilots ... very different amounts of engine life'"}
+      sweep: [0.1, 0.5]
+      assumption_id: A-W1.1-26
+    aar_mean_range:
+      value: [2.0, 3.5]
+      units: knot
+      description: 'Range of per-pilot mean AAR closure speed (uniform)'
+      evidence: {tag: 'DIRECT-unnamed', source: 'NFTC/ADA DSJ 70(2) 2020: closure 1.71-4.3 kt over 12 contacts with a clear pilot effect; research_notes/.../iaf_usage_and_validation_gap_closure.md Q2 inference (per-pilot mean 2-3.5 kt, SD ~0.7)'}
+    aar_sd:
+      value: 0.7
+      units: knot
+      description: 'Within-pilot SD of AAR closure speed (truncated at 10 kt design maximum)'
+      evidence: {tag: 'DIRECT-unnamed', source: 'NFTC/ADA DSJ 70(2) 2020; research_notes/.../iaf_usage_and_validation_gap_closure.md Q2'}
+    tau_range:
+      value: [0.1, 0.2]
+      units: s
+      description: 'Range of the pilot effective time delay (crossover model)'
+      evidence: {tag: 'TRANSFER: McRuer crossover model', source: 'modelling_methodology.md §2 (Yp Yc ~ wc e^-tau s / s, tau 0.1-0.2 s; MathWorks Crossover Pilot Model)'}
+    crossover_gain_sd:
+      value: 0.2
+      units: '1'
+      description: 'Lognormal SD of the per-pilot guidance-gain multiplier (crossover frequency)'
+      evidence: {tag: 'ASSUMPTION', source: 'modelling_methodology.md §2 (wc 1-10 rad/s)'}
+      sweep: [0.1, 0.4]
+      assumption_id: A-W1.1-42
+    remnant_median:
+      value: 0.02
+      units: '1'
+      description: 'Median pilot remnant SD (normalised inceptor units)'
+      evidence: {tag: 'ASSUMPTION', source: 'Remnant concept: NTRS 20180001222 (Hess structural model); level not public'}
+      sweep: [0.005, 0.05]
+      assumption_id: A-W1.1-42
+    remnant_sd:
+      value: 0.3
+      units: '1'
+      description: 'Lognormal SD of the remnant level across pilots'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public'}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.1-42
+    tail_affinity_sd:
+      value: 0.8
+      units: '1'
+      description: 'Lognormal SD of the per-tail affinity for high-activity missions (engine dispersion)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q3: dispersion factor ~1.3 (RTO-TR-028 Tornado), bimodal training vs operational usage (Harrier)'}
+      sweep: [0.0, 0.8]
+      assumption_id: A-W1.1-31
+  fuel_envelope:
+    fuel_pla_points:
+      value: [0.0, 18.0, 31.0, 87.0, 94.0, 130.0]
+      units: deg
+      description: 'PLA breakpoints of the plan-level fuel-flow table'
+      evidence: {tag: 'ASSUMPTION', source: 'F404 PLA map (TM-4240): FI 31, IRP 87, min AB ~94, max AB 130; GI ~18 (parameter_inventory ENG.PLA, -400 rigging)'}
+      proxy: true
+      sweep: [0.0, 130.0]
+      assumption_id: A-W1.1-27
+    fuel_wf_points:
+      value: [0.0, 0.07, 0.0863, 1.04, 1.8, 4.37]
+      units: kg/s
+      description: 'Sea-level-static fuel flow at the PLA breakpoints (scaled by p/p0 with altitude)'
+      evidence: {tag: 'ASSUMPTION', source: 'F404-400 test cell idle 685 lb/h (USAF IERA); IN20 MIL ~8,270 lb/h and max-AB SFC ~1.84 (tejas_utility_systems.md fuel; f404_in20_engine_model.md)'}
+      proxy: true
+      sweep: [0.0, 5.0]
+      assumption_id: A-W1.1-27
+    internal_fuel:
+      value: 2458.0
+      units: kg
+      description: 'Internal fuel'
+      evidence: {tag: 'DIRECT', source: 'tejas_airframe_aero_fcs.md line 73 (2,458 kg / 3,060 L; secondary)'}
+    drop_tank_fuel:
+      value: 960.0
+      units: kg
+      description: 'Fuel in one 1,200 L drop tank (0.80 kg/L)'
+      evidence: {tag: 'DIRECT', source: 'tejas_utility_systems.md KQ3 (2 x 1,200 L inboard; 2,458 kg / 3,060 L density)'}
+    landing_reserve:
+      value: 300.0
+      units: kg
+      description: 'Planned fuel at landing (bingo reserve)'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public (low-fuel warning logic: tejas_utility_systems.md)'}
+      sweep: [200.0, 500.0]
+      assumption_id: A-W1.1-27
+    nz_max:
+      value: 8.0
+      units: '1'
+      description: 'Operational normal-load-factor limit'
+      evidence: {tag: 'DIRECT', source: 'dictionary constants nz_envelope_max; report Appendix A3'}
+    mach_max:
+      value: 1.6
+      units: '1'
+      description: 'Cleared maximum Mach'
+      evidence: {tag: 'DIRECT', source: 'report §4 (cleared envelope M1.6; conflict 1.6 vs 1.8 Appendix A4 -> cleared value)'}
+    ceiling:
+      value: 15000.0
+      units: m
+      description: 'Service ceiling'
+      evidence: {tag: 'DIRECT', source: 'report §4 (ceiling 15 km; conflict 15 vs 16 km Appendix A4 -> lower)'}
+    pla_ground_idle:
+      value: 18.0
+      units: deg
+      description: 'Ground-idle PLA'
+      evidence: {tag: 'TRANSFER: F404-400 rigging', source: 'parameter_inventory.csv ENG.PLA (GI ~18)'}
+    pla_flight_idle:
+      value: 31.0
+      units: deg
+      description: 'Flight-idle PLA'
+      evidence: {tag: 'TRANSFER: F404-400 (HARV)', source: 'candidate_engine_and_ehm_data.md (TM-4240 p. 2; TM-100159 p. 7)'}
+    pla_irp:
+      value: 87.0
+      units: deg
+      description: 'IRP (MIL) PLA'
+      evidence: {tag: 'TRANSFER: F404-400 (HARV)', source: 'candidate_engine_and_ehm_data.md (TM-4240 p. 2; TM-100159 p. 7)'}
+    pla_runup:
+      value: 73.0
+      units: deg
+      description: 'Run-up check PLA against the brakes: ~90 % N2 (the nominal M07/M08 trim at SLS ISA gives N2 = 90 % of 16,810 rpm, ~40 kN, at 73 deg); the brakes do not hold MIL on a light aircraft (W2.1a take-off fix)'
+      evidence: {tag: 'ASSUMPTION', source: "the Tejas run-up procedure and power are not public; physics: the braked mains hold T <= mu_brake_static W (a/L) / (1 + mu_brake_static h/L) ~ 0.54 W in M06 (measured breakaway at 54 kN on the ~10 t clean aircraft, MIL ~51-55 kN), so the check runs at ~75 % of that limit on the lightest configuration (~40 kN = 90 % N2 on the nominal M07/M08 trim); validation: Tejas run-up procedure"}
+      sweep: [65.0, 80.0]
+      assumption_id: A-W2.1-8
+    pla_min_ab:
+      value: 94.0
+      units: deg
+      description: 'Minimum-AB PLA'
+      evidence: {tag: 'TRANSFER: F404-400 (HARV)', source: 'candidate_engine_and_ehm_data.md (TM-4240 p. 2; TM-100159 p. 7)'}
+    pla_max_ab:
+      value: 130.0
+      units: deg
+      description: 'Maximum-AB PLA'
+      evidence: {tag: 'TRANSFER: F404-400 (HARV)', source: 'candidate_engine_and_ehm_data.md (TM-4240 p. 2; TM-100159 p. 7)'}
+    count_off_hi:
+      value: 10.0
+      units: deg
+      description: 'Usage counting: PLA below which the engine is OFF'
+      evidence: {tag: 'ASSUMPTION', source: 'Counting convention (MIL-HDBK-1783B cycle types)'}
+      sweep: [5.0, 15.0]
+      assumption_id: A-W1.1-28
+    count_idle_hi:
+      value: 37.0
+      units: deg
+      description: 'Usage counting: upper bound of the IDLE level (flight idle + 6 deg)'
+      evidence: {tag: 'ASSUMPTION', source: 'Counting convention'}
+      sweep: [33.0, 45.0]
+      assumption_id: A-W1.1-28
+    count_hyst:
+      value: 2.0
+      units: deg
+      description: 'Usage counting hysteresis'
+      evidence: {tag: 'ASSUMPTION', source: 'Counting convention'}
+      sweep: [0.5, 4.0]
+      assumption_id: A-W1.1-28
+  primitives:
+    pid:
+      table: {file: primitives.csv, column: pid}
+      units: '1'
+      description: 'Primitive id'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [1, 17]
+      assumption_id: A-W1.1-25
+    pla:
+      table: {file: primitives.csv, column: pla_deg}
+      units: deg
+      description: 'Feed-forward PLA'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 130]
+      assumption_id: A-W1.1-25
+    pla_lo:
+      table: {file: primitives.csv, column: pla_lo_deg}
+      units: deg
+      description: 'PLA trim band low'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 130]
+      assumption_id: A-W1.1-25
+    pla_hi:
+      table: {file: primitives.csv, column: pla_hi_deg}
+      units: deg
+      description: 'PLA trim band high'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 130]
+      assumption_id: A-W1.1-25
+    ab_capable:
+      table: {file: primitives.csv, column: ab_capable}
+      units: '1'
+      description: '1 if the primitive may use AB'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-25
+    pla_ab:
+      table: {file: primitives.csv, column: pla_ab_deg}
+      units: deg
+      description: 'PLA when AB is used'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 130]
+      assumption_id: A-W1.1-25
+    nz:
+      table: {file: primitives.csv, column: nz_g}
+      units: '1'
+      description: 'Target normal load factor'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0.5, 8.0]
+      assumption_id: A-W1.1-25
+    nz_sd:
+      table: {file: primitives.csv, column: nz_sd_g}
+      units: '1'
+      description: 'SD of the target load factor'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0.0, 1.5]
+      assumption_id: A-W1.1-25
+    peaks:
+      table: {file: primitives.csv, column: peaks}
+      units: '1'
+      description: 'Nz peaks at the target per primitive'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 6]
+      assumption_id: A-W1.1-25
+    dwell_med:
+      table: {file: primitives.csv, column: dwell_med_s}
+      units: s
+      description: 'Median dwell (lognormal)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [3, 600]
+      assumption_id: A-W1.1-25
+    dwell_sig:
+      table: {file: primitives.csv, column: dwell_sig}
+      units: '1'
+      description: 'Dwell lognormal sigma'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0.1, 1.0]
+      assumption_id: A-W1.1-25
+    vz:
+      table: {file: primitives.csv, column: vz_mps}
+      units: m/s
+      description: 'Vertical speed target (+ up)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [-150, 150]
+      assumption_id: A-W1.1-25
+    mach:
+      table: {file: primitives.csv, column: mach}
+      units: '1'
+      description: 'Mach target'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0.3, 1.6]
+      assumption_id: A-W1.1-25
+    turn:
+      table: {file: primitives.csv, column: turn}
+      units: '1'
+      description: '1 if the primitive turns (heading change)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-25
+    power_active:
+      table: {file: primitives.csv, column: power_active}
+      units: '1'
+      description: '1 if the primitive is at IRP/AB (throttle-activity trait applies)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-25
+  missions:
+    mid:
+      table: {file: missions.csv, column: mid}
+      units: '1'
+      description: 'Mission type id'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [1, 10]
+      assumption_id: A-W1.1-22
+    ocu_mix:
+      table: {file: missions.csv, column: ocu_mix}
+      units: '1'
+      description: 'Mission mix of an OCU/training squadron'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-22
+    ops_mix:
+      table: {file: missions.csv, column: ops_mix}
+      units: '1'
+      description: 'Mission mix of an operational squadron'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-22
+    dur_mult:
+      table: {file: missions.csv, column: dur_mult}
+      units: '1'
+      description: 'Flight-time multiplier of the mission type'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0.6, 1.6]
+      assumption_id: A-W1.1-22
+    drop_prob:
+      table: {file: missions.csv, column: drop_prob}
+      units: '1'
+      description: 'Probability of drop tanks'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-22
+    transit_alt:
+      table: {file: missions.csv, column: transit_alt_m}
+      units: m
+      description: 'Transit altitude'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [300, 12000]
+      assumption_id: A-W1.1-22
+    block_alt:
+      table: {file: missions.csv, column: block_alt_m}
+      units: m
+      description: 'Mission-block base altitude'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [150, 12000]
+      assumption_id: A-W1.1-22
+    transit_s:
+      table: {file: missions.csv, column: transit_s}
+      units: s
+      description: 'Median transit time each way'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [60, 1200]
+      assumption_id: A-W1.1-22
+    tg_mean:
+      table: {file: missions.csv, column: tg_mean}
+      units: '1'
+      description: 'Mean touch-and-go circuits (Poisson)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 4]
+      assumption_id: A-W1.1-22
+    ab_prob:
+      table: {file: missions.csv, column: ab_prob}
+      units: '1'
+      description: 'Probability an AB-capable primitive uses AB'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-22
+    to_ab_prob:
+      table: {file: missions.csv, column: to_ab_prob}
+      units: '1'
+      description: 'Probability of an AB take-off (before weight/temperature adjustment)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-22
+    high_activity:
+      table: {file: missions.csv, column: high_activity}
+      units: '1'
+      description: '1 for high-activity missions (tail affinity applies)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q2/(d) (default mission mixes OCU/operational [ASSUMPTION]; mission type drives cycle and Nz content x2-4, NACA RM L54E18)'}
+      sweep: [0, 1]
+      assumption_id: A-W1.1-22
+    mix_m01:
+      table: {file: mission_mix.csv, column: m01}
+      units: '1'
+      description: 'Primitive weights of mission type 1'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m02:
+      table: {file: mission_mix.csv, column: m02}
+      units: '1'
+      description: 'Primitive weights of mission type 2'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m03:
+      table: {file: mission_mix.csv, column: m03}
+      units: '1'
+      description: 'Primitive weights of mission type 3'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m04:
+      table: {file: mission_mix.csv, column: m04}
+      units: '1'
+      description: 'Primitive weights of mission type 4'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m05:
+      table: {file: mission_mix.csv, column: m05}
+      units: '1'
+      description: 'Primitive weights of mission type 5'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m06:
+      table: {file: mission_mix.csv, column: m06}
+      units: '1'
+      description: 'Primitive weights of mission type 6'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m07:
+      table: {file: mission_mix.csv, column: m07}
+      units: '1'
+      description: 'Primitive weights of mission type 7'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m08:
+      table: {file: mission_mix.csv, column: m08}
+      units: '1'
+      description: 'Primitive weights of mission type 8'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m09:
+      table: {file: mission_mix.csv, column: m09}
+      units: '1'
+      description: 'Primitive weights of mission type 9'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+    mix_m10:
+      table: {file: mission_mix.csv, column: m10}
+      units: '1'
+      description: 'Primitive weights of mission type 10'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../flight_profiles_and_usage.md Q7 (semi-Markov primitive library [ASSUMPTION]; no public fighter matrices); values calibrated to the plan-level usage gates'}
+      sweep: [0, 10]
+      assumption_id: A-W1.1-25
+  usage_drivers:
+    exposure_agl:
+      value: 300.0
+      units: m
+      description: 'Particulate/salt exposure height: engine-running time on the ground and in plan segments below this height above the field counts as exposure time (usage drivers dust_index, salt_index)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../faults_and_degradation.md §1 (fighters ingest dust/salt unfiltered near the ground; particle sizes) and §9(c)-(d) (usage drivers include dust and salt indices for Indian bases; values not found)'}
+      sweep: [100.0, 1000.0]
+      assumption_id: A-W1.1-33
+    dust_clear_level:
+      value: 0.1
+      units: '1'
+      description: 'Dust level on a day without an IMD dust phenomenon, relative to a dust-storm day (= 1)'
+      evidence: {tag: 'ASSUMPTION', source: 'IMD 1991-2020 dust-storm days set the dust days [DIRECT]; the background level is not in the evidence base (faults_and_degradation.md §9(c)-(d))'}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W1.1-33
+    chute_prob:
+      value: 1.0
+      units: '1'
+      description: 'Probability that the brake chute is streamed on a full-stop landing'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../iaf_usage_and_validation_gap_closure.md Q2 [INFERENCE]: deploy at touchdown (<= 154 kt normal); DDP 45 streamings / 8 years [DIRECT] is the life counter'}
+      sweep: [0.3, 1.0]
+      assumption_id: A-W1.1-35

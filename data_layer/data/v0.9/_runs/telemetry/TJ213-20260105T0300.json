@@ -1,0 +1,43 @@
+{
+  "abort": {
+    "kind": "ground_impact",
+    "message": "[ground_impact] at step 727194 (t = 3029.97 s, DESCENT): airborne phase with height above ground 0.91 m",
+    "phase": "DESCENT",
+    "t_s": 3029.975
+  },
+  "cir_rows": 47040690,
+  "code_commit": "6d4dc52f52eb1359bc244d36648ef1058876129b",
+  "completed": false,
+  "deliveries": [
+    {
+      "attempt": 0,
+      "complete": true,
+      "t_ingest": 1767612811080409342
+    }
+  ],
+  "flown_s": 3029.0,
+  "kind": "telemetry",
+  "mission_type": "ACM_INTERCEPT",
+  "planned_window_s": 4183.426071904,
+  "preview": "PREVIEW: behaviour not yet validated",
+  "recorded_channels": 231,
+  "root_seed_hex": "000000000000000000000000000000a5",
+  "rows": {
+    "events.bit_faults": 9,
+    "events.cautions": 24,
+    "events.exceedances": 17,
+    "param.samples": 22020995,
+    "sortie.manifest": 1,
+    "usage.counters": 0
+  },
+  "scenario": "gate",
+  "sortie_id": "TJ213-20260105T0300",
+  "t_end": 1767584222965414113,
+  "t_ingest": 1767612811080409342,
+  "t_landing": null,
+  "t_start": 1767581193965414113,
+  "t_takeoff": 1767582024752914113,
+  "tail_no": "TJ213",
+  "truncated": false,
+  "wall_s": 353.1
+}

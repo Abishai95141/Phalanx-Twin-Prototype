@@ -1,0 +1,49 @@
+{
+ "name": "w24a2-final",
+ "note": "stage-6 arms: the committed proxy configuration (stages 1-5 identified, stage-4 pooled-fit bank), the same with the stage-4 median-fit bank, and with no engine disturbance bank (ablation)",
+ "arms": {
+  "proxy": {
+   "name": "proxy"
+  },
+  "proxy_medianbank": {
+   "name": "proxy_medianbank",
+   "bank": {
+    "fuel": {
+     "sd": 0.004823581161357912,
+     "rho": 1.1891092400794155e-13,
+     "tau": 4.999833491281427
+    },
+    "comb": {
+     "sd": 0.01020535326508219,
+     "rho": 8.356080418931302e-14,
+     "tau": 3.3178772347733214
+    },
+    "inlet": {
+     "sd": 0.010700204627754605,
+     "rho": 0.6448004417082973,
+     "tau": 0.2392139210350003
+    },
+    "shaft": {
+     "sd": 0.009246027809470902,
+     "rho": 0.8864376373535535,
+     "tau": 0.050000000000012555
+    },
+    "fan": {
+     "sd": 2.000000387102611e-05,
+     "rho": 0.9999998976790125,
+     "tau": 0.05000000208199325
+    }
+   }
+  },
+  "proxy_nobank": {
+   "name": "proxy_nobank",
+   "bank": {
+    "fuel": {
+     "sd": 0.0,
+     "rho": 0.0,
+     "tau": 1.0
+    }
+   }
+  }
+ }
+}

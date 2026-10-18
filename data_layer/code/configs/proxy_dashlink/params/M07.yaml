@@ -1,0 +1,888 @@
+# M07 proxy engine (DASHlink Tail 687 proxy mode; AD-33, AD-43): topology separate_fixed (format phalanx.params/1).
+# Owner: W2.4a. The DASHlink aircraft type is not disclosed by NASA (a four-engine regional jet; BAe 146 /
+# Avro RJ class is an ASSUMPTION, research_notes/.../public_aerospace_datasets.md:82), so no cycle value of the
+# real engine is public. Structure: AD-43 (same component-level method as the Tejas M07). Anchors: [MEASURED]
+# round-2 frozen M-A on 687-CAL (analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; an existing
+# result, not a new fit). Everything else is ASSUMPTION with a sweep, or TRANSFER from the Tejas M07
+# (configs/tejas/params/M07.yaml, same method structure). Identified in W2.4a-2 (AD-34). No restricted value
+# (report App. A1) is used.
+format: phalanx.params/1
+module: M07
+sets:
+  design:
+    wf_design_anchor:
+      value: 0.44372
+      units: kg/s
+      description: Corrected fuel flow at the design (top-knot) corrected core speed; the inlet airflow is scaled to reproduce it (design closure)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S (687-CAL, 152 flights): g^-1(N2c 98.385 %) = 3,521.7 lb/h corrected; analysis/settling_experiment_round2/results/frozen/S/ma_readable.json FFN2.g_knots"}
+    egt_design_anchor:
+      value: 918.78
+      units: K
+      description: Corrected EGT at the design point (theta = 1); T4 is solved so that the EGT-station temperature (T5, A-W2.4a-4) equals it
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S: k_W(3,521.7 lb/h) + k_N(103.99 %) = 918.8 K (EGT stage knots); analysis/settling_experiment_round2/results/frozen/S/ma_readable.json"}
+    n1_design_frac:
+      value: 1.0398686
+      units: "1"
+      description: Corrected fan speed at the design point as a fraction of 100 % N1 (top knot of the measured N1c(N2c) relation)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S N1.h_knots (N1c 103.99 % at N2c 98.38 %), 687-CAL"}
+    n2_design_frac:
+      value: 0.9838461
+      units: "1"
+      description: Corrected core speed at the design point as a fraction of 100 % N2 (top knot of the measured relation)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S N1.h_knots_x[7] = 98.385 %, 687-CAL"}
+    n1_100pct:
+      value: 13270.0
+      units: rpm
+      description: Fan speed at 100 % N1 (percent reference; the DASHlink engine's rpm is not public). Only I omega_ref^2 enters the percent-speed dynamics, which are set by the rotor energy time h_lp_s, so the value has no behavioural effect (tested)
+      evidence: {tag: "TRANSFER: Phalanx Tejas dictionary channel_reference", source: "configs/tejas/dictionary/tables/constants.yaml channel_reference.n1_100pct; proxy dictionary configs/proxy_dashlink/dictionary (same reference so the M08 lane conversions are shared); A-W2.4a-6"}
+    n2_100pct:
+      value: 16810.0
+      units: rpm
+      description: Core speed at 100 % N2 (percent reference; not public for the DASHlink engine; no behavioural effect, see n1_100pct)
+      evidence: {tag: "TRANSFER: Phalanx Tejas dictionary channel_reference", source: "configs/tejas/dictionary/tables/constants.yaml channel_reference.n2_100pct; A-W2.4a-6"}
+    bpr_design:
+      value: 5.0
+      units: "1"
+      description: Bypass ratio at design (high-bypass regional-jet class)
+      evidence: {tag: ASSUMPTION, source: "AD-43 (separate-flow high-bypass); DASHlink engine type not disclosed (public_aerospace_datasets.md:82); no cycle data in the evidence base"}
+      sweep: [4.0, 6.5]
+      assumption_id: A-W2.4a-1
+    fpr_design:
+      value: 1.55
+      units: "1"
+      description: Fan total pressure ratio at design (single-stage high-bypass fan class)
+      evidence: {tag: ASSUMPTION, source: "AD-43; no cycle data in the evidence base"}
+      sweep: [1.4, 1.75]
+      assumption_id: A-W2.4a-1
+    opr_design:
+      value: 13.0
+      units: "1"
+      description: Overall pressure ratio P3/P2 at design (regional-jet class)
+      evidence: {tag: ASSUMPTION, source: "AD-43; no cycle data in the evidence base"}
+      sweep: [10.0, 18.0]
+      assumption_id: A-W2.4a-1
+    eta_fan_design:
+      value: 0.88
+      units: "1"
+      description: Fan isentropic efficiency at design
+      evidence: {tag: ASSUMPTION, source: "generic high-bypass fan practice; not public"}
+      sweep: [0.84, 0.91]
+      assumption_id: A-W2.4a-1
+    eta_hpc_design:
+      value: 0.84
+      units: "1"
+      description: HPC isentropic efficiency at design (booster lumped in, PROXY A-W2.4a-3)
+      evidence: {tag: ASSUMPTION, source: "generic practice; not public"}
+      sweep: [0.80, 0.88]
+      assumption_id: A-W2.4a-1
+    eta_hpt_design:
+      value: 0.87
+      units: "1"
+      description: HPT isentropic efficiency at design
+      evidence: {tag: ASSUMPTION, source: "generic practice; not public"}
+      sweep: [0.84, 0.91]
+      assumption_id: A-W2.4a-1
+    eta_lpt_design:
+      value: 0.90
+      units: "1"
+      description: LPT isentropic efficiency at design
+      evidence: {tag: ASSUMPTION, source: "generic practice; not public"}
+      sweep: [0.86, 0.93]
+      assumption_id: A-W2.4a-1
+    f_ngv:
+      value: 0.08
+      units: "1"
+      description: HP NGV cooling air, fraction of HPC delivery
+      evidence: {tag: ASSUMPTION, source: "lower-T4 civil core than the F404 (11 %, TRANSFER there); not public"}
+      sweep: [0.04, 0.12]
+      assumption_id: A-W2.4a-1
+    f_rot:
+      value: 0.05
+      units: "1"
+      description: Turbine blade/disc and LPT cooling air, fraction of HPC delivery
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.03, 0.08]
+      assumption_id: A-W2.4a-1
+    p_acc_design:
+      value: 40.0
+      units: kW
+      description: Engine accessory-gearbox load at design N2 (scales with N2^2), incl. the aircraft electrical/hydraulic off-take per engine
+      evidence: {tag: ASSUMPTION, source: "not public; Tejas value 50 kW (A-W1.3a-16) as order of magnitude"}
+      sweep: [10.0, 120.0]
+      assumption_id: A-W2.4a-1
+    eta_mech:
+      value: 0.995
+      units: "1"
+      description: Shaft mechanical efficiency (bearings, windage)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml eta_mech (A-W1.3a-16)"}
+    gear_ratio:
+      value: 3.0
+      units: "1"
+      description: LP-turbine speed / fan speed (fan gearbox; 1 = direct drive). Enters only the LPT map speed, which the design scaler absorbs; kept for physical meaning
+      evidence: {tag: ASSUMPTION, source: "AD-43 (LP spool inertia including any fan gearbox); whether the DASHlink engine is geared is not disclosed"}
+      sweep: [1.0, 3.5]
+      assumption_id: A-W2.4a-5
+    eta_gearbox:
+      value: 0.99
+      units: "1"
+      description: Fan gearbox efficiency (1.0 for a direct-drive fan)
+      evidence: {tag: ASSUMPTION, source: "AD-43; not public"}
+      sweep: [0.98, 1.0]
+      assumption_id: A-W2.4a-5
+    h_lp_s:
+      value: 0.7293
+      units: s
+      description: LP rotor energy time (kinetic energy of the LP spool reflected to the fan shaft at design / design fan power); sets i_lp = 2 H P / omega^2
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage 5 (analysis/proxy_quicklook/results/stage5): staged indirect transient-weighted output-error identification on 687-CAL, n = 4 A/T windows of 120 s (st5_segments.py), shape residual (per window offset and gain removed); plant stage with the committed governor gains and the stage-0 autothrottle gains (i_lp x1.216 of the W2.4a-1 value 0.6 s); not public"}
+      sweep: [0.2, 2.0]
+      assumption_id: A-W2.4a-6
+    h_hp_s:
+      value: 0.3770
+      units: s
+      description: HP rotor energy time (kinetic energy of the HP spool at design / design HPC power); sets i_hp
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage 5 (analysis/proxy_quicklook/results/stage5): staged indirect transient-weighted output-error identification on 687-CAL, n = 4 A/T windows of 120 s (st5_segments.py), shape residual (per window offset and gain removed); (i_hp x1.257 of the W2.4a-1 value 0.3 s); not public"}
+      sweep: [0.1, 1.0]
+      assumption_id: A-W2.4a-6
+    fan_ncmap_design:
+      value: 1.0
+      units: "1"
+      description: Design-point position on the (scaled AXI5) fan map, corrected-speed axis
+      evidence: {tag: ASSUMPTION, source: "pyCycle map defaults; map positions not public"}
+      sweep: [0.95, 1.05]
+      assumption_id: A-W2.4a-8
+    fan_rline_design:
+      value: 2.0
+      units: "1"
+      description: Design-point position on the fan map, R-line axis (stall line R = 1.0)
+      evidence: {tag: ASSUMPTION, source: "pyCycle AXI5 map defaults"}
+      sweep: [1.6, 2.4]
+      assumption_id: A-W2.4a-8
+    hpc_ncmap_design:
+      value: 1.0
+      units: "1"
+      description: Design-point position on the HPC (HBTF) map, corrected-speed axis
+      evidence: {tag: ASSUMPTION, source: "pyCycle HBTF HPC map defaults"}
+      sweep: [0.95, 1.05]
+      assumption_id: A-W2.4a-8
+    hpc_rline_design:
+      value: 2.0
+      units: "1"
+      description: Design-point position on the HPC map, R-line axis
+      evidence: {tag: ASSUMPTION, source: "pyCycle HBTF HPC map defaults"}
+      sweep: [1.6, 2.4]
+      assumption_id: A-W2.4a-8
+    turb_npmap_design:
+      value: 100.0
+      units: "1"
+      description: Design-point position on the HPT/LPT (HBTF) maps, Np axis
+      evidence: {tag: ASSUMPTION, source: "pyCycle HBTF turbine map defaults"}
+      sweep: [90.0, 110.0]
+      assumption_id: A-W2.4a-8
+    turb_prmap_design:
+      value: 4.0
+      units: "1"
+      description: Design-point position on the HPT/LPT maps, PR axis (lower than the F404's 6.0 for the lower-loading civil turbines)
+      evidence: {tag: ASSUMPTION, source: "pyCycle HBTF turbine maps (PR axis 1.5-9); not public"}
+      sweep: [3.0, 6.0]
+      assumption_id: A-W2.4a-8
+    m3_design:
+      value: 0.25
+      units: "1"
+      description: HPC-exit Mach number at design (PS3/P3 relation)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml m3_design (pyCycle example 0.244)"}
+  components:
+    dp_core_duct:
+      value: 0.01
+      units: "1"
+      description: Fan-exit to HPC-inlet duct total-pressure loss (core stream)
+      evidence: {tag: ASSUMPTION, source: "generic practice; not public"}
+      sweep: [0.002, 0.03]
+      assumption_id: A-W2.4a-1
+    dp_bypass_duct:
+      value: 0.02
+      units: "1"
+      description: Bypass-duct total-pressure loss upstream of the bypass nozzle
+      evidence: {tag: ASSUMPTION, source: "generic practice; not public"}
+      sweep: [0.01, 0.04]
+      assumption_id: A-W2.4a-1
+    dp_burner:
+      value: 0.05
+      units: "1"
+      description: Combustor total-pressure loss at design corrected flow (scales with the square of it)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml dp_burner (A-W1.3a-1)"}
+    eta_burner:
+      value: 0.99
+      units: "1"
+      description: Main-burner combustion efficiency
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml eta_burner (A-W1.3a-17)"}
+    lhv:
+      value: 43.1
+      units: MJ/kg
+      description: Fuel lower heating value (Jet-A)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml lhv"}
+    cfg:
+      value: 0.98
+      units: "1"
+      description: Gross-thrust coefficient of both nozzles (fully expanded convention, A-W1.3a-19)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml cfg"}
+    cd8:
+      value: 0.97
+      units: "1"
+      description: Core nozzle discharge coefficient
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml cd8"}
+    cd18:
+      value: 0.97
+      units: "1"
+      description: Bypass nozzle discharge coefficient
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml cd8 (same convention)"}
+    pr_choke_hpt:
+      value: 2.0
+      units: "1"
+      description: HPT choking pressure ratio of the flow-capacity unchoke factor
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml pr_choke_hpt (A-W1.3a-4)"}
+    pr_choke_lpt:
+      value: 1.9
+      units: "1"
+      description: LPT choking pressure ratio of the flow-capacity unchoke factor
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml pr_choke_lpt (A-W1.3a-4)"}
+    gamma_turb_eq:
+      value: 1.3
+      units: "1"
+      description: Equivalent ratio of specific heats of the turbine unchoke factor
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml gamma_turb_eq"}
+    stall_slope:
+      value: 1.0
+      units: "1"
+      description: Map continuation slope beyond the stall line
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml stall_slope (A-W1.3a-2)"}
+    mil_e_5008b_a:
+      value: 0.075
+      units: "1"
+      description: MIL-E-5008B ram-recovery constant a (supersonic only; inactive for the subsonic proxy)
+      evidence: {tag: "TRANSFER: standard", source: "MIL-E-5008B; configs/tejas/params/M07.yaml"}
+    mil_e_5008b_b:
+      value: 1.35
+      units: "1"
+      description: MIL-E-5008B ram-recovery exponent b (supersonic only)
+      evidence: {tag: "TRANSFER: standard", source: "MIL-E-5008B; configs/tejas/params/M07.yaml"}
+  dynamics:
+    v21:
+      value: 2.0
+      units: m**3
+      description: Fan-exit + bypass-duct volume (large high-bypass duct)
+      evidence: {tag: ASSUMPTION, source: "NASA TP-1034 volume method (Tejas A-W1.3a-5) applied to a high-bypass duct; not public"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-7
+    v3:
+      value: 0.03
+      units: m**3
+      description: HPC-exit + combustor volume (smaller civil core)
+      evidence: {tag: ASSUMPTION, source: "NASA TP-1034 volumes scaled by core corrected flow (Tejas A-W1.3a-5); not public"}
+      sweep: [0.015, 0.06]
+      assumption_id: A-W2.4a-7
+    v45:
+      value: 0.1
+      units: m**3
+      description: HPT-LPT inter-turbine volume
+      evidence: {tag: ASSUMPTION, source: "NASA TP-1034 volumes scaled by core flow; not public"}
+      sweep: [0.05, 0.3]
+      assumption_id: A-W2.4a-7
+    v5:
+      value: 0.2
+      units: m**3
+      description: LPT-exit duct volume up to the core nozzle
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.1, 0.5]
+      assumption_id: A-W2.4a-7
+    tau_comb:
+      value: 0.01
+      units: s
+      description: Combustor gas energy-storage time constant on T41
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml tau_comb (A-W1.3a-6)"}
+  actuators:
+    tau_fmv:
+      value: 0.05
+      units: s
+      description: Fuel metering valve servo time constant
+      evidence: {tag: "TRANSFER: generic NASA C-MAPSS", source: "NASA TM-2007-215026 (FMV 20 rad/s); configs/tejas/params/M07.yaml"}
+    fuel_transport_delay:
+      value: 0.04
+      units: s
+      description: Fuel transport delay metering valve to nozzles (whole 240 Hz ticks)
+      evidence: {tag: "TRANSFER: generic NASA C-MAPSS40k", source: "NASA TM-2010-216810 p.6 (40 ms); configs/tejas/params/M07.yaml"}
+    tau_vg:
+      value: 0.05
+      units: s
+      description: Variable-geometry (HPC stator) actuator time constant
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml tau_vg (A-W1.3a-11)"}
+    vg_rate:
+      value: 40.0
+      units: deg/s
+      description: Variable-geometry slew-rate limit
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vg_rate"}
+    vg_min:
+      value: -5.0
+      units: deg
+      description: Variable-geometry angle lower limit
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vg_min"}
+    vg_max:
+      value: 55.0
+      units: deg
+      description: Variable-geometry angle upper limit
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vg_max"}
+  geometry_effects:
+    k_w_fvg:
+      value: 0.0
+      units: 1/rad
+      description: Fan flow sensitivity to fan inlet guide vane mis-rig (no fan IGV on a high-bypass fan)
+      evidence: {tag: ASSUMPTION, source: "AD-43 (separate-flow high-bypass fan without variable IGVs); not public"}
+      sweep: [0.0, 0.6]
+      assumption_id: A-W2.4a-1
+    k_e_fvg:
+      value: 0.0
+      units: 1/rad**2
+      description: Fan efficiency sensitivity to IGV mis-rig (none, see k_w_fvg)
+      evidence: {tag: ASSUMPTION, source: "AD-43; not public"}
+      sweep: [0.0, 0.65]
+      assumption_id: A-W2.4a-1
+    k_w_cvg:
+      value: 0.38
+      units: 1/rad
+      description: HPC flow sensitivity to stator mis-rig (only off-schedule angles act; M08 schedules the same reference)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml k_w_cvg (A-W1.3a-12)"}
+    k_e_cvg:
+      value: 0.65
+      units: 1/rad**2
+      description: HPC efficiency sensitivity to stator mis-rig
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml k_e_cvg (A-W1.3a-12)"}
+    vg_dev_sat:
+      value: 15.0
+      units: deg
+      description: Smooth saturation of the off-schedule VG angle
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vg_dev_sat"}
+    fvg_ref_n1c:
+      value: [0.5, 1.2]
+      units: "1"
+      description: Reference fan VG schedule breakpoints (unused; no fan IGV, sensitivities 0)
+      evidence: {tag: ASSUMPTION, source: "AD-43 (no fan IGV); a flat schedule so the VG state carries no information"}
+      sweep: [0.5, 1.2]
+      assumption_id: A-W2.4a-1
+    fvg_ref_angle:
+      value: [0.0, 0.0]
+      units: deg
+      description: Reference fan VG schedule (flat zero, unused)
+      evidence: {tag: ASSUMPTION, source: "AD-43 (no fan IGV)"}
+      sweep: [0.0, 10.0]
+      assumption_id: A-W2.4a-1
+    cvg_ref_n2c:
+      value: [0.55, 0.70, 0.95, 1.05]
+      units: "1"
+      description: Reference HPC stator schedule breakpoints (corrected core speed, fraction of design)
+      evidence: {tag: ASSUMPTION, source: "Tejas M07 schedule shape (A-W1.3a-12) shifted to the civil core's idle range; not public"}
+      sweep: [0.5, 1.05]
+      assumption_id: A-W2.4a-1
+    cvg_ref_angle:
+      value: [40.0, 35.0, 5.0, 2.0]
+      units: deg
+      description: Reference HPC stator angles at those breakpoints (positive = more closed)
+      evidence: {tag: ASSUMPTION, source: "Tejas M07 schedule shape (A-W1.3a-12); not public"}
+      sweep: [0.0, 50.0]
+      assumption_id: A-W2.4a-1
+  thermal:
+    c_metal:
+      value: 30000.0
+      units: J/K
+      description: Hot-section rotor metal heat capacity (heat soak)
+      evidence: {tag: ASSUMPTION, source: "Tejas M07 value 60,000 J/K (A-W1.3a-8) scaled down for the smaller core; not public"}
+      sweep: [10000.0, 100000.0]
+      assumption_id: A-W2.4a-9
+    ha_metal:
+      value: 1000.0
+      units: W/K
+      description: Gas-to-metal heat-transfer conductance at design flow (scales with W^0.8)
+      evidence: {tag: ASSUMPTION, source: "Tejas M07 value 2,000 W/K (A-W1.3a-8) scaled; not public"}
+      sweep: [300.0, 3000.0]
+      assumption_id: A-W2.4a-9
+    tau_case:
+      value: 8.0
+      units: s
+      description: HPT case/shroud thermal time constant
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml tau_case (A-W1.3a-8)"}
+    c_case:
+      value: 0.3
+      units: "1"
+      description: Case reference temperature weight between T3 and T41
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml c_case"}
+    g_clr_case:
+      value: 2.5e-5
+      units: 1/K
+      description: Tip-clearance growth per K of case temperature
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml g_clr_case"}
+    g_clr_metal:
+      value: 2.5e-5
+      units: 1/K
+      description: Tip-clearance reduction per K of rotor metal temperature
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml g_clr_metal"}
+    g_clr_speed:
+      value: 0.005
+      units: "1"
+      description: Tip-clearance reduction from rotor growth at design speed
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml g_clr_speed"}
+    k_eta_clr:
+      value: 1.5
+      units: "1"
+      description: HPT efficiency loss per unit clearance change
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml k_eta_clr"}
+  surge:
+    sm_trigger:
+      value: -0.02
+      units: "1"
+      description: Surge trigger margin (PR_stall/PR - 1) of the PROXY surge event model. The relative margin of a low-PR fan shrinks in proportion to (PR - 1) toward idle (about +0.8 % at ground idle on the scaled map), so the trigger sits below 0 so that the thin idle margin does not fire the event model (-2 % with the W2.4a-2 identified plant, whose ground idle sits on the scaled map's stall line); real fan surge at idle is not modelled
+      evidence: {tag: ASSUMPTION, source: "Tejas M07 event model (A-W1.3a-9, trigger 0.0, sweep -0.02..0.05); proxy fan margin from the scaled AXI5 map (A-W2.4a-8). W2.4a-2: -0.02 (end of the declared range) because the identified plant (A-W2.4a-21) puts ground idle on the scaled map stall line, in the similarity extrapolation below its lowest speed line (margins -1.0 to -1.1 % at the replay start fired 6-12 surge events per engine at -0.01); in flight the identified plant keeps at least 3 % (stage-1 floors), so the trigger does not hide flight margins; the DASHlink record shows no surge"}
+      proxy: true
+      sweep: [-0.02, 0.05]
+      assumption_id: A-W2.4a-9
+    surge_c_min:
+      value: 0.12
+      units: "1"
+      description: Compressor delivery fraction at surge collapse (PROXY event model)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml surge_c_min"}
+      proxy: true
+      sweep: [0.05, 0.3]
+      assumption_id: A-W1.3a-9
+    surge_t_rec:
+      value: 0.2
+      units: s
+      description: Surge recovery time (PROXY event model)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml surge_t_rec"}
+    surge_eff:
+      value: 0.5
+      units: "1"
+      description: HPC efficiency factor at full surge collapse (PROXY event model)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml surge_eff"}
+      proxy: true
+      sweep: [0.3, 0.8]
+      assumption_id: A-W1.3a-9
+  flame:
+    far_lbo_ref:
+      value: 0.004
+      units: "1"
+      description: Lean blow-out fuel-air ratio at the reference pressure
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml far_lbo_ref (A-W1.3a-10)"}
+    p_lbo_ref:
+      value: 100.0
+      units: kPa
+      description: Lean blow-out reference pressure
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml p_lbo_ref"}
+    n_lbo:
+      value: 0.5
+      units: "1"
+      description: Pressure exponent of the lean blow-out limit
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml n_lbo"}
+    t_lbo:
+      value: 0.05
+      units: s
+      description: Persistence of the lean condition before blow-out
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml t_lbo"}
+    far_light_min:
+      value: 0.008
+      units: "1"
+      description: Minimum fuel-air ratio for light-off
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml far_light_min"}
+    p3_light_min:
+      value: 40.0
+      units: kPa
+      description: Minimum combustor pressure for light-off
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml p3_light_min"}
+    t_ign:
+      value: 0.5
+      units: s
+      description: Light-off persistence with ignition on
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml t_ign"}
+    wf_min_flame:
+      value: 0.005
+      units: kg/s
+      description: Fuel flow below which the flame is lost
+      evidence: {tag: ASSUMPTION, source: "Tejas M07 0.01 kg/s (A-W1.3a-10) halved for the smaller civil core; not public"}
+      sweep: [0.002, 0.02]
+      assumption_id: A-W2.4a-9
+  oil:
+    c_oil:
+      value: 40000.0
+      units: J/K
+      description: Lumped oil-system heat capacity
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml c_oil (A-W1.3a-13)"}
+    q_oil_ref:
+      value: 30.0
+      units: kW
+      description: Heat rejected to oil at design N2
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml q_oil_ref"}
+    ua_oil_air:
+      value: 50.0
+      units: W/K
+      description: Oil-to-air conductance
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml ua_oil_air"}
+    ua_oil_fuel:
+      value: 375.0
+      units: W/K
+      description: Fuel-oil cooler conductance at design fuel flow (scales with Wf^0.8)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml ua_oil_fuel"}
+    dt_fuel_sink:
+      value: 15.0
+      units: delta_degC
+      description: Default fuel-inlet temperature above ambient (steady-solver input default)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml dt_fuel_sink"}
+    p_oil_reg:
+      value: 350.0
+      units: kPa
+      description: Regulated oil pressure scale
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml p_oil_reg"}
+    n2_oil_k:
+      value: 0.3
+      units: "1"
+      description: Oil-pump pressure rise constant vs N2
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml n2_oil_k"}
+    oil_visc_k:
+      value: 0.3
+      units: "1"
+      description: Oil-pressure viscosity exponent
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml oil_visc_k"}
+    t_oil_ref:
+      value: 360.0
+      units: K
+      description: Reference oil temperature of the viscosity term
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml t_oil_ref"}
+  vibration:
+    vib_k_n1:
+      value: 11.1
+      units: m/s**2
+      description: N1 1/rev vibration source amplitude at design (PROXY band split)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vib_k_n1 (A-W1.3a-14)"}
+      proxy: true
+      sweep: [5.0, 20.0]
+      assumption_id: A-W1.3a-14
+    vib_k_n2:
+      value: 14.0
+      units: m/s**2
+      description: N2 1/rev vibration source amplitude at design (PROXY band split)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vib_k_n2"}
+      proxy: true
+      sweep: [6.0, 25.0]
+      assumption_id: A-W1.3a-14
+    vib_k_bb:
+      value: 18.8
+      units: m/s**2
+      description: Broadband vibration source amplitude at design airflow (PROXY band split)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vib_k_bb"}
+      proxy: true
+      sweep: [5.0, 40.0]
+      assumption_id: A-W1.3a-14
+    vib_exp:
+      value: 2.5
+      units: "1"
+      description: Speed exponent of the 1/rev amplitudes (PROXY)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml vib_exp"}
+      proxy: true
+      sweep: [1.5, 3.5]
+      assumption_id: A-W1.3a-14
+  disturbances:
+    k_eta_fan_face:
+      value: 0.6
+      units: "1"
+      description: Fan-efficiency change per unit fan-flow-capacity change of the fan_face disturbance (AD-46; W2.4a check <= ~0.3)
+      evidence: {tag: ASSUMPTION, source: "AD-46 amended: with the flow share 0 the fan_face channel is the LP shaft-torque path and k_eta scales it (fan-efficiency change per unit loading); 0.6, the declared maximum, so the declared loading range 0-0.02 covers the W2.4a-1 LP-torque prototype (about 1.2 % SD); the product loading x k_eta is what W2.4a-2 stage 4 identifies (A-W2.4a-10)"}
+      sweep: [0.0, 0.6]
+      assumption_id: A-W2.4a-10
+  simulation:
+    n_sub:
+      value: 2
+      units: "1"
+      description: Minimum Heun sub-steps per 240 Hz tick (more when the stiffness estimate demands)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml n_sub (A-W1.3a-6)"}
+    int_tol:
+      value: 0.001
+      units: "1"
+      description: Relative Heun-minus-Euler pressure error that triggers tick refinement
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml int_tol"}
+    stab_hlam:
+      value: 1.4
+      units: "1"
+      description: Explicit stability bound on sub-step x stiffness estimate
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml stab_hlam"}
+    n_sub_max:
+      value: 64
+      units: "1"
+      description: Maximum sub-steps per tick
+      evidence: {tag: "TRANSFER: Phalanx Tejas M07", source: "configs/tejas/params/M07.yaml n_sub_max"}
+    p6_relax_tau:
+      value: 1.0
+      units: s
+      description: Relaxation time of the unused mixer-volume state to ambient (numerical regularity of the steady solver; no physics in separate_fixed)
+      evidence: {tag: ASSUMPTION, source: "numerical; the state carries no physical meaning in the separate-flow topology"}
+      sweep: [0.1, 10.0]
+      assumption_id: A-W2.4a-7
+    fan_face_flow_share:
+      value: 0.0
+      units: '1'
+      description: Share of the fan_face disturbance acting on the fan flow capacity; 0 = efficiency only, the LP shaft-torque path (AD-46 amended, the committed structure since W2.4a-2); 1 = the original AD-46 flow capacity and efficiency path
+      evidence: {tag: ASSUMPTION, source: "AD-46 amended by the MF1 decision (2026-10-15, AD-52 D item 2): the secondary LP input is the LP shaft-torque (fan efficiency-only) path, flow share 0 by structure; the fan-flow path reproduced the E1 failure (N1-FF 0.23) in the W2.4a-1 study"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.4a-18
+  off_design:
+    fan_wc_mod_a:
+      value: 1.054226
+      units: "1"
+      description: Off-design map modifier amplitude a of the fan map corrected flow (multiplier 1 + a (1 - Nc/Nc_des)^k below design corrected speed, 1 at and above it); 0 = the scaled generic map (A-W2.4a-8)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.034); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [-0.6, 3.0]
+      assumption_id: A-W2.4a-21
+    fan_wc_mod_k:
+      value: 1.828192
+      units: "1"
+      description: Off-design map modifier exponent k of the fan map corrected flow (shape of the departure below design corrected speed)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0649); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-21
+    fan_eff_mod_a:
+      value: 0.9684
+      units: "1"
+      description: Off-design map modifier amplitude a of the fan map efficiency (multiplier 1 + a (1 - Nc/Nc_des)^k below design corrected speed, 1 at and above it); 0 = the scaled generic map (A-W2.4a-8)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.139); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [-0.6, 3.0]
+      assumption_id: A-W2.4a-21
+    fan_eff_mod_k:
+      value: 4.0
+      units: "1"
+      description: Off-design map modifier exponent k of the fan map efficiency (shape of the departure below design corrected speed)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.491); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-21
+    hpc_wc_mod_a:
+      value: 0.775655
+      units: "1"
+      description: Off-design map modifier amplitude a of the HPC map corrected flow (multiplier 1 + a (1 - Nc/Nc_des)^k below design corrected speed, 1 at and above it); 0 = the scaled generic map (A-W2.4a-8)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0688); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [-0.6, 3.0]
+      assumption_id: A-W2.4a-21
+    hpc_wc_mod_k:
+      value: 1.084144
+      units: "1"
+      description: Off-design map modifier exponent k of the HPC map corrected flow (shape of the departure below design corrected speed)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.108); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-21
+    hpc_eff_mod_a:
+      value: 0.0
+      units: "1"
+      description: Off-design map modifier amplitude a of the HPC map efficiency (multiplier 1 + a (1 - Nc/Nc_des)^k below design corrected speed, 1 at and above it); 0 = the scaled generic map (A-W2.4a-8)
+      evidence: {tag: ASSUMPTION, source: "neutral value; tested in the W2.4a-2 stage-1 steady identification on 687-CAL (identified 0.0015, exponent unidentifiable), so the HPC efficiency map is left unmodified (analysis/proxy_quicklook/results/stage1/st_fits.json)"}
+      sweep: [-0.6, 3.0]
+      assumption_id: A-W2.4a-21
+    hpc_eff_mod_k:
+      value: 2.0
+      units: "1"
+      description: Off-design map modifier exponent k of the HPC map efficiency (shape of the departure below design corrected speed)
+      evidence: {tag: ASSUMPTION, source: "neutral shape (amplitude 0, no effect)"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-21
+    rni_exp:
+      value: 0.0
+      units: "1"
+      description: Reynolds-number effect exponent n - every component loss (1 - eta) is multiplied by RNI^-n when the inlet Reynolds-number index RNI = delta2 theta2^-1.2 is below 1 (1 at SLS ISA, so the design anchors are unchanged); 0 = no Reynolds effect
+      evidence: {tag: "TRANSFER: NASA TP-1034 F100 model method (Reynolds effects in the component maps)", source: "tested in the W2.4a-2 stage-1 steady identification on 687-CAL: identified 0.0125 (SE 0.008), negligible; set to 0 (analysis/proxy_quicklook/results/stage1/st_fits.json); research_notes/.../candidate_engine_and_ehm_data.md (TP-1034)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W2.4a-21
+    fan_nc_mod_a:
+      value: 0.696908
+      units: "1"
+      description: Off-design speed-line modifier amplitude a of the fan map speed line (the map is read at Nc (1 + a (1 - Nc/Nc_des)^k) below design corrected speed, so flow, pressure ratio, efficiency and stall line move together); 0 = the scaled generic map (A-W2.4a-8)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0127); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [-0.3, 1.5]
+      assumption_id: A-W2.4a-21
+    fan_nc_mod_k:
+      value: 1.0
+      units: "1"
+      description: Off-design speed-line modifier exponent k of the fan map speed line
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0085); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-21
+    hpc_nc_mod_a:
+      value: 0.542547
+      units: "1"
+      description: Off-design speed-line modifier amplitude a of the HPC map speed line (the map is read at Nc (1 + a (1 - Nc/Nc_des)^k) below design corrected speed, so flow, pressure ratio, efficiency and stall line move together); 0 = the scaled generic map (A-W2.4a-8)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.014); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [-0.3, 1.5]
+      assumption_id: A-W2.4a-21
+    hpc_nc_mod_k:
+      value: 1.091373
+      units: "1"
+      description: Off-design speed-line modifier exponent k of the HPC map speed line
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0297); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W2.4a-21
+  prototypes:
+    gp_lag_tau:
+      value: 0.0
+      units: s
+      description: PROTOTYPE flag (W2.4a-2 stage 3, not adopted) - time constant of the gas-path thermal storage between the LPT exit and the T5 station (exhaust duct, struts, probe rakes); 0 = off (the station sees the LPT-exit gas temperature)
+      evidence: {tag: ASSUMPTION, source: "AD-52 item 3 (EGT phase vs N1 is a model target: M07 gas-path thermal lag + M12 thermocouple); W2.4a-2 plan item 3; no proxy heat-capacity data in the evidence base - swept, not identified"}
+      sweep: [0.0, 5.0]
+      assumption_id: A-W2.4a-23
+    gp_lag_kappa:
+      value: 1.0
+      units: "1"
+      description: PROTOTYPE - share of the gas-temperature change absorbed by the storage node at the station (1 = a pure first-order lag of the station temperature; < 1 a lag-lead)
+      evidence: {tag: ASSUMPTION, source: "W2.4a-2 stage 3 prototype; swept"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.4a-23
+  tables:
+    thermo_species_id:
+      table: {file: nasa9_species.csv, column: species_id}
+      units: "1"
+      description: Species index (0 N2, 1 O2, 2 Ar, 3 CO2, 4 H2O)
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "McBride, Zehe & Gordon, NASA/TP-2002-211556, via pyCycle thermo_data/janaf.py (Apache-2.0, commit ee7e161)"}
+    thermo_range_id:
+      table: {file: nasa9_species.csv, column: range_id}
+      units: "1"
+      description: Temperature range (0 = 200-1000 K, 1 = 1000-6000 K)
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a1:
+      table: {file: nasa9_species.csv, column: a1}
+      units: "1"
+      description: NASA-9 coefficient a1 (cp/R form)
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a2:
+      table: {file: nasa9_species.csv, column: a2}
+      units: "1"
+      description: NASA-9 coefficient a2
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a3:
+      table: {file: nasa9_species.csv, column: a3}
+      units: "1"
+      description: NASA-9 coefficient a3
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a4:
+      table: {file: nasa9_species.csv, column: a4}
+      units: "1"
+      description: NASA-9 coefficient a4
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a5:
+      table: {file: nasa9_species.csv, column: a5}
+      units: "1"
+      description: NASA-9 coefficient a5
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a6:
+      table: {file: nasa9_species.csv, column: a6}
+      units: "1"
+      description: NASA-9 coefficient a6
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_a7:
+      table: {file: nasa9_species.csv, column: a7}
+      units: "1"
+      description: NASA-9 coefficient a7
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_b1:
+      table: {file: nasa9_species.csv, column: b1}
+      units: "1"
+      description: NASA-9 enthalpy integration constant b1
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_b2:
+      table: {file: nasa9_species.csv, column: b2}
+      units: "1"
+      description: NASA-9 entropy integration constant b2
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    thermo_molar_mass:
+      table: {file: nasa9_species.csv, column: molar_mass}
+      units: g/mol
+      description: Species molar mass
+      evidence: {tag: "TRANSFER: NASA Glenn thermodynamic data", source: "NASA/TP-2002-211556 via pyCycle janaf.py"}
+    fan_map_nc:
+      table: {file: fan_map_axi5.csv, column: nc}
+      units: "1"
+      description: Fan map corrected speed (fraction of map design), AXI5 alpha = 0 slice
+      evidence: {tag: "TRANSFER: pyCycle generic map (AXI5)", source: "pyCycle maps/axi5.py (NPSS axi-5 map), Apache-2.0, commit ee7e161; converted by phalanx.engine._mapgen"}
+    fan_map_rline:
+      table: {file: fan_map_axi5.csv, column: rline}
+      units: "1"
+      description: Fan map R-line (stall line R = 1.0)
+      evidence: {tag: "TRANSFER: pyCycle generic map (AXI5)", source: "pyCycle maps/axi5.py, commit ee7e161"}
+    fan_map_wc:
+      table: {file: fan_map_axi5.csv, column: wc}
+      units: "1"
+      description: Fan map corrected flow (map units; only ratios are used after scaling)
+      evidence: {tag: "TRANSFER: pyCycle generic map (AXI5)", source: "pyCycle maps/axi5.py, commit ee7e161"}
+    fan_map_pr:
+      table: {file: fan_map_axi5.csv, column: pr}
+      units: "1"
+      description: Fan map pressure ratio
+      evidence: {tag: "TRANSFER: pyCycle generic map (AXI5)", source: "pyCycle maps/axi5.py, commit ee7e161"}
+    fan_map_eff:
+      table: {file: fan_map_axi5.csv, column: eff}
+      units: "1"
+      description: Fan map isentropic efficiency
+      evidence: {tag: "TRANSFER: pyCycle generic map (AXI5)", source: "pyCycle maps/axi5.py, commit ee7e161"}
+    hpc_map_nc:
+      table: {file: hpc_map_hbtf.csv, column: nc}
+      units: "1"
+      description: HPC map corrected speed (fraction of map design), HBTF HPC alpha = 0 slice
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPC)", source: "pyCycle maps/HPC_map.py (NPSS HBTF HPC), Apache-2.0, commit ee7e161"}
+    hpc_map_rline:
+      table: {file: hpc_map_hbtf.csv, column: rline}
+      units: "1"
+      description: HPC map R-line
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPC)", source: "pyCycle maps/HPC_map.py, commit ee7e161"}
+    hpc_map_wc:
+      table: {file: hpc_map_hbtf.csv, column: wc}
+      units: "1"
+      description: HPC map corrected flow (map units)
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPC)", source: "pyCycle maps/HPC_map.py, commit ee7e161"}
+    hpc_map_pr:
+      table: {file: hpc_map_hbtf.csv, column: pr}
+      units: "1"
+      description: HPC map pressure ratio
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPC)", source: "pyCycle maps/HPC_map.py, commit ee7e161"}
+    hpc_map_eff:
+      table: {file: hpc_map_hbtf.csv, column: eff}
+      units: "1"
+      description: HPC map isentropic efficiency
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPC)", source: "pyCycle maps/HPC_map.py, commit ee7e161"}
+    hpt_map_np:
+      table: {file: hpt_map_hbtf.csv, column: np}
+      units: "1"
+      description: HPT map speed parameter, HBTF HPT alpha = 1 slice
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPT)", source: "pyCycle maps/HPT_map.py (NPSS HBTF HPT), Apache-2.0, commit ee7e161"}
+    hpt_map_pr:
+      table: {file: hpt_map_hbtf.csv, column: pr}
+      units: "1"
+      description: HPT map pressure ratio
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPT)", source: "pyCycle maps/HPT_map.py, commit ee7e161"}
+    hpt_map_wp:
+      table: {file: hpt_map_hbtf.csv, column: wp}
+      units: "1"
+      description: HPT map flow parameter (map units)
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPT)", source: "pyCycle maps/HPT_map.py, commit ee7e161"}
+    hpt_map_eff:
+      table: {file: hpt_map_hbtf.csv, column: eff}
+      units: "1"
+      description: HPT map isentropic efficiency
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF HPT)", source: "pyCycle maps/HPT_map.py, commit ee7e161"}
+    lpt_map_np:
+      table: {file: lpt_map_hbtf.csv, column: np}
+      units: "1"
+      description: LPT map speed parameter, HBTF LPT alpha = 1 slice
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF LPT)", source: "pyCycle maps/LPT_map.py (NPSS HBTF LPT), Apache-2.0, commit ee7e161"}
+    lpt_map_pr:
+      table: {file: lpt_map_hbtf.csv, column: pr}
+      units: "1"
+      description: LPT map pressure ratio
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF LPT)", source: "pyCycle maps/LPT_map.py, commit ee7e161"}
+    lpt_map_wp:
+      table: {file: lpt_map_hbtf.csv, column: wp}
+      units: "1"
+      description: LPT map flow parameter (map units)
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF LPT)", source: "pyCycle maps/LPT_map.py, commit ee7e161"}
+    lpt_map_eff:
+      table: {file: lpt_map_hbtf.csv, column: eff}
+      units: "1"
+      description: LPT map isentropic efficiency
+      evidence: {tag: "TRANSFER: pyCycle generic map (HBTF LPT)", source: "pyCycle maps/LPT_map.py, commit ee7e161"}

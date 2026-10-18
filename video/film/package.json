@@ -1,0 +1,2 @@
+{ "name": "phalanx-film", "private": true, "type": "module",
+  "dependencies": { "hyperframes": "0.8.162", "gsap": "3.14.2", "three": "0.186.1", "esbuild": "0.25.10" } }

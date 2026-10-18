@@ -1,0 +1,10 @@
+# HyperFrames sandbox: keep sources + small evidence frames; ignore installs, media renders, tool state.
+node_modules/
+renders/
+out/*.mp4
+out/*.mov
+out/*.webm
+out/*.log
+out/snap-perf/
+**/.hyperframes/
+**/snapshots/

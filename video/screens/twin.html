@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Aircraft twin — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/addons/" } }</script>
+<style>
+  .t-grid { display: grid; grid-template-columns: 248px minmax(0,1fr) 392px; grid-template-rows: minmax(0,1fr) 104px; gap: 16px; height: 100%; }
+  /* tree */
+  .tree { padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+  .search { height: 38px; border-radius: 10px; background: var(--bg-2); display: flex; align-items: center; gap: 8px; padding: 0 12px; color: var(--ink-4); font-size: 13.5px; margin-bottom: 6px; }
+  .tn { display: flex; align-items: center; gap: 8px; height: 31px; padding: 0 8px; border-radius: 8px; font-size: 13.5px; color: var(--ink-2); }
+  .tn .c { color: var(--ink-4); width: 14px; height: 14px; }
+  .tn .s { width: 7px; height: 7px; border-radius: 50%; margin-left: auto; }
+  .tn .n { margin-left: auto; font: 600 11.5px var(--mono); color: var(--ink-4); }
+  .tn.l2 { padding-left: 30px; font-size: 13px; }
+  .tn.l1 { font-weight: 650; color: var(--ink); }
+  .tn.sel { background: var(--accent-wash); color: var(--accent-ink); font-weight: 650; box-shadow: inset 2px 0 0 var(--accent); }
+  .tn .ser { font: 500 11px var(--mono); color: var(--ink-4); margin-left: auto; }
+  .tree .sep { height: 1px; background: var(--line); margin: 6px 4px; }
+  /* viewport */
+  .vp { position: relative; overflow: hidden; border-radius: var(--r-lg); background:
+      radial-gradient(1200px 600px at 50% 40%, #fff 0%, #FAFAF8 60%, #F4F4F1 100%); border: 1px solid var(--line); }
+  .vp canvas { position: absolute; inset: 0; }
+  .vp .bpgrid { position: absolute; inset: 0; background-image: linear-gradient(var(--line-2) 1px, transparent 1px), linear-gradient(90deg, var(--line-2) 1px, transparent 1px); background-size: 48px 48px; opacity: .5; mask-image: radial-gradient(closest-side, rgba(0,0,0,.6), transparent); }
+  .vp-top { position: absolute; left: 16px; right: 16px; top: 14px; display: flex; align-items: center; gap: 10px; z-index: 3; }
+  .tools { display: flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 3px; }
+  .tools span { width: 34px; height: 32px; display: grid; place-items: center; border-radius: 8px; color: var(--ink-3); }
+  .tools span.on { background: var(--ink); color: #fff; }
+  .seg.glass { background: rgba(255,255,255,.86); border: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .lbl { position: absolute; z-index: 4; transform: translate(-50%, -50%); pointer-events: none; }
+  .tag { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px 8px; box-shadow: var(--shadow-pop); white-space: nowrap; }
+  .tag .k { font: 700 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+  .tag .v { font-size: 13.5px; font-weight: 650; margin-top: 2px; }
+  .tag .s { font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+  .tag.rep .k { color: var(--wire); } .tag.sus .k { color: var(--accent-ink); } .tag.sus2 .k { color: #9A6406; }
+  .tag.sus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-wash), var(--shadow-pop); }
+  .leaders { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+  .anchor { position: absolute; z-index: 4; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%,-50%); border: 2px solid #fff; }
+  .vp-legend { position: absolute; left: 16px; bottom: 14px; z-index: 3; display: flex; gap: 14px; align-items: center; background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 11px; padding: 9px 13px; font-size: 12.5px; color: var(--ink-3); }
+  .vp-legend i { display: inline-block; vertical-align: middle; margin-right: 6px; }
+  .vp-foot { position: absolute; right: 16px; bottom: 14px; z-index: 3; display: flex; gap: 10px; align-items: center; font: 500 11.5px var(--mono); color: var(--ink-4); }
+  .insight-float { position: absolute; left: 16px; bottom: 62px; z-index: 3; width: 292px; background: rgba(255,255,255,.96); color: var(--ink); border: 1px solid var(--accent-line); border-radius: 14px; padding: 14px 16px; box-shadow: 0 0 0 4px var(--accent-wash), var(--shadow-pop); }
+  .insight-float .label { color: var(--accent-ink); }
+  .insight-float b { font-size: 15px; display: block; margin: 6px 0 6px; line-height: 1.35; letter-spacing: -0.01em; }
+  .insight-float p { font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+  .swaps { display: flex; gap: 2.5px; margin-top: 10px; flex-wrap: wrap; }
+  .swaps i { width: 7px; height: 14px; border-radius: 2px; background: var(--line); display: block; }
+  .swaps i.r { background: var(--accent); }
+  /* component panel */
+  .panel { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  .ph { padding: 14px 20px 12px; border-bottom: 1px solid var(--line); }
+  .ph h2 { font-size: 20px; font-weight: 650; letter-spacing: -0.02em; margin-top: 4px; }
+  .psec { padding: 10px 20px; border-bottom: 1px solid var(--line-2); }
+  .psec .st { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .kv { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; font-size: 13px; }
+  .kv span:nth-child(odd) { color: var(--ink-3); }
+  .kv span:nth-child(even) { font-weight: 650; text-align: right; }
+  .obar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; gap: 1.5px; margin: 6px 0 6px; }
+  .verdict { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .verdict div { border-radius: 9px; padding: 7px 8px; font-size: 11.5px; color: var(--ink-3); background: var(--bg-2); line-height: 1.25; }
+  .verdict div b { display: block; font-size: 12.5px; color: var(--ink); margin-top: 2px; }
+  .verdict div.on { background: var(--wire-wash); color: var(--wire); box-shadow: inset 0 0 0 1.5px var(--wire); }
+  .verdict div.on b { color: var(--wire); }
+  .rec { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line-2); }
+  .rec:first-of-type { border-top: 0; }
+  .rec .a { font: 650 12.5px var(--mono); }
+  .rec .p { font-size: 12px; color: var(--ink-3); grid-column: 1 / -1; }
+  .pfoot { margin-top: auto; padding: 10px 20px 12px; font: 500 11px var(--mono); color: var(--ink-4); background: var(--bg-2); line-height: 1.6; }
+  /* scrubber */
+  .scrub { grid-column: 1 / -1; padding: 12px 20px 10px; display: grid; grid-template-columns: 150px 1fr; gap: 0 16px; }
+  .scrub .rl { font-size: 12px; color: var(--ink-3); height: 19px; display: flex; align-items: center; gap: 8px; }
+  #scrubsvg { grid-row: 1 / span 4; grid-column: 2; }
+</style>
+</head>
+<body data-page="twin">
+<div id="content">
+<div class="t-grid">
+  <!-- component tree -->
+  <div class="card tree" data-shot="tree">
+    <div class="search"><i data-i="search" class="ico-sm"></i>Tail, serial, code, job…<span class="kbd" style="margin-left:auto">⌘K</span></div>
+    <div class="tn l1"><i data-i="twin" class="ico-sm"></i>TJ107<span class="pill fmc" style="margin-left:auto;height:20px">FMC</span></div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Engine &amp; FADEC<span class="s" style="background:var(--ink-5)"></span></div>
+    <div class="tn"><i data-i="chevDown" class="c"></i><b style="font-weight:650">Hydraulics</b><span class="s" style="background:var(--accent)"></span></div>
+    <div class="tn l2 sel">Pump 1 · SYS1<span class="ser">HYDP-…010</span></div>
+    <div class="tn l2">Pump 2 · SYS2<span class="ser">HYDP-…002</span></div>
+    <div class="tn l2">AMAGB<span class="ser">AMAGB-…001</span></div>
+    <div class="tn l2">Filter · SYS1<span class="ser">—</span></div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Avionics<span class="n">3</span></div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Air data<span class="n">1</span></div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Landing gear<span class="n">3/8</span></div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Electrical</div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Fuel</div>
+    <div class="tn"><i data-i="chevRight" class="c"></i>Flight controls</div>
+    <div class="sep"></div>
+    <div class="tn"><i data-i="grid" class="c"></i>Zones</div>
+    <div class="tn"><i data-i="history" class="c"></i>Serial lineage</div>
+    <div style="margin-top:auto" class="well" >
+      <div style="padding:12px 12px 11px;font-size:12px;color:var(--ink-3);line-height:1.45">
+        <div class="label" style="margin-bottom:6px">Synchronised</div>
+        Last ingest <b style="color:var(--ink)">19 Jun 22:27</b><br>61 sorties · 49.6 FH · 116 landings<br>Snapshot sealed 06:00 IST
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D viewport -->
+  <div class="vp" id="vp" data-shot="viewport">
+    <div class="bpgrid"></div>
+    <div class="vp-top">
+      <div class="seg glass" id="lenses"><span data-lens="health"><i data-i="target" class="ico-sm"></i>Health</span><span class="on" data-lens="evidence"><i data-i="link" class="ico-sm"></i>Evidence</span><span data-lens="maintenance"><i data-i="wrench" class="ico-sm"></i>Maintenance</span><span data-lens="systems"><i data-i="route" class="ico-sm"></i>Systems</span><span data-lens="whatif"><i data-i="fork" class="ico-sm"></i>What-if</span></div>
+      <div class="grow"></div>
+      <div class="tools"><span class="on"><i data-i="xray" class="ico-sm"></i></span><span id="explodeBtn"><i data-i="explode" class="ico-sm"></i></span><span><i data-i="section" class="ico-sm"></i></span><span><i data-i="target" class="ico-sm"></i></span></div>
+    </div>
+    <svg class="leaders" id="leaders"></svg>
+    <div id="labels"></div>
+    <div class="insight-float" data-shot="swap-insight">
+      <span class="label">Sensor vs component</span>
+      <b>The alarm stayed with the aircraft through 28 pump removals.</b>
+      <p>HYD-101 fired on 59 of 61 TJ107 sorties while 10 different pump serials rotated through SYS1. The evidence follows the tail, not the pump.</p>
+      <div class="swaps" id="swaps"></div>
+    </div>
+    <div class="vp-legend">
+      <span><i style="width:11px;height:11px;border-radius:50%;background:var(--wire)"></i>Reporter</span>
+      <span><i style="width:22px;height:4px;border-radius:2px;background:var(--accent)"></i>Suspect · isolation 0.8</span>
+      <span><i style="width:22px;height:2px;border-radius:2px;background:#C98512"></i>0.2</span>
+      <span class="faint">thickness = isolation confidence</span>
+    </div>
+    <div class="vp-foot"><span>schematic placement</span><span>·</span><span>x-ray</span></div>
+  </div>
+
+  <!-- component panel -->
+  <div class="card panel" data-shot="panel">
+    <div class="ph">
+      <div class="row"><span class="label">Component</span><div class="grow"></div><span class="tier diag">DIAG</span><span class="tier pred">PRED</span><span class="tier presc">PRESC</span></div>
+      <h2>Hydraulic pump 1 · SYS1</h2>
+      <div class="row gap8" style="margin-top:8px"><span class="code">HYDP-000010</span><span class="pill grey hatch" style="color:var(--ink-2)">inferred</span></div>
+      <div class="xs faint" style="margin-top:6px">Install record not yet ingested — position from job sulur-26169-0006 (19 Jun)</div>
+    </div>
+    <div class="psec">
+      <div class="st"><span class="label">Status</span><div class="grow"></div><span class="pill fmc">FMC</span></div>
+      <div class="kv"><span>Open issue</span><span><span class="code">HYD-101</span> standing · 34 flights</span><span>TJ107 effort on HYD-101</span><span class="num">64 jobs · 792 man-h</span></div>
+    </div>
+    <div class="psec">
+      <div class="st"><span class="label">Assessment</span><div class="grow"></div><span class="xs faint">fleet · 107 HYD-101 jobs</span></div>
+      <div class="obar"><div style="flex:71;background:var(--ink-4)"></div><div style="flex:35;background:var(--accent)"></div><div style="flex:1;background:var(--ink)"></div></div>
+      <div class="row xs muted" style="gap:12px"><span>71 CND</span><span style="color:var(--accent-ink)">35 removed → all RTOK</span><span>1 TS</span><span style="margin-left:auto;color:var(--ink);font-weight:650">0 confirmed</span></div>
+      <div class="kv" style="margin-top:10px"><span>P(confirmed pump fault)</span><span class="num">0.005 <span class="faint" style="font-weight:500">[0.000, 0.023]</span></span></div>
+      <div class="verdict"><div>Component<b>Unlikely</b></div><div class="on">Indication path<b>Likely</b></div><div>Undetermined<b>—</b></div></div>
+    </div>
+    <div class="psec">
+      <div class="st"><span class="label">Projection</span></div>
+      <div class="kv"><span>If removed again · P(RTOK)</span><span class="num">0.985 <span class="faint" style="font-weight:500">[0.93, 1.00]</span></span><span>Shop history, pumps</span><span class="num">33 / 33 RTOK</span></div>
+    </div>
+    <div class="psec" style="border-bottom:0">
+      <div class="st"><span class="label">Recommended</span><div class="grow"></div><span class="xs faint">P-DEC-01 r3 · D8 nuisance review</span></div>
+      <div class="rec"><span class="a">Stop R/R on HYD-101 alone</span><span class="auth agent">MONITOR</span></div>
+      <div class="rec"><span class="a">TROUBLESHOOT indication path</span><span class="auth agent"><i data-i="cpu" class="ico-sm"></i>AGENT</span></div>
+      <div class="rec"><span class="a">CHANGE_MONITORING_CONFIG</span><span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span><span class="p">Draft only · engineering officer signs</span></div>
+    </div>
+    <div class="pfoot">snapshot 06:00 · 2c2d0f5b… · nff base rate 2.3.0 @champion<br>policy P-DEC-01/1.4.0+jdm.c9b849a8e719 · contract a4396f1d</div>
+  </div>
+
+  <!-- as-of scrubber -->
+  <div class="card scrub" data-shot="scrubber">
+    <div class="rl"><b style="color:var(--ink);font-size:12.5px">As of</b><span class="mono" style="color:var(--accent-ink)">22 Jun 06:00</span></div>
+    <svg id="scrubsvg" height="80" style="width:100%"></svg>
+    <div class="rl"><i style="width:10px;height:4px;background:var(--fmc);border-radius:2px"></i>Availability</div>
+    <div class="rl"><i style="width:4px;height:10px;background:var(--accent);border-radius:1px"></i>Sorties · HYD-101</div>
+    <div class="rl"><i data-i="wrench" class="ico-sm" style="color:var(--ink-2)"></i>Pump removals</div>
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  PHX.mount({ page: 'twin', title: 'Aircraft twin · TJ107', sub: 'One state per tail and per serial · every colour computed from the twin as of the snapshot',
+    chips: [{ k: 'ok', i: 'lock', t: 'Air-gapped' }, { i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { i: 'history', t: 'Last ingest <b>19 Jun 22:27</b>' }, { k: 'accent', i: 'link', t: 'Evidence lens' }] });
+  // swap strip
+  document.getElementById('swaps').innerHTML = Array.from({ length: 61 }, (_, i) => `<i class="${PHX_DATA.tj107.sorties[i][1] ? 'r' : ''}"></i>`).join('');
+  // scrubber
+  (function () {
+    const el = document.getElementById('scrubsvg'), W = el.clientWidth || el.parentNode.clientWidth - 186, D = PHX_DATA.tj107, X = d => 6 + (W - 12) * d / D.T;
+    const col = { FMC: '#1F8A4C', PMCM: '#5E9F3A', NMCM_S: '#C98512', NMCM_U: '#C98512', NMCS: '#D4492A', NMCD: '#5B4FCF' };
+    let g = '';
+    D.state.forEach((s, i) => { const x0 = X(s[0]), x1 = X(i < D.state.length - 1 ? D.state[i + 1][0] : D.T); g += `<rect x="${x0}" y="4" width="${Math.max(.6, x1 - x0)}" height="9" fill="${col[s[1]]}" />`; });
+    D.sorties.forEach(s => { g += `<rect x="${X(s[0]) - 1}" y="${s[1] ? 25 : 29}" width="2.2" height="${s[1] ? 13 : 9}" rx="1" fill="${s[1] ? '#E8743B' : '#B9BDC2'}"/>`; });
+    D.removals.forEach(r => { g += `<path d="M${X(r[0])} 46 l4.5 7 h-9z" fill="#31353B"/>`; });
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']; const mStart = [0, 27, 55, 86, 116, 147];
+    mStart.forEach((d, i) => { g += `<line x1="${X(d)}" x2="${X(d)}" y1="0" y2="62" stroke="var(--line)"/><text x="${X(d) + 5}" y="74" font-size="11" font-family="JetBrains Mono" fill="var(--ink-4)">${months[i]}</text>`; });
+    const xt = X(D.T); g += `<line x1="${xt}" x2="${xt}" y1="0" y2="64" stroke="var(--ink)" stroke-width="2"/><circle cx="${xt}" cy="64" r="6" fill="var(--ink)" stroke="#fff" stroke-width="2"/>`;
+    const xg = X(D.T - 32); g += `<line x1="${xg}" x2="${xg}" y1="0" y2="64" stroke="var(--ink-4)" stroke-dasharray="3 3"/><rect x="${xg - 34}" y="62" width="68" height="17" rx="5" fill="var(--bg-2)" stroke="var(--line)"/><text x="${xg}" y="74" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono" fill="var(--ink-3)">21 May</text>`;
+    el.setAttribute('viewBox', `0 0 ${W} 80`); el.setAttribute('width', W); el.innerHTML = g;
+  })();
+</script>
+<script type="module">
+  import { createTwin } from './assets/twin3d.js';
+  const host = document.getElementById('vp');
+  const LBL = [
+    { id: 'BHEEM_EU', cls: 'rep', k: 'Reporter', v: 'BHEEM EU', s: 'HYD-101 · 59 of 61 sorties', dx: -40, dy: -150, color: 'var(--wire)' },
+    { id: 'HYD_PUMP', cls: 'sus', k: 'Suspect · 0.8', v: 'Hyd pump 1 · HYDP-000010', s: '28 removals · 10 pumps · 0 confirmed', dx: 210, dy: -60, color: 'var(--accent)' },
+    { id: 'AMAGB', cls: 'sus2', k: 'Suspect · 0.2', v: 'AMAGB', s: 'no removals', dx: 170, dy: 110, color: '#C98512' }
+  ];
+  const labels = document.getElementById('labels'), leaders = document.getElementById('leaders');
+  labels.innerHTML = LBL.map(l => `<div class="anchor" id="an-${l.id}" style="background:${l.color}"></div><div class="lbl" id="lb-${l.id}"><div class="tag ${l.cls}"><div class="k">${l.k}</div><div class="v">${l.v}</div><div class="s">${l.s}</div></div></div>`).join('');
+  const twin = createTwin(host, { lens: 'evidence', selected: 'HYD_PUMP', az: 0.74, el: 0.44, dist: 23.5, onFrame(screenOf) {
+    let svg = '';
+    LBL.forEach(l => { const [x, y] = screenOf(l.id); const a = document.getElementById('an-' + l.id), b = document.getElementById('lb-' + l.id);
+      a.style.left = x + 'px'; a.style.top = y + 'px'; b.style.left = (x + l.dx) + 'px'; b.style.top = (y + l.dy) + 'px';
+      svg += `<path d="M${x} ${y} L${x + l.dx * .55} ${y + l.dy} L${x + l.dx} ${y + l.dy}" fill="none" stroke="${l.color}" stroke-width="1.4" opacity=".9"/>`; });
+    leaders.innerHTML = svg;
+  } });
+  host.querySelector('canvas').style.zIndex = 1;
+  window.__twin = twin;
+  const showLabels = on => { labels.style.display = leaders.style.display = on ? '' : 'none'; document.querySelector('.vp-legend').style.visibility = on ? '' : 'hidden'; };
+  document.querySelectorAll('#lenses span').forEach(sp => sp.addEventListener('click', () => {
+    document.querySelectorAll('#lenses span').forEach(x => x.classList.remove('on')); sp.classList.add('on');
+    twin.setLens(sp.dataset.lens === 'whatif' ? 'maintenance' : sp.dataset.lens); showLabels(sp.dataset.lens === 'evidence'); }));
+  let ex = 0; document.getElementById('explodeBtn').addEventListener('click', e => { ex = ex ? 0 : 1; e.currentTarget.classList.toggle('on', !!ex);
+    const a0 = twin.state.explode, t0 = performance.now(); const step = () => { const k = Math.min(1, (performance.now() - t0) / 700); twin.state.explode = a0 + (ex - a0) * (1 - Math.pow(1 - k, 3)); if (k < 1) requestAnimationFrame(step); }; step(); });
+  const q = new URLSearchParams(location.search); if (q.get('lens')) document.querySelector(`#lenses span[data-lens=${q.get('lens')}]`)?.click(); if (q.get('explode')) { twin.state.explode = +q.get('explode'); }
+  const t0 = performance.now();
+  const loop = () => { twin.renderAt((performance.now() - t0) / 1000); requestAnimationFrame(loop); };
+  loop();
+</script>
+</body></html>

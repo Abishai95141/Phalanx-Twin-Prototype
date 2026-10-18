@@ -1,0 +1,1256 @@
+{
+ "faults": {
+  "F1": {
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      -0.04813861529091172,
+      0.04632088377539374
+     ],
+     "mean": -0.0009088657577589921
+    },
+    "eng.n1": {
+     "ci95": [
+      -0.6744885806424513,
+      0.3172946624132046
+     ],
+     "mean": -0.1785969591146234
+    },
+    "eng.t5": {
+     "ci95": [
+      -0.1167446840858809,
+      0.054882252881951366
+     ],
+     "mean": -0.030931215601964768
+    },
+    "eng.thrust": {
+     "ci95": [
+      -0.7617273333945036,
+      0.3078295688367763
+     ],
+     "mean": -0.22694888227886362
+    },
+    "eng.wf": {
+     "ci95": [
+      -0.740610198634889,
+      0.3133079729201596
+     ],
+     "mean": -0.21365111285736466
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.FOULING",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      -0.018394281613542344,
+      -0.01669474168571863
+     ],
+     "mean": -0.017544511649630487,
+     "muir": -1,
+     "n_evaluable": 4,
+     "recorded": false,
+     "shifts": [
+      -0.01802226435178843,
+      -0.01783105810857392,
+      -0.016806588789711814,
+      -0.017518135348447778,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      0.0014664737214579253,
+      0.001935754870104403
+     ],
+     "mean": 0.0017011142957811642,
+     "muir": -1,
+     "n_evaluable": 4,
+     "recorded": true,
+     "shifts": [
+      0.0016032469539028552,
+      0.0015759151787630165,
+      0.0018995397978993605,
+      0.0017257552525594248,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      -0.0367613305527124,
+      -0.03472023965317293
+     ],
+     "mean": -0.035740785102942665,
+     "muir": -1,
+     "n_evaluable": 4,
+     "recorded": false,
+     "shifts": [
+      -0.03570786060050018,
+      -0.03542946028444041,
+      -0.03664665478866917,
+      -0.03517916473816089,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      -0.019045589362071128,
+      -0.018066286703787484
+     ],
+     "mean": -0.018555938032929306,
+     "muir": -1,
+     "n_evaluable": 4,
+     "recorded": true,
+     "shifts": [
+      -0.018414557887269232,
+      -0.018498449305928782,
+      -0.0190025087859835,
+      -0.018308236152535705,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      -0.02127353202266765,
+      -0.020238952166736726
+     ],
+     "mean": -0.020756242094702188,
+     "muir": -1,
+     "n_evaluable": 4,
+     "recorded": true,
+     "shifts": [
+      -0.02103173956447145,
+      -0.020654575748983023,
+      -0.020997736340584956,
+      -0.020340916724769332,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      0.010420632605525258,
+      0.012381952709418952
+     ],
+     "mean": 0.011401292657472105,
+     "muir": 1,
+     "n_evaluable": 4,
+     "recorded": true,
+     "shifts": [
+      0.011719905226870326,
+      0.011578304518487095,
+      0.01181822966918152,
+      0.010488731215349472,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      0.004700860735935798,
+      0.005252092569965179
+     ],
+     "mean": 0.0049764766529504885,
+     "muir": 1,
+     "n_evaluable": 4,
+     "recorded": true,
+     "shifts": [
+      0.005176987553033143,
+      0.005014393824864865,
+      0.004757415464685489,
+      0.004957109769218458,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 4/5 pairs)"
+    }
+   },
+   "row": "fan",
+   "states": [
+    [
+     "eng:foul_fan",
+     0.02
+    ]
+   ],
+   "verdict": "FAIL",
+   "verdict_recorded_only": "FAIL"
+  },
+  "F2": {
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      -0.09562082204889279,
+      0.04550798771172469
+     ],
+     "mean": -0.025056417168584044
+    },
+    "eng.n1": {
+     "ci95": [
+      -1.149862167107417,
+      0.07194104095174103
+     ],
+     "mean": -0.538960563077838
+    },
+    "eng.t5": {
+     "ci95": [
+      -0.10761881170352532,
+      0.015533525292466516
+     ],
+     "mean": -0.0460426432055294
+    },
+    "eng.thrust": {
+     "ci95": [
+      -1.2709196238905212,
+      0.05595933617247939
+     ],
+     "mean": -0.6074801438590209
+    },
+    "eng.wf": {
+     "ci95": [
+      -1.2396896041395373,
+      0.05594796989685136
+     ],
+     "mean": -0.5918708171213429
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.FOULING",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      -0.006229640434539208,
+      0.0020205677851378953
+     ],
+     "mean": -0.0021045363247006563,
+     "muir": 0,
+     "n_evaluable": 2,
+     "recorded": false,
+     "shifts": [
+      -0.002429189058974199,
+      NaN,
+      NaN,
+      -0.0017798835904271136,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      -0.0006643291110784335,
+      0.00266102023091562
+     ],
+     "mean": 0.0009983455599185931,
+     "muir": 1,
+     "n_evaluable": 2,
+     "recorded": true,
+     "shifts": [
+      0.000867490225417066,
+      NaN,
+      NaN,
+      0.0011292008944201201,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      -0.03481306069741326,
+      0.008093825510476382
+     ],
+     "mean": -0.013359617593468438,
+     "muir": -1,
+     "n_evaluable": 2,
+     "recorded": false,
+     "shifts": [
+      -0.011671195003923138,
+      NaN,
+      NaN,
+      -0.015048040183013736,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      -0.013996646301610212,
+      0.017782223688547295
+     ],
+     "mean": 0.0018927886934685407,
+     "muir": -1,
+     "n_evaluable": 2,
+     "recorded": true,
+     "shifts": [
+      0.0031433143480600625,
+      NaN,
+      NaN,
+      0.0006422630388770191,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      -0.01933836503139751,
+      -0.006235649219547491
+     ],
+     "mean": -0.0127870071254725,
+     "muir": -1,
+     "n_evaluable": 2,
+     "recorded": true,
+     "shifts": [
+      -0.012271404076257243,
+      NaN,
+      NaN,
+      -0.013302610174687757,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      0.004331912114336773,
+      0.024533201508457655
+     ],
+     "mean": 0.014432556811397214,
+     "muir": 1,
+     "n_evaluable": 2,
+     "recorded": true,
+     "shifts": [
+      0.015227494789084903,
+      NaN,
+      NaN,
+      0.013637618833709526,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      0.0014604356141056237,
+      0.00367908796164118
+     ],
+     "mean": 0.0025697617878734018,
+     "muir": 1,
+     "n_evaluable": 2,
+     "recorded": true,
+     "shifts": [
+      0.0026570676511741493,
+      NaN,
+      NaN,
+      0.0024824559245726543,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 2/5 pairs)"
+    }
+   },
+   "row": "hpc",
+   "states": [
+    [
+     "eng:foul_hpc",
+     0.02
+    ]
+   ],
+   "verdict": "FAIL",
+   "verdict_recorded_only": "FAIL"
+  },
+  "F3": {
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      -0.16863021867176015,
+      0.5090091101588268
+     ],
+     "mean": 0.17018944574353334
+    },
+    "eng.n1": {
+     "ci95": [
+      -0.9175178174297257,
+      -0.9037922416588776
+     ],
+     "mean": -0.9106550295443017
+    },
+    "eng.t5": {
+     "ci95": [
+      -0.15550180835643423,
+      0.5058848543134882
+     ],
+     "mean": 0.17519152297852697
+    },
+    "eng.thrust": {
+     "ci95": [
+      -0.9993705567979421,
+      -0.9980255752915004
+     ],
+     "mean": -0.9986980660447212
+    },
+    "eng.wf": {
+     "ci95": [
+      -0.972977045009687,
+      -0.9727591699917485
+     ],
+     "mean": -0.9728681075007177
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.EROSION",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 0,
+     "n_evaluable": 0,
+     "recorded": false,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": false,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    }
+   },
+   "row": "hpc",
+   "states": [
+    [
+     "eng:ero_hpc",
+     0.05
+    ]
+   ],
+   "verdict": "FAIL",
+   "verdict_recorded_only": "FAIL"
+  },
+  "F4": {
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      -0.1707215507904373,
+      0.15880260181343767
+     ],
+     "mean": -0.005959474488499805
+    },
+    "eng.n1": {
+     "ci95": [
+      -0.9042851247055618,
+      -0.8977887984198715
+     ],
+     "mean": -0.9010369615627166
+    },
+    "eng.t5": {
+     "ci95": [
+      -0.11649368623164874,
+      0.03174190440408994
+     ],
+     "mean": -0.0423758909137794
+    },
+    "eng.thrust": {
+     "ci95": [
+      -0.9984234580618098,
+      -0.997418454242656
+     ],
+     "mean": -0.9979209561522329
+    },
+    "eng.wf": {
+     "ci95": [
+      -0.972977045009687,
+      -0.9727591699917485
+     ],
+     "mean": -0.9728681075007177
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.EROSION",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": false,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": false,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    }
+   },
+   "row": "hpt",
+   "states": [
+    [
+     "eng:ero_hpt",
+     0.026
+    ]
+   ],
+   "verdict": "FAIL",
+   "verdict_recorded_only": "FAIL"
+  },
+  "F5": {
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      0.01121577443793486,
+      0.011952081400717646
+     ],
+     "mean": 0.011583927919326253
+    },
+    "eng.n1": {
+     "ci95": [
+      -3.1873695838351733e-06,
+      1.0773594899860437e-05
+     ],
+     "mean": 3.793112658012632e-06
+    },
+    "eng.t5": {
+     "ci95": [
+      -5.8705600431626796e-05,
+      5.049340071701895e-05
+     ],
+     "mean": -4.106099857303924e-06
+    },
+    "eng.thrust": {
+     "ci95": [
+      -0.0047494338429437104,
+      -0.004197136550230525
+     ],
+     "mean": -0.004473285196587118
+    },
+    "eng.wf": {
+     "ci95": [
+      -0.0013496966759393861,
+      -0.0008217157588803446
+     ],
+     "mean": -0.0010857062174098654
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.EROSION",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      -0.0010586327850051322,
+      0.0007439304668711407
+     ],
+     "mean": -0.00015735115906699579,
+     "muir": 0,
+     "n_evaluable": 5,
+     "recorded": false,
+     "shifts": [
+      -0.0009348041917643807,
+      -0.0008155695647011505,
+      0.0006309230286513699,
+      -0.000179270144466362,
+      0.0005119650769455444
+     ],
+     "verdict": "PASS"
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      0.001402963710901284,
+      0.001990381511137369
+     ],
+     "mean": 0.0016966726110193263,
+     "muir": 1,
+     "n_evaluable": 5,
+     "recorded": true,
+     "shifts": [
+      0.0014517863342580403,
+      0.0014787119270315264,
+      0.0020040004066058962,
+      0.001844409842545427,
+      0.0017044545446557422
+     ],
+     "verdict": "PASS"
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      -0.011960106597915103,
+      -0.009616805801372167
+     ],
+     "mean": -0.010788456199643635,
+     "muir": -1,
+     "n_evaluable": 5,
+     "recorded": false,
+     "shifts": [
+      -0.01042455822604211,
+      -0.009933430315285458,
+      -0.010515941743513451,
+      -0.010664786668586407,
+      -0.012403564044790752
+     ],
+     "verdict": "PASS"
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      -0.006841271533859832,
+      -0.0066506702657399335
+     ],
+     "mean": -0.006745970899799883,
+     "muir": 0,
+     "n_evaluable": 5,
+     "recorded": true,
+     "shifts": [
+      -0.006682852102415541,
+      -0.00673408043348975,
+      -0.00670267601151972,
+      -0.006732438913808168,
+      -0.006877807037766231
+     ],
+     "verdict": "PASS"
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      -0.0042984051174163726,
+      -0.00395963065938569
+     ],
+     "mean": -0.004129017888401031,
+     "muir": 0,
+     "n_evaluable": 5,
+     "recorded": true,
+     "shifts": [
+      -0.004240750384520615,
+      -0.004025734285368018,
+      -0.004216414961174068,
+      -0.004220841166885418,
+      -0.0039413486440570385
+     ],
+     "verdict": "PASS"
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      0.0028748798659113503,
+      0.0032994203239478707
+     ],
+     "mean": 0.0030871500949296105,
+     "muir": 1,
+     "n_evaluable": 5,
+     "recorded": true,
+     "shifts": [
+      0.00302765833593469,
+      0.002923638525336986,
+      0.003223285973375315,
+      0.0029512476698804004,
+      0.00330991997012066
+     ],
+     "verdict": "PASS"
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      0.0011488371305446116,
+      0.0013861044354360407
+     ],
+     "mean": 0.0012674707829903261,
+     "muir": 0,
+     "n_evaluable": 5,
+     "recorded": true,
+     "shifts": [
+      0.0012809726886955203,
+      0.0011484390880194292,
+      0.0012123033654324457,
+      0.0012921031235468999,
+      0.0014035356492573356
+     ],
+     "verdict": "PASS"
+    }
+   },
+   "row": "lpt",
+   "states": [
+    [
+     "eng:ero_lpt",
+     0.008
+    ]
+   ],
+   "verdict": "PASS",
+   "verdict_recorded_only": "PASS"
+  },
+  "F6": {
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      -0.16292276694495475,
+      0.19350916904094348
+     ],
+     "mean": 0.015293201047994365
+    },
+    "eng.n1": {
+     "ci95": [
+      -0.9053335102472301,
+      -0.8990651874897738
+     ],
+     "mean": -0.902199348868502
+    },
+    "eng.t5": {
+     "ci95": [
+      -0.10437753595594557,
+      0.05633721890917265
+     ],
+     "mean": -0.02402015852338646
+    },
+    "eng.thrust": {
+     "ci95": [
+      -0.9985409897839921,
+      -0.9974737319576603
+     ],
+     "mean": -0.9980073608708262
+    },
+    "eng.wf": {
+     "ci95": [
+      -0.972977045009687,
+      -0.9727591699917485
+     ],
+     "mean": -0.9728681075007177
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.HPT_DETERIORATION",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": false,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": false,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": 1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "muir": -1,
+     "n_evaluable": 0,
+     "recorded": true,
+     "shifts": [
+      NaN,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ],
+     "verdict": "FAIL (not evaluable: 0/5 pairs)"
+    }
+   },
+   "row": "hpt",
+   "states": [
+    [
+     "eng:abn_hpt",
+     0.03
+    ]
+   ],
+   "verdict": "FAIL",
+   "verdict_recorded_only": "FAIL"
+  },
+  "F7": {
+   "c26": {
+    "band_ps3": [
+     0.06,
+     0.1
+    ],
+    "band_wfm": [
+     0.06,
+     0.175
+    ],
+    "fg_shift": NaN,
+    "ps3_p1_shift": NaN,
+    "verdict": "FAIL",
+    "wfm_shift": NaN
+   },
+   "irp": {
+    "eng.a8": {
+     "ci95": [
+      -0.10196473421248017,
+      0.054488000079032685
+     ],
+     "mean": -0.02373836706672374
+    },
+    "eng.n1": {
+     "ci95": [
+      -1.2213698393071173,
+      -0.2205251661660289
+     ],
+     "mean": -0.720947502736573
+    },
+    "eng.t5": {
+     "ci95": [
+      -0.09575804890285781,
+      0.07800324400359492
+     ],
+     "mean": -0.008877402449631444
+    },
+    "eng.thrust": {
+     "ci95": [
+      -1.3357381381445284,
+      -0.2798478143002171
+     ],
+     "mean": -0.8077929762223727
+    },
+    "eng.wf": {
+     "ci95": [
+      -1.3034173995346852,
+      -0.2702806117731895
+     ],
+     "mean": -0.7868490056539373
+    },
+    "healthy_limiter_codes": [
+     18
+    ]
+   },
+   "mode": "FM.ENG.HPC_DAMAGE",
+   "plots": {
+    "C1 W1c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      -0.015916173727695264,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    },
+    "C2 N2c-N1c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      -0.010731325340722643,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    },
+    "C3 Fgc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      0.0301918092191084,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    },
+    "C4 Wfmc-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      0.06348302514970952,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    },
+    "C5 PS3/P1-N2c": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      0.01975871377751747,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    },
+    "C6 T56c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      0.041528600797281545,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    },
+    "C7 N2c-P56/P1": {
+     "ci95": [
+      NaN,
+      NaN
+     ],
+     "mean": NaN,
+     "n_evaluable": 1,
+     "shifts": [
+      0.0016474519832472563,
+      NaN,
+      NaN,
+      NaN,
+      NaN
+     ]
+    }
+   },
+   "states": [
+    [
+     "eng:extra_hpc_eta",
+     -0.05
+    ]
+   ]
+  }
+ },
+ "n_pairs": 5,
+ "trim": "pre-registered (healthy, no load)"
+}

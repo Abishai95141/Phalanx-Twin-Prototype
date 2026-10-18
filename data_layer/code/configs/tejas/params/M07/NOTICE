@@ -1,0 +1,29 @@
+Third-party data in this directory
+==================================
+
+The component-map and thermodynamic tables
+
+    fan_map_axi5.csv
+    hpc_map_hbtf.csv
+    hpt_map_hbtf.csv
+    lpt_map_hbtf.csv
+    nasa9_species.csv
+
+are derived from pyCycle (OpenMDAO/pyCycle, NASA Glenn Research Center), converted to CSV by
+src/phalanx/engine/_mapgen.py (the source files were parsed as text with ast; they were never executed).
+
+    Project:   pyCycle, https://github.com/OpenMDAO/pyCycle
+    Commit:    ee7e16126a7a54b5fe35292c53b7eb4e9572620b
+    Files:     pycycle/maps/axi5.py                         -> fan_map_axi5.csv (alpha = 0 slice)
+               pycycle/maps/HPC_map.py                      -> hpc_map_hbtf.csv (alpha = 0 slice)
+               pycycle/maps/HPT_map.py                      -> hpt_map_hbtf.csv (alpha = 1 slice)
+               pycycle/maps/LPT_map.py                      -> lpt_map_hbtf.csv (alpha = 1 slice)
+               pycycle/thermo/cea/thermo_data/janaf.py      -> nasa9_species.csv (N2, O2, Ar, CO2, H2O)
+    SPDX-License-Identifier: Apache-2.0
+    Licence:   https://github.com/OpenMDAO/pyCycle/blob/ee7e16126a7a54b5fe35292c53b7eb4e9572620b/LICENSE.txt
+               https://www.apache.org/licenses/LICENSE-2.0
+
+Modifications: the maps are re-expressed in long CSV format (one row per map point); values are unchanged.
+The NASA 9-coefficient polynomials in janaf.py are from McBride, Zehe and Gordon, NASA/TP-2002-211556.
+
+The full Apache-2.0 licence text is a release item (owner/coordinator).

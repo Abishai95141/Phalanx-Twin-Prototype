@@ -1,0 +1,374 @@
+# M13 acquisition and residual texture of the DASHlink proxy (W2.4a). Structure in M13/acquisition_map.yaml.
+# Native steps, recorder LSBs, ranges and rates come from the proxy dictionary (configs/proxy_dashlink/dictionary).
+# Recorded-word texture values are MEASURED on 687-CAL (round-2 frozen M-B, analysis/settling_experiment_round2/
+# results/frozen/S/mb.json; native grids analysis/settling_experiment/results/native_step_cal.json).
+# Noise sigmas are in native steps; ceilings in the channel's engineering unit.
+format: phalanx.params/1
+module: M13
+sets:
+  noise_n1_rec:
+    sigma_steps:
+      value: 0.476
+      units: "1"
+      description: Idiosyncratic AR(1) noise of the N1 word, in native steps of 0.04 % (median of the four positions, 0.0191 %)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL N1_1-4 sigma 0.0195/0.0313/0.0130/0.0186 %RPM (mb.json); median / 0.04 % native step"}
+    tau_c:
+      value: 0.34
+      units: s
+      description: Correlation time of the N1 word noise (phi 0.42-0.51 at 4 Hz)
+      evidence: {tag: MEASURED, source: "mb.json N1 phi 0.42-0.51 at 4 Hz: tau_c = -0.25 s / ln(0.48)"}
+    tail_p:
+      value: 0.0
+      units: "1"
+      description: Heavy-tail mixture probability (none measured on the idiosyncratic part)
+      evidence: {tag: MEASURED, source: "mb.json (Gaussian AR(1) noise model fitted)"}
+    tail_k:
+      value: 1.0
+      units: "1"
+      description: Heavy-tail scale (inactive)
+      evidence: {tag: MEASURED, source: "mb.json"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers of the idiosyncratic noise (1; heteroscedasticity is coupled residual, M03/M07)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n1.regime_mult (A-W1.6-22)"}
+  noise_n2_rec:
+    sigma_steps:
+      value: 0.126
+      units: "1"
+      description: Idiosyncratic AR(1) noise of the N2 word in native steps (median 0.00505 %)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL N2_1-4 sigma 0.0026/0.0075/0.0082/0.0 %RPM (mb.json); median / 0.04 %"}
+    tau_c:
+      value: 0.26
+      units: s
+      description: Correlation time of the N2 word noise (phi 0.35-0.41 at 4 Hz)
+      evidence: {tag: MEASURED, source: "mb.json N2 phi 0.35-0.41 at 4 Hz"}
+    tail_p:
+      value: 0.0
+      units: "1"
+      description: Heavy-tail mixture probability (none)
+      evidence: {tag: MEASURED, source: "mb.json"}
+    tail_k:
+      value: 1.0
+      units: "1"
+      description: Heavy-tail scale (inactive)
+      evidence: {tag: MEASURED, source: "mb.json"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers (1)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n2.regime_mult"}
+  noise_zero_rec:
+    sigma_steps:
+      value: 0.0
+      units: "1"
+      description: No idiosyncratic noise (EGT and FF words; also the controller T5 harness lanes)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL EGT_1-4 and FF_1-4 sigma 0 (unexplained variance below the quantiser variance; mb.json)"}
+    tau_c:
+      value: 0.0
+      units: s
+      description: inactive
+      evidence: {tag: MEASURED, source: "mb.json (sigma 0)"}
+    tail_p:
+      value: 0.0
+      units: "1"
+      description: inactive
+      evidence: {tag: MEASURED, source: "mb.json (sigma 0)"}
+    tail_k:
+      value: 1.0
+      units: "1"
+      description: inactive
+      evidence: {tag: MEASURED, source: "mb.json (sigma 0)"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: inactive
+      evidence: {tag: MEASURED, source: "mb.json (sigma 0)"}
+  noise_n1_lane:
+    sigma_eu:
+      value: 0.0190625
+      units: "1"
+      description: Controller N1 lane noise, percent (0.61 native steps of 0.03125 %; in EU because the lane is
+        quantised at its converter_step, dictionary 0.1.2 migration W2.2) (Tejas lane texture)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n1 (A-W1.6-22)"}
+    tau_c:
+      value: 0.34
+      units: s
+      description: Controller N1 lane noise correlation time
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n1"}
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n1"}
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n1"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers (1)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n1"}
+  noise_n2_lane:
+    sigma_eu:
+      value: 0.005
+      units: "1"
+      description: Controller N2 lane noise, percent (0.16 native steps of 0.03125 %; in EU because the lane is
+        quantised at its converter_step, dictionary 0.1.2 migration W2.2) (Tejas lane texture)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n2 (A-W1.6-22)"}
+    tau_c:
+      value: 0.26
+      units: s
+      description: Controller N2 lane noise correlation time
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n2"}
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n2"}
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n2"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers (1)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_n2"}
+  noise_default_lane:
+    sigma_steps:
+      value: 0.144
+      units: "1"
+      description: Other controller lanes without a converter step (T25) noise in native steps (Tejas default)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_default (A-W1.6-22)"}
+    tau_c:
+      value: 0.0
+      units: s
+      description: white
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_default"}
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_default"}
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_default"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers (1)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_default"}
+  noise_ps3_lane:
+    sigma_eu:
+      value: 0.072
+      units: "1"
+      description: Controller PS3 lane noise, psi (0.144 native steps of 0.5 psi, in EU for a converter-step lane, W2.2)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_ps3 (A-W1.6-22)"}
+    tau_c:
+      value: 0.0
+      units: s
+      description: white
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_ps3 (A-W1.6-22)"}
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_ps3 (A-W1.6-22)"}
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_ps3 (A-W1.6-22)"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers (1)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_ps3 (A-W1.6-22)"}
+  noise_t1_lane:
+    sigma_eu:
+      value: 0.144
+      units: "1"
+      description: Controller T1 lane noise, degC (0.144 native steps of 1 degC, in EU for a converter-step lane, W2.2)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_t1 (A-W1.6-22)"}
+    tau_c:
+      value: 0.0
+      units: s
+      description: white
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_t1 (A-W1.6-22)"}
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_t1 (A-W1.6-22)"}
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_t1 (A-W1.6-22)"}
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Phase multipliers (1)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml noise_fadec_t1 (A-W1.6-22)"}
+  ceiling_ps3_lane:
+    sigma_eu:
+      value: 0.1443375
+      units: "1"
+      description: Ceiling of the PS3 lanes, psi (quantiser sigma of the 0.5 psi native step, in EU, W2.2)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml ceiling_fadec_ps3 (A-W1.6-23)"}
+  ceiling_t1_lane:
+    sigma_eu:
+      value: 0.288675
+      units: "1"
+      description: Ceiling of the T1 lanes, degC (quantiser sigma of the 1 degC native step, in EU, W2.2)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml ceiling_fadec_t1 (A-W1.6-23)"}
+  ceiling_n1:
+    sigma_eu:
+      value: 0.03128
+      units: "1"
+      description: Measured idiosyncratic ceiling of N1 (percent)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL N1 sigma maximum 0.0313 %RPM (mb.json)"}
+  ceiling_n2:
+    sigma_eu:
+      value: 0.00824
+      units: "1"
+      description: Measured idiosyncratic ceiling of N2 (percent)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL N2 sigma maximum 0.0082 %RPM (mb.json)"}
+  ceiling_egt:
+    sigma_eu:
+      value: 0.0
+      units: "1"
+      description: Measured idiosyncratic ceiling of EGT (zero)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL EGT sigma 0 (mb.json)"}
+  ceiling_ff:
+    sigma_eu:
+      value: 0.0
+      units: "1"
+      description: Measured idiosyncratic ceiling of FF (zero)
+      evidence: {tag: MEASURED, source: "round-2 M-B 687-CAL FF sigma 0 (mb.json)"}
+  ceiling_default:
+    sigma_steps:
+      value: 0.288675
+      units: "1"
+      description: Ceiling of the other controller lanes, in native steps (quantiser sigma)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml ceiling_default (A-W1.6-23)"}
+  gate_n1_rec:
+    threshold_eu:
+      value: 1.766
+      units: "1"
+      description: N1 word validity gate (reads 0 below), percent (median of the four positions)
+      evidence: {tag: MEASURED, source: "round-1 model_params_primary.json fixed.gate N1_1-4 1.78/2.03/1.75/1.22 %RPM (mb.json fixed.gate), 687-CAL"}
+  gate_n2_rec:
+    threshold_eu:
+      value: 0.03125
+      units: "1"
+      description: N2 word validity gate, percent (one recorder LSB)
+      evidence: {tag: MEASURED, source: "mb.json fixed.gate N2_1-4 0.03125 %RPM, 687-CAL"}
+  gate_ff_rec:
+    threshold_eu:
+      value: 8.0
+      units: "1"
+      description: FF word validity gate, lb/h (one recorder LSB)
+      evidence: {tag: MEASURED, source: "mb.json fixed.gate FF_1-4 8 lb/h, 687-CAL"}
+  freeze_egt_rec:
+    rate:
+      value: 0.048
+      units: 1/hour
+      description: Episodic freeze rate of the EGT word per airborne hour (mean of the four positions)
+      evidence: {tag: MEASURED, source: "mb.json fixed.freeze EGT_1-4 0.098/0.041/0.015/0.036 per airborne hour, 687-CAL"}
+    dur_min:
+      value: 30.0
+      units: s
+      description: Minimum freeze duration (detection rule of the measurement)
+      evidence: {tag: MEASURED, source: "analysis/dashlink_texture/dropouts.py sibling-stuck rule (>= 30 s), the rule the rates were measured with"}
+    dur_mean_excess:
+      value: 12.0
+      units: s
+      description: Mean freeze duration in excess of the minimum
+      evidence: {tag: MEASURED, source: "mb.json EGT freeze durations 30-84 s, median about 38 s"}
+  freeze_ff_rec:
+    rate:
+      value: 0.048
+      units: 1/hour
+      description: Episodic freeze rate of the FF word per airborne hour (mean of the four positions)
+      evidence: {tag: MEASURED, source: "mb.json fixed.freeze FF_1 0.191, FF_2-4 0 per airborne hour, 687-CAL"}
+    dur_min:
+      value: 30.0
+      units: s
+      description: Minimum freeze duration
+      evidence: {tag: MEASURED, source: "analysis/dashlink_texture/dropouts.py sibling-stuck rule (>= 30 s)"}
+    dur_mean_excess:
+      value: 60.0
+      units: s
+      description: Mean freeze duration in excess of the minimum
+      evidence: {tag: MEASURED, source: "mb.json FF_1 durations 31-775 s, median about 60 s"}
+  freeze_n1_rec:
+    rate:
+      value: 0.0026
+      units: 1/hour
+      description: Episodic freeze rate of the N1 word per airborne hour (mean of the four positions)
+      evidence: {tag: MEASURED, source: "mb.json fixed.freeze N1_1 0.0103, N1_2-4 0 per airborne hour, 687-CAL"}
+    dur_min:
+      value: 30.0
+      units: s
+      description: Minimum freeze duration
+      evidence: {tag: MEASURED, source: "analysis/dashlink_texture/dropouts.py sibling-stuck rule (>= 30 s)"}
+    dur_mean_excess:
+      value: 2.0
+      units: s
+      description: Mean freeze duration in excess of the minimum
+      evidence: {tag: MEASURED, source: "mb.json N1_1 durations 30.5, 33.0 s"}
+  offset_speed_rec:
+    offset_lsb:
+      value: 1.04
+      units: "1"
+      description: Native-grid offset phi0 of the N1/N2 words, in recorder LSB (reproduces the never-used residues)
+      evidence: {tag: MEASURED, source: "round-2 M-B phi0 N1/N2 1.04 LSB (mb.json phi0; REPORT §3.5: residues {3, 8, 12, 17, 21, 26, 31} mod 32 never used)"}
+  offset_egt_rec:
+    offset_lsb:
+      value: 0.04875
+      units: "1"
+      description: Native-grid offset phi0 of the EGT word, in recorder LSB
+      evidence: {tag: MEASURED, source: "round-2 M-B phi0 EGT 0.04875 LSB (mb.json; residues {1, 4, 7} mod 8 never used)"}
+  clock_fadec:
+    offset_ppm:
+      value: 50.0
+      units: "1"
+      description: Proxy controller oscillator offset, ppm (shared by M08 and its lanes)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml clock_fadec.offset_ppm (A-W1.6-21)"}
+    phase:
+      value: 0.0031
+      units: s
+      description: Proxy controller first-frame instant
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml clock_fadec.phase (A-W1.6-21)"}
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No slip on the controller lanes
+      evidence: {tag: "TRANSFER: Phalanx Tejas M13", source: "configs/tejas/params/M13.yaml clock_fadec.slip_enabled (A-W1.6-24)"}
+  clock_acms:
+    offset_ppm:
+      value: 0.0
+      units: "1"
+      description: ACMS sampling clock offset against the replay time base, ppm. The recorded inputs and the engine words share the ACMS clock, so the replay is on that clock (sample j at j x 250 ms). The measured 910 ppm recorder-versus-source offset is a source-update/recorder schedule effect (duplicates and skips about every 275 s at 4 Hz) that M13 does not represent at acquisition level (A-W2.4a-12)
+      evidence: {tag: ASSUMPTION, source: "report §8 (Delta about 910 ppm recorder vs source on DASHlink); analysis/settling_experiment/results/mechanism_summary.json; architecture §8, AD-06"}
+      sweep: [-1000.0, 1000.0]
+      assumption_id: A-W2.4a-12
+    phase:
+      value: 0.0
+      units: s
+      description: First ACMS sample at replay time 0 (aligned with the recorded inputs)
+      evidence: {tag: ASSUMPTION, source: "replay convention (inputs and words share sample index j)"}
+      sweep: [0.0, 0.25]
+      assumption_id: A-W2.4a-12
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No slip sentinels on digital engine words (P4 refuted on DASHlink)
+      evidence: {tag: MEASURED, source: "architecture §7 (digital bus words show no slip sentinels; P4 refuted); round-2 REPORT §3.5"}

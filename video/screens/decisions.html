@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Decisions — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: 92px minmax(0, 1fr); }
+  .epoch2 { flex-direction: row; align-items: center; padding: 0 32px; gap: 32px; }
+  .epoch2 .steps { flex: 1; }
+  .epoch2 .st span { white-space: nowrap; }
+  .board .r2 { grid-template-columns: 48px minmax(0, 1fr) 210px 92px; }
+  .board .r2 .who { display: flex; align-items: baseline; gap: 10px; }
+  .board .r2 .auth { justify-self: end; }
+  .board .r2.muted .ttl { color: var(--ink-2); }
+  .fun { display: flex; flex-direction: column; gap: 18px; margin-top: 26px; }
+  .fun .f { display: grid; grid-template-columns: 1fr auto; align-items: end; row-gap: 8px; }
+  .fun .f .n { font-size: 30px; font-weight: 650; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .fun .f .l { font-size: 14px; color: var(--ink-3); }
+  .fun .f .b { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; }
+  .fun .f .b i { display: block; height: 100%; background: var(--ink-5); border-radius: 3px; }
+  .fun .f.last .n { color: var(--accent-ink); }
+  .fun .f.last .b i { background: var(--accent); }
+  .nothing { margin-top: auto; background: var(--bg-2); border-radius: 14px; padding: 18px 20px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+  .nothing b { display: block; font-size: 15px; margin-bottom: 4px; color: var(--ink); }
+</style>
+</head>
+<body data-page="decisions">
+<div id="content">
+<div class="v2">
+  <!-- epoch -->
+  <div class="panel2 c12 epoch2" data-shot="epoch">
+    <span class="kick">Epoch · Mon 22 Jun</span>
+    <div class="steps">
+      <div class="st done"><i></i><span class="t">06:00</span><span>Snapshot sealed</span></div><div class="bar done"></div>
+      <div class="st done"><i></i><span class="t">06:04</span><span>Engines done</span></div><div class="bar done"></div>
+      <div class="st now"><i></i><span class="t">06:12</span><span>Board open</span></div><div class="bar"></div>
+      <div class="st"><i></i><span class="t">07:45</span><span>Board freezes</span></div><div class="bar"></div>
+      <div class="st"><i></i><span class="t">08:00</span><span>Orders issued</span></div>
+    </div>
+  </div>
+
+  <!-- the board -->
+  <div class="panel2 c8 board" data-shot="board" style="padding-bottom:16px">
+    <div class="row"><div><span class="kick">Today's board</span><div class="t2">Seven decisions before 07:45</div></div><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="rows2" style="margin-top:18px">
+      <div class="r2"><span class="prio p1">P1</span><div><div class="who"><span class="tailtag">TJ103</span><span class="ttl">Gear unsafe warning</span></div><div class="why">The same warning twice in ten days</div></div><span class="act-pill">TROUBLESHOOT</span><span class="auth agent">AGENT</span></div>
+      <div class="r2"><span class="prio p1">P1</span><div><div class="who"><span class="tailtag">TJ106</span><span class="ttl">Gear unsafe warning</span></div><div class="why">The same warning twice in twelve days</div></div><span class="act-pill">TROUBLESHOOT</span><span class="auth agent">AGENT</span></div>
+      <div class="r2 on" data-shot="tj107-row"><span class="prio p2">P2</span><div><div class="who"><span class="tailtag">TJ107</span><span class="ttl">Hydraulic alarm that never clears</span></div><div class="why">34 flights in a row · 28 pump removals found nothing</div></div><span class="act-pill">STOP R/R · TROUBLESHOOT</span><span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span></div>
+      <div class="r2"><span class="prio p2">P2</span><div><div class="who"><span class="tailtag">TJ108</span><span class="ttl">Waiting for a brake chute</span></div><div class="why">Grounded 80 days · oldest open AOG demand</div></div><span class="act-pill">EXPEDITE</span><span class="auth agent">AGENT</span></div>
+      <div class="r2"><span class="prio p3">P3</span><div><div class="who"><span class="tailtag">TJ105</span><span class="ttl">Starter fails to start</span></div><div class="why">Four times in ten days</div></div><span class="act-pill">TROUBLESHOOT</span><span class="auth agent">AGENT</span></div>
+      <div class="r2 muted"><span class="prio p3">P3</span><div><div class="who"><span class="tailtag">TJ105</span><span class="ttl">Tyre at 7 of 8 landings</span></div><div class="why">Ordering early changed nothing in 30 paired simulations</div></div><span class="act-pill" style="background:transparent;border:1px dashed var(--line-strong);color:var(--ink-3)">NO ORDER</span><span class="auth agent" style="opacity:.6">—</span></div>
+      <div class="r2 muted"><span class="prio p4">P4</span><div><div class="who"><span class="tailtag">6 tails</span><span class="ttl">Nine advisory codes, grouped</span></div><div class="why">Almost always closed as could-not-duplicate</div></div><span class="act-pill">MONITOR</span><span class="auth agent">AGENT</span></div>
+    </div>
+  </div>
+
+  <!-- right rail -->
+  <div class="panel2 c4" data-shot="funnel">
+    <span class="kick">Triage</span>
+    <div class="t2">How 1,192 alerts became seven decisions</div>
+    <div class="fun">
+      <div class="f"><span class="n">1,192</span><span class="l">alert rows · 168 days</span><span class="b"><i style="width:100%"></i></span></div>
+      <div class="f"><span class="n">326</span><span class="l">issues after dedupe and episodes</span><span class="b"><i style="width:27.3%"></i></span></div>
+      <div class="f"><span class="n">33</span><span class="l">open this morning</span><span class="b"><i style="width:2.8%"></i></span></div>
+      <div class="f last"><span class="n">7</span><span class="l">need a decision today</span><span class="b"><i style="width:.6%;min-width:6px"></i></span></div>
+    </div>
+    <div class="nothing"><b>If you do nothing</b>No orders go out at 08:00 and today runs as the status quo. Nothing is issued without a person.</div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  PHX.mount({ page: 'decisions', title: 'Decisions', sub: 'What should we do today, and why?',
+    chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'warn', i: 'decisions', t: 'Board closes 07:45' }] });
+</script>
+</body></html>

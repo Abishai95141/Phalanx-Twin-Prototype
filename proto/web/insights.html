@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Fleet insights — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: grid; grid-template-rows: auto minmax(0,1fr); row-gap: 24px; height: 100%; }
+  .tabs2 span { cursor: pointer; }
+  .v2 { grid-template-rows: minmax(0,1fr) minmax(0,1fr); }
+  .hero { grid-row: 1 / span 2; }
+  .hd { display: flex; align-items: flex-start; gap: 24px; }
+  .hd .num { margin-left: auto; text-align: right; flex: none; }
+  .kick .tier { margin-left: 6px; }
+  .wf .lb { font: 500 15px var(--font); fill: var(--ink-2); }
+  .wf .gh { font: 700 11.5px var(--font); letter-spacing: .14em; fill: var(--ink-3); }
+  .wf .vl { font: 500 13px var(--mono); fill: var(--ink-2); }
+  .wf .vg { font: 700 13px var(--mono); fill: var(--ink); }
+  .focus .big { color: var(--accent-ink); }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; grid-template-columns: minmax(0, 1fr); }
+    .hero { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; display: flex; flex-direction: column; }
+    .wf { height: auto; display: block; }
+    .focus .push, [data-shot="availability"] .push { margin-top: 18px; }
+  }
+  @media (max-width: 699px) {
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .hd { flex-direction: column; gap: 14px; }
+    .hd .num { margin-left: 0; text-align: left; }
+    .wf .lb { font-size: 14.5px; }
+    .wf .vl, .wf .vg { font-size: 13.5px; }
+  }
+</style>
+</head>
+<body data-page="insights">
+<div id="content">
+<div class="pg">
+  <div class="tabs2"><span class="on">Where availability went</span><span onclick="location.href='insights-nff.html'">Alarms that find nothing</span><span onclick="location.href='insights-integrity.html'">Can the records be trusted?</span></div>
+  <div class="v2">
+
+    <section class="panel2 c8 hero" data-shot="waterfall">
+      <div class="hd">
+        <div>
+          <div class="kick">Downtime · 168 days · 8 aircraft<span class="tier desc">DESC</span></div>
+          <div class="t2" id="wft"></div>
+          <div class="sub2">Each step removes days an aircraft could not fly, by the cause on its tech log.</div>
+        </div>
+        <div class="num"><div class="mid" id="wfn"></div><div class="ci" id="wfci" style="margin-top:8px"></div></div>
+      </div>
+      <svg class="wf" id="wf" width="100%" style="margin-top:28px"></svg>
+    </section>
+
+    <section class="panel2 c4 focus" data-shot="finding">
+      <div class="kick acc">Finding</div>
+      <div class="t2">Tyres and brake chutes cost most</div>
+      <div style="margin-top:20px"><span class="big" id="fn"></span><span class="t3" style="color:var(--ink-3);margin-left:10px">tail-days</span></div>
+      <div class="ci" id="fci" style="margin-top:8px"></div>
+      <div class="sub2" style="margin-top:14px">Both wear out with landings, so demand follows the flying plan and can be stocked ahead.</div>
+      <div class="push"><span class="lnk">Policy what-if<i data-i="chevRight" class="ico-sm"></i></span></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="availability">
+      <div class="kick">Availability · AFLMA lagging<span class="tier desc">DESC</span></div>
+      <div style="margin-top:18px;display:flex;align-items:baseline;gap:10px"><span class="big" id="mc"></span><span class="t3" style="color:var(--ink-3)">mission capable</span></div>
+      <div class="ci" id="mcci" style="margin-top:8px"></div>
+      <div class="kv2 push" id="kv"></div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-insights.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const I = window.PHX_INS;
+const $ = id => document.getElementById('content').querySelector('#' + id);
+const f1 = (x, d = 1) => Number(x).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
+const pc = (x, d = 1) => f1(x * 100, d);
+
+(function () {
+  const L = I.lagging.d168, D = I.downtime, s = D.NMCS.by, m = D.NMCM.by;
+  const sum = (o, keys) => Object.entries(o).filter(([k]) => !keys.includes(k)).reduce((a, [, v]) => a + v, 0);
+  const losses = D.NMCS.total + D.NMCM.total + D.NMCD.total;
+  const tyre = s['SYN-PN-TYRE'] + m['SYN-PN-TYRE'], chute = s['SYN-PN-CHUTE'] + (m['SYN-PN-CHUTE'] || 0);
+  $('wft').textContent = `Of ${f1(L.possessed)} possessed tail-days, ${f1(losses)} were lost`;
+  $('wfn').innerHTML = `${pc(losses / L.possessed)}<small style="font-size:22px;color:var(--ink-3);margin-left:4px">%</small>`;
+  $('wfci').textContent = 'of possessed time not mission capable';
+  $('fn').textContent = f1(tyre + chute);
+  $('fci').textContent = `${Math.round((tyre + chute) / losses * 100)} % of all lost days · tyres ${f1(tyre)} · chutes ${f1(chute)}`;
+
+  // waterfall: grey steps, consumables (the finding) in accent, mission capable in green
+  const A = 'var(--accent)', G1 = 'var(--ink-3)', G2 = 'var(--ink-5)';
+  const groups = [
+    { name: 'Awaiting parts', tot: D.NMCS.total, items: [['Tyres', s['SYN-PN-TYRE'], A], ['Brake chutes', s['SYN-PN-CHUTE'], A],
+      ['Hydraulic pumps', s['SYN-PN-HYDP'], G1], ['Engine', s['SYN-PN-ENG-F404'], G1],
+      ['Other parts or none logged', sum(s, ['SYN-PN-TYRE', 'SYN-PN-CHUTE', 'SYN-PN-HYDP', 'SYN-PN-ENG-F404']), G2]] },
+    { name: 'In maintenance', tot: D.NMCM.total, items: [['Major servicing (SRV-L2)', m['SRV-L2-MAJOR'], G1], ['No job on the tech log', m['none'], 'hatch'],
+      ['Routine servicing (SRV-L1)', m['SRV-L1'], G1], ['Tyre and chute changes', m['SYN-PN-TYRE'] + (m['SYN-PN-CHUTE'] || 0), A],
+      ['Minor servicing, other work', sum(m, ['SRV-L2-MAJOR', 'none', 'SRV-L1', 'SYN-PN-TYRE', 'SYN-PN-CHUTE']), G2]] },
+    { name: 'At depot', tot: D.NMCD.total, items: [['Aircraft overhaul · TJ101', D.NMCD.total, G1]] }];
+  // phone (< 700 px): label and value on one line, the bar on its own line below, full width
+  const PH = matchMedia('(max-width: 699px)').matches;
+  const W = PH ? 340 : 909, x0 = PH ? 0 : 268, x1 = PH ? 340 : 812, sx = v => x0 + (x1 - x0) * v / L.possessed;
+  const RH = 31, GH = 34;
+  let y = 0, g = '', rem = L.possessed, prev = null;
+  if (PH) {
+    const hb = 'url(#hatch)';
+    g += `<text class="lb" x="0" y="15" style="font-weight:650;fill:var(--ink)">Possessed</text><text class="vg" x="${W}" y="15" text-anchor="end">${f1(L.possessed)}</text>
+          <rect x="0" y="24" width="${W}" height="12" rx="4" fill="var(--bg-3)" stroke="var(--line-strong)"/>`;
+    let py = 36; y = 52;
+    groups.forEach(gr => {
+      g += `<text class="gh" x="0" y="${y + 16}">${gr.name.toUpperCase()}</text>${gr.items.length > 1 ? `<text class="vg" x="${W}" y="${y + 16}" text-anchor="end" style="fill:var(--ink-3)">${f1(gr.tot)}</text>` : ''}`;
+      y += 28;
+      gr.items.forEach(([n, v, c]) => {
+        const a = sx(rem - v), b = sx(rem), by = y + 23;
+        g += `<line x1="${b}" x2="${b}" y1="${py + 2}" y2="${by - 2}" stroke="var(--ink-4)" stroke-dasharray="2 3"/>`;
+        g += `<text class="lb" x="10" y="${y + 15}" ${c === A ? 'style="fill:var(--ink);font-weight:650"' : ''}>${n}</text>
+              <text class="vl" x="${W}" y="${y + 15}" text-anchor="end" ${c === A ? 'style="fill:var(--accent-ink);font-weight:700"' : ''}>${f1(v)}</text>
+              <rect x="${a}" y="${by}" width="${Math.max(2.5, b - a)}" height="10" rx="3" fill="${c === 'hatch' ? hb : c}" ${c === 'hatch' ? 'stroke="var(--ink-4)" stroke-width=".8"' : ''}/>`;
+        rem -= v; py = by + 10; y += 42;
+      });
+      y += 8;
+    });
+    const mx = sx(L.mc_days);
+    g += `<line x1="${mx}" x2="${mx}" y1="${py + 2}" y2="${y + 30}" stroke="var(--ink-4)" stroke-dasharray="2 3"/>
+         <line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line)"/>
+         <text class="lb" x="0" y="${y + 24}" style="font-weight:650;fill:var(--ink)">Mission capable</text>
+         <text class="vg" x="${W}" y="${y + 24}" text-anchor="end" style="fill:var(--fmc)">${f1(L.mc_days)}</text>
+         <rect x="0" y="${y + 34}" width="${mx}" height="22" rx="4" fill="var(--fmc)"/>
+         <text x="10" y="${y + 49.5}" style="font:650 13px var(--font);fill:#fff">${pc(L.mc)} % of possessed</text>`;
+    y += 18;
+  } else {
+  const conn = (x, yy) => prev !== null ? `<line x1="${x}" x2="${x}" y1="${yy - 8}" y2="${yy + 8}" stroke="var(--ink-4)" stroke-dasharray="2 3"/>` : '';
+  g += `<text class="lb" x="0" y="${y + 18}" style="font-weight:650;fill:var(--ink)">Possessed</text>
+        <rect x="${x0}" y="${y + 6}" width="${x1 - x0}" height="16" rx="4" fill="var(--bg-3)" stroke="var(--line-strong)"/>
+        <text class="vg" x="${W}" y="${y + 18}" text-anchor="end">${f1(L.possessed)}</text>`;
+  prev = sx(rem); y += RH + 8;
+  groups.forEach(gr => {
+    g += `<text class="gh" x="0" y="${y + 18}">${gr.name.toUpperCase()}</text><line x1="${x0}" x2="${W - 64}" y1="${y + 14}" y2="${y + 14}" stroke="var(--line-2)"/>
+          ${gr.items.length > 1 ? `<text class="vg" x="${W}" y="${y + 18}" text-anchor="end" style="fill:var(--ink-3)">${f1(gr.tot)}</text>` : ''}`;
+    y += GH;
+    gr.items.forEach(([n, v, c]) => {
+      const a = sx(rem - v), b = sx(rem);
+      g += conn(b, y) + `<rect x="${a}" y="${y + 6}" width="${Math.max(2.5, b - a)}" height="14" rx="3" fill="${c === 'hatch' ? 'url(#hatch)' : c}" ${c === 'hatch' ? 'stroke="var(--ink-4)" stroke-width=".8"' : ''}/>`;
+      g += `<text class="lb" x="16" y="${y + 18}" ${c === A ? 'style="fill:var(--ink);font-weight:650"' : ''}>${n}</text>
+            <text class="vl" x="${W}" y="${y + 18}" text-anchor="end" ${c === A ? 'style="fill:var(--accent-ink);font-weight:700"' : ''}>${f1(v)}</text>`;
+      rem -= v; prev = sx(rem); y += RH;
+    });
+    y += 6;
+  });
+  g += conn(sx(L.mc_days), y + 6) + `<line x1="0" x2="${W}" y1="${y + 2}" y2="${y + 2}" stroke="var(--line)"/>
+       <text class="lb" x="0" y="${y + 28}" style="font-weight:650;fill:var(--ink)">Mission capable</text>
+       <rect x="${x0}" y="${y + 14}" width="${sx(L.mc_days) - x0}" height="20" rx="4" fill="var(--fmc)"/>
+       <text x="${x0 + 12}" y="${y + 28.5}" style="font:650 13px var(--font);fill:#fff">${pc(L.mc)} % of possessed</text>
+       <text class="vg" x="${W}" y="${y + 28}" text-anchor="end" style="fill:var(--fmc)">${f1(L.mc_days)}</text>`;
+  }
+  const H = y + 40;
+  const el = $('wf'); el.setAttribute('viewBox', `0 0 ${W} ${H}`); el.setAttribute('height', H);
+  el.innerHTML = `<defs><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--bg)"/><line x1="0" y1="0" x2="0" y2="5" stroke="var(--ink-4)" stroke-width="1.5"/></pattern></defs>` + g;
+
+  const L30 = I.lagging.d30;
+  $('mc').innerHTML = `${pc(L.mc)}<small>%</small>`;
+  $('mcci').textContent = `168 d · last 30 d ${pc(L30.mc)} % · norm 75 %`;
+  $('kv').innerHTML = `<span>Awaiting parts · TNMCS</span><span>${pc(L.tnmcs)} %</span><span>In maintenance · TNMCM</span><span>${pc(L.tnmcm)} %</span><span>At depot · NMCD</span><span>${pc(L.nmcd)} %</span>`;
+})();
+
+PHX.mount({
+  page: 'insights', title: 'Fleet insights', sub: 'Command view · where availability is lost, and which fix buys the most back',
+  chips: [{ t: 'As of <b>Mon 22 Jun 06:00 IST</b>', i: 'clock' }, { t: '<b>168 d</b> · 8 aircraft', i: 'calendar' }]
+});
+</script>
+</body></html>

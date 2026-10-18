@@ -1,0 +1,270 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-chain" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-chain-title ill-chain-desc">
+  <title id="ill-chain-title">Hash-chained event log</title>
+  <desc id="ill-chain-desc">Blocks of the epoch event log, each carrying the previous block’s hash; the chain head is the hash shown on the orders screen.</desc>
+  <defs><pattern id="chain-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="chain-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="chain-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="chain-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="chain-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="chain-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="chain-row-1">
+    <g id="chain-block-1" class="block">
+      <rect class="draw" x="84" y="168" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="100" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 1</text>
+      <text x="320" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">06:00</text>
+      <text x="100" y="216" font-size="14.5" font-weight="700" fill="#0B0D10">SNAPSHOT_SEALED</text>
+      <text x="100" y="234" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">AGENT:PHALANX-LOOP</text>
+      <line x1="96" y1="248" x2="324" y2="248" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="100" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-1-prev" x="176" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">00000000…</text>
+      <line x1="176" y1="275" x2="244.4" y2="275" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="94" y="284" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="100" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-1-hash" x="176" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">fb379854…</text>
+    </g>
+    <g id="chain-block-2" class="block">
+      <rect class="draw" x="380" y="168" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="396" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 2</text>
+      <text x="616" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">06:04</text>
+      <text x="396" y="216" font-size="14.5" font-weight="700" fill="#0B0D10">ANALYZED</text>
+      <text x="396" y="234" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">AGENT:PHALANX-LOOP</text>
+      <line x1="392" y1="248" x2="620" y2="248" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="396" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-2-prev" x="472" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">fb379854…</text>
+      <line x1="472" y1="275" x2="540.4" y2="275" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="390" y="284" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="396" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-2-hash" x="472" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">6b4ddcbf…</text>
+    </g>
+    <g id="chain-block-3" class="block">
+      <rect class="draw" x="676" y="168" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="692" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 3</text>
+      <text x="912" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">06:05</text>
+      <text x="692" y="216" font-size="14.5" font-weight="700" fill="#0B0D10">BOARD_OPEN</text>
+      <text x="692" y="234" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">AGENT:PHALANX-LOOP</text>
+      <line x1="688" y1="248" x2="916" y2="248" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="692" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-3-prev" x="768" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">6b4ddcbf…</text>
+      <line x1="768" y1="275" x2="836.4" y2="275" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="686" y="284" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="692" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-3-hash" x="768" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">ed9fd6c8…</text>
+    </g>
+    <g id="chain-block-4-10" class="block gap">
+      <rect class="draw" x="972" y="168" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-dasharray="6 4" stroke-linejoin="round"/>
+      <text x="988" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 4–10</text>
+      <text x="1208" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">06:24–07:14</text>
+      <text x="988" y="216" font-size="13" font-weight="700" fill="#0B0D10">APPROVED ×6 · ACK</text>
+      <text x="988" y="234" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">7 events</text>
+      <line x1="984" y1="248" x2="1212" y2="248" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="988" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-4-10-prev" x="1064" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">ed9fd6c8…</text>
+      <line x1="1064" y1="275" x2="1132.4" y2="275" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="982" y="284" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="988" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-4-10-hash" x="1064" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">b95d7876…</text>
+    </g>
+    <g id="chain-block-11" class="block">
+      <rect class="draw" x="1268" y="168" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="1284" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 11</text>
+      <text x="1504" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">07:45</text>
+      <text x="1284" y="216" font-size="14.5" font-weight="700" fill="#0B0D10">FROZEN</text>
+      <text x="1284" y="234" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">AGENT:PHALANX-LOOP</text>
+      <line x1="1280" y1="248" x2="1508" y2="248" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1284" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-11-prev" x="1360" y="270" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">b95d7876…</text>
+      <line x1="1360" y1="275" x2="1428.4" y2="275" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="1278" y="284" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="1284" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-11-hash" x="1360" y="304" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">e14a5d43…</text>
+    </g>
+  </g>
+  <g id="chain-row-2">
+    <g id="chain-block-12" class="block">
+      <rect class="draw" x="84" y="470" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="100" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 12</text>
+      <text x="320" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">07:57</text>
+      <text x="100" y="518" font-size="14.5" font-weight="700" fill="#0B0D10">HUMAN_SIGNED</text>
+      <text x="100" y="536" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">HUMAN:ENGG-OFFICER</text>
+      <line x1="96" y1="550" x2="324" y2="550" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="100" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-12-prev" x="176" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">e14a5d43…</text>
+      <line x1="176" y1="577" x2="244.4" y2="577" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="94" y="586" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="100" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-12-hash" x="176" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">5531af78…</text>
+    </g>
+    <g id="chain-block-13" class="block">
+      <rect class="draw" x="380" y="470" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="396" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 13</text>
+      <text x="616" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">08:00</text>
+      <text x="396" y="518" font-size="14.5" font-weight="700" fill="#0B0D10">SUBMITTED</text>
+      <text x="396" y="536" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">AGENT:PHALANX-LOOP</text>
+      <line x1="392" y1="550" x2="620" y2="550" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="396" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-13-prev" x="472" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">5531af78…</text>
+      <line x1="472" y1="577" x2="540.4" y2="577" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="390" y="586" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="396" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-13-hash" x="472" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">20231ada…</text>
+    </g>
+    <g id="chain-block-14-19" class="block gap">
+      <rect class="draw" x="676" y="470" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-dasharray="6 4" stroke-linejoin="round"/>
+      <text x="692" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 14–19</text>
+      <text x="912" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">08:00–08:00</text>
+      <text x="692" y="518" font-size="14.5" font-weight="700" fill="#0B0D10">ACCEPTED ×6</text>
+      <text x="692" y="536" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">6 events</text>
+      <line x1="688" y1="550" x2="916" y2="550" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="692" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-14-19-prev" x="768" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">20231ada…</text>
+      <line x1="768" y1="577" x2="836.4" y2="577" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="686" y="586" width="232" height="30" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="692" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-14-19-hash" x="768" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0B0D10">75b87991…</text>
+    </g>
+    <g id="chain-block-20" class="block head subject">
+      <rect class="draw" x="972" y="470" width="252" height="156" rx="10" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="988" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">seq 20</text>
+      <text x="1208" y="496" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">08:00</text>
+      <text x="988" y="518" font-size="14.5" font-weight="700" fill="#E8743B">ACCEPTED</text>
+      <text x="988" y="536" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">GATEWAY:M21</text>
+      <line x1="984" y1="550" x2="1212" y2="550" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="988" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">prev_hash</text>
+      <text id="chain-block-20-prev" x="1064" y="572" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10">75b87991…</text>
+      <line x1="1064" y1="577" x2="1132.4" y2="577" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="982" y="586" width="232" height="30" rx="6" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="988" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">hash</text>
+      <text id="chain-block-20-hash" x="1064" y="606" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="700" fill="#E8743B">afd2fdab…</text>
+      <rect x="1162" y="459" width="52" height="20" rx="10" fill="#E8743B" stroke="none" stroke-linejoin="round"/>
+      <text x="1188" y="473" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.1em">HEAD</text>
+    </g>
+  </g>
+  <g id="chain-links" class="links">
+    <g id="chain-link-r1-0" class="link">
+      <path class="draw" d="M326 299 L358 299 L358 266 L378 266" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M378 266 L370 268.4 L370 263.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="326" cy="299" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="353" y="271.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="353" y="279.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <g id="chain-link-r1-1" class="link">
+      <path class="draw" d="M622 299 L654 299 L654 266 L674 266" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M674 266 L666 268.4 L666 263.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="622" cy="299" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="649" y="271.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="649" y="279.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <g id="chain-link-r1-2" class="link">
+      <path class="draw" d="M918 299 L950 299 L950 266 L970 266" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M970 266 L962 268.4 L962 263.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="918" cy="299" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="945" y="271.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="945" y="279.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <g id="chain-link-r1-3" class="link">
+      <path class="draw" d="M1214 299 L1246 299 L1246 266 L1266 266" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1266 266 L1258 268.4 L1258 263.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="1214" cy="299" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="1241" y="271.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="1241" y="279.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <g id="chain-link-wrap" class="link">
+      <path class="draw" d="M1510 299 L1536 299 L1536 397 L58 397 L58 568 L82 568" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M82 568 L74 570.4 L74 565.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="1510" cy="299" r="2.4" fill="#2563C9" stroke="none"/>
+    </g>
+    <g id="chain-link-r2-0" class="link">
+      <path class="draw" d="M326 601 L358 601 L358 568 L378 568" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M378 568 L370 570.4 L370 565.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="326" cy="601" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="353" y="573.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="353" y="581.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <g id="chain-link-r2-1" class="link">
+      <path class="draw" d="M622 601 L654 601 L654 568 L674 568" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M674 568 L666 570.4 L666 565.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="622" cy="601" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="649" y="573.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="649" y="581.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <g id="chain-link-r2-2" class="link">
+      <path class="draw" d="M918 601 L950 601 L950 568 L970 568" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M970 568 L962 570.4 L962 565.6 Z" fill="#2563C9" stroke="none"/>
+      <circle cx="918" cy="601" r="2.4" fill="#2563C9" stroke="none"/>
+      <rect x="945" y="573.5" width="10" height="14" rx="5" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="945" y="581.5" width="10" height="14" rx="5" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    </g>
+    <text x="700" y="389" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#2563C9" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">prev_hash of each block = hash of the block before</text>
+  </g>
+  <g id="chain-formula" class="note">
+    <text class="kicker" x="1276" y="484" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">HOW A BLOCK IS SEALED</text>
+    <text x="1276" y="514" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="600" fill="#0B0D10">hash = blake2b(</text>
+    <text x="1294" y="534" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="500" fill="#0B0D10">prev_hash ‖ canonical_json(event)</text>
+    <text x="1276" y="554" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="600" fill="#0B0D10">)  · 32 bytes</text>
+    <text x="1276" y="582" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">change any event and every</text>
+    <text x="1276" y="598" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">later hash changes with it</text>
+  </g>
+  <g id="chain-head-full" class="note">
+    <text class="kicker" x="84" y="690" font-size="11" font-weight="700" fill="#E8743B" letter-spacing="0.14em">CHAIN HEAD · EPOCH 22 JUN 08:00 · 20 EVENTS</text>
+    <text id="chain-head-hash" x="84" y="716" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="600" fill="#0B0D10">afd2fdab2f6818782c4300fc21c3dabd03db1f9a52b470bb91de37f766a8a526</text>
+    <text x="84" y="736" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">genesis prev_hash = 32 zero bytes · stream epoch:20260622T0800 · same value on the orders screen</text>
+  </g>
+  <text x="64" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">ONE LOG · EVERY STEP OF THE EPOCH, HASH-CHAINED</text>
+  <text x="64" y="94" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">read from the epoch log (lel.events) — values are the real hashes</text>
+  <g id="chain-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="chain-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">Hash-chained event log</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">epoch 22 Jun 08:00 · head afd2fdab…</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-11</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 11 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

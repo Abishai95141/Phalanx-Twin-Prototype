@@ -1,0 +1,11 @@
+# Reference policy: IAF-style hard-time / reactive status quo (W1.8; phalanx.orders.policies.StatusQuoPolicy).
+# Hard-time retirement, periodic servicing and reactive repair are M18 standing procedures; the status-quo
+# decisions are Maintenance Control's cannibalisations, by the rule in phalanx.maintenance.rules.cann_plan with the
+# threshold M18.yaml cann.min_awp_hours. No extra numbers live here.
+format: phalanx.policy/1
+name: status-quo
+rules:
+  cannibalisation:
+    uses: "M18.yaml cann.min_awp_hours"
+    evidence: {tag: ASSUMPTION, source: "GAO-02-86 (CANN to meet readiness from aircraft already down); NAMP (CANN WOs only from Maintenance Control)"}
+    assumption_id: A-W1.8-13

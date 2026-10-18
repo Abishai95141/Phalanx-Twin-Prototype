@@ -1,0 +1,71 @@
+Warning: The following taps are not trusted:
+  supabase/tap
+
+Homebrew is currently ignoring formulae, casks and commands
+from these taps because tap trust is required.
+Prefer trusting only the specific formulae, casks or commands you need.
+Trust installed formulae from these taps with:
+  brew trust --formula supabase/tap/supabase
+Trust other specific casks and commands with:
+  brew trust --cask <user>/<tap>/<cask>
+  brew trust --command <user>/<tap>/<command>
+Whole-tap trust is broader and includes all current and future formulae,
+casks and commands from the listed taps. Trust whole taps with:
+  brew trust supabase/tap
+Untap them with:
+  brew untap supabase/tap
+For more information, see:
+  https://docs.brew.sh/Tap-Trust
+==> Downloading bottle manifests
+✔︎ Bottle Manifest ffmpeg (9.0.2_1)
+==> Fetching downloads for: ffmpeg
+✔︎ Bottle ffmpeg (9.0.2_1)
+==> Upgrading ffmpeg
+  8.1.2 -> 9.0.2_1 
+==> Pouring ffmpeg--9.0.2_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/ffmpeg/9.0.2_1: 290 files, 53.9MB
+==> Cleanup
+Removing: /opt/homebrew/Cellar/ffmpeg/8.1.2... (287 files, 53.5MB)
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Caveats
+==> ffmpeg
+ffmpeg-full includes additional tools and libraries that are not included in the regular ffmpeg formula.
+HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade ffmpeg  1.92s user 0.77s system 37% cpu 7.253 total
+Warning: The following taps are not trusted:
+  supabase/tap
+
+Homebrew is currently ignoring formulae, casks and commands
+from these taps because tap trust is required.
+Prefer trusting only the specific formulae, casks or commands you need.
+Trust installed formulae from these taps with:
+  brew trust --formula supabase/tap/supabase
+Trust other specific casks and commands with:
+  brew trust --cask <user>/<tap>/<cask>
+  brew trust --command <user>/<tap>/<command>
+Whole-tap trust is broader and includes all current and future formulae,
+casks and commands from the listed taps. Trust whole taps with:
+  brew trust supabase/tap
+Untap them with:
+  brew untap supabase/tap
+For more information, see:
+  https://docs.brew.sh/Tap-Trust
+==> Downloading bottle manifests
+✔︎ Bottle Manifest dvisvgm (3.6.1_1)
+==> Would install 1 formula:
+dvisvgm 3.6.1_1
+==> Would install 1 dependency for dvisvgm:
+woff2
+==> Would upgrade 1 dependency for dvisvgm:
+sqlite
+==> Fetching downloads for: dvisvgm
+✔︎ Bottle Manifest woff2 (1.0.2)
+✔︎ Bottle sqlite (3.54.0)
+✔︎ Bottle dvisvgm (3.6.1_1)
+✔︎ Bottle woff2 (1.0.2)
+==> Installing dvisvgm dependency: woff2 (1.0.2)
+==> Pouring woff2--1.0.2.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/woff2/1.0.2: 20 files, 317.2KB
+==> Installing dvisvgm
+==> Pouring dvisvgm--3.6.1_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/dvisvgm/3.6.1_1: 11 files, 2.6MB

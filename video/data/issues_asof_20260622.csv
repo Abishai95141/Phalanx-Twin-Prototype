@@ -1,0 +1,453 @@
+tail,code,first,last,n,sev,lru,sus,desc,ep
+TJ101,ADC-002,2026-01-30 16:35:00+05:30,2026-02-02 10:19:52+05:30,2,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-01-30 00:00:00+05:30
+TJ101,ADC-002,2026-02-13 13:17:47+05:30,2026-02-13 13:17:47+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-02-13 00:00:00+05:30
+TJ101,ADC-002,2026-03-25 21:16:47+05:30,2026-04-10 16:52:21+05:30,3,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-03-25 00:00:00+05:30
+TJ101,ADC-002,2026-05-06 17:05:37+05:30,2026-05-06 17:05:37+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-05-06 00:00:00+05:30
+TJ101,ADC-002,2026-05-22 11:09:50+05:30,2026-05-22 13:50:56+05:30,2,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-05-22 00:00:00+05:30
+TJ101,ADC-501,2026-01-28 13:16:41+05:30,2026-01-28 13:16:41+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-01-28 00:00:00+05:30
+TJ101,ADC-501,2026-03-31 16:22:32+05:30,2026-03-31 16:22:32+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-03-31 00:00:00+05:30
+TJ101,AVI-201,2026-01-06 16:37:52+05:30,2026-01-07 13:16:20+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-06 00:00:00+05:30
+TJ101,AVI-201,2026-01-19 13:29:44+05:30,2026-01-28 13:16:41+05:30,3,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-19 00:00:00+05:30
+TJ101,AVI-201,2026-03-23 16:05:01+05:30,2026-03-23 16:05:01+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-23 00:00:00+05:30
+TJ101,AVI-201,2026-04-28 13:34:59+05:30,2026-04-28 13:34:59+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-28 00:00:00+05:30
+TJ101,AVI-201,2026-05-20 16:14:34+05:30,2026-05-20 16:14:34+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-20 00:00:00+05:30
+TJ101,AVI-202,2026-02-03 13:07:26+05:30,2026-02-03 13:07:26+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-02-03 00:00:00+05:30
+TJ101,AVI-202,2026-04-09 16:18:49+05:30,2026-04-16 09:55:00+05:30,2,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-04-09 00:00:00+05:30
+TJ101,AVI-203,2026-01-08 16:32:33+05:30,2026-02-10 16:43:41+05:30,7,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-08 00:00:00+05:30
+TJ101,AVI-203,2026-04-01 13:11:18+05:30,2026-04-09 16:18:49+05:30,3,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-04-01 00:00:00+05:30
+TJ101,AVI-203,2026-04-23 10:14:35+05:30,2026-04-23 10:14:35+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-04-23 00:00:00+05:30
+TJ101,AVI-203,2026-05-12 09:47:06+05:30,2026-05-15 13:22:57+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-05-12 00:00:00+05:30
+TJ101,AVI-204,2026-01-16 13:19:54+05:30,2026-01-16 13:19:54+05:30,1,ADVISORY,AHRS,"[{'lru': 'AHRS', 'isolation_confidence': 0.9}]",AHRS LRU BIT fail,2026-01-16 00:00:00+05:30
+TJ101,AVI-301,2026-02-03 13:07:26+05:30,2026-02-03 13:07:26+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-02-03 00:00:00+05:30
+TJ101,ENG-201,2026-01-06 16:37:52+05:30,2026-01-16 16:30:56+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-06 00:00:00+05:30
+TJ101,ENG-201,2026-01-28 13:16:41+05:30,2026-02-09 13:22:23+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-28 00:00:00+05:30
+TJ101,ENG-201,2026-03-30 13:39:05+05:30,2026-04-16 16:31:22+05:30,3,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-30 00:00:00+05:30
+TJ101,ENG-201,2026-04-29 08:34:36+05:30,2026-05-26 10:04:37+05:30,9,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-29 00:00:00+05:30
+TJ101,ENG-401,2026-02-06 13:31:24+05:30,2026-02-09 13:22:23+05:30,2,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-02-06 00:00:00+05:30
+TJ101,ENG-401,2026-03-30 13:39:05+05:30,2026-03-30 13:39:05+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-03-30 00:00:00+05:30
+TJ101,ENG-401,2026-05-18 16:08:13+05:30,2026-05-18 16:08:13+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-05-18 00:00:00+05:30
+TJ101,FCS-102,2026-04-09 10:17:31+05:30,2026-04-09 10:17:31+05:30,1,CAUTION,DFCC,"[{'lru': 'SLAT_ACTUATOR', 'isolation_confidence': 0.8}
+ {'lru': 'DFCC', 'isolation_confidence': 0.2}]",Slat actuator fault,2026-04-09 00:00:00+05:30
+TJ101,HYD-101,2026-01-30 09:58:01+05:30,2026-01-30 09:58:01+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-30 00:00:00+05:30
+TJ101,HYD-101,2026-05-22 13:50:56+05:30,2026-05-22 13:50:56+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-05-22 00:00:00+05:30
+TJ101,LGB-503,2026-01-13 13:43:16+05:30,2026-01-15 10:08:04+05:30,2,CAUTION,BHEEM_EU,"[{'lru': 'BRAKE_CONTROL', 'isolation_confidence': 0.5}
+ {'lru': 'BRAKE_VALVE', 'isolation_confidence': 0.5}]",Wheel brake fail,2026-01-13 00:00:00+05:30
+TJ101,LGB-503,2026-03-25 21:16:47+05:30,2026-04-13 21:26:58+05:30,4,CAUTION,BHEEM_EU,"[{'lru': 'BRAKE_CONTROL', 'isolation_confidence': 0.5}
+ {'lru': 'BRAKE_VALVE', 'isolation_confidence': 0.5}]",Wheel brake fail,2026-03-25 00:00:00+05:30
+TJ101,LGB-503,2026-05-26 10:04:37+05:30,2026-05-26 10:04:37+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'BRAKE_CONTROL', 'isolation_confidence': 0.5}
+ {'lru': 'BRAKE_VALVE', 'isolation_confidence': 0.5}]",Wheel brake fail,2026-05-26 00:00:00+05:30
+TJ101,SPS-001,2026-02-13 13:17:47+05:30,2026-02-13 13:17:47+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-02-13 00:00:00+05:30
+TJ101,SPS-001,2026-03-23 16:05:01+05:30,2026-03-23 16:05:01+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-03-23 00:00:00+05:30
+TJ101,SPS-001,2026-05-12 09:47:06+05:30,2026-05-12 09:47:06+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-05-12 00:00:00+05:30
+TJ102,ADC-002,2026-02-16 13:37:49+05:30,2026-02-26 09:34:56+05:30,2,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-02-16 00:00:00+05:30
+TJ102,ADC-002,2026-05-20 16:14:34+05:30,2026-05-20 16:14:34+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-05-20 00:00:00+05:30
+TJ102,ADC-501,2026-01-12 13:29:36+05:30,2026-01-12 13:29:36+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-01-12 00:00:00+05:30
+TJ102,AVI-201,2026-01-06 16:37:52+05:30,2026-01-06 16:37:52+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-06 00:00:00+05:30
+TJ102,AVI-201,2026-01-19 13:29:44+05:30,2026-01-26 09:59:21+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-19 00:00:00+05:30
+TJ102,AVI-201,2026-02-12 13:47:06+05:30,2026-02-12 13:47:06+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-02-12 00:00:00+05:30
+TJ102,AVI-201,2026-02-24 16:42:41+05:30,2026-02-26 09:34:56+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-02-24 00:00:00+05:30
+TJ102,AVI-201,2026-04-28 21:22:04+05:30,2026-04-28 21:22:04+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-28 00:00:00+05:30
+TJ102,AVI-201,2026-05-15 13:22:57+05:30,2026-05-22 16:35:41+05:30,3,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-15 00:00:00+05:30
+TJ102,AVI-201,2026-06-03 10:27:42+05:30,2026-06-03 10:27:42+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-06-03 00:00:00+05:30
+TJ102,AVI-203,2026-01-13 16:09:56+05:30,2026-01-15 17:02:14+05:30,4,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-13 00:00:00+05:30
+TJ102,AVI-203,2026-01-28 10:02:16+05:30,2026-01-28 10:02:16+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-28 00:00:00+05:30
+TJ102,AVI-203,2026-02-09 13:22:23+05:30,2026-02-09 13:22:23+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-02-09 00:00:00+05:30
+TJ102,AVI-203,2026-02-19 21:13:03+05:30,2026-02-19 21:13:03+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-02-19 00:00:00+05:30
+TJ102,AVI-203,2026-03-02 10:06:13+05:30,2026-03-02 10:06:13+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ102,AVI-203,2026-03-13 21:44:23+05:30,2026-03-13 21:44:23+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-13 00:00:00+05:30
+TJ102,AVI-203,2026-04-14 10:31:05+05:30,2026-04-14 10:31:05+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-04-14 00:00:00+05:30
+TJ102,AVI-203,2026-05-25 09:54:09+05:30,2026-06-04 13:22:10+05:30,4,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-05-25 00:00:00+05:30
+TJ102,AVI-203,2026-06-15 21:54:58+05:30,2026-06-15 21:54:58+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-06-15 00:00:00+05:30
+TJ102,AVI-301,2026-01-21 09:47:05+05:30,2026-01-21 09:47:05+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-01-21 00:00:00+05:30
+TJ102,ECM-002,2026-02-20 13:25:02+05:30,2026-02-20 13:25:02+05:30,1,ADVISORY,ECMS,"[{'lru': 'ECMS', 'isolation_confidence': 0.95}]",ECMS processor / memory fault,2026-02-20 00:00:00+05:30
+TJ102,ENG-101,2026-02-16 13:37:49+05:30,2026-02-16 13:37:49+05:30,1,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-02-16 00:00:00+05:30
+TJ102,ENG-201,2026-01-08 10:15:39+05:30,2026-01-22 21:09:32+05:30,9,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-08 00:00:00+05:30
+TJ102,ENG-201,2026-02-17 10:20:57+05:30,2026-03-13 21:44:23+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-02-17 00:00:00+05:30
+TJ102,ENG-201,2026-04-09 10:17:31+05:30,2026-04-13 21:26:58+05:30,2,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-09 00:00:00+05:30
+TJ102,ENG-201,2026-04-28 21:22:04+05:30,2026-05-25 09:54:09+05:30,7,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-28 00:00:00+05:30
+TJ102,ENG-201,2026-06-04 09:57:40+05:30,2026-06-18 13:31:23+05:30,6,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-04 00:00:00+05:30
+TJ102,ENG-202,2026-02-24 09:46:28+05:30,2026-02-24 09:46:28+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-02-24 00:00:00+05:30
+TJ102,ENG-202,2026-04-23 10:14:35+05:30,2026-04-23 10:14:35+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-04-23 00:00:00+05:30
+TJ102,ENG-401,2026-02-11 09:47:32+05:30,2026-02-11 09:47:32+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-02-11 00:00:00+05:30
+TJ102,ENG-401,2026-02-24 09:46:28+05:30,2026-02-24 09:46:28+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-02-24 00:00:00+05:30
+TJ102,FCS-102,2026-02-25 16:12:46+05:30,2026-02-25 16:12:46+05:30,1,CAUTION,DFCC,"[{'lru': 'SLAT_ACTUATOR', 'isolation_confidence': 0.8}
+ {'lru': 'DFCC', 'isolation_confidence': 0.2}]",Slat actuator fault,2026-02-25 00:00:00+05:30
+TJ102,FUE-401,2026-04-30 13:27:30+05:30,2026-04-30 13:27:30+05:30,1,CAUTION,ECFM_C,"[{'lru': 'BOOST_PUMP', 'isolation_confidence': 0.9}]",Fuel boost pump pressure low,2026-04-30 00:00:00+05:30
+TJ102,FUE-401,2026-06-03 10:27:42+05:30,2026-06-03 10:27:42+05:30,1,CAUTION,ECFM_C,"[{'lru': 'BOOST_PUMP', 'isolation_confidence': 0.9}]",Fuel boost pump pressure low,2026-06-03 00:00:00+05:30
+TJ102,HYD-001,2026-01-08 16:32:33+05:30,2026-01-15 17:02:14+05:30,5,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-01-08 00:00:00+05:30
+TJ102,HYD-001,2026-01-26 08:34:36+05:30,2026-01-26 09:59:21+05:30,2,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-01-26 00:00:00+05:30
+TJ102,HYD-001,2026-02-09 13:22:23+05:30,2026-03-13 21:44:23+05:30,14,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-02-09 00:00:00+05:30
+TJ102,HYD-001,2026-04-09 10:17:31+05:30,2026-04-16 16:31:22+05:30,5,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-04-09 00:00:00+05:30
+TJ102,HYD-001,2026-04-27 13:40:31+05:30,2026-05-06 09:39:15+05:30,5,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-04-27 00:00:00+05:30
+TJ102,HYD-001,2026-05-20 16:14:34+05:30,2026-05-29 13:37:13+05:30,4,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-05-20 00:00:00+05:30
+TJ102,HYD-001,2026-06-11 21:20:58+05:30,2026-06-18 21:08:03+05:30,5,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-06-11 00:00:00+05:30
+TJ102,HYD-101,2026-01-06 16:37:52+05:30,2026-01-28 16:12:25+05:30,9,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-06 00:00:00+05:30
+TJ102,HYD-101,2026-02-10 16:43:41+05:30,2026-03-16 10:08:48+05:30,14,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-02-10 00:00:00+05:30
+TJ102,HYD-101,2026-04-09 10:17:31+05:30,2026-06-18 21:08:03+05:30,24,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-04-09 00:00:00+05:30
+TJ102,SPS-501,2026-04-30 21:38:01+05:30,2026-04-30 21:38:01+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-04-30 00:00:00+05:30
+TJ103,ADC-501,2026-03-02 10:06:13+05:30,2026-03-02 10:06:13+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-03-02 00:00:00+05:30
+TJ103,ADC-501,2026-06-12 13:49:19+05:30,2026-06-15 21:54:58+05:30,2,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-06-12 00:00:00+05:30
+TJ103,AVI-201,2026-01-08 13:40:42+05:30,2026-01-08 13:40:42+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-08 00:00:00+05:30
+TJ103,AVI-201,2026-01-19 13:29:44+05:30,2026-01-19 13:29:44+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-19 00:00:00+05:30
+TJ103,AVI-201,2026-02-19 13:31:07+05:30,2026-02-19 13:31:07+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-02-19 00:00:00+05:30
+TJ103,AVI-201,2026-03-02 16:37:01+05:30,2026-03-02 16:37:01+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ103,AVI-201,2026-03-13 16:26:44+05:30,2026-03-26 21:29:48+05:30,4,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-13 00:00:00+05:30
+TJ103,AVI-201,2026-04-07 21:28:48+05:30,2026-04-23 10:14:35+05:30,5,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-07 00:00:00+05:30
+TJ103,AVI-201,2026-06-05 13:16:37+05:30,2026-06-12 08:34:36+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-06-05 00:00:00+05:30
+TJ103,AVI-202,2026-03-02 10:06:13+05:30,2026-03-02 10:06:13+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ103,AVI-202,2026-03-24 21:56:51+05:30,2026-03-24 21:56:51+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-03-24 00:00:00+05:30
+TJ103,AVI-202,2026-06-05 13:16:37+05:30,2026-06-05 13:16:37+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-06-05 00:00:00+05:30
+TJ103,AVI-202,2026-06-15 21:54:58+05:30,2026-06-15 21:54:58+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-06-15 00:00:00+05:30
+TJ103,AVI-203,2026-01-15 10:08:04+05:30,2026-01-15 10:08:04+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-15 00:00:00+05:30
+TJ103,AVI-203,2026-02-12 16:49:46+05:30,2026-02-19 13:31:07+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-02-12 00:00:00+05:30
+TJ103,AVI-203,2026-03-02 16:37:01+05:30,2026-03-02 16:37:01+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ103,AVI-203,2026-03-17 10:05:45+05:30,2026-04-10 16:52:21+05:30,5,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-17 00:00:00+05:30
+TJ103,AVI-203,2026-06-05 09:39:17+05:30,2026-06-12 08:34:36+05:30,3,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-06-05 00:00:00+05:30
+TJ103,AVI-301,2026-01-19 13:29:44+05:30,2026-01-20 10:10:16+05:30,2,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-01-19 00:00:00+05:30
+TJ103,AVI-301,2026-02-19 13:31:07+05:30,2026-02-19 13:31:07+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-02-19 00:00:00+05:30
+TJ103,AVI-301,2026-03-02 10:06:13+05:30,2026-03-02 16:37:01+05:30,2,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-03-02 00:00:00+05:30
+TJ103,AVI-301,2026-03-24 21:56:51+05:30,2026-04-17 09:54:00+05:30,5,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-03-24 00:00:00+05:30
+TJ103,AVI-301,2026-06-05 13:16:37+05:30,2026-06-05 13:16:37+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-06-05 00:00:00+05:30
+TJ103,AVI-301,2026-06-15 21:54:58+05:30,2026-06-15 21:54:58+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-06-15 00:00:00+05:30
+TJ103,ECM-002,2026-03-24 21:56:51+05:30,2026-04-01 13:11:18+05:30,2,ADVISORY,ECMS,"[{'lru': 'ECMS', 'isolation_confidence': 0.95}]",ECMS processor / memory fault,2026-03-24 00:00:00+05:30
+TJ103,ENG-101,2026-04-01 13:11:18+05:30,2026-04-03 13:19:14+05:30,2,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-04-01 00:00:00+05:30
+TJ103,ENG-103,2026-03-30 13:39:05+05:30,2026-03-30 13:39:05+05:30,1,CAUTION,FADEC,"[{'lru': 'FMU', 'isolation_confidence': 0.8}
+ {'lru': 'FADEC', 'isolation_confidence': 0.2}]",Fuel metering valve fault,2026-03-30 00:00:00+05:30
+TJ103,ENG-201,2026-01-07 16:44:39+05:30,2026-01-19 08:34:36+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-07 00:00:00+05:30
+TJ103,ENG-201,2026-02-10 16:43:41+05:30,2026-02-10 16:43:41+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-02-10 00:00:00+05:30
+TJ103,ENG-201,2026-03-02 10:06:13+05:30,2026-03-11 16:45:58+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-02 00:00:00+05:30
+TJ103,ENG-201,2026-04-06 16:49:56+05:30,2026-04-23 10:14:35+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-06 00:00:00+05:30
+TJ103,ENG-201,2026-06-04 09:57:40+05:30,2026-06-15 21:54:58+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-04 00:00:00+05:30
+TJ103,ENG-202,2026-01-08 13:40:42+05:30,2026-01-08 13:40:42+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-08 00:00:00+05:30
+TJ103,ENG-202,2026-03-03 13:11:43+05:30,2026-03-03 13:11:43+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-03-03 00:00:00+05:30
+TJ103,ENG-202,2026-03-18 16:16:54+05:30,2026-03-18 16:16:54+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-03-18 00:00:00+05:30
+TJ103,ENG-202,2026-06-04 08:34:36+05:30,2026-06-04 08:34:36+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-06-04 00:00:00+05:30
+TJ103,ENG-401,2026-01-16 16:30:56+05:30,2026-01-16 16:30:56+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-16 00:00:00+05:30
+TJ103,ENG-401,2026-03-03 13:11:43+05:30,2026-03-03 13:11:43+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-03-03 00:00:00+05:30
+TJ103,ENG-401,2026-03-18 16:16:54+05:30,2026-03-18 16:16:54+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-03-18 00:00:00+05:30
+TJ103,ENG-401,2026-06-04 08:34:36+05:30,2026-06-04 08:34:36+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-06-04 00:00:00+05:30
+TJ103,LGB-501,2026-01-08 13:40:42+05:30,2026-01-19 13:29:44+05:30,4,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-01-08 00:00:00+05:30
+TJ103,LGB-501,2026-02-16 09:34:49+05:30,2026-03-26 21:29:48+05:30,11,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-02-16 00:00:00+05:30
+TJ103,LGB-501,2026-04-07 21:28:48+05:30,2026-04-16 09:55:00+05:30,2,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-04-07 00:00:00+05:30
+TJ103,LGB-501,2026-06-15 21:54:58+05:30,2026-06-19 21:16:18+05:30,2,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-06-15 00:00:00+05:30
+TJ104,ADC-002,2026-04-02 16:55:09+05:30,2026-04-02 16:55:09+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-04-02 00:00:00+05:30
+TJ104,ADC-002,2026-06-11 13:18:36+05:30,2026-06-19 21:21:40+05:30,3,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-06-11 00:00:00+05:30
+TJ104,ADC-501,2026-02-06 13:39:50+05:30,2026-02-06 13:39:50+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-02-06 00:00:00+05:30
+TJ104,AVI-201,2026-01-07 16:38:57+05:30,2026-01-15 13:42:22+05:30,4,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-07 00:00:00+05:30
+TJ104,AVI-201,2026-01-28 10:02:16+05:30,2026-01-30 09:58:01+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-28 00:00:00+05:30
+TJ104,AVI-201,2026-02-09 13:22:23+05:30,2026-02-17 10:14:39+05:30,3,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-02-09 00:00:00+05:30
+TJ104,AVI-201,2026-03-02 16:46:31+05:30,2026-03-02 16:46:31+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ104,AVI-201,2026-04-01 17:04:46+05:30,2026-04-13 21:26:58+05:30,7,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-01 00:00:00+05:30
+TJ104,AVI-201,2026-06-10 14:08:34+05:30,2026-06-10 14:08:34+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-06-10 00:00:00+05:30
+TJ104,AVI-203,2026-01-06 16:37:52+05:30,2026-01-13 16:09:56+05:30,4,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-06 00:00:00+05:30
+TJ104,AVI-203,2026-02-10 16:37:34+05:30,2026-02-17 10:14:39+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-02-10 00:00:00+05:30
+TJ104,AVI-203,2026-03-02 13:37:21+05:30,2026-03-04 17:17:56+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ104,AVI-203,2026-03-31 16:54:34+05:30,2026-04-10 17:06:44+05:30,3,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-31 00:00:00+05:30
+TJ104,AVI-204,2026-01-22 21:09:32+05:30,2026-01-22 21:09:32+05:30,1,ADVISORY,AHRS,"[{'lru': 'AHRS', 'isolation_confidence': 0.9}]",AHRS LRU BIT fail,2026-01-22 00:00:00+05:30
+TJ104,AVI-204,2026-04-13 21:26:58+05:30,2026-04-13 21:26:58+05:30,1,ADVISORY,AHRS,"[{'lru': 'AHRS', 'isolation_confidence': 0.9}]",AHRS LRU BIT fail,2026-04-13 00:00:00+05:30
+TJ104,ELE-405,2026-01-09 09:59:22+05:30,2026-03-04 17:17:56+05:30,15,ADVISORY,BHEEM_EU,"[{'lru': 'TRU', 'isolation_confidence': 0.9}]",TRU fault,2026-01-09 00:00:00+05:30
+TJ104,ELE-405,2026-03-31 16:54:34+05:30,2026-04-10 10:05:34+05:30,6,ADVISORY,BHEEM_EU,"[{'lru': 'TRU', 'isolation_confidence': 0.9}]",TRU fault,2026-03-31 00:00:00+05:30
+TJ104,ELE-405,2026-06-11 13:18:36+05:30,2026-06-19 21:21:40+05:30,3,ADVISORY,BHEEM_EU,"[{'lru': 'TRU', 'isolation_confidence': 0.9}]",TRU fault,2026-06-11 00:00:00+05:30
+TJ104,ENG-201,2026-01-07 16:38:57+05:30,2026-03-03 13:16:47+05:30,20,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-07 00:00:00+05:30
+TJ104,ENG-201,2026-04-02 16:55:09+05:30,2026-04-16 09:55:00+05:30,6,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-02 00:00:00+05:30
+TJ104,ENG-201,2026-06-10 10:17:45+05:30,2026-06-15 13:52:51+05:30,3,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-10 00:00:00+05:30
+TJ104,ENG-202,2026-01-09 13:20:32+05:30,2026-01-09 13:20:32+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-09 00:00:00+05:30
+TJ104,ENG-202,2026-01-29 13:48:03+05:30,2026-01-30 16:35:00+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-29 00:00:00+05:30
+TJ104,ENG-401,2026-01-09 13:20:32+05:30,2026-01-09 13:20:32+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-09 00:00:00+05:30
+TJ104,ENG-401,2026-01-29 13:48:03+05:30,2026-01-30 16:35:00+05:30,3,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-29 00:00:00+05:30
+TJ104,FUE-401,2026-04-16 09:55:00+05:30,2026-04-16 09:55:00+05:30,1,CAUTION,ECFM_C,"[{'lru': 'BOOST_PUMP', 'isolation_confidence': 0.9}]",Fuel boost pump pressure low,2026-04-16 00:00:00+05:30
+TJ104,HYD-001,2026-04-10 17:06:44+05:30,2026-04-10 17:06:44+05:30,1,ADVISORY,BHEEM_EU,"[{'lru': 'HYD_FILTER', 'isolation_confidence': 0.95}]",Hydraulic filter ΔP indicator,2026-04-10 00:00:00+05:30
+TJ104,SPS-501,2026-01-08 10:15:39+05:30,2026-01-08 10:15:39+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-01-08 00:00:00+05:30
+TJ104,SPS-501,2026-04-02 16:55:09+05:30,2026-04-16 16:39:17+05:30,3,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-04-02 00:00:00+05:30
+TJ105,ADC-002,2026-02-03 16:31:46+05:30,2026-02-03 16:31:46+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-02-03 00:00:00+05:30
+TJ105,ADC-002,2026-04-20 13:42:17+05:30,2026-04-30 16:14:27+05:30,4,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-04-20 00:00:00+05:30
+TJ105,ADC-002,2026-06-12 13:52:25+05:30,2026-06-12 13:52:25+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-06-12 00:00:00+05:30
+TJ105,ADC-501,2026-01-13 13:43:16+05:30,2026-01-22 13:28:08+05:30,2,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-01-13 00:00:00+05:30
+TJ105,ADC-501,2026-02-19 13:31:07+05:30,2026-02-23 09:49:13+05:30,2,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-02-19 00:00:00+05:30
+TJ105,ADC-501,2026-03-16 10:00:53+05:30,2026-03-16 10:00:53+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-03-16 00:00:00+05:30
+TJ105,AVI-201,2026-01-08 13:40:42+05:30,2026-01-13 21:18:39+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-08 00:00:00+05:30
+TJ105,AVI-201,2026-03-11 16:50:36+05:30,2026-03-24 21:56:51+05:30,4,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-11 00:00:00+05:30
+TJ105,AVI-201,2026-04-07 21:28:48+05:30,2026-04-07 21:28:48+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-07 00:00:00+05:30
+TJ105,AVI-201,2026-04-28 13:32:31+05:30,2026-04-28 13:32:31+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-28 00:00:00+05:30
+TJ105,AVI-201,2026-05-13 13:32:07+05:30,2026-05-13 13:32:07+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-13 00:00:00+05:30
+TJ105,AVI-201,2026-05-25 09:54:09+05:30,2026-06-12 13:52:25+05:30,5,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-25 00:00:00+05:30
+TJ105,AVI-203,2026-02-03 10:27:58+05:30,2026-02-03 10:27:58+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-02-03 00:00:00+05:30
+TJ105,AVI-203,2026-02-23 16:42:22+05:30,2026-02-23 16:42:22+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-02-23 00:00:00+05:30
+TJ105,AVI-203,2026-03-16 10:00:53+05:30,2026-03-16 10:00:53+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-16 00:00:00+05:30
+TJ105,AVI-203,2026-03-30 13:39:05+05:30,2026-03-30 13:39:05+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-30 00:00:00+05:30
+TJ105,AVI-203,2026-06-03 10:22:26+05:30,2026-06-12 13:52:25+05:30,3,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-06-03 00:00:00+05:30
+TJ105,AVI-205,2026-04-27 13:40:31+05:30,2026-04-27 13:40:31+05:30,1,CAUTION,MC,"[{'lru': 'MC', 'isolation_confidence': 0.9}]",Mission computer LRU BIT fail,2026-04-27 00:00:00+05:30
+TJ105,ENG-101,2026-02-03 16:31:46+05:30,2026-02-06 13:31:24+05:30,2,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-02-03 00:00:00+05:30
+TJ105,ENG-101,2026-02-17 10:20:57+05:30,2026-02-19 21:13:03+05:30,2,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-02-17 00:00:00+05:30
+TJ105,ENG-101,2026-06-01 10:07:30+05:30,2026-06-01 10:07:30+05:30,1,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-06-01 00:00:00+05:30
+TJ105,ENG-201,2026-01-06 16:37:52+05:30,2026-01-19 13:37:26+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-06 00:00:00+05:30
+TJ105,ENG-201,2026-01-30 16:35:00+05:30,2026-01-30 16:35:00+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-30 00:00:00+05:30
+TJ105,ENG-201,2026-03-24 21:56:51+05:30,2026-04-01 17:04:46+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-24 00:00:00+05:30
+TJ105,ENG-201,2026-04-20 13:42:17+05:30,2026-04-28 13:32:31+05:30,2,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-20 00:00:00+05:30
+TJ105,ENG-201,2026-05-13 13:32:07+05:30,2026-05-15 13:22:57+05:30,2,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-05-13 00:00:00+05:30
+TJ105,ENG-201,2026-06-03 10:22:26+05:30,2026-06-04 13:22:10+05:30,2,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-03 00:00:00+05:30
+TJ105,ENG-201,2026-06-15 21:54:58+05:30,2026-06-15 21:54:58+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-15 00:00:00+05:30
+TJ105,ENG-202,2026-01-13 13:43:16+05:30,2026-01-13 13:43:16+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-13 00:00:00+05:30
+TJ105,ENG-202,2026-01-30 16:35:00+05:30,2026-01-30 16:35:00+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-30 00:00:00+05:30
+TJ105,ENG-202,2026-04-28 21:22:04+05:30,2026-04-28 21:22:04+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-04-28 00:00:00+05:30
+TJ105,ENG-401,2026-01-30 16:35:00+05:30,2026-01-30 16:35:00+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-30 00:00:00+05:30
+TJ105,ENG-401,2026-04-20 13:42:17+05:30,2026-04-28 21:22:04+05:30,2,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-04-20 00:00:00+05:30
+TJ105,ENG-401,2026-05-22 10:54:37+05:30,2026-05-22 10:54:37+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-05-22 00:00:00+05:30
+TJ105,FCS-005,2026-01-30 14:33:36+05:30,2026-01-30 14:33:36+05:30,1,ADVISORY,DFCC,"[{'lru': 'ASA', 'isolation_confidence': 0.9}]",Accelerometer lane fault,2026-01-30 00:00:00+05:30
+TJ105,FCS-101,2026-01-26 09:59:21+05:30,2026-01-26 09:59:21+05:30,1,CAUTION,DFCC,"[{'lru': 'SERVO_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'DFCC', 'isolation_confidence': 0.3}]",Elevon/rudder actuator BIT fault,2026-01-26 00:00:00+05:30
+TJ105,FCS-101,2026-04-27 13:40:31+05:30,2026-04-27 13:40:31+05:30,1,CAUTION,DFCC,"[{'lru': 'SERVO_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'DFCC', 'isolation_confidence': 0.3}]",Elevon/rudder actuator BIT fault,2026-04-27 00:00:00+05:30
+TJ105,FCS-102,2026-01-30 14:33:36+05:30,2026-02-03 10:27:58+05:30,2,CAUTION,DFCC,"[{'lru': 'SLAT_ACTUATOR', 'isolation_confidence': 0.8}
+ {'lru': 'DFCC', 'isolation_confidence': 0.2}]",Slat actuator fault,2026-01-30 00:00:00+05:30
+TJ105,FCS-102,2026-03-19 13:19:06+05:30,2026-03-19 13:19:06+05:30,1,CAUTION,DFCC,"[{'lru': 'SLAT_ACTUATOR', 'isolation_confidence': 0.8}
+ {'lru': 'DFCC', 'isolation_confidence': 0.2}]",Slat actuator fault,2026-03-19 00:00:00+05:30
+TJ105,FCS-201,2026-01-30 14:33:36+05:30,2026-01-30 14:33:36+05:30,1,CAUTION,DFCC,"[{'lru': 'DFCC', 'isolation_confidence': 0.9}]",DFCC channel fail,2026-01-30 00:00:00+05:30
+TJ105,FUE-401,2026-02-19 21:13:03+05:30,2026-02-19 21:13:03+05:30,1,CAUTION,ECFM_C,"[{'lru': 'BOOST_PUMP', 'isolation_confidence': 0.9}]",Fuel boost pump pressure low,2026-02-19 00:00:00+05:30
+TJ105,FUE-401,2026-06-18 08:34:36+05:30,2026-06-18 08:34:36+05:30,1,CAUTION,ECFM_C,"[{'lru': 'BOOST_PUMP', 'isolation_confidence': 0.9}]",Fuel boost pump pressure low,2026-06-18 00:00:00+05:30
+TJ105,HYD-101,2026-01-06 16:37:52+05:30,2026-01-15 17:02:14+05:30,2,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-06 00:00:00+05:30
+TJ105,HYD-101,2026-04-10 17:06:44+05:30,2026-04-10 17:06:44+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-04-10 00:00:00+05:30
+TJ105,LGB-501,2026-01-07 16:38:57+05:30,2026-01-15 10:08:04+05:30,2,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-01-07 00:00:00+05:30
+TJ105,SPS-501,2026-01-15 10:08:04+05:30,2026-02-06 13:31:24+05:30,6,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-01-15 00:00:00+05:30
+TJ105,SPS-501,2026-02-17 10:20:57+05:30,2026-02-19 13:31:07+05:30,2,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-02-17 00:00:00+05:30
+TJ105,SPS-501,2026-03-12 10:07:19+05:30,2026-03-19 13:19:06+05:30,2,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-03-12 00:00:00+05:30
+TJ105,SPS-501,2026-04-01 17:04:46+05:30,2026-04-10 17:06:44+05:30,2,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-04-01 00:00:00+05:30
+TJ105,SPS-501,2026-04-28 13:32:31+05:30,2026-05-07 21:35:12+05:30,3,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-04-28 00:00:00+05:30
+TJ105,SPS-501,2026-05-25 09:54:09+05:30,2026-05-25 09:54:09+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-05-25 00:00:00+05:30
+TJ105,SPS-501,2026-06-10 10:17:45+05:30,2026-06-19 21:21:40+05:30,4,CAUTION,BHEEM_EU,"[{'lru': 'JFS', 'isolation_confidence': 0.7}
+ {'lru': 'BATTERY', 'isolation_confidence': 0.3}]",JFS start fail,2026-06-10 00:00:00+05:30
+TJ106,ADC-002,2026-06-18 13:23:34+05:30,2026-06-18 13:23:34+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-06-18 00:00:00+05:30
+TJ106,ADC-501,2026-01-08 10:15:39+05:30,2026-01-08 10:15:39+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-01-08 00:00:00+05:30
+TJ106,ADC-501,2026-05-12 09:42:18+05:30,2026-05-12 09:42:18+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-05-12 00:00:00+05:30
+TJ106,ADC-501,2026-05-29 17:17:51+05:30,2026-06-01 10:07:29+05:30,2,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-05-29 00:00:00+05:30
+TJ106,AVI-201,2026-01-07 16:44:39+05:30,2026-01-08 10:15:39+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-07 00:00:00+05:30
+TJ106,AVI-201,2026-01-22 21:09:32+05:30,2026-01-22 21:09:32+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-22 00:00:00+05:30
+TJ106,AVI-201,2026-02-02 21:27:27+05:30,2026-02-19 13:31:07+05:30,6,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-02-02 00:00:00+05:30
+TJ106,AVI-201,2026-03-04 17:05:34+05:30,2026-03-11 16:45:58+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-04 00:00:00+05:30
+TJ106,AVI-201,2026-03-26 21:29:48+05:30,2026-03-26 21:29:48+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-26 00:00:00+05:30
+TJ106,AVI-201,2026-04-07 21:28:48+05:30,2026-04-16 09:55:00+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-07 00:00:00+05:30
+TJ106,AVI-201,2026-05-05 08:34:36+05:30,2026-05-08 08:34:36+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-05 00:00:00+05:30
+TJ106,AVI-201,2026-05-22 11:09:50+05:30,2026-05-22 21:07:53+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-22 00:00:00+05:30
+TJ106,AVI-201,2026-06-10 13:36:52+05:30,2026-06-18 13:23:34+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-06-10 00:00:00+05:30
+TJ106,AVI-202,2026-01-16 13:19:54+05:30,2026-02-12 16:59:41+05:30,7,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-01-16 00:00:00+05:30
+TJ106,AVI-202,2026-02-23 16:42:22+05:30,2026-03-04 17:05:34+05:30,3,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-02-23 00:00:00+05:30
+TJ106,AVI-202,2026-03-23 16:05:01+05:30,2026-04-02 16:55:09+05:30,3,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-03-23 00:00:00+05:30
+TJ106,AVI-202,2026-04-13 21:26:58+05:30,2026-04-13 21:26:58+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-04-13 00:00:00+05:30
+TJ106,AVI-202,2026-04-30 21:38:01+05:30,2026-05-04 10:04:47+05:30,2,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-04-30 00:00:00+05:30
+TJ106,AVI-202,2026-05-15 13:56:32+05:30,2026-05-26 09:56:38+05:30,3,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-05-15 00:00:00+05:30
+TJ106,AVI-202,2026-06-18 21:08:03+05:30,2026-06-18 21:08:03+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-06-18 00:00:00+05:30
+TJ106,AVI-203,2026-01-28 16:12:25+05:30,2026-03-11 16:45:58+05:30,8,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-28 00:00:00+05:30
+TJ106,AVI-203,2026-04-06 16:49:56+05:30,2026-04-16 09:55:00+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-04-06 00:00:00+05:30
+TJ106,AVI-203,2026-04-30 13:27:30+05:30,2026-05-05 08:34:36+05:30,3,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-04-30 00:00:00+05:30
+TJ106,AVI-203,2026-05-22 11:09:50+05:30,2026-06-10 13:36:52+05:30,4,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-05-22 00:00:00+05:30
+TJ106,AVI-204,2026-01-06 16:37:52+05:30,2026-04-16 16:31:22+05:30,52,ADVISORY,AHRS,"[{'lru': 'AHRS', 'isolation_confidence': 0.9}]",AHRS LRU BIT fail,2026-01-06 00:00:00+05:30
+TJ106,AVI-204,2026-04-30 13:27:30+05:30,2026-06-18 21:08:03+05:30,26,ADVISORY,AHRS,"[{'lru': 'AHRS', 'isolation_confidence': 0.9}]",AHRS LRU BIT fail,2026-04-30 00:00:00+05:30
+TJ106,AVI-301,2026-01-08 10:15:39+05:30,2026-01-08 10:15:39+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-01-08 00:00:00+05:30
+TJ106,AVI-301,2026-02-06 13:31:24+05:30,2026-02-13 13:17:47+05:30,3,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-02-06 00:00:00+05:30
+TJ106,AVI-301,2026-02-24 16:42:41+05:30,2026-02-24 16:42:41+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-02-24 00:00:00+05:30
+TJ106,AVI-301,2026-03-11 16:45:58+05:30,2026-03-18 16:16:54+05:30,2,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-03-11 00:00:00+05:30
+TJ106,AVI-301,2026-04-06 16:49:56+05:30,2026-04-16 09:55:00+05:30,2,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-04-06 00:00:00+05:30
+TJ106,AVI-301,2026-05-05 08:34:36+05:30,2026-05-05 08:34:36+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-05-05 00:00:00+05:30
+TJ106,AVI-301,2026-05-20 16:14:34+05:30,2026-05-29 17:17:51+05:30,3,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-05-20 00:00:00+05:30
+TJ106,ECM-002,2026-04-07 21:28:48+05:30,2026-04-07 21:28:48+05:30,1,ADVISORY,ECMS,"[{'lru': 'ECMS', 'isolation_confidence': 0.95}]",ECMS processor / memory fault,2026-04-07 00:00:00+05:30
+TJ106,ELE-405,2026-01-07 16:44:39+05:30,2026-01-07 16:44:39+05:30,1,ADVISORY,BHEEM_EU,"[{'lru': 'TRU', 'isolation_confidence': 0.9}]",TRU fault,2026-01-07 00:00:00+05:30
+TJ106,ELE-405,2026-02-19 13:31:07+05:30,2026-02-19 13:31:07+05:30,1,ADVISORY,BHEEM_EU,"[{'lru': 'TRU', 'isolation_confidence': 0.9}]",TRU fault,2026-02-19 00:00:00+05:30
+TJ106,ENG-201,2026-01-06 16:37:52+05:30,2026-01-13 13:40:21+05:30,3,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-06 00:00:00+05:30
+TJ106,ENG-201,2026-02-06 13:31:24+05:30,2026-02-16 13:37:49+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-02-06 00:00:00+05:30
+TJ106,ENG-201,2026-03-02 10:06:13+05:30,2026-03-24 21:47:28+05:30,8,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-02 00:00:00+05:30
+TJ106,ENG-201,2026-04-06 13:22:41+05:30,2026-04-13 21:26:58+05:30,3,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-06 00:00:00+05:30
+TJ106,ENG-201,2026-04-30 13:27:30+05:30,2026-05-22 21:07:53+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-30 00:00:00+05:30
+TJ106,ENG-201,2026-06-04 09:57:40+05:30,2026-06-04 09:57:40+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-04 00:00:00+05:30
+TJ106,ENG-201,2026-06-15 13:34:21+05:30,2026-06-18 13:23:34+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-06-15 00:00:00+05:30
+TJ106,ENG-202,2026-01-29 16:20:19+05:30,2026-01-29 16:20:19+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-29 00:00:00+05:30
+TJ106,ENG-202,2026-02-11 09:47:32+05:30,2026-02-11 09:47:32+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-02-11 00:00:00+05:30
+TJ106,ENG-202,2026-03-11 16:45:58+05:30,2026-03-11 16:45:58+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-03-11 00:00:00+05:30
+TJ106,ENG-202,2026-05-26 09:56:38+05:30,2026-05-26 09:56:38+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-05-26 00:00:00+05:30
+TJ106,ENG-401,2026-01-29 16:20:19+05:30,2026-01-29 16:20:19+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-29 00:00:00+05:30
+TJ106,ENG-401,2026-02-10 16:43:41+05:30,2026-02-11 09:47:32+05:30,2,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-02-10 00:00:00+05:30
+TJ106,ENG-401,2026-03-11 16:45:58+05:30,2026-03-11 16:45:58+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-03-11 00:00:00+05:30
+TJ106,ENG-401,2026-05-26 09:56:38+05:30,2026-05-26 09:56:38+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-05-26 00:00:00+05:30
+TJ106,HYD-101,2026-01-12 13:29:36+05:30,2026-01-12 13:29:36+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-12 00:00:00+05:30
+TJ106,HYD-101,2026-02-19 13:31:07+05:30,2026-02-19 13:31:07+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-02-19 00:00:00+05:30
+TJ106,HYD-101,2026-03-12 16:35:25+05:30,2026-03-19 13:14:20+05:30,2,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-03-12 00:00:00+05:30
+TJ106,LGB-501,2026-01-30 10:08:15+05:30,2026-02-02 10:32:08+05:30,2,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-01-30 00:00:00+05:30
+TJ106,LGB-501,2026-02-19 21:13:03+05:30,2026-02-19 21:13:03+05:30,1,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-02-19 00:00:00+05:30
+TJ106,LGB-501,2026-03-02 10:06:13+05:30,2026-03-18 16:16:54+05:30,3,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-03-02 00:00:00+05:30
+TJ106,LGB-501,2026-05-29 17:17:51+05:30,2026-05-29 17:17:51+05:30,1,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-05-29 00:00:00+05:30
+TJ106,LGB-501,2026-06-10 13:36:52+05:30,2026-06-18 21:08:03+05:30,2,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-06-10 00:00:00+05:30
+TJ106,LGB-503,2026-05-29 17:17:51+05:30,2026-05-29 17:17:51+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'BRAKE_CONTROL', 'isolation_confidence': 0.5}
+ {'lru': 'BRAKE_VALVE', 'isolation_confidence': 0.5}]",Wheel brake fail,2026-05-29 00:00:00+05:30
+TJ106,SPS-001,2026-04-30 21:38:01+05:30,2026-04-30 21:38:01+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-04-30 00:00:00+05:30
+TJ107,ADC-001,2026-04-27 13:40:31+05:30,2026-04-27 13:40:31+05:30,1,CAUTION,ADC,"[{'lru': 'AOA_VANE', 'isolation_confidence': 0.9}]",AoA vane disagree,2026-04-27 00:00:00+05:30
+TJ107,ADC-002,2026-03-13 16:26:44+05:30,2026-03-13 21:44:23+05:30,2,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-03-13 00:00:00+05:30
+TJ107,ADC-002,2026-04-20 13:33:24+05:30,2026-04-20 13:33:24+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-04-20 00:00:00+05:30
+TJ107,ADC-002,2026-06-18 13:31:23+05:30,2026-06-18 13:31:23+05:30,1,ADVISORY,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.8}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.2}]",Air-data transducer fault,2026-06-18 00:00:00+05:30
+TJ107,ADC-501,2026-01-19 13:29:44+05:30,2026-01-19 13:29:44+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-01-19 00:00:00+05:30
+TJ107,ADC-501,2026-02-02 10:19:52+05:30,2026-02-02 10:19:52+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-02-02 00:00:00+05:30
+TJ107,AVI-201,2026-01-28 16:12:25+05:30,2026-01-28 16:12:25+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-28 00:00:00+05:30
+TJ107,AVI-201,2026-03-23 16:05:01+05:30,2026-03-23 16:05:01+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-23 00:00:00+05:30
+TJ107,AVI-201,2026-04-16 16:31:22+05:30,2026-04-20 13:33:24+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-04-16 00:00:00+05:30
+TJ107,AVI-201,2026-05-25 09:48:38+05:30,2026-06-01 10:07:30+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-05-25 00:00:00+05:30
+TJ107,AVI-201,2026-06-15 21:54:58+05:30,2026-06-15 21:54:58+05:30,1,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-06-15 00:00:00+05:30
+TJ107,AVI-202,2026-04-20 13:33:24+05:30,2026-04-20 13:33:24+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-04-20 00:00:00+05:30
+TJ107,AVI-202,2026-06-04 09:57:40+05:30,2026-06-05 13:16:37+05:30,2,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-06-04 00:00:00+05:30
+TJ107,AVI-202,2026-06-15 13:45:07+05:30,2026-06-18 21:08:03+05:30,2,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-06-15 00:00:00+05:30
+TJ107,AVI-203,2026-01-22 13:36:35+05:30,2026-02-06 13:31:24+05:30,4,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-22 00:00:00+05:30
+TJ107,AVI-203,2026-03-26 21:29:48+05:30,2026-03-26 21:29:48+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-26 00:00:00+05:30
+TJ107,AVI-203,2026-05-04 10:04:47+05:30,2026-05-07 21:35:12+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-05-04 00:00:00+05:30
+TJ107,AVI-203,2026-05-27 16:16:02+05:30,2026-05-27 16:16:02+05:30,1,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-05-27 00:00:00+05:30
+TJ107,AVI-203,2026-06-11 21:20:58+05:30,2026-06-18 13:31:23+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-06-11 00:00:00+05:30
+TJ107,ELE-405,2026-01-15 17:02:14+05:30,2026-01-15 17:02:14+05:30,1,ADVISORY,BHEEM_EU,"[{'lru': 'TRU', 'isolation_confidence': 0.9}]",TRU fault,2026-01-15 00:00:00+05:30
+TJ107,ENG-101,2026-06-18 13:31:23+05:30,2026-06-18 13:31:23+05:30,1,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-06-18 00:00:00+05:30
+TJ107,ENG-201,2026-01-14 10:04:18+05:30,2026-02-16 09:36:19+05:30,10,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-14 00:00:00+05:30
+TJ107,ENG-201,2026-03-02 10:06:13+05:30,2026-03-04 17:05:34+05:30,2,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-02 00:00:00+05:30
+TJ107,ENG-201,2026-04-13 08:34:36+05:30,2026-04-27 13:40:31+05:30,4,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-04-13 00:00:00+05:30
+TJ107,ENG-201,2026-05-21 08:34:36+05:30,2026-06-04 09:57:40+05:30,6,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-05-21 00:00:00+05:30
+TJ107,ENG-202,2026-01-14 10:04:18+05:30,2026-01-14 10:04:18+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-01-14 00:00:00+05:30
+TJ107,ENG-401,2026-01-14 10:04:18+05:30,2026-01-22 13:36:35+05:30,2,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-14 00:00:00+05:30
+TJ107,ENG-401,2026-06-04 09:57:40+05:30,2026-06-04 09:57:40+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-06-04 00:00:00+05:30
+TJ107,HYD-101,2026-01-05 08:34:36+05:30,2026-02-16 09:36:19+05:30,20,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-05 00:00:00+05:30
+TJ107,HYD-101,2026-03-02 10:06:13+05:30,2026-06-18 21:08:03+05:30,43,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-03-02 00:00:00+05:30
+TJ107,LGB-503,2026-03-31 16:22:32+05:30,2026-03-31 16:22:32+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'BRAKE_CONTROL', 'isolation_confidence': 0.5}
+ {'lru': 'BRAKE_VALVE', 'isolation_confidence': 0.5}]",Wheel brake fail,2026-03-31 00:00:00+05:30
+TJ107,SPS-001,2026-01-19 13:29:44+05:30,2026-01-19 13:29:44+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-01-19 00:00:00+05:30
+TJ107,SPS-001,2026-02-02 21:27:27+05:30,2026-02-02 21:27:27+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-02-02 00:00:00+05:30
+TJ107,SPS-001,2026-06-18 13:31:23+05:30,2026-06-18 13:31:23+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-06-18 00:00:00+05:30
+TJ108,ADC-501,2026-01-28 10:02:16+05:30,2026-01-28 10:02:16+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-01-28 00:00:00+05:30
+TJ108,ADC-501,2026-02-12 14:22:26+05:30,2026-02-12 14:22:26+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-02-12 00:00:00+05:30
+TJ108,ADC-501,2026-03-02 13:37:21+05:30,2026-03-02 13:37:21+05:30,1,CAUTION,ADC,"[{'lru': 'ADC', 'isolation_confidence': 0.6}
+ {'lru': 'PITOT_STATIC', 'isolation_confidence': 0.4}]",Air data degraded,2026-03-02 00:00:00+05:30
+TJ108,AVI-201,2026-01-09 09:52:04+05:30,2026-01-22 21:09:32+05:30,5,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-01-09 00:00:00+05:30
+TJ108,AVI-201,2026-02-10 16:37:34+05:30,2026-02-12 16:49:46+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-02-10 00:00:00+05:30
+TJ108,AVI-201,2026-03-12 16:35:25+05:30,2026-03-13 16:26:44+05:30,2,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-12 00:00:00+05:30
+TJ108,AVI-201,2026-03-25 21:16:47+05:30,2026-04-02 16:55:09+05:30,3,ADVISORY,RADAR,"[{'lru': 'RADAR', 'isolation_confidence': 0.8}]",Radar LRU BIT fail,2026-03-25 00:00:00+05:30
+TJ108,AVI-202,2026-01-15 10:08:04+05:30,2026-01-15 10:08:04+05:30,1,ADVISORY,SMS,"[{'lru': 'SMS', 'isolation_confidence': 0.85}]",SMS LRU BIT fail,2026-01-15 00:00:00+05:30
+TJ108,AVI-203,2026-01-06 16:37:52+05:30,2026-01-29 16:14:13+05:30,5,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-01-06 00:00:00+05:30
+TJ108,AVI-203,2026-03-02 10:16:09+05:30,2026-03-02 13:37:21+05:30,2,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-02 00:00:00+05:30
+TJ108,AVI-203,2026-03-19 10:16:00+05:30,2026-04-01 17:04:46+05:30,4,ADVISORY,INGPS,"[{'lru': 'INGPS', 'isolation_confidence': 0.85}]",INGPS LRU BIT fail,2026-03-19 00:00:00+05:30
+TJ108,AVI-301,2026-01-15 10:08:04+05:30,2026-01-15 10:08:04+05:30,1,ADVISORY,MC,"[{'lru': 'MUX_BUS', 'isolation_confidence': 0.5}
+ {'lru': 'MC', 'isolation_confidence': 0.5}]",1553 bus fault,2026-01-15 00:00:00+05:30
+TJ108,ENG-101,2026-01-08 13:40:42+05:30,2026-01-16 16:30:56+05:30,2,CAUTION,FADEC,"[{'lru': 'NOZZLE_ACTUATOR', 'isolation_confidence': 0.7}
+ {'lru': 'FADEC', 'isolation_confidence': 0.3}]",Nozzle actuator / torque motor fault,2026-01-08 00:00:00+05:30
+TJ108,ENG-201,2026-01-06 16:37:52+05:30,2026-01-06 16:37:52+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-06 00:00:00+05:30
+TJ108,ENG-201,2026-01-21 09:47:05+05:30,2026-01-28 10:02:16+05:30,5,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-01-21 00:00:00+05:30
+TJ108,ENG-201,2026-03-02 10:16:09+05:30,2026-03-02 13:37:21+05:30,2,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-02 00:00:00+05:30
+TJ108,ENG-201,2026-03-12 16:35:25+05:30,2026-04-01 17:04:46+05:30,6,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane A processor fault,2026-03-12 00:00:00+05:30
+TJ108,ENG-202,2026-03-02 13:37:21+05:30,2026-03-02 13:37:21+05:30,1,ADVISORY,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.95}]",FADEC lane B processor fault,2026-03-02 00:00:00+05:30
+TJ108,ENG-401,2026-01-06 16:37:52+05:30,2026-01-06 16:37:52+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-01-06 00:00:00+05:30
+TJ108,ENG-401,2026-03-02 13:37:21+05:30,2026-03-02 13:37:21+05:30,1,CAUTION,FADEC,"[{'lru': 'FADEC', 'isolation_confidence': 0.6}
+ {'lru': 'FADEC_ALTERNATOR', 'isolation_confidence': 0.4}]",FADEC power supply fault,2026-03-02 00:00:00+05:30
+TJ108,FCS-102,2026-02-06 13:31:24+05:30,2026-02-06 13:31:24+05:30,1,CAUTION,DFCC,"[{'lru': 'SLAT_ACTUATOR', 'isolation_confidence': 0.8}
+ {'lru': 'DFCC', 'isolation_confidence': 0.2}]",Slat actuator fault,2026-02-06 00:00:00+05:30
+TJ108,HYD-101,2026-01-09 09:52:04+05:30,2026-01-09 09:52:04+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-09 00:00:00+05:30
+TJ108,HYD-101,2026-01-21 13:34:19+05:30,2026-01-21 13:34:19+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'HYD_PUMP', 'isolation_confidence': 0.8}
+ {'lru': 'AMAGB', 'isolation_confidence': 0.2}]",Hydraulic pump fault,2026-01-21 00:00:00+05:30
+TJ108,LGB-501,2026-01-23 10:07:33+05:30,2026-01-23 10:07:33+05:30,1,WARNING,BHEEM_EU,"[{'lru': 'GEAR_PROXIMITY', 'isolation_confidence': 0.6}
+ {'lru': 'GEAR_ACTUATOR', 'isolation_confidence': 0.4}]",Gear unsafe,2026-01-23 00:00:00+05:30
+TJ108,SPS-001,2026-03-11 16:50:36+05:30,2026-03-11 16:50:36+05:30,1,CAUTION,BHEEM_EU,"[{'lru': 'AMAGB', 'isolation_confidence': 0.9}]",AMAGB oil low,2026-03-11 00:00:00+05:30

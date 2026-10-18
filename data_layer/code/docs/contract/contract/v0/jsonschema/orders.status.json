@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:phalanx:contract:0.2.0:orders.status:consumer",
+  "title": "orders.status record (Phalanx contract 0.2.0)",
+  "description": "Order lifecycle: accepted, queued, in work, completed, rejected (with reason). One record per status change.",
+  "x-phalanx-contract-hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "dict_version",
+    "dict_hash",
+    "order_id",
+    "status_seq",
+    "status",
+    "reason",
+    "t_status",
+    "result_record_ids"
+  ],
+  "properties": {
+    "record_id": {
+      "description": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "dict_version": {
+      "description": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "type": "string"
+    },
+    "dict_hash": {
+      "description": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{16,128}$"
+    },
+    "order_id": {
+      "description": "Order this status refers to.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "status_seq": {
+      "description": "Index of this status change within the order (0, 1, 2, ...).",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+    },
+    "status": {
+      "description": "Lifecycle state.",
+      "type": "string",
+      "enum": [
+        "ACCEPTED",
+        "QUEUED",
+        "IN_WORK",
+        "COMPLETED",
+        "REJECTED"
+      ]
+    },
+    "reason": {
+      "description": "Reason; required when status is REJECTED.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "t_status": {
+      "description": "Simulation time of the status change. The event and availability time of the record.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807,
+      "x-phalanx-time-unit": "ns",
+      "x-phalanx-time-scale": "sim_utc"
+    },
+    "result_record_ids": {
+      "description": "record_ids of the normal records the execution produced; empty if none.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$"
+      }
+    }
+  }
+}

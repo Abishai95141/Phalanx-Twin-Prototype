@@ -1,0 +1,298 @@
+# Code tables. Everything marked synthetic is a Phalanx construct (AD-19: IAF-relabelled synthetic codes; synthetic
+# SSS-NNN fault codes); it is never claimed to be the real Tejas code structure (RULES.md rule 6).
+format: phalanx.dictionary.code_tables/1
+tables:
+  validity:
+    title: Contract validity enum names (architecture §12; codes are owned by the W0.4 contract spec)
+    synthetic: false
+    prov: R-VALIDITY
+    values: [NORMAL, NO_COMPUTED_DATA, FUNCTIONAL_TEST, FAILURE_WARNING, BUS_INVALID]
+  ssm_bnr:
+    title: ARINC-429 sign/status matrix for BNR words (bits 30-31) -> validity
+    synthetic: false
+    prov: R-VALIDITY
+    codes: {"0": FAILURE_WARNING, "1": NO_COMPUTED_DATA, "2": FUNCTIONAL_TEST, "3": NORMAL}
+  ssm_dis:
+    title: ARINC-429 sign/status matrix for discrete words (bits 30-31) -> validity
+    synthetic: false
+    prov: R-VALIDITY
+    codes: {"0": NORMAL, "1": NO_COMPUTED_DATA, "2": FUNCTIONAL_TEST, "3": FAILURE_WARNING}
+  mil1553_validity_bit:
+    # 0.1.2 (AD-45, contract precedence AD-38/41): a set invalid bit is BUS_INVALID; FAILURE_WARNING is reserved
+    # for the ARINC-429 SSM failure-warning code
+    title: Per-message validity word (synthetic, F/A-18C IAVAL-style) bit value -> validity
+    synthetic: true
+    prov: R-ICD-WORDS
+    codes: {"0": NORMAL, "1": BUS_INVALID}
+  mil1553_status_word:
+    title: MIL-STD-1553B RT status word bits (bit 15 = first transmitted data bit after sync)
+    synthetic: false
+    prov: R-VALIDITY
+    bits:
+      "15": RT_ADDRESS_4
+      "14": RT_ADDRESS_3
+      "13": RT_ADDRESS_2
+      "12": RT_ADDRESS_1
+      "11": RT_ADDRESS_0
+      "10": MESSAGE_ERROR
+      "9": INSTRUMENTATION
+      "8": SERVICE_REQUEST
+      "4": BROADCAST_COMMAND_RECEIVED
+      "3": BUSY
+      "2": SUBSYSTEM_FLAG
+      "1": DYNAMIC_BUS_CONTROL_ACCEPTANCE
+      "0": TERMINAL_FLAG
+  bit_code_format:
+    title: Synthetic BIT/fault code format SSS-NNN (AD-19)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    pattern: "^[A-Z]{3}-[0-9]{3}$"
+    prefixes:
+      ENG: engine and FADEC
+      ECM: ECMS / engine monitoring
+      FCS: DFCC and actuators
+      ADC: air data
+      NAV: navigation
+      HYD: hydraulics
+      FUE: fuel
+      ELE: electrical
+      ECS: environmental control and life support
+      LGB: landing gear, brakes, NWS, chute
+      SPS: secondary power (AMAGB, JFS)
+      FIR: fire protection
+      AVI: avionics and buses
+      CWS: centralised warning system
+      STR: structure
+    number_blocks:
+      "001-099": sensor or input
+      "100-199": actuator or output
+      "200-299": processor, memory or software
+      "300-399": interface or bus
+      "400-499": power supply
+      "500-699": function or performance monitor
+      "700-899": exceedance or limit
+      "900-999": reserved
+    # 16-bit code word of a code_word channel (0.1.2, from A-W1.7-6; rule R-CODE-WORD): prefix index k (position of
+    # the prefix in the channel's `prefixes` list) in bits 15-10, NNN in bits 9-0; EU value (CIR, contract) =
+    # k * 1000 + NNN; word 0 / EU 0 = no active code (NNN 000 is never a code)
+    word_layout:
+      word_bits: 16
+      prefix_index: {lsb_bit: 10, width: 6}
+      number: {lsb_bit: 0, width: 10}
+      eu_prefix_scale: 1000
+      no_code: 0
+      prov: R-CODE-WORD
+  cws_legends:
+    title: CWS legend slots (30 red/amber legends; the real legend list is not public)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    slots: 30
+    slot_pattern: "CWS-L{n:02d}"
+  fcs_law:
+    title: FCS control-law state (from the inventory FCS.MODE row text)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    # 3 = GROUND added in 0.1.2 (W1.2, AD-47: M05 emits it on the ground)
+    codes: {"0": SCHEDULED_GAIN, "1": FIXED_GAIN_REVERSION, "2": SPIN_RECOVERY, "3": GROUND}
+  gps_fix:
+    title: GPS fix state (synthetic)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    codes: {"0": NO_FIX, "1": FIX_2D, "2": FIX_3D}
+  gps_fom:
+    title: GPS figure of merit (synthetic; code 1 = best estimated position accuracy, 9 = worst)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    codes: {"1": FOM_1, "2": FOM_2, "3": FOM_3, "4": FOM_4, "5": FOM_5, "6": FOM_6, "7": FOM_7, "8": FOM_8, "9": FOM_9}
+  ins_mode:
+    title: INS mode (synthetic)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    codes: {"0": "OFF", "1": ALIGN, "2": NAV_HYBRID, "3": NAV_INERTIAL_ONLY, "4": ATTITUDE_ONLY}
+  flight_phase:
+    # 0-7 are the DASHlink PH codes (R-CODES-PHASE); 8-15 are synthetic fighter phases added in 0.1.2 (W1.1,
+    # AD-49; R-CODES-SYNTHETIC), listed in synthetic_codes
+    title: Derived flight phase (DASHlink PH codes 0-7; synthetic fighter phases 8-15)
+    synthetic: false
+    prov: R-CODES-PHASE
+    extra_prov: [R-CODES-SYNTHETIC]
+    synthetic_codes: ["8", "9", "10", "11", "12", "13", "14", "15"]
+    codes: {"0": UNKNOWN, "1": PREFLIGHT, "2": TAXI, "3": TAKEOFF, "4": CLIMB, "5": CRUISE, "6": APPROACH, "7": ROLLOUT, "8": ENGINE_START, "9": MISSION, "10": DESCENT, "11": PATTERN, "12": TOUCH_AND_GO, "13": SHUTDOWN, "14": GROUND_RUN, "15": HOT_REFUEL}
+  borescope_grade:
+    title: Borescope finding grade (from the inventory MX.BORESCOPE range text)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    codes: {"0": PASS, "1": LIMIT, "2": REJECT}
+  store_station:
+    title: Store station content code (9 hard points; synthetic content codes)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    codes: {"0": EMPTY, "1": DROP_TANK, "2": AIR_TO_AIR, "3": AIR_TO_GROUND, "4": POD, "5": OTHER}
+  bit_codes:
+    # ONE synthetic BIT / fault / exceedance code table for every module (AD-48 item 5; AD-19). Promoted from
+    # M14's configs/tejas/params/M14/codes.yaml (102 codes, same order, so M14's code index is unchanged) plus
+    # ENG-509/ENG-510, which keep two M08 afterburner faults distinct. Identity and meaning only: desc, severity
+    # (sev), fault list (PFL/MFL), detection mechanism (mech), source LRU, lane, src (internal = LRU self-test,
+    # external = reported by the owning module, cir = limit monitor on a recorded channel), CWS legend slot,
+    # voice channel, and the monitor channel / limit id / sense / gate. Detection timing, suspects, CND/NFF
+    # propensity and sympathetic codes are M14 behaviour parameters and stay in M14's params.
+    title: Unified synthetic BIT/fault/exceedance codes SSS-NNN (FADEC M08, FCS M05, utilities M09, monitoring M14)
+    synthetic: true
+    prov: R-CODES-SYNTHETIC
+    format: bit_code_format
+    groups: {ENG: ENGINE, ECM: ENGINE_MONITORING, FCS: FLIGHT_CONTROL, ADC: AIR_DATA, NAV: NAVIGATION, HYD: HYDRAULICS, FUE: FUEL, ELE: ELECTRICAL, ECS: ENVIRONMENTAL_CONTROL, LGB: LANDING_GEAR_BRAKES, SPS: SECONDARY_POWER, FIR: FIRE_PROTECTION, AVI: AVIONICS, CWS: WARNING_SYSTEM, STR: STRUCTURE}
+    # limit ids that are module parameters, not dictionary channel limits (owner module)
+    module_limits: {aoa_voice: M14, discrete_on: M14, hyd_low: M14, hyd_temp_high: M14, low_alt: M14, low_fuel: M14, mach_max: M14, n1_overspeed: M14, n2_overspeed: M14, obogs_o2_low: M14, oil_p_low: M14}
+    codes:
+      ENG-001: {index: 0, desc: "N1 sensor lane A fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "external"}
+      ENG-002: {index: 1, desc: "N1 sensor lane B fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "external"}
+      ENG-003: {index: 2, desc: "N2 sensor lane A fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "external"}
+      ENG-004: {index: 3, desc: "N2 sensor lane B fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "external"}
+      ENG-005: {index: 4, desc: "T5 harness A open/fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "external", legend: "CWS-L01"}
+      ENG-006: {index: 5, desc: "T5 harness B open/fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "external", legend: "CWS-L01"}
+      ENG-007: {index: 6, desc: "PS3 transducer lane A fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "external"}
+      ENG-008: {index: 7, desc: "PS3 transducer lane B fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "external"}
+      ENG-009: {index: 8, desc: "T1 sensor lane A fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "external"}
+      ENG-010: {index: 9, desc: "T1 sensor lane B fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "external"}
+      ENG-011: {index: 10, desc: "Nozzle position feedback fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L02"}
+      ENG-012: {index: 11, desc: "Oil pressure transmitter fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-014: {index: 12, desc: "T25 sensor lane A fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "external"}
+      ENG-024: {index: 13, desc: "T25 sensor lane B fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "external"}
+      ENG-031: {index: 14, desc: "N1 cross-channel disagreement (soft fail)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-032: {index: 15, desc: "N2 cross-channel disagreement (soft fail)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-033: {index: 16, desc: "T1 cross-channel disagreement (soft fail)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-034: {index: 17, desc: "T25 cross-channel disagreement (soft fail)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-035: {index: 18, desc: "PS3 cross-channel disagreement (soft fail)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-036: {index: 19, desc: "T5 cross-channel disagreement (soft fail)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-041: {index: 20, desc: "N1 analytical check fail, model substituted", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-042: {index: 21, desc: "N2 analytical check fail, model substituted", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-043: {index: 22, desc: "T1 analytical check fail, model substituted", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-044: {index: 23, desc: "T25 analytical check fail, model substituted", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-045: {index: 24, desc: "PS3 analytical check fail, model substituted", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-046: {index: 25, desc: "T5 analytical check fail, model substituted", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "external"}
+      ENG-051: {index: 26, desc: "N1 signal fail (no valid lane)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-052: {index: 27, desc: "N2 signal fail (no valid lane)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-053: {index: 28, desc: "T1 signal fail (no valid lane)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-054: {index: 29, desc: "T25 signal fail (no valid lane)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-055: {index: 30, desc: "PS3 signal fail (no valid lane)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-056: {index: 31, desc: "T5 signal fail (no valid lane)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-508: {index: 32, desc: "FADEC control reversion (second like failure)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L03"}
+      ENG-101: {index: 33, desc: "Nozzle actuator / torque motor fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "internal", legend: "CWS-L02"}
+      ENG-102: {index: 34, desc: "Variable-geometry actuator fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", src: "internal"}
+      ENG-103: {index: 35, desc: "Fuel metering valve fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "internal", legend: "CWS-L03"}
+      ENG-201: {index: 36, desc: "FADEC lane A processor fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "A", src: "internal"}
+      ENG-202: {index: 37, desc: "FADEC lane B processor fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "FADEC", lane: "B", src: "internal"}
+      ENG-401: {index: 38, desc: "FADEC power supply fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "internal", legend: "CWS-L03"}
+      ENG-501: {index: 39, desc: "Compressor stall detected", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L04"}
+      ENG-502: {index: 40, desc: "Flameout detected", sev: "WARNING", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L05"}
+      ENG-503: {index: 41, desc: "Afterburner fail / no-light", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L06"}
+      ENG-504: {index: 42, desc: "Hung start", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L07"}
+      ENG-505: {index: 43, desc: "Hot start", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L07"}
+      ENG-506: {index: 44, desc: "Thrust low / engine fail", sev: "WARNING", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L05"}
+      ENG-701: {index: 45, desc: "T5 over-temperature", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "ECMS", src: "cir", legend: "CWS-L08", monitor: {channel: "ENG.T5", limit: "steady_max", sense: "high"}}
+      ENG-702: {index: 46, desc: "N1 overspeed", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "ECMS", src: "cir", legend: "CWS-L09", monitor: {channel: "ENG.N1.V", limit: "n1_overspeed", sense: "high"}}
+      ENG-703: {index: 47, desc: "N2 overspeed", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "ECMS", src: "cir", legend: "CWS-L09", monitor: {channel: "ENG.N2.V", limit: "n2_overspeed", sense: "high"}}
+      ECM-001: {index: 48, desc: "Chip detector", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "ECMS", src: "cir", legend: "CWS-L10", monitor: {channel: "ENG.CHIP", limit: "discrete_on", sense: "high"}}
+      ECM-002: {index: 49, desc: "ECMS processor / memory fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "ECMS", src: "internal"}
+      ECM-501: {index: 50, desc: "Gas-path trend alert (EHM)", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "ECMS", src: "internal"}
+      ECM-701: {index: 51, desc: "Engine vibration exceedance", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "ECMS", src: "cir", legend: "CWS-L11", monitor: {channel: "ENG.VIB.OVERALL", limit: "steady_max", sense: "high"}}
+      ECM-702: {index: 52, desc: "Engine oil pressure low", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "ECMS", src: "cir", legend: "CWS-L12", monitor: {channel: "ENG.OIL_P", limit: "oil_p_low", sense: "low", gate: "engine_running"}}
+      FCS-001: {index: 53, desc: "Rate sensor lane fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "DFCC", src: "external"}
+      FCS-005: {index: 54, desc: "Accelerometer lane fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "DFCC", src: "external"}
+      FCS-101: {index: 55, desc: "Elevon/rudder actuator BIT fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "DFCC", src: "internal", legend: "CWS-L13"}
+      FCS-102: {index: 56, desc: "Slat actuator fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "DFCC", src: "internal", legend: "CWS-L13"}
+      FCS-201: {index: 57, desc: "DFCC channel fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "DFCC", src: "internal", legend: "CWS-L14"}
+      FCS-501: {index: 58, desc: "Air-data mistrack", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "DFCC", src: "external", legend: "CWS-L15"}
+      FCS-502: {index: 59, desc: "FCS reversion to fixed gain", sev: "WARNING", list: "PFL", mech: "CBIT", lru: "DFCC", src: "external", legend: "CWS-L16"}
+      ADC-001: {index: 60, desc: "AoA vane disagree", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "ADC", src: "internal", legend: "CWS-L15"}
+      ADC-002: {index: 61, desc: "Air-data transducer fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "ADC", src: "internal"}
+      ADC-401: {index: 62, desc: "Probe/vane heater fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "DFCC", src: "internal", legend: "CWS-L17"}
+      ADC-501: {index: 63, desc: "Air data degraded", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "ADC", src: "internal", legend: "CWS-L15"}
+      NAV-001: {index: 64, desc: "INS sensor fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "INGPS", src: "internal"}
+      NAV-201: {index: 65, desc: "INGPS processor fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "INGPS", src: "internal", legend: "CWS-L18"}
+      AVI-201: {index: 66, desc: "Radar LRU BIT fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "RADAR", src: "internal"}
+      AVI-202: {index: 67, desc: "SMS LRU BIT fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "SMS", src: "internal"}
+      AVI-203: {index: 68, desc: "INGPS LRU BIT fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "INGPS", src: "internal"}
+      AVI-204: {index: 69, desc: "AHRS LRU BIT fail", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "AHRS", src: "internal"}
+      AVI-205: {index: 70, desc: "Mission computer LRU BIT fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "MC", src: "internal", legend: "CWS-L19"}
+      AVI-301: {index: 71, desc: "1553 bus fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "MC", src: "internal"}
+      HYD-001: {index: 72, desc: "Hydraulic filter ΔP indicator", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal"}
+      HYD-101: {index: 73, desc: "Hydraulic pump fault", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal", legend: "CWS-L20"}
+      HYD-501: {index: 74, desc: "HYD1 pressure low", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "BHEEM_EU", src: "cir", legend: "CWS-L21", monitor: {channel: "HYD.SYS1.P", limit: "hyd_low", sense: "low", gate: "engine_running"}}
+      HYD-502: {index: 75, desc: "HYD2 pressure low", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "BHEEM_EU", src: "cir", legend: "CWS-L22", monitor: {channel: "HYD.SYS2.P", limit: "hyd_low", sense: "low", gate: "engine_running"}}
+      HYD-701: {index: 76, desc: "Hydraulic temperature high", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "BHEEM_EU", src: "cir", legend: "CWS-L20", monitor: {channel: "HYD.SYS1.T", limit: "hyd_temp_high", sense: "high"}}
+      FUE-001: {index: 77, desc: "Fuel gauging probe fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "ECFM_C", src: "internal"}
+      FUE-401: {index: 78, desc: "Fuel boost pump pressure low", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "ECFM_C", src: "internal", legend: "CWS-L23"}
+      FUE-501: {index: 79, desc: "Low fuel", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "ECFM_C", src: "cir", legend: "CWS-L24", monitor: {channel: "FUEL.TOTAL.TOTAL", limit: "low_fuel", sense: "low"}}
+      ELE-401: {index: 80, desc: "Main generator offline", sev: "WARNING", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "external", legend: "CWS-L25"}
+      ELE-702: {index: 81, desc: "DC bus under-voltage", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "BHEEM_EU", src: "cir", legend: "CWS-L26", monitor: {channel: "ELEC.DCBUS.V.MAIN", limit: "normal_band_low", sense: "low", gate: "engine_running"}}
+      ELE-703: {index: 82, desc: "Battery low", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "BHEEM_EU", src: "cir", legend: "CWS-L26", monitor: {channel: "ELEC.BATT.AH", limit: "warning_low", sense: "low"}}
+      ELE-404: {index: 83, desc: "Backup power on line", sev: "ADVISORY", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "external", legend: "CWS-L25"}
+      ELE-405: {index: 84, desc: "TRU fault", sev: "ADVISORY", list: "MFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal"}
+      ELE-701: {index: 85, desc: "Generator frequency out of band", sev: "ADVISORY", list: "MFL", mech: "EXCEEDANCE", lru: "BHEEM_EU", src: "cir", monitor: {channel: "ELEC.GEN.F", limit: "normal_band_low", sense: "low", gate: "engine_running"}}
+      ECS-501: {index: 86, desc: "Avionics cooling overheat", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "ECFM_C", src: "internal", legend: "CWS-L27"}
+      ECS-701: {index: 87, desc: "Bleed temperature high", sev: "CAUTION", list: "PFL", mech: "EXCEEDANCE", lru: "ECFM_C", src: "cir", legend: "CWS-L27", monitor: {channel: "ECS.BLEED_T.PHX_IN", limit: "steady_max", sense: "high"}}
+      ECS-503: {index: 88, desc: "OBOGS low oxygen", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "ECFM_C", src: "cir", legend: "CWS-L28", monitor: {channel: "LSS.OBOGS.O2", limit: "obogs_o2_low", sense: "low", gate: "airborne"}}
+      LGB-501: {index: 89, desc: "Gear unsafe", sev: "WARNING", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal", legend: "CWS-L29"}
+      LGB-502: {index: 90, desc: "Weight-on-wheels disagree", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "DFCC", src: "external", legend: "CWS-L29"}
+      LGB-503: {index: 91, desc: "Wheel brake fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal", legend: "CWS-L30"}
+      SPS-001: {index: 92, desc: "AMAGB oil low", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal", legend: "CWS-L10"}
+      SPS-501: {index: 93, desc: "JFS start fail", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "internal", legend: "CWS-L07"}
+      FIR-501: {index: 94, desc: "Engine fire warning", sev: "WARNING", list: "PFL", mech: "CBIT", lru: "BHEEM_EU", src: "cir", legend: "CWS-L05", voice: false, monitor: {channel: "FIRE.WARN", limit: "discrete_on", sense: "high"}}
+      STR-701: {index: 95, desc: "Over-g (Nz above +8 g)", sev: "CAUTION", list: "MFL", mech: "EXCEEDANCE", lru: "OAC", src: "cir", monitor: {channel: "FCS.VOTED.NZ", limit: "operational_envelope_high", sense: "high"}}
+      STR-702: {index: 96, desc: "Under-g (Nz below -3.5 g)", sev: "CAUTION", list: "MFL", mech: "EXCEEDANCE", lru: "OAC", src: "cir", monitor: {channel: "FCS.VOTED.NZ", limit: "operational_envelope_low", sense: "low"}}
+      STR-703: {index: 97, desc: "Overspeed (Mach above cleared limit)", sev: "CAUTION", list: "MFL", mech: "EXCEEDANCE", lru: "OAC", src: "cir", monitor: {channel: "AD.MACH", limit: "mach_max", sense: "high"}}
+      CWS-701: {index: 98, desc: "Voice warning: angle of attack", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "CWS", src: "cir", legend: "CWS-L04", voice: "CWS.VOICE.AOA", monitor: {channel: "AD.AOA", limit: "aoa_voice", sense: "high", gate: "airborne"}}
+      CWS-702: {index: 99, desc: "Voice warning: low altitude", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "CWS", src: "cir", legend: "CWS-L29", voice: "CWS.VOICE.LOW_ALT", monitor: {channel: "NAV.RADALT", limit: "low_alt", sense: "low", gate: "airborne"}}
+      CWS-703: {index: 100, desc: "Voice warning: undercarriage", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "CWS", src: "external", legend: "CWS-L29", voice: "CWS.VOICE.UC"}
+      CWS-704: {index: 101, desc: "Voice warning: canopy", sev: "WARNING", list: "PFL", mech: "EXCEEDANCE", lru: "CWS", src: "external", legend: "CWS-L28", voice: "CWS.VOICE.CANOPY"}
+      # ---- added in dictionary 0.1.2: M08 faults that M14's provisional translation folded into ENG-503
+      ENG-509: {index: 102, desc: "Afterburner lockout (light-off retries exhausted)", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L06"}
+      ENG-510: {index: 103, desc: "Afterburner blowout", sev: "CAUTION", list: "PFL", mech: "CBIT", lru: "FADEC", src: "external", legend: "CWS-L06"}
+    # Documented migrations to this table (W2.1). M08's codes as on its unmerged branch reuse numbers with other
+    # meanings (e.g. its ENG-011 is N1 lane A, here ENG-011 is the nozzle feedback fault).
+    legacy:
+      M08:
+        source: "wp/w1.3b-fadec c1c63b4, src/phalanx/fadec/codes.py FAULT_CODES (unmerged; SYNTHETIC)"
+        codes:
+          ENG-011: ENG-001  # N1 lane A failed
+          ENG-021: ENG-002  # N1 lane B failed
+          ENG-012: ENG-003  # N2 lane A failed
+          ENG-022: ENG-004  # N2 lane B failed
+          ENG-013: ENG-009  # T1 lane A failed
+          ENG-023: ENG-010  # T1 lane B failed
+          ENG-014: ENG-014  # T25 lane A failed
+          ENG-024: ENG-024  # T25 lane B failed
+          ENG-015: ENG-007  # PS3 lane A failed
+          ENG-025: ENG-008  # PS3 lane B failed
+          ENG-016: ENG-005  # T5 lane A (harness A) failed
+          ENG-026: ENG-006  # T5 lane B (harness B) failed
+          ENG-031: ENG-031  # N1 cross-channel soft-fail
+          ENG-032: ENG-032  # N2 cross-channel soft-fail
+          ENG-033: ENG-033  # T1 cross-channel soft-fail
+          ENG-034: ENG-034  # T25 cross-channel soft-fail
+          ENG-035: ENG-035  # PS3 cross-channel soft-fail
+          ENG-036: ENG-036  # T5 cross-channel soft-fail
+          ENG-041: ENG-041  # N1 analytical fail, model substituted
+          ENG-042: ENG-042  # N2 analytical fail, model substituted
+          ENG-043: ENG-043  # T1 analytical fail, model substituted
+          ENG-044: ENG-044  # T25 analytical fail, model substituted
+          ENG-045: ENG-045  # PS3 analytical fail, model substituted
+          ENG-046: ENG-046  # T5 analytical fail, model substituted
+          ENG-051: ENG-051  # N1 signal fail (no lane)
+          ENG-052: ENG-052  # N2 signal fail (no lane)
+          ENG-053: ENG-053  # T1 signal fail (no lane)
+          ENG-054: ENG-054  # T25 signal fail (no lane)
+          ENG-055: ENG-055  # PS3 signal fail (no lane)
+          ENG-056: ENG-056  # T5 signal fail (no lane)
+          ENG-501: ENG-502  # Flameout detected, auto-relight active
+          ENG-502: ENG-504  # Hung start / hung relight
+          ENG-503: ENG-501  # Compressor stall detected
+          ENG-504: ENG-506  # Sub-idle (N2 below run threshold, fuel on) = the FADEC's engine-fail / thrust-low detection
+          ENG-505: ENG-503  # Afterburner no-light
+          ENG-506: ENG-509  # Afterburner failed: retries exhausted
+          ENG-507: ENG-510  # Afterburner blowout
+          ENG-508: ENG-508  # Control reversion (second like failure)
+          ENG-701: ENG-701  # T5 over-temperature (M14 records it from its ECMS monitor)
+          ENG-702: ENG-702  # N1 overspeed (M14 records it from its ECMS monitor)
+          ENG-703: ENG-703  # N2 overspeed (M14 records it from its ECMS monitor)

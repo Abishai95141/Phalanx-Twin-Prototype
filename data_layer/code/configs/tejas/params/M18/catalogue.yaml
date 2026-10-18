@@ -1,0 +1,546 @@
+# M18 maintainable-item catalogue (W1.8). SYNTHETIC: part numbers, makers, serial formats and the position list are
+# Phalanx constructs (AD-19, RULES.md rule 6). They are not the real Tejas illustrated parts catalogue.
+#
+# One entry per item class (a part-number class). `positions` are the installed positions on every tail.
+# Numeric columns are declared once under `columns` with units and evidence; a class may override the evidence
+# of one cell under `evidence` (e.g. a DIRECT life limit). ASSUMPTION columns carry a relative sweep (a multiplier
+# range applied to every class) and an assumption_id registered in docs/assumptions.md (W1.8 section).
+# Loader and rules: src/phalanx/maintenance/catalogue.py.
+format: phalanx.m18.catalogue/1
+synthetic_label: >-
+  SYNTHETIC Phalanx item catalogue (AD-19): part numbers, makers and serials are synthetic; positions and
+  classes are a v1 selection of maintenance-relevant LRUs, not the real Tejas IPC.
+columns:
+  ts_hours:
+    units: h
+    description: Median elapsed troubleshooting time (fault isolation) for a defect against this class.
+    evidence: {tag: ASSUMPTION, source: "NAMP 4790.2E Fig 15-6 (IGB chip: 3.0 elapsed h incl. troubleshooting); research_notes maintenance_records_and_events.md chain 1 (troubleshooting 12:40-15:10, 2.5 h)"}
+    sweep: [0.5, 2.0]
+    assumption_id: A-W1.8-5
+  rr_hours:
+    units: h
+    description: Median elapsed remove-and-replace time including ground run / operational check.
+    evidence: {tag: ASSUMPTION, source: "NAMP 4790.2E Figs 15-8/15-41 (FADEC R/R; 13.5 elapsed h incl. waits); maintenance_records_and_events.md chain 1 (install 17:30-18:30)"}
+    sweep: [0.5, 2.0]
+    assumption_id: A-W1.8-5
+  p_isolate:
+    units: "1"
+    description: Probability that troubleshooting isolates the truly faulty position when the fault is real (else a wrong suspect in the ambiguity group is replaced).
+    evidence: {tag: ASSUMPTION, source: "report §9 (F110 EMS isolated ~70 % of real faults correctly at service entry; 90 % target); candidate_engine_and_ehm_data.md l.710"}
+    sweep: [0.75, 1.15]
+    assumption_id: A-W1.8-6
+  p_ground_repro:
+    units: "1"
+    description: Probability that a real fault reproduces on the ground check (intermittents lower).
+    evidence: {tag: ASSUMPTION, source: "report §9 (intermittents two-state Markov; NFF 30-60 % avionics, Khan et al.); TO 00-20-2 HMC 675/676"}
+    sweep: [0.7, 1.15]
+    assumption_id: A-W1.8-6
+  p_bench_miss:
+    units: "1"
+    description: Probability that the bench test does not confirm a truly faulty unit (RTOK on a bad unit; rogue-unit mechanism).
+    evidence: {tag: ASSUMPTION, source: "FAA AC 120-17B (rogue units: same S/N, repetitive removals); MIL-HDBK-338B (CND/RTOK)"}
+    sweep: [0.0, 2.0]
+    assumption_id: A-W1.8-7
+  p_bcm:
+    units: "1"
+    description: Probability that a confirmed-faulty unit is beyond the capability of base (I-level) maintenance and goes to depot (BRD/HAL/OEM).
+    evidence: {tag: ASSUMPTION, source: "CAG 17/2015 para 4.4 (of 344 LCA LRUs, 90 non-repairable, 69 without HAL ROH: D-level dependence) [DIRECT existence]; class values swept"}
+    sweep: [0.5, 1.5]
+    assumption_id: A-W1.8-7
+  shop_days:
+    units: day
+    description: Median base-shop (I-level) turnaround for bench check and repair.
+    evidence: {tag: ASSUMPTION, source: "NAMP §15.5 (I-level induction by turn-in document); no IAF value public"}
+    sweep: [0.5, 3.0]
+    assumption_id: A-W1.8-7
+  depot_days:
+    units: day
+    description: Median depot (BRD/HAL/OEM) turnaround.
+    evidence: {tag: "TRANSFER: F-35 military depots", source: "GAO-23-105341 pp.11-13 (average 72 days; goal 60-90); CAG 38/2015 para 2.1.3.2 (LRUs sent to OEM: longer turnaround)"}
+  stock_per_ac:
+    units: "1"
+    description: Initial serviceable spares at the base per aircraft held (rounded up, minimum 0).
+    evidence: {tag: ASSUMPTION, source: "Scale of Rotables not public (CAG 38/2015 para 2.1.3.4 names it); engine overridden by DIRECT CAG 17/2015"}
+    sweep: [0.0, 3.0]
+    assumption_id: A-W1.8-8
+  life_fh:
+    units: h
+    description: Hard-time flight-hour life (0 = no FH limit).
+    evidence: {tag: ASSUMPTION, source: "IAF maintains on hours flown and calendar life (41st Report 16th LS para 3.20) [DIRECT practice]; values per class swept unless overridden"}
+    sweep: [0.6, 2.0]
+    assumption_id: A-W1.8-9
+  life_landings:
+    units: "1"
+    description: Life in landings (0 = none); tyres are replaced on condition at this landing count.
+    evidence: {tag: ASSUMPTION, source: "per-class overrides carry the evidence"}
+    sweep: [0.6, 1.5]
+    assumption_id: A-W1.8-9
+  life_streams:
+    units: "1"
+    description: Life in brake-chute streamings (0 = none).
+    evidence: {tag: ASSUMPTION, source: "per-class override (chute) carries the evidence"}
+    sweep: [0.8, 1.2]
+    assumption_id: A-W1.8-9
+  life_years:
+    units: year
+    description: Calendar life since manufacture or last overhaul (0 = none).
+    evidence: {tag: ASSUMPTION, source: "per-class overrides carry the evidence"}
+    sweep: [0.5, 1.5]
+    assumption_id: A-W1.8-9
+  lead_mult:
+    units: "1"
+    description: Multiplier on the supply lead-time distribution for this class (engine supply is a documented Tejas availability shock).
+    evidence: {tag: ASSUMPTION, source: "indian_fleet_platform_relevance.md (GE F404 supply ~2 years late; 'only five' engines for 20 Mk1A, Apr 2026)"}
+    sweep: [0.5, 3.0]
+    assumption_id: A-W1.8-10
+  unit_cost:
+    units: "1"
+    description: Relative unit cost (cost-proxy KPI only; engine = 100).
+    evidence: {tag: ASSUMPTION, source: "relative ordering only; no prices used"}
+    sweep: [0.5, 2.0]
+    assumption_id: A-W1.8-11
+classes:
+  ENG:
+    name: F404-GE-IN20 engine (composite F404, AD-01)
+    part_no: SYN-PN-ENG-F404
+    maker: SYN-MKR-ENG
+    system: ENG
+    lru: null
+    positions: [ENG]
+    mesm: G
+    ambiguity: ENGINE
+    repair_level: D
+    consumable: false
+    inspectable_by: [BORESCOPE, SRV-L2-MAJOR, COND-ENGINE]
+    ts_hours: 2.5
+    rr_hours: 14.0
+    p_isolate: 0.85
+    p_ground_repro: 0.85
+    p_bench_miss: 0.05
+    p_bcm: 1.0
+    shop_days: 5.0
+    depot_days: 120.0
+    stock_per_ac: 0.2
+    life_fh: 1000.0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 2.0
+    unit_cost: 100.0
+    evidence:
+      stock_per_ac: {tag: DIRECT, source: "CAG 17/2015 para 4.6.1 (IOC contract support package: four reserve engines for 20 aircraft)"}
+      depot_days: {tag: ASSUMPTION, source: "engine overhaul at HAL/OEM; longer than the 72-day LRU average (GAO-23-105341); no IN20 value public"}
+  FADEC:
+    name: Engine FADEC (dual channel)
+    part_no: SYN-PN-FADEC
+    maker: SYN-MKR-FADEC
+    system: ENG
+    lru: FADEC
+    positions: [FADEC]
+    mesm: G
+    ambiguity: ENGINE
+    repair_level: D
+    consumable: false
+    inspectable_by: []
+    ts_hours: 2.0
+    rr_hours: 3.0
+    p_isolate: 0.8
+    p_ground_repro: 0.75
+    p_bench_miss: 0.15
+    p_bcm: 1.0
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.125
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.5
+    unit_cost: 12.0
+  JFS:
+    name: Jet fuel starter GTSU-110
+    part_no: SYN-PN-JFS
+    maker: SYN-MKR-SPS
+    system: SPS
+    lru: null
+    positions: [JFS]
+    mesm: G
+    ambiguity: START
+    repair_level: D
+    consumable: false
+    inspectable_by: [SRV-L2-MAJOR]
+    ts_hours: 2.0
+    rr_hours: 4.0
+    p_isolate: 0.8
+    p_ground_repro: 0.8
+    p_bench_miss: 0.1
+    p_bcm: 0.8
+    shop_days: 4.0
+    depot_days: 72.0
+    stock_per_ac: 0.125
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 6.0
+  AMAGB:
+    name: Aircraft-mounted accessory gearbox
+    part_no: SYN-PN-AMAGB
+    maker: SYN-MKR-SPS
+    system: SPS
+    lru: null
+    positions: [AMAGB]
+    mesm: G
+    ambiguity: START
+    repair_level: D
+    consumable: false
+    inspectable_by: [SRV-L2-MAJOR]
+    ts_hours: 2.0
+    rr_hours: 6.0
+    p_isolate: 0.85
+    p_ground_repro: 0.85
+    p_bench_miss: 0.05
+    p_bcm: 1.0
+    shop_days: 4.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 750.0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 5.0
+    evidence:
+      life_fh: {tag: DIRECT, source: "DDP node 8779 (AMAGB: 750 h life); tejas_utility_systems.md KQ1"}
+  HYDP:
+    name: Engine-driven hydraulic pump (280 bar)
+    part_no: SYN-PN-HYDP
+    maker: SYN-MKR-HYD
+    system: HYD
+    lru: null
+    positions: [HYDP1, HYDP2]
+    mesm: G
+    ambiguity: HYDRAULIC
+    repair_level: I
+    consumable: false
+    inspectable_by: [SRV-L2-MINOR, SRV-L2-MAJOR]
+    ts_hours: 2.0
+    rr_hours: 3.0
+    p_isolate: 0.8
+    p_ground_repro: 0.85
+    p_bench_miss: 0.05
+    p_bcm: 0.4
+    shop_days: 5.0
+    depot_days: 72.0
+    stock_per_ac: 0.125
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 3.0
+  GEN:
+    name: Main AC generator
+    part_no: SYN-PN-GEN
+    maker: SYN-MKR-ELE
+    system: ELE
+    lru: GCU
+    positions: [GEN]
+    mesm: G
+    ambiguity: ELECTRICAL
+    repair_level: I
+    consumable: false
+    inspectable_by: [SRV-L2-MAJOR]
+    ts_hours: 1.5
+    rr_hours: 2.5
+    p_isolate: 0.8
+    p_ground_repro: 0.8
+    p_bench_miss: 0.1
+    p_bcm: 0.4
+    shop_days: 4.0
+    depot_days: 72.0
+    stock_per_ac: 0.125
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 3.0
+  DFCC:
+    name: Digital flight control computer (quadruplex)
+    part_no: SYN-PN-DFCC
+    maker: SYN-MKR-FCS
+    system: FCS
+    lru: DFCC
+    positions: [DFCC]
+    mesm: G
+    ambiguity: FLIGHT_CONTROL
+    repair_level: D
+    consumable: false
+    inspectable_by: []
+    ts_hours: 2.0
+    rr_hours: 2.0
+    p_isolate: 0.85
+    p_ground_repro: 0.7
+    p_bench_miss: 0.2
+    p_bcm: 1.0
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 10.0
+  ADC:
+    name: Air data computer (one of four lanes, represented as one position in v1)
+    part_no: SYN-PN-ADC
+    maker: SYN-MKR-ADC
+    system: ADC
+    lru: ADC
+    positions: [ADC]
+    mesm: G
+    ambiguity: FLIGHT_CONTROL
+    repair_level: D
+    consumable: false
+    inspectable_by: []
+    ts_hours: 1.5
+    rr_hours: 1.5
+    p_isolate: 0.8
+    p_ground_repro: 0.7
+    p_bench_miss: 0.2
+    p_bcm: 1.0
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 4.0
+  INGPS:
+    name: INS/GPS
+    part_no: SYN-PN-INGPS
+    maker: SYN-MKR-NAV
+    system: NAV
+    lru: INGPS
+    positions: [INGPS]
+    mesm: P
+    ambiguity: AVIONICS
+    repair_level: D
+    consumable: false
+    inspectable_by: []
+    ts_hours: 1.5
+    rr_hours: 1.5
+    p_isolate: 0.75
+    p_ground_repro: 0.65
+    p_bench_miss: 0.25
+    p_bcm: 1.0
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 6.0
+  RADAR:
+    name: Fire-control radar (LRU set)
+    part_no: SYN-PN-RADAR
+    maker: SYN-MKR-AVI
+    system: AVI
+    lru: RADAR
+    positions: [RADAR]
+    mesm: P
+    ambiguity: AVIONICS
+    repair_level: D
+    consumable: false
+    inspectable_by: []
+    ts_hours: 2.0
+    rr_hours: 2.0
+    p_isolate: 0.7
+    p_ground_repro: 0.6
+    p_bench_miss: 0.3
+    p_bcm: 1.0
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 15.0
+  FQGS:
+    name: Fuel quantity gauging controller (ECFM-C function)
+    part_no: SYN-PN-FQGS
+    maker: SYN-MKR-FUE
+    system: FUE
+    lru: ECFM_C
+    positions: [FQGS]
+    mesm: G
+    ambiguity: FUEL
+    repair_level: I
+    consumable: false
+    inspectable_by: [SRV-L2-MINOR, SRV-L2-MAJOR]
+    ts_hours: 1.5
+    rr_hours: 2.0
+    p_isolate: 0.75
+    p_ground_repro: 0.6
+    p_bench_miss: 0.3
+    p_bcm: 0.5
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 2.0
+  OBOGS:
+    name: On-board oxygen generating system
+    part_no: SYN-PN-OBOGS
+    maker: SYN-MKR-ECS
+    system: ECS
+    lru: OBOGS
+    positions: [OBOGS]
+    mesm: G
+    ambiguity: LIFE_SUPPORT
+    repair_level: I
+    consumable: false
+    inspectable_by: [SRV-L2-MINOR, SRV-L2-MAJOR]
+    ts_hours: 1.0
+    rr_hours: 1.5
+    p_isolate: 0.85
+    p_ground_repro: 0.8
+    p_bench_miss: 0.1
+    p_bcm: 0.4
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 2.0
+  BCU:
+    name: Brake control / anti-skid unit (software-loaded)
+    part_no: SYN-PN-BCU
+    maker: SYN-MKR-LGB
+    system: LGB
+    lru: ANTISKID
+    positions: [BCU]
+    mesm: G
+    ambiguity: BRAKING
+    repair_level: D
+    consumable: false
+    inspectable_by: []
+    ts_hours: 1.5
+    rr_hours: 1.5
+    p_isolate: 0.8
+    p_ground_repro: 0.7
+    p_bench_miss: 0.2
+    p_bcm: 1.0
+    shop_days: 3.0
+    depot_days: 72.0
+    stock_per_ac: 0.1
+    life_fh: 0
+    life_landings: 0
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 3.0
+  BRAKE:
+    name: Carbon main-wheel brake
+    part_no: SYN-PN-BRAKE
+    maker: SYN-MKR-LGB
+    system: LGB
+    lru: null
+    positions: [BRK_L, BRK_R]
+    mesm: G
+    ambiguity: BRAKING
+    repair_level: I
+    consumable: false
+    inspectable_by: [SRV-L1, SRV-L2-MINOR, SRV-L2-MAJOR]
+    ts_hours: 1.0
+    rr_hours: 2.0
+    p_isolate: 0.9
+    p_ground_repro: 0.9
+    p_bench_miss: 0.02
+    p_bcm: 0.2
+    shop_days: 5.0
+    depot_days: 60.0
+    stock_per_ac: 0.25
+    life_fh: 0
+    life_landings: 1400
+    life_streams: 0
+    life_years: 0
+    lead_mult: 1.0
+    unit_cost: 1.5
+    evidence:
+      life_landings: {tag: "TRANSFER: F-15 carbon brakes", source: "report §9 utility wear table (carbon brakes 1,400 landings, F-15); Tejas carbon-carbon brakes (ADA GS)"}
+  TYRE:
+    name: Main-wheel tyre
+    part_no: SYN-PN-TYRE
+    maker: SYN-MKR-TYR
+    system: LGB
+    lru: null
+    positions: [TYR_L, TYR_R]
+    mesm: G
+    ambiguity: WHEELS
+    repair_level: C
+    consumable: true
+    inspectable_by: [SRV-L1, SRV-L2-MINOR, SRV-L2-MAJOR]
+    ts_hours: 0.5
+    rr_hours: 1.0
+    p_isolate: 0.95
+    p_ground_repro: 0.95
+    p_bench_miss: 0.0
+    p_bcm: 0.0
+    shop_days: 1.0
+    depot_days: 30.0
+    stock_per_ac: 6.0
+    life_fh: 0
+    life_landings: 8
+    life_streams: 0
+    life_years: 0
+    lead_mult: 0.2
+    unit_cost: 0.2
+    evidence:
+      life_landings: {tag: "TRANSFER: F-16 main tyres", source: "NASA NTRS 19960009454 via iaf_usage_and_validation_gap_closure.md l.697 (8-12 landings Blk 30, 4-8 Blk 40/50); report §9 (4-12 landings)"}
+  CHUTE:
+    name: Brake parachute
+    part_no: SYN-PN-CHUTE
+    maker: SYN-MKR-LGB
+    system: LGB
+    lru: null
+    positions: [CHUTE]
+    mesm: P
+    ambiguity: WHEELS
+    repair_level: C
+    consumable: true
+    inspectable_by: [SRV-L1, SRV-L2-MINOR]
+    ts_hours: 0.5
+    rr_hours: 0.5
+    p_isolate: 0.95
+    p_ground_repro: 0.95
+    p_bench_miss: 0.0
+    p_bcm: 0.0
+    shop_days: 1.0
+    depot_days: 30.0
+    stock_per_ac: 0.5
+    life_fh: 0
+    life_landings: 0
+    life_streams: 45
+    life_years: 8.0
+    lead_mult: 1.0
+    unit_cost: 0.3
+    evidence:
+      life_streams: {tag: DIRECT, source: "DDP node 8027 (brake chute: 45 streamings / 8 years)"}
+      life_years: {tag: DIRECT, source: "DDP node 8027 (brake chute: 45 streamings / 8 years)"}

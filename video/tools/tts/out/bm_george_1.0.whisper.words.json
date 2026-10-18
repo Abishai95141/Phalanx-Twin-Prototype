@@ -1,0 +1,365 @@
+{
+ "raw": [
+  {
+   "text": "Every",
+   "start": 0.0,
+   "end": 0.5,
+   "p": 0.9476476311683655
+  },
+  {
+   "text": "morning,",
+   "start": 0.5,
+   "end": 0.88,
+   "p": 0.9985712766647339
+  },
+  {
+   "text": "before",
+   "start": 1.08,
+   "end": 1.36,
+   "p": 0.997086226940155
+  },
+  {
+   "text": "eight,",
+   "start": 1.36,
+   "end": 1.68,
+   "p": 0.3002946078777313
+  },
+  {
+   "text": "a",
+   "start": 2.14,
+   "end": 2.18,
+   "p": 0.9972681999206543
+  },
+  {
+   "text": "squadron",
+   "start": 2.18,
+   "end": 2.54,
+   "p": 0.9371935725212097
+  },
+  {
+   "text": "engineering",
+   "start": 2.54,
+   "end": 3.16,
+   "p": 0.9701960682868958
+  },
+  {
+   "text": "officer",
+   "start": 3.16,
+   "end": 3.78,
+   "p": 0.9978035092353821
+  },
+  {
+   "text": "decides",
+   "start": 3.78,
+   "end": 4.5,
+   "p": 0.9975221753120422
+  },
+  {
+   "text": "which",
+   "start": 4.5,
+   "end": 4.84,
+   "p": 0.9960660338401794
+  },
+  {
+   "text": "aircraft",
+   "start": 4.84,
+   "end": 5.34,
+   "p": 0.9991737008094788
+  },
+  {
+   "text": "will",
+   "start": 5.34,
+   "end": 5.68,
+   "p": 0.9980137348175049
+  },
+  {
+   "text": "fly.",
+   "start": 5.68,
+   "end": 6.1,
+   "p": 0.9995844960212708
+  },
+  {
+   "text": "Phalanx",
+   "start": 6.9,
+   "end": 7.24,
+   "p": 0.7979784905910492
+  },
+  {
+   "text": "Twin",
+   "start": 7.24,
+   "end": 7.48,
+   "p": 0.5007253289222717
+  },
+  {
+   "text": "turns",
+   "start": 7.48,
+   "end": 8.1,
+   "p": 0.9850711822509766
+  },
+  {
+   "text": "the",
+   "start": 8.1,
+   "end": 8.28,
+   "p": 0.9961658716201782
+  },
+  {
+   "text": "fleet's",
+   "start": 8.28,
+   "end": 8.68,
+   "p": 0.9801144003868103
+  },
+  {
+   "text": "evidence",
+   "start": 8.68,
+   "end": 9.0,
+   "p": 0.9966170191764832
+  },
+  {
+   "text": "into",
+   "start": 9.0,
+   "end": 9.6,
+   "p": 0.9954286813735962
+  },
+  {
+   "text": "a",
+   "start": 9.6,
+   "end": 9.78,
+   "p": 0.9961839318275452
+  },
+  {
+   "text": "handful",
+   "start": 9.78,
+   "end": 10.1,
+   "p": 0.9981319308280945
+  },
+  {
+   "text": "of",
+   "start": 10.1,
+   "end": 10.4,
+   "p": 0.9984973669052124
+  },
+  {
+   "text": "signed",
+   "start": 10.4,
+   "end": 10.68,
+   "p": 0.9770456552505493
+  },
+  {
+   "text": "decisions",
+   "start": 10.68,
+   "end": 11.24,
+   "p": 0.9967876672744751
+  },
+  {
+   "text": "\u2014",
+   "start": 11.24,
+   "end": 11.68,
+   "p": 0.0029527603182941675
+  },
+  {
+   "text": "and",
+   "start": 11.68,
+   "end": 11.98,
+   "p": 0.9306881427764893
+  },
+  {
+   "text": "shows",
+   "start": 11.98,
+   "end": 12.24,
+   "p": 0.996980607509613
+  },
+  {
+   "text": "exactly",
+   "start": 12.24,
+   "end": 12.8,
+   "p": 0.99687260389328
+  },
+  {
+   "text": "why.",
+   "start": 12.8,
+   "end": 13.26,
+   "p": 0.9995249509811401
+  }
+ ],
+ "words": [
+  {
+   "text": "Every",
+   "start": 0.0,
+   "end": 0.5,
+   "how": "equal"
+  },
+  {
+   "text": "morning,",
+   "start": 0.5,
+   "end": 0.88,
+   "how": "equal"
+  },
+  {
+   "text": "before",
+   "start": 1.08,
+   "end": 1.36,
+   "how": "equal"
+  },
+  {
+   "text": "eight,",
+   "start": 1.36,
+   "end": 1.68,
+   "how": "equal"
+  },
+  {
+   "text": "a",
+   "start": 2.14,
+   "end": 2.18,
+   "how": "equal"
+  },
+  {
+   "text": "squadron",
+   "start": 2.18,
+   "end": 2.54,
+   "how": "equal"
+  },
+  {
+   "text": "engineering",
+   "start": 2.54,
+   "end": 3.16,
+   "how": "equal"
+  },
+  {
+   "text": "officer",
+   "start": 3.16,
+   "end": 3.78,
+   "how": "equal"
+  },
+  {
+   "text": "decides",
+   "start": 3.78,
+   "end": 4.5,
+   "how": "equal"
+  },
+  {
+   "text": "which",
+   "start": 4.5,
+   "end": 4.84,
+   "how": "equal"
+  },
+  {
+   "text": "aircraft",
+   "start": 4.84,
+   "end": 5.34,
+   "how": "equal"
+  },
+  {
+   "text": "will",
+   "start": 5.34,
+   "end": 5.68,
+   "how": "equal"
+  },
+  {
+   "text": "fly.",
+   "start": 5.68,
+   "end": 6.1,
+   "how": "equal"
+  },
+  {
+   "text": "Phalanx",
+   "start": 6.9,
+   "end": 7.24,
+   "how": "equal"
+  },
+  {
+   "text": "Twin",
+   "start": 7.24,
+   "end": 7.48,
+   "how": "equal"
+  },
+  {
+   "text": "turns",
+   "start": 7.48,
+   "end": 8.1,
+   "how": "equal"
+  },
+  {
+   "text": "the",
+   "start": 8.1,
+   "end": 8.28,
+   "how": "equal"
+  },
+  {
+   "text": "fleet's",
+   "start": 8.28,
+   "end": 8.68,
+   "how": "equal"
+  },
+  {
+   "text": "evidence",
+   "start": 8.68,
+   "end": 9.0,
+   "how": "equal"
+  },
+  {
+   "text": "into",
+   "start": 9.0,
+   "end": 9.6,
+   "how": "equal"
+  },
+  {
+   "text": "a",
+   "start": 9.6,
+   "end": 9.78,
+   "how": "equal"
+  },
+  {
+   "text": "handful",
+   "start": 9.78,
+   "end": 10.1,
+   "how": "equal"
+  },
+  {
+   "text": "of",
+   "start": 10.1,
+   "end": 10.4,
+   "how": "equal"
+  },
+  {
+   "text": "signed",
+   "start": 10.4,
+   "end": 10.68,
+   "how": "equal"
+  },
+  {
+   "text": "decisions",
+   "start": 10.68,
+   "end": 11.24,
+   "how": "equal"
+  },
+  {
+   "text": "and",
+   "start": 11.68,
+   "end": 11.98,
+   "how": "equal"
+  },
+  {
+   "text": "shows",
+   "start": 11.98,
+   "end": 12.24,
+   "how": "equal"
+  },
+  {
+   "text": "exactly",
+   "start": 12.24,
+   "end": 12.8,
+   "how": "equal"
+  },
+  {
+   "text": "why.",
+   "start": 12.8,
+   "end": 13.26,
+   "how": "equal"
+  }
+ ],
+ "stats": {
+  "model_load_s": 1.09,
+  "transcribe_s": 5.42,
+  "audio_s": 13.9
+ }
+}

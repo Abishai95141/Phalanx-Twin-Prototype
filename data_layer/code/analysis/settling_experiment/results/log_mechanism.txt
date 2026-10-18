@@ -1,0 +1,4 @@
+687-CAL {'P1': ('confirmed', ''), 'P2': ('untestable', 'confirmed'), 'P3': ('refuted', 'confirmed'), 'P4': ('refuted', ''), 'P5': ('confirmed', '')}
+687-TEST {'P1': ('confirmed', ''), 'P2': ('untestable', 'confirmed'), 'P3': ('refuted', 'confirmed'), 'P4': ('refuted', ''), 'P5': ('confirmed', '')}
+652 {'P1': ('confirmed', ''), 'P2': ('untestable', 'confirmed'), 'P3': ('refuted', 'confirmed'), 'P4': ('refuted', ''), 'P5': ('confirmed', '')}
+{"source": "687-CAL only", "P4_digital_stale_reads_at_L6": false, "verdicts": {"P1": "confirmed", "P2": "untestable", "P3": "refuted", "P4": "refuted", "P5": "confirmed"}, "verdicts_text_post_hoc": {"P1": "confirmed", "P2": "confirmed", "P3": "confirmed", "P4": "refuted", "P5": "confirmed"}}

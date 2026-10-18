@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Ingest and as-of — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: grid; grid-template-rows: auto minmax(0,1fr); row-gap: 24px; height: 100%; }
+  .tabbar { display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .v2 { grid-template-rows: minmax(0,1fr) minmax(0,1fr); }
+  .hero { grid-row: 1 / span 2; }
+  .hd { display: flex; align-items: flex-start; gap: 24px; }
+  .hd .num { margin-left: auto; text-align: right; flex: none; }
+  .ax { font: 500 11px var(--mono); fill: var(--ink-4); }
+  .sl { font: 500 13px var(--font); fill: var(--ink-2); }
+  .focus .big { color: var(--accent-ink); }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; grid-template-columns: minmax(0, 1fr); }
+    .hero { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    #tl, #hr { height: auto; display: block; }
+    [data-shot] .push { margin-top: 20px; }
+  }
+  @media (max-width: 699px) {
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .hd { flex-direction: column; gap: 14px; }
+    .hd .num { margin-left: 0; text-align: left; }
+    .ax { font-size: 12.5px; }
+    .sl { font-size: 14px; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="pg">
+  <div class="tabbar" id="tabbar"></div>
+  <div class="v2">
+
+    <section class="panel2 c8 hero" data-shot="ingest">
+      <div class="hd">
+        <div>
+          <div class="kick">Ingest · last 60 epochs</div>
+          <div class="t2">Records arrive through the day and are sealed at 06:00</div>
+          <div class="sub2">Each bar is one 06:00 → 06:00 window. Anything later waits for the next snapshot.</div>
+        </div>
+        <div class="num"><div class="mid" id="in"></div><div class="ci" id="ici" style="margin-top:8px"></div></div>
+      </div>
+      <svg id="tl" width="100%" style="margin-top:26px"></svg>
+      <div class="kick" style="margin-top:30px">Hour of arrival · 168 days</div>
+      <svg id="hr" width="100%" style="margin-top:12px"></svg>
+    </section>
+
+    <section class="panel2 c4 focus" data-shot="asof">
+      <div class="kick acc">As-of store</div>
+      <div class="t2">Every read is as of a moment</div>
+      <div style="margin-top:18px;display:flex;align-items:baseline;gap:10px"><span class="big" id="an"></span><span class="t3" style="color:var(--ink-3)">cut-offs pass</span></div>
+      <div class="ci" id="aci" style="margin-top:8px"></div>
+      <div class="kv2 push" id="akv"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="lag">
+      <div class="kick">Ingest lag</div>
+      <div class="t2">Most records land within the hour</div>
+      <div style="margin-top:18px;display:flex;align-items:baseline;gap:10px"><span class="big" id="ln"></span><span class="t3" style="color:var(--ink-3)">within 1 h</span></div>
+      <div class="ci" id="lci" style="margin-top:8px"></div>
+      <div class="kv2 push" id="lkv"></div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const DF = window.PHX_DF;
+const $ = id => document.getElementById('content').querySelector('#' + id);
+const N = x => Number(x).toLocaleString('en-IN');
+const f1 = (x, d = 1) => Number(x).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
+const TABS = [['Release and gate', 'data.html'], ['Ingest and as-of', 'data-ingest.html'], ['Telemetry streams', 'data-telemetry.html'], null, ['Models', 'assurance.html']];
+const here = location.pathname.split('/').pop() || 'data.html';
+$('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1] === here ? 'on' : ''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+/* ---------- records admitted per epoch, stacked ---------- */
+(function () {
+  const TL = DF.timeline, E = TL.epochs, S = TL.series;
+  const order = [['Usage counters', 'var(--ink-5)'], ['Maintenance records', 'var(--ink-3)'], ['BIT and cautions', 'var(--accent)'], ['Orders', 'var(--ink)']];
+  $('in').textContent = N(TL.total_60);
+  $('ici').textContent = `records admitted · ${E[0]} – ${E[E.length - 1]}`;
+  // tablets draw narrower (text stays near 1:1); phones also move the legend under the chart
+  const PH = matchMedia('(max-width: 699px)').matches, TB = matchMedia('(max-width: 1199px)').matches;
+  const W = PH ? 380 : TB ? 720 : 909, CH = PH ? 250 : 372, H = PH ? CH + 96 : CH, pl = 34, pr = PH ? 8 : 178, top = 10, ph = CH - 34;
+  const tot = E.map((_, i) => order.reduce((a, [k]) => a + S[k][i], 0)), mx = 550;
+  const bw = (W - pl - pr) / E.length, ys = v => top + ph * (1 - v / mx);
+  let g = '';
+  [0, 100, 200, 300, 400, 500].forEach(v => g += `<line x1="${pl}" x2="${W - pr}" y1="${ys(v)}" y2="${ys(v)}" stroke="var(--line-2)"/><text class="ax" x="${pl - 8}" y="${ys(v) + 4}" text-anchor="end">${v}</text>`);
+  E.forEach((d, i) => {
+    const x = pl + i * bw + 1.5, w = bw - 3; let acc = 0;
+    order.forEach(([k, c]) => { const v = S[k][i]; if (!v) return; g += `<rect x="${x}" y="${ys(acc + v)}" width="${w}" height="${Math.max(1, ys(acc) - ys(acc + v) - 1)}" rx="1.5" fill="${c}"/>`; acc += v; });
+    if (i % 10 === 0 && !(PH && i > E.length - 12)) g += `<text class="ax" x="${x + w / 2}" y="${CH - 6}" text-anchor="middle">${d}</text>`;
+  });
+  // snapshot cut-off at the right edge of the last epoch
+  const xc = pl + E.length * bw;
+  g += `<line x1="${xc}" x2="${xc}" y1="${top - 6}" y2="${top + ph}" stroke="var(--accent)" stroke-width="1.5"/><text class="ax" x="${xc}" y="${CH - 6}" text-anchor="${PH ? 'end' : 'middle'}" style="fill:var(--accent-ink)">${PH ? '06:00' : '22 Jun 06:00'}</text>`;
+  // direct labels
+  let ly = top + 18;
+  order.slice().reverse().forEach(([k, c], j) => {
+    const s = S[k].reduce((a, b) => a + b, 0);
+    if (PH) { const lx = (j % 2) * (W / 2), yy = CH + 30 + Math.floor(j / 2) * 46;
+      g += `<rect x="${lx}" y="${yy - 10}" width="12" height="12" rx="3" fill="${c}"/><text class="sl" x="${lx + 20}" y="${yy}">${k}</text><text x="${lx + 20}" y="${yy + 18}" style="font:500 13px var(--mono);fill:var(--ink-4)">${N(s)}</text>`;
+      return; }
+    g += `<rect x="${W - pr + 24}" y="${ly - 10}" width="12" height="12" rx="3" fill="${c}"/><text class="sl" x="${W - pr + 44}" y="${ly}">${k}</text><text x="${W - pr + 44}" y="${ly + 18}" style="font:500 13px var(--mono);fill:var(--ink-4)">${N(s)}</text>`;
+    ly += 50;
+  });
+  const el = $('tl'); el.setAttribute('viewBox', `0 0 ${W} ${H}`); el.setAttribute('height', H); el.innerHTML = g;
+
+  // hour of arrival
+  const hrs = Array.from({ length: 24 }, (_, h) => Object.values(TL.hour).reduce((a, s) => a + s[h], 0));
+  const HW = PH ? 380 : TB ? 720 : 909, HH = 132, hp = 34, hpr = PH ? 8 : 178, hb = (HW - hp - hpr) / 24, hm = Math.max(...hrs);
+  let h = '';
+  hrs.forEach((v, i) => { const bh = (HH - (PH ? 44 : 26)) * v / hm; h += `<rect x="${hp + i * hb + 2}" y="${HH - 22 - bh}" width="${hb - 4}" height="${Math.max(1, bh)}" rx="2" fill="${i < 6 ? 'var(--ink-5)' : 'var(--ink-3)'}"/>`;
+    if (i % 3 === 0) h += `<text class="ax" x="${hp + i * hb}" y="${HH - 4}" text-anchor="middle">${String(i).padStart(2, '0')}:00</text>`; });
+  const x6 = hp + 6 * hb;
+  h += `<line x1="${x6}" x2="${x6}" y1="0" y2="${HH - 20}" stroke="var(--accent)" stroke-width="1.5"/><text x="${x6 + 8}" y="12" style="font:650 13px var(--font);fill:var(--accent-ink)">snapshot cut-off</text>`;
+  const early = hrs.slice(0, 6).reduce((a, b) => a + b, 0), all = hrs.reduce((a, b) => a + b, 0);
+  if (PH) h += `<text class="sl" x="${HW}" y="12" text-anchor="end">${f1(early / all * 100, 1)} % before 06:00</text>`;
+  else h += `<text class="sl" x="${HW - hpr + 24}" y="${HH - 52}">${f1(early / all * 100, 1)} % arrive</text><text class="sl" x="${HW - hpr + 24}" y="${HH - 34}">00:00 – 06:00</text>`;
+  const eh = $('hr'); eh.setAttribute('viewBox', `0 0 ${HW} ${HH}`); eh.setAttribute('height', HH); eh.innerHTML = h;
+})();
+
+/* ---------- as-of store ---------- */
+(function () {
+  const A = DF.asof_tests, Vz = DF.visible;
+  $('an').innerHTML = `${A.shuffle_future_passed}<small>/ ${A.cuts}</small>`;
+  $('aci').textContent = `shuffle-the-future test · an event-time read fails ${A.event_time_read_detected} of ${A.cuts}`;
+  const m = Vz['fleet/maint.records'], b = Vz['fleet/events.bit_faults'];
+  $('akv').innerHTML = `<span>Maintenance rows visible at 06:00</span><span>${N(m.visible)} / ${N(m.total)}</span>
+    <span>BIT events visible at 06:00</span><span>${N(b.visible)} / ${N(b.total)}</span>
+    <span>Arrived after 06:00 about earlier events</span><span>${N(m.late)} excluded</span>`;
+})();
+
+/* ---------- ingest lag ---------- */
+(function () {
+  const L = DF.lag, mr = L['Maintenance records'], ev = L['BIT events'];
+  const tj212 = DF.sorties.find(s => s.tail === 'TJ212');
+  $('ln').innerHTML = `${f1(mr.same_hour * 100, 1)}<small>%</small>`;
+  $('lci').textContent = `of ${N(mr.n)} maintenance rows · ${N(mr.over24)} later than a day, worst ${Math.round(mr.max / 24)} d`;
+  $('lkv').innerHTML = `<span>BIT events · median after occurrence</span><span>${f1(ev.median, 2)} h</span>
+    <span>BIT events · 90th percentile</span><span>${f1(ev.p90, 2)} h</span>
+    <span>Recorder download · TJ212 after stop</span><span>${f1(tj212.download_lag_h, 1)} h</span>`;
+})();
+
+PHX.mount({
+  page: 'assurance', title: 'Data foundation', sub: 'Assurance · can we trust what the twin was built from?',
+  chips: [{ t: 'As of <b>Mon 22 Jun 06:00 IST</b>', i: 'clock' }, { k: 'ok', i: 'shield', t: 'Release v0.9 admitted' }]
+});
+</script>
+</body></html>

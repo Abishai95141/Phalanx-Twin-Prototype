@@ -1,0 +1,2 @@
+# raw per-pair campaign outputs (regenerable with code/leak_campaign.py run; ~35 MB); the audit summary leak_audit.json is committed
+*.jsonl

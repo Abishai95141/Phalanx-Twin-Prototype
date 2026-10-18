@@ -1,0 +1,286 @@
+# Maintenance, logistics and availability records (architecture §10; AD-19; M18).
+name: maint.records
+description: >-
+  The §10 record types in one topic, discriminated by record_type, with linkage keys (tail, sortie, job number,
+  component triplet, demand number, engine serial, sw_config_id, telemetry record_id). Each status change of a
+  record is a new record version. Codes are synthetic IAF-relabelled tables (AD-19). Data-quality defects are
+  injected after truth and listed only in labels.truth.
+basis: "ARCH §10, §12"
+restricted: false
+event_time: t_event
+ingest_time: t_ingest
+partition_by: [tail_no]
+json_schema: false
+record_id_key:
+  - {name: record_type, type: str, source: column}
+  - {name: record_key, type: str, source: column}
+  - {name: record_version, type: u64, source: column}
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_event}
+  - {check: order, left: t_close, op: ">=", right: t_open}
+fields:
+  - include: record_header
+  - name: record_type
+    type: enum:MaintRecordType
+    nullable: false
+    basis: "ARCH §10"
+    description: Record type.
+  - name: record_key
+    type: string
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-13"
+    description: Natural identity of the record across its versions (job number, demand number, or a synthetic key for logs and bins).
+  - name: record_version
+    type: uint32
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-13"
+    description: Version of the record; a new version is emitted at every status change.
+  - name: status
+    type: enum:MaintStatus
+    nullable: true
+    basis: "TRANSFER: NAMP job status; ASSUMPTION: A-W0.4-13"
+    description: Lifecycle state of this version; null for records without a lifecycle (e.g. availability bins).
+  - name: tail_no
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §10 (linkage)"
+    description: Aircraft tail; null for base-level records (e.g. stock).
+  - name: base
+    type: string
+    nullable: true
+    basis: "ARCH §10; ASSUMPTION: A-W0.4-13"
+    description: Base or maintenance organisation.
+  - name: sortie_id
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §10 (linkage)"
+    description: Sortie the record refers to (sortie records, write-ups).
+  - name: job_no
+    type: string
+    nullable: true
+    basis: "ARCH §10 (linkage: job number)"
+    description: Job ('snag') number.
+  - name: linked_job_no
+    type: string
+    nullable: true
+    basis: "ARCH §10 (cannibalisation: two linked jobs)"
+    description: Linked job number (cannibalisation donor/recipient, troubleshooting parent).
+  - name: demand_no
+    type: string
+    nullable: true
+    basis: "ARCH §10 (linkage: demand number)"
+    description: Supply demand number.
+  - name: engine_serial
+    type: string
+    nullable: true
+    basis: "ARCH §10 (linkage)"
+    description: Engine serial.
+  - name: part_no
+    type: string
+    nullable: true
+    basis: "ARCH §5.3 (component triplet)"
+    description: Part number of the item concerned.
+  - name: serial_no
+    type: string
+    nullable: true
+    basis: "ARCH §5.3 (component triplet)"
+    description: Serial number of the item concerned (may be a defective default such as 'XXX', ARCH §10).
+  - name: maker
+    type: string
+    nullable: true
+    basis: "ARCH §5.3 (component triplet)"
+    description: Maker of the item concerned.
+  - name: sw_config_id
+    type: string
+    nullable: true
+    basis: "ARCH §10 (linkage)"
+    description: Software configuration identifier (modification / software load records).
+  - name: order_id
+    type: string
+    nullable: true
+    basis: "ARCH §11.1 (every executed order produces normal records)"
+    description: Order that caused the record, if any.
+  - name: evidence_record_ids
+    type:
+      list: record_id
+      item_nullable: false
+    nullable: false
+    basis: "ARCH §10 (linkage: telemetry record_id)"
+    description: Telemetry or event record_ids that triggered or support the record; empty if none.
+  - name: when_discovered
+    type: string
+    nullable: true
+    basis: "TRANSFER: NAMP/TO 00-20 When-Discovered; ARCH AD-19 (synthetic codes)"
+    description: When-discovered code (synthetic Phalanx table).
+  - name: system_code
+    type: string
+    nullable: true
+    basis: "TRANSFER: WUC; ARCH AD-19 (synthetic codes)"
+    description: System / work-unit code (synthetic Phalanx table).
+  - name: malfunction_code
+    type: string
+    nullable: true
+    basis: "TRANSFER: NAMP MAL / USAF HMC; ARCH AD-19 (synthetic codes)"
+    description: How-malfunctioned code (synthetic Phalanx table).
+  - name: action_taken_code
+    type: string
+    nullable: true
+    basis: "TRANSFER: NAMP/USAF Action Taken; ARCH AD-19 (synthetic codes)"
+    description: Action-taken code (synthetic Phalanx table).
+  - name: type_maint_code
+    type: string
+    nullable: true
+    basis: "TRANSFER: NAMP Type Maintenance; ARCH AD-19 (synthetic codes)"
+    description: Type-of-maintenance code (synthetic Phalanx table).
+  - name: discrepancy_text
+    type: string
+    nullable: true
+    basis: "ARCH §10 (free text)"
+    description: Discrepancy narrative (free text, may carry injected noise).
+  - name: corrective_action_text
+    type: string
+    nullable: true
+    basis: "ARCH §10 (free text)"
+    description: Corrective-action narrative.
+  - name: limitations_text
+    type: string
+    nullable: true
+    basis: "ARCH §10 (technical log: limitations, deferred defects)"
+    description: Limitations or deferral conditions (technical log).
+  - name: corrected_by
+    type: string
+    nullable: true
+    basis: "ARCH §10 (signatures)"
+    description: Pseudonymous identifier of the technician who did the work.
+  - name: inspected_by
+    type: string
+    nullable: true
+    basis: "ARCH §10 (signatures)"
+    description: Pseudonymous identifier of the inspector.
+  - name: man_hours
+    type: float64
+    nullable: true
+    units: h
+    minimum: 0.0
+    basis: "TRANSFER: NAMP MAN HRS"
+    description: Man-hours booked.
+  - name: priority
+    type: enum:SupplyPriority
+    nullable: true
+    basis: "ARCH §10 (demand priority AOG/MCM/PHU)"
+    description: Supply demand priority.
+  - name: quantity
+    type: uint32
+    nullable: true
+    basis: "TRANSFER: NAMP requisition QTY"
+    description: Quantity demanded or issued.
+  - name: install_action
+    type: enum:InstallAction
+    nullable: true
+    basis: "ARCH §10 (component life record)"
+    description: Install or remove (component life records).
+  - name: item_hours
+    type: float64
+    nullable: true
+    units: h
+    minimum: 0.0
+    basis: "ARCH §10 (time at removal/installation)"
+    description: Item operating hours at removal or installation.
+  - name: item_cycles
+    type: float64
+    nullable: true
+    units: count
+    minimum: 0.0
+    basis: "ARCH §10 (cycles at removal/installation)"
+    description: Item cycles at removal or installation.
+  - name: donor_tail_no
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §10 (cannibalisation donor)"
+    description: Donor tail of a cannibalisation.
+  - name: inspection_type
+    type: string
+    nullable: true
+    basis: "ARCH §10 (inspection / servicing)"
+    description: Inspection or servicing type (e.g. scheduled, conditional, borescope), synthetic table.
+  - name: shop_finding
+    type: enum:ShopFinding
+    nullable: true
+    basis: "ARCH §10 (shop / depot finding)"
+    description: Shop finding on a turned-in item.
+  - name: compliance_status
+    type: enum:ComplianceStatus
+    nullable: true
+    basis: "ARCH §10 (modification compliance status)"
+    description: Compliance status of a modification or software load.
+  - name: availability_state
+    type: enum:AvailabilityState
+    nullable: true
+    basis: "ARCH §10 (15-min mission-capability bins)"
+    description: Mission-capability state of the 15-minute bin starting at t_event (AVAILABILITY_STATE records).
+  - name: mission_type
+    type: string
+    nullable: true
+    basis: "ARCH §10 (sortie record: mission)"
+    description: Mission flown (SORTIE records).
+  - name: crew_id
+    type: string
+    nullable: true
+    basis: "ARCH §10 (sortie record: crew)"
+    description: Pseudonymous crew identifier (SORTIE records).
+  - name: flight_hours
+    type: float64
+    nullable: true
+    units: h
+    minimum: 0.0
+    basis: "ARCH §10 (sortie record: hours)"
+    description: Flight hours (SORTIE records).
+  - name: landings
+    type: uint32
+    nullable: true
+    basis: "ARCH §10 (sortie record: landings)"
+    description: Landings (SORTIE records).
+  - name: engine_cycles
+    type: float64
+    nullable: true
+    units: count
+    minimum: 0.0
+    basis: "ARCH §10 (sortie record: cycles)"
+    description: Engine cycles (SORTIE records).
+  - name: engine_starts
+    type: uint32
+    nullable: true
+    basis: "ARCH §10 (sortie record: starts)"
+    description: Engine starts (SORTIE records).
+  - name: t_event
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-13"
+    description: Instant this record version refers to (discovery, status change, bin start). The event time of the record.
+  - name: t_open
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "TRANSFER: NAMP RECEIVED date-time"
+    description: When the job or record was opened.
+  - name: t_close
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "TRANSFER: NAMP COMPLETED date-time"
+    description: When the job or record was closed.
+  - name: t_ingest
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §10 (reconciliation lag), I5"
+    description: When this record version became visible in the maintenance system (includes reconciliation lag).
+  - name: provenance
+    type: enum:Provenance
+    nullable: false
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-13"
+    description: direct (records are produced on the ground by M18).

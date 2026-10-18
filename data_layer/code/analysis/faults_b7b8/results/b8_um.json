@@ -1,0 +1,156 @@
+{
+ "fault_instances": {
+  "immature": {
+   "modes": {
+    "FM.AV.INTERMITTENT_CONNECTOR": 7,
+    "FM.ENG.AB_NO_LIGHT": 5,
+    "FM.ENG.HUNG_START": 1
+   },
+   "n": 13,
+   "persistent": 0
+  },
+  "mature": {
+   "modes": {
+    "FM.AV.INTERMITTENT_CONNECTOR": 16,
+    "FM.ENG.AB_BLOWOUT": 1,
+    "FM.ENG.AB_NO_LIGHT": 9,
+    "FM.ENG.HOT_START": 1,
+    "FM.ENG.HUNG_START": 1,
+    "FM.ENG.NOZZLE_LIMIT_CYCLE": 1
+   },
+   "n": 29,
+   "persistent": 0
+  }
+ },
+ "m14_config": "usage mode, every code a test (DEVIATIONS D7)",
+ "n_worlds": {
+  "immature": 8,
+  "mature": 8
+ },
+ "regimes": {
+  "immature": {
+   "admin_close_days_median": 6.705451388888889,
+   "admin_close_days_q10_q90": [
+    3.348634259259259,
+    11.093787037037037
+   ],
+   "admin_close_flights": {
+    "3": 73
+   },
+   "admin_closes": 73,
+   "bit_pilot_jobs_final_action": {
+    "AT-ADM": 73,
+    "AT-CND": 949,
+    "AT-DEF": 7,
+    "AT-RR": 244,
+    "AT-TS": 2
+   },
+   "bit_records": 2460,
+   "cnd": [
+    0.7941422594142259,
+    0.7702927531454227,
+    0.8161067201356769
+   ],
+   "episodes": 1455,
+   "fa_per_fh": 5.4379061850656525,
+   "fa_per_fh_ci95": [
+    5.225119456446573,
+    5.657134417639141
+   ],
+   "fa_share": [
+    1.0,
+    0.9984408660683336,
+    1.0000000000000002
+   ],
+   "false_alarms": 2460,
+   "flight_hours": 452.38,
+   "nff_rtok": [
+    1.0,
+    0.9841157970207982,
+    0.9999999999999999
+   ],
+   "persist_eq1": [
+    0.7539518900343642,
+    0.7311713533640688,
+    0.7753950014181682
+   ],
+   "persist_ge3": [
+    0.10721649484536082,
+    0.09234087803520079,
+    0.1241606868956558
+   ],
+   "shop_findings": {
+    "RTOK": 238
+   },
+   "sorties": 543,
+   "verdict_chain2": "PASS",
+   "verdict_cnd": "FAIL",
+   "verdict_fa_rate": "PASS",
+   "verdict_fa_share": "PASS",
+   "verdict_nff": "FAIL",
+   "verdict_persist_eq1": "PASS",
+   "verdict_persist_ge3": "PASS",
+   "worlds": 8
+  },
+  "mature": {
+   "admin_close_days_median": 3.5003761574074073,
+   "admin_close_days_q10_q90": [
+    1.223917824074074,
+    4.813420138888889
+   ],
+   "admin_close_flights": {
+    "3": 6
+   },
+   "admin_closes": 6,
+   "bit_pilot_jobs_final_action": {
+    "AT-ADM": 6,
+    "AT-CND": 3,
+    "AT-RR": 1
+   },
+   "bit_records": 8,
+   "cnd": [
+    0.75,
+    0.30064184258240184,
+    0.9544127391902995
+   ],
+   "episodes": 8,
+   "fa_per_fh": 0.010921770919647243,
+   "fa_per_fh_ci95": [
+    0.004715245478669215,
+    0.021520242703250533
+   ],
+   "fa_share": [
+    1.0,
+    0.6755924351161198,
+    1.0
+   ],
+   "false_alarms": 8,
+   "flight_hours": 732.4819444444444,
+   "nff_rtok": [
+    1.0,
+    0.20654931437723745,
+    1.0
+   ],
+   "persist_eq1": [
+    1.0,
+    0.6755924351161198,
+    1.0
+   ],
+   "persist_ge3": [
+    0.0,
+    0.0,
+    0.32440756488388023
+   ],
+   "shop_findings": {
+    "RTOK": 1
+   },
+   "sorties": 914,
+   "verdict_chain2": "PASS",
+   "verdict_cnd": "PASS",
+   "verdict_fa_rate": "FAIL",
+   "verdict_fa_share": "FAIL",
+   "verdict_nff": "PASS",
+   "worlds": 8
+  }
+ }
+}

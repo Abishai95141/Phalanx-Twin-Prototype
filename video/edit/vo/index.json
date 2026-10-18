@@ -1,0 +1,207 @@
+{
+ "S01": {
+  "dur": 4.046,
+  "text": "Every morning, before eight, someone decides which aircraft will fly.",
+  "words": 10
+ },
+ "S02": {
+  "dur": 3.476,
+  "text": "That decision should rest on everything the fleet already knows.",
+  "words": 10
+ },
+ "S03": {
+  "dur": 3.948,
+  "text": "Health data. Technical records. Spares. Work in progress.",
+  "words": 8
+ },
+ "S04": {
+  "dur": 3.724,
+  "text": "Phalanx Twin brings it together \u2014 and turns it into decisions.",
+  "words": 11
+ },
+ "S05": {
+  "dur": 8.61,
+  "text": "The problem statement is blunt. Availability is low because maintenance is reactive \u2014 and the data that could prevent it isn't integrated.",
+  "words": 22
+ },
+ "S06": {
+  "dur": 6.197,
+  "text": "Audits keep finding the same thing: aircraft are lost to waiting \u2014 for parts, for repair, for a decision.",
+  "words": 19
+ },
+ "S07": {
+  "dur": 8.79,
+  "text": "In our fleet, one aircraft has been on the ground for eighty days, waiting for a brake chute \u2014 a consumable whose demand simply follows landings.",
+  "words": 26
+ },
+ "S08": {
+  "dur": 8.169,
+  "text": "Another has had its hydraulic pump removed twenty-eight times for one alarm. Every pump the shop tested came back: no fault found.",
+  "words": 22
+ },
+ "S09": {
+  "dur": 4.9,
+  "text": "Nearly twelve hundred alerts this season. More prediction alone would only add more.",
+  "words": 13
+ },
+ "S10": {
+  "dur": 5.093,
+  "text": "And any answer must be explainable, honest about time \u2014 and run fully offline.",
+  "words": 14
+ },
+ "S11": {
+  "dur": 4.199,
+  "text": "Phalanx Twin is a decision-support digital twin for the flight line.",
+  "words": 11
+ },
+ "S12": {
+  "dur": 5.24,
+  "text": "It answers four questions: what's happening, why, what happens next \u2014 and what we should do.",
+  "words": 16
+ },
+ "S13": {
+  "dur": 9.021,
+  "text": "Everything starts from one frozen data contract. A release gate admits it, and an as-of store guarantees we only use what was known at the time.",
+  "words": 26
+ },
+ "S14": {
+  "dur": 5.107,
+  "text": "If a record wasn't ingested by six, no model, rule or order can use it.",
+  "words": 15
+ },
+ "S15": {
+  "dur": 6.606,
+  "text": "That builds one state: a belief about every aircraft and every serialised part \u2014 with its uncertainty.",
+  "words": 17
+ },
+ "S16": {
+  "dur": 15.261,
+  "text": "Engines read that state. We chose models that fit sparse, censored maintenance data \u2014 calibrated classifiers, Bayesian isolation, survival models \u2014 and kept time-series foundation models as baselines, not decision-makers.",
+  "words": 30
+ },
+ "S17": {
+  "dur": 3.319,
+  "text": "Triage turns twelve hundred alerts into seven decisions.",
+  "words": 8
+ },
+ "S18": {
+  "dur": 11.132,
+  "text": "Versioned policies and optimisers propose orders, simulation tests them against the status quo, a person approves \u2014 and every step lands on one tamper-evident log.",
+  "words": 25
+ },
+ "S19": {
+  "dur": 4.72,
+  "text": "Monday, 06:00. Six of eight aircraft are mission capable.",
+  "words": 9
+ },
+ "S20": {
+  "dur": 6.491,
+  "text": "This season, most of the waiting came from tyres and brake chutes \u2014 demand you can predict from the flying plan.",
+  "words": 21
+ },
+ "S21": {
+  "dur": 4.519,
+  "text": "Today's board has seven issues \u2014 each with the evidence and the score behind it.",
+  "words": 15
+ },
+ "S22": {
+  "dur": 6.023,
+  "text": "TJ107. The system doesn't say replace the pump. It says stop \u2014 and shows why.",
+  "words": 15
+ },
+ "S23": {
+  "dur": 5.262,
+  "text": "In the twin, the alarm's reporter and its suspects light up where they sit in the aircraft.",
+  "words": 17
+ },
+ "S24": {
+  "dur": 5.833,
+  "text": "It stayed with this aircraft through ten different pumps. The evidence follows the tail \u2014 not the part.",
+  "words": 18
+ },
+ "S25": {
+  "dur": 10.067,
+  "text": "Learned from outcomes, the chance this pump is actually faulty is half a percent. Remove it again, and it's ninety-eight percent likely to come back 'no fault found'.",
+  "words": 28
+ },
+ "S26": {
+  "dur": 4.376,
+  "text": "So it recommends the test that resolves the most uncertainty per man-hour.",
+  "words": 12
+ },
+ "S27": {
+  "dur": 8.713,
+  "text": "Every recommendation comes from a rule you can read. Hard limits live in code; anything airworthiness-sensitive waits for a human signature.",
+  "words": 21
+ },
+ "S28": {
+  "dur": 7.759,
+  "text": "Before it reaches the board, each order is tested on paired simulations of the same futures \u2014 our plan against the status quo.",
+  "words": 23
+ },
+ "S29": {
+  "dur": 7.879,
+  "text": "For parts, a warning only helps if it beats the lead time \u2014 and the fork gate drops orders, like early tyres, that change nothing.",
+  "words": 25
+ },
+ "S30": {
+  "dur": 7.913,
+  "text": "At 07:45 the board freezes. At 08:00, orders go out \u2014 each one cited, signed where it must be, and safe to retry.",
+  "words": 23
+ },
+ "S31": {
+  "dur": 5.352,
+  "text": "Ask why any order was issued, and the chain answers \u2014 from data release to signature.",
+  "words": 16
+ },
+ "S32": {
+  "dur": 4.815,
+  "text": "Outcomes become labels, and models and rules are promoted only through gates.",
+  "words": 12
+ },
+ "S35": {
+  "dur": 3.39,
+  "text": "Phalanx Twin. One state. One loop. One log.",
+  "words": 8
+ },
+ "S34": {
+  "dur": 10.576,
+  "text": "On thirty paired simulations, the TJ107 decision adds twenty-two points of mission-capable time next month \u2014 and saves a hundred and sixteen man-hours.",
+  "words": 23
+ },
+ "S33A": {
+  "dur": 7.523,
+  "text": "Today, one question means five places: the tech log, the BIT downloads, the parts ledger, the shop reports and the plan.",
+  "words": 21
+ },
+ "S33B": {
+  "dur": 6.907,
+  "text": "Here, you just ask. The assistant plans, then reads only what it needs \u2014 as of 06:00 \u2014 through read-only tools.",
+  "words": 21
+ },
+ "S33C": {
+  "dur": 10.242,
+  "text": "Every number in its answer comes from a tool, never from the model, and every claim cites its records \u2014 even the what-if, from the same paired simulations the board uses.",
+  "words": 31
+ },
+ "S33D": {
+  "dur": 7.919,
+  "text": "It runs on one air-gapped box, first words in about a second \u2014 and it can only draft. The signature stays with the officer.",
+  "words": 24
+ },
+ "L1": {
+  "dur": 8.874,
+  "text": "All of this runs live on IBM LinuxONE: the simulator, models, rules, daily loop and audit log \u2014 on one mainframe-class server.",
+  "words": 22
+ },
+ "L2": {
+  "dur": 7.918,
+  "text": "Rebuilt there, it reproduces every record, row for row \u2014 and simulates a day for all eight aircraft in three and a half seconds.",
+  "words": 24
+ },
+ "L3": {
+  "dur": 11.452,
+  "text": "IBM Z is built for exactly this: availability, hardware-protected keys, confidential computing and AI on the chip \u2014 real-time AI for critical decisions.",
+  "words": 23
+ }
+}

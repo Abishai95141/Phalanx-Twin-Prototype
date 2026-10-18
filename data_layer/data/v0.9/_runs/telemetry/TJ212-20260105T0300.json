@@ -1,0 +1,43 @@
+{
+  "abort": null,
+  "cir_rows": 95878190,
+  "code_commit": "6d4dc52f52eb1359bc244d36648ef1058876129b",
+  "completed": true,
+  "deliveries": [
+    {
+      "attempt": 0,
+      "complete": true,
+      "t_ingest": 1767654064341562679
+    },
+    {
+      "attempt": 1,
+      "complete": true,
+      "t_ingest": 1767660133370814852
+    }
+  ],
+  "flown_s": 6173.7,
+  "kind": "telemetry",
+  "mission_type": "GROUND_ATTACK",
+  "planned_window_s": 6249.61744796,
+  "preview": "PREVIEW: behaviour not yet validated",
+  "recorded_channels": 231,
+  "root_seed_hex": "000000000000000000000000000000a5",
+  "rows": {
+    "events.bit_faults": 3,
+    "events.cautions": 50,
+    "events.exceedances": 48,
+    "param.samples": 44883122,
+    "sortie.manifest": 1,
+    "usage.counters": 0
+  },
+  "scenario": "gate",
+  "sortie_id": "TJ212-20260105T0300",
+  "t_end": 1767587064108211325,
+  "t_ingest": 1767654064341562679,
+  "t_landing": 1767586319208211325,
+  "t_start": 1767580890408211325,
+  "t_takeoff": 1767582026104044658,
+  "tail_no": "TJ212",
+  "truncated": false,
+  "wall_s": 542.5
+}

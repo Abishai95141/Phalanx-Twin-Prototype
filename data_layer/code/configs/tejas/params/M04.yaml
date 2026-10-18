@@ -1,0 +1,384 @@
+# M04 Pilot and guidance: model parameters (format phalanx.params/1). Guidance gains are tuned for stability on
+# the W1 test-fixture plant and are retuned on the integrated loop in W2.1 (A-W1.1-40).
+format: phalanx.params/1
+module: M04
+sets:
+  guidance:
+    k_alt:
+      value: 0.1
+      units: 1/s
+      description: 'Altitude error -> vertical-speed command gain'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [0.05, 0.2]
+      assumption_id: A-W1.1-40
+    vz_up_max:
+      value: 80.0
+      units: m/s
+      description: 'Vertical-speed command limit, climbing'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay); Tejas climb rate not public'}
+      sweep: [40.0, 150.0]
+      assumption_id: A-W1.1-40
+    vz_down_max:
+      value: 60.0
+      units: m/s
+      description: 'Vertical-speed command limit, descending'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [20.0, 100.0]
+      assumption_id: A-W1.1-40
+    k_gamma:
+      value: 0.5
+      units: 1/s
+      description: 'Flight-path-angle error -> load-factor gain'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [0.2, 1.5]
+      assumption_id: A-W1.1-40
+    k_track:
+      value: 0.25
+      units: 1/s
+      description: 'Track error -> turn-rate command gain; the coordinated bank is atan(V psi_dot / g), bounded by the segment bank limit (W2.1a-2: replaces the bank-per-track-error gain and the turn/track switch)'
+      evidence: {tag: 'ASSUMPTION', source: "research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops); chosen for a damping ratio ~0.75 of the track loop with the bank loop k_bank 0.6 1/s (omega_n^2 = k_bank k_track); validation: realised turn and roll-out histories"}
+      sweep: [0.15, 0.4]
+      assumption_id: A-W2.1-12
+    bank_max:
+      value: 60.0
+      units: deg
+      description: 'Bank limit outside manoeuvring primitives'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [30.0, 75.0]
+      assumption_id: A-W1.1-40
+    k_bank:
+      value: 0.6
+      units: 1/s
+      description: 'Bank error -> roll-rate command gain'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [0.3, 4.0]
+      assumption_id: A-W1.1-40
+    k_speed:
+      value: 1.0
+      units: deg*s/m
+      description: 'Speed error -> PLA trim gain'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [0.3, 3.0]
+      assumption_id: A-W1.1-40
+    k_speed_i:
+      value: 0.05
+      units: deg/m
+      description: 'Speed error integral -> PLA trim gain'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [0.0, 0.2]
+      assumption_id: A-W1.1-40
+    v_rotate:
+      value: 80.0
+      units: m/s
+      description: 'Rotation speed (lift-off ~290-325 km/h at 9.8 t, R§4 table [ASSUMPTION: physics])'
+      evidence: {tag: 'ASSUMPTION', source: 'report §4 phase table'}
+      sweep: [70.0, 95.0]
+      assumption_id: A-W1.1-40
+    theta_rotate:
+      value: 12.0
+      units: deg
+      description: 'Rotation pitch attitude'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public'}
+      sweep: [8.0, 15.0]
+      assumption_id: A-W1.1-40
+    k_theta:
+      value: 3.0
+      units: '1'
+      description: 'Pitch-attitude error -> load-factor gain at rotation (g per rad)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [1.0, 6.0]
+      assumption_id: A-W1.1-40
+    # ---- W2.1a take-off fix (A-W2.1-9): rotation on the ground and physically gated segments
+    stick_rotate:
+      value: 0.8
+      units: '1'
+      description: 'Most aft pitch stick the pilot uses for the rotation on the main gear (the M05 ground law links stick to elevon)'
+      evidence: {tag: 'ASSUMPTION', source: "rotation technique and stick amount not public for the Tejas; the cap only bounds the attitude-tracking command (A-W2.1-9); validation: Tejas take-off data"}
+      sweep: [0.5, 1.0]
+      assumption_id: A-W2.1-9
+    k_rot_theta:
+      value: 3.0
+      units: 1/rad
+      description: 'Rotation on the main gear: aft stick per radian of attitude error to the rising reference attitude'
+      evidence: {tag: 'ASSUMPTION', source: "pilot attitude-tracking gain (crossover-type, modelling_methodology.md §2); not public"}
+      sweep: [1.5, 6.0]
+      assumption_id: A-W2.1-9
+    t_liftoff:
+      value: 1.0
+      units: s
+      description: 'All gear off the ground for this long confirms the lift-off (the take-off roll segment ends)'
+      evidence: {tag: 'ASSUMPTION', source: "lift-off confirmation persistence (all gear off for 1 s); not public"}
+      sweep: [0.5, 3.0]
+      assumption_id: A-W2.1-9
+    t_touchdown:
+      value: 0.5
+      units: s
+      description: 'Main gear on the ground for this long confirms the touchdown (the landing roll segment starts)'
+      evidence: {tag: 'ASSUMPTION', source: "weight-on-wheels persistence of the landing roll; not public"}
+      sweep: [0.2, 2.0]
+      assumption_id: A-W2.1-9
+    q_rotate:
+      value: 0.0873
+      units: rad/s
+      description: "Rate of the pilot's reference attitude during the rotation on the main gear (5 deg/s, to theta_rotate)"
+      evidence: {tag: 'ASSUMPTION', source: "rotation rate not public for the Tejas; 5 deg/s brings the attitude to theta_rotate in ~2.5 s; validation: Tejas take-off data"}
+      sweep: [0.05, 0.15]
+      assumption_id: A-W2.1-9
+    k_rot_q:
+      value: 1.5
+      units: s/rad
+      description: 'Rotation on the main gear: aft stick per rad/s of pitch-rate error to the reference rotation rate (pilot lead)'
+      evidence: {tag: 'ASSUMPTION', source: "pilot rate (lead) gain of the crossover model (modelling_methodology.md §2); not public"}
+      sweep: [0.5, 3.0]
+      assumption_id: A-W2.1-9
+    h_gear_up:
+      value: 15.0
+      units: m
+      description: 'Height above the field at which the climbing pilot is safely airborne and selects the gear up (the take-off segment ends)'
+      evidence: {tag: 'ASSUMPTION', source: "gear-up height after a confirmed, climbing lift-off (~50 ft); not public"}
+      sweep: [5.0, 30.0]
+      assumption_id: A-W2.1-9
+    gamma_min:
+      value: 0.0524
+      units: rad
+      description: 'Minimum climb angle the energy guard keeps below h_safe after the take-off (3 deg)'
+      evidence: {tag: 'ASSUMPTION', source: "no level-off near the ground in the climb-out; value not public"}
+      sweep: [0.017, 0.087]
+      assumption_id: A-W2.1-9
+    h_safe:
+      value: 300.0
+      units: m
+      description: 'Height above the departure field below which the climb-out keeps gamma_min (and the departure bank limit)'
+      evidence: {tag: 'ASSUMPTION', source: "climb-out acceleration height (~1,000 ft); not public"}
+      sweep: [150.0, 600.0]
+      assumption_id: A-W2.1-9
+    h_turn:
+      value: 120.0
+      units: m
+      description: 'Height above the departure field below which the climb-out stays wings level (no heading turn)'
+      evidence: {tag: 'ASSUMPTION', source: "IAF departure SOP not public; the civil instrument-departure criterion (ICAO Doc 8168 PANS-OPS: no turn before 120 m / 394 ft above the runway end) as the reference value; validation: Tejas or IAF departure procedure if released"}
+      sweep: [60.0, 300.0]
+      assumption_id: A-W2.1-9
+    nz_push_min:
+      value: 0.0
+      units: '1'
+      description: 'Lowest load factor the airborne flight-path law commands (path corrections unload to 0 g at most; no manoeuvre primitive targets negative g)'
+      evidence: {tag: 'ASSUMPTION', source: "not public; measured W2.1a: a -3.5 g push in a 69 deg bank departed the integrated aircraft (alpha -60 deg); validation: realised Nz spectra incl. the negative side (W2.6)"}
+      sweep: [-1.0, 0.5]
+      assumption_id: A-W2.1-10
+    nz_rate:
+      value: 4.0
+      units: 1/s
+      description: 'Rate limit of the commanded load factor (g per second): changes of the guidance law ramp instead of stepping the stick'
+      evidence: {tag: 'ASSUMPTION', source: "pilot g-onset and release rates are not public for the Tejas; a moderate rate for training sorties; measured W2.1a: law switches stepped the commanded Nz from +5 g to 0 g in one tick before departures; validation: realised Nz-rate spectra"}
+      sweep: [2.0, 8.0]
+      assumption_id: A-W2.1-12
+    gamma_trade:
+      value: 0.0873
+      units: rad
+      description: 'Largest descent angle a manoeuvre primitive trades for speed when the speed has decayed to (1 - speed_margin) of the target (linear from 0 at the target speed), above h_safe'
+      evidence: {tag: 'ASSUMPTION', source: "energy management (height traded for speed) in sustained manoeuvres at fixed power; magnitude not public; measured W2.1a: MIL turns bled 255 -> 148 m/s at constant height before a departure; validation: realised energy-height histories"}
+      sweep: [0.0, 0.175]
+      assumption_id: A-W2.1-12
+    gamma_pull:
+      value: 0.5236
+      units: rad
+      description: 'Flight-path angle at which a pull-up primitive (no turn, target Nz >= 2) stops pulling its target Nz (30 deg); the altitude law then levels the aircraft'
+      evidence: {tag: 'ASSUMPTION', source: "not public; a pull-up to a climb, not a loop (measured W2.1a: an unbounded 2.6 g pull looped the aircraft at MIL into a stall at 5,800 m); validation: realised Nz and attitude spectra (W2.6)"}
+      sweep: [0.26, 1.05]
+      assumption_id: A-W2.1-10
+    bank_departure:
+      value: 30.0
+      units: deg
+      description: 'Bank limit of the climb-out between h_turn and h_safe above the departure field'
+      evidence: {tag: 'ASSUMPTION', source: "not public; a moderate departure bank (bank_max 60 deg applies above h_safe); validation: IAF departure SOP if released"}
+      sweep: [15.0, 45.0]
+      assumption_id: A-W2.1-9
+    n2_start_frac:
+      value: 0.2
+      units: '1'
+      description: 'N2 fraction at which the pilot advances the PLA to ground idle during start'
+      evidence: {tag: 'TRANSFER: F404-102 (T-50)', source: "report §4 phase table: 'PLA to idle at ~20 % N2' (KSAS 2006)"}
+    speed_margin:
+      value: 0.3
+      units: '1'
+      description: 'Fraction of the target speed over which the commanded climb is traded for speed (energy guard)'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [0.1, 0.5]
+      assumption_id: A-W1.1-40
+    overspeed_brake:
+      value: 15.0
+      units: m/s
+      description: 'Airspeed excess over target that deploys the airbrake'
+      evidence: {tag: 'ASSUMPTION', source: 'research_notes/.../modelling_methodology.md §2 (deterministic guidance + autopilot loops; crossover-type overlay)'}
+      sweep: [5.0, 30.0]
+      assumption_id: A-W1.1-40
+    stick_nz_pos:
+      value: 7.0
+      units: '1'
+      description: 'Load-factor increment at full aft stick (1 g + 7 g = +8 g)'
+      evidence: {tag: 'ASSUMPTION', source: 'Envelope +8/-3.5 g [DIRECT]; Tejas stick shaping not public'}
+      sweep: [5.0, 7.0]
+      assumption_id: A-W1.1-41
+    stick_nz_neg:
+      value: 4.5
+      units: '1'
+      description: 'Load-factor decrement at full forward stick (1 g - 4.5 g = -3.5 g)'
+      evidence: {tag: 'ASSUMPTION', source: 'Envelope +8/-3.5 g [DIRECT]; Tejas stick shaping not public'}
+      sweep: [3.0, 4.5]
+      assumption_id: A-W1.1-41
+    roll_rate_full:
+      value: 200.0
+      units: deg/s
+      description: 'Roll-rate command at full lateral stick'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public (tejas_airframe_aero_fcs.md)'}
+      sweep: [120.0, 280.0]
+      assumption_id: A-W1.1-41
+    nm_tau_stick:
+      value: 0.1
+      units: s
+      description: 'Neuromuscular lag on the sticks'
+      evidence: {tag: 'ASSUMPTION', source: 'Crossover/structural pilot models (NTRS 20180001222); value not public'}
+      sweep: [0.05, 0.2]
+      assumption_id: A-W1.1-42
+    nm_tau_throttle:
+      value: 0.08
+      units: s
+      description: 'Hand lag on the throttle'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public'}
+      sweep: [0.05, 0.2]
+      assumption_id: A-W1.1-43
+    pla_slew:
+      value: 200.0
+      units: deg/s
+      description: 'Pilot throttle slew limit (hand speed; NOT the engine-model PLA rate limits)'
+      evidence: {tag: 'ASSUMPTION', source: 'candidate_engine_and_ehm_data.md: TM-4240 19.03/26.81 and TM-110216 14/22 deg/s are engine-model PLA conditioning'}
+      sweep: [100.0, 400.0]
+      assumption_id: A-W1.1-43
+    remnant_corner:
+      value: 0.5
+      units: rad/s
+      description: 'Corner of the first-order remnant filter (set so remnant power is mostly below 0.25 Hz, V11)'
+      evidence: {tag: 'ASSUMPTION', source: 'Remnant concept (NTRS 20180001222); V11 Tejas pilot spectra mostly < 0.25 Hz (DSJ 66(1)); level not public'}
+      sweep: [0.2, 5.0]
+      assumption_id: A-W1.1-42
+    delay_max:
+      value: 0.3
+      units: s
+      description: 'Ring-buffer capacity for the pilot delay (>= the largest pilot tau)'
+      evidence: {tag: 'ASSUMPTION', source: 'Crossover tau 0.1-0.2 s'}
+      sweep: [0.2, 0.5]
+      assumption_id: A-W1.1-42
+    aar_contact_period:
+      value: 60.0
+      units: s
+      description: 'One drogue contact per this time in a tanker-contact segment'
+      evidence: {tag: 'ASSUMPTION', source: 'NFTC/ADA DSJ 70(2) (12 contacts measured); rate not public'}
+      sweep: [30.0, 120.0]
+      assumption_id: A-W1.1-44
+    aar_closing_time:
+      value: 10.0
+      units: s
+      description: 'Duration of the closing run that carries the commanded closure speed'
+      evidence: {tag: 'ASSUMPTION', source: 'Not public'}
+      sweep: [5.0, 20.0]
+      assumption_id: A-W1.1-44
+    aar_closure_max:
+      value: 10.0
+      units: knot
+      description: 'Design maximum closure (truncation of the closure draw)'
+      evidence: {tag: 'DIRECT-unnamed', source: "NFTC/ADA DSJ 70(2) 2020: 'maximum value of closure rate (10 knot) for impact load of 100 lbs' (ARSAG)"}
+    pla_ground_idle:
+      value: 18.0
+      units: deg
+      description: 'Ground-idle PLA'
+      evidence: {tag: 'TRANSFER: F404-400 rigging', source: 'parameter_inventory.csv ENG.PLA (GI ~18)'}
+    pla_min_ab:
+      value: 94.0
+      units: deg
+      description: 'AB detent (minimum-AB PLA)'
+      evidence: {tag: 'TRANSFER: F404-400 (HARV)', source: 'candidate_engine_and_ehm_data.md (TM-4240 p. 2)'}
+    fire_reaction:
+      value: 3.0
+      units: s
+      description: 'Pilot reaction from a fire warning to operating the extinguisher (util.fire_extinguish)'
+      evidence: {tag: 'ASSUMPTION', source: 'No Tejas fire-drill timing in the evidence base; crossover-type human reaction (modelling_methodology.md §2) plus switch actuation'}
+      sweep: [1.0, 10.0]
+      assumption_id: A-W1.1-46
+    release_stations:
+      value: [2, 3, 4]
+      units: '1'
+      description: 'M09 store stations (layout.STORES index: 2 OUTBOARD_L, 3 OUTBOARD_R, 4 CENTRELINE) released in order at the end of each dive-delivery pass of ground-attack and composite missions (inboard stations carry the drop tanks)'
+      evidence: {tag: 'ASSUMPTION', source: 'No Tejas training loadout in the evidence base; M09 station list (src/phalanx/utilities/layout.py STORES)'}
+      sweep: [0, 4]
+      assumption_id: A-W1.1-46
+    v_taxi:
+      value: 20.0
+      units: knot
+      description: 'Taxi ground speed held with the toe brakes (pilot.brake_cmd, AD-47)'
+      evidence: {tag: 'ASSUMPTION', source: 'Tejas taxi limits not in the evidence base (flight_profiles_and_usage.md Q-gaps: taxi limits not found)'}
+      sweep: [10.0, 30.0]
+      assumption_id: A-W1.1-47
+    k_wheel_brake:
+      value: 0.2
+      units: s/m
+      description: 'Toe-brake command per m/s of ground speed above the taxi speed'
+      evidence: {tag: 'ASSUMPTION', source: 'Proportional braking law (no Tejas brake-usage data)'}
+      sweep: [0.05, 0.5]
+      assumption_id: A-W1.1-47
+    brake_land_max:
+      value: 0.8
+      units: '1'
+      description: 'Toe-brake command cap on the landing roll'
+      evidence: {tag: 'ASSUMPTION', source: 'Normal (not maximum-effort) braking; no Tejas data'}
+      sweep: [0.4, 1.0]
+      assumption_id: A-W1.1-47
+    v_brake_on:
+      value: 110.0
+      units: knot
+      description: 'Ground speed below which wheel braking starts on the landing roll (aerobraking above)'
+      evidence: {tag: 'TRANSFER: F-16 (USAF AIB 91-0466)', source: 'USAF AIB 91-0466 (officially released): F-16D aerobraking nose-high to about 110 kt, then nose down and wheel braking (iaf_usage_and_validation_gap_closure.md Q3 table (c), "partly replaced"); value set to the released anchor, 110 kt (coordinator, 2026-10-15). The earlier value coincided with a restricted-manual roll-out figure (report App. A1); that citation and value are withdrawn (E1-HY, audit #121)'}
+      sweep: [80.0, 130.0]
+      assumption_id: A-W1.1-47
+    alpha_spin:
+      value: 45.0
+      units: deg
+      description: 'Spin recognition: angle of attack above this (with yaw rate) selects the FCS spin-recovery mode'
+      evidence: {tag: 'ASSUMPTION', source: 'Below the DIRECT Tejas spin modes (alpha 57-85 deg, 0.7-2.8 rad/s; tejas_airframe_aero_fcs.md row 65, AeSI FTG 2005 §11); pilot-selectable spin-recovery mode [DIRECT] (same note, AeSI §14/§25)'}
+      sweep: [35.0, 57.0]
+      assumption_id: A-W1.1-47
+    r_spin:
+      value: 0.5
+      units: rad/s
+      description: 'Spin recognition: yaw rate magnitude above this'
+      evidence: {tag: 'ASSUMPTION', source: 'Below the DIRECT spin-mode yaw rates 0.7-2.8 rad/s (tejas_airframe_aero_fcs.md row 65)'}
+      sweep: [0.3, 0.7]
+      assumption_id: A-W1.1-47
+    alpha_rec:
+      value: 20.0
+      units: deg
+      description: 'Spin recovered: angle of attack below this (with yaw rate below r_rec) deselects the mode'
+      evidence: {tag: 'ASSUMPTION', source: 'Hysteresis below the AoA limiter region (~26 deg departure boundary, tejas_airframe_aero_fcs.md V12)'}
+      sweep: [10.0, 26.0]
+      assumption_id: A-W1.1-47
+    r_rec:
+      value: 0.2
+      units: rad/s
+      description: 'Spin recovered: yaw rate magnitude below this'
+      evidence: {tag: 'ASSUMPTION', source: 'Hysteresis below r_spin'}
+      sweep: [0.05, 0.3]
+      assumption_id: A-W1.1-47
+    t_spin:
+      value: 2.0
+      units: s
+      description: 'Persistence before the pilot selects (or deselects) the spin-recovery mode'
+      evidence: {tag: 'ASSUMPTION', source: 'Pilot recognition time; no Tejas data'}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.1-47
+    reset_reaction:
+      value: 5.0
+      units: s
+      description: 'Pilot reaction from an FCS caution to the FCS reset (fcs.reset, via the pilot.fcs_caution hook)'
+      evidence: {tag: 'ASSUMPTION', source: 'EVT.FCS.DEGRADE "channel failure or dropout (reset possible)" [DIRECT, tejas_avionics_and_parameter_inventory.md]; reaction time not public'}
+      sweep: [2.0, 30.0]
+      assumption_id: A-W1.1-47

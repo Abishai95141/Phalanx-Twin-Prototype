@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Spares lead time — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: flex; flex-direction: column; gap: 24px; height: 100%; }
+  .tabs2 span { cursor: pointer; }
+  .tabs2 .tab-meta { margin-left: auto; font-size: 13px; color: var(--ink-4); font-weight: 500; padding: 0 0 14px; cursor: default; }
+  .g { flex: 1; min-height: 0; grid-template-rows: 368px minmax(0, 1fr); height: auto; }
+  .km { grid-row: span 2; }
+  .head2 { display: flex; align-items: flex-start; gap: 16px; }
+  .head2 .grow { flex: 1; }
+  .lead { display: flex; align-items: flex-end; gap: 32px; margin-top: 30px; }
+  .lead .ci { margin-top: 10px; max-width: 420px; }
+  .cls { display: flex; gap: 32px; margin-left: auto; padding-bottom: 2px; }
+  .cls div { font-size: 13px; color: var(--ink-4); line-height: 1.4; }
+  .cls b { display: block; font-size: 17px; font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .cls .hd { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); align-self: flex-end; padding-bottom: 3px; }
+  #kmc { margin-top: 36px; flex: 1; min-height: 0; }
+  #mrl { margin-top: 14px; flex: 1; min-height: 0; }
+  .mlead { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; }
+  .ul { margin-top: 12px; display: flex; flex-direction: column; }
+  .ul .u { display: grid; grid-template-columns: minmax(0, 1fr) 92px 104px; column-gap: 14px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line-2); }
+  .ul .u:first-child { border-top: 0; }
+  .ul .nm { font-size: 15px; font-weight: 650; }
+  .ul .nm span { display: block; font-size: 13px; color: var(--ink-4); font-weight: 500; margin-top: 2px; }
+  .ul .val { text-align: right; font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; }
+    .g { flex: none; }
+    .km { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    .lead { flex-wrap: wrap; gap: 20px 32px; }
+    #kmc { flex: none; height: 330px; margin-top: 30px; }
+    #mrl { flex: none; height: 230px; margin-top: 18px; }
+    #kmc svg, #mrl svg { display: block; overflow: visible; }
+    .ul .u { grid-template-columns: 92px minmax(0,1fr); row-gap: 8px; }
+    .ul .nm { grid-column: 1 / -1; }
+  }
+  @media (max-width: 699px) {
+    .tabs2 .tab-meta { display: none; }
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .head2 { flex-wrap: wrap; gap: 8px 12px; }
+    .lead { margin-top: 22px; }
+    .cls { margin-left: 0; flex-wrap: wrap; gap: 14px 28px; }
+    .cls .hd { flex-basis: 100%; }
+    .lead .ci { max-width: none; }
+    #kmc { height: 300px; }
+  }
+</style>
+</head>
+<body data-page="spares">
+<div id="content">
+<div class="pg">
+  <div class="tabs2"><span onclick="location.href='spares.html'">Grounding demands</span><span class="on">Lead time</span>
+    <span class="tab-meta" id="meta"></span></div>
+
+  <div class="v2 g">
+    <section class="panel2 c8 km" data-shot="leadtime">
+      <div class="head2">
+        <div class="grow"><span class="kick">Lead time · AOG orders</span>
+          <div class="t2" id="kmT"></div>
+          <div class="sub2">Lead-time model: CAG IL-76 AOG fit × 0.3 OEM-support factor, not yet calibrated on Tejas data.</div></div>
+        <span class="tier pred">PRED</span>
+      </div>
+      <div class="lead">
+        <div><div class="big num" id="kmV"></div><div class="ci" id="kmCi"></div></div>
+        <div class="cls" id="cls"></div>
+      </div>
+      <div id="kmc"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="remaining">
+      <div class="head2"><div class="grow"><span class="kick">Expected remaining wait</span>
+        <div class="t2">The longer an order waits, the longer it is likely to keep waiting</div></div><span class="tier pred">PRED</span></div>
+      <div class="mlead"><span class="mid num" id="mrlV"></span><span class="sub2" style="margin:0">more for TJ108's chute</span></div>
+      <div class="ci" id="mrlCi" style="margin-top:8px"></div>
+      <div id="mrl"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="useful">
+      <div class="head2"><div class="grow"><span class="kick">Useful lead time</span>
+        <div class="t2">Warning beats a typical wait</div>
+        <div class="sub2">Warning minus wait · median / 90th percentile</div></div><span class="tier presc">PRESC</span></div>
+      <div class="ul" id="ul"></div>
+    </section>
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data-spares.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const S = window.PHX_SPARES, L = S.leadtime, C = L.chute, TY = L.tyre, T = L.tj108, U = S.useful, mono = 'JetBrains Mono';
+const HALO = 'paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round"';
+const sq = new Date(S.S2.exit_sq[0].slice(0, 16).replace(' ', 'T')), simRem = Math.round((sq - new Date('2026-06-22T06:00')) / 864e5);
+document.getElementById('meta').textContent = `Model, checked against ${L.linked_n} fills on record for these aircraft`;
+document.getElementById('kmT').textContent = `Half of brake-chute orders arrive within a month; ${Math.round(C.s80 * 10)} in 10 wait longer than 80 days`;
+document.getElementById('kmV').innerHTML = `${Math.round(C.median)} d<small>median wait · brake chute</small>`;
+document.getElementById('kmCi').textContent = `Mean ${Math.round(C.mean)} d · 90th percentile ${Math.round(C.p90)} d · tyres ship faster: median ${TY.median} d`;
+const lk = L.linked, ch = lk.filter(x => x.part === 'CHUTE'), ty = lk.filter(x => x.part === 'TYRE');
+document.getElementById('cls').innerHTML = `<span class="hd">Fills on record</span>` +
+  `<div><b>${ty.length} tyres</b>all within ${Math.max(...ty.map(x => x.days)).toFixed(1)} d</div>` +
+  `<div><b>${ch.length} chutes</b>${ch.map(x => Math.round(x.days)).join(', ')} d</div>`;
+document.getElementById('mrlV').textContent = `≈ ${Math.round(T.mrl)} d`;
+document.getElementById('mrlCi').textContent = `At ${Math.round(T.age_d)} days open (model) · paired simulation, status quo: ${simRem} d`;
+
+const UL = [
+  ['Tyres', `${Math.round(U.tyre.horizon)} d warning (8 landings)`, U.tyre.useful_med, U.tyre.useful_p90],
+  ['Brake chutes', `${Math.round(U.chute.horizon)} d warning (45 streamings)`, U.chute.useful_med, U.chute.useful_p90],
+  ['Hydraulic pumps', 'no wear-out warning', null, null]
+];
+document.getElementById('ul').innerHTML = UL.map(([n, s, a, b]) => {
+  const W = 92, lo = -220, hi = 80, X = v => W * (v - lo) / (hi - lo), x0 = X(0); let bar;
+  if (a == null) bar = `<rect x="0" y="5" width="${W}" height="12" rx="3" fill="url(#hu)"/>`;
+  else bar = `<rect x="${X(b)}" y="7" width="${X(a) - X(b)}" height="8" rx="4" fill="var(--accent)" opacity=".35"/><rect x="${X(Math.max(a, 0)) - (a > 0 ? X(a) - x0 : 0)}" y="7" width="${a > 0 ? X(a) - x0 : 0}" height="8" rx="4" fill="var(--ink)"/><circle cx="${X(a)}" cy="11" r="4" fill="var(--ink)"/>`;
+  bar += `<line x1="${x0}" x2="${x0}" y1="0" y2="22" stroke="var(--ink-4)"/>`;
+  const sg = v => (v > 0 ? '+' : '−') + Math.round(Math.abs(v));
+  return `<div class="u"><div class="nm">${n}<span>${s}</span></div>
+    <svg width="${W}" height="22"><defs><pattern id="hu" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--bg-2)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--line-strong)" stroke-width="1.4"/></pattern></defs>${bar}</svg>
+    <span class="val">${a == null ? '<span style="color:var(--ink-4);font-weight:500">stock</span>' : `${sg(a)}<span style="color:var(--accent-ink)"> / ${sg(b)}</span> d`}</span></div>`;
+}).join('');
+
+PHX.mount({ page: 'spares', title: 'Spares', sub: 'What is grounding aircraft, and what will we need next?',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'warn', i: 'alert', t: '1 aircraft waiting for parts' }],
+  after() {
+    (function () {
+      const host = document.getElementById('kmc'), W = host.clientWidth, H = host.clientHeight, PH = W < 500;   // phones: fewer ticks, labels kept inside
+      const pl = 44, pb = 46, pt = 8, pr = 8, xm = 200, X = d => pl + (W - pl - pr) * d / xm, Y = v => pt + (H - pt - pb) * (1 - v);
+      let s = '';
+      [0, .25, .5, .75, 1].forEach(v => { s += `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-2)"/><text x="${pl - 10}" y="${Y(v) + 4}" font-size="11.5" text-anchor="end" fill="var(--ink-4)" font-family="${mono}">${v * 100}%</text>`; });
+      (PH ? [0, 60, 120, 180] : [0, 30, 60, 90, 120, 150, 180]).forEach(d => { s += `<text x="${X(d)}" y="${H - 6}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">${d} d</text>`; });
+      s += `<text x="${pl}" y="${Y(1) - 0}" dy="-0" font-size="11.5" fill="var(--ink-4)" font-family="${mono}" visibility="hidden">.</text>`;
+      const path = c => 'M' + c.filter(p => p[0] <= xm).map(p => `${X(p[0])} ${Y(p[1])}`).join(' L');
+      s += `<path d="${path(TY.curve)}" fill="none" stroke="var(--ink-5)" stroke-width="2"/>`;
+      s += `<path d="${path(C.curve)}" fill="none" stroke="var(--ink)" stroke-width="2.4"/>`;
+      // direct labels
+      const yt = TY.curve.find(p => p[0] >= 40)[1]; s += `<text x="${X(42)}" y="${Y(yt) - 10}" font-size="13" fill="var(--ink-3)" ${HALO}>tyres</text>`;
+      const yc = C.curve.find(p => p[0] >= 150)[1]; s += `<text x="${PH ? W - pr : X(150)}" y="${Y(yc) - 12}" font-size="13" ${PH ? 'text-anchor="end" ' : ''}fill="var(--ink)" font-weight="650" ${HALO}>brake chutes, pumps</text>`;
+      s += `<text x="${W - pr}" y="${Y(1) + 16}" font-size="13" text-anchor="end" fill="var(--ink-4)">share of orders still waiting</text>`;
+      // median
+      s += `<path d="M${pl} ${Y(.5)} H${X(C.median)} V${H - pb}" fill="none" stroke="var(--ink-2)" stroke-dasharray="2 4" stroke-width="1.2"/>`;
+      s += `<text x="${X(C.median) + 10}" y="${Y(.5) - 8}" font-size="13" fill="var(--ink)" font-weight="650" ${HALO}>median ${Math.round(C.median)} d</text>`;
+      // rug of fills on record
+      const ry = H - pb + 12;
+      s += `<text x="${X(200)}" y="${ry + 4}" font-size="11.5" text-anchor="end" fill="var(--ink-4)" font-family="${mono}">FILLS ON RECORD</text>`;
+      lk.forEach(f => { s += `<line x1="${X(f.days)}" x2="${X(f.days)}" y1="${ry - 6}" y2="${ry + 6}" stroke="${f.part === 'CHUTE' ? 'var(--ink)' : 'var(--ink-4)'}" stroke-width="2"/>`; });
+      // TJ108
+      const sx = X(T.age_d), sy = Y(T.s_at_age);
+      s += `<line x1="${sx}" x2="${sx}" y1="${sy}" y2="${H - pb}" stroke="var(--nmcs)" stroke-width="1.6"/>`;
+      s += `<circle cx="${sx}" cy="${sy}" r="6.5" fill="var(--nmcs)" stroke="#fff" stroke-width="2"/>`;
+      const tx = PH ? W - pr : sx + 14, ta = PH ? 'text-anchor="end" ' : '', ty = PH ? sy - 18 : sy;
+      s += `<text x="${tx}" y="${ty - 30}" font-size="13" ${ta}fill="var(--nmcs)" font-weight="650" ${HALO}>TJ108 chute · open ${Math.round(T.age_d)} d</text>`;
+      s += `<text x="${tx}" y="${ty - 12}" font-size="13" ${ta}fill="var(--ink-3)" ${HALO}>${Math.round(T.s_at_age * 100)} % of chute orders wait longer</text>`;
+      host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+    })();
+    (function () {
+      const host = document.getElementById('mrl'), W = host.clientWidth, H = host.clientHeight;
+      const pl = 40, pb = 24, pt = 8, pr = 8, xm = 120, ym = 600, X = a => pl + (W - pl - pr) * a / xm, Y = v => pt + (H - pt - pb) * (1 - v / ym);
+      const M = C.mrl; let s = '';
+      [0, 200, 400, 600].forEach(v => { s += `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-2)"/><text x="${pl - 8}" y="${Y(v) + 4}" font-size="11.5" text-anchor="end" fill="var(--ink-4)" font-family="${mono}">${v}</text>`; });
+      [0, 40, 80, 120].forEach(a => { s += `<text x="${X(a)}" y="${H - 4}" font-size="11.5" text-anchor="${a === 120 ? 'end' : a ? 'middle' : 'start'}" fill="var(--ink-4)" font-family="${mono}">${a} d</text>`; });
+      s += `<path d="M${M.map(p => `${X(p[0])} ${Y(p[1])}`).join(' L')}" fill="none" stroke="var(--ink)" stroke-width="2.4"/>`;
+      s += `<circle cx="${X(0)}" cy="${Y(M[0][1])}" r="4" fill="var(--ink)"/>`;
+      s += `<text x="${X(0) + 10}" y="${Y(M[0][1]) + 20}" font-size="13" fill="var(--ink-3)" ${HALO}>new order · ${Math.round(M[0][1])} d</text>`;
+      s += `<circle cx="${X(T.age_d)}" cy="${Y(simRem)}" r="5" fill="#fff" stroke="var(--ink-3)" stroke-width="2"/>`;
+      s += `<circle cx="${X(T.age_d)}" cy="${Y(T.mrl)}" r="6.5" fill="var(--nmcs)" stroke="#fff" stroke-width="2"/>`;
+      s += `<text x="${X(T.age_d) - 12}" y="${Y(T.mrl) - 12}" font-size="13" text-anchor="end" fill="var(--nmcs)" font-weight="650" ${HALO}>TJ108</text>`;
+      s += `<text x="${X(T.age_d) + 10}" y="${Y(simRem) + 18}" font-size="13" fill="var(--ink-3)" ${HALO}>simulated</text>`;
+      host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+    })();
+  } });
+</script>
+</body></html>

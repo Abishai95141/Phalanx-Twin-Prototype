@@ -1,0 +1,71 @@
+{
+  "tail": "TJ105",
+  "world": {
+    "scenario": "preview09-ops",
+    "root_seed": "0x9f1ee7",
+    "start": "2026-01-05",
+    "fleet_days_built": 205,
+    "m14_regime": "immature",
+    "policy": "scheduled/1.0.0",
+    "dict_version": "0.1.3",
+    "dict_hash": "9428d30f578f0318161737a6e6235f332632b2827b76eb6d853064544e7fbc8b",
+    "contract_version": "0.2.0",
+    "contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566"
+  },
+  "epoch": {
+    "t_utc_ns": 1782095400000000000,
+    "utc": "2026-06-22T02:30:00Z",
+    "ist": "2026-06-22 08:00 IST",
+    "t_kernel_ns": 14524200000000000
+  },
+  "snapshot_id": "9f1ecc80bfd311e4bd69eef6a78d17dbd551176f917f7766cb4109c2771ce3f5",
+  "wall_s_run_to_epoch": 11.49,
+  "wall_s_snapshot": 0.012,
+  "orders_submitted_before_epoch": 1,
+  "checks": {
+    "maint.records_rows_before_epoch": {
+      "session": 1104,
+      "preview": 1104,
+      "identical_all_columns": true,
+      "only_in_session": 0,
+      "only_in_preview": 0
+    },
+    "orders.commands_rows_before_epoch": {
+      "session": 1,
+      "preview": 1,
+      "identical_all_columns": true,
+      "only_in_session": 0,
+      "only_in_preview": 0
+    },
+    "orders.status_rows_before_epoch": {
+      "session": 4,
+      "preview_incl_colliding_worlds": 4,
+      "identical_all_columns": true,
+      "only_in_session": 0,
+      "note": "compared as session-rows subset of preview rows (order_id collisions)"
+    },
+    "events.bit_faults_rows_before_epoch": {
+      "session": 96,
+      "preview": 96,
+      "identical_all_columns": true,
+      "only_in_session": 0,
+      "only_in_preview": 0
+    },
+    "events.cautions_rows_before_epoch": {
+      "session": 48,
+      "preview": 48,
+      "identical_all_columns": true,
+      "only_in_session": 0,
+      "only_in_preview": 0
+    },
+    "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+      "session": 3,
+      "preview": 3,
+      "same_record_ids": true
+    },
+    "availability_state_at_epoch": {
+      "state": "FMC",
+      "since_ist": "2026-06-20 08:30 IST"
+    }
+  }
+}

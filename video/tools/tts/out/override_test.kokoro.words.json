@@ -1,0 +1,106 @@
+{
+ "raw": [
+  {
+   "text": "Phalanx",
+   "start": 0.275,
+   "end": 0.738
+  },
+  {
+   "text": "Twin",
+   "start": 0.738,
+   "end": 1.4
+  },
+  {
+   "text": "turns",
+   "start": 1.4,
+   "end": 1.738
+  },
+  {
+   "text": "the",
+   "start": 1.738,
+   "end": 1.837
+  },
+  {
+   "text": "fleet's",
+   "start": 1.837,
+   "end": 2.175
+  },
+  {
+   "text": "evidence",
+   "start": 2.175,
+   "end": 2.638
+  },
+  {
+   "text": "into",
+   "start": 2.638,
+   "end": 2.888
+  },
+  {
+   "text": "signed",
+   "start": 2.888,
+   "end": 3.188
+  },
+  {
+   "text": "decisions",
+   "start": 3.188,
+   "end": 4.05
+  }
+ ],
+ "words": [
+  {
+   "text": "Phalanx",
+   "start": 0.275,
+   "end": 0.738,
+   "how": "equal"
+  },
+  {
+   "text": "Twin",
+   "start": 0.738,
+   "end": 1.4,
+   "how": "equal"
+  },
+  {
+   "text": "turns",
+   "start": 1.4,
+   "end": 1.738,
+   "how": "equal"
+  },
+  {
+   "text": "the",
+   "start": 1.738,
+   "end": 1.837,
+   "how": "equal"
+  },
+  {
+   "text": "fleet's",
+   "start": 1.837,
+   "end": 2.175,
+   "how": "equal"
+  },
+  {
+   "text": "evidence",
+   "start": 2.175,
+   "end": 2.638,
+   "how": "equal"
+  },
+  {
+   "text": "into",
+   "start": 2.638,
+   "end": 2.888,
+   "how": "equal"
+  },
+  {
+   "text": "signed",
+   "start": 2.888,
+   "end": 3.188,
+   "how": "equal"
+  },
+  {
+   "text": "decisions.",
+   "start": 3.188,
+   "end": 4.05,
+   "how": "equal"
+  }
+ ],
+ "stats": {}
+}

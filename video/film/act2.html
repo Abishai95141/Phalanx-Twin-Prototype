@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/twin3d.bundle.js"></script>
+<script src="assets/phx-film.js"></script>
+<script src="assets/act2/aircraft.js"></script>
+<style>
+  @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; font-display: block; }
+  @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; font-display: block; }
+  :root {
+    --ink: #0B0D10; --ink-2: #31353B; --ink-3: #62676F; --ink-4: #8E939A; --ink-5: #B9BDC2;
+    --line: #E6E6E2; --line-2: #EFEFEC; --line-strong: #D6D6D1; --bg-2: #F7F7F5; --bg-3: #F1F1EE;
+    --accent: #E8743B; --accent-ink: #B4511F; --accent-wash: #FDF1EA; --accent-line: #F6CDB6;
+    --wire: #2563C9; --wire-wash: #EAF1FC; --ok: #1F8A4C; --ok-wash: #EAF6EF; --fmc: #1F8A4C;
+    --t-desc: #4B5563; --t-diag: #2563C9; --t-pred: #6D4AE0; --t-presc: #B4511F;
+    --font: "Manrope", ui-sans-serif, system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #FFFFFF; }
+  #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #FFFFFF;
+    font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1; }
+  #root * { box-sizing: border-box; }
+  .mono { font-family: var(--mono); letter-spacing: -0.01em; }
+  .layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+  .host { position: absolute; inset: 0; }
+
+  /* ---------- world (one growing system) ---------- */
+  #wcam { z-index: 1; }
+  #world { position: absolute; left: 0; top: 0; width: 3840px; height: 1660px; }
+  #wgrid { position: absolute; left: -2400px; top: -1600px; width: 8640px; height: 4860px;
+    background-image: linear-gradient(to right, #EFEFEC 1px, transparent 1px), linear-gradient(to bottom, #EFEFEC 1px, transparent 1px);
+    background-size: 48px 48px; background-position: 0 0; }
+  #wsvg, #wtop { position: absolute; left: 0; top: 0; overflow: visible; }
+  #wtop { z-index: 6; pointer-events: none; }
+  #wn { position: absolute; left: 0; top: 0; width: 3840px; height: 1660px; z-index: 4; }
+  #wn > div, .wn { position: absolute; }
+  #twin-host { position: absolute; left: 1240px; top: 240px; width: 960px; height: 600px; z-index: 3;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 80%, transparent 100%);
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 80%, transparent 100%); }
+  #twin-vp { position: absolute; inset: 0; }
+
+  .kick { font: 700 15px/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); white-space: nowrap; }
+  .ttl { font: 650 34px/1.1 var(--font); letter-spacing: -0.025em; color: var(--ink); white-space: nowrap; margin-top: 10px; }
+  .ttl .p { display: inline-block; }
+  .chip { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 14px; border: 1.5px solid var(--line-strong);
+    border-radius: 10px; background: #fff; font: 500 16px/1 var(--mono); color: var(--ink-2); white-space: nowrap; }
+  .chip .dt { width: 8px; height: 8px; border-radius: 50%; background: var(--wire); flex: none; }
+  .card { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; }
+
+  /* foundation */
+  .gate { padding: 0; }
+  .gate .gh { position: absolute; left: 22px; top: 18px; font: 700 13px/1 var(--mono); letter-spacing: .12em; color: var(--ink-3); }
+  .gate .row { position: absolute; left: 22px; right: 18px; height: 52px; display: flex; align-items: center; gap: 14px; }
+  .gate .ck { width: 26px; height: 26px; flex: none; }
+  .gate .lb { font: 650 18px/1.1 var(--font); color: var(--ink); white-space: nowrap; }
+  .gate .sb { font: 500 12.5px/1.2 var(--mono); color: var(--ink-3); margin-top: 4px; white-space: nowrap; }
+  .gate .sb b { color: var(--ink); font-weight: 700; }
+  .post { position: absolute; width: 4px; border-radius: 2px; background: var(--ink); }
+  .contract { padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .contract .nm { font: 650 17px/1.1 var(--font); }
+  .contract .hs { font: 500 12.5px/1.35 var(--mono); color: var(--ink-3); margin-top: 5px; white-space: nowrap; }
+  .lbl { font: 650 24px/1.1 var(--font); letter-spacing: -0.02em; white-space: nowrap; }
+  .sub { font: 500 14px/1.3 var(--mono); color: var(--ink-3); white-space: nowrap; }
+  .formula { font: 600 26px/1 var(--mono); color: var(--ink); white-space: nowrap; letter-spacing: -0.02em; }
+  .formula .a { color: var(--accent-ink); }
+  .rlab { font: 500 13.5px/1 var(--mono); color: var(--ink-2); white-space: nowrap; }
+  .axl { font: 500 12.5px/1 var(--mono); color: var(--ink-4); white-space: nowrap; transform: translateX(-50%); }
+  .cutchip { height: 32px; padding: 0 12px; border-radius: 8px; background: var(--accent); color: #fff; font: 700 14px/32px var(--mono); white-space: nowrap; }
+  .ost { font: 600 15px/1 var(--mono); color: var(--accent-ink); white-space: nowrap; }
+  .uchip { height: 30px; padding: 0 11px; border-radius: 8px; border: 1.5px solid var(--wire); color: var(--wire); background: #fff; font: 600 14px/27px var(--mono); white-space: nowrap; }
+
+  /* twin */
+  .tw-k { font: 700 15px/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+  .tw-t { font: 650 44px/1 var(--font); letter-spacing: -0.03em; margin-top: 12px; }
+  .tw-s { font: 500 20px/1.2 var(--font); color: var(--ink-3); margin-top: 8px; white-space: nowrap; }
+  .facet { padding: 10px 14px 11px; background: rgba(255,255,255,.94); border: 1.5px solid var(--line-strong); border-radius: 12px; white-space: nowrap; }
+  .facet .fn { font: 700 17px/1.1 var(--font); color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .facet .fn i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .facet .fs { font: 500 12.5px/1.3 var(--mono); color: var(--ink-3); margin-top: 5px; }
+  .facet .fs b { color: var(--ink); font-weight: 700; }
+  .facet .fs .m { color: var(--ink-4); }
+  .pill { display: inline-block; height: 20px; padding: 0 7px; border-radius: 6px; font: 700 11px/20px var(--mono); letter-spacing: .05em; }
+  .pill.fmc { background: var(--ok-wash); color: var(--fmc); }
+
+  /* engines */
+  .band { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .band .tb { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+  .band .tn { position: absolute; left: 24px; top: 24px; font: 700 15px/1 var(--mono); letter-spacing: .1em; }
+  .band .tq { position: absolute; left: 24px; top: 50px; width: 175px; font: 650 25px/1.12 var(--font); letter-spacing: -0.02em; color: var(--ink); }
+  .mchip { position: absolute; height: 46px; padding: 0 16px; display: flex; align-items: center; border: 1.5px solid var(--line-strong);
+    border-radius: 11px; background: #fff; font: 600 18.5px/1 var(--font); color: var(--ink-2); white-space: nowrap; letter-spacing: -0.01em; }
+  .mchip em { font-style: normal; color: var(--ink-4); font-weight: 500; margin-left: 7px; }
+  .arrl { font: 500 14px/1 var(--mono); color: var(--wire); white-space: nowrap; }
+  .rail-h { font: 700 13.5px/1 var(--mono); letter-spacing: .12em; color: var(--ink-3); white-space: nowrap; }
+  .rent { width: 440px; height: 112px; border-top: 1.5px solid var(--line); }
+  .rent .rn { position: absolute; left: 0; top: 18px; font: 650 25px/1 var(--font); letter-spacing: -0.02em; color: var(--ink-2); white-space: nowrap; }
+  .rent .rr { position: absolute; left: 0; top: 56px; font: 500 16.5px/1.25 var(--font); color: var(--ink-3); white-space: nowrap; }
+  .stamp { position: absolute; right: 0; top: 12px; height: 34px; padding: 0 11px; border: 2.5px solid var(--ink); border-radius: 7px;
+    font: 800 15px/29px var(--mono); letter-spacing: .12em; color: var(--ink); white-space: nowrap; background: rgba(255,255,255,.9); }
+  .stamp.base { border-color: var(--ink-3); color: var(--ink-3); }
+
+  /* triage */
+  .fbar { display: flex; align-items: baseline; justify-content: center; gap: 10px; background: #fff; border: 1.5px solid var(--ink); border-radius: 12px; white-space: nowrap; }
+  .fbar .n { font: 650 34px/1 var(--font); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .fbar .l { font: 500 17px/1 var(--font); color: var(--ink-3); }
+  .fbar.last { background: var(--accent-wash); border-color: var(--accent); }
+  .rchip { height: 32px; padding: 0 11px; border: 1.5px solid var(--line-strong); border-radius: 8px; background: #fff; font: 500 14.5px/29px var(--mono); color: var(--ink-2); white-space: nowrap; }
+  .mcard { width: 34px; height: 46px; border-radius: 7px; background: #fff; border: 1.5px solid var(--ink); overflow: hidden; }
+  .mcard i { position: absolute; left: 0; right: 0; top: 0; height: 7px; display: block; }
+  .mcard b { position: absolute; left: 6px; right: 6px; height: 3px; border-radius: 2px; background: var(--line-strong); display: block; }
+  .particle { width: 12px; height: 4px; border-radius: 2px; background: var(--ink-4); }
+
+  /* loop */
+  .sl { white-space: nowrap; }
+  .sl .nm { font: 750 21px/1 var(--font); letter-spacing: .03em; color: var(--ink); }
+  .sl .nm .tm { font: 700 19px/1 var(--mono); color: var(--accent-ink); margin-right: 8px; letter-spacing: 0; }
+  .sl .sb { font: 500 16px/1.2 var(--font); color: var(--ink-3); margin-top: 6px; }
+  .hub { text-align: center; white-space: nowrap; }
+  .hub .e { font: 700 13px/1 var(--mono); letter-spacing: .12em; color: var(--ink-4); }
+  .hub .n { font: 650 22px/1 var(--font); margin-top: 86px; }
+  .ochip { height: 28px; padding: 0 9px; border-radius: 7px; border: 1.5px solid var(--accent); background: #fff; color: var(--accent-ink); font: 700 12.5px/25px var(--mono); white-space: nowrap; }
+  .humanb { height: 28px; padding: 0 10px; border-radius: 7px; background: var(--ink); color: #fff; font: 700 13px/28px var(--mono); letter-spacing: .05em; white-space: nowrap; }
+  .lblock { width: 150px; height: 58px; border-radius: 10px; border: 1.5px solid var(--line-strong); background: #fff; padding: 9px 11px; }
+  .lblock .ty { font: 500 11.5px/1.15 var(--mono); color: var(--ink-3); white-space: nowrap; overflow: hidden; }
+  .lblock .hh { font: 700 14px/1 var(--mono); color: var(--ink); margin-top: 7px; white-space: nowrap; }
+  .lblock .hh span { color: var(--ink-4); font-weight: 500; }
+  .lblock.old { border-style: dashed; }
+  .lblock.old .hh { color: var(--ink-3); }
+  .loglab .k2 { font: 700 15px/1 var(--font); letter-spacing: .14em; color: var(--accent-ink); }
+  .loglab { display: flex; align-items: baseline; gap: 14px; white-space: nowrap; }
+  .loglab .s2 { font: 500 14px/1.3 var(--mono); color: var(--ink-3); }
+  .asst { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border: 1.5px dashed var(--ink-4); border-radius: 12px; background: #fff; white-space: nowrap; }
+  .asst .an { font: 700 18px/1.1 var(--font); }
+  .asst .as { font: 500 13px/1.25 var(--mono); color: var(--ink-3); margin-top: 3px; }
+
+  /* ---------- S11 product shot ---------- */
+  #s11 { z-index: 6; perspective: 2600px; perspective-origin: 50% 40%; }
+  #s11-win { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 50%; }
+  #s11-shadow { position: absolute; left: 60px; top: 70px; width: 1800px; height: 990px; border-radius: 28px;
+    box-shadow: 0 60px 120px -40px rgba(16,18,22,.28), 0 18px 40px -18px rgba(16,18,22,.14); }
+  #sc-ready, #sc-ready [data-composition-id="readiness"], #readiness-root, #readiness-root .stage { background: transparent !important; }
+  .kring { position: absolute; border: 2.5px solid var(--accent); border-radius: 22px; }
+
+  /* ---------- S12 four questions ---------- */
+  #s12 { z-index: 7; pointer-events: none; }
+  .col { position: absolute; background: #fff; border: 1.5px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(16,18,22,0); }
+  .col .bar { position: absolute; left: 0; right: 0; top: 0; height: 6px; transform-origin: 0 50%; }
+  .col .cc { position: absolute; left: 30px; top: 84px; right: 26px; bottom: 32px; display: flex; flex-direction: column; }
+  .col .q { font: 650 46px/1.06 var(--font); letter-spacing: -0.035em; color: var(--ink-5); }
+  .col .rl { height: 1.5px; background: var(--line); margin-top: auto; transform-origin: 0 50%; }
+  .col .big { font: 650 70px/1 var(--font); letter-spacing: -0.04em; margin-top: 26px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .col .big.nar { font-size: 62px; letter-spacing: -0.045em; }
+  .col .big.nar .ci { font-size: 21px; margin-left: 6px; }
+  .col .big.code { font: 700 58px/1 var(--mono); letter-spacing: -0.03em; }
+  .col .big.two { white-space: normal; font-size: 60px; line-height: 1.02; }
+  .col .big .ci { font: 500 24px/1 var(--mono); color: var(--ink-4); letter-spacing: -0.02em; margin-left: 4px; }
+  .col .ex { font: 550 25px/1.25 var(--font); color: var(--ink-2); margin-top: 14px; letter-spacing: -0.01em; }
+  .col .ctx { font: 500 15px/1.35 var(--mono); color: var(--ink-4); margin-top: 14px; }
+  .col .no { position: absolute; right: 26px; top: 30px; font: 600 15px/1 var(--mono); color: var(--ink-5); }
+
+  /* ---------- HUD tier strip ---------- */
+  #hud { z-index: 9; pointer-events: none; }
+  .tchip { position: absolute; display: inline-flex; align-items: center; gap: 9px; height: 38px; padding: 0 14px; border: 1.8px solid currentColor;
+    border-radius: 9px; background: #fff; font: 700 16px/1 var(--mono); letter-spacing: .1em; white-space: nowrap; transform-origin: 0 0; }
+  .tchip i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; display: block; }
+  .ghost { position: absolute; display: inline-flex; align-items: center; height: 21px; padding: 0 7px; border-radius: 6px; font: 700 10.5px/1 var(--mono);
+    letter-spacing: .06em; border: 1px solid currentColor; background: #fff; transform-origin: 0 0; white-space: nowrap; }
+  #tag { position: absolute; left: 0; width: 1920px; top: 92px; text-align: center; font: 650 46px/1 var(--font); letter-spacing: -0.03em; color: var(--ink); white-space: nowrap; }
+  #tag span { display: inline-block; }
+  #tag .dot { color: var(--accent); margin: 0 18px; }
+
+  /* ---------- S13 cutaway ---------- */
+  #cut { z-index: 5; }
+  #whiteout { z-index: 10; background: #fff; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="67.2" data-width="1920" data-height="1080">
+
+  <!-- the world: every component is built in place, the camera travels between them -->
+  <div id="wcam" class="cam" data-layout-allow-overflow>
+    <div id="world">
+      <div id="wgrid"></div>
+      <svg id="wsvg" width="3840" height="1660" viewBox="0 0 3840 1660">
+        <defs>
+          <marker id="ah-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0B0D10"/></marker>
+          <marker id="ah-wire" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563C9"/></marker>
+          <marker id="ah-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8743B"/></marker>
+          <marker id="ah-acc2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B4511F"/></marker>
+          <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#FAFAF8"/><line x1="0" y1="0" x2="0" y2="10" stroke="#E2E2DE" stroke-width="3"/></pattern>
+        </defs>
+        <g id="g-found"></g><g id="g-tl"></g><g id="g-plate"></g><g id="g-eng"></g><g id="g-tri"></g><g id="g-loop"></g><g id="g-log"></g><g id="g-x"></g>
+      </svg>
+      <div id="twin-host"><div id="twin-vp"></div></div>
+      <div id="wn"></div>
+      <svg id="wtop" width="3840" height="1660" viewBox="0 0 3840 1660"><g id="g-lead"></g><g id="g-fx"></g></svg>
+    </div>
+  </div>
+
+  <!-- S13 cutaway: the product's own gate card -->
+  <div id="cut" class="layer" style="opacity:0">
+    <div id="cam-data" class="cam" data-layout-allow-overflow>
+      <div id="sc-data" class="host" data-composition-id="data" data-composition-src="screens/data.html" data-start="15.5" data-duration="1.6" data-width="1920" data-height="1080" data-no-timeline></div>
+    </div>
+  </div>
+
+  <!-- S11 product shot -->
+  <div id="s11" class="layer">
+    <div id="s11-win">
+      <div id="s11-shadow"></div>
+      <div id="sc-ready" class="host" data-composition-id="readiness" data-composition-src="screens/readiness.html" data-start="0" data-duration="4.9" data-width="1920" data-height="1080" data-no-timeline></div>
+      <div id="s11-rings"></div>
+    </div>
+  </div>
+
+  <!-- S12 the four questions -->
+  <div id="s12" class="layer"></div>
+
+  <!-- HUD: the four tiers persist as a spine -->
+  <div id="hud" class="layer"><div id="tag"><span id="tg1">one state</span><span class="dot" id="td1">·</span><span id="tg2">one loop</span><span class="dot" id="td2">·</span><span id="tg3">one log</span></div></div>
+  <div id="whiteout" class="layer" style="opacity:0"></div>
+</div>
+
+<script>
+(function () {
+const { $, box, count, type, draw } = PHXF;
+const NS = 'http://www.w3.org/2000/svg';
+const D = 67.2;
+const FX = 960, FY = 510;
+const E = n => gsap.parseEase(n);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, p) => a + (b - a) * p;
+
+// absolute narration word times (act seconds) from edit/vo/S1x.tokens.json + timing.json vo_at_in_act
+const WORDS={"S11":[["Phalanx",0.366,0.878],["Twin",0.878,1.541],["is",1.541,1.679],["a",1.679,1.741],["decision-support",1.741,2.591],["digital",2.591,2.991],["twin",2.991,3.454],["for",3.454,3.579],["the",3.579,3.666],["flight",3.666,3.916],["line",3.916,4.566]],"S12":[["It",5.167,5.292],["answers",5.292,5.729],["four",5.729,5.967],["questions",5.967,6.867],["what's",6.992,7.217],["happening",7.217,7.717],["why",7.792,8.092],["what",8.167,8.317],["happens",8.317,8.717],["next",8.717,9.204],["and",9.255,9.367],["what",9.367,9.505],["we",9.505,9.654],["should",9.654,9.867],["do",9.867,10.392]],"S13":[["Everything",11.056,11.506],["starts",11.506,11.856],["from",11.856,12.069],["one",12.069,12.444],["frozen",12.444,12.981],["data",12.981,13.281],["contract",13.281,14.306],["A",14.444,14.556],["release",14.556,14.981],["gate",14.981,15.231],["admits",15.231,15.643],["it",15.643,16.081],["and",16.181,16.294],["an",16.294,16.393],["as-of",16.393,16.731],["store",16.731,17.006],["guarantees",17.006,17.843],["we",17.843,18.018],["only",18.018,18.343],["use",18.343,18.593],["what",18.593,18.719],["was",18.719,18.881],["known",18.881,19.219],["at",19.219,19.293],["the",19.293,19.381],["time",19.381,20.081]],"S14":[["If",20.708,20.845],["a",20.845,20.933],["record",20.933,21.333],["wasn't",21.333,21.621],["ingested",21.621,22.108],["by",22.108,22.32],["six",22.32,22.983],["no",23.121,23.358],["model",23.358,23.908],["rule",24.058,24.458],["or",24.458,24.608],["order",24.608,24.958],["can",24.958,25.133],["use",25.133,25.371],["it",25.371,25.808]],"S15":[["That",26.441,26.666],["builds",26.666,27.016],["one",27.016,27.241],["state",27.241,27.916],["a",28.053,28.141],["belief",28.141,28.566],["about",28.566,28.878],["every",28.878,29.191],["aircraft",29.191,29.866],["and",29.866,30.028],["every",30.028,30.391],["serialised",30.391,31.066],["part",31.066,31.641],["with",31.716,31.879],["its",31.879,32.041],["uncertainty",32.041,33.066]],"S16":[["Engines",34.34,34.815],["read",34.815,35.04],["that",35.04,35.29],["state",35.29,36.09],["We",36.215,36.377],["chose",36.377,36.715],["models",36.715,37.165],["that",37.165,37.377],["fit",37.377,37.64],["sparse",37.64,38.34],["censored",38.478,38.94],["maintenance",38.94,39.465],["data",39.465,40.04],["calibrated",40.153,40.74],["classifiers",40.74,41.74],["Bayesian",41.853,42.365],["isolation",42.365,43.265],["survival",43.378,43.94],["models",43.94,44.665],["and",44.74,44.878],["kept",44.878,45.203],["time-series",45.203,45.94],["foundation",45.94,46.54],["models",46.54,46.978],["as",46.978,47.14],["baselines",47.14,48.015],["not",48.128,48.365],["decision-makers",48.365,49.59]],"S17":[["Triage",50.633,51.133],["turns",51.133,51.495],["twelve",51.495,51.833],["hundred",51.833,52.12],["alerts",52.12,52.496],["into",52.496,52.746],["seven",52.746,53.07],["decisions",53.07,53.933]],"S18":[["Versioned",54.631,55.031],["policies",55.031,55.681],["and",55.681,55.818],["optimisers",55.818,56.556],["propose",56.556,57.094],["orders",57.094,57.906],["simulation",58.043,58.793],["tests",58.793,59.118],["them",59.118,59.306],["against",59.306,59.694],["the",59.694,59.781],["status",59.781,60.206],["quo",60.206,60.806],["a",60.944,61.056],["person",61.056,61.481],["approves",61.481,62.443],["and",62.531,62.693],["every",62.693,63.006],["step",63.006,63.331],["lands",63.331,63.756],["on",63.756,63.968],["one",63.968,64.318],["tamper-evident",64.318,65.081],["log",65.081,65.731]]};
+const w = (shot, word, n = 1) => { let k = 0; for (const [t, s] of WORDS[shot]) if (t === word && ++k === n) return s; throw new Error(shot + ':' + word); };
+
+const tl = gsap.timeline({ paused: true });
+const WN = $('#wn'), WS = $('#wsvg'), WT = $('#wtop');
+const px = v => v + 'px';
+function S(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || WS).appendChild(e); return e; }
+function H(cls, html, x, y, parent, style) { const e = document.createElement('div'); if (cls) e.className = cls; if (html != null) e.innerHTML = html;
+  e.style.left = px(x); e.style.top = px(y); e.style.position = 'absolute'; if (style) Object.assign(e.style, style); (parent || WN).appendChild(e); return e; }
+
+// ------------------------------------------------------------------ motion helpers
+function rise(el, t, o = {}) { tl.fromTo(el, { opacity: 0, y: o.dy ?? 16 }, { opacity: 1, y: 0, duration: o.d ?? .55, ease: o.ease || 'power3.out', stagger: o.st || 0 }, t); }
+function fadeIn(el, t, d = .45, ease = 'power2.out') { tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: d, ease, stagger: 0 }, t); }
+function fadeTo(el, t, from, to, d = .35, ease = 'power2.inOut') { tl.fromTo(el, { opacity: from }, { opacity: to, duration: d, ease, immediateRender: false }, t); }
+function pop(el, t, o = {}) { tl.fromTo(el, { opacity: 0, scale: o.s0 ?? .86 }, { opacity: 1, scale: 1, duration: o.d ?? .5, ease: o.ease || 'back.out(1.6)' }, t); }
+// one pulse: scale 1→1.04→1 plus an accent ring
+function pulse(el, t, ring) {
+  tl.fromTo(el, { scale: 1 }, { scale: 1.04, duration: .16, ease: 'power2.out', immediateRender: false }, t);
+  tl.fromTo(el, { scale: 1.04 }, { scale: 1, duration: .38, ease: 'power2.inOut', immediateRender: false }, t + .16);
+  if (ring) tl.fromTo(ring, { opacity: .9, scale: 1 }, { opacity: 0, scale: 1.12, duration: .6, ease: 'power2.out', immediateRender: false }, t);
+}
+// accent ring div around a world node box
+function ringFor(x, y, w, h, r = 14) { return H('', '', x - 3, y - 3, WN, { width: px(w + 6), height: px(h + 6), border: '2.5px solid #E8743B', borderRadius: px(r + 3), opacity: 0, zIndex: 9 }); }
+function drawP(paths, t, d, st = 0, ease = 'power2.inOut', op) { draw(tl, paths, t, d, st, ease);
+  paths.forEach((p, i) => { const o = op ?? +(p.getAttribute('opacity') ?? 1); tl.fromTo(p, { opacity: 0 }, { opacity: o, duration: .06, ease: 'none' }, t + i * st); }); }
+// packets travelling along a path (pure function of time)
+function flow(path, n, t0, t1, speed, color, r = 4.5, parent) {
+  const L = path.getTotalLength(), pts = [];
+  for (let i = 0; i <= 160; i++) { const p = path.getPointAtLength(L * i / 160); pts.push([p.x, p.y]); }
+  const dots = []; for (let i = 0; i < n; i++) dots.push(S('circle', { r, fill: color, opacity: 0 }, parent || WS));
+  const o = { t: 0 };
+  tl.fromTo(o, { t: 0 }, { t: t1 - t0, duration: t1 - t0, ease: 'none', onUpdate: () => {
+    dots.forEach((c, i) => {
+      const f = ((o.t * speed / L) + i / n) % 1, k = Math.min(159, Math.floor(f * 160)), q = f * 160 - k;
+      const x = lerp(pts[k][0], pts[k + 1][0], q), y = lerp(pts[k][1], pts[k + 1][1], q);
+      const fadeT = Math.min(1, o.t / .35, (t1 - t0 - o.t) / .35), fadeE = Math.min(1, f / .08, (1 - f) / .08);
+      c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('opacity', (Math.max(0, fadeT) * Math.max(0, fadeE)).toFixed(3));
+    }); } }, t0);
+  return dots;
+}
+
+// ------------------------------------------------------------------ world camera (pure function of time)
+const CAM = [ // [time reached, cx, cy, zoom, ease into this key]
+  [0.00, 1180, 600, 1.00, 'none'],
+  [10.25, 1090, 560, 1.03, 'sine.inOut'],
+  [11.45, 560, 392, 1.72, 'expo.inOut'],
+  [15.40, 598, 394, 1.68, 'sine.inOut'],
+  [16.75, 648, 396, 1.62, 'power2.inOut'],
+  [19.75, 660, 398, 1.60, 'sine.inOut'],
+  [20.80, 632, 930, 1.68, 'expo.inOut'],
+  [25.40, 640, 936, 1.72, 'sine.inOut'],
+  [26.75, 1760, 538, 1.62, 'expo.inOut'],
+  [33.90, 1764, 540, 1.67, 'sine.inOut'],
+  [35.40, 2420, 520, 0.79, 'expo.inOut'],
+  [37.40, 2520, 520, 0.83, 'sine.inOut'],
+  [38.60, 2830, 512, 1.10, 'power3.inOut'],
+  [44.60, 2870, 512, 1.15, 'sine.inOut'],
+  [45.85, 3332, 500, 1.30, 'expo.inOut'],
+  [49.55, 3348, 504, 1.36, 'sine.inOut'],
+  [50.65, 1720, 1180, 1.72, 'expo.inOut'],
+  [53.60, 1720, 1232, 1.76, 'sine.inOut'],
+  [54.80, 3080, 1222, 1.20, 'expo.inOut'],
+  [63.15, 3082, 1224, 1.235, 'sine.inOut'],
+  [65.35, 1925, 795, 0.495, 'expo.inOut'],
+  [66.35, 1925, 795, 0.502, 'sine.inOut'],
+  [67.20, 3060, 1380, 2.0, 'power3.in'],
+];
+const CAME = CAM.map(k => E(k[4]));
+function camAt(t) {
+  let i = 1; while (i < CAM.length - 1 && t > CAM[i][0]) i++;
+  const a = CAM[i - 1], b = CAM[i], p = clamp((t - a[0]) / (b[0] - a[0]), 0, 1), q = CAME[i](p);
+  const z = Math.exp(lerp(Math.log(a[3]), Math.log(b[3]), q));
+  return { cx: lerp(a[1], b[1], q), cy: lerp(a[2], b[2], q), z };
+}
+const WC = $('#wcam');
+function applyCam(t) { const c = camAt(t); WC.style.transform = `translate(${(FX - c.cx * c.z).toFixed(2)}px, ${(FY - c.cy * c.z).toFixed(2)}px) scale(${c.z.toFixed(5)})`; }
+
+function build() {
+// ============================================================== S11 · product shot
+const kpiSel = ['kpi-now', 'kpi-mc', 'kpi-parts', 'kpi-due'];
+const kpi = kpiSel.map(k => box(`#sc-ready [data-shot="${k}"]`));   // measured before any transform
+const SW = 0.97;                                     // window scale when the cards lift off
+const toScreen = b => ({ x: 960 + (b.x - 960) * SW, y: 540 + (b.y - 540) * SW, w: b.w * SW, h: b.h * SW });
+kpi.forEach((b, i) => H('kring', '', b.x - 6, b.y - 6, $('#s11-rings'), { width: px(b.w + 12), height: px(b.h + 12), opacity: 0 }));
+tl.fromTo('#s11', { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, .02);
+tl.fromTo('#s11-win', { scale: .82, rotationX: 13, y: 150 }, { scale: .915, rotationX: 0, y: 0, duration: 1.75, ease: 'expo.out' }, .02);
+tl.fromTo('#s11-shadow', { opacity: 0, scale: .94 }, { opacity: 1, scale: 1, duration: 1.8, ease: 'power2.out' }, .1);
+tl.fromTo('#s11-win', { scale: .915 }, { scale: SW, duration: 2.15, ease: 'power1.inOut', immediateRender: false }, 1.8);
+tl.fromTo('#s11-rings .kring', { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: .45, ease: 'power3.out', stagger: .07 }, 3.4);
+// lift-off: the four KPI cards become the four question columns
+tl.fromTo('#s11', { opacity: 1 }, { opacity: 0, duration: .55, ease: 'power2.inOut', immediateRender: false }, 4.12);
+
+// ============================================================== S12 · four questions
+const TIERS = [
+  { k: 'desc', name: 'DESCRIPTIVE', c: '#4B5563', q: 'What’s happening?', big: '<span id="c-b0">6</span> of 8', bigc: '', ex: 'aircraft mission capable', ctx: 'fleet · Mon 22 Jun 06:00', wq: ['S12', 'what\'s'] },
+  { k: 'diag', name: 'DIAGNOSTIC', c: '#2563C9', q: 'Why?', big: 'HYD-101', bigc: 'code', ex: 'is an indication fault — not a pump fault', ctx: 'fleet · 0 of 107 jobs confirmed', wq: ['S12', 'why'] },
+  { k: 'pred', name: 'PREDICTIVE', c: '#6D4AE0', q: 'What happens next?', big: '<span id="c-b2">0.985</span><span class="ci">[0.93, 1.00]</span>', bigc: 'nar', ex: 'P(RTOK) if the pump is removed again', ctx: '33 of 33 shop tests · no fault found', wq: ['S12', 'what', 1] },
+  { k: 'presc', name: 'PRESCRIPTIVE', c: '#B4511F', q: 'What should we do?', big: 'Stop removals', bigc: 'two', ex: 'troubleshoot the indication path', ctx: 'TJ107 · P2 · today’s board', wq: ['S12', 'what', 2] },
+];
+const COLW = 410, COLG = 26, COLY = 196, COLH = 588, COLX0 = (1920 - (4 * COLW + 3 * COLG)) / 2;
+const cols = TIERS.map((T, i) => {
+  const x = COLX0 + i * (COLW + COLG);
+  const c = H('col', `<div class="bar" style="background:${T.c}"></div><div class="no">0${i + 1}</div>
+    <div class="cc"><div class="q">${T.q}</div><div class="rl"></div><div class="big ${T.bigc}">${T.big}</div><div class="ex">${T.ex}</div><div class="ctx">${T.ctx}</div></div>`,
+    x, COLY, $('#s12'), { width: px(COLW), height: px(COLH) });
+  return { el: c, x };
+});
+const chips = TIERS.map((T, i) => H('tchip', `<i></i>${T.name}`, cols[i].x + 30, COLY + 30, $('#hud'), { color: T.c, opacity: 0 }));
+// morph KPI card → column (left/top/width/height), content hidden until it lands
+cols.forEach((c, i) => {
+  const s = toScreen(kpi[i]);
+  tl.fromTo(c.el, { opacity: 0 }, { opacity: 1, duration: .32, ease: 'power2.out' }, 4.06 + i * .03);
+  tl.fromTo(c.el, { x: s.x - c.x, y: s.y - COLY, width: s.w, height: s.h, borderRadius: 19 },
+    { x: 0, y: 0, width: COLW, height: COLH, borderRadius: 22, duration: .95, ease: 'power3.inOut' }, 4.32 + i * .05);
+  tl.fromTo(c.el, { boxShadow: '0 30px 60px -30px rgba(16,18,22,0)' }, { boxShadow: '0 30px 60px -30px rgba(16,18,22,.22)', duration: .45, ease: 'power2.out' }, 4.2 + i * .05);
+  tl.fromTo(c.el, { boxShadow: '0 30px 60px -30px rgba(16,18,22,.22)' }, { boxShadow: '0 30px 60px -30px rgba(16,18,22,0.05)', duration: .7, ease: 'power2.inOut', immediateRender: false }, 5.15 + i * .05);
+  tl.fromTo(c.el.querySelector('.bar'), { scaleX: 0 }, { scaleX: 1, duration: .6, ease: 'power3.out' }, 5.05 + i * .06);
+  tl.fromTo(c.el.querySelector('.no'), { opacity: 0 }, { opacity: 1, duration: .4 }, 5.2 + i * .06);
+});
+chips.forEach((ch, i) => rise(ch, 5.0 + i * .07, { dy: 14 }));
+// questions arrive pale on "four questions", then darken on their own words; the example lands just after
+cols.forEach((c, i) => {
+  const q = c.el.querySelector('.q'), T = TIERS[i], tq = w(T.wq[0], T.wq[1], T.wq[2] || 1);
+  rise(q, 5.5 + i * .12, { dy: 22, d: .6 });
+  tl.fromTo(q, { color: '#B9BDC2' }, { color: '#0B0D10', duration: .3, ease: 'power2.out', immediateRender: false }, tq - .05);
+  tl.fromTo(c.el, { borderColor: '#E6E6E2' }, { borderColor: T.c, duration: .3, ease: 'power2.out', immediateRender: false }, tq - .05);
+  tl.fromTo(c.el, { borderColor: T.c }, { borderColor: '#E6E6E2', duration: .5, ease: 'power2.inOut', immediateRender: false }, tq + .75);
+  tl.fromTo(c.el.querySelector('.rl'), { scaleX: 0 }, { scaleX: 1, duration: .5, ease: 'power3.out' }, tq + .05);
+  rise(c.el.querySelector('.big'), tq + .14, { dy: 24, d: .6 });
+  rise(c.el.querySelector('.ex'), tq + .26, { dy: 14 });
+  rise(c.el.querySelector('.ctx'), tq + .36, { dy: 10 });
+});
+count(tl, '#c-b0', 0, 6, w('S12', 'what\'s') + .14, .7, v => Math.round(v));
+count(tl, '#c-b2', 0, .985, w('S12', 'what', 1) + .14, .8, v => v.toFixed(3));
+// collapse: the columns fold up into a header strip that stays for the whole act
+const HS = .78, HY = 26, HG = 12;
+const cw = chips.map(c => c.offsetWidth * HS), totW = cw.reduce((a, b) => a + b, 0) + HG * 3;
+let hx = 960 - totW / 2;
+const hudPos = cw.map(wd => { const p = hx; hx += wd + HG; return p; });
+cols.forEach((c, i) => {
+  tl.fromTo(c.el.querySelector('.cc'), { opacity: 1 }, { opacity: 0, duration: .28, ease: 'power2.in', immediateRender: false }, 10.0 + i * .03);
+  tl.fromTo(c.el, { height: COLH, y: 0, opacity: 1 }, { height: 60, y: 10, opacity: 0, duration: .5, ease: 'power3.inOut', immediateRender: false }, 10.12 + i * .03);
+});
+chips.forEach((ch, i) => tl.fromTo(ch, { x: 0, y: 0, scale: 1 }, { x: hudPos[i] - (cols[i].x + 30), y: HY - (COLY + 30), scale: HS, duration: .78, ease: 'power3.inOut', immediateRender: false }, 10.08 + i * .04));
+// HUD state: dim while the foundation is built, light as each tier is delivered
+const hudOn = (i, t) => tl.fromTo(chips[i], { opacity: .38 }, { opacity: 1, duration: .4, ease: 'power2.out', immediateRender: false }, t);
+chips.forEach((ch, i) => tl.fromTo(ch, { opacity: 1 }, { opacity: .38, duration: .5, ease: 'power2.inOut', immediateRender: false }, 10.9 + i * .03));
+
+// ============================================================== world · 01 data foundation (S13)
+const GF = $('#g-found');
+const fHead = H('', `<div class="kick">01 · Data foundation</div><div class="ttl"><span class="p" id="ft1">contract 0.2.0</span><span class="p" id="ft2">&nbsp;· release gate</span><span class="p" id="ft3">&nbsp;· as-of store</span></div>`, 110, 150);
+const LOCK = (c) => `<svg width="30" height="34" viewBox="0 0 30 34"><rect x="3" y="14" width="24" height="18" rx="4" fill="none" stroke="${c}" stroke-width="2.4"/><path id="lock-sh" d="M8 14 V9 a7 7 0 0 1 14 0 V14" fill="none" stroke="${c}" stroke-width="2.4"/><circle cx="15" cy="23" r="2.4" fill="${c}"/></svg>`;
+const fCon = H('card contract', `${LOCK('#0B0D10')}<div><div class="nm">frozen contract</div><div class="hs">0.2.0 · <span id="f-hash"></span></div><div class="hs">dict tejas 0.1.3</div></div>`, 110, 228, WN, { width: '270px', height: '84px' });
+const TOP = ['param.samples', 'events', 'usage.counters', 'maint.records', 'orders'];
+const fT = TOP.map((t, i) => H('chip', `<span class="dt"></span>${t}`, 110, 330 + i * 50, WN, { width: '270px' }));
+const GX = 540, GY = 228, GW = 360, GH = 360;
+const CHECKS = [['sha256', '<b>2,782</b> files match MANIFEST'], ['contract a4396f1d', '0.2.0 on the allow-list'], ['schema', '<b>2,765</b> Parquet files pinned'],
+  ['invariants', 't_ingest ≥ t_event · no NaN'], ['scoped identity', '<b id="f-coll">3,388</b> colliding ids resolved']];
+const fGate = H('card gate', `<div class="gh">RELEASE GATE · G0</div>` + CHECKS.map((c, i) => `<div class="row" style="top:${50 + i * 60}px">
+   <svg class="ck" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11.5" fill="#fff" stroke="#D6D6D1" stroke-width="1.6" id="ckc${i}"/><path id="ckp${i}" d="M7.5 13.4 l3.6 3.6 l7.4 -8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+   <div><div class="lb">${c[0]}</div><div class="sb">${c[1]}</div></div></div>`).join(''), GX, GY, WN, { width: px(GW), height: px(GH) });
+const fPostL = H('post', '', GX - 2, GY - 16, WN, { height: px(GH + 32) }), fPostR = H('post', '', GX + GW - 2, GY - 16, WN, { height: px(GH + 32) });
+// streams: topics → gate inlet
+const streams = TOP.map((t, i) => { const y0 = 351 + i * 50, y1 = 372 + i * 22; return S('path', { d: `M382 ${y0} C452 ${y0} 470 ${y1} ${GX - 6} ${y1}`, fill: 'none', stroke: '#2563C9', 'stroke-width': 1.8, opacity: .55 }, GF); });
+// out: gate → store
+const outP = S('path', { d: `M${GX + GW + 6} 408 L ${GX + GW + 84} 408`, fill: 'none', stroke: '#2563C9', 'stroke-width': 2.2, 'marker-end': 'url(#ah-wire)' }, GF);
+// as-of store cylinder
+const SCX = 1070, SY0 = 300, SY1 = 500, SRX = 96, SRY = 24;
+const gStore = S('g', {}, GF);
+const stBody = S('path', { d: `M${SCX - SRX} ${SY0} V${SY1} A${SRX} ${SRY} 0 0 0 ${SCX + SRX} ${SY1} V${SY0}`, fill: '#fff', stroke: '#0B0D10', 'stroke-width': 2.2 }, gStore);
+const stFill = []; for (let i = 0; i < 6; i++) { const y = SY1 - 22 - i * 28; stFill.push(S('path', { d: `M${SCX - SRX + 6} ${y} A${SRX - 6} ${SRY - 6} 0 0 0 ${SCX + SRX - 6} ${y}`, fill: 'none', stroke: '#2563C9', 'stroke-width': 2, opacity: 0 }, gStore)); }
+const stTop = S('ellipse', { cx: SCX, cy: SY0, rx: SRX, ry: SRY, fill: '#F7F7F5', stroke: '#0B0D10', 'stroke-width': 2.2 }, gStore);
+const fStoreL = H('', `<div class="lbl" style="text-align:center">as-of store</div><div class="sub" style="text-align:center;margin-top:6px">bitemporal · <span style="color:#0B0D10;font-weight:700">as_of(t)</span></div>`, SCX - 120, SY1 + 38, WN, { width: '240px' });
+
+// -- S13 choreography
+rise(fHead.children[0], 10.72, { dy: 10 });
+rise('#ft1', w('S13', 'one'), { dy: 14 });
+rise('#ft2', w('S13', 'release') - .05, { dy: 14 });
+rise('#ft3', w('S13', 'as-of') - .05, { dy: 14 });
+const rCon = ringFor(110, 228, 270, 84, 16);
+rise(fCon, 10.92, { dy: 18 }); pulse(fCon, w('S13', 'frozen'), rCon);
+tl.fromTo('#lock-sh', { y: -5 }, { y: 0, duration: .25, ease: 'power3.in' }, w('S13', 'frozen') + .05);
+type(tl, '#f-hash', 'a4396f1d…', 12.6, .45);
+fCon.style.zIndex = 10; fT.forEach((c, i) => { c.style.zIndex = String(6 - i); });
+fT.forEach((c, i) => { tl.fromTo(c, { y: 236 - (330 + i * 50) }, { y: 0, duration: .7, ease: 'power3.out' }, 12.95 + i * .1); tl.fromTo(c, { opacity: 0 }, { opacity: 1, duration: .12 }, 12.95 + i * .1); });
+drawP(streams, 13.75, .65, .05);
+flow(streams[0], 3, 14.2, D, 120, '#2563C9'); flow(streams[1], 3, 14.25, D, 120, '#2563C9'); flow(streams[2], 3, 14.3, D, 120, '#2563C9');
+flow(streams[3], 3, 14.35, D, 120, '#2563C9'); flow(streams[4], 2, 14.4, D, 120, '#2563C9');
+// gate builds on "release gate", checks tick 120 ms apart on "admits"
+tl.fromTo([fPostL, fPostR], { scaleY: 0 }, { scaleY: 1, duration: .5, ease: 'power3.out', transformOrigin: '50% 100%' }, w('S13', 'release') - .1);
+const rGate = ringFor(GX, GY, GW, GH, 16);
+rise(fGate, w('S13', 'release'), { dy: 20 }); pulse(fGate, w('S13', 'gate'), rGate);
+tl.fromTo('.gate .row', { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out', stagger: .06 }, w('S13', 'gate') - .1);
+const t0ck = w('S13', 'admits') - .05;
+CHECKS.forEach((c, i) => {
+  const t = t0ck + i * .12;
+  tl.fromTo(`#ckc${i}`, { fill: '#FFFFFF', stroke: '#D6D6D1' }, { fill: '#1F8A4C', stroke: '#1F8A4C', duration: .16, ease: 'power2.out' }, t);
+  drawP([$(`#ckp${i}`)], t + .03, .2, 0, 'power2.out');
+});
+count(tl, '#f-coll', 0, 3388, t0ck + .1, .55, v => Math.round(v).toLocaleString('en-US'));
+// store
+drawP([outP], 16.62, .3, 0, 'power2.out');
+flow(outP, 2, 16.9, D, 90, '#2563C9');
+tl.fromTo(gStore, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 16.7);
+rise(fStoreL, 16.82, { dy: 12 });
+const rStore = ringFor(SCX - SRX - 8, SY0 - SRY - 8, SRX * 2 + 16, SY1 - SY0 + SRY * 2 + 16, 30);
+pulse(gStore, 17.0, rStore);
+stFill.forEach((p, i) => tl.fromTo(p, { opacity: 0 }, { opacity: .85, duration: .3, ease: 'power2.out' }, 17.3 + i * .32));
+
+// -- S13 cutaway: the product's own release-gate card (1 s)
+let dGate = box('#sc-data [data-shot="gate"]'); if (!dGate.w) dGate = { x: 392, y: 272, w: 964, h: 750 };
+const dFocus = { cx: dGate.x + dGate.w * .5 + 28, cy: dGate.y + 214 };
+const dCam = (s) => PHXF.camTo({ cx: dFocus.cx, cy: dFocus.cy }, s);
+tl.fromTo('#cut', { opacity: 0 }, { opacity: 1, duration: .26, ease: 'power2.out' }, 15.78);
+tl.fromTo('#cam-data', { ...dCam(1.8) }, { ...dCam(1.7), duration: 1.15, ease: 'power2.out' }, 15.75);
+tl.fromTo('#hud', { opacity: 1 }, { opacity: 0, duration: .2, immediateRender: false }, 15.76);
+tl.fromTo('#hud', { opacity: 0 }, { opacity: 1, duration: .3, immediateRender: false }, 16.7);
+tl.fromTo('#cut', { opacity: 1 }, { opacity: 0, duration: .26, ease: 'power2.in', immediateRender: false }, 16.62);
+
+// ============================================================== world · as-of timeline (S14)
+const GT = $('#g-tl');
+const tlHead = H('', `<div class="kick">Information discipline</div><div class="formula" style="margin-top:12px">as_of(t): <span class="a">t_ingest ≤ t</span></div>`, 110, 688);
+const PX0 = 450, PX1 = 1150, PD = 13, xd = d => PX0 + (PX1 - PX0) * d / PD;   // 16 Jun 00:00 → 29 Jun 00:00
+const legend = H('', `<svg width="226" height="20" style="display:block"><circle cx="9" cy="10" r="6" fill="#fff" stroke="#62676F" stroke-width="2"/><text x="22" y="15" font-family="JetBrains Mono" font-size="13" fill="#62676F">t_event</text><circle cx="119" cy="10" r="6" fill="#62676F"/><text x="132" y="15" font-family="JetBrains Mono" font-size="13" fill="#62676F">t_ingest</text></svg>`, PX1 - 214, 692);
+const CUT = xd(6.25);                                                          // 22 Jun 06:00 IST
+const AXY = 1046;
+const axis = S('path', { d: `M${PX0} ${AXY} H${PX1}`, stroke: '#62676F', 'stroke-width': 1.6, fill: 'none' }, GT);
+const ticks = []; for (let d = 0; d <= 13; d++) ticks.push(S('path', { d: `M${xd(d)} ${AXY} v${d % 2 ? 6 : 10}`, stroke: '#8E939A', 'stroke-width': 1.4 }, GT));
+const DL = { 0: '16 Jun', 2: '18', 4: '20', 6: '22 Jun', 8: '24', 10: '26', 12: '28' };
+const axl = Object.entries(DL).map(([d, t]) => H('axl', t, xd(+d), AXY + 16));
+const hatch = S('rect', { x: CUT, y: 782, width: PX1 - CUT + 12, height: 250, fill: 'url(#hatch)', opacity: 0 }, GT);
+const hatchL = H('', `<div style="font:600 15px/1 var(--font);color:#62676F;text-align:right">not yet known</div>`, PX1 - 198, 1012, WN, { width: '210px', opacity: 0 });
+// real records around the 06:00 cut (maint.records / events, scoped by tail)
+const REC = [
+  ['events · HYD-101 · TJ107', 2.604, 2.881],
+  ['maint · tyre life · TJ107', 3.447, 3.935],
+  ['maint · defect job · TJ103', 4.280, 4.280],
+  ['maint · shop finding · BCU', 5.149, 6.031],
+  ['maint · install HYDP-000010', 3.542, 11.038],
+  ['maint · supply demand · tyre', 0.484, 12.670],
+];
+const rows = REC.map((r, i) => {
+  const y = 804 + i * 38, x0 = xd(r[1]), x1 = xd(r[2]);
+  const g = S('g', {}, GT);
+  const ln = S('path', { d: `M${x0} ${y} H${Math.max(x0 + .1, x1)}`, stroke: '#B9BDC2', 'stroke-width': 2.4, fill: 'none' }, g);
+  const ce = S('circle', { cx: x0, cy: y, r: 6.5, fill: '#fff', stroke: '#B9BDC2', 'stroke-width': 2.2 }, g);
+  const ci = S('circle', { cx: x1, cy: y, r: 6.5, fill: '#B9BDC2' }, g);
+  const lab = H('rlab', r[0], 110, y - 7);
+  return { g, ln, ce, ci, lab, y, x0, x1, late: x1 > CUT };
+});
+const cutG = S('g', {}, GT);
+const cutLine = S('path', { d: `M0 786 V1054`, stroke: '#E8743B', 'stroke-width': 2.6 }, cutG);
+const cutChip = H('cutchip', '06:00 · 22 Jun', 0, 750, WN, { opacity: 0 });
+const ostChip = H('ost', 't_ingest ≤ 06:00', CUT + 106, 759, WN, { opacity: 0 });
+const useRow = H('', `<span class="uchip" id="u1">model</span> <span class="uchip" id="u2">rule</span> <span class="uchip" id="u3">order</span> <span style="font:500 14px var(--mono);color:#62676F;margin-left:6px">read only what was known</span>`, PX0, 1080, WN, { display: 'flex', gap: '8px', alignItems: 'center', opacity: 1, whiteSpace: 'nowrap' });
+// "store becomes a timeline": the axis unrolls from under the store
+rise(tlHead, 20.0, { dy: 14 });
+tl.fromTo(axis, { attr: { d: `M${SCX} ${AXY} H${SCX}` } }, { attr: { d: `M${PX0} ${AXY} H${PX1}` }, duration: .8, ease: 'power3.inOut' }, 20.15);
+tl.fromTo(ticks, { opacity: 0 }, { opacity: 1, duration: .3, stagger: .025 }, 20.55);
+tl.fromTo(axl, { opacity: 0 }, { opacity: 1, duration: .3, stagger: .04 }, 20.65);
+rise(legend, 20.7, { dy: 8 });
+rows.forEach((r, i) => {
+  const dot = S('circle', { cx: SCX, cy: 470, r: 6.5, fill: '#2563C9', opacity: 0 }, $('#g-fx')), o = { p: 0 }, t0 = 19.95 + i * .07;
+  tl.fromTo(dot, { opacity: 0 }, { opacity: 1, duration: .12 }, t0);
+  tl.fromTo(o, { p: 0 }, { p: 1, duration: .8, ease: 'power3.inOut', onUpdate: () => {
+    dot.setAttribute('cx', lerp(SCX, r.x1, o.p).toFixed(1)); dot.setAttribute('cy', (lerp(470, r.y, o.p) - Math.sin(o.p * Math.PI) * 60).toFixed(1)); } }, t0);
+  tl.fromTo(dot, { opacity: 1 }, { opacity: 0, duration: .2, immediateRender: false }, t0 + .78);
+});
+rows.forEach((r, i) => { rise(r.lab, 20.75 + i * .07, { dy: 10, d: .45 }); tl.fromTo(r.g, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, 20.8 + i * .07); });
+// cut-off sweeps to 06:00 on "ingested by six"
+const SW0 = w('S14', 'wasn\'t') + .05, SW1 = w('S14', 'six') + .02, swE = E('power2.inOut');
+const cutO = { x: PX0 };
+tl.fromTo(cutO, { x: PX0 }, { x: CUT, duration: SW1 - SW0, ease: 'power2.inOut', onUpdate: () => {
+  cutG.setAttribute('transform', `translate(${cutO.x.toFixed(1)} 0)`); cutChip.style.transform = `translateX(${(cutO.x - 58).toFixed(2)}px)`; } }, SW0);
+tl.fromTo([cutG, cutChip], { opacity: 0 }, { opacity: 1, duration: .25 }, SW0);
+// each known record turns blue as the sweep passes its ingest mark
+function sweepTime(x) { if (x <= PX0) return SW0; let lo = 0, hi = 1; for (let k = 0; k < 30; k++) { const m = (lo + hi) / 2; (PX0 + (CUT - PX0) * swE(m) < x) ? lo = m : hi = m; } return SW0 + (lo + hi) / 2 * (SW1 - SW0); }
+rows.forEach(r => {
+  if (r.late) return;
+  const t = sweepTime(r.x1);
+  tl.fromTo(r.ln, { stroke: '#B9BDC2' }, { stroke: '#2563C9', duration: .2 }, t);
+  tl.fromTo(r.ce, { stroke: '#B9BDC2' }, { stroke: '#2563C9', duration: .2 }, t);
+  tl.fromTo(r.ci, { fill: '#B9BDC2', attr: { r: 6.5 } }, { fill: '#2563C9', attr: { r: 8 }, duration: .18, ease: 'power2.out' }, t);
+  tl.fromTo(r.ci, { attr: { r: 8 } }, { attr: { r: 6.5 }, duration: .3, ease: 'power2.inOut', immediateRender: false }, t + .18);
+});
+tl.fromTo(hatch, { opacity: 0 }, { opacity: 1, duration: .45, ease: 'power2.out' }, SW1 + .05);
+tl.fromTo(hatchL, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, SW1 + .12);
+rows.filter(r => r.late).forEach((r, i) => { tl.fromTo(r.lab, { color: '#31353B' }, { color: '#B9BDC2', duration: .35, immediateRender: false }, SW1 + .1 + i * .06); });
+rise(ostChip, SW1 + .25, { dy: 8 });
+// "no model, rule or order can use it"
+tl.fromTo(useRow, { opacity: 0 }, { opacity: 1, duration: .01 }, w('S14', 'no') - .02);
+tl.fromTo(useRow.lastElementChild, { opacity: 0 }, { opacity: 1, duration: .4 }, w('S14', 'order') + .25);
+pop('#u1', w('S14', 'model') - .04, { d: .4 }); pop('#u2', w('S14', 'rule') - .04, { d: .4 }); pop('#u3', w('S14', 'order') - .04, { d: .4 });
+// transition: late records drop away, known evidence travels on to the state
+rows.filter(r => r.late).forEach((r, i) => {
+  tl.fromTo([r.g, r.lab], { opacity: 1, y: 0 }, { opacity: 0, y: 26, duration: .45, ease: 'power2.in', immediateRender: false }, 25.2 + i * .07);
+});
+fadeTo([hatch, hatchL], 25.25, 1, 0, .45);
+
+// ============================================================== world · 02 twin state (S15)
+const HX = 1240, HY0 = 240, HW = 960, HH = 600;
+const A0 = -Math.PI / 2;
+const twin = PHX_TWIN.createTwin($('#twin-vp'), { dpr: 2, lens: 'evidence', selected: 'HYD_PUMP', az: A0, el: 0.0, dist: 23.0, spin: false,
+  onFrame: (screenOf) => leaders(screenOf) });
+const LEADS = [];
+function leaders(screenOf) {
+  LEADS.forEach(L => { const [sx, sy] = screenOf(L.id), x = HX + sx, y = HY0 + sy;
+    const ax = L.side < 0 ? L.ax : L.ax, ay = L.ay, mx = ax + (x - ax) * .55;
+    L.p.setAttribute('d', `M${ax.toFixed(1)} ${ay.toFixed(1)} L${mx.toFixed(1)} ${ay.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}`);
+    L.d.setAttribute('cx', x.toFixed(1)); L.d.setAttribute('cy', y.toFixed(1)); });
+}
+twin.renderAt(0);
+const [rx, ry] = twin.screenOf('RADAR'), [chx, chy] = twin.screenOf('CHUTE');
+const K = (chx - rx) / (12.85 - 1.0);                                    // px per metre at the side view
+const XS = s => HX + rx + (s - 1.0) * K, YW = wl => HY0 + ry - (wl - 1.08) * K;
+// blueprint plate (side + plan, station-aligned), drawn in "match" coordinates
+const GP = $('#g-plate');
+const plate = S('g', {}, GP), sideG = S('g', {}, plate), planG = S('g', {}, plate), dimG = S('g', {}, plate);
+const st = { stroke: '#0B0D10', 'stroke-width': 2.2, fill: 'none', 'stroke-linejoin': 'round' };
+const sideD = 'M' + PHX_AC.SIDE_TOP.concat(PHX_AC.SIDE_BOT).map(([x, z]) => `${XS(x).toFixed(1)},${YW(z).toFixed(1)}`).join('L') + 'Z';
+const sideP = S('path', { ...st, d: sideD }, sideG);
+const P2 = (s, z) => `${XS(s).toFixed(1)},${YW(z).toFixed(1)}`;
+const canP = S('path', { ...st, 'stroke-width': 1.8, d: `M${P2(2.62, 1.6)}C${P2(3.0, 2.38)} ${P2(3.9, 2.4)} ${P2(4.75, 1.92)}` }, sideG);
+const intP = S('path', { ...st, 'stroke-width': 1.5, d: `M${P2(4.05, .72)}L${P2(4.05, 1.32)}L${P2(4.7, 1.36)}L${P2(5.8, .98)}Z` }, sideG);
+const wingP = S('path', { ...st, 'stroke-width': 1.4, 'stroke-dasharray': '6 5', d: `M${P2(4.6, 1.18)}L${P2(11.22, 1.12)}` }, sideG);
+const PC = YW(.62) + 70 + 4.1 * K, YB = b => PC + b * K;
+const ring = PHX_AC.ring();
+const planD = 'M' + ring.map(([s, b]) => `${XS(s).toFixed(1)},${YB(b).toFixed(1)}`).join('L') + 'Z';
+const planP = S('path', { ...st, d: planD }, planG);
+const cl = S('path', { stroke: '#8E939A', 'stroke-width': 1.3, 'stroke-dasharray': '10 6', fill: 'none', d: `M${XS(-.3)} ${PC} H${XS(13.5)}` }, planG);
+const canE = S('ellipse', { cx: XS(3.55), cy: PC, rx: 1.0 * K, ry: .34 * K, fill: 'none', stroke: '#0B0D10', 'stroke-width': 1.6 }, planG);
+const elev = [1, -1].map(sg => S('path', { ...st, 'stroke-width': 1.4, d: 'M' + [[10.72, 4.04], [10.98, 2.45], [11.14, 1.35]].map(([s, b]) => `${XS(s)},${YB(sg * b)}`).join('L') }, planG));
+for (let s = 0; s <= 13; s++) S('path', { d: `M${XS(s)} ${YB(4.1) + 18} v${s % 5 ? 10 : 18}`, stroke: '#8E939A', 'stroke-width': 1.4 }, planG);
+const DY = YW(4.38) - 44;
+S('path', { d: `M${XS(0)} ${DY} H${XS(13.2)}`, stroke: '#62676F', 'stroke-width': 1.5, 'marker-start': 'url(#ah-ink)', 'marker-end': 'url(#ah-ink)' }, dimG);
+S('path', { d: `M${XS(0)} ${DY - 16} V${YW(.95) - 8} M${XS(13.2)} ${DY - 16} V${YW(1.86) - 8}`, stroke: '#B9BDC2', 'stroke-width': 1.2, 'stroke-dasharray': '4 4' }, dimG);
+const dimT = S('text', { x: (XS(0) + XS(13.2)) / 2, y: DY - 14, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono', 'font-size': 26, 'font-weight': 600, fill: '#31353B' }, dimG); dimT.textContent = '13.2 m';
+const lSide = S('text', { x: XS(0) - 28, y: YW(1.6), 'text-anchor': 'end', 'font-family': 'JetBrains Mono', 'font-size': 22, 'font-weight': 700, fill: '#8E939A', 'letter-spacing': '2' }, dimG); lSide.textContent = 'SIDE';
+const lPlan = S('text', { x: XS(0) - 28, y: PC + 8, 'text-anchor': 'end', 'font-family': 'JetBrains Mono', 'font-size': 22, 'font-weight': 700, fill: '#8E939A', 'letter-spacing': '2' }, dimG); lPlan.textContent = 'PLAN';
+const lNote = S('text', { x: XS(13.2), y: YB(4.1) + 66, 'text-anchor': 'end', 'font-family': 'JetBrains Mono', 'font-size': 18, fill: '#B9BDC2' }, dimG); lNote.textContent = 'parametric schematic';
+// plate placement: whole plate scaled to fit the viewport; then grows to the 3D match position
+const pb = { x0: XS(-1.6), x1: XS(13.5), y0: DY - 40, y1: YB(4.1) + 72 };
+const SP = Math.min(560 / (pb.y1 - pb.y0), 640 / (pb.x1 - pb.x0));
+const PTX = (HX + HW / 2 + 40) - SP * (pb.x0 + pb.x1) / 2, PTY = (HY0 + HH / 2 + 18) - SP * (pb.y0 + pb.y1) / 2;
+const plO = { p: 0 };
+const setPlate = () => { const s = lerp(SP, 1, plO.p), tx = lerp(PTX, 0, plO.p), ty = lerp(PTY, 0, plO.p); plate.setAttribute('transform', `translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${s.toFixed(4)})`); };
+setPlate();
+tl.fromTo(plO, { p: 0 }, { p: 1, duration: 1.05, ease: 'power3.inOut', onUpdate: setPlate }, 28.15);
+// twin header + facets
+const twHead = H('', `<div class="tw-k">02 · Twin state</div><div class="tw-t">one state</div><div class="tw-s">per tail · per serial</div><div class="sub" style="margin-top:14px">TJ107 · as of Mon 22 Jun 06:00</div>`, HX + 20, HY0 + 44);
+const FACETS = [
+  { n: 'configuration', s: 'SYS1 <b>HYDP-000010</b> <span class="m">inferred</span><br>SYS2 <b>HYDP-000002</b>', c: '#4B5563', x: 1252, y: 446, id: 'HYD_PUMP2', side: -1 },
+  { n: 'usage & life', s: '<b>10.7</b> FH flown · 30 days', c: '#4B5563', x: 1252, y: 676, id: 'ENGINE', side: -1 },
+  { n: 'evidence', s: 'HYD-101 · <b>59</b> of 61 sorties', c: '#2563C9', x: 1958, y: 286, id: 'BHEEM_EU', side: 1 },
+  { n: 'health belief', s: 'P(pump faulty)<br><b>0.005</b> <span class="m">[0.000, 0.023]</span>', c: '#E8743B', x: 1958, y: 452, id: 'HYD_PUMP', side: 1 },
+  { n: 'work & availability', s: '<span class="pill fmc">FMC</span> &nbsp;7 open jobs', c: '#1F8A4C', x: 1958, y: 650, id: null, side: 1 },
+];
+const facetW = FACETS.map(f => H('', '', f.x, f.y, WN));
+const facetEls = FACETS.map((f, i) => H('facet', `<div class="fn"><i style="background:${f.c}"></i>${f.n}</div><div class="fs">${f.s}</div>`, 0, 0, facetW[i], { opacity: 0, position: 'relative', left: 'auto', top: 'auto' }));
+FACETS.forEach((f, i) => { if (f.side > 0) facetW[i].style.left = px(HX + HW - 4 - facetEls[i].offsetWidth); });
+const GL = $('#g-lead');
+FACETS.forEach((f, i) => {
+  if (!f.id) return;
+  const el = facetEls[i], fx = parseFloat(facetW[i].style.left), fy = parseFloat(facetW[i].style.top), fw = el.offsetWidth;
+  const ax = f.side < 0 ? fx + fw + 2 : fx - 2, ay = fy + 20;
+  const p = S('path', { fill: 'none', stroke: f.c, 'stroke-width': 1.6, opacity: 0 }, GL), d = S('circle', { r: 4.5, fill: f.c, opacity: 0 }, GL);
+  LEADS.push({ id: f.id, ax, ay, p, d, side: f.side, i });
+});
+// the as_of arrow from the store into the state
+const gS2T = S('path', { d: `M${SCX + SRX + 12} 400 C 1190 400 1205 470 ${HX + 40} 470`, fill: 'none', stroke: '#2563C9', 'stroke-width': 2.2, 'marker-end': 'url(#ah-wire)' }, $('#g-x'));
+
+// -- S14→S15: known evidence flies into the plate outline
+const SEED_PTS = [[0.0, .95], [3.6, 2.35], [9.6, 2.55], [13.2, 1.5]].map(([s, z]) => [PTX + SP * XS(s), PTY + SP * YW(z)]);
+rows.filter(r => !r.late).forEach((r, i) => {
+  const dot = S('circle', { cx: r.x1, cy: r.y, r: 7, fill: '#2563C9', opacity: 0 }, $('#g-fx'));
+  const o = { p: 0 }, [tx, ty] = SEED_PTS[i], t0 = 25.45 + i * .08;
+  tl.fromTo(dot, { opacity: 0 }, { opacity: 1, duration: .15 }, t0);
+  tl.fromTo(o, { p: 0 }, { p: 1, duration: 1.15, ease: 'power3.inOut', onUpdate: () => {
+    const q = o.p, x = lerp(r.x1, tx, q), y = lerp(r.y, ty, q) - Math.sin(q * Math.PI) * 140;
+    dot.setAttribute('cx', x.toFixed(1)); dot.setAttribute('cy', y.toFixed(1)); } }, t0);
+  tl.fromTo(dot, { opacity: 1, attr: { r: 7 } }, { opacity: 0, attr: { r: 16 }, duration: .45, ease: 'power2.out', immediateRender: false }, t0 + 1.12);
+});
+drawP([gS2T], 25.9, .7, 0, 'power2.inOut');
+// plate draws, then the side view lifts into the live twin
+drawP([sideP, planP], 26.45, 1.4, .1, 'power2.inOut');
+drawP([canP, intP, wingP, ...elev], 27.0, .7, .05);
+tl.fromTo([cl, canE], { opacity: 0 }, { opacity: 1, duration: .5 }, 27.3);
+tl.fromTo(planG.querySelectorAll('path[d*="v"]'), { opacity: 0 }, { opacity: 1, duration: .3, stagger: .02 }, 27.4);
+tl.fromTo(dimG, { opacity: 0 }, { opacity: 1, duration: .5 }, 27.5);
+rise(twHead.children[0], 26.5, { dy: 10 }); rise(twHead.children[1], w('S15', 'one') - .05, { dy: 16 }); rise(twHead.children[2], w('S15', 'state') + .2, { dy: 10 }); rise(twHead.children[3], 27.9, { dy: 8 });
+tl.fromTo(planG, { opacity: 1, y: 0 }, { opacity: 0, y: 60, duration: .6, ease: 'power2.in', immediateRender: false }, 28.1);
+tl.fromTo(dimG, { opacity: 1 }, { opacity: 0, duration: .35, immediateRender: false }, 28.1);
+tl.fromTo('#twin-host', { opacity: 0 }, { opacity: 1, duration: .7, ease: 'power2.inOut' }, 28.95);
+tl.fromTo(sideG, { opacity: 1 }, { opacity: 0, duration: .6, ease: 'power2.inOut', immediateRender: false }, 29.15);
+// live twin: hold on the matching side view, then orbit ~20° and keep turning slowly
+const orbE = E('power2.inOut');
+PHXF.driveTwin(tl, twin, 26.1, D - 26.1, (u) => {
+  const q = orbE(clamp((u - 3.15) / 4.7, 0, 1));
+  twin.state.az = A0 + .36 * q + Math.max(0, u - 7.85) * .011;
+  twin.state.el = .37 * q;
+  twin.state.dist = 23 - 1.6 * q;
+});
+// facets orbit in on "every serialised part"
+const TCX = HX + HW / 2, TCY = HY0 + HH / 2;
+FACETS.forEach((f, i) => {
+  const el = facetEls[i], wr = facetW[i], bx0 = parseFloat(wr.style.left), by0 = parseFloat(wr.style.top), fx = bx0 + el.offsetWidth / 2, fy = by0 + el.offsetHeight / 2;
+  const a1 = Math.atan2((fy - TCY) / .6, fx - TCX), r1 = Math.hypot(fx - TCX, (fy - TCY) / .6), a0 = a1 + .8 * (f.side || 1), r0 = r1 * 1.18;
+  const hw = el.offsetWidth / 2, hh = el.offsetHeight / 2, o = { p: 0 }, t0 = 29.95 + i * .26;
+  const set = () => { const a = lerp(a0, a1, o.p), r = lerp(r0, r1, o.p); wr.style.transform = `translate(${(TCX + Math.cos(a) * r - hw - bx0).toFixed(2)}px, ${(TCY + Math.sin(a) * r * .6 - hh - by0).toFixed(2)}px)`; };
+  tl.fromTo(o, { p: 0 }, { p: 1, duration: 1.0, ease: 'power3.out', onUpdate: set }, t0);
+  tl.fromTo(el, { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, duration: .55, ease: 'power2.out' }, t0);
+  const L = LEADS.find(l => l.i === i);
+  if (L) tl.fromTo([L.p, L.d], { opacity: 0 }, { opacity: .95, duration: .4, ease: 'power2.out' }, t0 + .85);
+  o.p = 0; set();
+});
+// uncertainty: the health-belief interval pulses on the word
+pulse(facetEls[3], w('S15', 'uncertainty') - .02, null);
+tl.fromTo(facetEls[3], { borderColor: '#D6D6D1' }, { borderColor: '#E8743B', duration: .3, immediateRender: false }, w('S15', 'uncertainty') - .02);
+hudOn(0, w('S15', 'state'));
+
+// ============================================================== world · 03 engines (S16)
+const EX = 2400, EW = 860;
+const eHead = H('', `<div class="kick">03 · Engines</div><div class="ttl">read the state · write findings back</div><div class="sub" id="e-fit" style="margin-top:10px;font-size:16px"></div>`, EX, 150);
+const BANDS = [
+  { k: 'DIAGNOSTIC', q: 'why?', c: '#2563C9', wash: '#EAF1FC', y: 236, h: 150, chips: ['BIT / NFF episodes', 'residuals + CUSUM', 'D-matrix + noisy-OR', 'sensor vs component'] },
+  { k: 'PREDICTIVE', q: 'what next?', c: '#6D4AE0', wash: '#F1EDFD', y: 404, h: 208, chips: ['CND classifier<em>calibrated</em>', 'Bayesian Weibull survival', 'state-space degradation', 'usage', 'spares demand', 'lead-time survival'] },
+  { k: 'PRESCRIPTIVE', q: 'what should we do?', c: '#B4511F', wash: '#FDF1EA', y: 630, h: 150, chips: ['expected-cost rules + value of information', 'CP-SAT plan', 'METRIC spares', 'AOG desk'] },
+];
+const CHX = EX + 222, CHW = 303, CHG = 14;
+const bandEls = BANDS.map((B, bi) => {
+  const el = H('band', `<div class="tb" style="background:${B.c}"></div><div class="tn" style="color:${B.c}">${B.k}</div><div class="tq">${B.q}</div>`, EX, B.y, WN, { width: px(EW), height: px(B.h) });
+  const ch = B.chips.map((c, i) => {
+    let x, y, wd = CHW;
+    if (bi === 2) { if (i === 0) { x = CHX; y = B.y + 24; wd = CHW * 2 + CHG; } else { x = CHX + (i - 1) * ((CHW * 2 + CHG - 2 * 10) / 3 + 10); y = B.y + 24 + 58; wd = (CHW * 2 + CHG - 20) / 3; } }
+    else { x = CHX + (i % 2) * (CHW + CHG); y = B.y + 24 + Math.floor(i / 2) * 58; }
+    return H('mchip', c, x, y, WN, { width: px(wd) });
+  });
+  return { el, ch, B };
+});
+// arrows between the state and the engines
+const aS2E = S('path', { d: `M${HX + HW + 6} 474 H${EX - 10}`, fill: 'none', stroke: '#2563C9', 'stroke-width': 2.2, 'marker-end': 'url(#ah-wire)' }, $('#g-eng'));
+const aE2S = S('path', { d: `M${EX - 8} 548 H${HX + HW + 14}`, fill: 'none', stroke: '#2563C9', 'stroke-width': 2.2, 'stroke-dasharray': '1 0', 'marker-end': 'url(#ah-wire)' }, $('#g-eng'));
+const lS2E = H('arrl', 'as_of(06:00)', HX + HW + 18, 448), lE2S = H('arrl', 'findings +<br>posteriors', HX + HW + 22, 562, WN, { lineHeight: '1.25' });
+// side rail: evaluated, kept out of the decision path
+const RX = 3330;
+const railH = H('rail-h', 'KEPT OUT OF THE DECISION PATH', RX, 236);
+const RAIL = [['TimesFM-3', 'weights licensed non-commercial', 'BASELINE ONLY', 'base'], ['Chronos-2', 'no likelihood for censored lifetimes', 'BASELINE ONLY', 'base'],
+  ['Deep RUL', 'no run-to-failure labels', 'NOT USED', ''], ['Reinforcement learning', 'no failure labels · not explainable', 'NOT USED', '']];
+const railEls = RAIL.map((r, i) => { const e = H('rent', `<div class="rn">${r[0]}</div><div class="rr">${r[1]}</div><div class="stamp ${r[3]}">${r[2]}</div>`, RX, 268 + i * 128, WN); return e; });
+// engines → triage (converging downward) + state → triage
+const TRX = 1720, TRY = 1050;
+const aE2T = S('path', { d: `M${EX + 30} ${630 + 150 + 4} C ${EX - 60} 980 ${TRX + 420} 960 ${TRX + 300} ${TRY - 6}`, fill: 'none', stroke: '#62676F', 'stroke-width': 1.8, 'marker-end': 'url(#ah-ink)' }, $('#g-eng'));
+const aS2T = S('path', { d: `M${TRX} ${HY0 + HH + 4} V${TRY - 8}`, fill: 'none', stroke: '#62676F', 'stroke-width': 1.8, 'marker-end': 'url(#ah-ink)' }, $('#g-eng'));
+
+// -- S16 choreography
+rise(eHead.children[0], w('S16', 'Engines') - .1, { dy: 10 }); rise(eHead.children[1], w('S16', 'read') - .05, { dy: 14 });
+type(tl, '#e-fit', 'fit to sparse, censored maintenance data', w('S16', 'fit'), 1.7);
+bandEls.forEach((b, i) => { rise(b.el, 34.45 + i * .14, { dy: 26, d: .65 }); });
+drawP([aS2E], w('S16', 'read'), .55, 0, 'power2.out'); rise(lS2E, w('S16', 'read') + .2, { dy: 8 });
+flow(aS2E, 3, 35.2, D, 150, '#2563C9', 4);
+const ringsB = bandEls.map(b => ringFor(EX, b.B.y, EW, b.B.h, 16));
+bandEls.forEach((b, bi) => {
+  const t0 = [36.35, 36.95, 37.6][bi];
+  b.ch.forEach((c, i) => pop(c, t0 + i * .07, { d: .45, s0: .9 }));
+  pulse(b.el, t0 - .1, ringsB[bi]);
+  hudOn(bi + 1, t0);
+});
+drawP([aE2S], w('S16', 'data') + .05, .55, 0, 'power2.out'); rise(lE2S, w('S16', 'data') + .25, { dy: 8 });
+flow(aE2S, 3, w('S16', 'data') + .3, D, 150, '#2563C9', 4);
+// named models light up as they are said
+function lightChip(el, B, t) {
+  tl.fromTo(el, { backgroundColor: '#FFFFFF', borderColor: '#D6D6D1', color: '#31353B' }, { backgroundColor: B.wash, borderColor: B.c, color: '#0B0D10', duration: .3, ease: 'power2.out', immediateRender: false }, t);
+  pulse(el, t, null);
+}
+lightChip(bandEls[1].ch[0], BANDS[1], w('S16', 'calibrated') - .02);
+lightChip(bandEls[0].ch[2], BANDS[0], w('S16', 'Bayesian') - .02);
+const isoTag = H('', `<div style="font:600 13px/1 var(--mono);color:#2563C9;white-space:nowrap">Bayesian isolation</div>`, bandEls[0].ch[2].offsetLeft + 12, BANDS[0].y + 24 + 58 + 50, WN, { opacity: 0 });
+rise(isoTag, w('S16', 'isolation'), { dy: 6, d: .4 });
+lightChip(bandEls[1].ch[1], BANDS[1], w('S16', 'survival') - .02);
+lightChip(bandEls[1].ch[5], BANDS[1], w('S16', 'survival') + .12);
+// rail: entries appear, stamps slam on their words
+rise(railH, 45.0, { dy: 8 });
+const stampT = [w('S16', 'foundation') + .1, w('S16', 'baselines') + .05, w('S16', 'not') - .02, w('S16', 'decision-makers') + .2];
+railEls.forEach((e, i) => {
+  rise(e.querySelector('.rn'), stampT[i] - .55, { dy: 12 }); rise(e.querySelector('.rr'), stampT[i] - .42, { dy: 8 });
+  tl.fromTo(e, { borderTopColor: '#FFFFFF' }, { borderTopColor: '#E6E6E2', duration: .3, immediateRender: false }, stampT[i] - .6);
+  const s = e.querySelector('.stamp');
+  tl.fromTo(s, { opacity: 0, scale: 1.7, rotation: -16 }, { opacity: 1, scale: 1, rotation: -5, duration: .26, ease: 'power4.in' }, stampT[i]);
+  tl.fromTo(e.querySelector('.rn'), { x: 0 }, { x: 2, duration: .05, yoyo: true, repeat: 3, ease: 'none', immediateRender: false }, stampT[i] + .26);
+});
+// converge into triage
+drawP([aS2T, aE2T], 49.35, .85, .08, 'power2.inOut');
+
+// ============================================================== world · 04 triage (S17)
+const trHead = H('', `<div class="kick">Triage</div><div class="ttl" style="font-size:30px">issues, not alerts</div>`, 1262, 966);
+const BARS = [
+  { x: 1420, w: 600, y: TRY, n: 1192, l: 'alert rows · 168 days', t: w('S17', 'hundred') },
+  { x: 1488, w: 464, y: TRY + 102, n: 326, l: 'issues', t: w('S17', 'alerts') - .05 },
+  { x: 1556, w: 328, y: TRY + 204, n: 33, l: 'open', t: w('S17', 'into') - .08 },
+  { x: 1606, w: 228, y: TRY + 306, n: 7, l: 'on today’s board', t: w('S17', 'seven') },
+];
+const BH = 58;
+const GTR = $('#g-tri');
+const conns = BARS.slice(1).map((b, i) => { const a = BARS[i]; return S('path', { d: `M${a.x + 10} ${a.y + BH} L${b.x + 6} ${b.y} L${b.x + b.w - 6} ${b.y} L${a.x + a.w - 10} ${a.y + BH} Z`, fill: '#F4F4F1', stroke: '#D6D6D1', 'stroke-width': 1.4 }, GTR); });
+const barEls = BARS.map((b, i) => H('fbar' + (i === 3 ? ' last' : ''), `<span class="n" id="trn${i}">${i ? b.n : ''}</span><span class="l">${b.l}</span>`, b.x, b.y, WN, { width: px(b.w), height: px(BH), paddingTop: '11px' }));
+const RULES = ['dedupe', 'episodes', 'inhibition', 'standing / chatter', 'stale'];
+const ruleEls = RULES.map((r, i) => H('rchip', r, 1262, TRY + 84 + i * 40));
+const ruleBr = S('path', { d: `M1438 ${TRY + 90} h18 v${4 * 40 + 20} h-18`, fill: 'none', stroke: '#B9BDC2', 'stroke-width': 1.6 }, GTR);
+const gatesEl = H('rchip', 'gates → C×U → value', 1898, TRY + 262, WN, { borderColor: '#0B0D10', color: '#0B0D10', fontWeight: 600 });
+const PRIO = ['#C8321F', '#C8321F', '#E8743B', '#E8743B', '#C99A12', '#C99A12', '#8E939A'];
+const CARDX = 1852, CARDY = TRY + 312;
+const mcards = PRIO.map((c, i) => H('mcard', `<i style="background:${c}"></i><b style="top:16px"></b><b style="top:24px;right:12px"></b><b style="top:32px"></b>`, CARDX + i * 41, CARDY, WN, { opacity: 0 }));
+// alert rain (seeded)
+let seed = 26249; const rnd = () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
+const parts = [];
+for (let i = 0; i < 64; i++) {
+  const x = 1440 + rnd() * 560, t0 = 50.0 + rnd() * 1.6, y0 = TRY - 230 - rnd() * 140;
+  const el = H('particle', '', x, y0, WN, { opacity: 0, background: rnd() < .12 ? '#E8743B' : '#8E939A' });
+  tl.fromTo(el, { opacity: 0, y: 0 }, { opacity: .9, y: TRY - 6 - y0, duration: .55, ease: 'power2.in' }, t0);
+  tl.fromTo(el, { opacity: .9 }, { opacity: 0, duration: .12, immediateRender: false }, t0 + .55);
+}
+// -- S17 choreography
+rise(trHead.children[0], 49.95, { dy: 10 }); rise(trHead.children[1], w('S17', 'Triage') - .05, { dy: 14 });
+barEls.forEach((b, i) => tl.fromTo(b, { opacity: 0, scaleX: .7 }, { opacity: 1, scaleX: 1, duration: .5, ease: 'power3.out' }, 49.9 + i * .1));
+tl.fromTo(conns, { opacity: 0 }, { opacity: 1, duration: .5, stagger: .1 }, 50.0);
+BARS.forEach((b, i) => {
+  if (i === 0) { const el = $('#trn0'), t1 = b.t, t0 = b.t - .85, e2 = E('power2.out'), o = { t: 0 };   // text is a pure function of time
+    tl.fromTo(o, { t: 0 }, { t: t1 + .1, duration: t1 + .1, ease: 'none', onUpdate: () => { el.textContent = o.t < t0 ? '' : Math.round(1192 * e2(clamp((o.t - t0) / (t1 - t0), 0, 1))).toLocaleString('en-US'); } }, 0); }
+  else tl.fromTo(`#trn${i}`, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .3, ease: 'power3.out' }, b.t - .25);
+  tl.fromTo(barEls[i].querySelector('.l'), { opacity: .35 }, { opacity: 1, duration: .25 }, b.t - (i ? .25 : .85));
+  if (i) tl.fromTo(barEls[i], { borderColor: '#D6D6D1' }, { borderColor: i === 3 ? '#E8743B' : '#0B0D10', duration: .2, immediateRender: false }, b.t - .25);
+});
+tl.fromTo(barEls.slice(1).map(b => b), { borderColor: '#D6D6D1' }, { borderColor: '#D6D6D1', duration: .01 }, 49.9);
+ruleEls.forEach((r, i) => rise(r, w('S17', 'alerts') - .25 + i * .05, { dy: 8, d: .35 }));
+tl.fromTo(ruleBr, { opacity: 0 }, { opacity: 1, duration: .3 }, w('S17', 'alerts') - .2);
+rise(gatesEl, w('S17', 'into') + .05, { dy: 8, d: .35 });
+mcards.forEach((m, i) => pop(m, w('S17', 'seven') + .04 + i * .045, { d: .38, s0: .6 }));
+pulse(barEls[3], w('S17', 'seven'), ringFor(BARS[3].x, BARS[3].y, BARS[3].w, BH, 12));
+
+// ============================================================== world · 05 the loop + one log (S18)
+const LC = { x: 3060, y: 1150 }, LR = 205;
+const GLP = $('#g-loop');
+const STAGES = [
+  { a: 0, tm: '06:00', nm: 'SNAPSHOT', sb: 't_ingest ≤ 06:00', w: ['S18', 'Versioned'], ev: 'epoch.snapshot', h: 'c80edd64' },
+  { a: 45, nm: 'ANALYZE', sb: 'engines · triage', w: ['S18', 'policies'], ev: 'epoch.analyzed', h: '8fa132e8' },
+  { a: 90, nm: 'PLAN', sb: 'policies L1–L4 · optimisers', w: ['S18', 'optimisers'], ev: 'recommendations', h: '51c0b2da' },
+  { a: 135, nm: 'FORK GATE', sb: 'paired simulations vs status quo', w: ['S18', 'simulation'], ev: 'fork.evaluated', h: '763909dc' },
+  { a: 180, nm: 'BOARD', sb: 'human gate · a person approves', w: ['S18', 'person'], ev: 'board.decision', h: 'e8f60f6d', human: true },
+  { a: 225, tm: '07:45', nm: 'FREEZE', sb: 'board frozen', w: ['S18', 'and', 2], ev: 'board.frozen', h: 'a84789db' },
+  { a: 270, tm: '08:00', nm: 'ORDERS', sb: 'typed · cited · signed', w: ['S18', 'every'], ev: 'orders.submitted', h: '192bef91' },
+  { a: 315, nm: 'RECONCILE', sb: 'outcomes come back', w: ['S18', 'step'], ev: 'orders.reconciled', h: '9138e091' },
+];
+const pol = (a, r) => [LC.x + r * Math.sin(a * Math.PI / 180), LC.y - r * Math.cos(a * Math.PI / 180)];
+const baseRing = S('circle', { cx: LC.x, cy: LC.y, r: LR, fill: 'none', stroke: '#E6E6E2', 'stroke-width': 2.4, 'stroke-dasharray': '3 7' }, GLP);
+const segs = STAGES.map((s, i) => { const a0 = s.a + 7, a1 = s.a + 45 - 7, [x0, y0] = pol(a0, LR), [x1, y1] = pol(a1, LR);
+  return S('path', { d: `M${x0.toFixed(1)} ${y0.toFixed(1)} A${LR} ${LR} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`, fill: 'none', stroke: '#E8743B', 'stroke-width': 4.5, 'stroke-linecap': 'round', 'marker-end': 'url(#ah-acc)' }, GLP); });
+const nodes = STAGES.map(s => { const [x, y] = pol(s.a, LR), g = S('g', { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)})` }, GLP);
+  const c = S('circle', { r: s.human ? 21 : 15, fill: s.human ? '#0B0D10' : '#fff', stroke: '#0B0D10', 'stroke-width': 2.4 }, g);
+  if (s.human) { S('circle', { cx: 0, cy: -6, r: 5, fill: '#fff' }, g); S('path', { d: 'M-9 11 a9 8 0 0 1 18 0 z', fill: '#fff' }, g); }
+  else if (s.tm) { S('circle', { r: 7, fill: 'none', stroke: '#0B0D10', 'stroke-width': 1.8 }, g); S('path', { d: 'M0 -4 V0 L3 2', fill: 'none', stroke: '#0B0D10', 'stroke-width': 1.8, 'stroke-linecap': 'round' }, g); }
+  else if (s.nm === 'FORK GATE') { S('path', { d: 'M-6 6 V2 L0 -5 L6 2 V6 M0 -5 V-8', fill: 'none', stroke: '#0B0D10', 'stroke-width': 1.9, 'stroke-linejoin': 'round' }, g); }
+  else S('circle', { r: 4.5, fill: '#0B0D10' }, g);
+  return { g, c }; });
+const labels = STAGES.map(s => {
+  const [x, y] = pol(s.a, LR + (s.a % 180 === 0 ? 40 : 34));
+  const el = H('sl', `<div class="nm">${s.tm ? `<span class="tm">${s.tm}</span>` : ''}${s.nm}</div><div class="sb">${s.sb}</div>`, 0, 0, WN, { opacity: 0 });
+  const wd = el.offsetWidth, ht = el.offsetHeight;
+  let lx, ly;
+  if (s.a === 0) { lx = x - wd / 2; ly = y - ht; el.style.textAlign = 'center'; }
+  else if (s.a === 180) { lx = x - wd / 2; ly = y; el.style.textAlign = 'center'; }
+  else if (s.a < 180) { lx = x; ly = y - ht / 2; }
+  else { lx = x - wd; ly = y - ht / 2; el.style.textAlign = 'right'; }
+  el.style.left = px(lx); el.style.top = px(ly); return el; });
+const hub = H('hub', `<div class="e">EPOCH · MON 22 JUN</div><div class="n" id="hub-n">7 issues</div>`, LC.x - 120, LC.y - 70, WN, { width: '240px', opacity: 0 });
+// the 7 board items fly from triage into the hub
+const HUBX = LC.x - (7 * 41 - 7) / 2, HUBY = LC.y - 28;
+mcards.forEach((m, i) => { const dx = HUBX + i * 41 - (CARDX + i * 41), dy = HUBY - CARDY;
+  tl.fromTo(m, { x: 0, y: 0 }, { x: dx, y: dy, duration: 1.15, ease: 'power3.inOut', immediateRender: false }, 53.62 + i * .035); });
+// proposed orders travel PLAN → FORK GATE; one passes, one is dropped
+const ordWA = H('', '', 0, 0), ordWB = H('', '', 0, 0);
+const ordA = H('ochip', 'order', 0, 0, ordWA, { opacity: 0 }), ordB = H('ochip', 'order', 0, 0, ordWB, { opacity: 0 });
+const dropT = H('', `<span style="font:600 13px/1 var(--mono);color:#8E939A">dropped · no change</span>`, 0, 0, WN, { opacity: 0 });
+const forkL = H('', `<div style="font:600 13.5px/1.3 var(--mono);color:#62676F;white-space:nowrap">plan vs status quo<br><b style="color:#0B0D10">n = 30</b> paired runs</div>`, 0, 0, WN, { opacity: 0 });
+const approve = H('humanb', 'HUMAN · APPROVE ✓', 0, 0, WN, { opacity: 0 });
+// log ribbon (one block per stage under the ring; earlier blocks appear as the camera pulls back)
+const LOGY = 1468, LBW = 150, LBG = 16, LX1 = 3752 - (8 * LBW + 7 * LBG);
+const GLG = $('#g-log');
+const chainLine = S('path', { d: `M${LX1 + LBW / 2} ${LOGY + 29} H${3752 - LBW / 2}`, stroke: '#E8743B', 'stroke-width': 2, fill: 'none' }, GLG);
+const logB = STAGES.map((s, i) => H('lblock', `<div class="ty">${s.ev}</div><div class="hh"><span>#</span><span id="lh${i}" style="color:#0B0D10;font-weight:700"></span></div>`, LX1 + i * (LBW + LBG), LOGY));
+const OLD = [['release.adopted', 300], ['batch.admitted', 640], ['finding.recorded', 1290], ['assistant.answered', 1520], ['issue.opened', 1910]];
+const chainOld = S('path', { d: `M${300 + LBW / 2} ${LOGY + 29} H${LX1 + LBW / 2}`, stroke: '#D6D6D1', 'stroke-width': 2, 'stroke-dasharray': '6 6', fill: 'none' }, GLG);
+const oldB = OLD.map(o => H('lblock old', `<div class="ty">${o[0]}</div><div class="hh"><span>#</span>…</div>`, o[1], LOGY, WN, { opacity: 0 }));
+const logLab = H('loglab', `<div class="k2">ONE LOG</div><div class="s2">hash-chained · append-only · every step</div>`, LX1, LOGY - 32, WN, { opacity: 0 });
+// learning closes the loop back to the engines
+const [rcx, rcy] = pol(315, LR);
+const learnP = S('path', { d: `M${rcx - 8} ${rcy - 14} C ${rcx - 40} ${rcy - 120}, ${2720} ${880}, ${2700} ${786}`, fill: 'none', stroke: '#B4511F', 'stroke-width': 2.4, 'stroke-dasharray': '9 7', 'marker-end': 'url(#ah-acc2)' }, GLP);
+const learnL = H('', `<div style="font:600 15px/1.3 var(--mono);color:#B4511F;white-space:nowrap">outcomes → labels → learning</div>`, 2440, 846, WN, { opacity: 0 });
+// the assistant reads the same state
+const asst = H('asst', `<svg width="26" height="26" viewBox="0 0 26 26"><path d="M4 6 h18 v11 h-9 l-5 4 v-4 h-4 z" fill="none" stroke="#0B0D10" stroke-width="2" stroke-linejoin="round"/></svg><div><div class="an">assistant</div><div class="as">read-only tools · same state · drafts only</div></div>`, 0, 870, WN, { opacity: 0 });
+asst.style.left = px(HX + HW - asst.offsetWidth);
+const asstLine = S('path', { d: `M${HX + HW - asst.offsetWidth / 2} 868 V${HY0 + HH - 30}`, stroke: '#8E939A', 'stroke-width': 1.8, 'stroke-dasharray': '5 5', fill: 'none' }, $('#g-x'));
+// region outlines for the closing beat
+const outlines = [[HX - 12, HY0 - 12, HW + 24, HH + 24, 22], [280, LOGY - 44, 3752 - 280 + 16, 118, 16]]
+  .map(([x, y, wd, ht, r]) => S('rect', { x, y, width: wd, height: ht, rx: r, fill: 'none', stroke: '#E8743B', 'stroke-width': 4, opacity: 0 }, $('#g-fx')));
+
+// -- S18 choreography
+tl.fromTo(baseRing, { opacity: 0 }, { opacity: 1, duration: .5 }, 54.1);
+fadeIn(hub, 54.55, .5);
+const stT = STAGES.map(s => w(s.w[0], s.w[1], s.w[2] || 1) - .04);
+stT[1] = w('S18', 'policies') + .1; stT[2] = w('S18', 'optimisers'); stT[3] = w('S18', 'simulation'); stT[4] = w('S18', 'person');
+stT[5] = w('S18', 'approves') + .55; stT[6] = w('S18', 'and', 2) + .05; stT[7] = w('S18', 'every') + .2;
+STAGES.forEach((s, i) => {
+  const t = stT[i];
+  tl.fromTo(nodes[i].g, { opacity: 0 }, { opacity: 1, duration: .3, ease: 'power2.out' }, t);
+  tl.fromTo(nodes[i].c, { attr: { r: (s.human ? 21 : 15) * .4 } }, { attr: { r: s.human ? 21 : 15 }, duration: .45, ease: 'back.out(2)' }, t);
+  rise(labels[i], t + .06, { dy: 10, d: .45 });
+  const tn = i < 7 ? stT[i + 1] : stT[7] + .35;
+  drawP([segs[i]], t + .1, Math.max(.25, tn - t - .1), 0, 'power1.inOut');
+  // log block for this stage, chained to the previous one
+  tl.fromTo(logB[i], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .35, ease: 'power3.out' }, t + .12);
+  type(tl, `#lh${i}`, s.h, t + .22, .28);
+});
+tl.fromTo(chainLine, { opacity: 0 }, { opacity: 1, duration: .1 }, stT[0] + .1);
+tl.fromTo(chainLine, { attr: { d: `M${LX1 + LBW / 2} ${LOGY + 29} H${LX1 + LBW / 2 + 1}` } }, { attr: { d: `M${LX1 + LBW / 2} ${LOGY + 29} H${3752 - LBW / 2}` }, duration: stT[7] - stT[0], ease: 'none' }, stT[0] + .12);
+fadeIn(logLab, stT[0] + .2, .5);
+// propose orders → fork gate (CRN-paired tests vs status quo) → one dropped
+const [px2, py2] = pol(90, LR), [px3, py3] = pol(135, LR);
+const ordPath = (o, t0, tgtA, off) => { const p = { a: 0 };
+  const set = () => { const ang = 90 + (tgtA - 90) * p.a, [x, y] = pol(ang, LR + off); o.style.transform = `translate(${(x - 28).toFixed(2)}px, ${(y - 14).toFixed(2)}px)`; };
+  tl.fromTo(p, { a: 0 }, { a: 1, duration: 1.0, ease: 'power2.inOut', onUpdate: set }, t0); p.a = 0; set(); };
+ordPath(ordWA, w('S18', 'propose') + .05, 127, 0); ordPath(ordWB, w('S18', 'propose') + .2, 116, 0);
+pop(ordA, w('S18', 'propose') + .05, { d: .35 }); pop(ordB, w('S18', 'propose') + .2, { d: .35 });
+const [fx3, fy3] = pol(135, LR + 34);
+forkL.style.left = px(fx3); forkL.style.top = px(fy3 + 30);
+rise(forkL, w('S18', 'against') - .05, { dy: 8 });
+tl.fromTo(ordB, { opacity: 1 }, { opacity: .25, duration: .3, immediateRender: false }, w('S18', 'quo') - .1);
+{ const [dx, dy] = pol(116, LR + 40); dropT.style.left = px(dx); dropT.style.top = px(dy - 8); }
+tl.fromTo(dropT, { opacity: 0 }, { opacity: 1, duration: .3 }, w('S18', 'quo'));
+tl.fromTo(ordA, { opacity: 1 }, { opacity: 0, duration: .35, immediateRender: false }, stT[5]);
+tl.fromTo([ordB, dropT], { opacity: 0.25 }, { opacity: 0, duration: .35, immediateRender: false }, stT[5]);
+// the human gate
+const [bx, by] = pol(180, LR);
+approve.style.left = px(bx - approve.offsetWidth / 2); approve.style.top = px(by - 66);
+pop(approve, w('S18', 'approves') + .05, { d: .4 });
+tl.fromTo('#hub-n', { color: '#0B0D10' }, { color: '#1F8A4C', duration: .3, immediateRender: false }, w('S18', 'approves') + .1);
+tl.fromTo(approve, { opacity: 1 }, { opacity: 0, duration: .3, immediateRender: false }, 63.2);
+// learning arrow closes the loop back to the engines
+drawP([learnP], stT[7] + .3, .9, 0, 'power2.inOut');
+rise(learnL, stT[7] + .7, { dy: 8 });
+// pull back: one log under everything, the assistant on the same state, the outer loop through orders
+tl.fromTo(chainOld, { opacity: 0 }, { opacity: 1, duration: .6 }, 63.6);
+oldB.forEach((b, i) => tl.fromTo(b, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, 64.45 - i * .12));
+tl.fromTo(logLab, { x: 0 }, { x: 300 - LX1, duration: .01, immediateRender: false }, 63.9);
+tl.fromTo(logLab, { opacity: 1 }, { opacity: 0, duration: .25, immediateRender: false }, 63.62);
+tl.fromTo(logLab, { opacity: 0 }, { opacity: 1, duration: .4, immediateRender: false }, 64.3);
+fadeIn(asst, 64.15, .45); drawP([asstLine], 64.2, .45);
+// closing beat: one state · one loop · one log
+['#tg1', '#td1', '#tg2', '#td2', '#tg3'].forEach((s, i) => rise(s, 65.12 + i * .2, { dy: 14 }));
+outlines.forEach((o, i) => { const t = 65.12 + i * .8; tl.fromTo(o, { opacity: 0 }, { opacity: 1, duration: .25 }, t); tl.fromTo(o, { opacity: 1 }, { opacity: 0, duration: .6, immediateRender: false }, t + .55); });
+tl.fromTo(segs, { strokeWidth: 4.5 }, { strokeWidth: 10, duration: .25, ease: 'power2.out', immediateRender: false }, 65.52);
+tl.fromTo(segs, { strokeWidth: 10 }, { strokeWidth: 4.5, duration: .6, ease: 'power2.inOut', immediateRender: false }, 65.8);
+// push through BOARD into the product
+tl.fromTo('#tag', { opacity: 1 }, { opacity: 0, duration: .35, ease: 'power2.in', immediateRender: false }, 66.4);
+tl.fromTo('#whiteout', { opacity: 0 }, { opacity: 1, duration: .27, ease: 'power2.in' }, 66.93);
+
+// camera, last (pure function of time)
+const camO = { t: 0 };
+tl.fromTo(camO, { t: 0 }, { t: D, duration: D, ease: 'none', onUpdate: () => applyCam(camO.t) }, 0);
+applyCam(0);
+window.__timelines["main"] = tl;
+}
+window.__timelines = window.__timelines || {};
+document.fonts.ready.then(build);
+})();
+</script>
+</body></html>

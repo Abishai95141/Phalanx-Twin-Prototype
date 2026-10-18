@@ -1,0 +1,43 @@
+{
+  "abort": {
+    "kind": "ground_impact",
+    "message": "[ground_impact] at step 310401 (t = 1293.34 s, DESCENT): airborne phase with height above ground 0.91 m",
+    "phase": "DESCENT",
+    "t_s": 1293.3375
+  },
+  "cir_rows": 20080448,
+  "code_commit": "6d4dc52f52eb1359bc244d36648ef1058876129b",
+  "completed": false,
+  "deliveries": [
+    {
+      "attempt": 0,
+      "complete": true,
+      "t_ingest": 1767702761851324764
+    }
+  ],
+  "flown_s": 1293.0,
+  "kind": "telemetry",
+  "mission_type": "AIR_TEST",
+  "planned_window_s": 2762.033452462,
+  "preview": "PREVIEW: behaviour not yet validated",
+  "recorded_channels": 231,
+  "root_seed_hex": "000000000000000000000000000000a5",
+  "rows": {
+    "events.bit_faults": 2,
+    "events.cautions": 3,
+    "events.exceedances": 2,
+    "param.samples": 9400198,
+    "sortie.manifest": 1,
+    "usage.counters": 0
+  },
+  "scenario": "gate",
+  "sortie_id": "TJ201-20260106T0300",
+  "t_end": 1767669042994790139,
+  "t_ingest": 1767702761851324764,
+  "t_landing": null,
+  "t_start": 1767667749994790139,
+  "t_takeoff": 1767668425411456805,
+  "tail_no": "TJ201",
+  "truncated": false,
+  "wall_s": 157.5
+}

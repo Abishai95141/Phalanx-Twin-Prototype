@@ -1,0 +1,58 @@
+# Caution and warning events (architecture §12 "Event record", §6 M14 CWS).
+name: events.cautions
+description: >-
+  Centralised-warning-system cautions and warnings (30 legends, 4 voice warnings) as recorded. A caution can be
+  recorded without reaching the pilot (displayed = false; F-35B ZM152 precedent).
+basis: "ARCH §12"
+restricted: false
+event_time: t_occurrence
+ingest_time: t_ingest
+partition_by: [tail_no, sortie_id]
+json_schema: false
+record_id_key:
+  - {name: provenance, type: str, source: column}
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+  - name: channel_id
+    type: str
+    source: path
+    description: "Full path: Ch10 channel ID of the discrete/event channel, decimal. Fast path: 'direct:<source_lru>'."
+  - {name: event_code, type: str, source: column}
+  - name: seq
+    type: u64
+    source: path
+    description: >-
+      Full path: cumulative packet counter of that channel. Fast path: occurrence index of (source_lru,
+      event_code) within the sortie, in t_occurrence order.
+  - name: msg_index
+    type: u64
+    source: path
+    description: "Full path: event index inside the packet. Fast path: 0."
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_occurrence}
+  - {check: order, left: snapshot_t_end, op: ">=", right: snapshot_t_start}
+  - {check: order, left: t_cleared, op: ">=", right: t_occurrence}
+fields:
+  - include: record_header
+  - include: event_core
+  - name: legend
+    type: string
+    nullable: false
+    basis: "ARCH §6 M14 (CWS legends); ASSUMPTION: A-W0.4-10"
+    description: CWS legend identifier (synthetic legend table from M01).
+  - name: displayed
+    type: bool
+    nullable: false
+    basis: "ARCH §10 (recorded health data never shown to the pilot); ASSUMPTION: A-W0.4-10"
+    description: Whether the caution reached the cockpit display.
+  - name: voice_warning
+    type: bool
+    nullable: false
+    basis: "ARCH §6 M14 (4 voice warnings); ASSUMPTION: A-W0.4-10"
+    description: Whether a voice warning accompanied the caution.
+  - name: t_cleared
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-10"
+    description: When the caution cleared; null if still active at the end of the recording.

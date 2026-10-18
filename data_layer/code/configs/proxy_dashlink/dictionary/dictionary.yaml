@@ -1,0 +1,13 @@
+# Phalanx proxy-mode dictionary (DASHlink Tail 687; W2.4a, AD-33/AD-43). Hand-maintained source.
+# FADEC lanes: TRANSFER of the Tejas FADEC lane definitions (the proxy runs the same M08 structure, AD-43).
+# Recorded words: MEASURED on DASHlink Tail 687 archive 1 (analysis/dashlink_texture, round-1/2 results).
+format: phalanx.dictionary.manifest/1
+platform: proxy_dashlink
+title: 'Phalanx proxy mode: DASHlink Tail 687 four-engine regional jet (separate-flow engines), engine words'
+dict_version: 0.1.0
+release_date: '2026-10-15'
+synthetic_icd: true
+synthetic_label: SYNTHETIC Phalanx proxy dictionary - no bus is modelled; not the DASHlink aircraft ICD
+tables: {lrus: tables/lrus.yaml, buses: tables/buses.yaml, rate_groups: tables/rate_groups.yaml, sinks: tables/sinks.yaml, code_tables: tables/code_tables.yaml, rules: tables/rules.yaml, constants: tables/constants.yaml}
+sources_dir: sources
+generators: []

@@ -1,0 +1,80 @@
+{
+ "source_label": "Generated engine trend (overlay v0.1)",
+ "model_id": "engine_health",
+ "model_version": "0.1.0",
+ "note": "Pipeline proof on generated data: the model finds what was planted. Not validated physics, not real engine data.",
+ "tuned_on": "nothing: settings fixed by hand before evaluation (engine_health.py)",
+ "summary": {
+  "planted_faults": 2,
+  "detected": 2,
+  "detected_before_true_limit": 2,
+  "lead_time_days_min_median_max": null,
+  "detection_delay_days_median": 4.5,
+  "false_alarm_episodes": 0,
+  "healthy_flights": 531,
+  "false_alarms_per_100_flights": 0.0
+ },
+ "runs": [
+  {
+   "run": "proto/runs/gonogo",
+   "world_seed": 0,
+   "engines": 9,
+   "flights": 598,
+   "healthy_flights": 531,
+   "snapshots_dropped": {
+    "frozen": 2,
+    "no valid": 0,
+    "outlier held": 0
+   },
+   "faults": [
+    {
+     "fault_id": "OVL-F1-TJ106",
+     "mode": "gradual",
+     "tail_no": "TJ106",
+     "engine_serial": "IN20-TJ106",
+     "onset": "2026-04-06 12:00",
+     "onset_efh": 41.7,
+     "true_limit_crossing": null,
+     "true_limit_crossing_efh": null,
+     "data_until": "2026-06-22 15:00",
+     "true_margin_at_end_c": 16.0,
+     "detected": true,
+     "detected_at": "2026-04-14 08:30",
+     "visible_at_ingest": "2026-04-14 09:54",
+     "first_alert_kind": "step (CUSUM)",
+     "detection_delay_days": 7.9,
+     "detection_delay_efh": 5.7,
+     "true_margin_at_detection_c": 43.3,
+     "lead_time_days": null,
+     "lead_time_efh": null,
+     "lead_time_note": "true margin had not reached 0 \u00b0C by the end of the data (16.0 \u00b0C left)"
+    },
+    {
+     "fault_id": "OVL-F2-TJ102",
+     "mode": "step",
+     "tail_no": "TJ102",
+     "engine_serial": "IN20-TJ102",
+     "onset": "2026-05-12 08:30",
+     "onset_efh": 51.5,
+     "true_limit_crossing": null,
+     "true_limit_crossing_efh": null,
+     "data_until": "2026-06-22 08:30",
+     "true_margin_at_end_c": 21.6,
+     "detected": true,
+     "detected_at": "2026-05-13 12:00",
+     "visible_at_ingest": "2026-05-13 13:32",
+     "first_alert_kind": "step (CUSUM)",
+     "detection_delay_days": 1.1,
+     "detection_delay_efh": 0.5,
+     "true_margin_at_detection_c": 31.1,
+     "lead_time_days": null,
+     "lead_time_efh": null,
+     "lead_time_note": "true margin had not reached 0 \u00b0C by the end of the data (21.6 \u00b0C left)"
+    }
+   ],
+   "false_alarm_episodes": 0,
+   "false_alarms_per_100_flights": 0.0,
+   "tracking_rmse_healthy_c": 0.86
+  }
+ ]
+}

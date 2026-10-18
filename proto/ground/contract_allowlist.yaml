@@ -1,0 +1,17 @@
+# G0 gate allowlist. A Parquet part is accepted only if its schema metadata matches one entry exactly.
+# Source: schema metadata of the preview v0.9 consumer tree (17 Oct 2026).
+contracts:
+  - name: phalanx.ground_decoder_contract
+    version: "0.2.0"
+    hash: a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566
+# Only consumer-audience files are readable by the system under test.
+audience: consumer
+# Topics the ground side reads, with the columns it requires (read by name, never by position).
+topics:
+  maint.records: [record_id, record_type, record_version, tail_no, sortie_id, job_no, serial_no, part_no, t_event, t_ingest]
+  events.bit_faults: [record_id, tail_no, sortie_id, event_code, severity, source_lru, suspect_lrus, t_occurrence, t_ingest]
+  events.cautions: [record_id, tail_no, sortie_id, event_code, severity, source_lru, suspect_lrus, t_occurrence, t_ingest]
+  usage.counters: [record_id, tail_no, sortie_id, param_id, value_eu, validity, t_update, t_ingest]
+  orders.commands: [record_id, order_id, issuer_kind, action, parameters, evidence, t_issued]
+  orders.status: [record_id, order_id, status_seq, status, result_record_ids, t_status]
+  param.samples: [record_id, tail_no, sortie_id, param_id, engine_serial, t_sample, value_eu, validity, quality_flags, t_ingest]

@@ -1,0 +1,265 @@
+{
+  "type": "record",
+  "name": "param_samples",
+  "namespace": "phalanx.contract.v0",
+  "doc": "Decoded parameter samples: one record per parameter value per acquisition, with six-time provenance (t_true is CIR- and labels-only), validity, quality flags and data-path provenance.",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": "string",
+      "doc": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": "string",
+      "doc": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "param_id",
+      "type": "string",
+      "doc": "Parameter-dictionary key (M01).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "tail_no",
+      "type": "string",
+      "doc": "Aircraft tail number (linkage key).",
+      "phalanx.basis": "ARCH §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sortie_id",
+      "type": "string",
+      "doc": "Sortie identifier (tail + date + take-off time, M02).",
+      "phalanx.basis": "ARCH §5.3, §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "engine_serial",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Serial of the engine the parameter belongs to; null for non-engine parameters.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (where relevant); ASSUMPTION: A-W0.4-7",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "source_lru",
+      "type": "string",
+      "doc": "LRU that acquired or computed the value (data-path provenance).",
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-7 (pattern)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "lane",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Redundancy lane or channel of a redundant source (e.g. DFCC channel); null if not redundant.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-7",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "bus",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Bus the value travelled on (synthetic Phalanx ICD bus name); null on the fast path and for direct analog channels.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-7",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "rt_sa_word",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "MIL-STD-1553 location 'RTnn/SAnn/Wnn' (remote terminal, subaddress, data-word index) in the synthetic Phalanx ICD; null if not 1553.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-7 (format)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "label_sdi",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "ARINC 429 location 'Looo/SDIn' (octal label, source/destination identifier) in the synthetic Phalanx ICD; null if not ARINC 429.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-7 (format)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_sample",
+      "type": "long",
+      "doc": "When the owning LRU acquired the value, on its drifting oscillator. The event time of the record.",
+      "phalanx.basis": "ARCH §8, §12; ASSUMPTION: A-W0.4-1 (scale)",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_bus",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "When the value appeared on the bus, at the Ch10-defined bit. Null on the fast path and for non-bus channels.",
+      "default": null,
+      "phalanx.basis": "ARCH §8, §12; ASSUMPTION: A-W0.4-4",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_record",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Recorder RTC time of the sample (per-recording origin). Null on the fast path.",
+      "default": null,
+      "phalanx.basis": "ARCH §8, §12; ASSUMPTION: A-W0.4-4",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "recorder_rtc"
+    },
+    {
+      "name": "t_utc",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Absolute time from the aircraft's simulated GPS/IRIG time source (TIME_SOURCE_INTERNAL when lock is lost). Fast path sets t_utc = t_sample (PROXY).",
+      "default": null,
+      "phalanx.basis": "ARCH §8, §12; ASSUMPTION: A-W0.4-4",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_ingest",
+      "type": "long",
+      "doc": "Arrival at the ground (per-sortie download burst). Consumers see a record only once t_ingest <= t_now (I5).",
+      "phalanx.basis": "ARCH §8, §12, I5; ASSUMPTION: A-W0.4-5",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "value_eu",
+      "type": "double",
+      "doc": "Decoded engineering value in `units`. Never NaN; a sentinel is carried as its value with the SENTINEL flag.",
+      "phalanx.basis": "ARCH §12; MEASURED: E1 (no NaN); ASSUMPTION: A-W0.4-7",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "raw_counts",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Raw bus word or ADC counts before engineering-unit conversion. Null on the fast path.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-4",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "units",
+      "type": "string",
+      "doc": "Engineering unit of value_eu as declared by the dictionary (pint-parseable).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "validity",
+      "type": {
+        "type": "enum",
+        "name": "Validity",
+        "doc": "Per-sample validity. ARINC 429 SSM semantics (NORMAL, NO_COMPUTED_DATA, FUNCTIONAL_TEST, FAILURE_WARNING) plus BUS_INVALID from 1553 status or validity words.",
+        "symbols": [
+          "NORMAL",
+          "NO_COMPUTED_DATA",
+          "FUNCTIONAL_TEST",
+          "FAILURE_WARNING",
+          "BUS_INVALID"
+        ]
+      },
+      "doc": "Validity state (ARINC 429 SSM semantics plus 1553 BUS_INVALID).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "quality_flags",
+      "type": "long",
+      "doc": "Quality flag bit set (see QualityFlags).",
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-8",
+      "phalanx.restricted": false,
+      "phalanx.flags": "QualityFlags"
+    },
+    {
+      "name": "provenance",
+      "type": {
+        "type": "enum",
+        "name": "Provenance",
+        "doc": "How the record reached the contract. full_path = via bus, Ch10 recorder and ground decoder; direct = fast path or a direct ground producer (M18 records, M21 order status, manifests).",
+        "symbols": [
+          "full_path",
+          "direct"
+        ]
+      },
+      "doc": "full_path (bus, Ch10, decoder) or direct (fast path).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "recording_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "On-board recording the record was decoded from (one recording per recorder sink and sortie, AD-25), unique within (tail_no, sortie_id). t_record and the Ch10 channel ID are comparable only within one recording. Null on the fast path and for a sortie's single unattributed bus-monitor capture (the 0.1.0 full path).",
+      "default": null,
+      "phalanx.basis": "ARCH §17 AD-25, AD-45; ASSUMPTION: A-W0.4-22",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sink",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Dictionary sink (M01 sinks table: CDR, ECMS_HUMS, MPDRU, FTI) whose recording carried the record; null exactly when recording_id is null.",
+      "default": null,
+      "phalanx.basis": "ARCH §17 AD-25; ASSUMPTION: A-W0.4-22",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "param.samples",
+  "phalanx.restricted": false
+}

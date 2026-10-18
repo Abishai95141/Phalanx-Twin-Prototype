@@ -1,0 +1,63 @@
+<!doctype html>
+<!--
+  Throughput benchmark: 60 s @ 1920x1080/30 fps of continuously moving UI-like content
+  (12 x 5 s scenes, each a dashboard grid with a camera push, count-ups and bars),
+  built synchronously from a seeded PRNG so every run is identical. Synthetic data.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #e9edf3; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: Inter, sans-serif; }
+      .scene { position: absolute; inset: 0; background: #fff; }
+      .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; padding: 48px 56px; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 300px; gap: 28px; }
+      .card { border: 1px solid #e3e7ee; border-radius: 16px; padding: 24px; box-shadow: 0 2px 6px rgba(15,27,45,.06); background: #fff; }
+      .card .l { font-size: 18px; color: #64748b; }
+      .card .v { font-size: 64px; font-weight: 700; color: #0f1b2d; margin-top: 18px; font-variant-numeric: tabular-nums; }
+      .card .b { margin-top: 28px; height: 12px; border-radius: 999px; background: #eef2f7; overflow: hidden; }
+      .card .b i { display: block; width: 100%; height: 100%; background: #2563eb; transform-origin: 0 50%; }
+      .hdr { position: absolute; left: 56px; bottom: 40px; font-size: 44px; font-weight: 900; color: #0f1b2d; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="perf" data-start="0" data-duration="60" data-width="1920" data-height="1080"></div>
+    <script>
+      // Seeded PRNG (mulberry32) -> deterministic content.
+      let seed = 26249;
+      const rnd = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+      const root = document.getElementById("root");
+      const tl = gsap.timeline({ paused: true });
+      const SCENES = 12, LEN = 5;
+      for (let s = 0; s < SCENES; s++) {
+        const sec = document.createElement("section");
+        sec.className = "clip scene"; sec.id = `s${s}`;
+        sec.dataset.start = String(s * LEN); sec.dataset.duration = String(LEN); sec.dataset.trackIndex = "0";
+        const cam = document.createElement("div"); cam.className = "cam"; cam.id = `cam${s}`;
+        const targets = [];
+        for (let c = 0; c < 8; c++) {
+          const v = Math.round(rnd() * 1000) / 10;
+          const card = document.createElement("div"); card.className = "card";
+          card.innerHTML = `<div class="l">Metric ${s}.${c}</div><div class="v"><span id="v${s}_${c}">0.0</span></div><div class="b"><i id="b${s}_${c}"></i></div>`;
+          cam.appendChild(card); targets.push({ c, v });
+        }
+        const hdr = document.createElement("div"); hdr.className = "hdr"; hdr.id = `h${s}`; hdr.textContent = `Scene ${s + 1} of ${SCENES}`;
+        sec.appendChild(cam); sec.appendChild(hdr); root.appendChild(sec);
+        const t0 = s * LEN;
+        targets.forEach(({ c, v }) => {
+          const o = { x: 0 };
+          tl.fromTo(o, { x: 0 }, { x: v, duration: 1.5, ease: "power2.out", onUpdate: () => { document.getElementById(`v${s}_${c}`).textContent = o.x.toFixed(1); } }, t0 + 0.2 + c * 0.08);
+          tl.fromTo(`#b${s}_${c}`, { scaleX: 0 }, { scaleX: v / 100, duration: 1.5, ease: "power2.out" }, t0 + 0.2 + c * 0.08);
+        });
+        const k = Math.floor(rnd() * 8), col = k % 4, row = Math.floor(k / 4);
+        const cx = 56 + col * ((1920 - 112 - 84) / 4 + 28) + 220, cy = 48 + row * 328 + 150, S = 1.6;
+        tl.fromTo(`#cam${s}`, { scale: 1, x: 0, y: 0 }, { scale: S, x: 960 - cx * S, y: 540 - cy * S, duration: 2.0, ease: "power3.inOut" }, t0 + 1.8);
+        tl.fromTo(`#h${s}`, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, t0 + 0.1);
+      }
+      window.__timelines["perf"] = tl;
+    </script>
+  </body>
+</html>

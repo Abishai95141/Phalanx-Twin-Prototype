@@ -1,0 +1,5 @@
+resp,n_transients,frac_identical_while_fast_med,frac_identical_while_fast_p90,median_identical_run_med
+N1,5760,0.015625,0.05084745762711865,2.0
+N2,5749,0.0,0.037037037037037035,1.0
+FF,3689,0.0,0.14285714285714285,1.0
+EGT,5138,0.015625,0.0625,2.0

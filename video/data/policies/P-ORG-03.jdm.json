@@ -1,0 +1,104 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "inputNode",
+      "name": "issue",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "dt",
+      "type": "decisionTableNode",
+      "name": "P-ORG-03 servicing deferral",
+      "position": {
+        "x": 320,
+        "y": 120
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "rq",
+            "name": "Deferral requested",
+            "field": "request.defer_servicing"
+          },
+          {
+            "id": "ext",
+            "name": "Extension %",
+            "field": "request.extension_pct"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "mode",
+            "name": "Mode",
+            "field": "rec.issuer"
+          },
+          {
+            "id": "st",
+            "name": "Status",
+            "field": "rec.status"
+          },
+          {
+            "id": "why",
+            "name": "Rationale",
+            "field": "rec.rationale_id"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "rq": "true",
+            "ext": "> 20",
+            "mode": "'HUMAN'",
+            "st": "'BLOCKED_L1'",
+            "why": "'EXT_GT_20PCT_INVARIANT'"
+          },
+          {
+            "_id": "r2",
+            "rq": "true",
+            "ext": "",
+            "mode": "'HUMAN'",
+            "st": "'DRAFT'",
+            "why": "'HUMAN_SIGNED_DRAFT_ONLY'"
+          },
+          {
+            "_id": "r3",
+            "rq": "",
+            "ext": "",
+            "mode": "'NONE'",
+            "st": "'NONE'",
+            "why": "'NO_RULE'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "out",
+      "type": "outputNode",
+      "name": "rec",
+      "position": {
+        "x": 640,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceId": "in",
+      "targetId": "dt",
+      "type": "edge"
+    },
+    {
+      "id": "e2",
+      "sourceId": "dt",
+      "targetId": "out",
+      "type": "edge"
+    }
+  ]
+}

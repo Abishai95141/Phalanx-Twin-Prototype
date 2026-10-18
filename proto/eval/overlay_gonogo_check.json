@@ -1,0 +1,48 @@
+{
+  "source_label": "Generated engine trend (overlay v0.1)",
+  "run": "/Users/abishaikc/Phalanx-Solution/proto/runs/gonogo",
+  "contract": {
+    "version": "0.2.0",
+    "hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566"
+  },
+  "history": {
+    "to": "2026-06-22 06:00:00 IST",
+    "sorties": 588,
+    "rows": 14112,
+    "files": 588
+  },
+  "delta": {
+    "window": [
+      "2026-06-22 06:00:00 IST",
+      "2026-06-23 06:00:00 IST"
+    ],
+    "sorties": 10,
+    "rows": 240,
+    "files": 10
+  },
+  "checks": {
+    "contract_hash_on_every_overlay_file": {
+      "files": 598,
+      "wrong": []
+    },
+    "delta_rows_in_window": {
+      "files_outside_window": []
+    },
+    "fleet_tree_unchanged": {
+      "before": [
+        "12c49739b785f22dea39a85e8590b6f8",
+        2464
+      ],
+      "after": [
+        "12c49739b785f22dea39a85e8590b6f8",
+        2464
+      ],
+      "ok": true
+    },
+    "repeat_call_identical": {
+      "files": true,
+      "rows": 240
+    }
+  },
+  "verdict": "PASS"
+}

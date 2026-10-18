@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Plan &amp; what-if — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: flex; flex-direction: column; gap: 24px; height: 100%; }
+  .tabs2 span { cursor: pointer; }
+  .tabs2 .tab-meta { margin-left: auto; font-size: 13px; color: var(--ink-4); font-weight: 500; padding: 0 0 14px; cursor: default; }
+  .g { flex: 1; min-height: 0; grid-template-rows: 380px minmax(0, 1fr); height: auto; }
+  .hero { grid-row: span 2; padding-bottom: 22px; }
+  .head2 { display: flex; align-items: flex-start; gap: 16px; }
+  .head2 .grow { flex: 1; }
+  .lead { display: flex; align-items: flex-end; gap: 40px; margin-top: 34px; }
+  .lead .ci { margin-top: 10px; }
+  .orders { display: flex; flex-direction: column; gap: 8px; margin-left: auto; align-items: flex-end; padding-bottom: 2px; }
+  .orders .lbl { font-size: 13px; color: var(--ink-4); margin-bottom: 2px; }
+  .orders .o { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--ink-2); }
+  #forest { margin-top: 44px; flex: 1; min-height: 0; }
+  .fnote { margin-top: 14px; }
+  .fnote { display: flex; gap: 18px; align-items: center; }
+  .fnote .sp { flex: 1; }
+  .dot-sq { display: inline-block; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink-4); background: #fff; vertical-align: -1px; margin-right: 6px; }
+  .dot-tr { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--ink); vertical-align: -1px; margin-right: 6px; }
+  .pairs-key { display: flex; gap: 18px; font-size: 13px; color: var(--ink-3); margin-top: 14px; }
+  #pairs { margin-top: 12px; flex: 1; min-height: 0; }
+  .cand .r2 { grid-template-columns: 56px minmax(0, 1fr) auto; min-height: 84px; }
+  .gate { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 11px; border-radius: 8px; font-size: 13px; font-weight: 650; white-space: nowrap; }
+  .gate.pass { background: var(--ok-wash); color: #17693A; }
+  .gate.drop { background: var(--bg-3); color: var(--ink-3); }
+  .gate svg { width: 14px; height: 14px; }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; }
+    .g { flex: none; }
+    .hero { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    .lead { flex-wrap: wrap; gap: 20px 40px; }
+    #forest { flex: none; height: 470px; margin-top: 34px; }
+    #pairs { flex: none; height: 380px; }
+    #forest svg, #pairs svg { display: block; overflow: visible; }
+    .fnote { flex-wrap: wrap; gap: 4px 12px; }
+    .fnote .sp { display: none; }
+    .cand .push { margin-top: 18px; }
+    .cand .r2 { grid-template-columns: 56px minmax(0,1fr); row-gap: 8px; padding-top: 14px; padding-bottom: 14px; min-height: 0; }
+    .cand .r2 > .gate { grid-column: 2; justify-self: start; }
+    .pairs-key { flex-wrap: wrap; gap: 6px 16px; }
+  }
+  @media (max-width: 699px) {
+    .tabs2 .tab-meta { display: none; }
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .head2 { flex-wrap: wrap; gap: 8px 12px; }
+    .lead { margin-top: 24px; }
+    .orders { margin-left: 0; align-items: flex-start; }
+    #forest { height: auto; margin-top: 28px; }
+    #pairs { height: 420px; }
+  }
+</style>
+</head>
+<body data-page="plan">
+<div id="content">
+<div class="pg">
+  <div class="tabs2"><span class="on">Plan vs status quo</span><span onclick="location.href='plan-schedule.html'">30-day schedule</span>
+    <span class="tab-meta">Epoch Mon 22 Jun 08:00 · horizon 22 Jun → 22 Jul</span></div>
+
+  <div class="v2 g">
+    <!-- hero: S1 paired-difference forest -->
+    <section class="panel2 c8 hero" data-shot="forest">
+      <div class="head2">
+        <div class="grow"><span class="kick acc">Recommended plan · TJ107 hydraulic alarm</span>
+          <div class="t2">Better on all ten measures — the safety guardrail needs a signature</div>
+          <div class="sub2">Plan minus status quo over the next 30 days, in 30 paired simulations that share the same future.</div></div>
+        <span class="tier presc">PRESC</span>
+      </div>
+      <div class="lead">
+        <div><div class="big num" id="heroV">+0.217<small>mission-capable rate</small></div>
+          <div class="ci" id="heroCi"></div></div>
+        <div class="orders">
+          <span class="lbl">The plan · issued at 08:00</span>
+          <span class="o">Troubleshoot the alarm once<span class="auth agent"><i data-i="cpu" class="ico-sm"></i>AGENT</span></span>
+          <span class="o">Filter HYD-101 on TJ107<span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span></span>
+        </div>
+      </div>
+      <div id="forest"></div>
+      <div class="fnote note"><span>Status quo = scheduled policy · belief mode</span><span>·</span><span id="snap"></span><span class="sp"></span><span id="comp"></span></div>
+    </section>
+
+    <!-- the 30 pairs -->
+    <section class="panel2 c4" data-shot="pairs">
+      <span class="kick">Paired runs · mission capable</span>
+      <div class="t2" id="pairsT">The plan wins in 29 of 30 matched futures</div>
+      <div class="pairs-key"><span><i class="dot-sq"></i>status quo</span><span><i class="dot-tr"></i>plan</span><span>one line = one future · ▲ means</span></div>
+      <div id="pairs"></div>
+    </section>
+
+    <!-- other candidates -->
+    <section class="panel2 c4 cand" data-shot="candidates">
+      <span class="kick">Other candidates · fork gate</span>
+      <div class="t2">Expedite the chute; skip the early tyre order</div>
+      <div class="rows2" style="margin-top:14px">
+        <div class="r2"><span class="tailtag">TJ108</span>
+          <div><div class="ttl">Expedite the brake chute</div><div class="why" id="s2why"></div></div>
+          <span class="gate pass"><i data-i="check" class="ico-sm"></i>Keep</span></div>
+        <div class="r2"><span class="tailtag">TJ105</span>
+          <div><div class="ttl">Order two tyres early</div><div class="why" id="s3why"></div></div>
+          <span class="gate drop"><i data-i="x" class="ico-sm"></i>Dropped</span></div>
+      </div>
+      <div class="note push">Kept only if a primary measure improves with its 95 % interval clear of zero and no guardrail is breached.</div>
+    </section>
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data-plan.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const P = window.PHX_PLAN, K = P.S1.kpis, Q = new URLSearchParams(location.search);
+const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + '';
+const f = (v, d) => (v < 0 ? '−' : v > 0 ? '+' : '') + Math.abs(v).toFixed(d);
+const g = (v, d) => (v < 0 ? '−' : '') + Math.abs(v).toFixed(d);
+const mono = 'JetBrains Mono';
+
+// hero number
+document.getElementById('heroCi').innerHTML = `95 % interval ${K.mc.d.lo.toFixed(3)} to ${K.mc.d.hi.toFixed(3)} · ${K.mc.sq.m.toFixed(3)} → ${K.mc.tr.m.toFixed(3)} · n = ${P.S1.n} pairs`;
+document.getElementById('snap').textContent = 'snapshot ' + P.S1.snapshot.slice(0, 8) + '…' + P.S1.snapshot.slice(-5);
+const tot = P.S1.wall.mode_total; document.getElementById('comp').textContent =
+  `${P.S1.n * 2} runs · ${P.S1.wall.per_branch_mean.toFixed(1)} s each · ${Math.floor(tot / 60)} min ${Math.round(tot % 60)} s in total`;
+
+// forest rows: dir = +1 when higher is better
+const ROWS = [
+  ['mc', 'Mission capable', 1, 3, ''], ['fmc', 'Fully mission capable', 1, 3, ''], ['nmcs', 'Waiting for parts', -1, 3, ''],
+  ['nmcm', 'In maintenance', -1, 3, ''], ['aog_days', 'Days grounded for parts', -1, 1, ' d'], ['man_hours', 'Maintenance man-hours', -1, 0, ' h'],
+  ['flying_task', 'Flying task achieved', 1, 3, ''], ['flown_fh', 'Flight hours', 1, 1, ' h'], ['sorties', 'Sorties', 1, 1, ''],
+  ['cost', 'Cost index', -1, 2, '']
+];
+// phone (< 500 px wide): each measure on two lines, label and change above its interval
+function drawForestPhone(host) {
+  const W = host.clientWidth, top = 30, rh = 54, lo = -30, hi = 110, X = v => 6 + (W - 12) * (v - lo) / (hi - lo), x0 = X(0);
+  let s = `<text x="${x0 - 8}" y="12" font-size="11.5" text-anchor="end" fill="var(--ink-4)" font-family="${mono}">← WORSE</text><text x="${x0 + 8}" y="12" font-size="11.5" fill="var(--ink-4)" font-family="${mono}">BETTER →</text>`;
+  const yb = top + ROWS.length * rh;
+  [0, 25, 50, 75, 100].forEach(t => {
+    s += `<line x1="${X(t)}" x2="${X(t)}" y1="${top - 6}" y2="${yb}" stroke="${t === 0 ? 'var(--ink-4)' : 'var(--line-2)'}" stroke-width="${t === 0 ? 1.2 : 1}"/>`;
+    if (t % 50 === 0) s += `<text x="${X(t)}" y="${yb + 16}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">${t === 0 ? '0' : '+' + t + ' %'}</text>`;
+  });
+  ROWS.forEach(([k, label, dir, dp, u], i) => {
+    const r = K[k], y = top + i * rh, base = r.sq.m, hot = k === 'mc';
+    const a = dir * r.d.lo / base * 100, b = dir * r.d.hi / base * 100, m = dir * r.d.m / base * 100, L = Math.min(a, b), R = Math.max(a, b);
+    if (hot) s += `<rect x="-8" y="${y + 1}" width="${W + 16}" height="${rh - 4}" rx="9" fill="var(--accent-wash)"/>`;
+    s += `<text x="0" y="${y + 19}" font-size="14.5" fill="var(--ink)" font-weight="${hot ? 650 : 500}" ${hot ? '' : 'paint-order="stroke" stroke="#fff" stroke-width="4"'}>${label}</text>`;
+    s += `<text x="${W}" y="${y + 19}" font-size="13" text-anchor="end" fill="var(--ink)" font-weight="650" font-family="${mono}" ${hot ? '' : 'paint-order="stroke" stroke="#fff" stroke-width="4"'}>${f(r.d.m, dp)}${u}</text>`;
+    const c = hot ? 'var(--accent)' : 'var(--ink)', yy = y + 37;
+    s += `<line x1="${X(Math.max(L, lo))}" x2="${X(Math.min(R, hi))}" y1="${yy}" y2="${yy}" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/>`;
+    if (R > hi) s += `<path d="M${X(hi) + 1} ${yy - 4} l6 4 -6 4z" fill="${c}"/>`;
+    s += `<circle cx="${X(m)}" cy="${yy}" r="5.5" fill="${c}" stroke="#fff" stroke-width="1.5"/>`;
+  });
+  const G = K.in_flight_failures, sc = (x0 - X(lo)) / 0.2, XG = v => x0 + v * sc, gr = yb + 34;
+  s += `<line x1="0" x2="${W}" y1="${gr}" y2="${gr}" stroke="var(--line)"/>`;
+  s += `<text x="0" y="${gr + 24}" font-size="14.5" fill="var(--ink)" font-weight="500">In-flight failures</text>`;
+  s += `<text x="${W}" y="${gr + 24}" font-size="13" text-anchor="end" fill="var(--ink)" font-weight="650" font-family="${mono}">${f(G.d.m, 3)}</text>`;
+  s += `<text x="0" y="${gr + 43}" font-size="13" fill="var(--ink-4)">Guardrail · interval includes zero · sign-off required</text>`;
+  const gy = gr + 66;
+  s += `<line x1="${x0}" x2="${x0}" y1="${gy - 12}" y2="${gy + 12}" stroke="var(--ink-4)" stroke-width="1.2"/>`;
+  s += `<line x1="${XG(-G.d.hi)}" x2="${XG(-G.d.lo)}" y1="${gy}" y2="${gy}" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round"/>`;
+  s += `<circle cx="${XG(-G.d.m)}" cy="${gy}" r="5.5" fill="#fff" stroke="var(--ink-2)" stroke-width="2"/>`;
+  s += `<text x="${X(lo)}" y="${gy + 26}" font-size="11.5" fill="var(--ink-4)" font-family="${mono}">+0.2</text><text x="${x0}" y="${gy + 26}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">0</text>`;
+  const H = gy + 32;
+  host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+function drawForest() {
+  const host = document.getElementById('forest');
+  if (host.clientWidth < 500) return drawForestPhone(host);
+  const W = host.clientWidth, H = host.clientHeight;
+  const top = 24, GH = 58, rh = Math.min(34, (H - top - 30 - GH) / ROWS.length), gr = top + ROWS.length * rh + 30;
+  const xL = 0, xA = 238, xP0 = 410, xP1 = W - 104, xD = W;
+  const lo = -30, hi = 110, X = v => xP0 + (xP1 - xP0) * (v - lo) / (hi - lo), x0 = X(0);
+  let s = '';
+  // header
+  s += `<text x="${xA}" y="11" font-size="11.5" fill="var(--ink-4)" font-family="${mono}">STATUS QUO → PLAN</text>`;
+  s += `<text x="${x0 - 8}" y="11" font-size="11.5" text-anchor="end" fill="var(--ink-4)" font-family="${mono}">← WORSE</text>`;
+  s += `<text x="${x0 + 8}" y="11" font-size="11.5" fill="var(--ink-4)" font-family="${mono}">BETTER →</text>`;
+  s += `<text x="${xD}" y="11" font-size="11.5" text-anchor="end" fill="var(--ink-4)" font-family="${mono}">CHANGE</text>`;
+  // grid
+  [0, 25, 50, 75, 100].forEach(t => {
+    s += `<line x1="${X(t)}" x2="${X(t)}" y1="${top - 6}" y2="${top + ROWS.length * rh + 2}" stroke="${t === 0 ? 'var(--ink-4)' : 'var(--line-2)'}" stroke-width="${t === 0 ? 1.2 : 1}"/>`;
+    if (W >= 900 || t % 50 === 0) s += `<text x="${X(t)}" y="${top + ROWS.length * rh + 17}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">${t === 0 ? '0' : '+' + t + ' %'}</text>`;   // tablets: fewer labels
+  });
+  ROWS.forEach(([k, label, dir, dp, u], i) => {
+    const r = K[k], y = top + i * rh + rh / 2, base = r.sq.m;
+    const a = dir * r.d.lo / base * 100, b = dir * r.d.hi / base * 100, m = dir * r.d.m / base * 100;
+    const L = Math.min(a, b), R = Math.max(a, b), hot = k === 'mc';
+    if (hot) s += `<rect x="-2" y="${y - rh / 2 + 2}" width="${W + 4}" height="${rh - 4}" rx="9" fill="var(--accent-wash)"/>`;
+    s += `<text x="${xL + (hot ? 12 : 0)}" y="${y + 5}" font-size="15" fill="var(--ink)" font-weight="${hot ? 650 : 500}">${label}</text>`;
+    s += `<text x="${xA}" y="${y + 4.5}" font-size="13" fill="var(--ink-3)" font-family="${mono}">${g(r.sq.m, dp)} → ${g(r.tr.m, dp)}</text>`;
+    const c = hot ? 'var(--accent)' : 'var(--ink)';
+    s += `<line x1="${X(Math.max(L, lo))}" x2="${X(Math.min(R, hi))}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/>`;
+    if (R > hi) s += `<path d="M${X(hi) + 1} ${y - 4} l6 4 -6 4z" fill="${c}"/>`;
+    s += `<circle cx="${X(m)}" cy="${y}" r="5.5" fill="${c}" stroke="#fff" stroke-width="1.5"/>`;
+    s += `<text x="${xD - (hot ? 12 : 0)}" y="${y + 4.5}" font-size="13" text-anchor="end" fill="var(--ink)" font-weight="650" font-family="${mono}">${f(r.d.m, dp)}${u}</text>`;
+  });
+  // guardrail
+  const G = K.in_flight_failures, sc = (x0 - xP0) / 0.2, XG = v => x0 + v * sc;   // v already oriented: positive = better
+  const gy = gr + 30;
+  s += `<line x1="0" x2="${W}" y1="${gr}" y2="${gr}" stroke="var(--line)"/>`;
+  s += `<text x="0" y="${gy - 3}" font-size="15" fill="var(--ink)" font-weight="500">In-flight failures</text>`;
+  s += `<text x="0" y="${gy + 16}" font-size="13" fill="var(--ink-4)">Guardrail · interval includes zero</text>`;
+  const sqRuns = Math.round(G.sq.m * P.S1.n), trRuns = Math.round(G.tr.m * P.S1.n);
+  s += `<text x="${xA}" y="${gy + 1.5}" font-size="13" fill="var(--ink-3)" font-family="${mono}">${sqRuns} → ${trRuns} of ${P.S1.n} runs</text>`;
+  s += `<line x1="${x0}" x2="${x0}" y1="${gy - 17}" y2="${gy + 17}" stroke="var(--ink-4)" stroke-width="1.2"/>`;
+  s += `<line x1="${XG(-G.d.hi)}" x2="${XG(-G.d.lo)}" y1="${gy - 2}" y2="${gy - 2}" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round"/>`;
+  s += `<circle cx="${XG(-G.d.m)}" cy="${gy - 2}" r="5.5" fill="#fff" stroke="var(--ink-2)" stroke-width="2"/>`;
+  s += `<text x="${XG(-G.d.lo) + 14}" y="${gy + 2.5}" font-size="13" fill="var(--ink-3)">sign-off required</text>`;
+  s += `<text x="${x0 - 0.2 * sc}" y="${gy + 26}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">+0.2</text>`;
+  s += `<line x1="${x0 - 0.2 * sc}" x2="${x0 - 0.2 * sc}" y1="${gy - 10}" y2="${gy + 10}" stroke="var(--line-2)"/>`;
+  s += `<text x="${x0}" y="${gy + 26}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">0</text>`;
+  s += `<text x="${xD}" y="${gy + 1.5}" font-size="13" text-anchor="end" fill="var(--ink)" font-weight="650" font-family="${mono}">${f(G.d.m, 3)}</text>`;
+  const defs = `<defs><pattern id="hp" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--bg-2)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--line)" stroke-width="2"/></pattern></defs>`;
+  host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs}${s}</svg>`;
+}
+
+// candidate rows
+const S2 = P.S2, S3 = P.S3;
+document.getElementById('s2why').textContent = `No change in 30 days · back in service ${Math.floor(S2.sooner_days)} days sooner over 400`;
+document.getElementById('s3why').textContent = `Nothing improves · cost index ${f(S3.kpis.cost.d.m, 2)}`;
+
+PHX.mount({ page: 'plan', title: 'Plan & what-if', sub: 'Is the plan better than doing nothing — and by how much?',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'ok', i: 'fork', t: '30 paired simulations · belief mode' }],
+  after() {
+    drawForest();
+    // dumbbell of the 30 pairs (needs layout, so after mount)
+    const host = document.getElementById('pairs'), W = host.clientWidth, H = host.clientHeight;
+    const pr = P.S1.pairs.map(p => ({ ...p, d: p.tr - p.sq })).sort((a, b) => a.d - b.d);
+    const pb = 22, rh = (H - pb - 12) / pr.length, lo = 0.3, hi = 1.0, X = v => 8 + (W - 26) * (v - lo) / (hi - lo);
+    let s = '';
+    [0.4, 0.6, 0.8, 1.0].forEach(t => { s += `<line x1="${X(t)}" x2="${X(t)}" y1="0" y2="${H - pb}" stroke="var(--line-2)"/><text x="${X(t)}" y="${H - 5}" font-size="11.5" text-anchor="middle" fill="var(--ink-4)" font-family="${mono}">${t.toFixed(1)}</text>`; });
+    const msq = P.S1.kpis.mc.sq.m, mtr = P.S1.kpis.mc.tr.m;
+    pr.forEach((p, i) => {
+      const y = 4 + i * rh + rh / 2, worse = p.d < 0;
+      s += `<line x1="${X(p.sq)}" x2="${X(p.tr)}" y1="${y}" y2="${y}" stroke="${worse ? 'var(--accent)' : 'var(--ink-5)'}" stroke-width="1.6"/>`;
+      s += `<circle cx="${X(p.sq)}" cy="${y}" r="3.2" fill="#fff" stroke="var(--ink-4)" stroke-width="1.3"/>`;
+      s += `<circle cx="${X(p.tr)}" cy="${y}" r="3.4" fill="${worse ? 'var(--accent)' : 'var(--ink)'}"/>`;
+    });
+    [[msq, '#fff', 'var(--ink-4)'], [mtr, 'var(--ink)', 'var(--ink)']].forEach(([v, fill, st]) => { s += `<path d="M${X(v)} ${H - pb - 1} l-5 -7 h10z" fill="${fill}" stroke="${st}" stroke-width="1.2"/>`; });
+    host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+    const better = pr.filter(p => p.d > 0).length;
+    document.getElementById('pairsT').textContent = `The plan wins in ${better} of ${pr.length} matched futures`;
+    if (Q.get('state') === 'guardrail') document.querySelector('[data-shot=forest]').classList.add('focus');
+  } });
+</script>
+</body></html>

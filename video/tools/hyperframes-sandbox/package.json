@@ -1,0 +1,23 @@
+{
+  "name": "phalanx-hyperframes-sandbox",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Local sandbox for evaluating HeyGen HyperFrames (HTML -> video) for the Phalanx launch video",
+  "type": "module",
+  "dependencies": {
+    "gsap": "3.14.2",
+    "hyperframes": "0.8.162",
+    "three": "0.181.2"
+  },
+  "scripts": {
+    "doctor": "HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes doctor",
+    "lint:smoke": "cd smoke && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes lint",
+    "render:smoke": "cd smoke && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes render --quality high --output ../out/smoke.mp4",
+    "render:screens": "cd screen-pattern && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes render --quality high --output ../out/screen-pattern.mp4",
+    "snapshot:screens": "cd screen-pattern && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes snapshot --at 1.2,2.5,3.1,4.5,5.3,7.5,9.5 --no-end --output ../out/snap-screen",
+    "render:iframe": "cd iframe-pattern && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes render --output ../out/iframe-test.mp4",
+    "render:perf": "cd perf && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes render --no-experimental-fast-capture --quality high --output ../out/perf60.mp4",
+    "render:overlay-webm": "cd alpha-overlay && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes render --format webm --output ../out/lt.webm",
+    "render:overlay-mov": "cd alpha-overlay && HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_SKIP_SKILLS=1 HYPERFRAMES_NO_UPDATE_CHECK=1 hyperframes render --format mov --output ../out/lt.mov"
+  }
+}

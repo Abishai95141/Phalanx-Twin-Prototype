@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="624" viewBox="0 0 920 624" font-family="Helvetica, Arial, sans-serif">
+<rect width="920" height="624" fill="white"/>
+<text x="460.0" y="17" text-anchor="middle" font-size="14">MF1-D class FLT: medians over flights</text>
+<g transform="translate(0,24)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Median coherence (engine 1, n=30)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">MSC</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="256.0" x2="448" y2="256.0" stroke="#eee"/>
+<text x="56" y="259.0" text-anchor="end" font-size="10">0</text>
+<line x1="58" y1="210.0" x2="448" y2="210.0" stroke="#eee"/>
+<text x="56" y="213.0" text-anchor="end" font-size="10">0.2</text>
+<line x1="58" y1="164.0" x2="448" y2="164.0" stroke="#eee"/>
+<text x="56" y="167.0" text-anchor="end" font-size="10">0.4</text>
+<line x1="58" y1="118.0" x2="448" y2="118.0" stroke="#eee"/>
+<text x="56" y="121.0" text-anchor="end" font-size="10">0.6</text>
+<line x1="58" y1="72.0" x2="448" y2="72.0" stroke="#eee"/>
+<text x="56" y="75.0" text-anchor="end" font-size="10">0.8</text>
+<line x1="58" y1="26.0" x2="448" y2="26.0" stroke="#eee"/>
+<text x="56" y="29.0" text-anchor="end" font-size="10">1</text>
+<polyline points="62.0,113.1 112.6,102.7 150.7,101.0 181.1,109.0 206.6,109.2 228.4,119.1 247.5,130.1 264.4,137.0 279.7,161.2 293.6,196.7 306.4,226.9 318.2,235.3 329.1,231.3 339.3,235.5 348.9,242.4 357.9,238.0 366.4,206.4 374.5,192.5 382.1,237.1 389.4,238.0 396.4,233.3 403.1,209.4 409.5,158.5 415.6,112.8 421.5,145.0 427.2,192.1 432.6,226.2 437.9,235.4 443.1,249.4 448.0,244.8" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N2->N1</text>
+<polyline points="62.0,101.7 112.6,110.9 150.7,123.8 181.1,137.0 206.6,156.3 228.4,174.6 247.5,190.8 264.4,200.6 279.7,212.7 293.6,227.2 306.4,236.7 318.2,245.2 329.1,248.7 339.3,252.1 348.9,251.9 357.9,247.6 366.4,228.1 374.5,226.3 382.1,244.4 389.4,251.6 396.4,250.4 403.1,234.5 409.5,200.0 415.6,153.1 421.5,181.8 427.2,228.5 432.6,246.2 437.9,252.0 443.1,251.8 448.0,240.1" fill="none" stroke="#c2410c" stroke-width="1.4"/>
+<text x="68" y="51" font-size="10" fill="#c2410c">FF->N1</text>
+<polyline points="62.0,87.8 112.6,87.9 150.7,98.9 181.1,105.4 206.6,127.8 228.4,152.1 247.5,174.1 264.4,191.6 279.7,207.1 293.6,228.2 306.4,236.7 318.2,242.4 329.1,249.5 339.3,253.9 348.9,253.8 357.9,250.0 366.4,227.0 374.5,221.0 382.1,238.2 389.4,244.2 396.4,243.1 403.1,232.6 409.5,202.5 415.6,162.8 421.5,190.7 427.2,230.8 432.6,240.3 437.9,241.3 443.1,232.0 448.0,216.7" fill="none" stroke="#15803d" stroke-width="1.4"/>
+<text x="68" y="63" font-size="10" fill="#15803d">FF->N2</text>
+<polyline points="62.0,157.0 112.6,132.2 150.7,130.9 181.1,152.2 206.6,165.6 228.4,194.4 247.5,214.0 264.4,231.3 279.7,237.7 293.6,245.5 306.4,247.9 318.2,252.0 329.1,253.9 339.3,254.3 348.9,254.8 357.9,251.1 366.4,236.8 374.5,235.3 382.1,249.7 389.4,253.0 396.4,250.2 403.1,241.2 409.5,217.7 415.6,185.9 421.5,209.2 427.2,240.6 432.6,247.2 437.9,252.8 443.1,252.3 448.0,244.3" fill="none" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="68" y="75" font-size="10" fill="#7c3aed">N1->EGT</text>
+<polyline points="62.0,85.1 112.6,82.2 150.7,84.6 181.1,100.4 206.6,131.0 228.4,166.3 247.5,200.3 264.4,220.4 279.7,238.6 293.6,248.1 306.4,252.0 318.2,253.4 329.1,254.5 339.3,253.8 348.9,253.9 357.9,250.6 366.4,241.5 374.5,242.2 382.1,247.7 389.4,248.3 396.4,242.6 403.1,235.0 409.5,211.8 415.6,189.5 421.5,207.8 427.2,232.5 432.6,241.8 437.9,246.8 443.1,251.3 448.0,250.3" fill="none" stroke="#6b7280" stroke-width="1.4"/>
+<text x="68" y="87" font-size="10" fill="#6b7280">N2->EGT</text></g>
+<g transform="translate(460,24)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Median phase, 0.2-1 Hz (second channel lags = negative)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">deg</text>
+<line x1="153.3" y1="256" x2="153.3" y2="260" stroke="#666"/>
+<text x="153.3" y="271" text-anchor="middle" font-size="10">0.4</text>
+<line x1="256.2" y1="256" x2="256.2" y2="260" stroke="#666"/>
+<text x="256.2" y="271" text-anchor="middle" font-size="10">0.6</text>
+<line x1="359.1" y1="256" x2="359.1" y2="260" stroke="#666"/>
+<text x="359.1" y="271" text-anchor="middle" font-size="10">0.8</text>
+<line x1="58" y1="230.8" x2="448" y2="230.8" stroke="#eee"/>
+<text x="56" y="233.8" text-anchor="end" font-size="10">-400</text>
+<line x1="58" y1="191.7" x2="448" y2="191.7" stroke="#eee"/>
+<text x="56" y="194.7" text-anchor="end" font-size="10">-300</text>
+<line x1="58" y1="152.6" x2="448" y2="152.6" stroke="#eee"/>
+<text x="56" y="155.6" text-anchor="end" font-size="10">-200</text>
+<line x1="58" y1="113.5" x2="448" y2="113.5" stroke="#eee"/>
+<text x="56" y="116.5" text-anchor="end" font-size="10">-100</text>
+<line x1="58" y1="74.4" x2="448" y2="74.4" stroke="#eee"/>
+<text x="56" y="77.4" text-anchor="end" font-size="10">0</text>
+<line x1="58" y1="35.2" x2="448" y2="35.2" stroke="#eee"/>
+<text x="56" y="38.2" text-anchor="end" font-size="10">100</text>
+<polyline points="62.0,91.2 94.2,96.0 126.3,100.7 158.5,102.6 190.7,104.7 222.8,108.7 255.0,111.3 287.2,112.7 319.3,117.9 351.5,122.2 383.7,122.6 415.8,123.3 448.0,123.7" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N2->N1</text>
+<polyline points="62.0,83.7 94.2,86.6 126.3,89.6 158.5,90.5 190.7,92.1 222.8,92.4 255.0,95.5 287.2,94.8 319.3,96.5 351.5,99.7 383.7,97.4 415.8,92.0 448.0,88.3" fill="none" stroke="#c2410c" stroke-width="1.4"/>
+<text x="68" y="51" font-size="10" fill="#c2410c">FF->N1</text>
+<polyline points="62.0,67.0 94.2,65.7 126.3,64.2 158.5,63.0 190.7,62.4 222.8,61.5 255.0,60.8 287.2,59.5 319.3,55.5 351.5,47.1 383.7,43.9 415.8,38.1 448.0,36.5" fill="none" stroke="#15803d" stroke-width="1.4"/>
+<text x="68" y="63" font-size="10" fill="#15803d">FF->N2</text>
+<polyline points="62.0,81.0 94.2,83.7 126.3,86.7 158.5,89.3 190.7,91.2 222.8,93.3 255.0,93.4 287.2,92.2 319.3,92.1 351.5,95.3 383.7,101.2 415.8,112.9 448.0,106.8" fill="none" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="68" y="75" font-size="10" fill="#7c3aed">N1->EGT</text>
+<polyline points="62.0,103.1 94.2,109.9 126.3,115.4 158.5,120.9 190.7,125.3 222.8,130.8 255.0,135.2 287.2,138.4 319.3,146.7 351.5,158.6 383.7,172.3 415.8,177.4 448.0,173.6" fill="none" stroke="#6b7280" stroke-width="1.4"/>
+<text x="68" y="87" font-size="10" fill="#6b7280">N2->EGT</text>
+<polyline points="62.0,90.0 94.2,94.4 126.3,98.8 158.5,103.2 190.7,107.6 222.8,112.0 255.0,116.4 287.2,120.8 319.3,125.2 351.5,129.6 383.7,134.0 415.8,138.4 448.0,142.8" fill="none" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="68" y="99" font-size="10" fill="#b91c1c">0.5 s delay</text>
+<polyline points="62.0,113.5 94.2,124.5 126.3,135.5 158.5,146.5 190.7,157.5 222.8,168.5 255.0,179.5 287.2,190.5 319.3,201.5 351.5,212.5 383.7,223.5 415.8,234.5 448.0,245.5" fill="none" stroke="#0e7490" stroke-width="1.4"/>
+<text x="68" y="111" font-size="10" fill="#0e7490">1.25 s delay</text></g>
+<g transform="translate(0,324)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Median H1 gain N2->N1</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">gain</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="253.1" x2="448" y2="253.1" stroke="#eee"/>
+<text x="56" y="256.1" text-anchor="end" font-size="10">0.2</text>
+<line x1="58" y1="211.1" x2="448" y2="211.1" stroke="#eee"/>
+<text x="56" y="214.1" text-anchor="end" font-size="10">0.4</text>
+<line x1="58" y1="169.2" x2="448" y2="169.2" stroke="#eee"/>
+<text x="56" y="172.2" text-anchor="end" font-size="10">0.6</text>
+<line x1="58" y1="127.3" x2="448" y2="127.3" stroke="#eee"/>
+<text x="56" y="130.3" text-anchor="end" font-size="10">0.8</text>
+<line x1="58" y1="85.3" x2="448" y2="85.3" stroke="#eee"/>
+<text x="56" y="88.3" text-anchor="end" font-size="10">1</text>
+<line x1="58" y1="43.4" x2="448" y2="43.4" stroke="#eee"/>
+<text x="56" y="46.4" text-anchor="end" font-size="10">1.2</text>
+<polyline points="62.0,108.3 112.6,99.8 150.7,117.3 181.1,117.0 206.6,105.4 228.4,103.9 247.5,105.7 264.4,101.1 279.7,117.6 293.6,149.3 306.4,190.6 318.2,211.5 329.1,205.3 339.3,218.7 348.9,229.4 357.9,217.0 366.4,139.6 374.5,134.7 382.1,212.3 389.4,231.6 396.4,212.5 403.1,177.6 409.5,97.3 415.6,36.5 421.5,79.6 427.2,156.7 432.6,201.7 437.9,208.4 443.1,245.5 448.0,229.2" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N2->N1 (%/%)</text></g>
+<g transform="translate(460,324)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Median share of fast-band power per 0.0625-Hz sub-band</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">share</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="181.3" x2="448" y2="181.3" stroke="#eee"/>
+<text x="56" y="184.3" text-anchor="end" font-size="10">0.01</text>
+<line x1="58" y1="74.8" x2="448" y2="74.8" stroke="#eee"/>
+<text x="56" y="77.8" text-anchor="end" font-size="10">0.1</text>
+<polyline points="62.0,102.9 112.6,28.5 150.7,38.2 181.1,62.7 206.6,80.3 228.4,106.5 247.5,126.8 264.4,147.7 279.7,169.9 293.6,186.0 306.4,196.2 318.2,211.3 329.1,228.3 339.3,236.0 348.9,239.3 357.9,229.5 366.4,205.4 374.5,202.2 382.1,231.6 389.4,244.0 396.4,245.5 403.1,232.5 409.5,195.4 415.6,167.0 421.5,188.5 427.2,227.7 432.6,247.4 437.9,246.8 443.1,233.1 448.0,217.8" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N1 power share</text>
+<polyline points="62.0,106.9 112.6,26.0 150.7,30.8 181.1,59.3 206.6,82.9 228.4,114.4 247.5,142.6 264.4,161.5 279.7,183.6 293.6,207.7 306.4,218.3 318.2,228.9 329.1,244.6 339.3,254.4 348.9,255.5 357.9,249.9 366.4,230.5 374.5,228.7 382.1,242.3 389.4,249.2 396.4,251.7 403.1,242.1 409.5,218.2 415.6,199.1 421.5,215.2 427.2,239.1 432.6,252.1 437.9,256.0 443.1,250.3 448.0,241.1" fill="none" stroke="#c2410c" stroke-width="1.4"/>
+<text x="68" y="51" font-size="10" fill="#c2410c">N2 power share</text></g>
+</svg>

@@ -1,0 +1,446 @@
+{
+ "fps": 30,
+ "segments": [
+  {
+   "src": "act01_v2",
+   "in": 0.0,
+   "dur": 66.5999,
+   "xfade": 0.0,
+   "film_start": 0.0,
+   "shots": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10"
+   ]
+  },
+  {
+   "src": "act2_v2",
+   "in": 0.0,
+   "dur": 10.85,
+   "xfade": 0.0,
+   "film_start": 66.5999,
+   "shots": [
+    "S11",
+    "S12"
+   ]
+  },
+  {
+   "src": "act2_v2",
+   "in": 50.12,
+   "dur": 17.08,
+   "xfade": 0.3,
+   "film_start": 77.1499,
+   "shots": [
+    "S17",
+    "S18"
+   ]
+  },
+  {
+   "src": "act3a",
+   "in": 0.0,
+   "dur": 37.2001,
+   "xfade": 0.0,
+   "film_start": 94.2299,
+   "shots": [
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S23",
+    "S24"
+   ]
+  },
+  {
+   "src": "act3a",
+   "in": 48.7001,
+   "dur": 14.3666,
+   "xfade": 0.0,
+   "film_start": 131.43,
+   "shots": [
+    "S26",
+    "S27"
+   ]
+  },
+  {
+   "src": "act3b",
+   "in": 0.0,
+   "dur": 9.2,
+   "xfade": 0.0,
+   "film_start": 145.7966,
+   "shots": [
+    "S28"
+   ]
+  },
+  {
+   "src": "act3b",
+   "in": 18.3333,
+   "dur": 14.8334,
+   "xfade": 0.3,
+   "film_start": 154.6966,
+   "shots": [
+    "S30",
+    "S31"
+   ]
+  },
+  {
+   "src": "linuxone",
+   "in": 0.0,
+   "dur": 30.9,
+   "xfade": 0.3,
+   "film_start": 169.23,
+   "shots": [
+    "L1",
+    "L2",
+    "L3"
+   ]
+  },
+  {
+   "src": "act4_v2",
+   "in": 37.6334,
+   "dur": 19.6666,
+   "xfade": 0.0,
+   "film_start": 200.13,
+   "shots": [
+    "S34",
+    "S35"
+   ]
+  }
+ ],
+ "shots": {
+  "S01": {
+   "src": "act01_v2",
+   "src_start": 0.0,
+   "start": 0.0,
+   "dur": 5.7,
+   "vo_at": 0.28,
+   "vo_at_in_act": 0.28,
+   "vo_dur": 4.046,
+   "text": "Every morning, before eight, someone decides which aircraft will fly."
+  },
+  "S02": {
+   "src": "act01_v2",
+   "src_start": 5.7,
+   "start": 5.7,
+   "dur": 4.1333,
+   "vo_at": 5.98,
+   "vo_at_in_act": 5.98,
+   "vo_dur": 3.476,
+   "text": "That decision should rest on everything the fleet already knows."
+  },
+  "S03": {
+   "src": "act01_v2",
+   "src_start": 9.8333,
+   "start": 9.8333,
+   "dur": 5.0,
+   "vo_at": 10.1133,
+   "vo_at_in_act": 10.1133,
+   "vo_dur": 3.948,
+   "text": "Health data. Technical records. Spares. Work in progress."
+  },
+  "S04": {
+   "src": "act01_v2",
+   "src_start": 14.8333,
+   "start": 14.8333,
+   "dur": 5.7667,
+   "vo_at": 15.1133,
+   "vo_at_in_act": 15.1133,
+   "vo_dur": 3.724,
+   "text": "Phalanx Twin brings it together \u2014 and turns it into decisions."
+  },
+  "S05": {
+   "src": "act01_v2",
+   "src_start": 20.6,
+   "start": 20.6,
+   "dur": 9.2667,
+   "vo_at": 20.88,
+   "vo_at_in_act": 20.88,
+   "vo_dur": 8.61,
+   "text": "The problem statement is blunt. Availability is low because maintenance is reactive \u2014 and the data that could prevent it isn't integrated."
+  },
+  "S06": {
+   "src": "act01_v2",
+   "src_start": 29.8667,
+   "start": 29.8667,
+   "dur": 6.8333,
+   "vo_at": 30.1467,
+   "vo_at_in_act": 30.1467,
+   "vo_dur": 6.197,
+   "text": "Audits keep finding the same thing: aircraft are lost to waiting \u2014 for parts, for repair, for a decision."
+  },
+  "S07": {
+   "src": "act01_v2",
+   "src_start": 36.7,
+   "start": 36.7,
+   "dur": 9.4333,
+   "vo_at": 36.98,
+   "vo_at_in_act": 36.98,
+   "vo_dur": 8.79,
+   "text": "In our fleet, one aircraft has been on the ground for eighty days, waiting for a brake chute \u2014 a consumable whose demand simply follows landings."
+  },
+  "S08": {
+   "src": "act01_v2",
+   "src_start": 46.1333,
+   "start": 46.1333,
+   "dur": 8.8,
+   "vo_at": 46.4133,
+   "vo_at_in_act": 46.4133,
+   "vo_dur": 8.169,
+   "text": "Another has had its hydraulic pump removed twenty-eight times for one alarm. Every pump the shop tested came back: no fault found."
+  },
+  "S09": {
+   "src": "act01_v2",
+   "src_start": 54.9333,
+   "start": 54.9333,
+   "dur": 5.5333,
+   "vo_at": 55.2133,
+   "vo_at_in_act": 55.2133,
+   "vo_dur": 4.9,
+   "text": "Nearly twelve hundred alerts this season. More prediction alone would only add more."
+  },
+  "S10": {
+   "src": "act01_v2",
+   "src_start": 60.4666,
+   "start": 60.4666,
+   "dur": 6.1333,
+   "vo_at": 60.7466,
+   "vo_at_in_act": 60.7466,
+   "vo_dur": 5.093,
+   "text": "And any answer must be explainable, honest about time \u2014 and run fully offline."
+  },
+  "S11": {
+   "src": "act2_v2",
+   "src_start": 0.0,
+   "start": 66.5999,
+   "dur": 4.8333,
+   "vo_at": 66.8799,
+   "vo_at_in_act": 0.28,
+   "vo_dur": 4.199,
+   "text": "Phalanx Twin is a decision-support digital twin for the flight line."
+  },
+  "S12": {
+   "src": "act2_v2",
+   "src_start": 4.8333,
+   "start": 71.4332,
+   "dur": 5.8667,
+   "vo_at": 71.7132,
+   "vo_at_in_act": 5.1133,
+   "vo_dur": 5.24,
+   "text": "It answers four questions: what's happening, why, what happens next \u2014 and what we should do."
+  },
+  "S17": {
+   "src": "act2_v2",
+   "src_start": 50.2667,
+   "start": 77.2966,
+   "dur": 3.9667,
+   "vo_at": 77.5766,
+   "vo_at_in_act": 50.5467,
+   "vo_dur": 3.319,
+   "text": "Triage turns twelve hundred alerts into seven decisions."
+  },
+  "S18": {
+   "src": "act2_v2",
+   "src_start": 54.2334,
+   "start": 81.2633,
+   "dur": 12.9667,
+   "vo_at": 81.5433,
+   "vo_at_in_act": 54.5134,
+   "vo_dur": 11.132,
+   "text": "Versioned policies and optimisers propose orders, simulation tests them against the status quo, a person approves \u2014 and every step lands on one tamper-evident log."
+  },
+  "S19": {
+   "src": "act3a",
+   "src_start": 0.0,
+   "start": 94.2299,
+   "dur": 5.3667,
+   "vo_at": 94.5099,
+   "vo_at_in_act": 0.28,
+   "vo_dur": 4.72,
+   "text": "Monday, 06:00. Six of eight aircraft are mission capable."
+  },
+  "S20": {
+   "src": "act3a",
+   "src_start": 5.3667,
+   "start": 99.5966,
+   "dur": 7.1333,
+   "vo_at": 99.8766,
+   "vo_at_in_act": 5.6467,
+   "vo_dur": 6.491,
+   "text": "This season, most of the waiting came from tyres and brake chutes \u2014 demand you can predict from the flying plan."
+  },
+  "S21": {
+   "src": "act3a",
+   "src_start": 12.5,
+   "start": 106.7299,
+   "dur": 5.1667,
+   "vo_at": 107.0099,
+   "vo_at_in_act": 12.78,
+   "vo_dur": 4.519,
+   "text": "Today's board has seven issues \u2014 each with the evidence and the score behind it."
+  },
+  "S22": {
+   "src": "act3a",
+   "src_start": 17.6667,
+   "start": 111.8966,
+   "dur": 6.6667,
+   "vo_at": 112.1766,
+   "vo_at_in_act": 17.9467,
+   "vo_dur": 6.023,
+   "text": "TJ107. The system doesn't say replace the pump. It says stop \u2014 and shows why."
+  },
+  "S23": {
+   "src": "act3a",
+   "src_start": 24.3334,
+   "start": 118.5633,
+   "dur": 5.9,
+   "vo_at": 118.8433,
+   "vo_at_in_act": 24.6134,
+   "vo_dur": 5.262,
+   "text": "In the twin, the alarm's reporter and its suspects light up where they sit in the aircraft."
+  },
+  "S24": {
+   "src": "act3a",
+   "src_start": 30.2334,
+   "start": 124.4633,
+   "dur": 6.9667,
+   "vo_at": 124.7433,
+   "vo_at_in_act": 30.5134,
+   "vo_dur": 5.833,
+   "text": "It stayed with this aircraft through ten different pumps. The evidence follows the tail \u2014 not the part."
+  },
+  "S26": {
+   "src": "act3a",
+   "src_start": 48.7001,
+   "start": 131.43,
+   "dur": 5.0333,
+   "vo_at": 131.71,
+   "vo_at_in_act": 48.9801,
+   "vo_dur": 4.376,
+   "text": "So it recommends the test that resolves the most uncertainty per man-hour."
+  },
+  "S27": {
+   "src": "act3a",
+   "src_start": 53.7334,
+   "start": 136.4633,
+   "dur": 9.3333,
+   "vo_at": 136.7433,
+   "vo_at_in_act": 54.0134,
+   "vo_dur": 8.713,
+   "text": "Every recommendation comes from a rule you can read. Hard limits live in code; anything airworthiness-sensitive waits for a human signature."
+  },
+  "S28": {
+   "src": "act3b",
+   "src_start": 0.0,
+   "start": 145.7966,
+   "dur": 9.2,
+   "vo_at": 146.0766,
+   "vo_at_in_act": 0.28,
+   "vo_dur": 7.759,
+   "text": "Before it reaches the board, each order is tested on paired simulations of the same futures \u2014 our plan against the status quo."
+  },
+  "S30": {
+   "src": "act3b",
+   "src_start": 18.3333,
+   "start": 154.6966,
+   "dur": 8.5333,
+   "vo_at": 154.9766,
+   "vo_at_in_act": 18.6133,
+   "vo_dur": 7.913,
+   "text": "At 07:45 the board freezes. At 08:00, orders go out \u2014 each one cited, signed where it must be, and safe to retry."
+  },
+  "S31": {
+   "src": "act3b",
+   "src_start": 26.8666,
+   "start": 163.2299,
+   "dur": 6.0,
+   "vo_at": 163.5099,
+   "vo_at_in_act": 27.1466,
+   "vo_dur": 5.352,
+   "text": "Ask why any order was issued, and the chain answers \u2014 from data release to signature."
+  },
+  "L1": {
+   "src": "linuxone",
+   "src_start": 0.0,
+   "start": 169.23,
+   "dur": 9.5,
+   "vo_at": 169.51,
+   "vo_at_in_act": 0.28,
+   "vo_dur": 8.874,
+   "text": "All of this runs live on IBM LinuxONE: the simulator, models, rules, daily loop and audit log \u2014 on one mainframe-class server."
+  },
+  "L2": {
+   "src": "linuxone",
+   "src_start": 9.5,
+   "start": 178.73,
+   "dur": 8.7,
+   "vo_at": 179.01,
+   "vo_at_in_act": 9.78,
+   "vo_dur": 7.918,
+   "text": "Rebuilt there, it reproduces every record, row for row \u2014 and simulates a day for all eight aircraft in three and a half seconds."
+  },
+  "L3": {
+   "src": "linuxone",
+   "src_start": 18.2,
+   "start": 187.43,
+   "dur": 12.7,
+   "vo_at": 187.71,
+   "vo_at_in_act": 18.48,
+   "vo_dur": 11.452,
+   "text": "IBM Z is built for exactly this: availability, hardware-protected keys, confidential computing and AI on the chip \u2014 real-time AI for critical decisions."
+  },
+  "S34": {
+   "src": "act4_v2",
+   "src_start": 37.6334,
+   "start": 200.13,
+   "dur": 11.8333,
+   "vo_at": 200.41,
+   "vo_at_in_act": 37.9134,
+   "vo_dur": 10.576,
+   "text": "On thirty paired simulations, the TJ107 decision adds twenty-two points of mission-capable time next month \u2014 and saves a hundred and sixteen man-hours."
+  },
+  "S35": {
+   "src": "act4_v2",
+   "src_start": 49.4667,
+   "start": 211.9633,
+   "dur": 7.8333,
+   "vo_at": 212.2433,
+   "vo_at_in_act": 49.7467,
+   "vo_dur": 3.39,
+   "text": "Phalanx Twin. One state. One loop. One log."
+  }
+ },
+ "linuxone": {
+  "dur": 30.9,
+  "shots": {
+   "L1": {
+    "act_start": 0.0,
+    "dur": 9.5
+   },
+   "L2": {
+    "act_start": 9.5,
+    "dur": 8.7
+   },
+   "L3": {
+    "act_start": 18.2,
+    "dur": 12.7
+   }
+  }
+ },
+ "total": 219.797,
+ "sections": {
+  "promise": 0.0,
+  "pain": 20.6,
+  "solution": 66.5999,
+  "demo": 94.2299,
+  "proof": 145.7966,
+  "platform": 169.23,
+  "result": 200.13,
+  "close": 211.9633
+ }
+}

@@ -1,0 +1,326 @@
+{
+ "raw": [
+  {
+   "text": "Every",
+   "start": 0.275,
+   "end": 0.55
+  },
+  {
+   "text": "morning",
+   "start": 0.55,
+   "end": 1.025
+  },
+  {
+   "text": "before",
+   "start": 1.1,
+   "end": 1.475
+  },
+  {
+   "text": "eight",
+   "start": 1.475,
+   "end": 1.975
+  },
+  {
+   "text": "a",
+   "start": 2.075,
+   "end": 2.188
+  },
+  {
+   "text": "squadron",
+   "start": 2.188,
+   "end": 2.75
+  },
+  {
+   "text": "engineering",
+   "start": 2.75,
+   "end": 3.362
+  },
+  {
+   "text": "officer",
+   "start": 3.362,
+   "end": 4.0
+  },
+  {
+   "text": "decides",
+   "start": 4.0,
+   "end": 4.487
+  },
+  {
+   "text": "which",
+   "start": 4.487,
+   "end": 4.675
+  },
+  {
+   "text": "aircraft",
+   "start": 4.675,
+   "end": 5.237
+  },
+  {
+   "text": "will",
+   "start": 5.237,
+   "end": 5.412
+  },
+  {
+   "text": "fly",
+   "start": 5.412,
+   "end": 6.25
+  },
+  {
+   "text": "Phalanx",
+   "start": 6.475,
+   "end": 7.037
+  },
+  {
+   "text": "Twin",
+   "start": 7.037,
+   "end": 7.537
+  },
+  {
+   "text": "turns",
+   "start": 7.537,
+   "end": 7.862
+  },
+  {
+   "text": "the",
+   "start": 7.862,
+   "end": 7.963
+  },
+  {
+   "text": "fleet's",
+   "start": 7.963,
+   "end": 8.312
+  },
+  {
+   "text": "evidence",
+   "start": 8.312,
+   "end": 8.787
+  },
+  {
+   "text": "into",
+   "start": 8.787,
+   "end": 9.025
+  },
+  {
+   "text": "a",
+   "start": 9.025,
+   "end": 9.137
+  },
+  {
+   "text": "handful",
+   "start": 9.137,
+   "end": 9.675
+  },
+  {
+   "text": "of",
+   "start": 9.675,
+   "end": 9.812
+  },
+  {
+   "text": "signed",
+   "start": 9.812,
+   "end": 10.113
+  },
+  {
+   "text": "decisions",
+   "start": 10.113,
+   "end": 11.062
+  },
+  {
+   "text": "and",
+   "start": 11.162,
+   "end": 11.35
+  },
+  {
+   "text": "shows",
+   "start": 11.35,
+   "end": 11.75
+  },
+  {
+   "text": "exactly",
+   "start": 11.75,
+   "end": 12.325
+  },
+  {
+   "text": "why",
+   "start": 12.325,
+   "end": 12.925
+  }
+ ],
+ "words": [
+  {
+   "text": "Every",
+   "start": 0.275,
+   "end": 0.55,
+   "how": "equal"
+  },
+  {
+   "text": "morning,",
+   "start": 0.55,
+   "end": 1.025,
+   "how": "equal"
+  },
+  {
+   "text": "before",
+   "start": 1.1,
+   "end": 1.475,
+   "how": "equal"
+  },
+  {
+   "text": "eight,",
+   "start": 1.475,
+   "end": 1.975,
+   "how": "equal"
+  },
+  {
+   "text": "a",
+   "start": 2.075,
+   "end": 2.188,
+   "how": "equal"
+  },
+  {
+   "text": "squadron",
+   "start": 2.188,
+   "end": 2.75,
+   "how": "equal"
+  },
+  {
+   "text": "engineering",
+   "start": 2.75,
+   "end": 3.362,
+   "how": "equal"
+  },
+  {
+   "text": "officer",
+   "start": 3.362,
+   "end": 4.0,
+   "how": "equal"
+  },
+  {
+   "text": "decides",
+   "start": 4.0,
+   "end": 4.487,
+   "how": "equal"
+  },
+  {
+   "text": "which",
+   "start": 4.487,
+   "end": 4.675,
+   "how": "equal"
+  },
+  {
+   "text": "aircraft",
+   "start": 4.675,
+   "end": 5.237,
+   "how": "equal"
+  },
+  {
+   "text": "will",
+   "start": 5.237,
+   "end": 5.412,
+   "how": "equal"
+  },
+  {
+   "text": "fly.",
+   "start": 5.412,
+   "end": 6.25,
+   "how": "equal"
+  },
+  {
+   "text": "Phalanx",
+   "start": 6.475,
+   "end": 7.037,
+   "how": "equal"
+  },
+  {
+   "text": "Twin",
+   "start": 7.037,
+   "end": 7.537,
+   "how": "equal"
+  },
+  {
+   "text": "turns",
+   "start": 7.537,
+   "end": 7.862,
+   "how": "equal"
+  },
+  {
+   "text": "the",
+   "start": 7.862,
+   "end": 7.963,
+   "how": "equal"
+  },
+  {
+   "text": "fleet's",
+   "start": 7.963,
+   "end": 8.312,
+   "how": "equal"
+  },
+  {
+   "text": "evidence",
+   "start": 8.312,
+   "end": 8.787,
+   "how": "equal"
+  },
+  {
+   "text": "into",
+   "start": 8.787,
+   "end": 9.025,
+   "how": "equal"
+  },
+  {
+   "text": "a",
+   "start": 9.025,
+   "end": 9.137,
+   "how": "equal"
+  },
+  {
+   "text": "handful",
+   "start": 9.137,
+   "end": 9.675,
+   "how": "equal"
+  },
+  {
+   "text": "of",
+   "start": 9.675,
+   "end": 9.812,
+   "how": "equal"
+  },
+  {
+   "text": "signed",
+   "start": 9.812,
+   "end": 10.113,
+   "how": "equal"
+  },
+  {
+   "text": "decisions \u2014",
+   "start": 10.113,
+   "end": 11.062,
+   "how": "equal"
+  },
+  {
+   "text": "and",
+   "start": 11.162,
+   "end": 11.35,
+   "how": "equal"
+  },
+  {
+   "text": "shows",
+   "start": 11.35,
+   "end": 11.75,
+   "how": "equal"
+  },
+  {
+   "text": "exactly",
+   "start": 11.75,
+   "end": 12.325,
+   "how": "equal"
+  },
+  {
+   "text": "why.",
+   "start": 12.325,
+   "end": 12.925,
+   "how": "equal"
+  }
+ ],
+ "stats": {}
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Policy lifecycle — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 750px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+  .lc .steps { margin-top: 30px; }
+  .steps .st { flex-direction: column; align-items: center; gap: 8px; }
+  .steps .st .c { font: 600 13px var(--mono); color: var(--ink-4); }
+  .steps .st.has .c { color: var(--ink); }
+  .steps .st.has i { background: var(--ink); border-color: var(--ink); }
+  .steps .st.acc i { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-wash); }
+  .steps .bar { margin: 0 10px 52px; }
+  .lc .r2 { grid-template-columns: minmax(0,1fr) 128px 310px; min-height: 80px; }
+  .stp { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 8px; font: 700 11.5px var(--mono); letter-spacing: .04em; white-space: nowrap; }
+  .stp.ink { background: var(--ink); color: #fff; } .stp.plain { background: var(--bg-3); color: var(--ink-2); } .stp.acc { background: var(--accent-wash); color: var(--accent-ink); }
+  .ver { font: 500 13px var(--mono); color: var(--ink-2); }
+  .ver b { color: var(--ink); font-weight: 650; }
+  .ev { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+  .chk .r2 { grid-template-columns: minmax(0,1fr) auto; min-height: 76px; }
+  .res { font: 700 12px var(--mono); letter-spacing: .04em; color: var(--ink); background: var(--bg-2); padding: 5px 10px; border-radius: 8px; white-space: nowrap; }
+
+  /* compact: tablet + phone */
+  @media (max-width: 1199px) {
+    .lc .steps { margin-top: 24px; display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); row-gap: 18px; column-gap: 4px; }
+    .lc .steps .bar { display: none; }
+    .steps .st { text-align: center; }
+    .lc .r2 { grid-template-columns: minmax(0,1fr) 112px 260px; min-height: 72px; }
+    .ver { overflow-wrap: anywhere; }
+    .lc #pol { margin-top: 18px !important; }
+  }
+  /* phone */
+  @media (max-width: 699px) {
+    .lc .steps { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .steps .st { font-size: 12.5px; }
+    .lc .r2 { grid-template-columns: minmax(0,1fr) auto; row-gap: 8px; padding-top: 14px; padding-bottom: 14px; }
+    .lc .r2 > div:first-child { grid-column: 1 / -1; }
+    .lc .r2 .ver { font-size: 12px; text-align: right; }
+    .chk .r2 { column-gap: 12px; }
+    .chk .r2 .why { overflow-wrap: anywhere; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c8 lc" data-shot="policy-lifecycle">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Policy lifecycle · same gates as models</div>
+        <div class="t2">A rule acts only after it is tested, shadowed and fork-evaluated</div>
+        <div class="sub2">Every stage change is an event signed by a person. A version is named by the hash of its table.</div>
+      </div>
+    </div>
+    <div class="steps" id="steps"></div>
+    <div class="rows2" id="pol" style="margin-top:8px"></div>
+  </section>
+
+  <section class="panel2 c4 chk" data-shot="static-checks">
+    <div class="kick">Static checks · run on every change</div>
+    <div class="t2">No gaps, no dead rows, no clock reads</div>
+    <div style="margin-top:24px;display:flex;align-items:flex-end;gap:12px"><div class="big" id="gaps"></div></div>
+    <div class="ci" style="margin-top:8px" id="gaps-ci"></div>
+    <div class="rows2" style="margin-top:18px" id="checks"></div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-policies.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const P = window.PHX_POLICIES;
+const TABS = [['Models','assurance.html'],['Backtests','assurance-backtest.html'],['Drift','assurance-drift.html'],null,['Decision table','policies.html'],['Policy lifecycle','policies-lifecycle.html'],['Authority','policies-authority.html'],null,['Why this order','provenance.html']];
+const here = location.pathname.split('/').pop();
+document.getElementById('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1]===here?'on':''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+const fk = P.forks, mc = fk.map(f => '+' + f.d_mc[0].toFixed(2)).join(' / ');
+const POL = [
+  ['P-DEC-01', 'Recurring deferred BIT code', 'ACTIVE', 'ink', `Forks: ${fk.length} epochs × ${fk[0].pairs} CRN pairs, mission capable ${mc}`],
+  ['P-ORG-01', 'Deferral limits by severity', 'ACTIVE', 'ink', 'Grounding and WARNING defects are never deferrable'],
+  ['P-ORG-02', 'Cannibalise only from an NMC donor', 'ACTIVE', 'ink', 'Otherwise expedite · one-tail worlds have no donor'],
+  ['P-ORG-03', 'Servicing deferral is a signed draft', 'CANARY', 'acc', 'Shown on the board, never issued without a signature'],
+  ['P-DEC-02', 'Repeat engine exceedances → borescope', 'SHADOW', 'plain', '0 matches: no exceedance records in fleet data yet'],
+];
+const STAGES = ['DRAFT', 'TESTED', 'SHADOW', 'FORK-EVALUATED', 'CANARY', 'ACTIVE', 'RETIRED'];
+const cnt = s => POL.filter(p => p[2] === s).length;
+document.getElementById('steps').innerHTML = STAGES.map((s, i) => `${i ? '<span class="bar"></span>' : ''}<span class="st ${cnt(s) ? 'has' : ''} ${s === 'CANARY' && cnt(s) ? 'acc' : ''}"><i></i><span>${s.charAt(0) + s.slice(1).toLowerCase()}</span><span class="c">${cnt(s)}</span></span>`).join('');
+document.getElementById('pol').innerHTML = POL.map(p => {
+  const v = P.policies[p[0]].policy_version, [nm, rest] = v.split('/');
+  return `<div class="r2"><div><div class="ttl">${p[1]}</div><div class="ev">${p[4]}</div></div><div><span class="stp ${p[3]}">${p[2]}</span></div>
+    <div class="ver">${nm}/<b>${rest.split('+')[0]}</b>+jdm.${rest.split('jdm.')[1]}</div></div>`;
+}).join('');
+
+const S = P.static, L = P.lint;
+document.getElementById('gaps').innerHTML = `${S.gaps}<small>gaps</small>`;
+document.getElementById('gaps-ci').textContent = `${S.combinations.toLocaleString('en-GB')} input combinations of P-DEC-01 checked in ${S.seconds} s`;
+const w = S.winners;
+const CH = [
+  ['Overlaps resolved by row order', `${S.overlaps} combinations match more than one row; first match wins`, 'BY DESIGN'],
+  ['Every row reachable', `r1 ${w.r1.toLocaleString('en-GB')} · r2 ${w.r2} · r3 ${w.r3} · r4 ${w.r4} · r5 ${w.r5} wins`, `${S.unreachable.length} DEAD`],
+  ['Determinism lint', `${L.files} tables · ${L.expressions} expressions · no clock reads, no function nodes`, `${L.violations.length} FINDINGS`],
+  ['Golden cases', `One expected case per row of P-DEC-01`, `${P.golden.passed} / ${P.golden.cases}`],
+];
+document.getElementById('checks').innerHTML = CH.map(c => `<div class="r2"><div><div class="ttl">${c[0]}</div><div class="why">${c[1]}</div></div><span class="res">${c[2]}</span></div>`).join('');
+
+PHX.mount({ page: 'assurance', title: 'Policies', sub: 'Rules are promoted exactly like models — on the same event log',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'ok', i: 'check', t: '0 gaps · 0 lint findings' }] });
+</script>
+</body></html>

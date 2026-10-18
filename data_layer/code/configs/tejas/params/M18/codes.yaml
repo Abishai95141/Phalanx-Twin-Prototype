@@ -1,0 +1,116 @@
+# M18 synthetic maintenance code tables (AD-19: NAMP / TO 00-20 / F700 / S5000F structure with IAF-relabelled
+# SYNTHETIC codes). IAF form layouts and code tables are not public (report §12; maintenance_records_and_events.md
+# Q1 gaps), so every code here is a Phalanx construct. Each code names the public code it is modelled on
+# (`transfer`), so downstream users can map them; nothing here is claimed to be a real IAF code.
+format: phalanx.m18.codes/1
+synthetic_label: >-
+  SYNTHETIC Phalanx maintenance code tables (AD-19), structurally modelled on USN NAMP 4790.2E App E and USAF
+  TO 00-20-2 Apps E-H; not IAF codes.
+evidence: {tag: "TRANSFER: USN NAMP 4790.2E App E; USAF TO 00-20-2 Apps E-H", source: "report §12; research_notes maintenance_records_and_events.md Q1, Q3, closing (b)"}
+tables:
+  when_discovered:
+    WD-PRE: {meaning: "Before flight, ground crew (pre-flight / start)", transfer: "TO 00-20-2 WDC A/B; NAMP WD A/B"}
+    WD-AIR: {meaning: "In flight, no abort (pilot write-up)", transfer: "TO 00-20-2 WDC D; NAMP WD D"}
+    WD-ABT: {meaning: "In flight, abort", transfer: "TO 00-20-2 WDC C; NAMP WD C"}
+    WD-DBF: {meaning: "After flight, pilot debrief", transfer: "TO 00-20-2 WDC E"}
+    WD-HMS: {meaning: "Between flights, health-monitoring (BIT/HMS) download review", transfer: "NAMP WD I (HMS identified fault)"}
+    WD-SCH: {meaning: "Scheduled servicing / periodic inspection", transfer: "TO 00-20-2 WDC M; NAMP WD M"}
+    WD-CND: {meaning: "Conditional / special inspection (exceedance, order)", transfer: "TO 00-20-2 WDC Q"}
+    WD-ANL: {meaning: "Data analytics / decision order", transfer: "NAMP WD N (NAE data analytics)"}
+    WD-SUP: {meaning: "Upon receipt from supply", transfer: "TO 00-20-2 WDC Y"}
+    WD-SHP: {meaning: "In shop (bench)", transfer: "TO 00-20-2 WDC W"}
+  type_maint:
+    TM-SVC: {meaning: "Servicing", transfer: "TO 00-20-2 TMC A"}
+    TM-UNS: {meaning: "Unscheduled maintenance", transfer: "TO 00-20-2 TMC B"}
+    TM-SCH: {meaning: "Scheduled inspection / periodic servicing", transfer: "TO 00-20-2 TMC D/P"}
+    TM-SPI: {meaning: "Special / conditional inspection", transfer: "TO 00-20-2 TMC S"}
+    TM-MOD: {meaning: "Modification / software load (TCTO-like)", transfer: "TO 00-20-2 TMC T"}
+    TM-PRD: {meaning: "Predictive / condition-based (order-driven)", transfer: "NAMP TM C (predictive maintenance)"}
+    TM-DEP: {meaning: "Depot maintenance", transfer: "TO 00-20-2 TMC R"}
+  action_taken:
+    AT-TS: {meaning: "Troubleshot", transfer: "TO 00-20-2 ATC Y"}
+    AT-RR: {meaning: "Removed and replaced", transfer: "TO 00-20-2 ATC R"}
+    AT-RMV: {meaning: "Removed", transfer: "TO 00-20-2 ATC P"}
+    AT-INS: {meaning: "Installed", transfer: "TO 00-20-2 ATC Q"}
+    AT-CND: {meaning: "Checked, could not duplicate / no repair required", transfer: "TO 00-20-2 ATC H; NAMP AT A"}
+    AT-ADM: {meaning: "Administrative close after monitoring", transfer: "F-35 4790.35D (AT O, admin close after 3 flights)"}
+    AT-INSP: {meaning: "Inspected", transfer: "TO 00-20-2 ATC X"}
+    AT-SVC: {meaning: "Serviced", transfer: "TO 00-20-2 ATC X"}
+    AT-DEF: {meaning: "Deferred with limits", transfer: "UK MAM-D F704 acceptable deferred fault"}
+    AT-CNR: {meaning: "Cannibalisation removal", transfer: "TO 00-20-2 ATC T"}
+    AT-CNI: {meaning: "Cannibalisation installation", transfer: "TO 00-20-2 ATC U"}
+    AT-MOD: {meaning: "Modification embodied", transfer: "NAMP TD compliance"}
+    AT-SW: {meaning: "Software loaded", transfer: "NAMP TD compliance"}
+    AT-BCS: {meaning: "Bench checked serviceable", transfer: "TO 00-20-2 ATC B (BCS/RTOK)"}
+    AT-REP: {meaning: "Repaired", transfer: "TO 00-20-2 ATC F"}
+    AT-BCM: {meaning: "Beyond capability of maintenance (to depot)", transfer: "NAMP BCM 1-9; USAF NRTS"}
+    AT-HLD: {meaning: "Aircraft grounded / released by order", transfer: "TO 00-20-1 Red X / exceptional release"}
+  malfunction:
+    MAL-BIT: {meaning: "BIT-indicated fault", transfer: "TO 00-20-2 HMC 644"}
+    MAL-FAL: {meaning: "BIT false alarm", transfer: "TO 00-20-2 HMC 672"}
+    MAL-NDF: {meaning: "No defect / could not duplicate", transfer: "TO 00-20-2 HMC 799; NAMP MAL 799"}
+    MAL-INT: {meaning: "Intermittent", transfer: "TO 00-20-2 HMC 901"}
+    MAL-FAIL: {meaning: "Failed / inoperative", transfer: "NAMP MAL 'Reasons for Failure' group"}
+    MAL-OT: {meaning: "Engine monitoring indicates over-limit", transfer: "NAMP MAL 922; TO 00-20-2 HMC 192"}
+    MAL-OG: {meaning: "Over-g / hard landing conditional", transfer: "NAMP §9.2.3.3(b)"}
+    MAL-HT: {meaning: "Removed at hard-time / life expiry", transfer: "NAMP MAL 804/866/879"}
+    MAL-WR: {meaning: "Worn beyond limits", transfer: "NAMP MAL 'Reasons for Removal'"}
+    MAL-CN: {meaning: "Removed for cannibalisation", transfer: "TO 00-20-2 HMC 875; NAMP MAL 812-818"}
+    MAL-STR: {meaning: "Start failure", transfer: "CAG 17/2015 (JFS three-consecutive-start failures)"}
+    MAL-SW: {meaning: "Software configuration defect", transfer: "Tejas 2026 brake-software event (report §12 chain 7)"}
+    MAL-IND: {meaning: "False indication", transfer: "ADA AR 2018-19 (zoom-climb false low-fuel)"}
+    MAL-INS: {meaning: "Found on inspection", transfer: "NAMP fix-phase (WD M, TM G)"}
+    MAL-DMG: {meaning: "Damaged (incident)", transfer: "NAMP MAL damage group"}
+    MAL-NONE: {meaning: "Not applicable (servicing, modification, order)", transfer: "NAMP MAL 000"}
+  inspection_type:
+    SRV-L1: {meaning: "First-line periodic servicing", transfer: "IAF 1st-line servicing (CAG 38/2015 para 2.1.3)"}
+    SRV-L2-MINOR: {meaning: "Second-line minor periodic servicing", transfer: "IAF 2nd-line servicing (CAG 24/2017 para 2.7.4: IL-76 at 300/900/1800 FH)"}
+    SRV-L2-MAJOR: {meaning: "Second-line major periodic servicing", transfer: "IAF 2nd-line servicing (CAG 24/2017)"}
+    ROH: {meaning: "Depot repair and overhaul (HAL)", transfer: "Su-30MKI HAL R&O (Business Standard 2014: 11-12 % of fleet)"}
+    BORESCOPE: {meaning: "Engine borescope inspection", transfer: "NAMP conditional inspection; faults_and_degradation.md (borescope, 800-EFH nozzle checks)"}
+    COND-ENGINE: {meaning: "Conditional inspection after an engine exceedance", transfer: "NAMP §9.2.3.3(b) (overtemp/overspeed)"}
+    COND-STRUCT: {meaning: "Conditional inspection after over-g / hard landing", transfer: "NAMP §9.2.3.3(b)"}
+    NDT: {meaning: "Non-destructive test", transfer: "report §14 order vocabulary (inspect: borescope, conditional, NDT)"}
+    WASH: {meaning: "Engine compressor wash", transfer: "JOAST 66(1)/68(4) RCMA(Engines)/HAL (compressor wash at regular intervals)"}
+    SERVICING: {meaning: "Fluid/tyre servicing", transfer: "report §14 (engine wash and servicing: oil, hydraulic, tyres)"}
+  servicing_schedule:
+    # periodic servicing types in forecast order (index k in M18 state). Intervals and durations are M18.yaml params.
+    order: [SRV-L1, SRV-L2-MINOR, SRV-L2-MAJOR, ROH]
+texts:
+  # Uppercase, terse templates in the documented style (NAMP §15.3.6 examples; TO 00-20-2 §4.14 phrasing).
+  # Placeholders: {item} {pos} {sn} {code} {tail} {task}. Synthetic wording [ASSUMPTION A-W1.8-12].
+  discrepancy:
+    pilot: "{item} {symptom} IN FLT. CAUTION ON. PLS CHK."
+    bit: "HMS/BIT CODE {code} SET ON DOWNLOAD. {item} SUSPECT."
+    bit_repeat: "REPEAT/RECURRING. HMS/BIT CODE {code} SET AGAIN. {item} SUSPECT."
+    exceedance: "{code} EXCEEDANCE RECORDED. CONDITIONAL INSP REQD. ACFT DOWN UNTIL INSPECTED."
+    inspection: "{item} {symptom} FOUND DURING {task}."
+    hard_time: "REPLACE {item} DUE TO HI-TIME ({limit})."
+    start_failure: "ENG START FAILED. JFS DID NOT ACHIEVE CUT-OUT. {item} SUSPECT."
+    incident: "{item} DAMAGED ON LANDING ROLL. ACFT DOWN."
+    order: "{action} ORDERED ({order})."
+  symptoms:
+    ENGINE: "OIL PRESS FLUCTUATES / EGT HIGH"
+    START: "START ABNORMAL / GEARBOX NOISY"
+    HYDRAULIC: "HYD PRESS LOW"
+    ELECTRICAL: "GEN FAIL CAUTION"
+    FLIGHT_CONTROL: "FCS CHANNEL FAIL"
+    AVIONICS: "DEGRADED"
+    FUEL: "LOW FUEL CAUTION SPURIOUS"
+    LIFE_SUPPORT: "OXY CAUTION"
+    BRAKING: "BRAKE PULLING / ANTISKID FAIL"
+    WHEELS: "WORN / CUT"
+  corrective:
+    rr: "R/R {item} IAW {task}. REMOVED S/N {sn_off}, INSTALLED S/N {sn_on}. OPS CHK GOOD. AREA FOD FREE."
+    rr_wrong: "R/R {item} IAW {task}. REMOVED S/N {sn_off}, INSTALLED S/N {sn_on}. OPS CHK GOOD."
+    cnd: "TROUBLESHOT {item} IAW {task}. COULD NOT DUPLICATE. NO DEFECT FOUND. OPS CHK GOOD."
+    admin: "DEFERRED AND MONITORED {n} FLTS. NO RECURRENCE. ADMIN CLOSE."
+    inspect_ok: "{task} CARRIED OUT. WITHIN LIMITS. NO FURTHER ACTION."
+    inspect_found: "{task} CARRIED OUT. {item} OUT OF LIMITS. RAISED SNAG {linked}."
+    service: "{task} CARRIED OUT. SERVICING COMPLETE."
+    cann_out: "CANNIBALIZED {item} S/N {sn_off} FOR {recipient}."
+    cann_in: "INSTALLED CANNIBALIZED {item} S/N {sn_on} FROM {donor}. OPS CHK GOOD."
+    mod: "COMPLIED WITH {task}. CHECKS GOOD. AREA FOD FREE AND SECURED."
+    sw: "LOADED S/W CONFIG {sw}. BIT GO. OPS CHK GOOD."
+    hold: "{action} BY ORDER {order}."
+    deferred: "DEFERRED IAW ORDER {order}. LIMITS: {limits}."

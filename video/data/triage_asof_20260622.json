@@ -1,0 +1,178 @@
+{
+ "issues_total": 326,
+ "events_total": 921,
+ "cautions_total": 271,
+ "issues_open": 33,
+ "new_issues_per_day": {
+  "mean": 1.98
+ },
+ "code_desc": {
+  "HYD-101": {
+   "severity": "CAUTION",
+   "source_lru": "BHEEM_EU",
+   "description": "Hydraulic pump fault"
+  },
+  "ENG-201": {
+   "severity": "ADVISORY",
+   "source_lru": "FADEC",
+   "description": "FADEC lane A processor fault"
+  },
+  "AVI-203": {
+   "severity": "ADVISORY",
+   "source_lru": "INGPS",
+   "description": "INGPS LRU BIT fail"
+  },
+  "ENG-401": {
+   "severity": "CAUTION",
+   "source_lru": "FADEC",
+   "description": "FADEC power supply fault"
+  },
+  "AVI-204": {
+   "severity": "ADVISORY",
+   "source_lru": "AHRS",
+   "description": "AHRS LRU BIT fail"
+  },
+  "AVI-201": {
+   "severity": "ADVISORY",
+   "source_lru": "RADAR",
+   "description": "Radar LRU BIT fail"
+  },
+  "LGB-501": {
+   "severity": "WARNING",
+   "source_lru": "BHEEM_EU",
+   "description": "Gear unsafe"
+  },
+  "ELE-405": {
+   "severity": "ADVISORY",
+   "source_lru": "BHEEM_EU",
+   "description": "TRU fault"
+  },
+  "ADC-501": {
+   "severity": "CAUTION",
+   "source_lru": "ADC",
+   "description": "Air data degraded"
+  },
+  "AVI-301": {
+   "severity": "ADVISORY",
+   "source_lru": "MC",
+   "description": "1553 bus fault"
+  },
+  "SPS-501": {
+   "severity": "CAUTION",
+   "source_lru": "BHEEM_EU",
+   "description": "JFS start fail"
+  },
+  "ENG-101": {
+   "severity": "CAUTION",
+   "source_lru": "FADEC",
+   "description": "Nozzle actuator / torque motor fault"
+  },
+  "ENG-202": {
+   "severity": "ADVISORY",
+   "source_lru": "FADEC",
+   "description": "FADEC lane B processor fault"
+  },
+  "HYD-001": {
+   "severity": "ADVISORY",
+   "source_lru": "BHEEM_EU",
+   "description": "Hydraulic filter \u0394P indicator"
+  },
+  "LGB-503": {
+   "severity": "CAUTION",
+   "source_lru": "BHEEM_EU",
+   "description": "Wheel brake fail"
+  },
+  "AVI-202": {
+   "severity": "ADVISORY",
+   "source_lru": "SMS",
+   "description": "SMS LRU BIT fail"
+  },
+  "SPS-001": {
+   "severity": "CAUTION",
+   "source_lru": "BHEEM_EU",
+   "description": "AMAGB oil low"
+  },
+  "FCS-101": {
+   "severity": "CAUTION",
+   "source_lru": "DFCC",
+   "description": "Elevon/rudder actuator BIT fault"
+  },
+  "FCS-201": {
+   "severity": "CAUTION",
+   "source_lru": "DFCC",
+   "description": "DFCC channel fail"
+  },
+  "FCS-005": {
+   "severity": "ADVISORY",
+   "source_lru": "DFCC",
+   "description": "Accelerometer lane fault"
+  },
+  "FCS-102": {
+   "severity": "CAUTION",
+   "source_lru": "DFCC",
+   "description": "Slat actuator fault"
+  },
+  "ADC-002": {
+   "severity": "ADVISORY",
+   "source_lru": "ADC",
+   "description": "Air-data transducer fault"
+  },
+  "FUE-401": {
+   "severity": "CAUTION",
+   "source_lru": "ECFM_C",
+   "description": "Fuel boost pump pressure low"
+  },
+  "ECM-002": {
+   "severity": "ADVISORY",
+   "source_lru": "ECMS",
+   "description": "ECMS processor / memory fault"
+  },
+  "ENG-103": {
+   "severity": "CAUTION",
+   "source_lru": "FADEC",
+   "description": "Fuel metering valve fault"
+  },
+  "AVI-205": {
+   "severity": "CAUTION",
+   "source_lru": "MC",
+   "description": "Mission computer LRU BIT fail"
+  },
+  "ADC-001": {
+   "severity": "CAUTION",
+   "source_lru": "ADC",
+   "description": "AoA vane disagree"
+  }
+ },
+ "lead_time_closed_days": {
+  "n": 127,
+  "median": 4.6,
+  "p90": 38.3,
+  "mean": 12.6,
+  "max": 91.6
+ },
+ "lead_by_part": {
+  "SYN-PN-CHUTE": {
+   "count": 6,
+   "median": 12.2,
+   "mean": 19.9,
+   "max": 50.5
+  },
+  "SYN-PN-HYDP": {
+   "count": 4,
+   "median": 9.5,
+   "mean": 12.5,
+   "max": 30.5
+  },
+  "SYN-PN-TYRE": {
+   "count": 117,
+   "median": 4.5,
+   "mean": 12.2,
+   "max": 91.6
+  }
+ },
+ "demands_open": 47,
+ "demands_by_prio": {
+  "MCM": 124,
+  "AOG": 50
+ }
+}

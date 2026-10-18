@@ -1,0 +1,517 @@
+# M12 avionics sensor-system extension (AD-51; W2.2): INS/GPS and standby AHRS error models, ADC computation
+# from the probe and vane lanes, radar altimeter, SMS station status, and the electrical supply path from
+# util.bus_v. "Just enough" (P3) fidelity: the report allocates avionics internals only enough fidelity to keep
+# cross-system couplings consistent (report §0 l.139). Structure in phalanx/sensors/avionics; every number here.
+#
+# Evidence base: report §1 Air data and inertial row (l.157), §9 electrical -> avionics cascade (l.741);
+# research_notes tejas_airframe_aero_fcs.md Q5 (INS/AHRS fit, NAL constant-bias finding, DRDO RINS figures,
+# ADMIRE templates), candidate_airframe_modelling_data.md Q4 (F/A-18 TM-110216 INS filters, TM-107601 gear AoA
+# bias), sensor_residual_texture.md Q1 (navigation-grade RLG and quartz accelerometers, tactical MEMS HG4930),
+# texture_and_fault_gap_closure.md (HAL ADC accuracy and altitude-rate filtering), tejas_utility_systems.md
+# (MIL-STD-704F bands, 50 ms transfer interrupts), faults_and_degradation.md (F-16 EGI frozen/invalid without a
+# flag after a power loss), parameter_inventory.csv rows NAV.*, AD.*, STORES.CONFIG.
+format: phalanx.params/1
+module: M12_AVIONICS
+sets:
+  # ---- standard constants (ICAO/USSA-76 atmosphere for the ADC algorithm; Earth for the INS error frame) ------
+  constants:
+    p0:
+      value: 101325.0
+      units: Pa
+      description: Standard sea-level pressure (pressure altitude, CAS reference)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562); ICAO Doc 7488"}
+    t0:
+      value: 288.15
+      units: K
+      description: Standard sea-level temperature
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    lapse:
+      value: 0.0065
+      units: K/m
+      description: Tropospheric temperature lapse rate
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    h_trop:
+      value: 11000.0
+      units: m
+      description: Tropopause geopotential altitude
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    r_air:
+      value: 287.05287
+      units: J/kg/K
+      description: Specific gas constant of dry air
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    gamma:
+      value: 1.4
+      units: "1"
+      description: Ratio of specific heats (isentropic / Rayleigh pitot inversion, TAT recovery)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976; Gracey NASA RP-1046 ch. 2"}
+    g0:
+      value: 9.80665
+      units: m/s**2
+      description: Standard gravity (pressure altitude; INS specific-force frame; Schuler loop)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    rho0:
+      value: 1.225
+      units: kg/m**3
+      description: Standard sea-level density (TAT heater-error index Z = M rho / rho0)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    earth_radius:
+      value: 6371008.8
+      units: m
+      description: Mean Earth radius (INS position-error frame and Schuler loop; spherical, errors are metres)
+      evidence: {tag: "TRANSFER: WGS-84 / IUGG mean radius", source: "WGS-84 ellipsoid mean radius R1 (NGA TR8350.2); an ellipsoidal radius changes a metre-level error by < 0.7 %"}
+    earth_rate:
+      value: 7.292115e-5
+      units: rad/s
+      description: Earth rotation rate (gyrocompass alignment error from the east gyro bias)
+      evidence: {tag: "TRANSFER: WGS-84", source: "WGS-84 defining parameter omega (NGA TR8350.2)"}
+
+  # ---- electrical supply (AD-51: electrical -> navigation invalid without a flag, a physical path) -----------
+  power:
+    v_dropout:
+      value: 16.0
+      units: V
+      description: Supply voltage below which an avionics LRU stops (28 V DC equipment)
+      evidence: {tag: ASSUMPTION, source: "MIL-STD-704F 28 V DC emergency floor 16 V (HAL ALH DC master box: 22-29 V normal, 16 V emergency; research_notes tejas_utility_systems.md l.247-253, TRANSFER); the LRU drop-out point itself is not public"}
+      sweep: [12.0, 18.0]
+      assumption_id: A-W2.2-1
+    t_holdup:
+      value: 0.05
+      units: s
+      description: Power interruption an LRU rides through on its hold-up capacitance before it drops out
+      evidence: {tag: ASSUMPTION, source: "MIL-STD-704F 50 ms transfer interrupts (tejas_utility_systems.md l.225, l.262: loss of the main generator transfers critical DC loads with a <= 50 ms interruption)"}
+      sweep: [0.02, 0.2]
+      assumption_id: A-W2.2-1
+    bus_ingps:
+      value: 1
+      units: "1"
+      description: util.bus_v index feeding the INS/GPS (M09 BUSES map; 1 = DC essential)
+      evidence: {tag: ASSUMPTION, source: "Tejas bus names (Main/Essential/Emergency, DDP node 9647, DIRECT-part) but no load allocation is public (tejas_utility_systems.md Gaps); navigation on the essential bus by analogy with the F/A-18 'ESSENTIAL AVIONICS' bus (CR-201670, TRANSFER)"}
+      sweep: [0, 2]
+      assumption_id: A-W2.2-1
+    bus_ahrs:
+      value: 2
+      units: "1"
+      description: util.bus_v index feeding the standby AHRS (2 = DC emergency)
+      evidence: {tag: ASSUMPTION, source: "standby attitude reference kept on the emergency bus (no Tejas load list public; tejas_utility_systems.md Gaps)"}
+      sweep: [0, 2]
+      assumption_id: A-W2.2-1
+    bus_radalt:
+      value: 0
+      units: "1"
+      description: util.bus_v index feeding the radar altimeter (0 = DC main)
+      evidence: {tag: ASSUMPTION, source: "no Tejas load list public (tejas_utility_systems.md Gaps)"}
+      sweep: [0, 2]
+      assumption_id: A-W2.2-1
+    bus_sms:
+      value: 0
+      units: "1"
+      description: util.bus_v index feeding the stores management system (0 = DC main)
+      evidence: {tag: ASSUMPTION, source: "no Tejas load list public (tejas_utility_systems.md Gaps)"}
+      sweep: [0, 2]
+      assumption_id: A-W2.2-1
+
+  # ---- INS/GPS (INGPS: RLG strapdown INS + GPS; SIGMA 95N on Mk1 per secondary sources) ----------------------
+  ins:
+    gyro_bias_sigma:
+      value: 0.005
+      units: deg/hour
+      description: Turn-on gyro bias per axis (1 sigma), drawn at each power-on
+      evidence: {tag: "TRANSFER: navigation-grade RLG IMU", source: "Honeywell HG9900 bias repeatability 0.0041 deg/h, GG1320AN bias stability 0.0035 deg/h; DRDO RINS 0.01 deg/h (sensor_residual_texture.md Q1 Gyros; tejas_airframe_aero_fcs.md Q5). Fit of a specific INS on Mk1A not confirmed"}
+      sweep: [0.002, 0.05]
+    gyro_gm_sigma:
+      value: 0.003
+      units: deg/hour
+      description: In-run gyro bias instability (first-order Gauss-Markov sigma)
+      evidence: {tag: "TRANSFER: navigation-grade RLG IMU", source: "HG9900 in-run bias 0.0021 deg/h; GG1320AN 0.0035 deg/h (sensor_residual_texture.md Q1); Wheeler et al. 2022 model gyro error as white noise plus first-order Markov drift"}
+    gyro_gm_tau:
+      value: 3600.0
+      units: s
+      description: Correlation time of the in-run gyro bias (Gauss-Markov)
+      evidence: {tag: ASSUMPTION, source: "first-order Markov drift structure (Wheeler et al. 2022, sensor_residual_texture.md Q1); the correlation time is not given"}
+      sweep: [600.0, 36000.0]
+      assumption_id: A-W2.2-2
+    gyro_arw:
+      value: 0.003
+      units: deg/hour**0.5
+      description: Gyro angle random walk
+      evidence: {tag: "TRANSFER: DRDO RINS", source: "ARW 0.003 deg/sqrt(h) (Reddy & Saraswat DSJ 63(2) 2013, tejas_airframe_aero_fcs.md Q5); GG1320AN 0.0035"}
+    accel_bias_sigma:
+      value: 5.0e-5
+      units: standard_gravity
+      description: Turn-on accelerometer bias per axis (1 sigma), drawn at each power-on
+      evidence: {tag: "TRANSFER: navigation-grade quartz accelerometer", source: "HG9900 accelerometer repeatability ~25 ug; QA-2000 one-year repeatability 160-550 ug (sensor_residual_texture.md Q1)"}
+      sweep: [2.5e-5, 5.5e-4]
+    accel_gm_sigma:
+      value: 1.0e-5
+      units: standard_gravity
+      description: In-run accelerometer bias instability (Gauss-Markov sigma)
+      evidence: {tag: ASSUMPTION, source: "below the turn-on repeatability of the quartz class (QA-2000 temperature sensitivity < 30 ug/degC; sensor_residual_texture.md Q1); in-run level not given"}
+      sweep: [0.0, 5.0e-5]
+      assumption_id: A-W2.2-2
+    accel_gm_tau:
+      value: 3600.0
+      units: s
+      description: Correlation time of the in-run accelerometer bias
+      evidence: {tag: ASSUMPTION, source: "as gyro_gm_tau"}
+      sweep: [600.0, 36000.0]
+      assumption_id: A-W2.2-2
+    accel_noise:
+      value: 2.2e-6
+      units: standard_gravity/hertz**0.5
+      description: Accelerometer white-noise density
+      evidence: {tag: "TRANSFER: QA-2000", source: "intrinsic noise < 7 ug rms over 0-10 Hz (sensor_residual_texture.md Q1): 7e-6 g / sqrt(10 Hz)"}
+    gps_sigma_h:
+      value: 25.5
+      units: m
+      description: GPS position error per horizontal axis (1 sigma, Gauss-Markov)
+      evidence: {tag: "TRANSFER: DRDO RINS", source: "'30 m GPS-aided' (Reddy & Saraswat DSJ 63(2) 2013; tejas_airframe_aero_fcs.md Q5) read as CEP: sigma = 30 / 1.1774"}
+      sweep: [3.0, 30.0]
+    gps_sigma_v_ratio:
+      value: 1.5
+      units: "1"
+      description: GPS vertical / horizontal error ratio
+      evidence: {tag: ASSUMPTION, source: "GNSS vertical error exceeds horizontal (geometry); not in the evidence base"}
+      sweep: [1.0, 3.0]
+      assumption_id: A-W2.2-2
+    gps_tau:
+      value: 300.0
+      units: s
+      description: Correlation time of the GPS position error
+      evidence: {tag: ASSUMPTION, source: "slowly varying satellite-geometry and atmospheric errors; not in the evidence base"}
+      sweep: [60.0, 1800.0]
+      assumption_id: A-W2.2-2
+    gps_vel_sigma:
+      value: 0.05
+      units: m/s
+      description: GPS (Doppler) velocity error per axis (1 sigma, Gauss-Markov)
+      evidence: {tag: ASSUMPTION, source: "GNSS Doppler velocity is centimetre-per-second class, far better than differenced positions; not in the evidence base"}
+      sweep: [0.01, 0.3]
+      assumption_id: A-W2.2-2
+    gps_vel_tau:
+      value: 1.0
+      units: s
+      description: Correlation time of the GPS velocity error
+      evidence: {tag: ASSUMPTION, source: "receiver tracking-loop correlation; not in the evidence base"}
+      sweep: [0.1, 10.0]
+      assumption_id: A-W2.2-2
+    aid_pos_tau:
+      value: 30.0
+      units: s
+      description: Time constant of the GPS position aiding (steady-state loosely coupled filter)
+      evidence: {tag: ASSUMPTION, source: "loosely coupled INS/GPS behaves as steady-state complementary loops; bandwidth not public"}
+      sweep: [5.0, 300.0]
+      assumption_id: A-W2.2-2
+    aid_vel_tau:
+      value: 10.0
+      units: s
+      description: Time constant of the GPS velocity aiding
+      evidence: {tag: ASSUMPTION, source: "as aid_pos_tau"}
+      sweep: [2.0, 60.0]
+      assumption_id: A-W2.2-2
+    baro_tau:
+      value: 60.0
+      units: s
+      description: Time constant of the critically damped second-order baro-inertial vertical loop (unaided mode)
+      evidence: {tag: ASSUMPTION, source: "baro-inertial damping of the unstable free-inertial vertical channel is standard INS practice; loop bandwidth not public"}
+      sweep: [20.0, 300.0]
+      assumption_id: A-W2.2-2
+    tilt_tau:
+      value: 60.0
+      units: s
+      description: Time constant of the tilt (level) correction from the aided velocity error
+      evidence: {tag: ASSUMPTION, source: "Kalman tilt estimation from velocity residuals; steady-state gain not public. Residual tilt settles at accelerometer bias / g (unobservable part)"}
+      sweep: [10.0, 600.0]
+      assumption_id: A-W2.2-2
+    heading_tau:
+      value: 120.0
+      units: s
+      description: Time constant of the heading correction during horizontal accelerations (observability only in manoeuvres)
+      evidence: {tag: ASSUMPTION, source: "heading becomes observable from velocity residuals under horizontal specific force; gain not public"}
+      sweep: [30.0, 1200.0]
+      assumption_id: A-W2.2-2
+    t_align:
+      value: 240.0
+      units: s
+      description: Ground re-alignment after a power cycle on the ground (INS_MODE ALIGN)
+      evidence: {tag: ASSUMPTION, source: "RLG gyrocompass alignment of minutes; Tejas figure not public"}
+      sweep: [120.0, 600.0]
+      assumption_id: A-W2.2-4
+    t_gps_reacq:
+      value: 30.0
+      units: s
+      description: GPS re-acquisition after the receiver regains power (GPS_FIX NO_FIX until then)
+      evidence: {tag: ASSUMPTION, source: "GNSS hot-start acquisition; not in the evidence base"}
+      sweep: [5.0, 120.0]
+      assumption_id: A-W2.2-4
+    cep_rate:
+      value: 1.0
+      units: nautical_mile/hour
+      description: Unaided position-error growth used by the INS for its figure of merit
+      evidence: {tag: "TRANSFER: DRDO RINS / HAL G3INS", source: "'1 nm/h unaided' (Reddy & Saraswat DSJ 63(2) 2013; HAL G3INS, parameter_inventory.csv NAV.INS.*)"}
+    fom_bounds:
+      value: [25.0, 50.0, 75.0, 100.0, 200.0, 500.0, 1000.0, 5000.0]
+      units: m
+      description: Estimated-position-error upper bounds of FOM 1-8 (FOM 9 above the last); dictionary gps_fom code table is synthetic
+      evidence: {tag: ASSUMPTION, source: "conventional GPS figure-of-merit bins (code 1 best ... 9 worst, dictionary gps_fom); values not in the evidence base"}
+      sweep: [25.0, 5000.0]
+      assumption_id: A-W2.2-4
+    nb_wn:
+      value: 15.896
+      units: rad/s
+      description: Natural frequency of the narrow-band body-rate output filter (second order)
+      evidence: {tag: "TRANSFER: F/A-18 HARV INS model", source: "TM-110216 §5.2: INS body rates through 2nd-order filters, wn 15.896 rad/s, zeta 0.707 (candidate_airframe_modelling_data.md Q4)"}
+    nb_zeta:
+      value: 0.707
+      units: "1"
+      description: Damping of the narrow-band body-rate filter
+      evidence: {tag: "TRANSFER: F/A-18 HARV INS model", source: "TM-110216 §5.2 (candidate_airframe_modelling_data.md Q4)"}
+    wb_wn:
+      value: 157.0
+      units: rad/s
+      description: Natural frequency of the wide-band body-rate output filter (25 Hz)
+      evidence: {tag: ASSUMPTION, source: "CR-201670 lists narrow- and wide-band INS body rates (candidate_airframe_modelling_data.md Q9); the wide-band bandwidth is not given: 25 Hz, below the 100 Hz INS frame"}
+      sweep: [63.0, 314.0]
+      assumption_id: A-W2.2-3
+    wb_zeta:
+      value: 0.707
+      units: "1"
+      description: Damping of the wide-band body-rate filter
+      evidence: {tag: ASSUMPTION, source: "as nb_zeta (TM-110216 filter form)"}
+      sweep: [0.5, 1.0]
+      assumption_id: A-W2.2-3
+    acc_wn:
+      value: 34.557
+      units: rad/s
+      description: Natural frequency of the INS acceleration output filter
+      evidence: {tag: "TRANSFER: F/A-18 HARV INS model", source: "TM-110216 §5.2: accelerations through 2nd-order filters, wn 34.557 rad/s, zeta 0.707 (candidate_airframe_modelling_data.md Q4)"}
+    acc_zeta:
+      value: 0.707
+      units: "1"
+      description: Damping of the INS acceleration output filter
+      evidence: {tag: "TRANSFER: F/A-18 HARV INS model", source: "TM-110216 §5.2 (candidate_airframe_modelling_data.md Q4)"}
+
+  # ---- standby AHRS (indigenous, flight-tested on LSP5; MEMS-class) ----------------------------------------------
+  ahrs:
+    gyro_bias_sigma:
+      value: 15.0
+      units: deg/hour
+      description: Turn-on gyro bias per axis (1 sigma), drawn at each power-on
+      evidence: {tag: "TRANSFER: tactical MEMS IMU (HG4930)", source: "turn-on bias repeatability 7-20 deg/h fresh, 20-60 deg/h at 10-year end of life (sensor_residual_texture.md Q1); parameter_inventory.csv NAV.AHRS texture 'MEMS-class bias'"}
+      sweep: [7.0, 60.0]
+    gyro_gm_sigma:
+      value: 0.35
+      units: deg/hour
+      description: In-run gyro bias instability (Gauss-Markov sigma)
+      evidence: {tag: "TRANSFER: tactical MEMS IMU (HG4930)", source: "in-run bias 0.25-0.45 deg/h fresh, 1-2 deg/h end of life (sensor_residual_texture.md Q1)"}
+      sweep: [0.25, 2.0]
+    gyro_gm_tau:
+      value: 600.0
+      units: s
+      description: Correlation time of the in-run gyro bias
+      evidence: {tag: ASSUMPTION, source: "HG4930 bias stability quoted over a month of operation; correlation time not given"}
+      sweep: [60.0, 3600.0]
+      assumption_id: A-W2.2-5
+    gyro_arw:
+      value: 0.05
+      units: deg/hour**0.5
+      description: Gyro angle random walk
+      evidence: {tag: "TRANSFER: tactical MEMS IMU (HG4930)", source: "ARW 0.04-0.06 deg/sqrt(h) fresh (sensor_residual_texture.md Q1)"}
+      sweep: [0.04, 0.175]
+    accel_bias_sigma:
+      value: 2.5e-3
+      units: standard_gravity
+      description: Turn-on accelerometer bias per axis (1 sigma)
+      evidence: {tag: "TRANSFER: tactical MEMS IMU (HG4930)", source: "turn-on bias repeatability 1.7-3.0 mg fresh, 5-10 mg end of life (sensor_residual_texture.md Q1)"}
+      sweep: [1.7e-3, 1.0e-2]
+    erect_tau:
+      value: 60.0
+      units: s
+      description: Erection (levelling) loop time constant toward the accelerometer vertical
+      evidence: {tag: ASSUMPTION, source: "vertical-reference erection practice; the Tejas AHRS design is not public. Sustained horizontal specific force (turns) drags the estimate toward a false vertical with this time constant"}
+      sweep: [10.0, 300.0]
+      assumption_id: A-W2.2-5
+    erect_cut_g:
+      value: 0.1
+      units: "1"
+      description: Erection cut-out when | |f| - g | exceeds this fraction of g
+      evidence: {tag: ASSUMPTION, source: "erection cut-out during manoeuvres (standard practice); threshold not public"}
+      sweep: [0.03, 0.3]
+      assumption_id: A-W2.2-5
+    erect_cut_rate:
+      value: 3.0
+      units: deg/s
+      description: Erection cut-out when the body rate exceeds this
+      evidence: {tag: ASSUMPTION, source: "as erect_cut_g"}
+      sweep: [1.0, 10.0]
+      assumption_id: A-W2.2-5
+    slave_tau:
+      value: 120.0
+      units: s
+      description: Heading slaving time constant to the magnetic sensor
+      evidence: {tag: ASSUMPTION, source: "slaved-heading practice; not public"}
+      sweep: [30.0, 600.0]
+      assumption_id: A-W2.2-5
+    mag_declination:
+      value: 0.0
+      units: deg
+      description: Magnetic declination at the operating area (heading output = magnetic heading)
+      evidence: {tag: ASSUMPTION, source: "declination at the Indian bases is not in the evidence base; 0 makes the output true-referenced, the sweep covers the region"}
+      sweep: [-2.0, 2.0]
+      assumption_id: A-W2.2-5
+    mag_dev_b:
+      value: 0.3
+      units: deg
+      description: Residual one-cycle compass deviation coefficient B (x sin heading)
+      evidence: {tag: ASSUMPTION, source: "residual deviation after a compass swing; not public"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-5
+    mag_dev_c:
+      value: 0.3
+      units: deg
+      description: Residual one-cycle compass deviation coefficient C (x cos heading)
+      evidence: {tag: ASSUMPTION, source: "as mag_dev_b"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-5
+
+  # ---- ADC computation (quadruplex ADC lanes -> voted and computed air data) --------------------------------------
+  adc:
+    gear_dk_ps:
+      value: 0.005
+      units: "1"
+      description: Gear-down increment of the static-source position error, as a fraction of qc (physical, gear fully down)
+      evidence: {tag: ASSUMPTION, source: "Tejas air-data parameters found to depend on undercarriage operation (Rajalakshmi et al. DSJ 56(1) 2006 pp.14-16, DIRECT, magnitude not public); report l.157"}
+      sweep: [0.0, 0.02]
+      assumption_id: A-W2.2-7
+    gear_dalpha_vane:
+      value: -0.7
+      units: deg
+      description: Gear-down increment of the local flow angle at the AoA vanes (physical, gear fully down)
+      evidence: {tag: "TRANSFER: F/A-18 TM-107601", source: "AoA probe bias 1.9 deg gear-up vs 1.2 deg gear-down (candidate_airframe_modelling_data.md Q4)"}
+      sweep: [-1.5, 0.0]
+    gear_resid:
+      value: 0.2
+      units: "1"
+      description: Fraction of the gear effect left after the ADC's gear-dependent correction (1 = the uncorrected pre-modification algorithm)
+      evidence: {tag: ASSUMPTION, source: "the Tejas algorithm was modified for undercarriage operation (DSJ 56(1), DIRECT); the residual is not public"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-7
+    gear_transit:
+      value: 6.0
+      units: s
+      description: Undercarriage transit time (gear position ramps from the handle; PROXY for af.gear_pos)
+      evidence: {tag: ASSUMPTION, source: "not public for Tejas; M06 keeps its gear state internal (no catalogue port)"}
+      sweep: [4.0, 12.0]
+      assumption_id: A-W2.2-7
+      proxy: true
+    hdot_tau:
+      value: 1.0
+      units: s
+      description: Altitude-rate filter time constant (first-order filtered derivative of pressure altitude)
+      evidence: {tag: ASSUMPTION, source: "HAL ADC: fed identical pressures, a new ADC's altitude rate lagged the in-service ADC by about 2 s (JOAST 67(2A) pp.278-281, texture_and_fault_gap_closure.md, TRANSFER: Indian ADC): ADC rate filters differ by seconds"}
+      sweep: [0.25, 3.0]
+      assumption_id: A-W2.2-6
+    qnh:
+      value: 101325.0
+      units: Pa
+      description: Altimeter setting of AD.HBARO (standard pressure; base QNH is not modelled)
+      evidence: {tag: ASSUMPTION, source: "no QNH source in the scenario; STD above the transition altitude"}
+      sweep: [98000.0, 104000.0]
+      assumption_id: A-W2.2-6
+    thr_pressure:
+      value: 5.0
+      units: hPa
+      description: Lane-vs-vote disagreement above which an ADC pressure transducer is reported invalid (AD.VALID)
+      evidence: {tag: ASSUMPTION, source: "Kala JOAST 67(2A): 0.02 % FS transducers and 90 % ADC BIT coverage (DIRECT); the monitor threshold is not public"}
+      sweep: [1.0, 20.0]
+      assumption_id: A-W2.2-6
+    thr_vane:
+      value: 2.0
+      units: deg
+      description: Lane-vs-vote disagreement above which a vane pick-off is reported invalid (AD.VALID)
+      evidence: {tag: ASSUMPTION, source: "as thr_pressure"}
+      sweep: [0.5, 5.0]
+      assumption_id: A-W2.2-6
+    tat_min:
+      value: -60.0
+      units: degC
+      description: TAT reading below which the ADC reports TAT invalid (dictionary range floor)
+      evidence: {tag: ASSUMPTION, source: "dictionary AD.TAT range -60..150 degC"}
+      sweep: [-70.0, -50.0]
+      assumption_id: A-W2.2-6
+
+  # ---- radar (radio) altimeter ----------------------------------------------------------------------------------
+  radalt:
+    h_max:
+      value: 5000.0
+      units: ft
+      description: Maximum tracked height; above it the altimeter reports NO_COMPUTED_DATA
+      evidence: {tag: ASSUMPTION, source: "parameter_inventory.csv NAV.RADALT range 0-5,000 ft [ASSUMPTION], validity 'NCD above range'"}
+      sweep: [2500.0, 8000.0]
+      assumption_id: A-W2.2-8
+    beam_half:
+      value: 30.0
+      units: deg
+      description: Antenna beam half-angle; within it the nearest return is straight down
+      evidence: {tag: ASSUMPTION, source: "inventory physical drivers 'terrain; attitude'; antenna pattern not public"}
+      sweep: [15.0, 50.0]
+      assumption_id: A-W2.2-8
+    track_max_tilt:
+      value: 60.0
+      units: deg
+      description: Tilt (from vertical) beyond which the return is lost (NO_COMPUTED_DATA)
+      evidence: {tag: ASSUMPTION, source: "as beam_half"}
+      sweep: [40.0, 80.0]
+      assumption_id: A-W2.2-8
+    scale_sigma:
+      value: 0.01
+      units: "1"
+      description: Per-unit scale error (1 sigma; installation, constant across sorties)
+      evidence: {tag: ASSUMPTION, source: "radio-altimeter accuracy class of a few percent; not in the evidence base"}
+      sweep: [0.0, 0.03]
+      assumption_id: A-W2.2-8
+    offset_sigma:
+      value: 0.5
+      units: m
+      description: Per-unit zero offset (installation delay residual, 1 sigma)
+      evidence: {tag: ASSUMPTION, source: "as scale_sigma"}
+      sweep: [0.0, 1.5]
+      assumption_id: A-W2.2-8
+    terrain_sigma:
+      value: 1.0
+      units: m
+      description: Terrain and vegetation height variation under the beam (spatial Gauss-Markov sigma)
+      evidence: {tag: ASSUMPTION, source: "inventory texture 'terrain noise'; M06 terrain is a flat ground elevation"}
+      sweep: [0.2, 5.0]
+      assumption_id: A-W2.2-8
+    terrain_length:
+      value: 100.0
+      units: m
+      description: Along-track correlation length of the terrain variation
+      evidence: {tag: ASSUMPTION, source: "as terrain_sigma"}
+      sweep: [20.0, 500.0]
+      assumption_id: A-W2.2-8
+    terrain_cell:
+      value: 10.0
+      units: m
+      description: Along-track cell length of the terrain process (draw index = cell number)
+      evidence: {tag: ASSUMPTION, source: "numerical setting: well below terrain_length"}
+      sweep: [2.0, 20.0]
+      assumption_id: A-W2.2-8
+    track_tau:
+      value: 0.1
+      units: s
+      description: Height-tracker lag (first order)
+      evidence: {tag: ASSUMPTION, source: "tracking-loop lag; not public"}
+      sweep: [0.02, 0.5]
+      assumption_id: A-W2.2-8
+
+  # ---- stores management system (station status) -----------------------------------------------------------------
+  sms:
+    p_hung:
+      value: 0.01
+      units: "1"
+      description: Probability that a commanded release leaves a hung store (station keeps its content, release bit not set)
+      evidence: {tag: ASSUMPTION, source: "parameter_inventory.csv STORES.CONFIG validity flags 'hung store; station fail' (DIRECT, digital weapon management MIL-STD-1760C); rate not public"}
+      sweep: [0.0, 0.05]
+      assumption_id: A-W2.2-9

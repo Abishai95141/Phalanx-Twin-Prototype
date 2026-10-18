@@ -1,0 +1,126 @@
+{
+ "pre_registered_config": {
+  "anchor": "about 3 h, same day, with parts (PREREGISTRATION \u00a74)",
+  "bit_records": [],
+  "injection_day": 2.0,
+  "limitation": "M18 has no oil-pressure-transmitter position (request to W2.6): the transmitter cannot be replaced at its own position, so troubleshooting ends on another engine position or as could-not-duplicate",
+  "m11_instances_open_at_end": 1,
+  "m14_config": "pre-registered (telemetry)",
+  "mode": "FM.SNS.OIL_P_TRANSMITTER",
+  "n_worlds": 1,
+  "new_work_orders": [],
+  "sorties_reference": 24,
+  "sorties_with_fault": 24,
+  "world": {
+   "days": 30,
+   "regime": "mature",
+   "root": 50081,
+   "tail": "TJ101"
+  }
+ },
+ "usage_mode_d7": {
+  "anchor": "about 3 h, same day, with parts (PREREGISTRATION \u00a74)",
+  "bit_records": [
+   {
+    "code": "ECM-702",
+    "t_h_after_injection": 2.5766666666666667
+   }
+  ],
+  "injection_day": 2.0,
+  "limitation": "M18 has no oil-pressure-transmitter position (request to W2.6): the transmitter cannot be replaced at its own position, so troubleshooting ends on another engine position or as could-not-duplicate",
+  "m11_instances_open_at_end": 0,
+  "m14_config": "usage mode (D7)",
+  "mode": "FM.SNS.OIL_P_TRANSMITTER",
+  "n_worlds": 1,
+  "new_work_orders": [
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCM_U",
+    "duration_h": 56.16444444444444,
+    "malfunction_code": "MAL-BIT",
+    "status": "CLOSED",
+    "system_code": "ENG",
+    "t_open_h_after_injection": 3.4066666666666667,
+    "when_discovered": "WD-DBF"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCM_S",
+    "duration_h": 4.393888888888889,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 314.5,
+    "when_discovered": "WD-SCH"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCM_S",
+    "duration_h": 3.991388888888889,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 314.5,
+    "when_discovered": "WD-SCH"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCM_S",
+    "duration_h": 5.120555555555556,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 338.5,
+    "when_discovered": "WD-SCH"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCM_S",
+    "duration_h": 3.5836111111111113,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 386.5,
+    "when_discovered": "WD-SCH"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCS",
+    "duration_h": 59.94,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 410.5,
+    "when_discovered": "WD-SCH"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCS",
+    "duration_h": 13.5975,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 506.5,
+    "when_discovered": "WD-SCH"
+   },
+   {
+    "action_taken_code": "AT-RR",
+    "availability_at_open_plus_1h": "NMCM_S",
+    "duration_h": 3.3308333333333335,
+    "malfunction_code": "MAL-HT",
+    "status": "CLOSED",
+    "system_code": "LGB",
+    "t_open_h_after_injection": 650.5,
+    "when_discovered": "WD-SCH"
+   }
+  ],
+  "sorties_reference": 24,
+  "sorties_with_fault": 26,
+  "world": {
+   "days": 30,
+   "regime": "mature",
+   "root": 50081,
+   "tail": "TJ101"
+  }
+ }
+}

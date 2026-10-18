@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Authority — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 750px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .mode { display: grid; grid-template-columns: 220px minmax(0,1fr); column-gap: 28px; padding: 24px 0; border-top: 1px solid var(--line-2); align-items: start; }
+  .mode:first-child { border-top: 0; }
+  .mode .nm { font-size: 17px; font-weight: 650; letter-spacing: -0.012em; display: flex; align-items: center; gap: 10px; }
+  .mode .bh { font-size: 13.5px; color: var(--ink-3); margin-top: 6px; line-height: 1.45; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mode .act-pill { height: 30px; }
+  .ov .r2 { grid-template-columns: minmax(0,1fr) auto auto; column-gap: 28px; }
+  .num2 { text-align: right; }
+  .num2 b { display: block; font-size: 17px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .num2 span { font-size: 13px; color: var(--ink-4); }
+  .codes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .codes span { font-size: 13px; color: var(--ink-2); background: var(--bg-2); border-radius: 8px; padding: 5px 10px; }
+  .codes b { font: 700 12px var(--mono); margin-right: 6px; }
+
+  /* compact: tablet + phone */
+  @media (max-width: 1199px) {
+    .mode { grid-template-columns: 200px minmax(0,1fr); column-gap: 22px; }
+    section[data-shot="approval-modes"] .push { margin-top: 20px; }
+    .ov .push { margin-top: 8px; }
+  }
+  /* phone */
+  @media (max-width: 699px) {
+    .mode { grid-template-columns: minmax(0,1fr); row-gap: 14px; padding: 20px 0; }
+    .mode .bh { font-size: 14px; }
+    section[data-shot="approval-modes"] .push { grid-template-columns: minmax(0,1fr) !important; gap: 12px !important; }
+    .ov .r2 { column-gap: 16px; }
+    .codes span { padding: 8px 12px; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c7" data-shot="approval-modes">
+    <div class="kick">Approval modes · per action</div>
+    <div class="t2">The system drafts; people decide what leaves the station</div>
+    <div class="sub2">Authority comes from the data layer's authority matrix and is never forked. Every rule starts on consent.</div>
+    <div style="margin-top:12px" id="modes"></div>
+    <div class="push" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="well" style="padding:18px 20px"><div class="t3">No automatic grounding</div><div class="sub2" style="font-size:13.5px">Airworthiness stays with the tech log and the release authority, never with a model.</div></div>
+      <div class="well" style="padding:18px 20px"><div class="t3">Judgement first</div><div class="sub2" style="font-size:13.5px">For GROUND, RELEASE and costly removals the engineer records a view before the recommendation is shown.</div></div>
+    </div>
+  </section>
+
+  <section class="panel2 c5 ov" data-shot="override-review">
+    <div class="kick">Override review</div>
+    <div class="t2">Reviewed per rule, never per person</div>
+    <div class="sub2">Overrides feed a weekly packet to the policy owner; thresholds never tune themselves.</div>
+    <div style="margin-top:26px;display:flex;align-items:flex-end;gap:12px"><div class="big">0<small>overrides</small></div></div>
+    <div class="ci" style="margin-top:8px">First epoch on the board — nothing has been overridden yet.</div>
+    <div class="rows2" style="margin-top:20px" id="rules"></div>
+    <div class="push">
+      <div class="kick" style="margin-top:18px">Optional one-tap reasons</div>
+      <div class="codes" id="codes"></div>
+    </div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-policies.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const TABS = [['Models','assurance.html'],['Backtests','assurance-backtest.html'],['Drift','assurance-drift.html'],null,['Decision table','policies.html'],['Policy lifecycle','policies-lifecycle.html'],['Authority','policies-authority.html'],null,['Why this order','provenance.html']];
+const here = location.pathname.split('/').pop();
+document.getElementById('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1]===here?'on':''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+const MODES = [
+  ['HUMAN only', 'signature', 'Drafted by the system, signed and issued by a person. Silence means nothing happens.', true,
+    ['EMBODY_MODIFICATION', 'LOAD_SOFTWARE', 'CHANGE_MONITORING_CONFIG', 'DEFER_SERVICING']],
+  ['Consent', 'check', 'Issued at 08:00 only if approved before the 07:45 freeze.', false,
+    ['GROUND', 'RELEASE', 'REMOVE_REPLACE', 'CANNIBALISE', 'RESTRICT_USAGE', 'ASSIGN_SORTIE', 'DEFER', 'BRING_FORWARD_SERVICING']],
+  ['Exception', 'clock', 'Issued unless vetoed — enabled per rule only after canary evidence. Enabled today for no rule.', false,
+    ['TROUBLESHOOT', 'INSPECT', 'WASH_SERVICE', 'REQUISITION_SPARES', 'EXPEDITE_SPARES', 'TRANSFER_STOCK']],
+];
+document.getElementById('modes').innerHTML = MODES.map(m => `<div class="mode">
+  <div><div class="nm"><i data-i="${m[1]}" class="ico"></i>${m[0]}</div><div class="bh">${m[2]}</div></div>
+  <div class="pills">${m[4].map(a => `<span class="act-pill ${m[3] ? 'human' : ''}">${a}</span>`).join('')}</div></div>`).join('');
+
+const RULES = [['P-DEC-01', 'Recurring deferred BIT code', 5], ['P-ORG-02', 'Cannibalise only from an NMC donor', 1], ['P-SPR-01', 'Consumable reorder from landings', 1]];
+document.getElementById('rules').innerHTML = RULES.map(r => `<div class="r2"><div><div class="ttl">${r[0]}</div><div class="why">${r[1]}</div></div>
+  <div class="num2"><b>${r[2]}</b><span>on board</span></div><div class="num2"><b>0</b><span>overridden</span></div></div>`).join('');
+const CODES = [['R1', 'operational need'], ['R2', 'resources'], ['R3', 'evidence disputed'], ['R4', 'done elsewhere'], ['R5', 'next servicing'], ['R6', 'other']];
+document.getElementById('codes').innerHTML = CODES.map(c => `<span><b>${c[0]}</b>${c[1]}</span>`).join('');
+
+PHX.mount({ page: 'assurance', title: 'Policies', sub: 'Who may issue what, and how disagreements with a rule are learned from',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'ok', i: 'lock', t: 'All rules on consent' }] });
+</script>
+</body></html>

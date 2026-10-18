@@ -1,0 +1,12 @@
+format: phalanx.params/1
+module: M21
+# M21 orders and decision interface (W1.8). The authority matrix is configs/policies/authority.yaml.
+sets:
+  epochs:
+    decision_times_local:
+      value: [8.0]
+      units: h
+      description: Local times of day of the decision epochs (the daily maintenance meeting); orders apply at the first epoch at or after max(t_issued, t_effective), and M18's maintenance-control review runs at the same epochs.
+      evidence: {tag: ASSUMPTION, source: "report §14 (decision epochs: post-download, daily maintenance meeting, weekly planning; configurable)"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.8-16

@@ -1,0 +1,38 @@
+# M12 channel map of the DASHlink proxy (W2.4a; structure only, every number is in ../M12.yaml).
+# Channels are proxy-dictionary ids (configs/proxy_dashlink/dictionary). Every engine channel reads index 0 of an
+# engine-axis signal; with n_engines = 4 M12 builds one sensor instance per engine (U3: ENG.N1.A:E1 .. :E4).
+# FADEC lanes: the M08 controller's sensors (TRANSFER of the Tejas classes). Recorded words (.REC): the DASHlink
+# N1_k / N2_k / EGT_k / FF_k sources with the round-2 MEASURED sensor dynamics (FF meter lag; thermocouple lag
+# tau proportional to W^-0.5).
+format: phalanx.sensors.channel_map/1
+platform: proxy_dashlink
+classes:
+  shaft_speed: {source: linear, dynamics: none}
+  rtd_inlet: {source: linear, dynamics: lag1_flux, params: rtd_inlet, flow: eng.w2,
+              map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac, pattern: deice_bias}}
+  tc_t5: {source: linear, dynamics: lag1_flux, params: tc_t5, flow: eng.w2,
+          map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac, pattern: pattern}}
+  tc_t25: {source: linear, dynamics: lag1_flux, params: tc_t25, flow: eng.w2,
+           map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac}}
+  ps3_transducer: {source: linear, dynamics: lag1, params: ps3_transducer, map: {tau: tau}}
+  egt_indication: {source: linear, dynamics: lag1_flux, params: egt_indication, flow: eng.w2,
+                   map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac}}
+  ff_indication: {source: linear, dynamics: lag1, params: ff_indication, map: {tau: tau}}
+channels:
+  # --- proxy controller (M08) lanes, FADEC-INT ---
+  ENG.N1.A: {class: shaft_speed, input: eng.n1, index: 0}
+  ENG.N1.B: {class: shaft_speed, input: eng.n1, index: 0}
+  ENG.N2.A: {class: shaft_speed, input: eng.n2, index: 0}
+  ENG.N2.B: {class: shaft_speed, input: eng.n2, index: 0}
+  ENG.T1.A: {class: rtd_inlet, input: eng.t2, index: 0}
+  ENG.T1.B: {class: rtd_inlet, input: eng.t2, index: 0}
+  ENG.PS3.A: {class: ps3_transducer, input: eng.ps3, index: 0}
+  ENG.PS3.B: {class: ps3_transducer, input: eng.ps3, index: 0}
+  ENG.T25: {class: tc_t25, input: eng.t25, index: 0}
+  ENG.T5.HARNESS_A: {class: tc_t5, input: eng.t5, index: 0, probes: 4}
+  ENG.T5.HARNESS_B: {class: tc_t5, input: eng.t5, index: 0, probes: 4}
+  # --- recorded DASHlink engine words (ACMS, 4 Hz) ---
+  ENG.N1.REC: {class: shaft_speed, input: eng.n1, index: 0}
+  ENG.N2.REC: {class: shaft_speed, input: eng.n2, index: 0}
+  ENG.T5.REC: {class: egt_indication, input: eng.t5, index: 0}
+  ENG.FF.REC: {class: ff_indication, input: eng.wf, index: 0}

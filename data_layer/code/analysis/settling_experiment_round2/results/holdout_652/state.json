@@ -1,0 +1,224 @@
+{
+ "freeze_check": {
+  "frozen_at": "2026-10-14 17:14:38 IST",
+  "mismatches": []
+ },
+ "archive2": {
+  "fetch_log": "/Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw2/fetch.log",
+  "downloaded": true,
+  "sha256": "df7bdda1aa9a8623941ec0d771a9e4cdcbfac60495b40b284b8b8b4bfb566fcc",
+  "bytes": 837334163,
+  "extracted": true,
+  "n_mat": 602,
+  "extracted_at": "2026-10-14 16:55:13",
+  "before_deadline": true,
+  "last_line": "2026-10-14 16:55:13 extracted n_mat=602 first=687200109141013.mat last=687200112311241.mat",
+  "mat_dir_exists": true,
+  "ready": true
+ },
+ "mode": {
+  "holdout": "652",
+  "primary": true,
+  "note": "Amendment A1: Tail 652 archive 8 is the primary holdout (cross-tail transfer); Tail 687 archive 2 is confirmatory when available."
+ },
+ "decision": {
+  "S_prior": {
+   "decision": "GO WITH FIXES or REWORK (depends on module attribution of the FAILs; see report)",
+   "n_pass": 0,
+   "fails": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6"
+   ],
+   "better_arm": "R2b",
+   "g0_pass_used": true,
+   "ranking": [
+    [
+     "R2b",
+     0,
+     6,
+     4.462854265118014
+    ],
+    [
+     "R2a",
+     0,
+     6,
+     5.8466071160861315
+    ]
+   ]
+  },
+  "S_cal": {
+   "decision": "GO WITH FIXES or REWORK (depends on module attribution of the FAILs; see report)",
+   "n_pass": 0,
+   "fails": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6"
+   ],
+   "better_arm": "R2b",
+   "g0_pass_used": true,
+   "ranking": [
+    [
+     "R2b",
+     0,
+     6,
+     4.606325465890112
+    ],
+    [
+     "R2a",
+     0,
+     6,
+     5.780595793838325
+    ]
+   ]
+  },
+  "P_prior": {
+   "decision": "GO WITH FIXES or REWORK (depends on module attribution of the FAILs; see report)",
+   "n_pass": 0,
+   "fails": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6"
+   ],
+   "better_arm": "R2b",
+   "g0_pass_used": true,
+   "ranking": [
+    [
+     "R2b",
+     0,
+     6,
+     4.707191024571516
+    ],
+    [
+     "R2a",
+     0,
+     6,
+     6.418795714509946
+    ]
+   ]
+  },
+  "P_cal": {
+   "decision": "GO WITH FIXES or REWORK (depends on module attribution of the FAILs; see report)",
+   "n_pass": 0,
+   "fails": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6"
+   ],
+   "better_arm": "R2b",
+   "g0_pass_used": true,
+   "ranking": [
+    [
+     "R2b",
+     0,
+     6,
+     4.786842728788342
+    ],
+    [
+     "R2a",
+     0,
+     6,
+     6.319181592931264
+    ]
+   ]
+  }
+ },
+ "g0": {
+  "S_R2a_prior": {
+   "pass": true,
+   "classifiers": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   }
+  },
+  "S_R2b_prior": {
+   "pass": true,
+   "classifiers": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   }
+  },
+  "P_R2a_prior": {
+   "pass": true,
+   "classifiers": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   }
+  },
+  "P_R2b_prior": {
+   "pass": true,
+   "classifiers": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   }
+  }
+ }
+}

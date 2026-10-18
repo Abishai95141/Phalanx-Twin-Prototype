@@ -1,0 +1,117 @@
+# Usage counters (architecture §12 "usage.counters": LUIs, TAC, cycles, starts, landings, Nz counts, chute streamings).
+name: usage.counters
+description: >-
+  Life-usage and usage counters as reported by their source (ECMS LUIs updated twice per flight, TAC, cycles,
+  starts, landings, Nz level-crossing counts, chute streamings). One record per counter update.
+basis: "ARCH §12"
+restricted: false
+event_time: t_update
+ingest_time: t_ingest
+partition_by: [tail_no, sortie_id]
+json_schema: false
+record_id_key:
+  - {name: provenance, type: str, source: column}
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+  - {name: engine_serial, type: str, source: column}
+  - {name: item_serial, type: str, source: column}
+  - {name: param_id, type: str, source: column}
+  - {name: update_seq, type: u64, source: column}
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_update}
+fields:
+  - include: record_header
+  - name: param_id
+    type: string
+    nullable: false
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-11"
+    description: Dictionary counter parameter (e.g. LUI.TYPE3, USAGE.TAC, USAGE.LANDINGS, STRUCT.NZ_COUNTERS).
+  - name: tail_no
+    type: string
+    nullable: false
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §12 (linkage)"
+    description: Aircraft tail number.
+  - name: sortie_id
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §12 (linkage); ASSUMPTION: A-W0.4-11"
+    description: Sortie the update belongs to; null for ground-computed counters not tied to a sortie.
+  - name: engine_serial
+    type: string
+    nullable: true
+    basis: "ARCH §12 (linkage); ASSUMPTION: A-W0.4-11"
+    description: Engine serial for engine counters (LUIs, TAC, engine starts); null otherwise.
+  - name: item_serial
+    type: string
+    nullable: true
+    basis: "ARCH §5.3 (component identity); ASSUMPTION: A-W0.4-11"
+    description: Serial of a life-tracked non-engine item the counter belongs to (e.g. chute); null otherwise.
+  - name: source_lru
+    type: string
+    nullable: false
+    pattern: "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    basis: "ASSUMPTION: A-W0.4-11"
+    description: Source of the counter (ECMS, OAC, fatigue meter, ground station).
+  - name: update_seq
+    type: uint32
+    nullable: false
+    basis: "ARCH §6 M14 (LUIs updated twice per flight); ASSUMPTION: A-W0.4-11"
+    description: Index of this update of this counter within the sortie (or within the ground period when sortie_id is null).
+  - name: value_eu
+    type: float64
+    nullable: false
+    minimum: 0.0
+    basis: "ASSUMPTION: A-W0.4-11"
+    description: Counter reading as reported by the source (cumulative), in `units`.
+  - name: increment_eu
+    type: float64
+    nullable: true
+    minimum: 0.0
+    basis: "ASSUMPTION: A-W0.4-11"
+    description: Increment attributed to this update when the source reports one; null otherwise.
+  - name: units
+    type: string
+    nullable: false
+    basis: "ARCH §12"
+    description: Unit of the counter (count, h).
+  - name: t_update
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-11"
+    description: When the source updated the counter. The event time of the record.
+  - name: t_record
+    type: time_ns
+    time_scale: recorder_rtc
+    nullable: true
+    basis: "ARCH §8"
+    description: Recorder RTC time; null on the fast path or for ground counters.
+  - name: t_utc
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ARCH §8"
+    description: Absolute time from the aircraft time source.
+  - name: t_ingest
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §8, I5"
+    description: Arrival at the ground.
+  - name: validity
+    type: enum:Validity
+    nullable: false
+    basis: "ARCH §12"
+    description: Validity of the counter reading.
+  - name: quality_flags
+    type: flags:QualityFlags
+    nullable: false
+    basis: "ARCH §12"
+    description: Quality flag bit set.
+  - name: provenance
+    type: enum:Provenance
+    nullable: false
+    basis: "ARCH §12"
+    description: full_path or direct.

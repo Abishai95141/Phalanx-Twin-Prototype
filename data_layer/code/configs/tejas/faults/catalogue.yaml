@@ -1,0 +1,859 @@
+# Fault-mode catalogue (architecture §6 M11, §9.2-9.3, AD-18; report §9). Rows of the two research catalogues:
+#   FD#n  = faults_and_degradation.md §9(b) fault-mode catalogue (38 rows)
+#   TFG#n = texture_and_fault_gap_closure.md synthesis (c) fault-signature table (41 rows)
+# Every row of both is covered by at least one mode (tests/unit/test_faults_catalogue.py).
+#
+# class:   degradation (gradual, advanced by M10 processes) | shock | transient | sensor | discrete | intermittent |
+#          latent (maintenance-induced) | physics (emerges from module physics; no injection)
+# onset:   m10 | physics | poisson (rate per flight hour, param) | per_event (probability per driver event) |
+#          markov (two-state per sortie) | latent (per maintenance action) | triggered (M10 damage threshold) | scripted
+# effects: perturbations applied at onset (I6: only state changes; never an observation):
+#          health     -> health.fault {state, delta x severity}
+#          sensors    -> sensor_fault to M12 {channel, mode, value, rate, duty, probe} (AD-42), built from
+#                        magnitude (fraction of channel span x severity), rate_per_s (drift, fraction of
+#                        span per s, bounded by magnitude), rate (1/s), duty, probe, factor, level
+#          monitoring -> monitor.lru_condition {code, magnitude (test-statistic σ units) x severity}
+#          utilities  -> util.fault to M09 {tail, mode} (AD-44 vocabulary: gen_fail, bk_fail, fire_onset,
+#                        fire_loop_open, fire_loop_short; their clears follow automatically)
+#          engine|fadec|airframe -> <prefix>.fault_inject {tail, mode, param x severity, instance, engine, clear}
+#                        (AD-48.4); airframe adds leg (M06 gear leg 0 nose, 1 left, 2 right, -1 all), given as
+#                        `legs: [..]`, `leg: n`, `leg: "*"` (a main leg by the instance's choice) or `leg: key`
+#                        (the trigger key's side suffix); airframe modes are M06's kernel.AF_FAULT_MODES
+#          health states may name the hydraulic system as {h} (taken from the trigger key, else 1)
+# graph_root: node of graph.yaml where the cascade starts (propagated with the edge latencies).
+# detection.coverage: probability the BIT test that owns the code can see this instance (missed-detection pool).
+# validation (AD-55, W2.5): status validated (the priority set: B7 checks run in depth, ids of
+#          analysis/faults_b7b8/, with the literature evidence) or unvalidated with its reason. The label-leak
+#          audit and G0 cover every mode.
+format: phalanx.fault_catalogue/2
+modes:
+  # ---------------------------------------------------------------- engine gradual degradation (M10 processes)
+  FM.ENG.FOULING:            {name: "Fan/compressor fouling", subsystem: engine, class: degradation, nm_ref: NM.ENG.FAN_HEALTH, onset: {process: m10}, refs: ["FD#1"], signature: "At fixed N1/thrust: T5 up, Wf up, N2 shift; ~1 % Γ and η; recoverable by wash", evidence: {tag: "TRANSFER: Kurz & Brun", source: "N:FD §9(b) #1"}, validation: {status: validated, checks: [B7-ENG-FOUL-SIG, B7-ENG-FOUL-RATE], evidence: "Muir et al. AGARD-CP-448 p7 Fig. 15 fan and HPC rows (directions) [TRANSFER: F404-400 CF-18]; Kurz & Brun GT2011-45012 (~1 % Gamma and eta per roughness step; recoverable by wash) [TRANSFER]"}}
+  FM.ENG.EROSION:            {name: "Compressor/turbine erosion", subsystem: engine, class: degradation, nm_ref: NM.ENG.HPC_HEALTH, onset: {process: m10}, refs: ["FD#2", "FD#5"], signature: "HPC η -5 %, Γ -9 % at 5,000 flights; stall margin down; LPT η -0.5 to -1.1 %", evidence: {tag: "TRANSFER: ProDiMES, C-MAPSS", source: "N:FD §9(b) #2, #5"}, validation: {status: validated, checks: [B7-ENG-ERO-SIG, B7-ENG-ERO-RATE], evidence: "ProDiMES NASA/TM-2010-215840 fleet HPC eta -5 %, Gamma -9 % at 5,000 flights and fighter severity S 1.5-2 (architecture §9.2) [TRANSFER + ASSUMPTION]; Muir Fig. 15 HPC row [TRANSFER]"}}
+  FM.ENG.RUB_IN:             {name: "Tip-clearance growth (rub-in)", subsystem: engine, class: degradation, nm_ref: NM.ENG.TIP_CLEARANCE, onset: {process: m10}, refs: ["FD#3"], signature: "+1 °C EGT and +0.1 % SFC per 0.001 in HPT clearance; 1 % TSFC flight 1", evidence: {tag: "TRANSFER: Lattime & Steinetz; Sallee", source: "N:FD §9(b) #3"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.ENG.HPT_DETERIORATION:  {name: "HPT erosion/oxidation/TBC loss and abnormal onset", subsystem: engine, class: degradation, nm_ref: NM.ENG.HPT_HEALTH, onset: {process: m10}, refs: ["FD#4"], signature: "HPT η -2.6 %, Γ +1.8 % at 3,000 cycles; 1 % HPT fault: N2 -0.6 %, Wf +0.6 %, EGT +12 °F", evidence: {tag: "TRANSFER: C-MAPSS", source: "N:FD §9(b) #4"}, validation: {status: validated, checks: [B7-ENG-HPT-SIG, B7-ENG-HPT-ONSET], evidence: "Muir Fig. 15 HPT-efficiency row [TRANSFER: F404-400]; Vhora US 7,062,370 Tbl I (1 % HPT: N2 down, Wf up, EGT up) [TRANSFER]; N-CMAPSS abnormal-onset law (Arias Chao 2021) [TRANSFER]"}}
+  FM.ENG.LIFE_USAGE:         {name: "Hot-section LCF/creep/TMF usage damage", subsystem: engine, class: degradation, nm_ref: NM.ENG.DISK_LIFE, onset: {process: m10}, refs: ["FD#14"], signature: "No gas-path signature until crack; usage counters (~2.5 TAC/EFH)", evidence: {tag: "TRANSFER: F-16 (Thunderbird AIB 2025)", source: "N:FD §9(b) #14 (Thunderbird AIB 2025: usage counting, no gas-path signature until crack; ~2.5 TAC/EFH inferred); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.ENG.BEARING_SPALL:      {name: "Main-shaft bearing spall progression", subsystem: engine, class: degradation, nm_ref: NM.ENG.BEARING_SPALL, onset: {process: m10}, refs: ["FD#15", "TFG#22"], signature: "Chips in oil (48 %), vibration (16 %), low oil pressure (12 %); ODM 2-50 mg/mm", evidence: {tag: "TRANSFER: Su-30MKI AL-31FP (IAF fleet); FEMTO rig", source: "N:FD §9(b) #15 (IAF Su-30MKI engine-failure statistics: chips 33/69, vibration 11/69, low oil pressure 8/69; FEMTO rig lives); N:TFG (c) #22; IAF-fleet evidence but another engine type (AL-31FP), so TRANSFER for the IN20; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}, validation: {status: validated, checks: [B7-OIL-C25, B7-OIL-SPALL], evidence: "Bennett et al. 1996 QFDA Tbl I (CF188 Fe 0.4747 ug/h mean, 1.6813 ug/h 2 sigma, 26 filters) [TRANSFER: F404-400]; NASA TM-2011-217117 spall growth 0.08-0.34 mm/h, debris 2-50 mg per mm [TRANSFER]"}}
+  FM.ENG.OIL_CONDITION:      {name: "Race wear / spinning raising oil Fe", subsystem: engine, class: degradation, nm_ref: NM.ENG.OIL_CONDITION, onset: {process: m10}, refs: ["TFG#25"], signature: "SOAP Fe slope 0.02-0.07 ppm/h normal -> 1-11 ppm/h; F404 abnormal ≥15 ppm", evidence: {tag: "TRANSFER: JOAP 2013", source: "N:TFG (c) #25"}, validation: {status: validated, checks: [B7-OIL-SOAP], evidence: "JOAP 2013 / N:TFG (c) #25: SOAP Fe slope 0.02-0.07 ppm/h normal, 1-11 ppm/h abnormal [TRANSFER: F404 family]"}}
+  FM.ENG.SEAL_WEAR:          {name: "Carbon-seal wear / oil leak", subsystem: engine, class: degradation, nm_ref: NM.ENG.SEAL_WEAR, onset: {process: m10}, refs: ["TFG#26"], signature: "Oil consumption to limit (F110 0.355 L/h)", evidence: {tag: "TRANSFER: JOAP 2013", source: "N:TFG (c) #26"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.ENG.NOZZLE_FLAP_CRACK:  {name: "Nozzle flap cracking", subsystem: engine, class: degradation, nm_ref: NM.ENG.NOZZLE_HW, onset: {process: m10}, refs: ["TFG#11"], signature: "No gas-path signature; outer flap cracks 4-16 mm at ~25 % of a 330 h test", evidence: {tag: "TRANSFER: F404-102 (KDTQ 2006)", source: "N:TFG (c) #11"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  # ---------------------------------------------------------------- engine shocks, transients and discrete faults
+  FM.ENG.FOD_BIRD:
+    name: "FOD or bird ingestion"
+    subsystem: engine
+    class: shock
+    nm_ref: NM.ENG.FAN_HEALTH
+    onset: {process: poisson, rate: bird_strike_rate, scale: engine_ingestion_fraction, env: dust}
+    severity: {dist: lognormal, median: 1.0, sigma: fod_severity_sigma}
+    effects:
+      - {target: health, state: "eng:fod_fan_eta", delta: fod_eta_step}
+      - {target: health, state: "eng:fod_fan_flow", delta: fod_flow_step}
+      - {target: health, state: "eng:fod_hpc_eta", delta: fod_hpc_step}
+      - {target: engine, mode: fod_imbalance, param: 1.0}
+    detection: {codes: [ENG-501, ECM-701], coverage: 0.9}
+    refs: ["FD#6", "TFG#3"]
+    signature: "Abrupt Γ/η shift; stalls every 3-5 s; thrust ≈96 % MIL; vibration up; FOD may give no code"
+    evidence: {tag: "TRANSFER: F-16/F-35A AIBs (Eielson, Luke); F100 (AIB 88-0165)", source: "N:FD §9(b) #6 (Eielson F-16, Luke F-35A AIBs); N:TFG (c) #3 (AIB 88-0165): the signature and effects; IAF bird strikes 357 incidents 2010-13 (indian_fleet_platform_relevance.md) is DIRECT IAF context for the rate, which M11.yaml bird_strike_rate tags on its own; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.POP_STALL:
+    name: "Pop stall from inlet distortion"
+    subsystem: engine
+    class: transient
+    nm_ref: NM.ENG.HPC_HEALTH
+    onset: {process: poisson, rate: pop_stall_rate}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 3.0
+    effects: [{target: engine, mode: pop_stall, param: 1.0}]
+    detection: {codes: [ENG-501], coverage: 0.95}
+    refs: ["TFG#1"]
+    signature: "PS3 85 -> 10-15 psia in ≤1 sample, ≈75 psia within 0.3 s, baseline ≈3 s; only at AoA > 70° with high yaw rate"
+    evidence: {tag: "TRANSFER: F404-400 (TM-104328)", source: "N:TFG (c) #1"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.BLADE_LOSS:
+    name: "Mechanical stall from blade loss (turned vane -> HCF crack -> liberation)"
+    subsystem: engine
+    class: discrete
+    nm_ref: NM.ENG.BLADE_CRACK
+    onset: {process: triggered, trigger: "eng:crack_len"}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: eng.blade_loss
+    effects:
+      - {target: health, state: "eng:extra_hpc_eta", delta: -0.05}
+      - {target: health, state: "eng:extra_hpc_flow", delta: -0.08}
+      - {target: engine, mode: blade_loss, param: 1.0}
+    detection: {codes: [ENG-501, ENG-701, ENG-503, ENG-502], coverage: 1.0}
+    refs: ["FD#8", "TFG#2"]
+    signature: "N1 95 -> 15 % in 0.6 s; N2 sub-idle; T5 rises; stall +2 s, overtemp +4 s, T sensor fail +10 s, flameout +13 s; generators off, EPU +16-19 s"
+    evidence: {tag: "TRANSFER: F110/F100 AIBs 88-0433, 90-0771, 87-0358; Thunderbird AIB 2025", source: "N:TFG (c) #2; N:FD §9(b) #8"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.HPC_DAMAGE:
+    name: "HPC damage (F404 take-off signature)"
+    subsystem: engine
+    class: shock
+    nm_ref: NM.ENG.HPC_HEALTH
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects:
+      - {target: health, state: "eng:extra_hpc_eta", delta: -0.05}
+    detection: {codes: [ECM-501], coverage: 0.7}
+    refs: ["TFG#4"]
+    signature: "Take-off PS3 rise lags twin by 1.5-2 s, plateau -4 pts; PS3/P1 +8 %, Wf +8-14 % at fixed N2"
+    evidence: {tag: "TRANSFER: F404-400 (AGARD-CP-448 P7)", source: "N:TFG (c) #4; the source quantifies the damage as about -5 % HPC efficiency equivalent only, so the unsourced -3 % HPC flow delta of the W1.5 entry was removed (W2.5)"}
+    validation: {status: validated, checks: [B7-ENG-C26], evidence: "Muir et al. AGARD-CP-448 p7 (HPC blade damage ~ -5 % HPC efficiency: PS3/P1 +8 %, Wf +8-14 % at fixed N2) and the NRC model (C26) [TRANSFER: F404-400]"}
+  FM.ENG.BEARING_FAILURE:
+    name: "Bearing failure with stall/vibration ceiling"
+    subsystem: engine
+    class: discrete
+    nm_ref: NM.ENG.BEARING_SPALL
+    onset: {process: triggered, trigger: "eng:spall_len"}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: eng.bearing_failure
+    effects: [{target: engine, mode: bearing_failure, param: 1.0}]
+    detection: {codes: [ECM-001, ECM-701, ENG-501], coverage: 0.9}
+    refs: ["TFG#5"]
+    signature: "Vibration at all powers; repeat stalls above ≈85 % RPM; RPM down with FTIT up; airstarts fail"
+    evidence: {tag: "TRANSFER: F110 (ExecSum 2006/2001)", source: "N:TFG (c) #5"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.AB_NO_LIGHT:
+    name: "AB no-light"
+    subsystem: engine
+    class: transient
+    nm_ref: NM.ENG.AB_SPRAYBAR
+    onset: {process: per_event, driver: ab_lights, probability: ab_no_light_p}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 10.0
+    effects: [{target: engine, mode: ab_no_light, param: 1.0}]
+    detection: {codes: [ENG-503], coverage: 0.95}
+    refs: ["FD#11", "TFG#6"]
+    signature: "No light-off detected 2.5 s after request; up to 3 retries; AB lever reverts to intermediate"
+    evidence: {tag: "TRANSFER: F100 (TM-86745)", source: "N:TFG (c) #6; N:FD §9(b) #11"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.AB_BLOWOUT:
+    name: "AB rumble and blowout"
+    subsystem: engine
+    class: transient
+    nm_ref: NM.ENG.AB_SPRAYBAR
+    onset: {process: per_event, driver: ab_lights, probability: ab_blowout_p}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 5.0
+    effects: [{target: engine, mode: ab_rumble_blowout, param: 1.0}]
+    detection: {codes: [ENG-503], coverage: 0.8}
+    refs: ["FD#11", "TFG#7"]
+    signature: "PAB 60 Hz, 2 psi pk-pk oscillation then blowout (band 30-200 Hz)"
+    evidence: {tag: "TRANSFER: F100 (CP-2298 P11; AFAPL-TR-78-82)", source: "N:TFG (c) #7"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.QUICKFILL_STALL:
+    name: "AB quickfill stall"
+    subsystem: engine
+    class: transient
+    nm_ref: NM.ENG.HPC_HEALTH
+    onset: {process: per_event, driver: ab_lights, probability: quickfill_stall_p}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 2.0
+    effects: [{target: engine, mode: quickfill_stall, param: 1.0}]
+    detection: {codes: [ENG-501], coverage: 0.95}
+    refs: ["TFG#8"]
+    signature: "Segment-fill pressure spike ≈300 psi -> fan stall; ≈1 per 994 segment-1 lights (high altitude, low speed)"
+    evidence: {tag: "TRANSFER: F100 (CP-2298 P11)", source: "N:TFG (c) #8"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.NOZZLE_LIMIT_CYCLE:
+    name: "Nozzle EPR-loop limit cycle"
+    subsystem: engine
+    class: intermittent
+    nm_ref: NM.ENG.NOZZLE_HW
+    onset: {process: markov, p_on: nozzle_lc_p_on, p_off: nozzle_lc_p_off}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: fadec, mode: nozzle_loop_gain_margin, param: 1.0}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["TFG#9"]
+    signature: "Sustained AJ limit cycle ±0.1-0.2 ft², intermittent, very sensitive to conditions; PAB ±2.5 psi; not detected as a fault. The F100 1-2 Hz (about 1.4 Hz) is a property of its EPR loop, not transferred: the IN20 nozzle loop holds T5 through the thermocouple harness (F404 probe τ 1.75 s, CR-1998-208416 Fig. 3), so its limit cycle is slower (M08 gives about 0.6 Hz, A-W2.1b-5)"
+    evidence: {tag: "TRANSFER: F100 (CP-2298 P12; TM-85914)", source: "N:TFG (c) #9 and Q6 (EPR-loop nozzle instability: 1-2 Hz on the F100 EPR loop; fix = gain halved, EPR deadband x30); loop variable per f404_in20_engine_model.md Q4 (A8 holds T5 at/above IRP); frequency expectation revised in W2.5 (coordinator item after W2.1b): amplitude, persistence and non-detection transfer, the frequency does not"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.SHUTOFF_PARTIAL:
+    name: "Main fuel shut-off valve partly closed"
+    subsystem: engine
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: engine, mode: fuel_restriction, param: 1.0}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["TFG#12"]
+    signature: "RPM stuck ≈70 % sub-idle ≈3 min, no throttle response, NO caution; then ≈20 %"
+    evidence: {tag: "TRANSFER: F110-129 (AIB 92-3886)", source: "N:TFG (c) #12; architecture §9.3 (no caution)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.FUEL_SCHEDULE_BIAS:
+    name: "Main fuel control over-fuelling"
+    subsystem: engine
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: uniform, lo: 0.5, hi: 1.0}
+    effects: [{target: fadec, mode: fuel_schedule_bias, param: 0.04}]
+    detection: {codes: [ECM-501], coverage: 0.5}
+    refs: ["TFG#13"]
+    signature: "Take-off fuel ratio Wf/PS3 ≈102-105 % vs 89-92 % at ≈80 % N2; flameout on start-up"
+    evidence: {tag: "TRANSFER: F404-400 (AGARD-CP-448 P7)", source: "N:TFG (c) #13"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.HUNG_START:
+    name: "Hung start"
+    subsystem: engine
+    class: transient
+    onset: {process: per_event, driver: starts, probability: hung_start_p}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 30.0
+    effects: [{target: engine, mode: hung_start, param: 1.0}]
+    detection: {codes: [ENG-504], coverage: 0.95}
+    refs: ["TFG#14"]
+    signature: "N2 flat ≈35 %; FTIT up ≈12 °C/s; nozzle ≈90 % open; FADEC rule N2 < 60 % and not rising for 1 s"
+    evidence: {tag: "TRANSFER: F100-229 (AIB 92-3890; CP-2298 P8)", source: "N:TFG (c) #14; architecture §6 M08"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.HOT_START:
+    name: "Hot start"
+    subsystem: engine
+    class: transient
+    onset: {process: per_event, driver: starts, probability: hot_start_p}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 20.0
+    effects: [{target: engine, mode: hot_start, param: 1.0}]
+    detection: {codes: [ENG-505, ENG-701], coverage: 0.95}
+    refs: ["TFG#15"]
+    signature: "FTIT overshoot; stall; control trims fuel above ≈760 °C"
+    evidence: {tag: "TRANSFER: F100 (CP-2298 P8; TM-85900)", source: "N:TFG (c) #15"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.FLAMEOUT:
+    name: "Flameout with FADEC relight"
+    subsystem: engine
+    class: transient
+    onset: {process: poisson, rate: flameout_rate}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 15.0
+    graph_root: eng.flameout
+    effects: [{target: engine, mode: flameout, param: 1.0}]
+    detection: {codes: [ENG-502], coverage: 1.0}
+    refs: ["TFG#16"]
+    signature: "T5 dips then rises; NH falling; PS3 collapse; flameout code set and cleared when T5 recovers"
+    evidence: {tag: "TRANSFER: RM12 (SHK RM 2019:02)", source: "N:TFG (c) #16"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.BLEED_LEAK:
+    name: "Bleed leak or over-extraction"
+    subsystem: engine
+    class: discrete
+    onset: {process: poisson, rate: bleed_leak_rate}
+    severity: {dist: uniform, lo: 0.2, hi: 1.0}
+    effects: [{target: engine, mode: bleed_leak, param: 0.45}]
+    detection: {codes: [ECM-501], coverage: 0.3}
+    refs: ["TFG#17"]
+    signature: "Thrust -2-3 % per lb/s (param in kg/s); T5/N2 shift"
+    evidence: {tag: "TRANSFER: F404-400 (TM-104247)", source: "N:TFG (c) #17"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.BLEED_MISSCHEDULE:
+    name: "Bleed valve mis-scheduled"
+    subsystem: engine
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: uniform, lo: 0.2, hi: 1.0}
+    effects: [{target: engine, mode: bleed_schedule_bias, param: 0.02}]
+    detection: {codes: [ECM-501], coverage: 0.2}
+    refs: ["FD#13"]
+    signature: "Gas-path residual shift; weak or undetectable at low power"
+    evidence: {tag: "TRANSFER: F117 (Rinehart & Simon)", source: "N:FD §9(b) #13; the VIPR fault was injected by hardware overriding the controller's bleed-valve command (Gorospe, Simon & Goebel, PHM 2015; N:FD §1c), i.e. an off-schedule valve, a plant state: target engine (M07 extra bleed fraction; M08 schedules no bleed and refuses it), retargeted from fadec at the W2.1b proposal (W2.5)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.VG_MISSCHEDULE:
+    name: "Variable-geometry mis-scheduling"
+    subsystem: engine
+    class: shock
+    nm_ref: NM.ENG.VG_ACTUATION
+    onset: {process: latent, actions: [engine_install, vg_rigging], probability: latent_p_engine}
+    severity: {dist: uniform, lo: 1.0, hi: 5.0}
+    effects: [{target: health, state: "eng:aux_vg_offset", delta: 1.0}]
+    detection: {codes: [ENG-102, ENG-501], coverage: 0.6}
+    refs: ["FD#7"]
+    signature: "Rotating stall 66 Hz; N2 12,790 -> 10,800 rpm; FTIT falls then rises; stall persists (vane error in degrees x severity)"
+    evidence: {tag: "TRANSFER: F100 DEEC (NASA TM-81759)", source: "N:FD §9(b) #7 (NASA TM-81759: RCVV/VSV mis-scheduling, rotating stall, DEEC fault codes); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.ENG.MISSING_AIR_SEAL:
+    name: "Missing fan air seal -> blade migration -> liberation"
+    subsystem: engine
+    class: latent
+    nm_ref: NM.ENG.FAN_HEALTH
+    onset: {process: latent, actions: [engine_overhaul, engine_install], probability: latent_p_engine}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: eng.fan_blade_liberation
+    effects:
+      - {target: health, state: "eng:extra_fan_eta", delta: -0.10}
+      - {target: engine, mode: fan_blade_liberation, param: 1.0}
+    detection: {codes: [FIR-501, ENG-506], coverage: 1.0}
+    refs: ["FD#9", "FD#28"]
+    signature: "591 h latent; thrust loss + fire/overheat/engine lights near-simultaneous; generator drop"
+    evidence: {tag: "TRANSFER: F-16 (Holloman AIB 90-0755)", source: "N:FD §9(b) #9, #28 (Holloman AIB 90-0755); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.MEC_MISASSEMBLY:
+    name: "Fuel control mis-assembly -> over-metering"
+    subsystem: engine
+    class: latent
+    onset: {process: latent, actions: [fuel_control_install], probability: latent_p_engine}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: eng.fuel_overmetering
+    effects: [{target: fadec, mode: fuel_overmetering, param: 0.15}]
+    detection: {codes: [ENG-702, ENG-701, FIR-501], coverage: 1.0}
+    refs: ["FD#10"]
+    signature: "Uncommanded acceleration, overspeed, overtemp, fire; first flight after installation"
+    evidence: {tag: "TRANSFER: F-16C (MEC mis-assembly AIB 2017)", source: "N:FD §9(b) #10 (F-16C AIB 2017); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c). Target (W2.5 decision): the defect is in metering hardware (F110 MEC pilot valve; on the IN20 the engine-mounted fuel metering unit under a FADEC position loop, which cannot see flow), so the delivered flow exceeds the command while the control law's command is unchanged. M08 realises exactly that (gain on the delivered demand, law state untouched) and no FADEC-computed fuel command is recorded (M08 RECORDED), so the fadec target is observationally identical to an M07 realisation and stays; it must move to M07 if a FADEC fuel-command word is ever recorded"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.LINER_BURN:
+    name: "Nozzle fairing fracture -> liner burn-through"
+    subsystem: engine
+    class: latent
+    nm_ref: NM.ENG.NOZZLE_HW
+    onset: {process: latent, actions: [nozzle_maintenance], probability: latent_p_engine}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: engine, mode: liner_burn_through, param: 1.0}]
+    detection: {codes: [FIR-501], coverage: 1.0}
+    refs: ["FD#12"]
+    signature: "Flame from aft fuselage, airspeed and climb decay, fire; cracks at ~700-900 h; found by 800-EFH inspection"
+    evidence: {tag: "TRANSFER: F-16 (Misawa AIB 92-3883)", source: "N:FD §9(b) #12 (Misawa AIB 92-3883); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.OIL_LOSS:
+    name: "Engine oil loss / low level -> pressure loss -> seizure"
+    subsystem: engine
+    class: discrete
+    nm_ref: NM.ENG.SEAL_WEAR
+    onset: {process: poisson, rate: oil_loss_rate}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: eng.oil_quantity_low
+    effects: [{target: engine, mode: oil_quantity_low, param: 1.0}]
+    detection: {codes: [ECM-702], coverage: 0.9}
+    refs: ["FD#16"]
+    signature: "Oil pressure down, unusual noise -> seizure (minutes); Tejas 2024 cause conflict oil pump vs oil level (report App. A4)"
+    evidence: {tag: "DIRECT", source: "N:FD §9(b) #16 (IDN/IDRW, unconfirmed): the 2024 Tejas engine seizure (secondary press; report App. A4 conflict). Kept DIRECT: Tejas-own evidence (W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.LUBE_COOLING_LOSS:
+    name: "Lube heat-rejection loss"
+    subsystem: engine
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: uniform, lo: 0.2, hi: 1.0}
+    effects: [{target: engine, mode: lube_cooling_loss, param: 0.05}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#17"]
+    signature: "HOT +0.6 %, LOT +0.5 % per 1 % fault (illustrative); slow; model residual only"
+    evidence: {tag: "TRANSFER: APU (Honeywell patent)", source: "N:FD §9(b) #17"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.ENG.OIL_STARVATION:
+    name: "AGB/PTO oil jet blocked -> starvation"
+    subsystem: engine
+    class: discrete
+    nm_ref: NM.SPS.AMAGB_WEAR
+    onset: {process: latent, actions: [engine_overhaul, amagb_maintenance], probability: latent_p_engine}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: eng.seizure
+    effects: [{target: health, state: "util:amagb_wear", delta: 2.0}]
+    detection: {codes: [ECM-702, SPS-001], coverage: 0.5}
+    refs: ["TFG#23"]
+    signature: "No debris/JOAP precursor; ≈5 EOT h to failure; N2 indication 0 in ≈2 s; oil pressure and generators lost; false hung JFS restart"
+    evidence: {tag: "TRANSFER: F110 (AIB 87-0242)", source: "N:TFG (c) #23"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  # ---------------------------------------------------------------- engine sensors (applied in M12 at s_inst / s_meas)
+  FM.SNS.INLET_STATIC_TRAPPED:
+    name: "Trapped (iced or plugged) inlet static pressure"
+    subsystem: air_data
+    class: sensor
+    nm_ref: NM.AD.TRANSDUCER_DRIFT
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: sensors, channel: AD.PS.A, mode: stuck, magnitude: 0.0}]
+    detection: {codes: [ADC-002, FCS-501], coverage: 0.5}
+    refs: ["TFG#18"]
+    signature: "Frozen PS; error grows with altitude; undetected until 25 % residual (20,000 ft climb)"
+    evidence: {tag: "TRANSFER: F100 (TM-86735)", source: "N:TFG (c) #18"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.SNS.PS3_VENTED:
+    name: "Burner pressure line broken (vented)"
+    subsystem: engine
+    class: sensor
+    nm_ref: NM.ENG.SENSOR_TRUTH
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: uniform, lo: 0.5, hi: 1.0}
+    effects: [{target: sensors, channel: ENG.PS3.A, mode: bias, magnitude: -0.6}]
+    detection: {codes: [ENG-007, ENG-501], coverage: 0.7}
+    refs: ["TFG#19"]
+    signature: "PB reads low -> false stall detected -> fuel cut -> sub-idle rollback (detection fooled)"
+    evidence: {tag: "TRANSFER: F100 (TM-86735)", source: "N:TFG (c) #19"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.SNS.PRESSURE_HIGH:
+    name: "Pressure transducer fails high in range"
+    subsystem: engine
+    class: sensor
+    nm_ref: NM.ENG.SENSOR_TRUTH
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: uniform, lo: 0.3, hi: 1.0}
+    effects: [{target: sensors, channel: ENG.PS3.B, mode: drift, magnitude: 0.3, rate_per_s: 0.001}]
+    detection: {codes: [ENG-008], coverage: 0.4}
+    refs: ["TFG#20"]
+    signature: "Nozzle opens, thrust much lower, FTIT low; flag only when out of range"
+    evidence: {tag: "TRANSFER: F100 (TM-86735; CP-2298 P7)", source: "N:TFG (c) #20"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.SNS.T5_OPEN:
+    name: "T5 harness open circuit"
+    subsystem: engine
+    class: sensor
+    nm_ref: NM.ENG.SENSOR_TRUTH
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: sensors, channel: ENG.T5.HARNESS_A, mode: open, magnitude: 0.0}]
+    detection: {codes: [ENG-005], coverage: 0.95}
+    refs: ["TFG#21"]
+    signature: "Driver to 0 or full scale; synthesised FTIT; N2 max -1,000 rpm (dual open)"
+    evidence: {tag: "TRANSFER: F100 (TM-86735)", source: "N:TFG (c) #21"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.SNS.T5_HARNESS_BIAS:
+    name: "T5 harness bias step"
+    subsystem: engine
+    class: sensor
+    nm_ref: NM.ENG.SENSOR_TRUTH
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: uniform, lo: 0.2, hi: 1.0}
+    effects: [{target: sensors, channel: ENG.T5.HARNESS_B, mode: bias, magnitude: 0.12}]
+    detection: {codes: [ENG-006], coverage: 0.3}
+    refs: ["FD#36"]
+    signature: "60 °C harness bias changed the identified fan-spool τ from 0.77 s to 2.11 s (magnitude = fraction of span x severity)"
+    evidence: {tag: "TRANSFER: F404 (Merrington, AGARD-CP-448)", source: "R§9 sensor faults; N:FD §9(b) #36"}
+    validation: {status: validated, checks: [B7-SNS-BIAS], evidence: "Merrington AGARD-CP-448 (F404 T5 harness bias, 60 degC) [TRANSFER]; AD-26 / TM-4551 (bias and deterioration are separate truths; the recorded shift is the bias, the engine truth is unchanged)"}
+  FM.SNS.NOZZLE_FEEDBACK:
+    name: "Nozzle position feedback failure"
+    subsystem: engine
+    class: sensor
+    nm_ref: NM.ENG.NOZZLE_HW
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: sensors, channel: ENG.A8.A, mode: stuck, magnitude: 0.0}]
+    detection: {codes: [ENG-011], coverage: 0.95}
+    refs: ["TFG#10"]
+    signature: "Nozzle driven fully closed; AB inhibited (F100); F404 FICA holds thrust via N2 reference"
+    evidence: {tag: "TRANSFER: F100/F404 (CP-2298 P7; TM-101396)", source: "N:TFG (c) #10"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.SNS.OIL_P_TRANSMITTER:
+    name: "Oil-pressure transmitter false-low"
+    subsystem: engine
+    class: sensor
+    nm_ref: NM.ENG.SENSOR_TRUTH
+    onset: {process: poisson, rate: sensor_fault_rate}
+    severity: {dist: uniform, lo: 0.5, hi: 1.0}
+    effects: [{target: sensors, channel: ENG.OIL_P, mode: bias, magnitude: -0.3}]
+    detection: {codes: [ECM-702, ENG-012], coverage: 0.9}
+    refs: ["TFG#41"]
+    signature: "False-low reading with true pressure normal; caution after 30 s; may cause precautionary IFSD"
+    evidence: {tag: "TRANSFER: F404-400 (Glenny 1989; MIL-T-5796D)", source: "N:TFG (c) #41"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.SNS.GENERIC:
+    name: "Generic sensor faults (drift, stuck, intermittent, spikes, open/short, slow response)"
+    subsystem: any
+    class: sensor
+    nm_ref: NM.ENG.SENSOR_TRUTH
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: sensors, channel: "*", mode: "*", magnitude: 0.0}]
+    detection: {codes: [], coverage: 0.5}
+    refs: ["FD#37"]
+    signature: "As parameterised (JSBSim FGSensor primitives)"
+    evidence: {tag: "TRANSFER: JSBSim FGSensor/FGActuator", source: "N:FD §9(b) #37"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  # ---------------------------------------------------------------- air data, avionics, electrical
+  FM.AD.MOISTURE_COMMON_MODE:
+    name: "Moisture in air-data transducers (common mode)"
+    subsystem: air_data
+    class: sensor
+    nm_ref: NM.AD.TRANSDUCER_DRIFT
+    onset: {process: poisson, rate: ad_moisture_rate, env: humidity}
+    severity: {dist: uniform, lo: 0.3, hi: 1.0}
+    effects:
+      - {target: sensors, channel: AD.PS.A, mode: bias, magnitude: 0.01}
+      - {target: sensors, channel: AD.PS.B, mode: bias, magnitude: 0.01}
+      - {target: sensors, channel: AD.PS.C, mode: bias, magnitude: 0.01}
+      - {target: sensors, channel: AD.PS.D, mode: bias, magnitude: 0.01}
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#30"]
+    signature: "AoA and airspeed error; rotation 12 kt slow; 30° pitch-up at 1.6 g; no flag (all channels affected)"
+    evidence: {tag: "TRANSFER: B-2 (Andersen 2008, secondary source)", source: "N:FD §9(b) #30 (B-2 2008, secondary); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.AD.PROBE_DISTURBANCE:
+    name: "Air-data probe flow disturbance -> exclusion + intermittent out-of-limits"
+    subsystem: air_data
+    class: sensor
+    nm_ref: NM.AD.TRANSDUCER_DRIFT
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: sensors, channel: AD.PT.A, mode: intermittent, rate: sensor_intermittent_rate, duty: sensor_intermittent_duty}]
+    detection: {codes: [ADC-501], coverage: 0.5}
+    refs: ["FD#31"]
+    signature: "AIR DATA DEGD for one side; > 40° AoA error in fused value; no caution for the other side"
+    evidence: {tag: "TRANSFER: F-35A (Hill AIB 2022)", source: "N:FD §9(b) #31 (Hill F-35A AIB); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.AD.VANE_CAL_BIAS:
+    name: "AoA vane calibration bias"
+    subsystem: air_data
+    class: latent
+    nm_ref: NM.AD.TRANSDUCER_DRIFT
+    onset: {process: latent, actions: [vane_install], probability: latent_p_airframe}
+    severity: {dist: uniform, lo: 0.1, hi: 1.0}
+    effects: [{target: sensors, channel: AD.AOA_VANE_L.A, mode: bias, magnitude: 0.23}]
+    detection: {codes: [ADC-001], coverage: 0.9}
+    refs: ["FD#32"]
+    signature: "Constant L-R split (21° B737); IAS/ALT disagree; stick shaker (fraction of span x severity)"
+    evidence: {tag: "TRANSFER: B737 (KNKT)", source: "N:FD §9(b) #32"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.AD.PROBE_MISALIGN:
+    name: "Air-data probe misalignment after maintenance"
+    subsystem: air_data
+    class: latent
+    nm_ref: NM.AD.VANE_FRICTION
+    onset: {process: latent, actions: [radome_maintenance, vane_install], probability: latent_p_airframe}
+    severity: {dist: uniform, lo: 0.1, hi: 0.3}
+    effects:
+      - {target: sensors, channel: AD.AOA_VANE_L.A, mode: bias, magnitude: 0.0111}
+      - {target: sensors, channel: AD.AOA_VANE_L.B, mode: bias, magnitude: 0.0111}
+    detection: {codes: [], coverage: 0.0}
+    refs: ["TFG#37"]
+    signature: "α/β offsets step 0.1-0.3° (severity in degrees x 1/90 of span)"
+    evidence: {tag: "TRANSFER: TM-101714", source: "N:TFG (c) #37"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.AD.VANE_FRICTION:       {name: "AoA vane bearing wear", subsystem: air_data, class: degradation, nm_ref: NM.AD.VANE_FRICTION, onset: {process: m10}, refs: ["TFG#38"], signature: "Buzz near M 1; ζ up; drift; voting mistrack", evidence: {tag: "TRANSFER: NACA RM L9F28a; TM-101714", source: "N:TFG (c) #38"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.AD.HEATER_FAIL:
+    name: "Probe/vane heater failure"
+    subsystem: air_data
+    class: discrete
+    nm_ref: NM.AD.HEATER_ELEMENT
+    onset: {process: triggered, trigger: "util:ad_heater"}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: monitoring, code: ADC-401, magnitude: 8.0}]
+    detection: {codes: [ADC-401], coverage: 0.95}
+    refs: ["TFG#39"]
+    signature: "TAT correction mismatch; icing risk -> frozen or large error; heater monitor (Tejas)"
+    evidence: {tag: "DIRECT", source: "N:TFG (c) #39 (DSJ 56(1), Rajalakshmi et al. 2006: Tejas vane and probe de-icing heaters are health-monitored). Kept DIRECT: Tejas-own evidence (W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; an LRU condition on its BIT statistic (M14); no physical signature to compare"}
+  FM.AV.BUS_SPIKES:
+    name: "Intermittent corrupted bus words"
+    subsystem: avionics
+    class: sensor
+    onset: {process: poisson, rate: bus_spike_rate}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 1200.0
+    effects: [{target: sensors, channel: AD.AOA_VANE_R.A, mode: spikes, magnitude: 0.5, rate: 0.05}]
+    detection: {codes: [AVI-301], coverage: 0.3}
+    refs: ["FD#33"]
+    signature: "AoA spikes (e.g. 50.625°); 1.2 s memorisation filter defeated; very rare (3 in 128 M unit-h)"
+    evidence: {tag: "TRANSFER: A330 (ATSB AO-2008-070)", source: "N:FD §9(b) #33"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M12 applies the AD-42 sensor-fault mode; its signature is not compared with literature"}
+  FM.AV.INTERMITTENT_CONNECTOR:
+    name: "Intermittent connector / solder joint"
+    subsystem: avionics
+    class: intermittent
+    nm_ref: NM.ELEC.WIRING
+    onset: {process: markov, p_on: intermittent_p_on, p_off: intermittent_p_off, env: humidity}
+    severity: {dist: uniform, lo: 3.0, hi: 8.0}
+    effects: [{target: monitoring, code: "AVI-2*", magnitude: 1.0}]
+    detection: {codes: [AVI-201, AVI-202, AVI-203, AVI-204, AVI-205], coverage: 0.7}
+    refs: ["FD#34"]
+    signature: "Removals NFF 30-50 % (up to 60 % naval avionics); BIT false or can't duplicate; recurs next flight 14-21 %"
+    evidence: {tag: "TRANSFER: Khan et al.; RADC-TR-81-220", source: "N:FD §9(b) #34; N:TFG Q9"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; an LRU condition on its BIT statistic (M14); no physical signature to compare"}
+  FM.AV.LRU_FAILURE:
+    name: "Avionics LRU hard failure"
+    subsystem: avionics
+    class: discrete
+    nm_ref: NM.AV.SOLDER_FATIGUE
+    onset: {process: poisson, rate: lru_failure_rate}
+    severity: {dist: uniform, lo: 6.0, hi: 12.0}
+    effects: [{target: monitoring, code: "AVI-2*", magnitude: 1.0}]
+    detection: {codes: [AVI-201, AVI-202, AVI-203, AVI-204, AVI-205], coverage: 0.85}
+    refs: ["FD#34"]
+    signature: "LRU BIT fail; F-35 isolation to one LRU 42-84 %; missed detections as large as false alarms"
+    evidence: {tag: "TRANSFER: F-35 DOT&E; RADC-TR-81-220", source: "N:TFG Q9"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; an LRU condition on its BIT statistic (M14); no physical signature to compare"}
+  FM.ELEC.PARTIAL_POWER_LOSS:
+    name: "Partial electrical power disruption"
+    subsystem: electrical
+    class: discrete
+    onset: {process: poisson, rate: partial_power_rate}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: elec.partial_power_loss
+    detection: {codes: [ELE-702], coverage: 0.5}
+    refs: ["FD#27"]
+    signature: "EGI invalid without flag; HUD pitch ladder lost at 30-45 s; AGCAS fail"
+    evidence: {tag: "TRANSFER: F-16C (Osan AIB 2023)", source: "N:FD §9(b) #27 (Osan AIB 2023); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.ELEC.GEN_DIODE:
+    name: "Generator rectifier diode open/short"
+    subsystem: electrical
+    class: discrete
+    nm_ref: NM.ELEC.GEN_HEALTH
+    onset: {process: poisson, rate: gen_diode_rate}
+    severity: {dist: uniform, lo: 0.0, hi: 1.0}
+    graph_root: elec.gen_offline
+    effects: [{target: utilities, mode: gen_fail}, {target: monitoring, code: ELE-401, magnitude: 8.0}]
+    detection: {codes: [ELE-401, ELE-404], coverage: 0.9}
+    refs: ["TFG#30", "FD#28"]
+    signature: "Open: field current up tens of %; short: very large field current, ripple up, GCU trip"
+    evidence: {tag: "TRANSFER: US 9,910,083; US 4,486,801; EP 2,077,613", source: "N:TFG (c) #30"}
+    validation: {status: validated, checks: [B7-ELEC-GEN], evidence: "MIL-STD-704F (transfer interruption <= 50 ms; DC transient limits) [TRANSFER]; AIB F-16CM 92-3881 (generator offline -> backup) [TRANSFER]; US 9,910,083 (GCU trip on a diode short) [TRANSFER]"}
+  FM.ELEC.GEN_REGULATION:    {name: "Generator speed-regulation wear", subsystem: electrical, class: degradation, nm_ref: NM.ELEC.GEN_HEALTH, onset: {process: m10}, refs: ["TFG#31"], signature: "Frequency fluctuation at idle or load step -> disconnect", evidence: {tag: "TRANSFER: Airbus Safety First 2025", source: "N:TFG (c) #31"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.ELEC.BACKUP_FAIL:
+    name: "Backup (DC emergency) power source failure"
+    subsystem: electrical
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: utilities, mode: bk_fail}]
+    detection: {codes: [], coverage: 0.0}
+    refs: []
+    signature: "Backup source unavailable when the main generator drops (M09 backup BIT word)"
+    evidence: {tag: ASSUMPTION, source: "M09 util.fault vocabulary (W1.4); no public rate: scripted only (A-W1.5-29)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.FIRE.LOOP_OPEN:
+    name: "Fire-detection loop open circuit"
+    subsystem: fire_protection
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: utilities, mode: fire_loop_open}]
+    detection: {codes: [], coverage: 0.0}
+    refs: []
+    signature: "Fire detection lost on the loop (M09 fire-detection state)"
+    evidence: {tag: ASSUMPTION, source: "M09 util.fault vocabulary (W1.4); no public rate: scripted only (A-W1.5-29)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.FIRE.LOOP_SHORT:
+    name: "Fire-detection loop short circuit"
+    subsystem: fire_protection
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: utilities, mode: fire_loop_short}]
+    detection: {codes: [], coverage: 0.0}
+    refs: []
+    signature: "Loop short: M09's fire-detection logic decides between a false warning and a loop fault"
+    evidence: {tag: ASSUMPTION, source: "M09 util.fault vocabulary (W1.4); no public rate: scripted only (A-W1.5-29)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.ELEC.BATTERY_FADE:      {name: "Battery capacity fade", subsystem: electrical, class: degradation, nm_ref: NM.SPS.BATT_SOH, onset: {process: m10}, refs: ["FD#29"], signature: "EOL at 30 % fade", evidence: {tag: "TRANSFER: NASA 18650 dataset", source: "N:FD §9(b) #29"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  # ---------------------------------------------------------------- hydraulics, gear, brakes, FCS, utilities
+  FM.HYD.ISA_CHECK_VALVE:
+    name: "Actuator internal leak (mis-installed check valves)"
+    subsystem: hydraulics
+    class: latent
+    nm_ref: NM.HYD.ACTUATOR_LEAK
+    onset: {process: latent, actions: [actuator_overhaul, actuator_install], probability: latent_p_airframe}
+    severity: {dist: uniform, lo: 0.5, hi: 1.0}
+    graph_root: hyd.actuator_internal_leak
+    effects: [{target: health, state: "act:elevon_li", delta: 1.0}, {target: health, state: "util:hyd1_sys_leak", delta: 5.0}]
+    detection: {codes: [HYD-501, HYD-502], coverage: 0.95}
+    refs: ["FD#18"]
+    signature: "Sys A 1,500-2,000 -> 1,000-2,000 psi (nominal 3,100 ± 50); 31 ml/min at 1,000 psi; then Sys B low"
+    evidence: {tag: "TRANSFER: F-16 (March ARB AIB 88-0477)", source: "N:FD §9(b) #18 (March ARB AIB 88-0477); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.HYD.FOHE_CRACK:
+    name: "Heat-exchanger weld crack (non-isolable utility circuit)"
+    subsystem: hydraulics
+    class: discrete
+    nm_ref: NM.HYD.HOSE_FITTING
+    onset: {process: poisson, rate: fohe_crack_rate}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: hyd.fohe_crack
+    effects: [{target: health, state: "util:hyd2_ext_leak", delta: 0.02}]
+    detection: {codes: [HYD-502, LGB-503], coverage: 0.9}
+    refs: ["FD#19"]
+    signature: "Hydraulic + Utility B + inlet lights; gauge ~3,000 psi early; brake loss; leak rate up above 225 °F"
+    evidence: {tag: "TRANSFER: F-15D (Kingsley AIB 84-0046)", source: "N:FD §9(b) #19 (Kingsley AIB 84-0046); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.HYD.FITTING_FATIGUE:
+    name: "Hydraulic coupling fatigue crack"
+    subsystem: hydraulics
+    class: discrete
+    nm_ref: NM.HYD.HOSE_FITTING
+    onset: {process: triggered, trigger: "util:hyd?_hose_fitting"}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: hyd.pump_failure
+    effects: [{target: health, state: "util:hyd{h}_ext_leak", delta: 0.3}]
+    detection: {codes: [HYD-501], coverage: 0.95}
+    refs: ["FD#20"]
+    signature: "Rapid loss in 2 of 4 systems (4,000 psi, bomber); minutes"
+    evidence: {tag: "TRANSFER: B-2A (AIBs 2021, 2022)", source: "N:FD §9(b) #20 (B-2A AIBs 2021, 2022); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.HYD.WATER_CONTAMINATION:
+    name: "Water-contaminated hydraulic servicing"
+    subsystem: hydraulics
+    class: latent
+    nm_ref: NM.HYD.FLUID_CONTAM
+    onset: {process: latent, actions: [hyd_servicing], probability: latent_p_servicing}
+    severity: {dist: uniform, lo: 0.5, hi: 1.0}
+    graph_root: hyd.fluid_contaminated
+    effects: [{target: health, state: "util:hyd1_contamination", delta: 1.0}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#21"]
+    signature: "Water ~33 %, particulates > 1,024 ppm; freezing at ~0 °F -> strut stroke loss -> false WoW (needs cold soak)"
+    evidence: {tag: "TRANSFER: F-35A (Eielson AIB 19-5535)", source: "N:FD §9(b) #21 (Eielson F-35A AIB 19-5535); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.HYD.PUMP_WEAR:          {name: "Hydraulic pump wear", subsystem: hydraulics, class: degradation, nm_ref: NM.HYD.PUMP_EFF, onset: {process: m10}, refs: ["FD#22", "TFG#27"], signature: "Case-drain ΔT flat ≈5 months then limit at ≈11.5 months; filter ΔP 6-12 -> > 14 psi in ≈4 weeks", evidence: {tag: "TRANSFER: US 12,265,000", source: "N:TFG (c) #27"}, validation: {status: validated, checks: [B7-HYD-PUMP-TIME, B7-HYD-PUMP-SIG], evidence: "US 12,265,000 (case-drain dT flat ~5 months, limit at ~11.5 months) [TRANSFER]; report §3 (pump leakage heats the fluid; pressure sags at high demand) [TRANSFER]"}}
+  FM.HYD.CONTAMINATION_TREND: {name: "Hydraulic particulate contamination", subsystem: hydraulics, class: degradation, nm_ref: NM.HYD.FLUID_CONTAM, onset: {process: m10}, refs: ["TFG#28"], signature: "No flight-hour trend; pump wear x4/x14; servo null leak 3 -> > 20 %", evidence: {tag: "TRANSFER: Pall 1996", source: "N:TFG (c) #28"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.HYD.PUMP_FAILURE:
+    name: "Engine-driven pump failure at the wear limit"
+    subsystem: hydraulics
+    class: discrete
+    nm_ref: NM.HYD.PUMP_EFF
+    onset: {process: triggered, trigger: "util:hyd?_pump_wear"}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: hyd.pump_failure
+    effects: [{target: health, state: "util:hyd{h}_pump_wear", delta: 3.0}, {target: monitoring, code: HYD-101, magnitude: 8.0}]
+    detection: {codes: [HYD-101, HYD-501], coverage: 0.95}
+    refs: ["FD#22"]
+    signature: "Pressure low on the affected system; replace ≤3 days after trend message"
+    evidence: {tag: "TRANSFER: US 12,265,000", source: "N:TFG (c) #27"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.HYD.ACCUM_GAS_LOSS:
+    name: "Accumulator gas loss step"
+    subsystem: hydraulics
+    class: shock
+    nm_ref: NM.HYD.ACCUM_PRECHARGE
+    onset: {process: poisson, rate: accum_leak_rate}
+    severity: {dist: uniform, lo: 0.1, hi: 0.5}
+    effects: [{target: health, state: "util:hyd1_precharge_loss", delta: 1.0}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#22", "TFG#29"]
+    signature: "P0 ∝ T; decay-time ratio shortens; fewer brake applications (precharge 130 -> 90 bar rig levels)"
+    evidence: {tag: "TRANSFER: US 8,494,789; UCI 447", source: "N:TFG (c) #29; N:FD §9(b) #22"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.LG.LOCK_SPRING:         {name: "Gear lock-link spring relaxation", subsystem: landing_gear, class: degradation, nm_ref: NM.LG.LOCK_SPRING, onset: {process: m10}, refs: ["FD#23"], signature: "88.9 lbf vs 100 ± 5 lbf; collapse despite down-and-locked", evidence: {tag: "TRANSFER: B-2 (AIB 2021)", source: "N:FD §9(b) #23"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.LG.DOWNLOCK_FORCE:
+    name: "Downlock actuator insufficient force"
+    subsystem: landing_gear
+    class: discrete
+    nm_ref: NM.LG.LOCK_SPRING
+    onset: {process: triggered, trigger: "util:lock_spring_?"}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: airframe, mode: gear_collapse_on_touchdown, param: 1.0, leg: key}]  # the lock spring's leg
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#24"]
+    signature: "Collapse on touchdown; fleet-known issue; no BIT"
+    evidence: {tag: "TRANSFER: USAF AIB (Kunsan 2019)", source: "N:FD §9(b) #24 (Kunsan 2019 AIB); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; acts through M05/M06; its signature needs the flying aircraft (W2.1a)"}
+  FM.FCS.ACTUATOR_WEAR:      {name: "Screw/servo actuator wear", subsystem: flight_control, class: degradation, nm_ref: NM.HYD.ACTUATOR_LEAK, onset: {process: m10}, refs: ["FD#25"], signature: "0.001 in/1,000 FH nominal; limit 0.040 in end play", evidence: {tag: "TRANSFER: MD-83 (NTSB AAR-02/01)", source: "N:FD §9(b) #25"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.FCS.POOR_LUBE:
+    name: "Inadequate actuator lubrication (x12 wear)"
+    subsystem: flight_control
+    class: latent
+    nm_ref: NM.HYD.ACTUATOR_LEAK
+    onset: {process: latent, actions: [actuator_servicing], probability: latent_p_servicing}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: health, state: "act:rudder", delta: 0.2}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#25"]
+    signature: "0.012 vs 0.001 in/1,000 FH (wear jump applied as a step)"
+    evidence: {tag: "TRANSFER: MD-83 (NTSB AAR-02/01)", source: "N:FD §5"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.FCS.CHANNEL_DROPOUT:
+    name: "FCS channel dropout and reset (Tejas)"
+    subsystem: flight_control
+    class: transient
+    onset: {process: poisson, rate: fcs_dropout_rate}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 5.0
+    effects: [{target: fcs, event: channel_fault, channel: "*", subsystem: WATCHDOG}, {target: monitoring, code: FCS-201, magnitude: 8.0}]
+    detection: {codes: [FCS-201], coverage: 0.95}
+    refs: []
+    signature: "One of four channels drops out and resets; quadruplex voting continues"
+    evidence: {tag: "DIRECT", source: "architecture §9.2 Tejas-specific events (FCS channel dropout); R§18"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; acts through M05/M06; its signature needs the flying aircraft (W2.1a)"}
+  FM.FCS.ACTUATOR_JAM:
+    name: "Control-surface actuator jam"
+    subsystem: flight_control
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: fcs, event: actuator_fault, surface: "*", mode: jam}]
+    detection: {codes: [FCS-101], coverage: 0.7}
+    refs: []
+    signature: "Surface frozen at its position; remaining surfaces re-allocate the command (M05)"
+    evidence: {tag: ASSUMPTION, source: "AD-47 fcs.actuator_fault (W1.2); no public rate: scripted only (A-W1.5-29)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; acts through M05/M06; its signature needs the flying aircraft (W2.1a)"}
+  FM.FCS.SERVO_COIL:
+    name: "Servo-valve coil failure on one channel"
+    subsystem: flight_control
+    class: discrete
+    onset: {process: scripted}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: fcs, event: actuator_fault, surface: "*", mode: servo, channel: "*"}]
+    detection: {codes: [FCS-101], coverage: 0.9}
+    refs: []
+    signature: "Actuator BIT servo-fail bit of one channel; quadruplex servo continues on the others"
+    evidence: {tag: ASSUMPTION, source: "AD-47 fcs.actuator_fault (W1.2); no public rate: scripted only (A-W1.5-29)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; acts through M05/M06; its signature needs the flying aircraft (W2.1a)"}
+  FM.CTRL.THROTTLE_BINDING:
+    name: "Cockpit control intermittent binding"
+    subsystem: controls
+    class: intermittent
+    onset: {process: markov, p_on: binding_p_on, p_off: intermittent_p_off}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: fadec, mode: pla_binding, param: 1.0}]
+    detection: {codes: [], coverage: 0.0}
+    refs: ["FD#26"]
+    signature: "Throttle trigger sticks intermittently -> inadvertent cutoff; no BIT"
+    evidence: {tag: "TRANSFER: USAF AIB (El Paso)", source: "N:FD §9(b) #26 (El Paso AIB); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; realised as a state perturbation by M07/M08 (eng./fadec.fault_inject, AD-48.4, W2.1b); its signature is not compared with literature (most need the flying aircraft, W2.1a)"}
+  FM.UTIL.GENERIC_WEAR:      {name: "ECS, fuel pumps/probes, tyres, brakes, AGB, IDG wear", subsystem: utilities, class: degradation, nm_ref: NM.ECS.HX_FOULING, onset: {process: m10}, refs: ["FD#38", "TFG#24"], signature: "No public quantitative fighter source (catalogue gap) -> generic gamma wear [ASSUMPTION]", evidence: {tag: "ASSUMPTION", source: "N:FD §9(b) #38"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.ECS.HX_FOULING:         {name: "ECS heat-exchanger fouling", subsystem: ecs, class: degradation, nm_ref: NM.ECS.HX_FOULING, onset: {process: m10}, refs: ["TFG#32"], signature: "Ram ΔP up, effectiveness down; pack outlet > 260 °C shutdown; 3-9 months dirty vs ≈18 clean", evidence: {tag: "TRANSFER: Wright 2018", source: "N:TFG (c) #32"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.LG.BRAKE_WEAR:          {name: "Carbon brake wear", subsystem: landing_gear, class: degradation, nm_ref: NM.LG.BRAKE_WEAR, onset: {process: m10}, refs: ["TFG#33"], signature: "1,400 landings (F-15C/D 3-rotor); per-stop temperature up as mass falls", evidence: {tag: "TRANSFER: Collins F-15", source: "N:TFG (c) #33"}, validation: {status: validated, checks: [B7-LG-BRAKE], evidence: "Collins F-15C/D carbon brake 1,400 landings per overhaul (N:TFG (c) #33) [TRANSFER]; per-stop heat-sink temperature rises as the stack mass falls [TRANSFER]"}}
+  FM.LG.TYRE_WEAR:           {name: "Tyre tread wear and leak", subsystem: landing_gear, class: degradation, nm_ref: NM.LG.TYRE, onset: {process: m10}, refs: ["TFG#34", "TFG#35"], signature: "0.1-0.6 kg/km at slip 0.1-0.3; ≤5 %/24 h leak acceptable", evidence: {tag: "TRANSFER: NASA TP-1569; Michelin", source: "N:TFG (c) #34-35"}, validation: {status: validated, checks: [B7-LG-TYRE], evidence: "F-16 main tyres 4-12 landings (report §9 utility wear) [TRANSFER]; NASA TP-1569 tread wear [TRANSFER]"}}
+  FM.LG.STRUT_LOSS:          {name: "Strut gas/oil loss", subsystem: landing_gear, class: degradation, nm_ref: NM.LG.STRUT_SERVICE, onset: {process: m10}, refs: ["TFG#36"], signature: "Landing pressure-stroke coefficient shifts (2 % oil loss detectable)", evidence: {tag: "TRANSFER: US 9,285,007", source: "N:TFG (c) #36"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.STR.FATIGUE:            {name: "Usage-driven structural fatigue", subsystem: structure, class: degradation, nm_ref: NM.STR.FATIGUE, onset: {process: m10}, refs: ["FD#35"], signature: "Exceedance and strain-derived damage per tail", evidence: {tag: "TRANSFER: MIL-HDBK-1530B (USAF ASIP guidance)", source: "N:FD §9(b) #35 (MIL-HDBK-1530B: individual aircraft tracking from exceedance and strain data); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, W2.1c)"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; M10 process with tagged rates and sweeps; no literature comparison run"}}
+  FM.FUEL.PROBE_CONTAMINATION:
+    name: "Fuel-probe contamination"
+    subsystem: fuel
+    class: shock
+    nm_ref: NM.FUEL.PROBE_DRIFT
+    onset: {process: poisson, rate: fuel_probe_contam_rate}
+    severity: {dist: uniform, lo: 0.5, hi: 2.0}
+    effects: [{target: health, state: "util:fuel_probe_drift", delta: 0.01}]
+    detection: {codes: [FUE-001], coverage: 0.3}
+    refs: ["TFG#40"]
+    signature: "+0.5-2 % quantity bias, noise; worse at low fuel"
+    evidence: {tag: "TRANSFER: MIL-G-26988C; NASA TM-87706", source: "N:TFG (c) #40"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  FM.SPS.AMAGB_GEAR_CRACK:
+    name: "AMAGB gear tooth crack"
+    subsystem: secondary_power
+    class: discrete
+    nm_ref: NM.SPS.AMAGB_WEAR
+    onset: {process: triggered, trigger: "util:amagb_wear"}
+    severity: {dist: fixed, value: 1.0}
+    effects: [{target: health, state: "util:amagb_wear", delta: 2.0}]
+    detection: {codes: [SPS-001], coverage: 0.3}
+    refs: ["TFG#24"]
+    signature: "No debris; TSA kurtosis/phase up 42-103 h before failure; final growth ~20 min"
+    evidence: {tag: "TRANSFER: McFadden 1985", source: "N:TFG (c) #24"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; its state perturbation is implemented; no literature comparison run"}
+  # ---------------------------------------------------------------- Tejas-specific discrete events (architecture §9.2)
+  FM.SPS.JFS_COLD_START_FAIL:
+    name: "JFS cold/altitude start failure (Tejas)"
+    subsystem: secondary_power
+    class: transient
+    nm_ref: NM.SPS.JFS_HEALTH
+    onset: {process: per_event, driver: cold_jfs_starts, probability: jfs_cold_fail_p}
+    severity: {dist: fixed, value: 1.0}
+    duration_s: 60.0
+    effects: [{target: monitoring, code: SPS-501, magnitude: 8.0}]
+    detection: {codes: [SPS-501], coverage: 1.0}
+    refs: []
+    signature: "GTSU-110 failed to prove three consecutive starts at Leh (2013-14); success at -15 °C after control patches (Jan 2015)"
+    evidence: {tag: "DIRECT", source: "architecture §9.2; f404_in20_engine_model.md Q8 (CAG 2015, HAL/DRDO)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; an LRU condition on its BIT statistic (M14); no physical signature to compare"}
+  FM.FUEL.GAUGING_ARTEFACT:  {name: "Zoom-climb false low-fuel warning (Tejas)", subsystem: fuel, class: physics, onset: {process: physics}, refs: [], signature: "False low-fuel at > 40° pitch, max AB and < 1,200 kg (gauging physics in M09, not an injected fault)", evidence: {tag: "DIRECT", source: "architecture §6 M09 and §9.2"}, validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; emerges from the physics (M09 true quantities, M12 gauging); nothing is injected"}}
+  FM.LG.BRAKE_SW_CONFIG:
+    name: "Brake-software configuration defect -> tyre burst -> excursion (Tejas)"
+    subsystem: landing_gear
+    class: latent
+    onset: {process: latent, actions: [software_load], probability: latent_p_software}
+    severity: {dist: fixed, value: 1.0}
+    graph_root: brakes.sw_config_defect
+    effects: [{target: monitoring, code: LGB-503, magnitude: 8.0}]
+    detection: {codes: [LGB-503], coverage: 0.5}
+    refs: []
+    signature: "Brake-software load -> tyre burst on landing -> runway excursion -> fleet grounding"
+    evidence: {tag: "DIRECT", source: "architecture §9.2 and R§18 (Tejas availability shock)"}
+    validation: {status: unvalidated, reason: "unvalidated (AD-55): outside the W2.5 priority set; an LRU condition on its BIT statistic (M14); no physical signature to compare"}

@@ -1,0 +1,12 @@
+PCHIP numba vs scipy max abs diff 5.46e-12 PASS
+variant P override cal: max diff FFN2 0.00e+00 N1 0.00e+00 EGT 0.00e+00 PASS
+   compact outputs == full[keep]: FFN2 0.0e+00 N1 0.0e+00 EGT 0.0e+00 PASS
+variant P override prior: max diff FFN2 0.00e+00 N1 0.00e+00 EGT 0.00e+00 PASS
+   compact outputs == full[keep]: FFN2 0.0e+00 N1 0.0e+00 EGT 0.0e+00 PASS
+variant S override cal: max diff FFN2 0.00e+00 N1 0.00e+00 EGT 0.00e+00 PASS
+   compact outputs == full[keep]: FFN2 0.0e+00 N1 0.0e+00 EGT 0.0e+00 PASS
+variant S override prior: max diff FFN2 0.00e+00 N1 0.00e+00 EGT 0.00e+00 PASS
+   compact outputs == full[keep]: FFN2 0.0e+00 N1 0.0e+00 EGT 0.0e+00 PASS
+B1 == corr_check 687200104111158.mat PASS
+B1 == corr_check 687200104111637.mat PASS
+B1 == corr_check 687200104120347.mat PASS

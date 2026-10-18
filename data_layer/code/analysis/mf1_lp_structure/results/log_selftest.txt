@@ -1,0 +1,21 @@
+MF1-D estimator self-test (synthetic signals only; no flight data)
+PASS  welch_equals_scipy_csd: max rel err 6.42e-16 (tol 1e-10), K=92
+PASS  delay_sign_and_size: tau_eq 0.4982 s (true +0.5)
+PASS  pure_delay_has_no_coherence_loss: r 0.100 r_lag 0.100 L_coh 0.0002 share_dyn 1.000
+PASS  parseval_r_spec_vs_time_domain: 0.1001 vs 0.0957
+PASS  zero_phase_noise_is_coherence_loss: L_phase 0.0006 L_shape 0.0001 share_coh 0.996
+PASS  texture_known_explains_loss: share_tex 0.995 share_beyond 0.001 r_truth 0.999
+PASS  texture_zero_moves_loss_beyond: share_beyond 0.996 with T=0
+PASS  texture_first_known_texture: tf s_tex 0.995 s_dyn 0.003 s_beyond 0.001
+PASS  delay_plus_texture_has_no_beyond: A beyond 0.002, TF beyond 0.002, TF tex 0.018
+PASS  white_texture_power: measured/predicted fast-band power 0.9981
+PASS  partial_coherence_given_common_is_zero: PCF 0.0024, 0.0024
+PASS  multiple_coherence_fraction: MCF 0.7467 expect 0.7353
+PASS  path_decomposition_adds_up_and_routes_via_common: r 0.7458 = via 0.7437 + partial 0.0020
+PASS  no_independent_N1_input_gives_zero_beyond: U_obs 0.0507 U_tex 0.0484 U_beyond 0.0023 ceiling 0.9515
+PASS  independent_N1_input_is_detected_beyond_texture: U_beyond 0.0687 vs injected LP share 0.0678 (tol 0.02)
+PASS  residual_cross_common_share_half: common share |gamma| 0.499 (expect 0.5), MSC 0.249 (expect 0.25)
+PASS  guard_refuses_raw2_outside_and_noncal: 4/4
+PASS  double_quantiser_variance_N1: simulated 0.000214583 vs rule 0.000214714 (ratio 0.999)
+PASS  double_quantiser_variance_EGT: simulated 0.0733334 vs rule 0.0741667 (ratio 0.989)
+OVERALL: PASS

@@ -1,0 +1,148 @@
+# Sortie manifest (architecture §12: tail, serials, software config, mission, dictionary version, seeds, code commit).
+name: sortie.manifest
+description: >-
+  One record per sortie: configuration and provenance of the data (tail, engine and LRU serials, software
+  configuration, mission, dictionary and contract versions, code commit, library versions). Seeds and the RNG
+  stream table are restricted fields (A-W0.4-12).
+basis: "ARCH §12"
+restricted: false
+event_time: t_start
+ingest_time: t_ingest
+partition_by: [tail_no, sortie_id]
+json_schema: true
+record_id_key:
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_start}
+  - {check: order, left: t_takeoff, op: ">=", right: t_start}
+  - {check: order, left: t_landing, op: ">=", right: t_takeoff}
+  - {check: order, left: t_end, op: ">=", right: t_start}
+fields:
+  - include: record_header
+  - include: tail_sortie
+  - name: base
+    type: string
+    nullable: true
+    basis: "ARCH §6 M02 (bases); ASSUMPTION: A-W0.4-12"
+    description: Operating base of the sortie.
+  - name: mission_type
+    type: string
+    nullable: false
+    basis: "ARCH §12 (mission)"
+    description: Mission type from the M02 mission mix.
+  - name: crew_id
+    type: string
+    nullable: true
+    basis: "ARCH §10 (sortie record: crew); ASSUMPTION: A-W0.4-12"
+    description: Pseudonymous crew identifier (no latent pilot traits).
+  - name: sw_config_id
+    type: string
+    nullable: false
+    basis: "ARCH §5.3, §12 (software config)"
+    description: Software-configuration identifier of the aircraft for this sortie.
+  - name: engine_serials
+    type:
+      list:
+        struct:
+          - {name: position, type: string, nullable: false, basis: "ARCH §12", description: Engine position (e.g. '1').}
+          - {name: serial, type: string, nullable: false, basis: "ARCH §12", description: Engine serial number.}
+      item_nullable: false
+    nullable: false
+    basis: "ARCH §12 (serials)"
+    description: Installed engine serials by position.
+  - name: lru_serials
+    type:
+      list:
+        struct:
+          - {name: lru, type: string, nullable: false, basis: "ARCH §12", description: LRU name.}
+          - {name: part_no, type: string, nullable: false, basis: "ARCH §5.3 (component triplet)", description: Part number.}
+          - {name: serial_no, type: string, nullable: false, basis: "ARCH §5.3 (component triplet)", description: Serial number.}
+          - {name: maker, type: string, nullable: true, basis: "ARCH §5.3 (component triplet)", description: Maker.}
+      item_nullable: false
+    nullable: false
+    basis: "ARCH §12 (serials); ARCH §5.3 (component triplet)"
+    description: Installed serialised LRUs (component triplet).
+  - name: t_start
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-12"
+    description: Start of the sortie record (engine start or recorder start). The event time of the record.
+  - name: t_takeoff
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ARCH §5.3 (sortie_id = tail + date + take-off time)"
+    description: Take-off time; null for a ground abort.
+  - name: t_landing
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-12"
+    description: Landing time; null if not airborne.
+  - name: t_end
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-12"
+    description: End of the sortie record (engine shutdown or recorder stop).
+  - name: t_ingest
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §8, I5"
+    description: When the manifest reached the ground (download).
+  - name: contract_version
+    type: string
+    nullable: false
+    basis: "ARCH §12 (versioning)"
+    description: Contract semantic version the sortie's records conform to.
+  - name: config_hash
+    type: string
+    nullable: false
+    basis: "ARCH §15 (manifest)"
+    description: Hash of the run configuration.
+  - name: code_commit
+    type: string
+    nullable: false
+    basis: "ARCH §12 (code commit)"
+    description: Git commit of the generating code.
+  - name: library_versions
+    type:
+      list:
+        struct:
+          - {name: name, type: string, nullable: false, basis: "ARCH §15", description: Library name.}
+          - {name: version, type: string, nullable: false, basis: "ARCH §15", description: Library version.}
+      item_nullable: false
+    nullable: false
+    basis: "ARCH §15 (manifest: library versions)"
+    description: Library versions, sorted by name.
+  - name: run_manifest_hash
+    type: string
+    nullable: true
+    basis: "ARCH §15; ASSUMPTION: A-W0.4-12"
+    description: Content hash of the full run manifest (core/manifest.py) this sortie belongs to.
+  - name: root_seed
+    type: string
+    nullable: true
+    restricted: true
+    pattern: "^[0-9a-f]{32}$"
+    basis: "ARCH §12 (seeds), §15; ASSUMPTION: A-W0.4-12 (restricted)"
+    description: 128-bit root seed, hex. RESTRICTED (with the code commit it regenerates truth).
+  - name: rng_stream_table
+    type:
+      list:
+        struct:
+          - {name: key_path, type: string, nullable: false, basis: "ARCH §15", description: Canonical text form of the core.rng key path.}
+          - {name: stream_ref, type: string, nullable: false, basis: "ARCH §15", description: Stream reference (digest of the key path).}
+      item_nullable: false
+    nullable: true
+    restricted: true
+    basis: "ARCH §12 (seeds), §15 (stream table); ASSUMPTION: A-W0.4-12 (restricted)"
+    description: RNG stream table of the sortie. RESTRICTED.
+  - name: provenance
+    type: enum:Provenance
+    nullable: false
+    basis: "ARCH §12"
+    description: direct (manifests are produced on the ground) or full_path (decoded from a recording).

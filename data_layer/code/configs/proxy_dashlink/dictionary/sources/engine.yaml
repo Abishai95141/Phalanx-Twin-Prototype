@@ -1,0 +1,501 @@
+# Phalanx proxy-mode dictionary (DASHlink Tail 687; W2.4a, AD-33/AD-43). Hand-maintained source.
+# FADEC lanes: TRANSFER of the Tejas FADEC lane definitions (the proxy runs the same M08 structure, AD-43).
+# Recorded words: MEASURED on DASHlink Tail 687 archive 1 (analysis/dashlink_texture, round-1/2 results).
+format: phalanx.dictionary.source/1
+platform: proxy_dashlink
+subsystem: engine
+parameters:
+  ENG.N1:
+    name: Fan (LP) rotor speed
+    measurement_class: measured
+    computed_by: null
+    evidence: &id001
+      tag: 'TRANSFER: Phalanx Tejas dictionary FADEC lanes; MEASURED'
+      source: 'lanes: configs/tejas/dictionary/sources/engine.yaml (R-LANE-PROXY); word: DASHlink Tail 687 (param_table.csv, native_step_cal.json)'
+      classes: [TRANSFER, MEASURED]
+      primary: TRANSFER
+      core_tag: 'TRANSFER: Phalanx Tejas dictionary FADEC lanes'
+    notes: 'lanes A/B: proxy controller (M08); REC: the DASHlink ''FAN SPEED'' word N1_k'
+    channels:
+      ENG.N1.A:
+        measurand_id: ENG.N1
+        lane: A
+        role: lane
+        name: Fan speed (proxy controller lane A)
+        quantity: speed_percent
+        units: percent
+        signal: frequency
+        sensor_type: 2 eddy-current or magnetic pickups (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 115}
+        native_step: 0.03125
+        recorder_lsb: null
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.00701904296875
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY}
+        notes: []
+      ENG.N1.B:
+        measurand_id: ENG.N1
+        lane: B
+        role: lane
+        name: Fan speed (proxy controller lane B)
+        quantity: speed_percent
+        units: percent
+        signal: frequency
+        sensor_type: 2 eddy-current or magnetic pickups (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 115}
+        native_step: 0.03125
+        recorder_lsb: null
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.00701904296875
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY}
+        notes: []
+      ENG.N1.REC:
+        measurand_id: ENG.N1
+        lane: ''
+        role: single
+        name: Fan speed word (DASHlink N1_k, FAN SPEED LSP)
+        quantity: speed_percent
+        units: percent
+        signal: digital
+        sensor_type: null
+        source_lru: ACMS
+        acq_lru: ACMS
+        range: {min: 0, max: 128}
+        native_step: 0.04
+        recorder_lsb: 0.03125
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: ACMS}
+        validity: {method: none}
+        rates: {acquisition: ACMS4, bus: null, producer: null}
+        sinks:
+        - {sink: ACMS_REC, basis: evidenced, group: ACMS4, prov: R-SINK-PROXY, group_prov: R-RATE-ACMS4}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-DASHLINK-WORD, units: R-DASHLINK-WORD, signal: R-DASHLINK-WORD, source_lru: R-DASHLINK-WORD, acq_lru: R-DASHLINK-WORD, range: R-RANGE-DASHLINK, native_step: R-LSB-NATIVE-CAL,
+          recorder_lsb: R-LSB-DASHLINK-REC, encoding: R-DASHLINK-WORD, transport: R-ICD-NONE, validity: R-DASHLINK-WORD, rates.acquisition: R-RATE-ACMS4}
+        notes: []
+  ENG.N2:
+    name: Core (HP) rotor speed
+    measurement_class: measured
+    computed_by: null
+    evidence: *id001
+    notes: 'lanes A/B: proxy controller (M08); REC: the DASHlink ''CORE SPEED'' word N2_k'
+    channels:
+      ENG.N2.A:
+        measurand_id: ENG.N2
+        lane: A
+        role: lane
+        name: Core speed (proxy controller lane A)
+        quantity: speed_percent
+        units: percent
+        signal: frequency
+        sensor_type: 2 eddy-current or magnetic pickups (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 110}
+        native_step: 0.03125
+        recorder_lsb: null
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.0067138671875
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY}
+        notes: []
+      ENG.N2.B:
+        measurand_id: ENG.N2
+        lane: B
+        role: lane
+        name: Core speed (proxy controller lane B)
+        quantity: speed_percent
+        units: percent
+        signal: frequency
+        sensor_type: 2 eddy-current or magnetic pickups (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 110}
+        native_step: 0.03125
+        recorder_lsb: null
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.0067138671875
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY}
+        notes: []
+      ENG.N2.REC:
+        measurand_id: ENG.N2
+        lane: ''
+        role: single
+        name: Core speed word (DASHlink N2_k, CORE SPEED LSP)
+        quantity: speed_percent
+        units: percent
+        signal: digital
+        sensor_type: null
+        source_lru: ACMS
+        acq_lru: ACMS
+        range: {min: 0, max: 128}
+        native_step: 0.04
+        recorder_lsb: 0.03125
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: ACMS}
+        validity: {method: none}
+        rates: {acquisition: ACMS4, bus: null, producer: null}
+        sinks:
+        - {sink: ACMS_REC, basis: evidenced, group: ACMS4, prov: R-SINK-PROXY, group_prov: R-RATE-ACMS4}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-DASHLINK-WORD, units: R-DASHLINK-WORD, signal: R-DASHLINK-WORD, source_lru: R-DASHLINK-WORD, acq_lru: R-DASHLINK-WORD, range: R-RANGE-DASHLINK, native_step: R-LSB-NATIVE-CAL,
+          recorder_lsb: R-LSB-DASHLINK-REC, encoding: R-DASHLINK-WORD, transport: R-ICD-NONE, validity: R-DASHLINK-WORD, rates.acquisition: R-RATE-ACMS4}
+        notes: []
+  ENG.T1:
+    name: Engine inlet total temperature
+    measurement_class: measured
+    computed_by: null
+    evidence: &id002
+      tag: 'TRANSFER: Phalanx Tejas dictionary FADEC lanes'
+      source: configs/tejas/dictionary/sources/engine.yaml; AD-43 (R-LANE-PROXY)
+      classes: [TRANSFER]
+      primary: TRANSFER
+      core_tag: 'TRANSFER: Phalanx Tejas dictionary FADEC lanes'
+    notes: null
+    channels:
+      ENG.T1.A:
+        measurand_id: ENG.T1
+        lane: A
+        role: lane
+        name: Inlet temperature (proxy controller lane A)
+        quantity: temperature
+        units: degC
+        signal: analog
+        sensor_type: RTD (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: -54, max: 149}
+        native_step: 1.0
+        recorder_lsb: null
+        adc_bits: 14
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.01239013671875
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY, adc_bits: R-LANE-PROXY}
+        notes: []
+      ENG.T1.B:
+        measurand_id: ENG.T1
+        lane: B
+        role: lane
+        name: Inlet temperature (proxy controller lane B)
+        quantity: temperature
+        units: degC
+        signal: analog
+        sensor_type: RTD (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: -54, max: 149}
+        native_step: 1.0
+        recorder_lsb: null
+        adc_bits: 14
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.01239013671875
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY, adc_bits: R-LANE-PROXY}
+        notes: []
+  ENG.T25:
+    name: HPC inlet total temperature
+    measurement_class: measured
+    computed_by: null
+    evidence: *id002
+    notes: null
+    channels:
+      ENG.T25:
+        measurand_id: ENG.T25
+        lane: ''
+        role: single
+        name: HPC inlet temperature (proxy controller)
+        quantity: temperature
+        units: degC
+        signal: analog
+        sensor_type: thermocouple (proxy controller; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: -54, max: 280}
+        native_step: 1.0
+        recorder_lsb: 1.0
+        adc_bits: 12
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, adc_bits: R-LANE-PROXY, recorder_lsb: R-LANE-PROXY}
+        notes: []
+  ENG.PS3:
+    name: HPC exit static pressure
+    measurement_class: measured
+    computed_by: null
+    evidence: *id002
+    notes: null
+    channels:
+      ENG.PS3.A:
+        measurand_id: ENG.PS3
+        lane: A
+        role: lane
+        name: PS3 (proxy controller lane A)
+        quantity: pressure
+        units: psi
+        signal: analog
+        sensor_type: pressure transducer (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 500}
+        native_step: 0.5
+        recorder_lsb: null
+        adc_bits: 14
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.030517578125
+        pressure_ref: absolute
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY, adc_bits: R-LANE-PROXY}
+        notes: []
+      ENG.PS3.B:
+        measurand_id: ENG.PS3
+        lane: B
+        role: lane
+        name: PS3 (proxy controller lane B)
+        quantity: pressure
+        units: psi
+        signal: analog
+        sensor_type: pressure transducer (proxy controller lane; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 500}
+        native_step: 0.5
+        recorder_lsb: null
+        adc_bits: 14
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        converter_step: 0.030517578125
+        pressure_ref: absolute
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-LANE-PROXY, converter_step: R-LANE-PROXY, adc_bits: R-LANE-PROXY}
+        notes: []
+  ENG.T5:
+    name: Exhaust gas temperature (thermocouple harnesses)
+    measurement_class: measured
+    computed_by: null
+    evidence: *id001
+    notes: 'harness lanes A/B: proxy controller (M08), 0-1000 degC (R-RANGE-EGT-PROXY); REC: the DASHlink EGT_k word'
+    channels:
+      ENG.T5.HARNESS_A:
+        measurand_id: ENG.T5
+        lane: HARNESS_A
+        role: single
+        name: EGT harness A (proxy controller)
+        quantity: temperature
+        units: degC
+        signal: analog
+        sensor_type: thermocouple harness (proxy controller; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 1000}
+        native_step: 1.0
+        recorder_lsb: 1.0
+        adc_bits: 12
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-EGT-PROXY, adc_bits: R-LANE-PROXY, recorder_lsb: R-LANE-PROXY}
+        notes: []
+      ENG.T5.HARNESS_B:
+        measurand_id: ENG.T5
+        lane: HARNESS_B
+        role: single
+        name: EGT harness B (proxy controller)
+        quantity: temperature
+        units: degC
+        signal: analog
+        sensor_type: thermocouple harness (proxy controller; TRANSFER)
+        source_lru: FADEC
+        acq_lru: FADEC
+        range: {min: 0, max: 1000}
+        native_step: 1.0
+        recorder_lsb: 1.0
+        adc_bits: 12
+        encoding: {type: float64}
+        transport: {type: internal, lru: FADEC}
+        validity: {method: none}
+        rates: {acquisition: FADEC-INT, bus: null, producer: null}
+        sinks:
+        - {sink: INTERNAL, basis: derived, group: null, consumer: FADEC, prov: R-SINK-PROXY, group_prov: R-SINK-PROXY}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-LANE-PROXY, units: R-LANE-PROXY, signal: R-LANE-PROXY, sensor_type: R-LANE-PROXY, source_lru: R-LANE-PROXY, acq_lru: R-LANE-PROXY, native_step: R-LANE-PROXY, encoding: R-LANE-PROXY,
+          transport: R-LANE-PROXY, validity: R-LANE-PROXY, rates.acquisition: R-LANE-PROXY, range: R-RANGE-EGT-PROXY, adc_bits: R-LANE-PROXY, recorder_lsb: R-LANE-PROXY}
+        notes: []
+      ENG.T5.REC:
+        measurand_id: ENG.T5
+        lane: ''
+        role: single
+        name: Exhaust gas temperature word (DASHlink EGT_k)
+        quantity: temperature
+        units: degC
+        signal: digital
+        sensor_type: null
+        source_lru: ACMS
+        acq_lru: ACMS
+        range: {min: 0, max: 1000}
+        native_step: 0.8
+        recorder_lsb: 0.5
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: ACMS}
+        validity: {method: none}
+        rates: {acquisition: ACMS4, bus: null, producer: null}
+        sinks:
+        - {sink: ACMS_REC, basis: evidenced, group: ACMS4, prov: R-SINK-PROXY, group_prov: R-RATE-ACMS4}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-DASHLINK-WORD, units: R-DASHLINK-WORD, signal: R-DASHLINK-WORD, source_lru: R-DASHLINK-WORD, acq_lru: R-DASHLINK-WORD, range: R-RANGE-EGT-PROXY, native_step: R-LSB-NATIVE-CAL,
+          recorder_lsb: R-LSB-DASHLINK-REC, encoding: R-DASHLINK-WORD, transport: R-ICD-NONE, validity: R-DASHLINK-WORD, rates.acquisition: R-RATE-ACMS4}
+        notes: []
+  ENG.FF:
+    name: Main fuel flow
+    measurement_class: measured
+    computed_by: null
+    evidence:
+      tag: MEASURED
+      source: DASHlink Tail 687 archive 1 (analysis/dashlink_texture/results/param_table.csv; analysis/settling_experiment/results/native_step_cal.json)
+      classes: [MEASURED]
+      primary: MEASURED
+      core_tag: MEASURED
+    notes: 'REC: the DASHlink FF_k word (single 8 lb/h lattice)'
+    channels:
+      ENG.FF.REC:
+        measurand_id: ENG.FF
+        lane: ''
+        role: single
+        name: Fuel flow word (DASHlink FF_k)
+        quantity: mass_flow
+        units: lb/hr
+        signal: digital
+        sensor_type: null
+        source_lru: ACMS
+        acq_lru: ACMS
+        range: {min: 0, max: 4096}
+        native_step: 8.0
+        recorder_lsb: 8.0
+        adc_bits: null
+        encoding: {type: float64}
+        transport: {type: internal, lru: ACMS}
+        validity: {method: none}
+        rates: {acquisition: ACMS4, bus: null, producer: null}
+        sinks:
+        - {sink: ACMS_REC, basis: evidenced, group: ACMS4, prov: R-SINK-PROXY, group_prov: R-RATE-ACMS4}
+        calibration: null
+        limits: []
+        inputs: []
+        proxy: false
+        prov: {quantity: R-DASHLINK-WORD, units: R-DASHLINK-WORD, signal: R-DASHLINK-WORD, source_lru: R-DASHLINK-WORD, acq_lru: R-DASHLINK-WORD, range: R-RANGE-DASHLINK, native_step: R-LSB-NATIVE-CAL,
+          recorder_lsb: R-LSB-DASHLINK-REC, encoding: R-DASHLINK-WORD, transport: R-ICD-NONE, validity: R-DASHLINK-WORD, rates.acquisition: R-RATE-ACMS4}
+        notes: []

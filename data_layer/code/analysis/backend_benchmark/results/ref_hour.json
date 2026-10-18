@@ -1,0 +1,34 @@
+{
+ "digest": "ac99e6e77ddffefe8c3f6fb1d76e71ef",
+ "machine": {
+  "cpu": "Apple M4",
+  "eff_cores": "6",
+  "env": {
+   "NUMBA_CACHE_DIR": null,
+   "NUMBA_NUM_THREADS": null,
+   "OMP_NUM_THREADS": "1",
+   "XLA_FLAGS": null
+  },
+  "machine": "arm64",
+  "mem_gb": 16.0,
+  "ncpu": 10,
+  "perf_cores": "4",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+   "jax": "0.11.2",
+   "jaxlib": "0.11.2",
+   "llvmlite": "0.50.0",
+   "numba": "0.68.0",
+   "numpy": "2.5.4",
+   "python": "3.13.3",
+   "scipy": "1.18.1"
+  }
+ },
+ "peak_rss_mb": 265.328125,
+ "state_digest": "12bbd46af622d87768bd1ceef0e1261b",
+ "steps": 864000,
+ "t_cpu": 901.22,
+ "t_feed": 0.1448877559741959,
+ "t_kernel": 922.5164749210817,
+ "t_wall": 922.7614957080077
+}

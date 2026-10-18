@@ -1,0 +1,10 @@
+# Decision tables evaluated with zen-engine (layers 2–3 of architecture 07 Part B). Files are byte-for-byte the
+# film's (video/data/policies/, written by assure_policies.py) except P-SPR-01, which is new here. The policy
+# version string is "<name>/<semver>+jdm.<sha256(file bytes)[:12]>", so any edit to a file changes its version.
+policies:
+  P-DEC-01: {semver: 1.4.0, layer: L3, title: Recurring deferred BIT code, file: P-DEC-01.jdm.json}
+  P-DEC-02: {semver: 0.3.0, layer: L3, title: Engine serial exceedances → borescope, file: P-DEC-02.jdm.json}
+  P-ORG-01: {semver: 2.1.0, layer: L2, title: MEL-like deferral limits, file: P-ORG-01.jdm.json}
+  P-ORG-02: {semver: 1.2.0, layer: L2, title: Cannibalise only from NMC donor, file: P-ORG-02.jdm.json}
+  P-ORG-03: {semver: 1.1.0, layer: L2, title: Servicing deferral = HUMAN draft, file: P-ORG-03.jdm.json}
+  P-SPR-01: {semver: 1.0.0, layer: L3, title: Life-limited spares reorder, file: P-SPR-01.jdm.json}

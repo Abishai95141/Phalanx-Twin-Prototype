@@ -1,0 +1,1649 @@
+{
+ "n_flights": 60,
+ "variants": {
+  "T1_L6_primary": {
+   "classifiers": {
+    "lr": {
+     "auc": 0.9519444444444444,
+     "ci95": [
+      0.9219375,
+      0.9811111111111112
+     ],
+     "pass": false
+    },
+    "gb": {
+     "auc": 0.9608333333333334,
+     "ci95": [
+      0.9297152777777777,
+      0.9836111111111111
+     ],
+     "pass": false
+    }
+   },
+   "pass_full_feature_set": false,
+   "pipeline_only": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   },
+   "pass_pipeline_only": true,
+   "univariate_all": [
+    {
+     "feature": "EGT_1_mantissa_tz_mean",
+     "auc": 0.2602777777777778,
+     "mean_real": 43.800539890083286,
+     "mean_syn": 43.58915063256428,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_3_mantissa_tz_mean",
+     "auc": 0.2619444444444444,
+     "mean_real": 43.80454650517408,
+     "mean_syn": 43.598024606173595,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_4_mantissa_tz_mean",
+     "auc": 0.26222222222222225,
+     "mean_real": 43.73286840905879,
+     "mean_syn": 43.53505170408536,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_2_mantissa_tz_mean",
+     "auc": 0.2683333333333333,
+     "mean_real": 43.81319326781891,
+     "mean_syn": 43.61070543846209,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_4_mantissa_tz_mean",
+     "auc": 0.38472222222222224,
+     "mean_real": 42.42864979974818,
+     "mean_syn": 42.36523458318615,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_fracbin4",
+     "auc": 0.5980555555555556,
+     "mean_real": 0.5022802562336972,
+     "mean_syn": 0.512702474975366,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_fracbin5",
+     "auc": 0.40194444444444444,
+     "mean_real": 0.4977197437663028,
+     "mean_syn": 0.487297525024634,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_3_mantissa_tz_mean",
+     "auc": 0.40583333333333327,
+     "mean_real": 42.793018672226154,
+     "mean_syn": 42.71728454327781,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_mantissa_tz_mean",
+     "auc": 0.4163888888888888,
+     "mean_real": 32.400708294046765,
+     "mean_syn": 32.373358927585066,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_3_mantissa_tz_mean",
+     "auc": 0.4205555555555556,
+     "mean_real": 42.57419015862642,
+     "mean_syn": 42.51903998989235,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_n_sentinel",
+     "auc": 0.43986111111111115,
+     "mean_real": 1440.35,
+     "mean_syn": 1353.4833333333333,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_2_mantissa_tz_mean",
+     "auc": 0.4402777777777778,
+     "mean_real": 42.64027172365179,
+     "mean_syn": 42.591323302546954,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_1_mantissa_tz_mean",
+     "auc": 0.4561111111111111,
+     "mean_real": 42.71155845015117,
+     "mean_syn": 42.66979682654376,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_2_mantissa_tz_mean",
+     "auc": 0.5413888888888889,
+     "mean_real": 42.698683636228644,
+     "mean_syn": 42.723922897278676,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_last",
+     "auc": 0.4758333333333333,
+     "mean_real": 0.12758959929148356,
+     "mean_syn": -0.017418551445007324,
+     "n_flights_differing": 16
+    },
+    {
+     "feature": "FF_3_mantissa_tz_mean",
+     "auc": 0.5197222222222222,
+     "mean_real": 46.77456932621976,
+     "mean_syn": 46.785230299072964,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_4_mantissa_tz_mean",
+     "auc": 0.48333333333333334,
+     "mean_real": 42.64264711978596,
+     "mean_syn": 42.63375176652901,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_first",
+     "auc": 0.5158333333333333,
+     "mean_real": 0.9283962249755859,
+     "mean_syn": 1.001491626103719,
+     "n_flights_differing": 1
+    },
+    {
+     "feature": "FF_4_mantissa_tz_mean",
+     "auc": 0.5102777777777778,
+     "mean_real": 46.667151698871166,
+     "mean_syn": 46.670552696711276,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_1_mantissa_tz_mean",
+     "auc": 0.49277777777777776,
+     "mean_real": 46.806101751090864,
+     "mean_syn": 46.801194995372924,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_2_mantissa_tz_mean",
+     "auc": 0.5011111111111111,
+     "mean_real": 46.81414517398328,
+     "mean_syn": 46.815694240094146,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_1_mantissa_tz_mean",
+     "auc": 0.4991666666666667,
+     "mean_real": 42.772883455210334,
+     "mean_syn": 42.77186756360287,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_4_last",
+     "auc": 0.5000000000000001,
+     "mean_real": 2.0770833333333334,
+     "mean_syn": 2.0770833333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_last",
+     "auc": 0.5000000000000001,
+     "mean_real": 1.6661458333333334,
+     "mean_syn": 1.6661458333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_last",
+     "auc": 0.5000000000000001,
+     "mean_real": 12.0,
+     "mean_syn": 12.0,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_first",
+     "auc": 0.49999999999999994,
+     "mean_real": 1.2375,
+     "mean_syn": 1.2375,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_last",
+     "auc": 0.49999999999999994,
+     "mean_real": 0.04479166666666667,
+     "mean_syn": 0.04479166666666667,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_last",
+     "auc": 0.49999999999999994,
+     "mean_real": 0.04739583333333333,
+     "mean_syn": 0.04739583333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "record_frames",
+     "auc": 0.5,
+     "mean_real": 1588.1166666666666,
+     "mean_syn": 1588.1166666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "record_s",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_first",
+     "auc": 0.5,
+     "mean_real": 66.34166666666667,
+     "mean_syn": 66.34166666666667,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_last",
+     "auc": 0.5,
+     "mean_real": 221.54166666666666,
+     "mean_syn": 221.54166666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_first",
+     "auc": 0.5,
+     "mean_real": 47.166666666666664,
+     "mean_syn": 47.166666666666664,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_last",
+     "auc": 0.5,
+     "mean_real": 187.20833333333334,
+     "mean_syn": 187.20833333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_first",
+     "auc": 0.5,
+     "mean_real": 50.025,
+     "mean_syn": 50.025,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_last",
+     "auc": 0.5,
+     "mean_real": 194.56666666666666,
+     "mean_syn": 194.56666666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_first",
+     "auc": 0.5,
+     "mean_real": 58.93333333333333,
+     "mean_syn": 58.93333333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_last",
+     "auc": 0.5,
+     "mean_real": 244.375,
+     "mean_syn": 244.375,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "VRTG_n",
+     "auc": 0.5,
+     "mean_real": 50819.73333333333,
+     "mean_syn": 50819.73333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "VRTG_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    }
+   ],
+   "gross_cues_auc_outside_0.2_0.8": [],
+   "no_gross_univariate_cue": true
+  },
+  "T2_L6_primary": {
+   "classifiers": {
+    "lr": {
+     "auc": 0.9475,
+     "ci95": [
+      0.9152777777777777,
+      0.9780555555555556
+     ],
+     "pass": false
+    },
+    "gb": {
+     "auc": 0.9530555555555555,
+     "ci95": [
+      0.9174930555555555,
+      0.9813888888888889
+     ],
+     "pass": false
+    }
+   },
+   "pass_full_feature_set": false,
+   "pipeline_only": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   },
+   "pass_pipeline_only": true,
+   "univariate_all": [
+    {
+     "feature": "EGT_3_mantissa_tz_mean",
+     "auc": 0.2758333333333333,
+     "mean_real": 43.80454650517408,
+     "mean_syn": 43.61706510205298,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_2_mantissa_tz_mean",
+     "auc": 0.2827777777777778,
+     "mean_real": 43.81319326781891,
+     "mean_syn": 43.62784146735079,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_4_mantissa_tz_mean",
+     "auc": 0.2880555555555556,
+     "mean_real": 43.73286840905879,
+     "mean_syn": 43.56254132804473,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_1_mantissa_tz_mean",
+     "auc": 0.30888888888888894,
+     "mean_real": 43.800539890083286,
+     "mean_syn": 43.63486376841651,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_4_mantissa_tz_mean",
+     "auc": 0.39555555555555555,
+     "mean_real": 42.42864979974818,
+     "mean_syn": 42.368471256030936,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_fracbin4",
+     "auc": 0.5980555555555556,
+     "mean_real": 0.5022802562336972,
+     "mean_syn": 0.512702474975366,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_fracbin5",
+     "auc": 0.40194444444444444,
+     "mean_real": 0.4977197437663028,
+     "mean_syn": 0.487297525024634,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_3_mantissa_tz_mean",
+     "auc": 0.4161111111111111,
+     "mean_real": 42.793018672226154,
+     "mean_syn": 42.72510600855085,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_mantissa_tz_mean",
+     "auc": 0.4163888888888888,
+     "mean_real": 32.400708294046765,
+     "mean_syn": 32.373358927585066,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_4_mantissa_tz_mean",
+     "auc": 0.5822222222222222,
+     "mean_real": 46.667151698871166,
+     "mean_syn": 46.726515423657425,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_3_mantissa_tz_mean",
+     "auc": 0.4200000000000001,
+     "mean_real": 42.57419015862642,
+     "mean_syn": 42.517224609503046,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_2_mantissa_tz_mean",
+     "auc": 0.4386111111111111,
+     "mean_real": 42.64027172365179,
+     "mean_syn": 42.593906163602405,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_3_mantissa_tz_mean",
+     "auc": 0.4397222222222222,
+     "mean_real": 46.77456932621976,
+     "mean_syn": 46.728043028840865,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_n_sentinel",
+     "auc": 0.43986111111111115,
+     "mean_real": 1440.35,
+     "mean_syn": 1353.4833333333333,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_1_mantissa_tz_mean",
+     "auc": 0.45083333333333336,
+     "mean_real": 42.71155845015117,
+     "mean_syn": 42.662164660917675,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_1_mantissa_tz_mean",
+     "auc": 0.5433333333333333,
+     "mean_real": 46.806101751090864,
+     "mean_syn": 46.84586081698719,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_2_mantissa_tz_mean",
+     "auc": 0.5419444444444445,
+     "mean_real": 42.698683636228644,
+     "mean_syn": 42.725527022636896,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_last",
+     "auc": 0.4758333333333333,
+     "mean_real": 0.12758959929148356,
+     "mean_syn": -0.017418551445007324,
+     "n_flights_differing": 16
+    },
+    {
+     "feature": "FF_2_mantissa_tz_mean",
+     "auc": 0.47805555555555557,
+     "mean_real": 46.81414517398328,
+     "mean_syn": 46.793913144575384,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_first",
+     "auc": 0.5158333333333333,
+     "mean_real": 0.9283962249755859,
+     "mean_syn": 1.001491626103719,
+     "n_flights_differing": 1
+    },
+    {
+     "feature": "N1_4_mantissa_tz_mean",
+     "auc": 0.4872222222222223,
+     "mean_real": 42.64264711978596,
+     "mean_syn": 42.63568069973223,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_1_mantissa_tz_mean",
+     "auc": 0.5025000000000001,
+     "mean_real": 42.772883455210334,
+     "mean_syn": 42.77530061696562,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_4_last",
+     "auc": 0.5005555555555556,
+     "mean_real": 2.0770833333333334,
+     "mean_syn": 2.0859375,
+     "n_flights_differing": 2
+    },
+    {
+     "feature": "FF_4_last",
+     "auc": 0.4994444444444445,
+     "mean_real": 12.0,
+     "mean_syn": 10.8,
+     "n_flights_differing": 2
+    },
+    {
+     "feature": "N2_4_last",
+     "auc": 0.5002777777777778,
+     "mean_real": 1.6661458333333334,
+     "mean_syn": 1.66875,
+     "n_flights_differing": 2
+    },
+    {
+     "feature": "EGT_4_last",
+     "auc": 0.4997222222222222,
+     "mean_real": 244.375,
+     "mean_syn": 244.225,
+     "n_flights_differing": 2
+    },
+    {
+     "feature": "N1_4_first",
+     "auc": 0.49999999999999994,
+     "mean_real": 1.2375,
+     "mean_syn": 1.2375,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_last",
+     "auc": 0.49999999999999994,
+     "mean_real": 0.04479166666666667,
+     "mean_syn": 0.04479166666666667,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_last",
+     "auc": 0.49999999999999994,
+     "mean_real": 0.04739583333333333,
+     "mean_syn": 0.04739583333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "record_frames",
+     "auc": 0.5,
+     "mean_real": 1588.1166666666666,
+     "mean_syn": 1588.1166666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "record_s",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_first",
+     "auc": 0.5,
+     "mean_real": 66.34166666666667,
+     "mean_syn": 66.34166666666667,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_last",
+     "auc": 0.5,
+     "mean_real": 221.54166666666666,
+     "mean_syn": 221.54166666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_first",
+     "auc": 0.5,
+     "mean_real": 47.166666666666664,
+     "mean_syn": 47.166666666666664,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_last",
+     "auc": 0.5,
+     "mean_real": 187.20833333333334,
+     "mean_syn": 187.20833333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_first",
+     "auc": 0.5,
+     "mean_real": 50.025,
+     "mean_syn": 50.025,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_last",
+     "auc": 0.5,
+     "mean_real": 194.56666666666666,
+     "mean_syn": 194.56666666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_first",
+     "auc": 0.5,
+     "mean_real": 58.93333333333333,
+     "mean_syn": 58.93333333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "VRTG_n",
+     "auc": 0.5,
+     "mean_real": 50819.73333333333,
+     "mean_syn": 50819.73333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "VRTG_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    }
+   ],
+   "gross_cues_auc_outside_0.2_0.8": [],
+   "no_gross_univariate_cue": true
+  },
+  "T1_L6p_primary": {
+   "classifiers": {
+    "lr": {
+     "auc": 0.9347222222222222,
+     "ci95": [
+      0.8947222222222222,
+      0.9713888888888889
+     ],
+     "pass": false
+    },
+    "gb": {
+     "auc": 0.963611111111111,
+     "ci95": [
+      0.9341597222222222,
+      0.9869444444444444
+     ],
+     "pass": false
+    }
+   },
+   "pass_full_feature_set": false,
+   "pipeline_only": {
+    "lr": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    },
+    "gb": {
+     "auc": 0.5,
+     "ci95": [
+      0.5,
+      0.5
+     ],
+     "pass": true
+    }
+   },
+   "pass_pipeline_only": true,
+   "univariate_all": [
+    {
+     "feature": "EGT_1_mantissa_tz_mean",
+     "auc": 0.2602777777777778,
+     "mean_real": 43.800539890083286,
+     "mean_syn": 43.58915063256428,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_3_mantissa_tz_mean",
+     "auc": 0.2619444444444444,
+     "mean_real": 43.80454650517408,
+     "mean_syn": 43.598024606173595,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_4_mantissa_tz_mean",
+     "auc": 0.26222222222222225,
+     "mean_real": 43.73286840905879,
+     "mean_syn": 43.53505170408536,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "EGT_2_mantissa_tz_mean",
+     "auc": 0.2683333333333333,
+     "mean_real": 43.81319326781891,
+     "mean_syn": 43.61070543846209,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_4_mantissa_tz_mean",
+     "auc": 0.38472222222222224,
+     "mean_real": 42.42864979974818,
+     "mean_syn": 42.36523458318615,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_fracbin5",
+     "auc": 0.4011111111111111,
+     "mean_real": 0.4977197437663028,
+     "mean_syn": 0.4872457640335354,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_fracbin4",
+     "auc": 0.5988888888888888,
+     "mean_real": 0.5022802562336972,
+     "mean_syn": 0.5127542359664646,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_3_mantissa_tz_mean",
+     "auc": 0.40583333333333327,
+     "mean_real": 42.793018672226154,
+     "mean_syn": 42.71728454327781,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_mantissa_tz_mean",
+     "auc": 0.4163888888888889,
+     "mean_real": 32.400708294046765,
+     "mean_syn": 32.37335690526217,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_3_mantissa_tz_mean",
+     "auc": 0.4205555555555556,
+     "mean_real": 42.57419015862642,
+     "mean_syn": 42.51903998989235,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_2_mantissa_tz_mean",
+     "auc": 0.4402777777777778,
+     "mean_real": 42.64027172365179,
+     "mean_syn": 42.591323302546954,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N2_1_mantissa_tz_mean",
+     "auc": 0.4561111111111111,
+     "mean_real": 42.71155845015117,
+     "mean_syn": 42.66979682654376,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_2_mantissa_tz_mean",
+     "auc": 0.5413888888888889,
+     "mean_real": 42.698683636228644,
+     "mean_syn": 42.723922897278676,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_n_sentinel",
+     "auc": 0.46486111111111106,
+     "mean_real": 1440.35,
+     "mean_syn": 1391.8333333333333,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_last",
+     "auc": 0.5233333333333333,
+     "mean_real": 0.12758959929148356,
+     "mean_syn": 0.27473413944244385,
+     "n_flights_differing": 12
+    },
+    {
+     "feature": "FF_3_mantissa_tz_mean",
+     "auc": 0.5197222222222222,
+     "mean_real": 46.77456932621976,
+     "mean_syn": 46.785230299072964,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_4_mantissa_tz_mean",
+     "auc": 0.48333333333333334,
+     "mean_real": 42.64264711978596,
+     "mean_syn": 42.63375176652901,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_4_mantissa_tz_mean",
+     "auc": 0.5102777777777778,
+     "mean_real": 46.667151698871166,
+     "mean_syn": 46.670552696711276,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "FF_1_mantissa_tz_mean",
+     "auc": 0.49277777777777776,
+     "mean_real": 46.806101751090864,
+     "mean_syn": 46.801194995372924,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "VRTG_first",
+     "auc": 0.5055555555555555,
+     "mean_real": 0.9283962249755859,
+     "mean_syn": 0.8557204802831014,
+     "n_flights_differing": 3
+    },
+    {
+     "feature": "FF_2_mantissa_tz_mean",
+     "auc": 0.5011111111111111,
+     "mean_real": 46.81414517398328,
+     "mean_syn": 46.815694240094146,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_1_mantissa_tz_mean",
+     "auc": 0.4991666666666667,
+     "mean_real": 42.772883455210334,
+     "mean_syn": 42.77186756360287,
+     "n_flights_differing": 60
+    },
+    {
+     "feature": "N1_4_last",
+     "auc": 0.5000000000000001,
+     "mean_real": 2.0770833333333334,
+     "mean_syn": 2.0770833333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_last",
+     "auc": 0.5000000000000001,
+     "mean_real": 1.6661458333333334,
+     "mean_syn": 1.6661458333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_last",
+     "auc": 0.5000000000000001,
+     "mean_real": 12.0,
+     "mean_syn": 12.0,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_first",
+     "auc": 0.49999999999999994,
+     "mean_real": 1.2375,
+     "mean_syn": 1.2375,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_last",
+     "auc": 0.49999999999999994,
+     "mean_real": 0.04479166666666667,
+     "mean_syn": 0.04479166666666667,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_last",
+     "auc": 0.49999999999999994,
+     "mean_real": 0.04739583333333333,
+     "mean_syn": 0.04739583333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "record_frames",
+     "auc": 0.5,
+     "mean_real": 1588.1166666666666,
+     "mean_syn": 1588.1166666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "record_s",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N1_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "N2_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_first",
+     "auc": 0.5,
+     "mean_real": 66.34166666666667,
+     "mean_syn": 66.34166666666667,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_1_last",
+     "auc": 0.5,
+     "mean_real": 221.54166666666666,
+     "mean_syn": 221.54166666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_first",
+     "auc": 0.5,
+     "mean_real": 47.166666666666664,
+     "mean_syn": 47.166666666666664,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_2_last",
+     "auc": 0.5,
+     "mean_real": 187.20833333333334,
+     "mean_syn": 187.20833333333334,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_first",
+     "auc": 0.5,
+     "mean_real": 50.025,
+     "mean_syn": 50.025,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_3_last",
+     "auc": 0.5,
+     "mean_real": 194.56666666666666,
+     "mean_syn": 194.56666666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_first",
+     "auc": 0.5,
+     "mean_real": 58.93333333333333,
+     "mean_syn": 58.93333333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "EGT_4_last",
+     "auc": 0.5,
+     "mean_real": 244.375,
+     "mean_syn": 244.375,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_1_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_1_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_2_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_2_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_3_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_3_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_n",
+     "auc": 0.5,
+     "mean_real": 25409.866666666665,
+     "mean_syn": 25409.866666666665,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "FF_4_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "VRTG_n",
+     "auc": 0.5,
+     "mean_real": 50819.73333333333,
+     "mean_syn": 50819.73333333333,
+     "n_flights_differing": 0
+    },
+    {
+     "feature": "VRTG_n_over_rate",
+     "auc": 0.5,
+     "mean_real": 6352.466666666666,
+     "mean_syn": 6352.466666666666,
+     "n_flights_differing": 0
+    }
+   ],
+   "gross_cues_auc_outside_0.2_0.8": [],
+   "no_gross_univariate_cue": true
+  }
+ }
+}

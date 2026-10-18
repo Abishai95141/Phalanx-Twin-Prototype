@@ -1,0 +1,69 @@
+  tail_eng D2_lr_64_tex all_texture            AUC 1.000 [1.000, 1.000] nf=1215 t=16s
+  tail_eng D2_lr_64_tex drop_quant             AUC 1.000 [1.000, 1.000] nf=1039 t=24s
+  tail_eng D2_lr_64_tex drop_noise             AUC 1.000 [1.000, 1.000] nf=1167 t=30s
+  tail_eng D2_lr_64_tex drop_spectral          AUC 1.000 [1.000, 1.000] nf=463 t=33s
+  tail_eng D2_lr_64_tex drop_tails             AUC 1.000 [1.000, 1.000] nf=1151 t=39s
+  tail_eng D2_lr_64_tex drop_missing           AUC 1.000 [1.000, 1.000] nf=1103 t=45s
+  tail_eng D2_lr_64_tex drop_cross             AUC 1.000 [1.000, 1.000] nf=1152 t=51s
+  tail_eng D2_lr_64_tex only_quant             AUC 1.000 [1.000, 1.000] nf=176 t=52s
+  tail_eng D2_lr_64_tex only_noise             AUC 1.000 [1.000, 1.000] nf=48 t=52s
+  tail_eng D2_lr_64_tex only_spectral          AUC 1.000 [1.000, 1.000] nf=752 t=57s
+  tail_eng D2_lr_64_tex only_tails             AUC 0.929 [0.895, 0.959] nf=64 t=57s
+  tail_eng D2_lr_64_tex only_missing           AUC 0.809 [0.747, 0.867] nf=112 t=58s
+  tail_eng D2_lr_64_tex only_cross             AUC 0.993 [0.981, 1.000] nf=63 t=58s
+  tail_eng D2_lr_64_tex onlychan_N1            AUC 0.999 [0.998, 1.000] nf=288 t=60s
+  tail_eng D2_lr_64_tex onlychan_N2            AUC 1.000 [1.000, 1.000] nf=288 t=61s
+  tail_eng D2_lr_64_tex onlychan_EGT           AUC 0.898 [0.854, 0.937] nf=288 t=63s
+  tail_eng D2_lr_64_tex onlychan_FF            AUC 0.974 [0.953, 0.989] nf=288 t=64s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  tail_eng D3_64_onlychan_N1              AUC 0.997 t=252s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  tail_eng D3_64_onlychan_N2              AUC 1.000 t=420s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  tail_eng D3_64_onlychan_EGT             AUC 0.852 t=595s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  tail_eng D3_64_onlychan_FF              AUC 0.943 t=763s
+  tail_vrtg D2_gb_seg_tex all_texture            AUC 0.994 [0.987, 0.999] nf=431 t=10s
+  tail_vrtg D2_gb_seg_tex drop_quant             AUC 0.995 [0.988, 0.999] nf=365 t=14s
+  tail_vrtg D2_gb_seg_tex drop_noise             AUC 0.994 [0.987, 0.999] nf=408 t=18s
+  tail_vrtg D2_gb_seg_tex drop_spectral          AUC 0.987 [0.974, 0.996] nf=155 t=20s
+  tail_vrtg D2_gb_seg_tex drop_tails             AUC 0.995 [0.989, 0.999] nf=407 t=23s
+  tail_vrtg D2_gb_seg_tex drop_missing           AUC 0.951 [0.921, 0.974] nf=389 t=27s
+  tail_vrtg D2_gb_seg_tex drop_cross             AUC 0.994 [0.987, 0.999] nf=431 t=31s
+  tail_vrtg D2_gb_seg_tex only_quant             AUC 0.709 [0.641, 0.774] nf=66 t=31s
+  tail_vrtg D2_gb_seg_tex only_noise             AUC 0.613 [0.535, 0.684] nf=23 t=32s
+  tail_vrtg D2_gb_seg_tex only_spectral          AUC 0.953 [0.927, 0.974] nf=276 t=34s
+  tail_vrtg D2_gb_seg_tex only_tails             AUC 0.656 [0.584, 0.725] nf=24 t=35s
+  tail_vrtg D2_gb_seg_tex only_missing           AUC 0.984 [0.968, 0.996] nf=42 t=36s
+  tail_vrtg D3_64_sentinels_zeroed         AUC 0.688 t=191s
+  temporal_eng D2_gb_seg_tex all_texture            AUC 0.949 [0.898, 0.986] nf=7562 t=19s
+  temporal_eng D2_gb_seg_tex drop_quant             AUC 0.929 [0.864, 0.981] nf=6506 t=33s
+  temporal_eng D2_gb_seg_tex drop_noise             AUC 0.949 [0.898, 0.987] nf=7194 t=45s
+  temporal_eng D2_gb_seg_tex drop_spectral          AUC 0.956 [0.915, 0.986] nf=3050 t=50s
+  temporal_eng D2_gb_seg_tex drop_tails             AUC 0.939 [0.884, 0.981] nf=7178 t=62s
+  temporal_eng D2_gb_seg_tex drop_missing           AUC 0.947 [0.896, 0.985] nf=6698 t=74s
+  temporal_eng D2_gb_seg_tex drop_cross             AUC 0.951 [0.900, 0.989] nf=7184 t=87s
+  temporal_eng D2_gb_seg_tex only_quant             AUC 0.964 [0.925, 0.990] nf=1056 t=89s
+  temporal_eng D2_gb_seg_tex only_noise             AUC 0.915 [0.852, 0.965] nf=368 t=90s
+  temporal_eng D2_gb_seg_tex only_spectral          AUC 0.873 [0.795, 0.943] nf=4512 t=100s
+  temporal_eng D2_gb_seg_tex only_tails             AUC 0.855 [0.769, 0.927] nf=384 t=101s
+  temporal_eng D2_gb_seg_tex only_missing           AUC 0.619 [0.498, 0.741] nf=864 t=102s
+  temporal_eng D2_gb_seg_tex only_cross             AUC 0.777 [0.668, 0.870] nf=378 t=103s
+  temporal_eng D2_gb_seg_tex onlychan_N1            AUC 0.805 [0.708, 0.889] nf=1796 t=112s
+  temporal_eng D2_gb_seg_tex onlychan_N2            AUC 0.836 [0.745, 0.917] nf=1796 t=122s
+  temporal_eng D2_gb_seg_tex onlychan_EGT           AUC 0.944 [0.893, 0.981] nf=1796 t=130s
+  temporal_eng D2_gb_seg_tex onlychan_FF            AUC 0.899 [0.816, 0.964] nf=1796 t=139s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  temporal_eng D3_64_onlychan_N1              AUC 0.779 t=148s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  temporal_eng D3_64_onlychan_N2              AUC 0.637 t=160s
+  temporal_eng D3_64_onlychan_EGT             AUC 0.773 t=169s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  temporal_eng D3_64_onlychan_FF              AUC 0.717 t=178s

@@ -1,0 +1,640 @@
+{
+ "population": {
+  "bit_evidenced_jobs": 623,
+  "labelled": 600,
+  "no_fault": 516,
+  "removed_or_ts": 84,
+  "open_or_deferred": 23,
+  "actions": {
+   "AT-CND": 360,
+   "AT-ADM": 156,
+   "AT-RR": 84
+  }
+ },
+ "rolling_origin": [
+  {
+   "origin": "2026-03-01",
+   "n_train": 242,
+   "n_test": 103,
+   "pos_test": 89,
+   "role": "validation",
+   "logreg \u00b7 one-hot codes": {
+    "auc": 0.878,
+    "brier": 0.0883,
+    "ece": 0.0408,
+    "n": 103,
+    "pos": 89
+   },
+   "logreg \u00b7 as-of priors": {
+    "auc": 0.869,
+    "brier": 0.0909,
+    "ece": 0.1,
+    "n": 103,
+    "pos": 89
+   },
+   "gbm+platt \u00b7 as-of priors": {
+    "auc": 0.872,
+    "brier": 0.0936,
+    "ece": 0.0686,
+    "n": 103,
+    "pos": 89
+   },
+   "per-code base rate": {
+    "auc": 0.818,
+    "brier": 0.0929,
+    "ece": 0.0432,
+    "n": 103,
+    "pos": 89
+   }
+  },
+  {
+   "origin": "2026-04-01",
+   "n_train": 341,
+   "n_test": 110,
+   "pos_test": 98,
+   "role": "validation",
+   "logreg \u00b7 one-hot codes": {
+    "auc": 0.926,
+    "brier": 0.0635,
+    "ece": 0.0566,
+    "n": 110,
+    "pos": 98
+   },
+   "logreg \u00b7 as-of priors": {
+    "auc": 0.909,
+    "brier": 0.0663,
+    "ece": 0.0606,
+    "n": 110,
+    "pos": 98
+   },
+   "gbm+platt \u00b7 as-of priors": {
+    "auc": 0.892,
+    "brier": 0.0752,
+    "ece": 0.0564,
+    "n": 110,
+    "pos": 98
+   },
+   "per-code base rate": {
+    "auc": 0.909,
+    "brier": 0.07,
+    "ece": 0.0559,
+    "n": 110,
+    "pos": 98
+   }
+  },
+  {
+   "origin": "2026-05-01",
+   "n_train": 449,
+   "n_test": 67,
+   "pos_test": 54,
+   "role": "held-out",
+   "logreg \u00b7 one-hot codes": {
+    "auc": 0.916,
+    "brier": 0.09,
+    "ece": 0.0665,
+    "n": 67,
+    "pos": 54
+   },
+   "logreg \u00b7 as-of priors": {
+    "auc": 0.927,
+    "brier": 0.0891,
+    "ece": 0.0502,
+    "n": 67,
+    "pos": 54
+   },
+   "gbm+platt \u00b7 as-of priors": {
+    "auc": 0.9,
+    "brier": 0.0985,
+    "ece": 0.0646,
+    "n": 67,
+    "pos": 54
+   },
+   "per-code base rate": {
+    "auc": 0.865,
+    "brier": 0.1021,
+    "ece": 0.0911,
+    "n": 67,
+    "pos": 54
+   }
+  },
+  {
+   "origin": "2026-06-01",
+   "n_train": 522,
+   "n_test": 72,
+   "pos_test": 60,
+   "role": "held-out",
+   "logreg \u00b7 one-hot codes": {
+    "auc": 0.828,
+    "brier": 0.1238,
+    "ece": 0.1286,
+    "n": 72,
+    "pos": 60
+   },
+   "logreg \u00b7 as-of priors": {
+    "auc": 0.814,
+    "brier": 0.1286,
+    "ece": 0.13,
+    "n": 72,
+    "pos": 60
+   },
+   "gbm+platt \u00b7 as-of priors": {
+    "auc": 0.819,
+    "brier": 0.1203,
+    "ece": 0.0917,
+    "n": 72,
+    "pos": 60
+   },
+   "per-code base rate": {
+    "auc": 0.857,
+    "brier": 0.0997,
+    "ece": 0.0658,
+    "n": 72,
+    "pos": 60
+   }
+  }
+ ],
+ "selection": {
+  "rule": "lowest mean Brier on validation origins 2026-03-01, 2026-04-01",
+  "selected": "logreg \u00b7 one-hot codes",
+  "val_brier": {
+   "logreg \u00b7 one-hot codes": 0.0759,
+   "logreg \u00b7 as-of priors": 0.0786,
+   "gbm+platt \u00b7 as-of priors": 0.0844,
+   "per-code base rate": 0.0814
+  }
+ },
+ "held_out": {
+  "train": "labels known before 2026-05-01",
+  "test": "jobs opened 2026-05-01 -> 2026-06-22 06:00",
+  "n_train": 449,
+  "pos_train": 392,
+  "n_test": 139,
+  "pos_test": 114,
+  "logreg \u00b7 one-hot codes": {
+   "auc": 0.865,
+   "brier": 0.1072,
+   "ece": 0.0735,
+   "n": 139,
+   "pos": 114,
+   "fit_s": 0.013,
+   "calibration": [
+    {
+     "lo": 0.3,
+     "n": 18,
+     "p": 0.3578,
+     "y": 0.5556
+    },
+    {
+     "lo": 0.4,
+     "n": 5,
+     "p": 0.4441,
+     "y": 0.6
+    },
+    {
+     "lo": 0.5,
+     "n": 6,
+     "p": 0.5527,
+     "y": 0.3333
+    },
+    {
+     "lo": 0.6,
+     "n": 13,
+     "p": 0.6531,
+     "y": 0.6154
+    },
+    {
+     "lo": 0.7,
+     "n": 11,
+     "p": 0.7383,
+     "y": 0.4545
+    },
+    {
+     "lo": 0.8,
+     "n": 2,
+     "p": 0.8785,
+     "y": 1.0
+    },
+    {
+     "lo": 0.9,
+     "n": 84,
+     "p": 0.9916,
+     "y": 1.0
+    }
+   ]
+  },
+  "logreg \u00b7 as-of priors": {
+   "auc": 0.863,
+   "brier": 0.1098,
+   "ece": 0.0799,
+   "n": 139,
+   "pos": 114,
+   "fit_s": 0.011,
+   "calibration": [
+    {
+     "lo": 0.3,
+     "n": 15,
+     "p": 0.3698,
+     "y": 0.6667
+    },
+    {
+     "lo": 0.4,
+     "n": 7,
+     "p": 0.4269,
+     "y": 0.4286
+    },
+    {
+     "lo": 0.5,
+     "n": 4,
+     "p": 0.5659,
+     "y": 0.5
+    },
+    {
+     "lo": 0.6,
+     "n": 15,
+     "p": 0.6518,
+     "y": 0.4667
+    },
+    {
+     "lo": 0.7,
+     "n": 14,
+     "p": 0.7543,
+     "y": 0.5714
+    },
+    {
+     "lo": 0.9,
+     "n": 84,
+     "p": 0.9876,
+     "y": 1.0
+    }
+   ]
+  },
+  "gbm+platt \u00b7 as-of priors": {
+   "auc": 0.849,
+   "brier": 0.1071,
+   "ece": 0.0681,
+   "n": 139,
+   "pos": 114,
+   "fit_s": 0.936,
+   "calibration": [
+    {
+     "lo": 0.3,
+     "n": 1,
+     "p": 0.3923,
+     "y": 1.0
+    },
+    {
+     "lo": 0.4,
+     "n": 10,
+     "p": 0.4768,
+     "y": 0.5
+    },
+    {
+     "lo": 0.5,
+     "n": 21,
+     "p": 0.5439,
+     "y": 0.619
+    },
+    {
+     "lo": 0.6,
+     "n": 13,
+     "p": 0.6481,
+     "y": 0.4615
+    },
+    {
+     "lo": 0.7,
+     "n": 9,
+     "p": 0.7193,
+     "y": 0.4444
+    },
+    {
+     "lo": 0.8,
+     "n": 1,
+     "p": 0.8136,
+     "y": 1.0
+    },
+    {
+     "lo": 0.9,
+     "n": 84,
+     "p": 0.9767,
+     "y": 1.0
+    }
+   ]
+  },
+  "per-code base rate": {
+   "auc": 0.858,
+   "brier": 0.1008,
+   "ece": 0.0459,
+   "n": 139,
+   "pos": 114,
+   "fit_s": 0.0,
+   "calibration": [
+    {
+     "lo": 0.5,
+     "n": 8,
+     "p": 0.5706,
+     "y": 0.375
+    },
+    {
+     "lo": 0.6,
+     "n": 38,
+     "p": 0.6244,
+     "y": 0.5526
+    },
+    {
+     "lo": 0.7,
+     "n": 6,
+     "p": 0.7603,
+     "y": 0.6667
+    },
+    {
+     "lo": 0.8,
+     "n": 1,
+     "p": 0.806,
+     "y": 0.0
+    },
+    {
+     "lo": 0.9,
+     "n": 86,
+     "p": 0.9917,
+     "y": 1.0
+    }
+   ]
+  }
+ },
+ "held_out_vs_baseline": {
+  "d_auc": 0.007,
+  "d_auc_ci": [
+   -0.046,
+   0.063
+  ],
+  "d_brier": 0.0066,
+  "d_brier_ci": [
+   -0.0118,
+   0.0258
+  ],
+  "boot": 2000
+ },
+ "tail_grouped": {
+  "logreg \u00b7 one-hot codes": {
+   "auc": 0.851,
+   "brier": 0.1075,
+   "ece": 0.0872,
+   "n": 139,
+   "pos": 114
+  },
+  "per-code base rate": {
+   "auc": 0.858,
+   "brier": 0.1008,
+   "ece": 0.0459,
+   "n": 139,
+   "pos": 114
+  },
+  "groups": [
+   [
+    "TJ101",
+    "TJ102"
+   ],
+   [
+    "TJ103",
+    "TJ104"
+   ],
+   [
+    "TJ105",
+    "TJ106"
+   ],
+   [
+    "TJ107",
+    "TJ108"
+   ]
+  ]
+ },
+ "artefact_sha256": "41b20ba84500de81329a111c5888c4c2a42f0281320331ac69d605fce9a3386e",
+ "feature_spec_sha256": "36de88b9389dd675f909b5a4e6935512b79d7fa8bdb63c96000b19340872f6df",
+ "train_set_blake2b": "0909afce5da62b226d84b3f9eb572a39",
+ "coefficients_top": [
+  [
+   "fault_list_PFL",
+   -1.106
+  ],
+  [
+   "severity_ADVISORY",
+   1.103
+  ],
+  [
+   "fault_list_MFL",
+   1.103
+  ],
+  [
+   "severity_CAUTION",
+   -0.785
+  ],
+  [
+   "code_ENG-401",
+   -0.502
+  ],
+  [
+   "tail_no_TJ107",
+   -0.499
+  ],
+  [
+   "code_ENG-201",
+   0.474
+  ],
+  [
+   "tail_no_TJ101",
+   -0.474
+  ]
+ ],
+ "tj107_hyd101_latest_job": {
+  "job": "sulur-26169-0006",
+  "t_open": "2026-06-18 21:27:51+05:30",
+  "label": 0,
+  "p_nofault": 0.567,
+  "code_nf_asof": 0.639
+ },
+ "code_rates_asof_snapshot": {
+  "ENG-201": {
+   "n": 107,
+   "nofault": 107,
+   "rate": 1.0
+  },
+  "HYD-101": {
+   "n": 94,
+   "nofault": 59,
+   "rate": 0.628
+  },
+  "AVI-203": {
+   "n": 71,
+   "nofault": 71,
+   "rate": 1.0
+  },
+  "AVI-201": {
+   "n": 68,
+   "nofault": 68,
+   "rate": 1.0
+  },
+  "AVI-204": {
+   "n": 35,
+   "nofault": 35,
+   "rate": 1.0
+  },
+  "HYD-001": {
+   "n": 31,
+   "nofault": 31,
+   "rate": 1.0
+  },
+  "LGB-501": {
+   "n": 31,
+   "nofault": 19,
+   "rate": 0.613
+  },
+  "SPS-501": {
+   "n": 25,
+   "nofault": 18,
+   "rate": 0.72
+  },
+  "ADC-501": {
+   "n": 19,
+   "nofault": 10,
+   "rate": 0.526
+  },
+  "ELE-405": {
+   "n": 18,
+   "nofault": 18,
+   "rate": 1.0
+  }
+ },
+ "champion_g1": {
+  "window": "jobs opened 1 Mar -> 31 May, labels known by 1 Jun 06:00",
+  "model": {
+   "auc": 0.889,
+   "brier": 0.088,
+   "ece": 0.0555,
+   "n": 274,
+   "pos": 235
+  },
+  "constant_fleet_rate": {
+   "auc": 0.417,
+   "brier": 0.1224,
+   "ece": 0.0096,
+   "n": 274,
+   "pos": 235
+  },
+  "calibration": [
+   {
+    "lo": 0.4,
+    "n": 1,
+    "p": 0.4659,
+    "y": 1.0
+   },
+   {
+    "lo": 0.5,
+    "n": 8,
+    "p": 0.5638,
+    "y": 0.75
+   },
+   {
+    "lo": 0.6,
+    "n": 43,
+    "p": 0.6557,
+    "y": 0.4884
+   },
+   {
+    "lo": 0.7,
+    "n": 40,
+    "p": 0.7325,
+    "y": 0.65
+   },
+   {
+    "lo": 0.8,
+    "n": 3,
+    "p": 0.8304,
+    "y": 0.6667
+   },
+   {
+    "lo": 0.9,
+    "n": 179,
+    "p": 0.9876,
+    "y": 1.0
+   }
+  ]
+ },
+ "g2_shadow_replay": {
+  "epochs": 14,
+  "scored": 51,
+  "max_per_epoch": 10,
+  "below_0_6": 3,
+  "per_epoch": [
+   {
+    "cutoff": "2026-06-01 06:00",
+    "scored": 0,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-02 06:00",
+    "scored": 10,
+    "low_nf": 1
+   },
+   {
+    "cutoff": "2026-06-03 06:00",
+    "scored": 0,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-04 06:00",
+    "scored": 6,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-05 06:00",
+    "scored": 8,
+    "low_nf": 1
+   },
+   {
+    "cutoff": "2026-06-06 06:00",
+    "scored": 4,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-07 06:00",
+    "scored": 0,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-08 06:00",
+    "scored": 0,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-09 06:00",
+    "scored": 0,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-10 06:00",
+    "scored": 0,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-11 06:00",
+    "scored": 9,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-12 06:00",
+    "scored": 9,
+    "low_nf": 0
+   },
+   {
+    "cutoff": "2026-06-13 06:00",
+    "scored": 5,
+    "low_nf": 1
+   },
+   {
+    "cutoff": "2026-06-14 06:00",
+    "scored": 0,
+    "low_nf": 0
+   }
+  ]
+ }
+}

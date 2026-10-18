@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- Frame-exact animation for loop.gif: render(t) draws time t seconds; render_anim.sh captures ?t=… frames. -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../build/fonts.css">
+<style>
+  html,body{margin:0;background:#fff;width:1200px;height:560px;overflow:hidden;font-family:Manrope,sans-serif;color:#0B0D10}
+  .k{position:absolute;left:56px;top:40px;font-size:13px;font-weight:700;letter-spacing:.14em;color:#E8743B}
+  .h{position:absolute;left:56px;top:62px;font-size:32px;font-weight:800;letter-spacing:-.025em}
+  .clock{position:absolute;right:56px;top:34px;text-align:right}
+  .clock .t{font-family:JBMono,monospace;font-size:46px;font-weight:700;letter-spacing:-.02em;line-height:1}
+  .clock .d{font-size:13px;font-weight:700;color:#8A8F98;margin-top:6px;letter-spacing:.08em}
+  .foot{position:absolute;left:56px;bottom:22px;font-size:12px;color:#8A8F98}
+  svg{position:absolute;left:0;top:0}
+  .st{font-size:13px;font-weight:800}
+  .tm{font-family:JBMono,monospace;font-size:12px;font-weight:600}
+  .dt{font-size:11.5px;fill:#4B5563}
+</style></head><body>
+<div class="k">THE DAILY CYCLE · RUNS ON ITS OWN ON IBM LINUXONE</div>
+<div class="h">From snapshot to signed orders by 08:00.</div>
+<div class="clock"><div class="t" id="clk">06:00</div><div class="d" id="day">MON 22 JUN · IST</div></div>
+<svg id="s" width="1200" height="560" viewBox="0 0 1200 560"></svg>
+<div class="foot">Each step is a record on one hash-chained event log · times as in the live system's epoch timeline · simulated fleet</div>
+<script>
+const ST = [
+  [0.3, 0, "06:00", "Snapshot sealed", ["only data received", "by 06:00 counts"]],
+  [1.0, 4, "06:04", "Models run", ["11 models: false alarm,", "isolation, removal risk"]],
+  [1.6, 5, "06:05", "Board open", ["9 ranked decisions,", "what-ifs pre-run"]],
+  [3.4, 105, "07:45", "Board freezes", ["no changes after", "the freeze"]],
+  [4.1, 112, "07:52", "Signatures", ["HUMAN-only orders", "signed by the officer"]],
+  [4.8, 120, "08:00", "Orders issued", ["through the simulator's", "own order gateway"]],
+  [6.3, 720, "day", "The fleet flies", ["8 aircraft fly, break", "and are repaired"]],
+  [7.6, 1440, "06:00", "Outcomes back", ["as new records —", "the loop closes"]],
+];
+const X0 = 96, DX = 144, TY = 236;
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const seg = (t, a, b) => ease((t - a) / (b - a));
+const HALF = [[0,0],[.35,.05],[.9,.22],[1.6,.36],[2.3,.45],[3,.52],[3.7,.62],[4.05,.98],[4.6,1.02],[7.29,2.4],[9.32,4.1],[10.72,4.1],[11.22,1.02],[11.9,.8],[12.55,.58],[12.62,.5],[13.2,.44],[13.2,0]];
+const RING = HALF.concat(HALF.slice(1, -1).reverse().map(([x, y]) => [x, -y]));
+const plane = (cx, cy, s, fill, stroke) => `<path d="M${RING.map(([x, y]) => `${(cx + y * s).toFixed(1)},${(cy + (x - 6.6) * s).toFixed(1)}`).join('L')}Z" fill="${fill}" stroke="${stroke}" stroke-width="1.2" stroke-linejoin="round"/>`;
+const FLEET = ["NMCD","FMC","FMC","FMC","FMC","FMC","FMC","NMCS"];
+const TONE = {FMC:["#1F8A4C","#EAF6EF"], NMCS:["#D4492A","#FCEDE9"], NMCD:["#5B4FCF","#EFEEFC"]};
+function clockAt(t) {   // minutes after 06:00
+  const P = [[0, 0]].concat(ST.filter(s => s[2] !== "day").map(s => [s[0], s[1]]));
+  if (t >= P[P.length - 1][0]) return P[P.length - 1][1];
+  for (let i = 1; i < P.length; i++) if (t <= P[i][0]) { const [a, va] = P[i - 1], [b, vb] = P[i]; return va + (vb - va) * (t - a) / (b - a); }
+}
+function render(t) {
+  const m = clockAt(t), tot = 360 + m, hh = Math.floor(tot / 60) % 24, mm = Math.floor(tot % 60);
+  document.getElementById('clk').textContent = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+  document.getElementById('day').textContent = tot >= 1440 ? 'TUE 23 JUN · IST' : 'MON 22 JUN · IST';
+  let o = '';
+  // track
+  const reached = ST.filter(s => t >= s[0]).length;
+  const prog = (() => { for (let i = 0; i < ST.length; i++) { if (t < ST[i][0]) { if (i === 0) return 0; return (i - 1) + (t - ST[i - 1][0]) / (ST[i][0] - ST[i - 1][0]); } } return ST.length - 1; })();
+  o += `<path d="M${X0} ${TY}H${X0 + DX * 7}" stroke="#E6E6E2" stroke-width="4" stroke-linecap="round"/>`;
+  o += `<path d="M${X0} ${TY}H${X0 + DX * prog}" stroke="#E8743B" stroke-width="4" stroke-linecap="round"/>`;
+  // night band behind the day station
+  o += `<rect x="${X0 + DX * 5.5}" y="${TY - 70}" width="${DX * 2}" height="196" rx="14" fill="#F7F7F5" opacity="${seg(t, 4.8, 5.4)}"/>`;
+  ST.forEach(([at, , tm, title, det], i) => {
+    const x = X0 + DX * i, k = seg(t, at - .15, at + .25), on = t >= at;
+    const c = i >= 5 && i <= 6 ? '#5B4FCF' : '#E8743B';
+    o += `<text x="${x}" y="${TY - 26}" text-anchor="middle" class="tm" fill="${on ? '#0B0D10' : '#B5B9C0'}">${tm}</text>`;
+    o += `<circle cx="${x}" cy="${TY}" r="${on ? 11 : 8}" fill="${on ? c : '#fff'}" stroke="${on ? c : '#D6D6D1'}" stroke-width="3"/>`;
+    if (on && t < at + .6) o += `<circle cx="${x}" cy="${TY}" r="${11 + 18 * seg(t, at, at + .6)}" fill="none" stroke="${c}" stroke-width="2" opacity="${1 - seg(t, at, at + .6)}"/>`;
+    o += `<g opacity="${.25 + .75 * k}" transform="translate(0 ${(1 - k) * 8})"><text x="${x}" y="${TY + 40}" text-anchor="middle" class="st" fill="${on ? '#0B0D10' : '#8A8F98'}">${title}</text>`;
+    det.forEach((d, j) => o += `<text x="${x}" y="${TY + 62 + j * 16}" text-anchor="middle" class="dt" opacity="${k}">${d}</text>`);
+    o += `</g>`;
+  });
+  // fleet row: aircraft lift off during the day and return
+  const fy = 440, day = seg(t, 4.9, 5.3) * (1 - seg(t, 7.0, 7.5));
+  o += `<text x="${X0 - 40}" y="${fy - 56}" class="tm" fill="#8A8F98">FLEET</text>`;
+  FLEET.forEach((st, i) => {
+    const x = X0 - 10 + i * 66, fly = st === 'FMC' ? day * (14 + 10 * Math.sin(t * 5 + i)) : 0;
+    const [s, w] = TONE[st];
+    o += plane(x, fy - fly, 3.2, w, s);
+    o += `<text x="${x}" y="${fy + 36}" text-anchor="middle" class="tm" fill="#4B5563">TJ10${i + 1}</text>`;
+  });
+  // log ticker
+  const LOG = ["snapshot sealed · dd75a4fc…", "engines done · 11 models", "board open · 9 items", "board frozen", "order signed · HUMAN", "orders submitted · gateway", "fleet stepped one day", "order status · outcomes"];
+  o += `<text x="680" y="${fy - 56}" class="tm" fill="#8A8F98">HASH-CHAINED LOG</text>`;
+  const shown = LOG.slice(0, reached).slice(-4);
+  shown.forEach((l, j) => { const idx = reached - shown.length + j;
+    o += `<g opacity="${seg(t, ST[idx][0], ST[idx][0] + .3)}"><rect x="680" y="${fy - 42 + j * 24}" width="464" height="20" rx="5" fill="${j === shown.length - 1 ? '#FDF1EA' : '#F7F7F5'}"/>`
+      + `<text x="692" y="${fy - 28 + j * 24}" class="tm" fill="#0B0D10">#${idx + 1}  ${l}</text>`
+      + (idx ? `<text x="1132" y="${fy - 28 + j * 24}" text-anchor="end" class="tm" fill="#8A8F98">← #${idx}</text>` : '') + `</g>`; });
+  document.getElementById('s').innerHTML = o;
+}
+render(parseFloat(new URLSearchParams(location.search).get('t') || '9'));
+</script></body></html>

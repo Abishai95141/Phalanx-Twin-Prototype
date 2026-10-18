@@ -1,0 +1,17 @@
+{
+ "n_flights": 651,
+ "identical_content_groups": [],
+ "frmc_irregular_total": 726,
+ "frmc_irregular_at_wrap_step3": 725,
+ "frmc_irregular_other": [
+  [
+   "687200104231428.mat",
+   "3515->3523@frame217"
+  ]
+ ],
+ "flights_with_glitch_frames": 229,
+ "glitch_frames_total": 11717,
+ "frames_total": 748592,
+ "glitch_in_first_frame": 79,
+ "glitch_in_last_frame": 565
+}

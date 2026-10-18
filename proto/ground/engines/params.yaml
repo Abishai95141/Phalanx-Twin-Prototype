@@ -1,0 +1,60 @@
+# Model parameters of the engines. ASSUMPTION = a value we chose (with the range it is swept over), not one
+# learned from the data. Policy thresholds and preferences live in ../policies/prefs.yaml.
+
+episodes:
+  window_days: 10            # architecture 07 D4: same (tail, code) within 10 days (by t_ingest) joins the issue
+  open_days: 10              # an issue is open while its latest occurrence is younger than this
+  power_codes: [ELE-405, ENG-401]   # D6: power-supply codes inhibit dependent BIT fails in the same sortie
+  inhibited_severities: [ADVISORY]  # only ADVISORY / MFL LRU BIT fails are muted, never CAUTION or WARNING
+
+cnd:
+  prior_strength: 2.0        # pseudo-observations at the fleet rate (DEVELOPMENT §2.5)
+  holdout_days: 52           # challenger: held-out block = jobs opened in the last 52 days (22 Jun → from 1 May)
+  min_holdout: 30            # fewer held-out jobs → the challenger is not scored
+  challenger_C: 0.5          # logistic-regression inverse regularisation (as the film's assurance run)
+
+isolation:
+  detection: 0.6             # ASSUMPTION d: P(bench finds the fault | unit faulty); swept 0.3–0.9
+  leak: 0.20                 # ASSUMPTION: prior mass on the indication path (reporter channel, sensor, harness); swept 0.05–0.40
+  sensitivity: 0.7           # ASSUMPTION: P(test positive | its hypothesis true); swept 0.3–0.9
+  false_positive: 0.05       # ASSUMPTION: P(test positive | another hypothesis true)
+  false_confirm: 0.01        # ASSUMPTION: P(bench CONFIRMED | unit healthy)
+  sweep_detection: [0.3, 0.45, 0.6, 0.75, 0.9]
+  sweep_leak: [0.05, 0.10, 0.15, 0.20, 0.30, 0.40]
+  sweep_sensitivity: [0.3, 0.5, 0.7, 0.9]
+  min_tail_jobs: 5           # man-hours from this tail's jobs when it has at least this many, else the fleet's
+  # Suspect LRU → part number when the name differs from SYN-PN-<LRU>; and checks for LRUs with no part on record
+  lru_parts:
+    HYD_PUMP: SYN-PN-HYDP
+  lru_labels:
+    HYD_PUMP: pump
+    AMAGB: gearbox drive
+    JFS: JFS
+    TRU: TRU
+    ADC: ADC
+    FADEC: FADEC
+  lru_checks:
+    AMAGB: {name: AMAGB drive check, detail: "pad spline · oil · drive to the pump", proc: PHX-FIM-SPS,
+            note: "AMAGB sits in the start-system ambiguity group; no AMAGB jobs on record"}
+
+similar:
+  top: 5
+  weights: {code: 3.0, lru: 2.0, part: 1.5, outcome: 1.0}
+
+leadtime:
+  quantiles: [0.5, 0.9]
+
+life:
+  window_days: 30            # usage rate over the last 30 days
+  # life limits come from the station's hard-time job text, e.g. "DUE TO HI-TIME (8 LDG)"
+  items:
+    SYN-PN-TYRE: {unit: landings, text: "LDG", label: tyre}
+    SYN-PN-CHUTE: {unit: streamings, text: "STREAMINGS", counter: USAGE.CHUTE_STREAMINGS, label: brake chute}
+
+drift:
+  week_days: 7
+  min_events: 20             # codes with fewer events in the window are not scanned
+  bootstrap: 2000             # as the film's assurance run (same seed → same p-value)
+  alpha: 0.01
+  known_window_weeks: 1      # a change point within ±1 week of a known change (install, wash, release) is explained
+  seed: 20260622

@@ -1,0 +1,17 @@
+# Phalanx proxy-mode dictionary (DASHlink Tail 687; W2.4a, AD-33/AD-43). Hand-maintained source.
+# FADEC lanes: TRANSFER of the Tejas FADEC lane definitions (the proxy runs the same M08 structure, AD-43).
+# Recorded words: MEASURED on DASHlink Tail 687 archive 1 (analysis/dashlink_texture, round-1/2 results).
+format: phalanx.dictionary.lrus/1
+lrus:
+  FADEC:
+    name: 'Proxy engine controller (M08 structure: governing, A/T outer loop, signal validation), one per engine'
+    role: engine control and engine-sensor acquisition in proxy mode
+    units: 4
+    frame_hz: 60
+    frame_prov: R-RATE-PROXY-FADEC
+    evidence: {tag: 'TRANSFER: Phalanx Tejas dictionary FADEC lanes', source: AD-43; configs/tejas/dictionary/tables/lrus.yaml FADEC}
+  ACMS:
+    name: DASHlink aircraft condition monitoring recorder (engine words at 4 Hz)
+    role: flight data acquisition and recording of the proxy aircraft
+    units: 1
+    evidence: {tag: MEASURED, source: analysis/dashlink_texture/results/param_table.csv; research_notes/.../empirical_dashlink_texture.md}

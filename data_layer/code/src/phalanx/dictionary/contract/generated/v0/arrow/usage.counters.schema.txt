@@ -1,0 +1,132 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+param_id: string not null
+  -- field metadata --
+  phalanx.description: 'Dictionary counter parameter (e.g. LUI.TYPE3, USAGE.TAC, USAGE.LANDINGS, STRUCT.NZ_COUNTERS).'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+tail_no: string not null
+  -- field metadata --
+  phalanx.description: 'Aircraft tail number.'
+  phalanx.basis: 'ARCH §12 (linkage)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+sortie_id: string
+  -- field metadata --
+  phalanx.description: 'Sortie the update belongs to; null for ground-computed counters not tied to a sortie.'
+  phalanx.basis: 'ARCH §12 (linkage); ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+engine_serial: string
+  -- field metadata --
+  phalanx.description: 'Engine serial for engine counters (LUIs, TAC, engine starts); null otherwise.'
+  phalanx.basis: 'ARCH §12 (linkage); ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+item_serial: string
+  -- field metadata --
+  phalanx.description: 'Serial of a life-tracked non-engine item the counter belongs to (e.g. chute); null otherwise.'
+  phalanx.basis: 'ARCH §5.3 (component identity); ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+source_lru: string not null
+  -- field metadata --
+  phalanx.description: 'Source of the counter (ECMS, OAC, fatigue meter, ground station).'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9_.-]*$'
+update_seq: uint32 not null
+  -- field metadata --
+  phalanx.description: 'Index of this update of this counter within the sortie (or within the ground period when sortie_id is null).'
+  phalanx.basis: 'ARCH §6 M14 (LUIs updated twice per flight); ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+value_eu: double not null
+  -- field metadata --
+  phalanx.description: 'Counter reading as reported by the source (cumulative), in `units`.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+  phalanx.minimum: '0.0'
+increment_eu: double
+  -- field metadata --
+  phalanx.description: 'Increment attributed to this update when the source reports one; null otherwise.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+  phalanx.minimum: '0.0'
+units: string not null
+  -- field metadata --
+  phalanx.description: 'Unit of the counter (count, h).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+t_update: int64 not null
+  -- field metadata --
+  phalanx.description: 'When the source updated the counter. The event time of the record.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-11'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_record: int64
+  -- field metadata --
+  phalanx.description: 'Recorder RTC time; null on the fast path or for ground counters.'
+  phalanx.basis: 'ARCH §8'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'recorder_rtc'
+t_utc: int64
+  -- field metadata --
+  phalanx.description: 'Absolute time from the aircraft time source.'
+  phalanx.basis: 'ARCH §8'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_ingest: int64 not null
+  -- field metadata --
+  phalanx.description: 'Arrival at the ground.'
+  phalanx.basis: 'ARCH §8, I5'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+validity: string not null
+  -- field metadata --
+  phalanx.description: 'Validity of the counter reading.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Validity'
+  phalanx.enum_symbols: '["NORMAL","NO_COMPUTED_DATA","FUNCTIONAL_TEST","FAILURE_WARNING","BUS_INVALID"]'
+quality_flags: uint32 not null
+  -- field metadata --
+  phalanx.description: 'Quality flag bit set.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.flags: 'QualityFlags'
+  phalanx.flag_bits: '{"SENTINEL":0,"GATED":1,"HELD_STALE":2,"DUPLICATE_POLL":3,"SUBSTITUTED":4,"VOTED_OUT":5,"OUT_OF_RANGE":6,"CLOCK_SUSPECT":7,"TIME_SOURCE_INTERNAL":8,"DUPLICATE_DOWNLOAD":9,"DECODER_INTERPOLATED":10}'
+provenance: string not null
+  -- field metadata --
+  phalanx.description: 'full_path or direct.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Provenance'
+  phalanx.enum_symbols: '["full_path","direct"]'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'usage.counters'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_update'
+phalanx.ingest_time: 't_ingest'
+phalanx.partition_by: '["tail_no","sortie_id"]'
+phalanx.record_id_key: '["provenance","tail_no","sortie_id","engine_serial","item_serial","param_id","update_seq"]'
+phalanx.audience: 'full'

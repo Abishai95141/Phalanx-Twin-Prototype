@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: A,Manrope,64,&H00100D0B,&H00100D0B,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,1,0,0,7,100,100,100,1
+Style: B,Manrope,64,&H00100D0B,&H00100D0B,&H00FFFFFF,&H00FFFFFF,-1,0,0,0,100,100,0,0,1,0,0,7,100,100,250,1
+Style: C,Manrope SemiBold,64,&H00100D0B,&H00100D0B,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,1,0,0,7,100,100,400,1
+Style: D,JetBrains Mono,56,&H00100D0B,&H00100D0B,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,1,0,0,7,100,100,550,1
+Style: E,Helvetica Neue,64,&H00100D0B,&H00100D0B,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,1,0,0,7,100,100,700,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.00,A,,0,0,0,,Manrope regular: signed decisions 0123
+Dialogue: 0,0:00:00.00,0:00:01.00,B,,0,0,0,,Manrope bold=-1: signed decisions 0123
+Dialogue: 0,0:00:00.00,0:00:01.00,C,,0,0,0,,Manrope SemiBold: signed decisions 0123
+Dialogue: 0,0:00:00.00,0:00:01.00,D,,0,0,0,,JetBrains Mono: TAIL-07 F-217 0.36
+Dialogue: 0,0:00:00.00,0:00:01.00,E,,0,0,0,,Helvetica Neue: signed decisions 0123

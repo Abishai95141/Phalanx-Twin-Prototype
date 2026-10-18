@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Assurance — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 750px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+
+  /* registry list */
+  .reg .rows2 { margin-top: 22px; }
+  .reg .colhead { display: grid; grid-template-columns: minmax(0,1fr) 132px 196px 148px; column-gap: 16px; padding: 0 4px 10px; margin-top: 18px;
+    border-bottom: 1px solid var(--line); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); }
+  .reg .colhead .gl { display: flex; gap: 8px; letter-spacing: 0; font: 600 11.5px var(--mono); }
+  .reg .colhead .gl span { width: 25px; text-align: center; }
+  .reg .r2 { grid-template-columns: minmax(0,1fr) 132px 196px 148px; min-height: 58px; cursor: pointer; }
+  .reg .rows2 { overflow: auto; min-height: 0; flex: 1; }
+  .tabp { display: none !important; } body.t-models .tp-models, body.t-backtests .tp-backtests, body.t-forks .tp-forks { display: flex !important; }
+  .src { font-size: 12.5px; color: var(--ink-3); line-height: 1.35; }
+  .bt .kv2 { margin-top: 18px; font-size: 14px; row-gap: 11px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .fk .r2 { grid-template-columns: 150px 96px minmax(0,1fr) 160px; min-height: 64px; }
+  .reg .r2 .why { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .reg .rows2 { margin-top: 0; }
+  .mname { display: flex; align-items: baseline; gap: 10px; }
+  .mname .ver { font: 500 13px var(--mono); color: var(--ink-4); }
+  .gates { display: flex; gap: 8px; }
+  .gd { width: 25px; height: 25px; border-radius: 8px; display: grid; place-items: center; border: 1.5px solid var(--line-strong); background: var(--bg); color: var(--ink-4); }
+  .gd svg { width: 13px; height: 13px; }
+  .gd.pass { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .gd.run { border-color: var(--accent); background: var(--accent-wash); color: var(--accent-ink); }
+  .gd.run::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .gd.fail { border-color: var(--warn); background: var(--warn-wash); color: var(--warn); }
+  .gd.insuf { border-color: var(--ink-4); background-image: repeating-linear-gradient(135deg, var(--ink-5) 0 1.5px, transparent 1.5px 5px); }
+  .gd.redo { border-color: var(--warn); color: var(--warn); border-style: dashed; }
+  .gd.none { border-style: dotted; }
+  .stp { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 8px; font: 700 11.5px var(--mono); letter-spacing: .04em; white-space: nowrap; }
+  .stp.champ { background: var(--ink); color: #fff; }
+  .stp.plain { background: var(--bg-3); color: var(--ink-2); }
+  .stp.line { border: 1px solid var(--line-strong); color: var(--ink-2); }
+  .stp.warn { background: var(--warn-wash); color: #8A5A12; border: 1px solid var(--warn-line); }
+  .metric { text-align: right; }
+  .metric b { display: block; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .metric .ci { display: block; margin-top: 2px; white-space: nowrap; }
+  .legend2 { display: flex; gap: 20px; align-items: center; font-size: 13px; color: var(--ink-3); margin-top: 10px; }
+  .legend2 .gd { width: 18px; height: 18px; border-radius: 6px; }
+  .legend2 .gd svg { width: 10px; height: 10px; }
+  .legend2 .gd.run::after { width: 6px; height: 6px; }
+  .legend2 span { display: inline-flex; align-items: center; gap: 8px; }
+
+  /* gate chain */
+  .chain { position: relative; margin-top: 22px; }
+  .chain::before { content: ""; position: absolute; left: 21px; top: 30px; bottom: 30px; width: 1.5px; background: var(--line); }
+  .gate { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; column-gap: 16px; align-items: center; min-height: 76px; position: relative; }
+  .gate + .gate { border-top: 1px solid var(--line-2); }
+  .gb { width: 44px; height: 44px; border-radius: 14px; background: var(--bg); border: 1.5px solid var(--ink); display: grid; place-items: center; font: 700 13px var(--mono); z-index: 1; }
+  .gb.pass { background: var(--ink); color: #fff; }
+  .gb.run { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-wash); }
+  .gate .ttl { font-size: 15px; font-weight: 650; letter-spacing: -0.01em; display: flex; gap: 10px; align-items: baseline; }
+  .gate .ttl .t { font: 500 13px var(--mono); color: var(--ink-4); }
+  .gate .why { font-size: 13px; color: var(--ink-3); margin-top: 4px; line-height: 1.4; }
+  .gate .rt { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .hx { font: 500 13px var(--mono); color: var(--ink-4); white-space: nowrap; }
+  .hx b { color: var(--ink-2); font-weight: 600; }
+  .foot2 { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-3); }
+  .regscroll { display: contents; }
+
+  /* compact: tablet + phone */
+  @media (max-width: 1199px) {
+    .regscroll { display: block; overflow-x: auto; margin: 0 -22px; padding: 0 22px; -webkit-overflow-scrolling: touch; }
+    .reg .colhead, .reg .rows2 { min-width: 640px; }
+    .reg .rows2 { overflow: visible; }
+    .reg .r2 { min-height: 64px; }
+    .metric .ci { white-space: normal; }
+    .bt .note.push { margin-top: 14px; }
+    .bt .rows2[style*="max-height"] { max-height: none !important; }
+    .gate .ttl { flex-wrap: wrap; }
+    .foot2 { flex-wrap: wrap; }
+    .foot2 .mono { overflow-wrap: anywhere; }
+  }
+  /* phone */
+  @media (max-width: 699px) {
+    .regscroll { margin: 0 -18px; padding: 0 18px; }
+    .reg .colhead, .reg .rows2 { min-width: 760px; }
+    .bt .rows2[style*="max-height"] { overflow-x: auto; margin: 6px -18px 0; padding: 0 18px; }
+    .bt .rows2[style*="max-height"] .r2 { min-width: 430px; }
+    .bt .kv2 { font-size: 14.5px; }
+    .bt .row { align-items: flex-start; }
+    .bt .row > .kick { flex: 1 1 auto; min-width: 0; line-height: 1.5; }
+    .bt .row > .grow { display: none; }
+    .fk .r2 { grid-template-columns: minmax(0,1fr) auto; row-gap: 8px; padding-top: 14px; padding-bottom: 14px; }
+    .fk .r2 > div { grid-column: 1 / -1; }
+    .fk .r2 > span:last-child { grid-column: 1 / -1; justify-self: start !important; }
+    .fk .r2 > span:last-child:empty { display: none; }
+    .gate { grid-template-columns: 44px minmax(0,1fr); row-gap: 8px; padding: 14px 0; }
+    .gate .rt { grid-column: 2; align-items: flex-start; }
+    .chain::before { top: 36px; bottom: 36px; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <!-- MODELS: registry + gates -->
+  <section class="panel2 c7 reg tabp tp-models" data-shot="registry">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick" id="reg-kick"></div>
+        <div class="t2">Which models are allowed to inform a decision today</div>
+        <div class="sub2">Every model run is registered on the one log with its version and the source of its data.</div>
+      </div>
+      <span class="tier pred">PRED</span>
+    </div>
+    <div class="regscroll">
+    <div class="colhead"><span>Model</span><span>State</span><span>Source</span><span style="text-align:right">Evidence</span></div>
+    <div class="rows2" id="rows"></div>
+    </div>
+  </section>
+  <section class="panel2 c5 tabp tp-models" data-shot="gates">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick acc" id="sel-kick"></div>
+        <div class="t2" id="sel-t2"></div>
+        <div class="sub2" id="sel-sub"></div>
+      </div>
+    </div>
+    <div class="chain" id="chain"></div>
+    <div class="foot2" id="foot"></div>
+  </section>
+
+  <!-- BACKTESTS: removal risk + engine health -->
+  <section class="panel2 c6 bt tabp tp-backtests" data-shot="hazard" id="hazard"></section>
+  <section class="panel2 c6 bt tabp tp-backtests" data-shot="engine-health" id="ehealth"></section>
+
+  <!-- PAIRED SIMULATIONS -->
+  <section class="panel2 c8 fk tabp tp-forks" data-shot="forks">
+    <div class="kick">Paired simulations · fork gate</div>
+    <div class="t2" id="fk-t2"></div>
+    <div class="sub2">Each candidate order is run against doing nothing on the same random futures (CRN pairs); orders that change nothing are dropped.</div>
+    <div class="rows2" style="margin-top:14px" id="forks"></div>
+  </section>
+  <section class="panel2 c4 soft tabp tp-forks" data-shot="forks-note">
+    <span class="kick">How to read it</span>
+    <div class="t2">One simulated fleet, many futures</div>
+    <div class="sub2" style="margin-top:12px">Δ mission capable is in points over the next 30 days, with a 95 % interval. An interval that crosses 0 is not significant: the order may still be right for other reasons, and a person decides.</div>
+    <div class="note push">Source: Simulated fleet · paired simulations of the data layer's fork service. Not validated physics.</div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const Q = PHX_API.q, TAB = ['backtests', 'forks'].includes(Q.get('tab')) ? Q.get('tab') : 'models';
+const NAME = { episodes: ['Alert episodes', 'Alerts merged into episodes and issues'], cnd: ['False alarm · champion', 'Will this job close with no fault found?'],
+  cnd_challenger: ['False alarm · challenger', 'Learned model on job-open features'], isolation: ['Fault isolation', 'Which item is it — or the indication?'],
+  similar: ['Similar cases', 'Nearest past cases by code, item and outcome'], leadtime: ['Supply lead time', 'Days until a demanded spare arrives'],
+  life: ['Life used', 'Used against limit; date at limit'], drift: ['Drift', 'Shifts in alert rates outside known change points'],
+  triage: ['Triage', 'Gates, consequence × urgency, bands'], hazard: ['Removal risk', 'Which serials need replacing, and when?'],
+  engine_health: ['Engine health', 'EGT margin and trend from takeoff snapshots'] };
+const f3 = x => (x == null ? '—' : (+x).toFixed(3)), sg = x => (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(1);
+let A = null, SEL = null;
+PHX_API.boot({ page: 'assurance', title: 'Assurance',
+  async load(L) { [, A] = await Promise.all([L.want('epoch'), L.get('assurance')]); },
+  render() {
+    document.body.classList.add('t-' + TAB);
+    const T = [['Models', 'models'], ['Backtests', 'backtests'], ['Paired simulations', 'forks']];
+    $('tabbar').innerHTML = '<div class="tabs2">' + T.map(([l, k]) => `<span class="${k === TAB ? 'on' : ''}" data-href="${esc(PHX_API.href('assurance.html', { tab: k === 'models' ? undefined : k }))}" style="cursor:pointer">${l}</span>`).join('') + '</div>';
+    models(); backtests(); forks();
+    const ok = (A.gates || []).filter(g => g.ok).length, n = (A.gates || []).length;
+    return { page: 'assurance', title: 'Assurance', sub: 'Models earn their place through logged gates — and lose it the same way',
+      chips: [PHX.clockChips()[0], ok === n ? { k: 'ok', i: 'shield', t: `${n} of ${n} gates passed` } : { k: 'warn', i: 'shield', t: `${ok} of ${n} gates passed` }], after: wire };
+  } });
+
+function card(m) {
+  const C = A.cnd || {}, H = (A.hazard || {}).backtest || {}, E = ((A.engine_health || {}).eval || {}).summary || {};
+  const champ = C.champion && /base rate/.test(C.champion);
+  switch (m.engine) {
+    case 'cnd': return { st: [champ ? 'CHAMPION' : 'CHALLENGER', champ ? 'champ' : 'line'], m: `Brier ${f3(C.brier_champion)}`, ci: `held-out · n ${C.n_test ?? '—'}` };
+    case 'cnd_challenger': return { st: [champ ? 'CANDIDATE' : 'CHAMPION', champ ? 'line' : 'champ'], m: `Brier ${f3(C.brier_challenger)}`, ci: champ ? 'no better than the base rate' : 'beats the base rate' };
+    case 'hazard': { const fit = (H.fit_classes || []).length, ins = (H.insufficient_evidence_classes || []).length;
+      return { st: fit ? ['PARTIAL', 'warn'] : ['INSUFFICIENT', 'warn'], m: `${fit} of ${fit + ins} classes`, ci: fit ? `fitted: ${(H.fit_classes || []).join(', ')}` : 'INSUFFICIENT_EVIDENCE' }; }
+    case 'engine_health': return { st: ['PIPELINE', 'plain'], m: `${E.detected ?? '—'} of ${E.planted_faults ?? '—'} found`, ci: `${E.false_alarms_per_100_flights ?? '—'} false alarms / 100 flights` };
+    default: return { st: [m.status || 'REGISTERED', 'plain'], m: m.model_version, ci: 'on the log' };
+  }
+}
+function models() {
+  const M = A.models || [], reg = new Set((A.registered || []).map(r => r.model_id + '@' + r.model_version));
+  $('reg-kick').textContent = `Model registry · ${M.length} versions · ${reg.size} registered on the log`;
+  SEL = SEL || (M.find(m => m.engine === 'cnd') || M[0] || {}).model_id;
+  $('rows').innerHTML = M.map(m => { const c = card(m), nm = NAME[m.engine] || [m.model_id, m.engine];
+    return `<div class="r2 ${m.model_id === SEL ? 'on' : ''}" data-model="${esc(m.model_id)}">
+    <div><div class="mname"><span class="ttl">${esc(nm[0])}</span><span class="ver">${esc(m.model_version)}</span></div><div class="why">${esc(nm[1])}</div></div>
+    <div><span class="stp ${c.st[1]}">${esc(c.st[0])}</span></div>
+    <div class="src">${esc(m.source_label)}${reg.has(m.model_id + '@' + m.model_version) ? '' : ' · <span style="color:var(--warn)">not on the log</span>'}</div>
+    <div class="metric"><b>${esc(c.m)}</b><span class="ci">${esc(c.ci)}</span></div></div>`; }).join('') || '<div class="note">No models registered yet.</div>';
+  selected();
+}
+// right panel: the selected model's card, then the promotion gates G0–G3
+function selected() {
+  const m = (A.models || []).find(x => x.model_id === SEL) || {}, nm = NAME[m.engine] || [m.model_id || '—', ''], C = A.cnd || {};
+  $('sel-kick').textContent = `Selected · ${nm[0]} ${m.model_version || ''}`;
+  $('sel-t2').textContent = m.engine === 'cnd' || m.engine === 'cnd_challenger'
+    ? `Champion: ${C.champion || '—'} · Brier ${f3(C.brier_champion)} vs ${f3(C.brier_challenger)}` : 'Promoted gate by gate, on the one log';
+  const ci = C.d_brier_ci ? ` · ΔBrier 95 % CI [${f3(C.d_brier_ci[0])}, ${f3(C.d_brier_ci[1])}]` : '';
+  $('sel-sub').innerHTML = m.engine === 'cnd' || m.engine === 'cnd_challenger'
+    ? `AUC ${f3(C.auc_champion)} vs ${f3(C.auc_challenger)}${ci} · trained on ${C.n_train ?? '—'} jobs, tested on ${C.n_test ?? '—'}. The challenger replaces the base rate only if it beats it.`
+    : esc(m.method || nm[1]) + (m.outputs ? ` · outputs <span class="mono" style="font-size:12.5px">${m.outputs.map(esc).join(', ')}</span>` : '');
+  $('chain').innerHTML = (A.gates || []).map(g => `<div class="gate">
+    <div class="gb ${g.ok ? 'pass' : 'run'}">${esc(g.gate)}</div>
+    <div><div class="ttl">${esc(g.name)}</div><div class="why">${esc(g.text)}</div></div>
+    <div class="rt">${g.ok ? '<span class="pill fmc">passed</span>' : '<span class="pill nmcm">not met</span>'}</div></div>`).join('') || '<div class="note">No gate results on the log yet.</div>';
+  $('foot').innerHTML = `<i data-i="tag" class="ico-sm"></i><span>Source <b style="color:var(--ink)">${esc(m.source_label || '—')}</b></span><div class="grow"></div><span class="mono" style="color:var(--ink-3)">${esc(m.model_id || '')}</span>`;
+  PHX.icons($('foot'));
+}
+function backtests() {
+  const H = (A.hazard || {}).backtest || {}, K = ((A.hazard || {}).counts || {}).totals || {}, S = H.scores_fit_classes || {};
+  const fit = H.fit_classes || [], ins = H.insufficient_evidence_classes || [];
+  const CH = H.champion || null, CV = (CH && (CH.model_version || CH.version)) || H.model_version || '';
+  const CA = Array.isArray(H.candidates) ? H.candidates : [];
+  const num = v => (v == null ? '—' : (+v).toFixed(3));
+  const cands = CA.length ? `<div class="kick" style="margin-top:20px">Candidates · held-out</div>
+    <div class="rows2" style="margin-top:6px;max-height:210px;overflow:auto">
+      <div class="r2" style="grid-template-columns:minmax(0,1fr) 64px 64px 72px 104px;min-height:28px;font:600 11.5px var(--mono);color:var(--ink-4)"><span>Model</span><span style="text-align:right">Brier</span><span style="text-align:right">AUC</span><span style="text-align:right">C-index</span><span></span></div>
+      ${CA.map(c => `<div class="r2" style="grid-template-columns:minmax(0,1fr) 64px 64px 72px 104px;min-height:38px;font-size:13px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(c.name)}">${esc(c.name)}</span><span class="num" style="text-align:right">${num(c.brier)}</span><span class="num" style="text-align:right">${num(c.auc)}</span><span class="num" style="text-align:right">${num(c.c_index)}</span><span style="justify-self:end">${c.promoted ? '<span class="stp champ">CHAMPION</span>' : '<span class="stp line">candidate</span>'}</span></div>`).join('')}
+    </div>` : '';
+  $('hazard').innerHTML = `<div class="row"><span class="kick">Removal risk · ${esc((CH && CH.model_id) || H.model_id || 'hazard')} ${esc(CV)}</span><div class="grow"></div><span class="tier pred">PRED</span></div>
+    <div class="t2">${fit.length ? `Fitted for ${fit.join(', ')}; the rest have too few confirmed failures` : 'Not enough confirmed failures to fit any class yet'}</div>
+    <div class="big" style="margin-top:20px">${fit.length}<small>of ${fit.length + ins.length} part classes fitted</small></div>
+    <div class="ci" style="margin-top:8px">INSUFFICIENT_EVIDENCE under ${H.min_events ?? 10} events · ${esc(H.source_label || 'Simulated fleet history')}</div>
+    <div class="kv2"><span>Confirmed shop findings</span><span>${K.confirmed ?? '—'} of ${K.shop_findings ?? '—'}</span>
+      <span>Failure events used</span><span>${K.hazard_events ?? '—'}</span>
+      <span>Brier, fitted classes</span><span>${f3(S.brier_model)} <span class="ci">vs ${f3(S.brier_pooled_exponential)} pooled</span></span>
+      <span>Concordance</span><span>${f3(H.c_index_fit_class_spells)}</span>
+      ${Object.entries(H.median_life_fh_by_fit_class || {}).map(([k, v]) => `<span>Median life · ${esc(k)}</span><span>${Math.round(v)} FH</span>`).join('')}</div>
+    ${cands}
+    <div class="pills">${ins.map(c => `<span class="stp line">${esc(c)}</span>`).join('')}</div>
+    <div class="note push">${esc(H.note || '')}</div>`;
+  const E = (A.engine_health || {}).eval || {}, U = E.summary || {};
+  $('ehealth').innerHTML = `<div class="row"><span class="kick">Engine health · ${esc(E.model_id || 'engine_health')} ${esc(E.model_version || '')}</span><div class="grow"></div><span class="tier pred">PRED</span></div>
+    <div class="t2">Planted faults found before the margin limit</div>
+    <div class="big" style="margin-top:20px">${U.detected ?? '—'}<small>of ${U.planted_faults ?? '—'} planted faults</small></div>
+    <div class="ci" style="margin-top:8px">${esc(E.source_label || 'Generated engine trend (overlay v0.1)')}</div>
+    <div class="kv2"><span>Found before the true limit</span><span>${U.detected_before_true_limit ?? '—'}</span>
+      <span>Detection delay, median</span><span>${U.detection_delay_days_median ?? '—'} d</span>
+      <span>False alarms</span><span>${U.false_alarm_episodes ?? '—'} · ${U.false_alarms_per_100_flights ?? '—'} per 100 flights</span>
+      <span>Healthy flights watched</span><span>${(U.healthy_flights ?? '—').toLocaleString('en-GB')}</span></div>
+    <div class="note push">${esc(E.note || '')}</div>`;
+}
+function forks() {
+  const F = A.forks || [], done = F.filter(f => f.status === 'done');
+  $('fk-t2').textContent = F.length ? `${PHX.words(done.length)} of ${F.length} board issues simulated against doing nothing` : 'No candidate orders to simulate yet';
+  const ST = { done: 'fmc', running: 'nmcm', queued: 'grey', failed: 'nmcs' };
+  $('forks').innerHTML = F.map(f => {
+    let res = '<span class="ci">waiting</span>', verdict = '';
+    if (f.d_mc) { const [m, lo, hi] = f.d_mc; res = `<span class="ttl" style="font-size:15px">${sg(m)} pts</span> <span class="ci">[${sg(lo)}, ${sg(hi)}] · ${f.pairs} pairs</span>`;
+      verdict = f.no_change ? 'No change · dropped' : lo > 0 ? 'Helps' : hi < 0 ? 'Hurts' : 'Not significant'; }
+    return `<div class="r2"><span class="tailtag" style="font-size:13.5px">${esc(f.issue_id)}</span><span><span class="pill ${ST[f.status] || 'grey'}">${esc(f.status)}</span></span><div>${res}</div><span style="justify-self:end">${verdict ? `<span class="pill grey">${esc(verdict)}</span>` : ''}</span></div>`;
+  }).join('') || '<div class="note">Paired simulations start when the board opens.</div>';
+}
+function wire() {
+  PHX.links();
+  $('rows').addEventListener('click', e => { const r = e.target.closest('[data-model]'); if (!r) return; SEL = r.dataset.model;
+    document.querySelectorAll('#rows .r2').forEach(x => x.classList.toggle('on', x.dataset.model === SEL)); selected(); });
+}
+</script>
+</body></html>

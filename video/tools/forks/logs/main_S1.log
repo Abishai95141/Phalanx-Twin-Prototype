@@ -1,0 +1,192 @@
+S1 belief m=0 sq=3.0s tr=4.1s
+S1 belief m=1 sq=4.1s tr=4.8s
+S1 belief m=2 sq=5.1s tr=4.4s
+S1 belief m=3 sq=5.4s tr=6.7s
+S1 belief m=4 sq=5.1s tr=7.5s
+S1 belief m=5 sq=6.0s tr=6.3s
+S1 belief m=6 sq=4.0s tr=5.1s
+S1 belief m=7 sq=5.3s tr=9.7s
+S1 belief m=8 sq=6.0s tr=4.7s
+S1 belief m=9 sq=3.6s tr=4.2s
+S1 belief m=10 sq=5.3s tr=6.3s
+S1 belief m=11 sq=5.2s tr=5.4s
+S1 belief m=12 sq=3.9s tr=4.9s
+S1 belief m=13 sq=3.3s tr=4.5s
+S1 belief m=14 sq=4.0s tr=4.4s
+S1 belief m=15 sq=3.8s tr=5.3s
+S1 belief m=16 sq=4.0s tr=6.5s
+S1 belief m=17 sq=2.6s tr=2.5s
+S1 belief m=18 sq=1.9s tr=2.6s
+S1 belief m=19 sq=2.5s tr=3.2s
+S1 belief m=20 sq=4.0s tr=3.1s
+S1 belief m=21 sq=2.6s tr=2.8s
+S1 belief m=22 sq=2.2s tr=3.0s
+S1 belief m=23 sq=2.1s tr=3.8s
+S1 belief m=24 sq=2.2s tr=2.8s
+S1 belief m=25 sq=2.2s tr=3.4s
+S1 belief m=26 sq=2.8s tr=3.2s
+S1 belief m=27 sq=3.2s tr=4.1s
+S1 belief m=28 sq=3.5s tr=4.2s
+S1 belief m=29 sq=3.0s tr=3.7s
+S1 ensemble m=0 sq=3.1s tr=3.6s
+S1 ensemble m=1 sq=3.1s tr=3.5s
+S1 ensemble m=2 sq=3.2s tr=2.7s
+S1 ensemble m=3 sq=2.8s tr=3.8s
+S1 ensemble m=4 sq=2.8s tr=3.7s
+S1 ensemble m=5 sq=2.5s tr=2.8s
+S1 ensemble m=6 sq=2.2s tr=2.7s
+S1 ensemble m=7 sq=2.3s tr=2.8s
+S1 ensemble m=8 sq=2.5s tr=2.7s
+S1 ensemble m=9 sq=2.4s tr=3.1s
+S1 ensemble m=10 sq=2.6s tr=3.0s
+S1 ensemble m=11 sq=2.8s tr=3.3s
+S1 ensemble m=12 sq=2.2s tr=2.3s
+S1 ensemble m=13 sq=1.8s tr=2.3s
+S1 ensemble m=14 sq=1.8s tr=2.2s
+S1 ensemble m=15 sq=1.8s tr=2.3s
+S1 ensemble m=16 sq=2.7s tr=2.8s
+S1 ensemble m=17 sq=2.1s tr=2.6s
+S1 ensemble m=18 sq=2.0s tr=2.5s
+S1 ensemble m=19 sq=2.6s tr=4.1s
+S1 ensemble m=20 sq=4.4s tr=3.0s
+S1 ensemble m=21 sq=2.1s tr=3.3s
+S1 ensemble m=22 sq=3.1s tr=3.3s
+S1 ensemble m=23 sq=2.0s tr=3.6s
+S1 ensemble m=24 sq=2.3s tr=3.1s
+S1 ensemble m=25 sq=2.5s tr=2.5s
+S1 ensemble m=26 sq=2.0s tr=2.2s
+S1 ensemble m=27 sq=2.4s tr=3.0s
+S1 ensemble m=28 sq=2.7s tr=4.6s
+S1 ensemble m=29 sq=2.9s tr=3.2s
+{
+ "belief": {
+  "mc": {
+   "n": 30,
+   "mean": 0.21734953703703705,
+   "sd": 0.13557524863642517,
+   "ci_low": 0.16672490720369065,
+   "ci_high": 0.26797416687038345
+  },
+  "fmc": {
+   "n": 30,
+   "mean": 0.19119212962962964,
+   "sd": 0.13175331751530794,
+   "ci_low": 0.14199463233117518,
+   "ci_high": 0.2403896269280841
+  },
+  "nmcs": {
+   "n": 30,
+   "mean": -0.12259259259259257,
+   "sd": 0.14242134196066852,
+   "ci_low": -0.1757735956860301,
+   "ci_high": -0.06941158949915505
+  },
+  "nmcm": {
+   "n": 30,
+   "mean": -0.09475694444444442,
+   "sd": 0.03765592030829389,
+   "ci_low": -0.10881789617283533,
+   "ci_high": -0.08069599271605352
+  },
+  "flown_fh": {
+   "n": 30,
+   "mean": 6.628314814814816,
+   "sd": 3.525174996134267,
+   "ci_low": 5.311992838112069,
+   "ci_high": 7.9446367915175635
+  },
+  "aog_days": {
+   "n": 30,
+   "mean": -3.677777777777778,
+   "sd": 4.272640258820056,
+   "ci_low": -5.273207870580904,
+   "ci_high": -2.0823476849746525
+  },
+  "man_hours": {
+   "n": 30,
+   "mean": -115.67956666666664,
+   "sd": 45.436104115774945,
+   "ci_low": -132.64568677387697,
+   "ci_high": -98.71344655945632
+  },
+  "cost": {
+   "n": 30,
+   "mean": -3.850129000000001,
+   "sd": 4.177787657605852,
+   "ci_low": -5.410140549422274,
+   "ci_high": -2.2901174505777275
+  },
+  "in_flight_failures": {
+   "n": 30,
+   "mean": 0.06666666666666667,
+   "sd": 0.2537081317024625,
+   "ci_low": -0.0280695066564651,
+   "ci_high": 0.16140283998979843
+  }
+ },
+ "ensemble": {
+  "mc": {
+   "n": 30,
+   "mean": 0.21734953703703705,
+   "sd": 0.13557524863642517,
+   "ci_low": 0.16672490720369065,
+   "ci_high": 0.26797416687038345
+  },
+  "fmc": {
+   "n": 30,
+   "mean": 0.19119212962962964,
+   "sd": 0.13175331751530794,
+   "ci_low": 0.14199463233117518,
+   "ci_high": 0.2403896269280841
+  },
+  "nmcs": {
+   "n": 30,
+   "mean": -0.12259259259259257,
+   "sd": 0.14242134196066852,
+   "ci_low": -0.1757735956860301,
+   "ci_high": -0.06941158949915505
+  },
+  "nmcm": {
+   "n": 30,
+   "mean": -0.09475694444444442,
+   "sd": 0.03765592030829389,
+   "ci_low": -0.10881789617283533,
+   "ci_high": -0.08069599271605352
+  },
+  "flown_fh": {
+   "n": 30,
+   "mean": 6.628314814814816,
+   "sd": 3.525174996134267,
+   "ci_low": 5.311992838112069,
+   "ci_high": 7.9446367915175635
+  },
+  "aog_days": {
+   "n": 30,
+   "mean": -3.677777777777778,
+   "sd": 4.272640258820056,
+   "ci_low": -5.273207870580904,
+   "ci_high": -2.0823476849746525
+  },
+  "man_hours": {
+   "n": 30,
+   "mean": -115.67956666666664,
+   "sd": 45.436104115774945,
+   "ci_low": -132.64568677387697,
+   "ci_high": -98.71344655945632
+  },
+  "cost": {
+   "n": 30,
+   "mean": -3.850129000000001,
+   "sd": 4.177787657605852,
+   "ci_low": -5.410140549422274,
+   "ci_high": -2.2901174505777275
+  },
+  "in_flight_failures": {
+   "n": 30,
+   "mean": 0.06666666666666667,
+   "sd": 0.2537081317024625,
+   "ci_low": -0.0280695066564651,
+   "ci_high": 0.16140283998979843
+  }
+ }
+}

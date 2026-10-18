@@ -1,0 +1,360 @@
+{
+  "type": "record",
+  "name": "events_bit_faults",
+  "namespace": "phalanx.contract.v0",
+  "doc": "Built-in-test fault events (PBIT/CBIT/MBIT/IBIT) as decoded on the ground. Every event is also present in the sortie's Ch10 file as a recording event (emitted twice, architecture §12).",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": "string",
+      "doc": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": "string",
+      "doc": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Identifier of the event occurrence, stable between its Ch10 recording event and its ground record.",
+      "phalanx.basis": "ARCH §12; TRANSFER: S5000F eventIdentifier",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "tail_no",
+      "type": "string",
+      "doc": "Aircraft tail number.",
+      "phalanx.basis": "ARCH §12 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sortie_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Sortie of the event; null for ground events outside a sortie (e.g. IBIT/MBIT on the line).",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (linkage); ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "engine_serial",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Engine serial for engine events; null otherwise.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "source_lru",
+      "type": "string",
+      "doc": "LRU or monitor that detected and reported the event.",
+      "phalanx.basis": "ARCH §12; TRANSFER: S5000F EventReporter",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "event_code",
+      "type": "string",
+      "doc": "Synthetic fault, exceedance or caution code from the M01 code tables (labelled synthetic; not a real Tejas code).",
+      "phalanx.basis": "ARCH AD-19 (synthetic SSS-NNN codes); ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "event_group",
+      "type": "string",
+      "doc": "Event group (subsystem class, e.g. ENGINE, HYDRAULICS), from the M01 code tables.",
+      "phalanx.basis": "TRANSFER: S5000F eventGroup; ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "severity",
+      "type": {
+        "type": "enum",
+        "name": "EventSeverity",
+        "doc": "Alerting level of the event (S5000F eventSeverity).",
+        "symbols": [
+          "ADVISORY",
+          "CAUTION",
+          "WARNING"
+        ]
+      },
+      "doc": "Alerting level.",
+      "phalanx.basis": "TRANSFER: S5000F eventSeverity, MIL-STD-411C; ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "description",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Code-table description of the event.",
+      "default": null,
+      "phalanx.basis": "TRANSFER: S5000F eventDescription",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "confirmed_status",
+      "type": {
+        "type": "enum",
+        "name": "ConfirmedStatus",
+        "doc": "Confirmation state as known by the emitter at emission time. On-board events are emitted UNCONFIRMED; confirmation or refutation is a later maintenance outcome carried in maint.records.",
+        "symbols": [
+          "UNCONFIRMED",
+          "CONFIRMED",
+          "NOT_CONFIRMED"
+        ]
+      },
+      "doc": "Confirmation state known at emission (on-board events are UNCONFIRMED).",
+      "phalanx.basis": "TRANSFER: S5000F eventConfirmedStatus; ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "detection_mechanism",
+      "type": {
+        "type": "enum",
+        "name": "DetectionMechanism",
+        "doc": "How an event was detected.",
+        "symbols": [
+          "PBIT",
+          "CBIT",
+          "MBIT",
+          "IBIT",
+          "EXCEEDANCE",
+          "PILOT"
+        ]
+      },
+      "doc": "PBIT, CBIT, MBIT, IBIT, EXCEEDANCE or PILOT.",
+      "phalanx.basis": "ARCH §12; TRANSFER: S5000F detectionMechanismType",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "detection_far_per_fh",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Nominal (specified) false-alarm rate of the detection mechanism per flight hour, from M01. Never the simulator's true rate.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; TRANSFER: S5000F detectionMechanismFalseAlarmRate; ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false,
+      "phalanx.units": "1/h"
+    },
+    {
+      "name": "fault_list",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "FaultList",
+          "doc": "Fault-list level.",
+          "symbols": [
+            "PFL",
+            "MFL"
+          ]
+        }
+      ],
+      "doc": "PFL (pilot-visible) or MFL (maintenance-only); null where not applicable.",
+      "default": null,
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "latched",
+      "type": "boolean",
+      "doc": "Latch state of the event at emission.",
+      "phalanx.basis": "ARCH §12 (latch state)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "persistence_count",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Consecutive frames or iterations the condition persisted before it was declared.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (persistence count)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "suspect_lrus",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "events_bit_faults_suspect_lrus_item",
+          "fields": [
+            {
+              "name": "lru",
+              "type": "string",
+              "doc": "Suspect LRU.",
+              "phalanx.basis": "ARCH §12",
+              "phalanx.restricted": false
+            },
+            {
+              "name": "isolation_confidence",
+              "type": "double",
+              "doc": "Isolation confidence of this suspect, 0..1.",
+              "phalanx.basis": "ARCH §12",
+              "phalanx.restricted": false
+            }
+          ]
+        }
+      },
+      "doc": "Suspect-LRU list in isolation order; empty when no isolation is made.",
+      "phalanx.basis": "ARCH §12 (suspect-LRU list with isolation confidence)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "snapshot_t_start",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Start of the event snapshot window (e.g. 5 s before); samples in the window are in param.samples.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (snapshot window pointer)",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "snapshot_t_end",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "End of the event snapshot window (e.g. 25-35 s after).",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (snapshot window pointer)",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "ch10_event_number",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "IRIG 106 Ch10 recording-event number of the on-board copy; null on the fast path.",
+      "default": null,
+      "phalanx.basis": "TRANSFER: IRIG 106 Ch10 recording event (report §13); ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_occurrence",
+      "type": "long",
+      "doc": "When the event was declared on board. The event time of the record.",
+      "phalanx.basis": "TRANSFER: S5000F eventOccurrenceDateTime; ASSUMPTION: A-W0.4-1",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_record",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Recorder RTC time of the on-board copy; null on the fast path.",
+      "default": null,
+      "phalanx.basis": "ARCH §8; ASSUMPTION: A-W0.4-4",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "recorder_rtc"
+    },
+    {
+      "name": "t_utc",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Absolute time from the aircraft time source.",
+      "default": null,
+      "phalanx.basis": "ARCH §8; ASSUMPTION: A-W0.4-4",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_ingest",
+      "type": "long",
+      "doc": "Arrival at the ground.",
+      "phalanx.basis": "ARCH §8, I5",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "quality_flags",
+      "type": "long",
+      "doc": "Quality flag bit set.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false,
+      "phalanx.flags": "QualityFlags"
+    },
+    {
+      "name": "provenance",
+      "type": {
+        "type": "enum",
+        "name": "Provenance",
+        "doc": "How the record reached the contract. full_path = via bus, Ch10 recorder and ground decoder; direct = fast path or a direct ground producer (M18 records, M21 order status, manifests).",
+        "symbols": [
+          "full_path",
+          "direct"
+        ]
+      },
+      "doc": "full_path or direct.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "lane",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Lane or channel of a redundant LRU that reported the BIT fault; null if not redundant.",
+      "default": null,
+      "phalanx.basis": "ARCH §6 M05/M14 (per-channel BIT); ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "raw_bit_word",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Raw BIT or status word as recorded; null on the fast path.",
+      "default": null,
+      "phalanx.basis": "ARCH §6 M15 (status and BIT words); ASSUMPTION: A-W0.4-10",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "events.bit_faults",
+  "phalanx.restricted": false
+}

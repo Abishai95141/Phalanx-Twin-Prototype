@@ -1,0 +1,200 @@
+{
+ "S1": {
+  "jax_unroll1": {
+   "bitwise_outputs": false,
+   "bitwise_sel": true,
+   "first_differing_step": 0,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 2.4187144919079364e-16,
+    "N2": 1.7812515166015788e-16,
+    "PS3": 9.463773579267738e-16,
+    "T5": 3.410736643474585e-15,
+    "Tm": 2.861754248232011e-16,
+    "Wf": 2.290329128117558e-14
+   },
+   "max_pointwise_rel": 2.3117519582498902e-14,
+   "sel_flip_steps": 0
+  },
+  "jax_unroll4": {
+   "bitwise_outputs": false,
+   "bitwise_sel": true,
+   "first_differing_step": 0,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 2.4187144919079364e-16,
+    "N2": 1.7812515166015788e-16,
+    "PS3": 9.463773579267738e-16,
+    "T5": 3.410736643474585e-15,
+    "Tm": 2.861754248232011e-16,
+    "Wf": 2.290329128117558e-14
+   },
+   "max_pointwise_rel": 2.3117519582498902e-14,
+   "sel_flip_steps": 0
+  },
+  "numba": {
+   "bitwise_outputs": true,
+   "bitwise_sel": true,
+   "first_differing_step": null,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 0.0,
+    "N2": 0.0,
+    "PS3": 0.0,
+    "T5": 0.0,
+    "Tm": 0.0,
+    "Wf": 0.0
+   },
+   "max_pointwise_rel": 0.0,
+   "sel_flip_steps": 0
+  }
+ },
+ "S2": {
+  "jax_unroll1": {
+   "bitwise_outputs": false,
+   "bitwise_sel": true,
+   "first_differing_step": 0,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 6.363391084266384e-16,
+    "N2": 7.547997590838399e-16,
+    "PS3": 1.837015414091287e-15,
+    "T5": 1.2667166389840882e-15,
+    "Tm": 4.0814455746633465e-16,
+    "Wf": 2.9773760400685846e-15
+   },
+   "max_pointwise_rel": 2.0027664768239098e-14,
+   "sel_flip_steps": 0
+  },
+  "jax_unroll4": {
+   "bitwise_outputs": false,
+   "bitwise_sel": true,
+   "first_differing_step": 0,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 6.363391084266384e-16,
+    "N2": 7.547997590838399e-16,
+    "PS3": 1.837015414091287e-15,
+    "T5": 1.2667166389840882e-15,
+    "Tm": 4.0814455746633465e-16,
+    "Wf": 2.9773760400685846e-15
+   },
+   "max_pointwise_rel": 2.0027664768239098e-14,
+   "sel_flip_steps": 0
+  },
+  "numba": {
+   "bitwise_outputs": true,
+   "bitwise_sel": true,
+   "first_differing_step": null,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 0.0,
+    "N2": 0.0,
+    "PS3": 0.0,
+    "T5": 0.0,
+    "Tm": 0.0,
+    "Wf": 0.0
+   },
+   "max_pointwise_rel": 0.0,
+   "sel_flip_steps": 0
+  }
+ },
+ "S3": {
+  "jax_unroll1": {
+   "bitwise_outputs": false,
+   "bitwise_sel": true,
+   "first_differing_step": 0,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 6.331753035143408e-16,
+    "N2": 8.736976070972054e-16,
+    "PS3": 1.6665520771432704e-15,
+    "T5": 2.3277652478289546e-15,
+    "Tm": 4.098928446388742e-16,
+    "Wf": 5.17047475851099e-15
+   },
+   "max_abs_over_scale_per_10min": [
+    4.418405702727573e-15,
+    3.619332330957693e-15,
+    3.6663366469441565e-15,
+    5.17047475851099e-15,
+    2.679246011228422e-15,
+    3.1257870130998258e-15
+   ],
+   "max_pointwise_rel": 4.65903226243146e-14,
+   "sel_flip_steps": 0
+  },
+  "jax_unroll4": {
+   "bitwise_outputs": false,
+   "bitwise_sel": true,
+   "first_differing_step": 0,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 6.331753035143408e-16,
+    "N2": 8.736976070972054e-16,
+    "PS3": 1.7542653443613373e-15,
+    "T5": 2.3277652478289546e-15,
+    "Tm": 4.098928446388742e-16,
+    "Wf": 5.17047475851099e-15
+   },
+   "max_abs_over_scale_per_10min": [
+    4.418405702727573e-15,
+    3.619332330957693e-15,
+    3.6663366469441565e-15,
+    5.17047475851099e-15,
+    2.679246011228422e-15,
+    3.1257870130998258e-15
+   ],
+   "max_pointwise_rel": 4.65903226243146e-14,
+   "sel_flip_steps": 0
+  },
+  "numba": {
+   "bitwise_outputs": true,
+   "bitwise_sel": true,
+   "first_differing_step": null,
+   "first_sel_flip_s": null,
+   "max_abs_over_channel_scale": {
+    "N1": 0.0,
+    "N2": 0.0,
+    "PS3": 0.0,
+    "T5": 0.0,
+    "Tm": 0.0,
+    "Wf": 0.0
+   },
+   "max_abs_over_scale_per_10min": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max_pointwise_rel": 0.0,
+   "sel_flip_steps": 0
+  }
+ },
+ "machine": {
+  "cpu": "Apple M4",
+  "eff_cores": "6",
+  "env": {
+   "NUMBA_CACHE_DIR": null,
+   "NUMBA_NUM_THREADS": null,
+   "OMP_NUM_THREADS": null,
+   "XLA_FLAGS": null
+  },
+  "machine": "arm64",
+  "mem_gb": 16.0,
+  "ncpu": 10,
+  "perf_cores": "4",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+   "jax": "0.11.2",
+   "jaxlib": "0.11.2",
+   "llvmlite": "0.50.0",
+   "numba": "0.68.0",
+   "numpy": "2.5.4",
+   "python": "3.13.3",
+   "scipy": "1.18.1"
+  }
+ }
+}

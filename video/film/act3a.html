@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/twin3d.bundle.js"></script>
+<script src="assets/phx-film.js"></script>
+<style>
+@font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; }
+:root { --ink:#0B0D10; --ink-2:#31353B; --ink-3:#62676F; --ink-4:#8E939A; --ink-5:#B9BDC2; --line:#E6E6E2; --line-2:#EFEFEC;
+  --accent:#E8743B; --accent-ink:#B4511F; --accent-wash:#FDF1EA; --accent-line:#F6CDB6; --wire:#2563C9; --wire-wash:#EAF1FC; --ok:#1F8A4C; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #fff; font-family: Manrope, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.x-layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: 0; }
+.x-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.x-host { position: absolute; inset: 0; }
+.x-ov { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; z-index: 50; }
+.x-ann { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; z-index: 51; }
+.x-mono { font-family: "JetBrains Mono", monospace; }
+/* annotations (stage coordinates, inside a camera) */
+.x-ost { position: absolute; display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px; border-radius: 20px; background: #fff; border: 1.5px solid var(--accent-line); box-shadow: 0 0 0 4px var(--accent-wash), 0 14px 30px -14px rgba(16,18,22,.25); font: 650 16px Manrope; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; opacity: 0; }
+.x-ost b { font: 700 18px "JetBrains Mono"; color: var(--accent-ink); }
+.x-ost .k { font: 700 11.5px "JetBrains Mono"; letter-spacing: .12em; color: var(--accent-ink); }
+.x-bk { position: absolute; border: 2px solid var(--accent); border-right: 0; border-radius: 6px 0 0 6px; opacity: 0; }
+.x-uline { position: absolute; height: 2px; border-radius: 1px; background: var(--wire); transform-origin: 0 50%; opacity: 0; }
+.x-strike { position: absolute; height: 2px; border-radius: 1px; background: var(--ink-3); transform-origin: 0 50%; opacity: 0; }
+.x-hl { border-radius: 4px; box-shadow: 0 0 0 0 var(--accent-wash); }
+.x-hud { position: absolute; display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 18px; border-radius: 23px; background: rgba(255,255,255,.97); border: 1.5px solid var(--accent-line); box-shadow: 0 0 0 5px var(--accent-wash), 0 18px 40px -18px rgba(16,18,22,.3); font: 700 15px "JetBrains Mono"; color: var(--ink); white-space: nowrap; opacity: 0; }
+.x-hud .k { color: var(--accent-ink); letter-spacing: .1em; font-size: 12.5px; }
+.x-hud .s { font: 600 14px Manrope; color: var(--ink-3); }
+/* screen-space overlays */
+#scr { position: absolute; inset: 0; pointer-events: none; }
+#cursor { position: absolute; left: 0; top: 0; width: 34px; height: 34px; opacity: 0; }
+#cursor svg { display: block; transform-origin: 5px 4px; }
+.x-rip { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; }
+#mtxt { position: absolute; left: 0; top: 0; white-space: nowrap; font-weight: 650; letter-spacing: -0.015em; color: var(--ink); transform-origin: 0 0; }
+#morph { position: absolute; left: 0; top: 0; overflow: hidden; border-radius: 16px; background: var(--accent-wash); border: 1.5px solid var(--accent-line); box-shadow: 0 0 0 5px rgba(253,241,234,.8), 0 30px 60px -30px rgba(16,18,22,.25); opacity: 0; }
+.x-edot { position: absolute; left: 0; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--wire); box-shadow: 0 0 0 4px rgba(37,99,201,.18); opacity: 0; }
+#whiteout { position: absolute; inset: 0; background: #fff; opacity: 0; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="63.0667" data-width="1920" data-height="1080">
+
+  <!-- S19 · readiness -->
+  <div id="L-ready" class="x-layer"><div id="cam-ready" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-ready" class="x-host" data-composition-id="a3ready" data-composition-src="screens/a3ready.html" data-start="0" data-duration="5.8" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-ready"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-ready"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-ready"></div>
+  </div></div>
+
+  <!-- S20 · fleet insights -->
+  <div id="L-ins" class="x-layer"><div id="cam-ins" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-ins" class="x-host" data-composition-id="a3ins" data-composition-src="screens/a3ins.html" data-start="4.9" data-duration="8.0" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-ins"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-ins"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-ins"></div>
+  </div></div>
+
+  <!-- S21 · today's board -->
+  <div id="L-board" class="x-layer"><div id="cam-board" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-board" class="x-host" data-composition-id="a3board" data-composition-src="screens/a3board.html" data-start="12.1" data-duration="5.9" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-board"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-board"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-board"></div>
+  </div></div>
+
+  <!-- S22 · recommendation -->
+  <div id="L-rec" class="x-layer"><div id="cam-rec" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-rec" class="x-host" data-composition-id="a3rec" data-composition-src="screens/a3rec.html" data-start="17.2" data-duration="6.2" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-rec"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-rec"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-rec"></div>
+  </div></div>
+
+  <!-- S22 cutaway · why -->
+  <div id="L-why" class="x-layer"><div id="cam-why" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-why" class="x-host" data-composition-id="a3why" data-composition-src="screens/a3why.html" data-start="22.4" data-duration="2.4" data-width="1920" data-height="1080" data-no-timeline></div>
+    <div class="x-ann" id="ann-why"></div>
+  </div></div>
+
+  <!-- S23–S24 · the twin -->
+  <div id="L-twin" class="x-layer"><div id="cam-twin" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-twin" class="x-host" data-composition-id="a3twin" data-composition-src="screens/a3twin.html" data-start="23.8" data-duration="13.45" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-twin"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <div class="x-ann" id="ann-twin"></div>
+  </div></div>
+
+  <!-- S26 · workbench -->
+  <div id="L-wb" class="x-layer"><div id="cam-wb" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-wb" class="x-host" data-composition-id="a3wb" data-composition-src="screens/a3wb.html" data-start="48.6" data-duration="5.5" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-wb"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-wb"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-wb"></div>
+  </div></div>
+
+  <!-- S27 · policies: decision table -->
+  <div id="L-pol" class="x-layer"><div id="cam-pol" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-pol" class="x-host" data-composition-id="a3pol" data-composition-src="screens/a3pol.html" data-start="53.4" data-duration="6.5" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-pol"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-pol"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-pol"></div>
+  </div></div>
+
+  <!-- S27 · policies: authority -->
+  <div id="L-auth" class="x-layer"><div id="cam-auth" class="x-cam" data-layout-allow-overflow>
+    <div id="sc-auth" class="x-host" data-composition-id="a3auth" data-composition-src="screens/a3auth.html" data-start="59.0" data-duration="4.0667" data-width="1920" data-height="1080" data-no-timeline></div>
+    <svg class="x-ov" id="veil-auth"><path fill="#fff" fill-rule="evenodd"/></svg>
+    <svg class="x-ov" id="trav-auth"><path fill="none" stroke="#E8743B" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div class="x-ann" id="ann-auth"></div>
+  </div></div>
+
+  <!-- screen-space overlays -->
+  <div id="scr">
+    <div id="morph"><div id="mtxt"><span class="x-mono" style="font-weight:700">TJ107</span>&nbsp;&nbsp;Hydraulic alarm that never clears</div></div>
+    <div id="edots"></div>
+    <div id="rips"></div>
+    <div id="cursor"></div>
+  </div>
+  <div id="whiteout"></div>
+</div>
+
+<script>
+(function () {
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const D = 63.0667;
+// shot starts and narration starts (act-local seconds, edit/timing.json)
+const VO = { S19: .28, S20: 5.6467, S21: 12.78, S22: 17.9467, S23: 24.6134, S24: 30.5134, S26: 48.9801, S27: 54.0134 };
+const SH = { S19: 0, S20: 5.3667, S21: 12.5, S22: 17.6667, S23: 24.3334, S24: 30.2334, S25: 37.2001, S26: 48.7001, S27: 53.7334 };
+const w = (s, x) => VO[s] + x;                          // word time (tokens are relative to the shot's narration)
+const EZ = {}; const ez = n => EZ[n] || (EZ[n] = gsap.parseEase(n));
+const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const ramp = (t, a, b, e = 'power2.inOut') => ez(e)(cl((t - a) / (b - a)));
+const lerp = (a, b, u) => a + (b - a) * u;
+const px = v => v.toFixed(2) + 'px';
+function box(el) { if (typeof el === 'string') el = $(el); const r = el.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height, cx: r.left + r.width / 2, cy: r.top + r.height / 2, r: [r.left, r.top, r.width, r.height] }; }
+function tbox(el) { const rg = document.createRange(); rg.selectNodeContents(el); const r = rg.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height, cx: r.left + r.width / 2, cy: r.top + r.height / 2, r: [r.left, r.top, r.width, r.height] }; }
+const pad = (b, p, py = p) => [b.x - p, b.y - py, b.w + 2 * p, b.h + 2 * py];
+const union = (...bs) => { const x0 = Math.min(...bs.map(b => b.x)), y0 = Math.min(...bs.map(b => b.y)), x1 = Math.max(...bs.map(b => b.x + b.w)), y1 = Math.max(...bs.map(b => b.y + b.h)); return { x: x0, y: y0, w: x1 - x0, h: y1 - y0, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, r: [x0, y0, x1 - x0, y1 - y0] }; };
+
+/* ---------- keyframe evaluators (pure functions of time) ---------- */
+function kf(keys, t) {              // keys: [t, [values], ease]
+  if (!keys.length) return null;
+  if (t <= keys[0][0]) return keys[0][1];
+  for (let i = 1; i < keys.length; i++) {
+    const b = keys[i]; if (t <= b[0]) { const a = keys[i - 1], u = ez(b[2] || 'power2.inOut')((t - a[0]) / Math.max(1e-6, b[0] - a[0])); return a[1].map((x, j) => x + (b[1][j] - x) * u); }
+  }
+  return keys[keys.length - 1][1];
+}
+const crv = (p0, p1, p2, p3, u) => .5 * ((2 * p1) + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u * u + (-p0 + 3 * p1 - 3 * p2 + p3) * u * u * u);
+function crPath(P, u) {             // Catmull-Rom through points P (arrays), u in [0,1]
+  const n = P.length - 1, f = cl(u) * n, i = Math.min(n - 1, Math.floor(f)), k = f - i;
+  const p0 = P[Math.max(0, i - 1)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(n, i + 2)];
+  return p1.map((_, j) => crv(p0[j], p1[j], p2[j], p3[j], k));
+}
+/* camera: keys [t, cx, cy, s, ease, via?] (stage coordinates of the layer) */
+function camAt(keys, t) {
+  if (t <= keys[0][0]) return { cx: keys[0][1], cy: keys[0][2], s: keys[0][3] };
+  for (let i = 1; i < keys.length; i++) {
+    const b = keys[i]; if (t > b[0]) continue;
+    const a = keys[i - 1], u = ez(b[4] || 'power2.inOut')((t - a[0]) / Math.max(1e-6, b[0] - a[0]));
+    if (b[5]) { const P = [[a[1], a[2], Math.log(a[3])], ...b[5].map(v => [v[0], v[1], Math.log(v[2])]), [b[1], b[2], Math.log(b[3])]]; const q = crPath(P, u); return { cx: q[0], cy: q[1], s: Math.exp(q[2]) }; }
+    return { cx: lerp(a[1], b[1], u), cy: lerp(a[2], b[2], u), s: Math.exp(lerp(Math.log(a[3]), Math.log(b[3]), u)) };
+  }
+  const z = keys[keys.length - 1]; return { cx: z[1], cy: z[2], s: z[3] };
+}
+function camXY(c) {
+  let x = 960 - c.cx * c.s, y = 540 - c.cy * c.s;
+  if (c.s >= 1) { x = Math.min(0, Math.max(1920 - 1920 * c.s, x)); y = Math.min(0, Math.max(1080 - 1080 * c.s, y)); }
+  return { x, y, s: c.s };
+}
+const CAM = {};      // layer → { el, keys }
+const camOf = (L, t) => camXY(camAt(CAM[L].keys, t));
+const toScr = (L, t, p) => { const c = camOf(L, t); return [c.x + p[0] * c.s, c.y + p[1] * c.s]; };
+const rectScr = (L, t, r) => { const c = camOf(L, t); return [c.x + r[0] * c.s, c.y + r[1] * c.s, r[2] * c.s, r[3] * c.s]; };
+
+/* spotlight veil + travelling focus ring (inside each camera, stage coordinates) */
+function rrect(x, y, w, h, R) { R = Math.max(0, Math.min(R, w / 2, h / 2));
+  return `M${x + R} ${y}H${x + w - R}A${R} ${R} 0 0 1 ${x + w} ${y + R}V${y + h - R}A${R} ${R} 0 0 1 ${x + w - R} ${y + h}H${x + R}A${R} ${R} 0 0 1 ${x} ${y + h - R}V${y + R}A${R} ${R} 0 0 1 ${x + R} ${y}Z`; }
+const VEIL = {}, TRAV = {}, VP_ = {}, TP_ = {};   // layer → keys [t, [x,y,w,h,alpha], ease]  /  [t, [x,y,w,h,alpha,draw], ease]
+function veilFrame(L, t) {
+  const v = kf(VEIL[L] || [], t), p = VP_[L] || (VP_[L] = $(`#veil-${L} path`)); if (!p) return;
+  if (!v || v[4] < .004) { p.setAttribute('d', ''); return; }
+  p.setAttribute('d', `M-4000 -4000H6000V6000H-4000Z ` + rrect(v[0], v[1], v[2], v[3], 20)); p.setAttribute('fill-opacity', v[4].toFixed(3));
+}
+function travFrame(L, t) {
+  const v = kf(TRAV[L] || [], t), p = TP_[L] || (TP_[L] = $(`#trav-${L} path`)); if (!p) return;
+  if (!v || v[4] < .004) { p.setAttribute('d', ''); return; }
+  const R = 18, P = 2 * (v[2] + v[3]) - (8 - 2 * Math.PI) * R;
+  p.setAttribute('d', rrect(v[0], v[1], v[2], v[3], R)); p.setAttribute('stroke-opacity', v[4].toFixed(3));
+  p.setAttribute('stroke-dasharray', `${(P * cl(v[5] ?? 1)).toFixed(1)} ${(P + 10).toFixed(1)}`);
+}
+/* cursor: keys [t, layer, [x,y] stage] — screen position follows that layer's camera */
+const CUR = [], CURO = [];
+function cursorAt(t) {
+  if (!CUR.length) return [0, 0];
+  const at = k => toScr(k[1], t, k[2]);
+  if (t <= CUR[0][0]) return at(CUR[0]);
+  for (let i = 1; i < CUR.length; i++) {
+    const b = CUR[i]; if (t > b[0]) continue;
+    const a = CUR[i - 1], pa = at(a), pb = at(b), u = ez(b[3] || 'power2.inOut')((t - a[0]) / Math.max(1e-6, b[0] - a[0]));
+    const dx = pb[0] - pa[0], dy = pb[1] - pa[1], bow = Math.sin(Math.PI * u) * .1;
+    return [pa[0] + dx * u - dy * bow, pa[1] + dy * u + dx * bow];
+  }
+  return at(CUR[CUR.length - 1]);
+}
+
+function build() {
+const tl = gsap.timeline({ paused: true });
+const layers = ['ready', 'ins', 'board', 'rec', 'why', 'twin', 'wb', 'pol', 'auth'];
+layers.forEach(L => CAM[L] = { el: $('#cam-' + L), keys: [[0, 960, 540, 1]] });
+const S = (L, sel) => $(`#sc-${L} ${sel}`), SS = (L, sel) => $$(`#sc-${L} ${sel}`);
+const ann = (L, cls, html, st = {}) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; Object.assign(d.style, st); $('#ann-' + L).appendChild(d); return d; };
+// wrap the leading number of a ".big" into a span so it can count without touching its <small>
+const numSpan = el => { const n = el.firstChild; const s = document.createElement('span'); s.textContent = n.nodeValue.trim(); el.replaceChild(s, n); return s; };
+const fade = (sel, a, b, at, dur, e = 'power2.inOut') => tl.fromTo(sel, { opacity: a }, { opacity: b, duration: dur, ease: e, immediateRender: false }, at);
+const count = (el, from, to, at, dur, fmt, e = 'power3.out', hide = false) => { const o = { v: from }; if (hide) tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: .2 }, at - .06); tl.fromTo(o, { v: from }, { v: to, duration: dur, ease: e, immediateRender: false, onUpdate: () => { el.textContent = fmt(o.v); } }, at); el.textContent = fmt(from); };
+const pop = (sel, at, dur = .45, from = { opacity: 0, scale: .82 }, e = 'back.out(2)') => tl.fromTo(sel, from, { opacity: 1, scale: 1, x: 0, y: 0, duration: dur, ease: e }, at);
+const comma = v => Math.round(v).toLocaleString('en-GB');
+function click(t) {   // dip + ripple at the cursor position at time t
+  tl.fromTo('#cursor svg', { scale: 1 }, { scale: .82, duration: .07, ease: 'power2.in', immediateRender: false }, t);
+  tl.fromTo('#cursor svg', { scale: .82 }, { scale: 1, duration: .12, ease: 'power2.out', immediateRender: false }, t + .07);
+  const [x, y] = cursorAt(t), r = document.createElement('div'); r.className = 'x-rip'; r.style.left = px(x + 5); r.style.top = px(y + 4); $('#rips').appendChild(r);
+  tl.fromTo(r, { scale: .1, opacity: .55 }, { scale: 1, opacity: 0, duration: .5, ease: 'power2.out' }, t + .02);
+}
+$('#cursor').innerHTML = PHXF.CURSOR;
+
+/* ============ DOM prep (text wrappers) before any measurement ============ */
+const six = numSpan(S('ready', '[data-shot="kpi-now"] .big'));
+{ const sub = S('ins', '[data-shot="finding"] .sub2'); sub.innerHTML = sub.innerHTML.replace('follows the flying plan', '<span class="x-hl" id="fl-plan">follows the flying plan</span>'); }
+{ const h2 = S('rec', '.hero h2'); h2.innerHTML = h2.textContent.split(' ').map(x => `<span class="hw" style="display:inline-block">${x}</span>`).join(' '); }
+const nState = numSpan(S('rec', '[data-shot="state"] .big')), nFc = numSpan(S('rec', '[data-shot="forecast"] .big'));
+const whySmall = S('rec', '[data-shot="why"] .big small'); whySmall.innerHTML = whySmall.innerHTML.replace('107', '<span id="n107">107</span>');
+const n107 = $('#n107');
+const nImp = numSpan(S('rec', '[data-shot="impact"] .big'));
+const insight = S('twin', '.insight-float');
+{ const b = insight.querySelector('b'), p = insight.querySelector('p');
+  b.innerHTML = b.innerHTML.replace('28 pump removals', '<span class="x-hl" id="hl-28">28 pump removals</span>');
+  p.innerHTML = p.innerHTML.replace('10 different pump serials', '<span class="x-hl" id="hl-10">10 different pump serials</span>').replace('The evidence follows the tail, not the pump.', '<span class="x-hl" id="hl-tail">The evidence follows the tail, not the pump.</span>'); }
+const n59 = numSpan(S('wb', '[data-shot="strip"] .big'));
+const perfEl = S('pol', '#a3pol-perf'), perfV = parseFloat(perfEl.textContent), nPerf = numSpan(perfEl);
+
+/* ============ measure everything first (no transforms applied yet) ============ */
+// S19 readiness
+const R6 = box(S('ready', '[data-shot="kpi-now"]')), RP = box(S('ready', '[data-shot="kpi-parts"]'));
+const AC = {}; ['TJ101', 'TJ102', 'TJ103', 'TJ104', 'TJ105', 'TJ106', 'TJ107', 'TJ108'].forEach(k => AC[k] = box(S('ready', `.ac[data-tail="${k}"]`)));
+const REX = box(S('ready', '.window'));
+// S20 insights
+const IWF = box(S('ins', '[data-shot="waterfall"]')), IFD = box(S('ins', '[data-shot="finding"]')), IBT = box(S('ins', '.side-cta .btn-block'));
+const wfSvg = S('ins', '#a3ins-wf');
+const wfRects = $$('rect', wfSvg).filter(r => r.getAttribute('height') === '14'), WFR = wfRects.map(box);
+const wfTxt = t => box($$('text', wfSvg).find(e => e.textContent.trim() === t));
+const ROWS_TC = union(wfTxt('Tyres'), wfTxt('88.6'), WFR[0], WFR[1]), ROWS_AP = union(wfTxt('AWAITING PARTS'), wfTxt('16.5'));
+// S21 board
+const BRD = box(S('board', '[data-shot="board"]')), FUN = box(S('board', '[data-shot="funnel"]'));
+const brow = SS('board', '.rows2 .r2'), BROW = brow.map(box), B107 = box(S('board', '[data-shot="tj107-row"]'));
+const B107T = box(S('board', '[data-shot="tj107-row"] .ttl')), B107W = tbox(S('board', '[data-shot="tj107-row"] .who'));
+// S22 recommendation + why
+const RH2 = box(S('rec', '.hero h2')), RH = box(S('rec', '[data-shot="reco"]')), RST = box(S('rec', '[data-shot="state"]')), RWY = box(S('rec', '[data-shot="why"]')), RFC = box(S('rec', '[data-shot="forecast"]'));
+const ROR = box(S('rec', '[data-shot="orders"]')), RIM = box(S('rec', '[data-shot="impact"]'));
+const RFACT = union(RST, RWY, RFC), RLOW = union(ROR, RIM);
+const WEV = box(S('why', '[data-shot="evidence"]')), WRU = box(S('why', '[data-shot="rule"]')), WALL = union(WEV, WRU);
+const wRows = SS('why', '#a3why-evrows .r2'), wRid = SS('why', '#a3why-evrows .rid'), WRID = wRid.map(box);
+// S23–24 twin
+const vpEl = S('twin', '#a3twin-vp'), VP = box(vpEl), TINS = box(S('twin', '.insight-float')), TSCR = box(S('twin', '[data-shot="scrubber"]'));
+const TPAN = box(S('twin', '[data-shot="panel"]'));
+// S26 workbench
+const WSTR = box(S('wb', '[data-shot="strip"]')), WCA = box(S('wb', '[data-shot="cause"]')), WTE = box(S('wb', '[data-shot="tests"]'));
+const wtc = SS('wb', '.tests .tc'), WTC = wtc.map(box), wcr = SS('wb', '.cause .r2'), WCR = wcr.map(box);
+const WNAV = box(SS('wb', '.nav a')[6]);
+// S27 policies
+const PTB = box(S('pol', '[data-shot="decision-table"]')), PTR = box(S('pol', '[data-shot="trace"]')), PLY = box(S('pol', '[data-shot="layers"]'));
+const ptr = SS('pol', '#a3pol-dtab tr'), PROW = ptr.map(box);      // 0 grp, 1 head, 2 test, 3 r1, 4 r2, 5 r3, 6 r4 …
+const ply = SS('pol', '.ly'), PLYB = ply.map(box), PTAB = box(SS('pol', '#a3pol-tabbar .tabs2 a')[5]);
+const AMODE = SS('auth', '.mode'), AM0 = box(AMODE[0]), apill = SS('auth', '.mode:first-child .act-pill'), APILL = apill.map(box);
+const ACMC = APILL[2], ANM = box(S('auth', '.mode:first-child .nm'));
+const fun = SS('board', '.fun .f'), FUN3 = box(fun[3]), BWHY = brow.map(r => box(r.querySelector('.why')));
+const WPUMP = tbox(wcr[2].querySelector('.ttl')), WRANK = tbox(wtc[0].querySelector('.rank'));
+
+/* ============ S19 · readiness: 6 of 8 → glide across the fleet → TJ107 ============ */
+const t19 = { push: [1.15, 2.5], glide: [2.95, 4.4], back: [4.55, 5.1], out: 5.1 };
+CAM.ready.keys = [[0, 960, 540, 1.075], [.95, 960, 540, 1.0, 'expo.out'], [t19.push[0], 930, 520, 1.025, 'sine.inOut'],
+  [t19.push[1], R6.cx, R6.cy + 4, 1.8, 'expo.inOut'], [t19.glide[0], R6.cx + 10, R6.cy + 8, 1.84, 'sine.inOut'],
+  [t19.glide[1], AC.TJ107.cx, AC.TJ107.cy, 1.62, 'power2.inOut', [[1180, 560, 1.36]]],
+  [t19.back[0], AC.TJ107.cx - 6, AC.TJ107.cy - 4, 1.65, 'sine.inOut'],
+  [t19.back[1], 1130, 430, 1.16, 'power2.inOut'], [5.65, RP.cx, RP.cy, 1.6, 'power2.in']];
+tl.fromTo('#whiteout', { opacity: 1 }, { opacity: 0, duration: .55, ease: 'power2.out' }, 0);
+$('#L-ready').style.opacity = 1;
+fade('#L-ready', 1, 0, 5.1, .3, 'power2.in');
+// hero count-up, dots fill on "of eight"
+count(six, 0, 6, 1.62, .98, v => Math.round(v), 'power2.out', true);
+SS('ready', '#a3ready-dots i').forEach((d, i) => tl.fromTo(d, { opacity: .12, scale: .4 }, { opacity: 1, scale: 1, duration: .32, ease: 'back.out(2.6)' }, w('S19', 2.0) + i * .07));
+// travelling ring: KPI → (glide) → TJ107 → waiting-for-parts card
+const rr = b => pad(b, 7);
+TRAV.ready = [[1.9, [...rr(R6), 0, 0]], [2.0, [...rr(R6), 1, 0], 'none'], [2.55, [...rr(R6), 1, 1], 'power2.out'],
+  [t19.glide[0], [...rr(R6), 1, 1]], [3.62, [...rr(AC.TJ103), 1, 1], 'power2.inOut'], [t19.glide[1], [...rr(AC.TJ107), 1, 1], 'power2.inOut'],
+  [t19.back[0] + .05, [...rr(AC.TJ107), 1, 1]], [t19.back[1], [...rr(RP), 1, 1], 'power2.inOut'], [5.3, [...rr(RP), 0, 1]]];
+VEIL.ready = [[2.0, [...rr(R6), 0]], [2.5, [...rr(R6), .5], 'power2.out'], [t19.glide[0], [...rr(R6), .5]], [3.62, [...rr(AC.TJ103), .38]], [t19.glide[1], [...rr(AC.TJ107), .5]],
+  [t19.back[0] + .05, [...rr(AC.TJ107), .5]], [t19.back[1], [...rr(RP), .42]], [5.3, [...rr(RP), 0]]];
+// subtle lift of TJ107's planform as the camera lands
+tl.fromTo(S('ready', '.ac[data-tail="TJ107"] .pf'), { y: 0 }, { y: -8, duration: .6, ease: 'power3.out' }, t19.glide[1] - .2);
+
+/* ============ S20 · insights: where the waiting went ============ */
+fade('#L-ins', 0, 1, 5.28, .36, 'power2.out');
+CAM.ins.keys = [[5.12, ROWS_AP.cx - 40, ROWS_AP.cy + 40, 1.36], [5.95, IWF.cx, IWF.cy - 10, 1.2, 'expo.out'], [7.0, IWF.cx + 10, IWF.cy - 4, 1.23, 'sine.inOut'],
+  [w('S20', 2.24) + .02, ROWS_TC.cx - 60, ROWS_TC.cy + 30, 1.72, 'expo.inOut'], [9.25, ROWS_TC.cx - 50, ROWS_TC.cy + 34, 1.76, 'sine.inOut'],
+  [10.2, IFD.cx, IFD.cy + 20, 1.6, 'expo.inOut'], [11.45, IFD.cx - 8, IFD.cy + 24, 1.64, 'sine.inOut'], [12.1, 960, 540, 1.0, 'power2.inOut'], [12.6, 860, 470, 1.06, 'power2.in']];
+// waterfall bars grow (steps descend to the left; each grows from its right edge)
+wfRects.forEach((r, i) => { const x = +r.getAttribute('x'), wd = +r.getAttribute('width');
+  tl.fromTo(r, { attr: { x: x + wd, width: 0 } }, { attr: { x, width: wd }, duration: .42, ease: 'power3.out' }, 5.55 + i * .1); });
+const wfDash = $$('line[stroke-dasharray]', wfSvg); tl.fromTo(wfDash, { opacity: 0 }, { opacity: 1, duration: .2, stagger: .1 }, 5.5);
+const possessed = $$('rect', wfSvg).find(r => r.getAttribute('height') === '16'), mcBar = $$('rect', wfSvg).find(r => r.getAttribute('height') === '20');
+tl.fromTo(possessed, { attr: { width: 0 } }, { attr: { width: +possessed.getAttribute('width') }, duration: .5, ease: 'power3.out' }, 5.4);
+tl.fromTo(mcBar, { attr: { width: 0 } }, { attr: { width: +mcBar.getAttribute('width') }, duration: .6, ease: 'power3.out' }, 6.75);
+// tyres + brake chutes: spotlight, pulses on the spoken words, bracket + 69 % chip
+VEIL.ins = [[7.45, [...pad(ROWS_TC, 10, 8), 0]], [w('S20', 2.24), [...pad(ROWS_TC, 10, 8), .55], 'power2.out'], [9.3, [...pad(ROWS_TC, 10, 8), .55]],
+  [10.2, [...pad(IFD, 6), .5], 'expo.inOut'], [11.4, [...pad(IFD, 6), .5]], [11.85, [...pad(IFD, 6), 0]]];
+[[WFR[0], w('S20', 2.24)], [WFR[1], w('S20', 2.93)]].forEach(([b, t]) => {
+  const g = ann('ins', '', '', { position: 'absolute', left: px(b.x - 6), top: px(b.y - 6), width: px(b.w + 12), height: px(b.h + 12), borderRadius: '8px', boxShadow: '0 0 0 2px #E8743B', opacity: 0 });
+  tl.fromTo(g, { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: .4, ease: 'power3.out' }, t - .08);
+  tl.to(g, { opacity: 0, duration: .5 }, 9.6);
+});
+{ const y0 = WFR[0].y - 4, y1 = WFR[1].y + WFR[1].h + 4, bx = WFR[1].x - 18;
+  const bk = ann('ins', 'x-bk', '', { left: px(bx), top: px(y0), width: px(9), height: px(y1 - y0) });
+  const chip = ann('ins', 'x-ost', '<b>69 %</b>of awaiting-parts time · tyres + brake chutes', { top: px((y0 + y1) / 2 - 20) });
+  chip.style.left = px(bx - 14 - chip.offsetWidth);
+  tl.fromTo(bk, { opacity: 0, scaleY: .2 }, { opacity: 1, scaleY: 1, duration: .4, ease: 'power3.out' }, w('S20', 3.3));
+  tl.fromTo(chip, { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: .5, ease: 'power3.out' }, w('S20', 3.4));
+  tl.to([bk, chip], { opacity: 0, duration: .4, ease: 'power2.in' }, 9.55); }
+// finding: 208.8 tail-days lands on "predict"; "flying plan" underline
+const fn = S('ins', '#a3ins-fn'); count(fn, 0, 208.8, w('S20', 4.0), .8, v => v.toFixed(1)); tl.fromTo(fn, { opacity: 0 }, { opacity: 1, duration: .25 }, w('S20', 4.0) - .1);
+{ tl.fromTo('#fl-plan', { backgroundColor: 'rgba(253,241,234,0)', color: 'rgba(98,103,111,1)' }, { backgroundColor: 'rgba(253,241,234,1)', color: 'rgba(180,81,31,1)', duration: .35 }, w('S20', 5.4)); }
+TRAV.ins = [[9.75, [...pad(IFD, 6), 0, 0]], [9.8, [...pad(IFD, 6), 1, 0], 'none'], [10.5, [...pad(IFD, 6), 1, 1], 'power2.out'], [11.5, [...pad(IFD, 6), 1, 1]], [11.9, [...pad(IFD, 6), 0, 1]]];
+// cursor → "Open decision board"
+CUR.push([11.35, 'ins', [1500, 860]], [12.05, 'ins', [IBT.x + 64, IBT.cy + 2]]);
+CURO.push([11.3, [0]], [11.5, [1]], [12.45, [1]], [12.6, [0]]);
+click(12.1);
+fade('#L-ins', 1, 0, 12.18, .22, 'power2.in');
+
+/* ============ S21 · today's board: seven decisions ============ */
+fade('#L-board', 0, 1, 12.3, .32, 'power2.out');
+CAM.board.keys = [[12.2, 960, 540, 1.06], [12.95, 960, 540, 1.0, 'expo.out'], [13.9, 1180, 560, 1.12, 'sine.inOut'],
+  [15.0, BRD.cx, BROW[1].cy + 40, 1.42, 'expo.inOut'], [16.1, BRD.cx, BROW[4].cy, 1.44, 'sine.inOut'],
+  [16.85, B107.cx - 60, B107.cy + 10, 1.66, 'power2.inOut'], [17.3, B107.cx - 60, B107.cy + 10, 1.7, 'sine.inOut']];
+brow.forEach((r, i) => tl.fromTo(r, { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, 12.45 + i * .06));
+const FN = [1192, 326, 33, 7];
+fun.forEach((f, i) => { const at = 12.85 + i * .3, n = f.querySelector('.n'), bar = f.querySelector('.b i');
+  tl.fromTo(f, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, at - .05);
+  count(n, i ? FN[i - 1] : 0, FN[i], at, .42, comma, 'power2.out');
+  tl.fromTo(bar, { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: .5, ease: 'power3.out' }, at); });
+const n7 = fun[3].querySelector('.n'); tl.fromTo(n7, { scale: 1 }, { scale: 1.18, duration: .18, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '0 70%' }, w('S21', 1.02) + .05);
+// evidence (blue underline under each row's reason) and score (priority badges pulse)
+brow.forEach((r, i) => { const wy = BWHY[i];
+  const u = ann('board', 'x-uline', '', { left: px(wy.x), top: px(wy.y + wy.h + 1), width: px(wy.w) });
+  tl.fromTo(u, { opacity: 0, scaleX: 0 }, { opacity: .85, scaleX: 1, duration: .35, ease: 'power2.out' }, w('S21', 2.7) + i * .06);
+  tl.to(u, { opacity: 0, duration: .3 }, 16.6);
+  tl.fromTo(r.querySelector('.prio'), { scale: 1 }, { scale: 1.22, duration: .16, yoyo: true, repeat: 1, ease: 'power2.out' }, w('S21', 3.5) + i * .05); });
+TRAV.board = [[13.55, [...pad(FUN3, 8), 0, 0]], [13.6, [...pad(FUN3, 8), 1, 0], 'none'], [14.0, [...pad(FUN3, 8), 1, 1], 'power2.out'], [14.5, [...pad(FUN3, 8), 0, 1]],
+  [16.75, [...pad(B107, 5), 0, 0]], [16.8, [...pad(B107, 5), 1, 0], 'none'], [17.1, [...pad(B107, 5), 1, 1], 'power2.out']];
+VEIL.board = [[16.4, [...pad(B107, 5), 0]], [16.9, [...pad(B107, 5), .45], 'power2.out']];
+CUR.push([16.25, 'board', [1500, 1000]], [16.95, 'board', [B107T.x + 70, B107T.cy + 4]]);
+CURO.push([16.2, [0]], [16.4, [1]], [17.15, [1]], [17.3, [0]]);
+click(17.0);
+fade('#L-board', 1, 0, 17.18, .3, 'power2.in');
+
+/* ============ S22 · recommendation (TJ107 row morphs into the recommendation) ============ */
+const tM0 = 17.1, tM1 = 17.72;
+CAM.rec.keys = [[17.3, RH.cx - 40, RH.cy + 70, 1.24], [18.9, RH.cx - 70, RH.cy + 76, 1.28, 'sine.inOut'],
+  [19.5, RFACT.cx, RFACT.cy, 1.28, 'expo.inOut'], [20.85, RFACT.cx + 12, RFACT.cy + 6, 1.31, 'sine.inOut'],
+  [21.45, RLOW.cx, RLOW.cy - 10, 1.27, 'expo.inOut'], [22.7, RLOW.cx + 10, RLOW.cy - 4, 1.31, 'sine.inOut']];
+const MORPH = { a: rectScr('board', tM0, B107.r), b: rectScr('rec', tM1, RH.r), el: $('#morph'), tx: $('#mtxt'),
+  ta: [(B107W.x - B107.x) * camOf('board', tM0).s, (B107W.y - B107.y) * camOf('board', tM0).s, 16 * camOf('board', tM0).s], tb: [(RH2.x - RH.x) * camOf('rec', tM1).s, (RH2.y - RH.y) * camOf('rec', tM1).s, 30 * camOf('rec', tM1).s] };
+MORPH.o = [[tM0, [0]], [tM0 + .22, [1], 'power2.out'], [tM1 - .04, [1]], [tM1 + .2, [0], 'power2.out']];
+fade('#L-rec', 0, 1, 17.42, .3, 'power2.out');
+// hero line reveals word by word on "TJ107"
+{ tl.fromTo(S('rec', '.hero .kick'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, 17.62);
+  tl.fromTo(SS('rec', '.hero .hw'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out', stagger: .055 }, 17.72);
+  tl.fromTo(S('rec', '.hero .sub2'), { opacity: 0 }, { opacity: 1, duration: .4 }, 18.3);
+  tl.fromTo(SS('rec', '.hero .acts .btn'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .35, stagger: .06, ease: 'power3.out' }, 18.35); }
+// STATE · WHY · FORECAST
+count(nState, 0, 28, 19.3, .75, v => Math.round(v), 'power3.out', true);
+tl.fromTo(S('rec', '[data-shot="why"] .big'), { opacity: 0, scale: .7 }, { opacity: 1, scale: 1, duration: .4, ease: 'back.out(2)', transformOrigin: '0 80%' }, 19.62);
+count(n107, 0, 107, 19.65, .75, v => Math.round(v), 'power3.out', true);
+count(nFc, 0, 98.5, 20.0, .8, v => v.toFixed(1), 'power3.out', true);
+// ORDERS (AGENT vs HUMAN) · IMPACT
+const ordRows = SS('rec', '[data-shot="orders"] .r2');
+ordRows.forEach((r, i) => tl.fromTo(r, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, 21.05 + i * .14));
+pop(S('rec', '[data-shot="orders"] .auth.agent'), 21.45); pop(S('rec', '[data-shot="orders"] .auth.human'), 21.7);
+count(nImp, 0, 21.7, 21.4, 1.0, v => '+' + v.toFixed(1), 'power3.out', true);
+tl.fromTo(S('rec', '[data-shot="impact"] .kv2'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 21.9);
+TRAV.rec = [[17.75, [...pad(RH, 4), 0, 1]], [17.85, [...pad(RH, 4), 1, 1]], [18.95, [...pad(RH, 4), 1, 1]],
+  [19.4, [...pad(RST, 4), 1, 1], 'power2.inOut'], [19.72, [...pad(RWY, 4), 1, 1], 'power2.inOut'], [20.08, [...pad(RFC, 4), 1, 1], 'power2.inOut'],
+  [20.95, [...pad(RFC, 4), 1, 1]], [21.4, [...pad(ROR, 4), 1, 1], 'power2.inOut'], [21.95, [...pad(ROR, 4), 1, 1]], [22.35, [...pad(RIM, 4), 1, 1], 'power2.inOut'], [22.75, [...pad(RIM, 4), 1, 1]]];
+VEIL.rec = [[18.9, [...pad(RH, 4), 0]], [19.4, [...pad(RST, 4), .4]], [19.72, [...pad(RWY, 4), .4]], [20.08, [...pad(RFC, 4), .4]], [20.95, [...pad(RFC, 4), .4]],
+  [21.4, [...pad(ROR, 4), .4]], [21.95, [...pad(ROR, 4), .4]], [22.35, [...pad(RIM, 4), .4]], [22.75, [...pad(RIM, 4), .4]]];
+
+/* ---- cutaway: why (feathered white wipe in, evidence ticks, rule steps) ---- */
+CAM.why.keys = [[22.55, WALL.cx + 30, WALL.cy, 1.2], [24.3, WALL.cx - 10, WALL.cy - 6, 1.26, 'sine.inOut']];
+const WIPE = [[22.58, [0]], [23.0, [1], 'power2.inOut']];
+fade('#L-why', 0, 1, 22.55, .02);
+const wChecks = wRows.map(r => r.querySelector('svg'));
+wChecks.forEach((c, i) => tl.fromTo(c, { opacity: 0, scale: .2 }, { opacity: 1, scale: 1, duration: .32, ease: 'back.out(3)', transformOrigin: '50% 50%' }, w('S22', 5.0) + i * .085));
+wRows.forEach((r, i) => tl.fromTo(r, { opacity: .4 }, { opacity: 1, duration: .25 }, w('S22', 4.95) + i * .085));
+const rs = SS('why', '.rule .rs');
+rs.forEach((r, i) => tl.fromTo(r, { opacity: .3 }, { opacity: 1, duration: .3 }, 23.15 + i * .2));
+SS('why', '.rule .rs.hit .dot').forEach((d, i) => tl.fromTo(d, { scale: .6, boxShadow: '0 0 0 0px rgba(232,116,59,.35)' }, { scale: 1, boxShadow: '0 0 0 9px rgba(232,116,59,0)', duration: .55, ease: 'back.out(2.5)' }, 23.35 + i * .22));
+SS('why', '.rule .rs.hit .in').forEach((d, i) => pop(d, 23.45 + i * .22, .4));
+// evidence → reporter: the record chips collapse into the twin's reporter
+fade('#L-twin', 0, 1, 24.12, .4, 'power2.out');
+fade('#L-why', 1, 0, 23.92, .25, 'power2.in');
+
+/* ============ S23 · the twin (Evidence lens) ============ */
+const TW0 = 23.85, TW1 = 37.25;
+const t23 = { rep: 24.62, lab: w('S23', 1.54) - .1, sus: w('S23', 2.49) - .05, arc: w('S23', 2.49) + .1, sel: w('S23', 3.35), sys0: 28.25, sys1: 29.75 };
+CAM.twin.keys = [[23.95, VP.cx, VP.cy + 10, 1.34], [24.75, VP.cx, VP.cy, 1.22, 'expo.out'], [25.9, VP.cx + 8, VP.cy - 4, 1.27, 'sine.inOut'],
+  [27.05, VP.cx + 30, VP.cy - 20, 1.46, 'power2.inOut'], [30.0, VP.cx + 46, VP.cy - 26, 1.52, 'sine.inOut'],
+  // S24: insight panel + strip, then back to see the scrubber (time travel)
+  [30.95, TINS.cx + 150, TINS.cy - 60, 1.7, 'expo.inOut'], [32.85, TINS.cx + 160, TINS.cy - 64, 1.75, 'sine.inOut'],
+  [33.65, 1150, 660, 1.14, 'expo.inOut'], [36.0, 1150, 650, 1.18, 'sine.inOut'], [37.25, 1150, 645, 1.2, 'sine.inOut']];
+const LBL = [{ id: 'BHEEM_EU', dx: -40, dy: -150, color: '#2563C9', at: t23.lab }, { id: 'HYD_PUMP', dx: 210, dy: -60, color: '#E8743B', at: t23.sus }, { id: 'AMAGB', dx: 170, dy: 110, color: '#C98512', at: t23.sus + .25 }];
+LBL.forEach(l => { l.a = S('twin', '#a3twin-an-' + l.id); l.b = S('twin', '#a3twin-lb-' + l.id); l.tag = l.b.querySelector('.tag'); });
+const leaders = S('twin', '#a3twin-leaders');
+const TWS = { lab: {}, pop: {} };
+const backOut = ez('back.out(2.2)');
+const twin = window.PHX_TWIN.createTwin(vpEl, { dpr: 2, lens: 'xray', selected: null, az: .55, el: .44, dist: 24.5, spin: false,
+  onFrame(screenOf) {
+    let svg = '';
+    LBL.forEach(l => { const [x, y] = screenOf(l.id), o = TWS.lab[l.id] || 0, p = TWS.pop[l.id] || 0;
+      l.a.style.left = px(x); l.a.style.top = px(y); l.a.style.opacity = o.toFixed(3);
+      l.b.style.left = px(x + l.dx); l.b.style.top = px(y + l.dy); l.b.style.opacity = o.toFixed(3); l.tag.style.transform = `scale(${(.82 + .18 * p).toFixed(4)})`;
+      if (o > .003) { const k = cl(p * 1.15); svg += `<path d="M${x.toFixed(1)} ${y.toFixed(1)} L${(x + l.dx * .55 * k).toFixed(1)} ${(y + l.dy * k).toFixed(1)} L${(x + l.dx * k).toFixed(1)} ${(y + l.dy * k).toFixed(1)}" fill="none" stroke="${l.color}" stroke-width="1.4" opacity="${(.9 * o).toFixed(3)}"/>`; } });
+    leaders.innerHTML = svg;
+  } });
+const cv = vpEl.querySelector('canvas'); cv.style.zIndex = 1;
+const N = twin.nodes, root3 = N.BHEEM_EU.grp.parent;
+const evid = root3.children.find(c => c.type === 'Group' && c.children.length === 2 && c.children.every(l => l.material && l.material.dashed));
+evid.children.forEach(l => { l.material.transparent = true; });
+const NEUTRAL = 0xdcdfe3;
+const lensTabs = SS('twin', '#a3twin-lenses span[data-lens]');
+const lensChip = S('twin', '.page-head .chip.accent'), lensTxt = Array.from(lensChip.childNodes).filter(n => n.nodeType === 3).pop();
+const legend = S('twin', '.vp-legend');
+const hlOn = (id, at) => tl.fromTo(id, { backgroundColor: 'rgba(253,241,234,0)', boxShadow: '0 0 0 0px rgba(253,241,234,0)' }, { backgroundColor: 'rgba(253,241,234,1)', boxShadow: '0 0 0 3px rgba(253,241,234,1)', duration: .35, ease: 'power2.out' }, at);
+hlOn('#hl-28', w('S24', .21)); hlOn('#hl-10', w('S24', 1.61)); hlOn('#hl-tail', w('S24', 3.26));
+const cells = SS('twin', '#a3twin-swaps i');
+// scrubber: handle + every dated mark, so the future dims while we travel back
+const scrub = S('twin', '#a3twin-scrubsvg');
+const hLine = $$('line', scrub).find(l => l.getAttribute('stroke-width') === '2'), hDot = $$('circle', scrub).find(c => c.getAttribute('cx') === '1246');
+const HX1 = 1246, HX0 = 1010.16;
+const marks = [];
+$$('rect', scrub).forEach(r => { const y = r.getAttribute('y'); if (y === '4' || y === '25' || y === '29') marks.push({ el: r, x: +r.getAttribute('x') }); });
+$$('path', scrub).forEach(p => { const m = /^M([\d.]+) 46/.exec(p.getAttribute('d') || ''); if (m) marks.push({ el: p, x: +m[1] }); });
+const sorties = marks.filter(m => m.el.tagName === 'rect' && m.el.getAttribute('y') !== '4').map(m => m.x).sort((a, b) => a - b);
+const asofTxt = S('twin', '[data-shot="scrubber"] .rl .mono');
+const MAY1 = 860.918, JUN1 = 1089.388;
+const dateAt = hx => { const d = hx < JUN1 ? 1 + (hx - MAY1) / (JUN1 - MAY1) * 31 : 1 + (hx - JUN1) / (JUN1 - MAY1) * 31; const day = Math.min(hx < JUN1 ? 31 : 22, Math.max(1, Math.round(d))); return `${day} ${hx < JUN1 && Math.round(d) <= 31 ? 'May' : 'Jun'} 06:00`; };
+const hud = ann('twin', 'x-hud', `<span class="k">TIME TRAVEL</span><span>as of <span id="hud-d">22 Jun 06:00</span></span><span class="s">only what was known then</span>`, { top: px(VP.y + 74) });
+hud.style.left = px(VP.cx - hud.offsetWidth / 2);
+const t24 = { fill0: 30.55, fill1: 32.05, back0: w('S24', 3.2), back1: w('S24', 3.95), fwd0: w('S24', 4.75), fwd1: w('S24', 5.4) };
+tl.fromTo(hud, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, t24.back0 - .15);
+tl.to(hud, { opacity: 0, y: -8, duration: .35, ease: 'power2.in' }, t24.fwd1 + .05);
+const hudD = () => $('#hud-d');
+function twinTick(T) {
+  const s = twin.state;
+  const o1 = ramp(T, 24.0, 30.3, 'sine.inOut'), o2 = ramp(T, 30.3, 37.25, 'sine.inOut');
+  s.az = .55 + .436 * o1 + .12 * o2; s.el = .44 - .05 * o1 + .02 * o2; s.dist = 24.5 - 1.6 * o1 - .4 * o2;
+  const sysOn = T >= t23.sys0 && T < t23.sys1;
+  s.lens = T < t23.rep ? 'xray' : (sysOn ? 'systems' : 'evidence');
+  s.selected = T >= t23.sel && !sysOn ? 'HYD_PUMP' : null;
+  twin.paint();
+  if (s.lens === 'evidence') {
+    const rc = ramp(T, t23.rep, t23.rep + .35), sc = ramp(T, t23.sus, t23.sus + .4);
+    const tint = (n, hex, u) => { const c = n.mesh.material.color, tgt = c.clone(); c.setHex(NEUTRAL); c.lerp(tgt.setHex(hex), u); };
+    tint(N.BHEEM_EU, 0x2563c9, rc); tint(N.HYD_PUMP, 0xe8743b, sc); tint(N.AMAGB, 0xd9a03a, sc);
+    const ar = ramp(T, t23.arc, t23.arc + .55); evid.visible = ar > .001; evid.children.forEach(l => { l.material.opacity = ar; });
+  }
+  // labels: pop on the spoken words, step aside for the Systems lens and for time travel
+  const hx = T < t24.fwd0 ? lerp(HX1, HX0, ramp(T, t24.back0, t24.back1)) : lerp(HX0, HX1, ramp(T, t24.fwd0, t24.fwd1));
+  const ttk = cl((HX1 - hx) / 60);
+  LBL.forEach(l => { const a = ramp(T, l.at, l.at + .3, 'power2.out'); const away = Math.max(ramp(T, t23.sys0 - .2, t23.sys0) * (1 - ramp(T, t23.sys1, t23.sys1 + .3)), ttk);
+    TWS.lab[l.id] = a * (1 - away); TWS.pop[l.id] = backOut(cl((T - l.at) / .45)); });
+  lensTabs.forEach(sp => sp.classList.toggle('on', sp.dataset.lens === (sysOn ? 'systems' : 'evidence')));
+  lensTxt.nodeValue = sysOn ? 'Systems lens' : 'Evidence lens';
+  legend.style.opacity = (1 - ramp(T, t23.sys0 - .15, t23.sys0) * (1 - ramp(T, t23.sys1, t23.sys1 + .2))).toFixed(3);
+  // sortie strip fills (S24), then dims beyond the as-of handle
+  const fp = ramp(T, t24.fill0, t24.fill1, 'power1.inOut') * cells.length, known = sorties.filter(x => x <= hx + .5).length;
+  cells.forEach((c, i) => { const u = cl(fp - i); const dim = i >= known ? .16 : 1; c.style.opacity = ((.14 + .86 * u) * dim).toFixed(3); c.style.transform = `scaleY(${(.35 + .65 * ez('back.out(2)')(u)).toFixed(3)})`; });
+  hLine.setAttribute('x1', hx.toFixed(2)); hLine.setAttribute('x2', hx.toFixed(2)); hDot.setAttribute('cx', hx.toFixed(2));
+  marks.forEach(m => { m.el.style.opacity = m.x > hx + .5 ? .14 : 1; });
+  const ds = hx > HX1 - .3 ? '22 Jun 06:00' : dateAt(hx); asofTxt.textContent = ds; const hd = hudD(); if (hd) hd.textContent = ds;
+  insight.style.opacity = (1 - .5 * ttk).toFixed(3);
+  cv.style.filter = ttk > .001 ? `saturate(${(1 - .85 * ttk).toFixed(3)}) opacity(${(1 - .4 * ttk).toFixed(3)})` : 'none';
+}
+// evidence dots: the six record chips (cutaway) fly into the reporter
+{ const tL = 24.55; twinTick(tL); twin.renderAt(tL - TW0); const [rx, ry] = twin.screenOf('BHEEM_EU');
+  const tgt = toScr('twin', tL, [VP.x + rx, VP.y + ry]);
+  WRID.forEach((b, i) => { const d = document.createElement('div'); d.className = 'x-edot'; $('#edots').appendChild(d);
+    const s0 = toScr('why', 23.9, [b.cx, b.cy]), t0 = 23.92 + i * .035;
+    const o = { u: 0 }, mx = (s0[0] + tgt[0]) / 2 + (i - 2.5) * 30, my = Math.min(s0[1], tgt[1]) - 160 + i * 18;
+    tl.fromTo(o, { u: 0 }, { u: 1, duration: tL - t0, ease: 'power2.inOut', immediateRender: false, onUpdate: () => { const u = o.u, x = (1 - u) * (1 - u) * s0[0] + 2 * (1 - u) * u * mx + u * u * tgt[0], y = (1 - u) * (1 - u) * s0[1] + 2 * (1 - u) * u * my + u * u * tgt[1]; d.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${(1 - .35 * u).toFixed(3)})`; } }, t0);
+    d.style.transform = `translate(${s0[0].toFixed(1)}px, ${s0[1].toFixed(1)}px)`;
+    tl.fromTo(d, { opacity: 0 }, { opacity: 1, duration: .12, immediateRender: false }, t0);
+    tl.fromTo(d, { opacity: 1 }, { opacity: 0, duration: .25, immediateRender: false }, tL - .02); });
+  tl.fromTo(wRid, { boxShadow: '0 0 0 0px rgba(37,99,201,0)' }, { boxShadow: '0 0 0 3px rgba(37,99,201,.35)', duration: .2, stagger: .035 }, 23.85);
+}
+twinTick(TW0);
+PHXF.driveTwin(tl, twin, TW0, TW1 - TW0, lt => twinTick(TW0 + lt));
+VEIL.twin = [[30.3, [...pad(TINS, 8), 0]], [30.95, [...pad(TINS, 8), .32], 'power2.out'], [32.9, [...pad(TINS, 8), .32]], [33.4, [...pad(TINS, 8), 0]]];
+tl.fromTo('#whiteout', { opacity: 0 }, { opacity: 1, duration: .55, ease: 'power2.in', immediateRender: false }, 36.6);
+fade('#L-twin', 1, 0, 37.2, .05);
+
+/* ============ S25 · clean white (Manim insert) ============ */
+
+/* ============ S26 · workbench: the next best test ============ */
+fade('#L-wb', 0, 1, 48.65, .05);
+tl.fromTo('#whiteout', { opacity: 1 }, { opacity: 0, duration: .6, ease: 'power2.out', immediateRender: false }, 48.72);
+CAM.wb.keys = [[48.7, WSTR.cx, WSTR.cy + 20, 1.4], [49.95, WSTR.cx + 10, WSTR.cy + 14, 1.3, 'power2.out'],
+  [50.7, WCA.cx, WCA.cy + 6, 1.58, 'expo.inOut'], [51.4, WCA.cx - 4, WCA.cy + 10, 1.62, 'sine.inOut'],
+  [52.1, WTE.cx - 40, WTE.cy - 20, 1.34, 'expo.inOut'], [52.9, WTE.cx - 30, WTE.cy - 22, 1.37, 'sine.inOut'], [53.5, 960, 540, 1.0, 'power2.inOut'], [53.95, 780, 560, 1.07, 'power2.in']];
+const stripC = SS('wb', '#a3wb-strip circle');
+stripC.forEach((c, i) => { const r0 = +c.getAttribute('r'); tl.fromTo(c, { attr: { r: 0 } }, { attr: { r: r0 }, duration: .3, ease: 'back.out(3)' }, 48.85 + i * .016); });
+count(n59, 0, 59, 48.9, 1.0, v => Math.round(v), 'power2.out');
+const causeBars = SS('wb', '.cause .bar i'), causeP = SS('wb', '.cause .p');
+causeBars.forEach((b, i) => tl.fromTo(b, { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: .55, ease: 'power3.out' }, 50.45 + i * .14));
+count(causeP[0], 0, .56, 50.45, .55, v => v.toFixed(2), 'power3.out', true); count(causeP[1], 0, .44, 50.59, .55, v => v.toFixed(2), 'power3.out', true);
+{ const t = WPUMP; const st = ann('wb', 'x-strike', '', { left: px(t.x - 4), top: px(t.cy), width: px(t.w + 8) });
+  tl.fromTo(st, { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: .4, ease: 'power2.inOut' }, 50.95);
+  tl.fromTo(wcr[2], { opacity: 1 }, { opacity: .55, duration: .4 }, 51.1);
+  const rp = ann('wb', 'x-ost', '<span class="k">RULED OUT</span>', { left: px(t.x + t.w + 16), top: px(t.cy - 20), height: '34px', boxShadow: 'none' });
+  tl.fromTo(rp, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, 51.05); }
+TRAV.wb = [[50.3, [...pad(WCR[0], 4), 0, 0]], [50.35, [...pad(WCR[0], 4), 1, 0], 'none'], [50.8, [...pad(WCR[0], 4), 1, 1], 'power2.out'], [51.3, [...pad(WCR[0], 4), 1, 1]],
+  [51.8, [...pad(WTC[0], 2), 1, 1], 'power2.inOut'], [52.95, [...pad(WTC[0], 2), 1, 1]], [53.25, [...pad(WTC[0], 2), 0, 1]]];
+VEIL.wb = [[51.5, [...pad(WTE, 4), 0]], [51.9, [...pad(WTC[0], 2), .38], 'power2.out'], [52.95, [...pad(WTC[0], 2), .38]], [53.2, [...pad(WTC[0], 2), 0]]];
+wtc.forEach((c, i) => tl.fromTo(c, { opacity: .3 }, { opacity: 1, duration: .35 }, 51.55 + i * .12));
+SS('wb', '.tests .ig .b i').forEach((b, i) => tl.fromTo(b, { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: .6, ease: 'power3.out' }, 51.8 + i * .12));
+{ const rk = WRANK; const c = ann('wb', 'x-ost', 'information gain per man-hour', { left: px(rk.x + rk.w + 14), top: px(rk.cy - 16), height: '32px', padding: '0 12px', fontSize: '14px' });
+  tl.fromTo(c, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, w('S26', 3.4));
+  tl.to(c, { opacity: 0, duration: .3 }, 53.3); }
+CUR.push([52.95, 'wb', [1300, 880]], [53.5, 'wb', [WNAV.x + 60, WNAV.cy + 3]]);
+CURO.push([52.9, [0]], [53.1, [1]], [53.85, [1]], [54.0, [0]]);
+click(53.55);
+fade('#L-wb', 1, 0, 53.62, .2, 'power2.in');
+
+/* ============ S27 · policies: a rule you can read; HUMAN-only authority ============ */
+fade('#L-pol', 0, 1, 53.72, .33, 'power2.out');
+const R3 = PROW[5], TROW = PROW[2];
+CAM.pol.keys = [[53.6, 960, 540, 1.06], [54.3, 960, 540, 1.0, 'expo.out'], [55.25, PTB.cx, PTB.cy + 10, 1.42, 'expo.inOut'],
+  [55.7, PTB.cx - 10, PTB.cy + 14, 1.45, 'sine.inOut'], [56.2, R3.x + 380, R3.cy - 20, 1.72, 'power2.inOut'], [56.85, R3.x + R3.w - 380, R3.cy - 20, 1.72, 'power2.inOut'],
+  [57.45, PTR.cx, PTR.cy - 20, 1.45, 'expo.inOut'], [57.65, PTR.cx + 6, PTR.cy - 20, 1.46, 'sine.inOut'],
+  [58.25, PLY.cx + 30, PLY.cy, 1.5, 'expo.inOut'], [58.6, PLY.cx + 34, PLY.cy - 4, 1.52, 'sine.inOut'], [59.15, 1000, 420, 1.12, 'power2.inOut'], [59.45, 1000, 400, 1.18, 'power2.in']];
+// the table evaluates: TJ107's inputs, r1 ✗, r2 ✗, r3 ✓ (first match wins)
+ptr.slice(3).forEach(r => tl.fromTo(r, { opacity: .32 }, { opacity: .32, duration: .01 }, 53.5));
+tl.fromTo(ptr[2], { opacity: 0 }, { opacity: 1, duration: .35 }, 54.35);
+[[3, 54.85], [4, 55.15]].forEach(([k, t]) => { tl.fromTo(ptr[k], { opacity: .32 }, { opacity: .75, duration: .2, immediateRender: false }, t);
+  tl.fromTo(ptr[k].querySelector('.fail'), { scale: 1 }, { scale: 1.12, duration: .14, yoyo: true, repeat: 1, ease: 'power2.out' }, t); });
+tl.fromTo(ptr[5], { opacity: .32 }, { opacity: 1, duration: .25, immediateRender: false }, 55.45);
+pop(ptr[5].querySelector('td.id'), 55.45, .4, { opacity: 0, scale: .6 });
+const scanR = PROW.slice(3, 6);
+TRAV.pol = [[54.6, [...pad(TROW, 3, 0), 0, 0]], [54.65, [...pad(scanR[0], 3, 0), 1, 0], 'none'], [54.85, [...pad(scanR[0], 3, 0), .6, 1]], [55.15, [...pad(scanR[1], 3, 0), .6, 1], 'power2.inOut'],
+  [55.45, [...pad(R3, 3, 0), 1, 1], 'power2.inOut'], [56.9, [...pad(R3, 3, 0), 1, 1]], [57.25, [...pad(PTR, 4), 1, 1], 'power2.inOut'], [57.85, [...pad(PTR, 4), 1, 1]],
+  [58.2, [...pad(PLYB[0], 4), 1, 1], 'power2.inOut'], [58.7, [...pad(PLYB[0], 4), 1, 1]], [58.95, [...pad(PLYB[0], 4), 0, 1]]];
+VEIL.pol = [[55.2, [...pad(R3, 3, 0), 0]], [55.6, [...pad(R3, 3, 0), .42], 'power2.out'], [56.9, [...pad(R3, 3, 0), .42]], [57.25, [...pad(PTR, 4), .36], 'power2.inOut'], [57.85, [...pad(PTR, 4), .36]],
+  [58.2, [...pad(PLYB[0], 4), .4], 'power2.inOut'], [58.7, [...pad(PLYB[0], 4), .4]], [58.95, [...pad(PLYB[0], 4), 0]]];
+// zen-engine trace: engine time counts to the measured value shown on the screen
+{ count(nPerf, 0, perfV, 57.0, .7, x => x.toFixed(1), 'power3.out', true);
+  const rows = S('pol', '#a3pol-inputs span:last-child'), txt = rows.textContent; PHXF.type(tl, rows, txt, 57.15, .45);
+  tl.fromTo(SS('pol', '#a3pol-outputs span'), { opacity: 0 }, { opacity: 1, duration: .25, stagger: .03 }, 57.3); }
+ply.forEach((l, i) => tl.fromTo(l, { opacity: .3, x: -10 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, 57.75 + i * .08));
+tl.fromTo(ply[0].querySelector('.n'), { backgroundColor: 'rgba(232,116,59,0)', color: 'rgba(49,53,59,1)' }, { backgroundColor: 'rgba(232,116,59,1)', color: 'rgba(255,255,255,1)', duration: .3 }, w('S27', 4.15));
+// cursor → Authority tab
+CUR.push([58.55, 'pol', [1500, 760]], [59.05, 'pol', [PTAB.cx, PTAB.cy + 4]]);
+CURO.push([58.5, [0]], [58.7, [1]], [59.3, [1]], [59.45, [0]]);
+click(59.1);
+fade('#L-pol', 1, 0, 59.18, .2, 'power2.in');
+fade('#L-auth', 0, 1, 59.3, .32, 'power2.out');
+CAM.auth.keys = [[59.2, 1000, 420, 1.1], [59.75, 1000, 430, 1.04, 'expo.out'], [60.55, AM0.cx + 40, AM0.cy + 6, 1.62, 'expo.inOut'], [62.4, AM0.cx + 56, AM0.cy + 4, 1.7, 'sine.inOut'], [63.07, AM0.cx + 60, AM0.cy + 4, 1.74, 'sine.inOut']];
+apill.forEach((p, i) => pop(p, 59.75 + i * .09, .4, { opacity: .3, scale: .9 }));
+TRAV.auth = [[60.0, [...pad(ACMC, 6), 0, 0]], [60.05, [...pad(ACMC, 6), 1, 0], 'none'], [60.5, [...pad(ACMC, 6), 1, 1], 'power2.out'], [62.3, [...pad(ACMC, 6), 1, 1]]];
+VEIL.auth = [[60.0, [...pad(AM0, 8), 0]], [60.6, [...pad(AM0, 8), .45], 'power2.out']];
+tl.fromTo(apill[2], { scale: 1 }, { scale: 1.08, duration: .18, yoyo: true, repeat: 1, ease: 'power2.out' }, 60.15);
+{ const nm = S('auth', '.mode:first-child .nm'); const ic = nm.querySelector('svg');
+  tl.fromTo(nm, { color: 'rgba(11,13,16,1)' }, { color: 'rgba(180,81,31,1)', duration: .3 }, w('S27', 7.55));
+  if (ic) tl.fromTo(ic, { scale: 1 }, { scale: 1.35, duration: .2, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '50% 50%' }, w('S27', 7.6));
+  const u = ann('auth', 'x-uline', '', { left: px(ANM.x), top: px(ANM.y + ANM.h + 4), width: px(ANM.w), background: '#E8743B' });
+  tl.fromTo(u, { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: .5, ease: 'power2.inOut' }, w('S27', 7.95)); }
+tl.fromTo('#whiteout', { opacity: 0 }, { opacity: 1, duration: .55, ease: 'power2.in', immediateRender: false }, D - .58);
+
+/* ============ per-frame: cameras, veils, rings, cursor, wipe ============ */
+function frame(t) {
+  layers.forEach(L => { const c = camOf(L, t); CAM[L].el.style.transform = `translate(${c.x.toFixed(2)}px, ${c.y.toFixed(2)}px) scale(${c.s.toFixed(5)})`; veilFrame(L, t); travFrame(L, t); });
+  const [x, y] = cursorAt(t), o = kf(CURO, t); const cu = CURSOR_EL; cu.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`; cu.style.opacity = o ? o[0].toFixed(3) : 0;
+  const wp = kf(WIPE, t)[0], e = 100 * (1 - wp);   // feathered white wipe for the cutaway (right → left)
+  const mo = kf(MORPH.o, t)[0]; MORPH.el.style.opacity = mo.toFixed(3);
+  if (mo > .001) { const u = ez('expo.inOut')(cl((t - tM0) / (tM1 - tM0))), r = MORPH.a.map((v, j) => lerp(v, MORPH.b[j], u));
+    MORPH.el.style.transform = `translate(${r[0].toFixed(2)}px, ${r[1].toFixed(2)}px)`; MORPH.el.style.width = px(r[2]); MORPH.el.style.height = px(r[3]);
+    const q = MORPH.ta.map((v, j) => lerp(v, MORPH.tb[j], u)); MORPH.tx.style.transform = `translate(${q[0].toFixed(2)}px, ${q[1].toFixed(2)}px)`; MORPH.tx.style.fontSize = px(q[2]); MORPH.tx.style.opacity = (1 - ramp(t, tM1 - .25, tM1 - .02)).toFixed(3); }
+  const lw = LWHY; const m = wp >= 1 ? 'none' : `linear-gradient(90deg, rgba(0,0,0,0) ${(e - .625).toFixed(3)}%, #000 ${e.toFixed(3)}%)`;
+  lw.style.webkitMaskImage = m; lw.style.maskImage = m;
+}
+const CURSOR_EL = $('#cursor'), LWHY = $('#L-why');
+const fo = { t: 0 };
+tl.fromTo(fo, { t: 0 }, { t: D, duration: D, ease: 'none', onUpdate: () => frame(fo.t) }, 0);
+frame(0);
+window.__timelines["main"] = tl;
+}
+window.__timelines = window.__timelines || {};
+document.fonts.ready.then(build);
+})();
+</script>
+</body></html>

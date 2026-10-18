@@ -1,0 +1,241 @@
+<!doctype html>
+<!--
+  HyperFrames smoke test (Phalanx launch-video pipeline evaluation).
+  5 s @ 1920x1080, 30 fps. Exercises: UI-screen camera push-in/pull-back, title entrance,
+  SVG path draw-on + pulsing node, MP4 clip, alpha WebM + alpha ProRes MOV overlays,
+  WAV audio track, clip-path wipe between scenes, 2D canvas + three.js WebGL canvas,
+  local @font-face woff2. All labels are synthetic.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <!-- GSAP vendored locally (no render-time network). -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script type="importmap">
+      { "imports": { "three": "./assets/vendor/three.module.js" } }
+    </script>
+    <style>
+      @font-face {
+        font-family: "SandboxLocal";
+        src: url("assets/fonts/sandbox-local-mono-700.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1220; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: Inter, sans-serif; }
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+
+      /* ---------- Scene A: white product UI with a virtual camera ---------- */
+      #scene-a { background: #e9edf3; }
+      #world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .app { position: absolute; inset: 0; display: grid; grid-template-columns: 280px 1fr; background: #ffffff; }
+      .side { background: #f4f6fa; border-right: 1px solid #e3e7ee; padding: 36px 24px; }
+      .brand { font-weight: 900; font-size: 26px; color: #0f1b2d; letter-spacing: -0.02em; margin-bottom: 40px; }
+      .nav { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+      .nav li { font-size: 18px; color: #4a5568; padding: 12px 14px; border-radius: 10px; }
+      .nav li.active { background: #e6eefc; color: #1d4ed8; font-weight: 700; }
+      .main { padding: 40px 48px; display: flex; flex-direction: column; gap: 28px; }
+      .topbar { display: flex; justify-content: space-between; align-items: center; }
+      .topbar h2 { font-size: 34px; color: #0f1b2d; letter-spacing: -0.02em; }
+      .pill { font-size: 16px; color: #475569; background: #f1f5f9; padding: 8px 14px; border-radius: 999px; }
+      .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .card { background: #ffffff; border: 1px solid #e3e7ee; border-radius: 16px; padding: 24px 28px; box-shadow: 0 1px 2px rgba(15,27,45,.05); }
+      .card .label { font-size: 16px; color: #64748b; margin-bottom: 10px; }
+      .card .value { font-size: 52px; font-weight: 700; color: #0f1b2d; letter-spacing: -0.03em; }
+      .card .value.mono { font-family: "SandboxLocal", monospace; }
+      .bar { margin-top: 16px; height: 10px; border-radius: 999px; background: #eef2f7; overflow: hidden; }
+      .bar > i { display: block; width: 100%; height: 100%; background: #2563eb; transform-origin: 0 50%; }
+      #kpi-target { border-color: #93b4f5; }
+      table { width: 100%; border-collapse: collapse; font-size: 18px; color: #1e293b; }
+      th { text-align: left; font-size: 14px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 10px 14px; border-bottom: 1px solid #e3e7ee; }
+      td { padding: 14px; border-bottom: 1px solid #eef2f7; }
+      tr.hl td { background: #fff7e6; }
+      .tag { font-size: 14px; padding: 4px 10px; border-radius: 999px; background: #fee2e2; color: #b91c1c; font-weight: 700; }
+      .tag.ok { background: #dcfce7; color: #15803d; }
+
+      #title-wrap { position: absolute; left: 0; right: 0; bottom: 70px; display: flex; justify-content: center; z-index: 5; }
+      #title {
+        font-size: 64px; font-weight: 900; letter-spacing: -0.03em; color: #ffffff;
+        background: rgba(15, 27, 45, 0.88); padding: 18px 36px; border-radius: 18px;
+      }
+
+      /* ---------- Scene B wrapper (untimed) so the wipe also covers its media ---------- */
+      #scene-b-wrap { position: absolute; inset: 0; z-index: 10; }
+      #scene-b { background: #0b1220; color: #e2e8f0; }
+      #diagram { position: absolute; left: 80px; top: 140px; width: 900px; height: 600px; }
+      #diagram path { fill: none; stroke: #60a5fa; stroke-width: 6; stroke-linecap: round; }
+      #diagram circle.node { fill: #0b1220; stroke: #93c5fd; stroke-width: 5; }
+      #pulse { fill: #f59e0b; }
+      #b-label { position: absolute; left: 80px; top: 64px; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; }
+      #spark { position: absolute; left: 80px; top: 790px; width: 900px; height: 200px; }
+      #three-layer { position: absolute; left: 1060px; top: 600px; width: 760px; height: 400px; border-radius: 16px; background: #111a2e; }
+      .vframe { position: absolute; left: 1100px; top: 120px; width: 640px; height: 360px; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.5); z-index: 11; }
+      .vframe video { width: 100%; height: 100%; display: block; }
+      #ov-webm { position: absolute; left: 1580px; top: 330px; width: 240px; height: 240px; z-index: 12; }
+      #ov-mov { position: absolute; left: 1040px; top: 330px; width: 240px; height: 240px; z-index: 12; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="smoke" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+
+      <!-- Scene A: 0.0 -> 3.0 s (overlaps scene B by 0.6 s for the wipe) -->
+      <section id="scene-a" class="clip scene" data-start="0" data-duration="3" data-track-index="0">
+        <div id="world" data-layout-allow-overflow>
+          <div class="app">
+            <aside class="side">
+              <div class="brand">Phalanx</div>
+              <ul class="nav">
+                <li class="active">Fleet overview</li>
+                <li>Tail health</li>
+                <li>Maintenance plan</li>
+                <li>Orders</li>
+              </ul>
+            </aside>
+            <main class="main">
+              <div class="topbar"><h2>Fleet overview</h2><span class="pill">Synthetic data · demo</span></div>
+              <div class="kpis">
+                <div class="card" id="kpi-target">
+                  <div class="label">Fleet availability</div>
+                  <div class="value mono"><span id="avail-num">0.0</span>%</div>
+                  <div class="bar"><i id="avail-bar"></i></div>
+                </div>
+                <div class="card"><div class="label">Tails due inspection</div><div class="value">3</div></div>
+                <div class="card"><div class="label">Open work orders</div><div class="value">12</div></div>
+              </div>
+              <div class="card">
+                <table>
+                  <thead><tr><th>Tail</th><th>Component</th><th>Risk</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>T-01</td><td>Engine module A</td><td>0.12</td><td><span class="tag ok">OK</span></td></tr>
+                    <tr id="row-alert"><td>T-04</td><td>Fuel pump B</td><td>0.71</td><td><span class="tag">Watch</span></td></tr>
+                    <tr><td>T-06</td><td>Gearbox C</td><td>0.09</td><td><span class="tag ok">OK</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </main>
+          </div>
+        </div>
+        <div id="title-wrap"><h1 id="title">HyperFrames smoke test</h1></div>
+      </section>
+
+      <!-- Scene B wrapper: untimed, carries the clip-path wipe for scene B AND its media -->
+      <div id="scene-b-wrap">
+        <section id="scene-b" class="clip scene" data-start="2.4" data-duration="2.6" data-track-index="1">
+          <div id="b-label">Diagram · media · canvas</div>
+          <svg id="diagram" viewBox="0 0 900 600">
+            <path id="p1" d="M80 300 C 240 120, 360 120, 450 300" />
+            <path id="p2" d="M450 300 C 540 480, 680 480, 820 300" />
+            <path id="p3" d="M80 300 L 820 300" />
+            <circle class="node" cx="80" cy="300" r="26" />
+            <circle class="node" cx="820" cy="300" r="26" />
+            <circle id="pulse" cx="450" cy="300" r="30" />
+          </svg>
+          <canvas id="spark" width="900" height="200"></canvas>
+          <canvas id="three-layer" width="760" height="400"></canvas>
+        </section>
+        <div class="vframe">
+          <video id="clip-main" src="assets/clip.mp4" data-start="2.4" data-duration="2.6" data-track-index="2" muted playsinline></video>
+        </div>
+        <video id="ov-webm" src="assets/overlay.webm" data-start="2.4" data-duration="2.6" data-track-index="3" muted playsinline></video>
+        <video id="ov-mov" src="assets/overlay.mov" data-start="2.4" data-duration="2.6" data-track-index="4" muted playsinline></video>
+      </div>
+
+      <audio id="tone" src="assets/tone.wav" data-start="0" data-duration="5" data-track-index="5" data-volume="0.8"></audio>
+    </div>
+
+    <script>
+      // ---- Camera target measured ONCE at setup (layout is static), then baked into tweens.
+      const world = document.getElementById("world");
+      const target = document.getElementById("kpi-target");
+      function rectIn(el, ancestor) {
+        let x = 0, y = 0, n = el;
+        while (n && n !== ancestor) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+        return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+      }
+      const r = rectIn(target, world);
+      const S = 2.1;
+      const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+      const camIn = { scale: S, x: 960 - cx * S, y: 540 - cy * S };
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Title entrance (fromTo so backward/random seeks are exact).
+      tl.fromTo("#title", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.15);
+      tl.to("#title", { opacity: 0, y: -20, duration: 0.3, ease: "power2.in" }, 2.0);
+
+      // Camera: push in to the availability card, hold, pull back.
+      tl.fromTo(world, { scale: 1, x: 0, y: 0, transformOrigin: "0 0" },
+        { ...camIn, duration: 0.8, ease: "power3.inOut" }, 0.4);
+      tl.to(world, { scale: 1, x: 0, y: 0, duration: 0.6, ease: "power2.inOut" }, 1.75);
+
+      // Element-level motion inside the UI: count-up, progress bar, row highlight.
+      const counter = { v: 0 };
+      tl.fromTo(counter, { v: 0 }, { v: 78.4, duration: 0.9, ease: "power2.out",
+        onUpdate: () => { document.getElementById("avail-num").textContent = counter.v.toFixed(1); } }, 0.55);
+      tl.fromTo("#avail-bar", { scaleX: 0 }, { scaleX: 0.784, duration: 0.9, ease: "power2.out" }, 0.55);
+      tl.fromTo("#row-alert td", { backgroundColor: "rgba(255,247,230,0)" }, { backgroundColor: "rgba(253,224,160,1)", duration: 0.3 }, 2.0);
+
+      // Wipe: scene B (and its media) revealed left-to-right, scene A recedes.
+      tl.fromTo("#scene-b-wrap", { clipPath: "inset(0% 0% 0% 100%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power3.inOut" }, 2.4);
+      tl.fromTo("#world", { filter: "brightness(1)" }, { filter: "brightness(0.6)", duration: 0.55 }, 2.4);
+
+      // SVG draw-on via stroke-dashoffset, staggered.
+      ["#p1", "#p2", "#p3"].forEach((sel, i) => {
+        const p = document.querySelector(sel);
+        const len = p.getTotalLength();
+        tl.fromTo(p, { strokeDasharray: len, strokeDashoffset: len },
+          { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 2.6 + i * 0.25);
+      });
+      // Pulsing node (finite repeat).
+      tl.fromTo("#pulse", { scale: 0.8, transformOrigin: "50% 50%" },
+        { scale: 1.35, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 5 }, 3.0);
+      tl.fromTo("#b-label", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 2.7);
+
+      // 2D canvas driven from a GSAP proxy (onUpdate redraws -> seek-safe).
+      const sctx = document.getElementById("spark").getContext("2d");
+      const spark = { p: 0 };
+      function drawSpark() {
+        sctx.clearRect(0, 0, 900, 200);
+        sctx.strokeStyle = "#34d399"; sctx.lineWidth = 5; sctx.beginPath();
+        const n = Math.max(2, Math.floor(spark.p * 90));
+        for (let i = 0; i < n; i++) {
+          const x = i * 10, y = 100 + 60 * Math.sin(i / 7) * Math.cos(i / 23);
+          i ? sctx.lineTo(x, y) : sctx.moveTo(x, y);
+        }
+        sctx.stroke();
+      }
+      tl.fromTo(spark, { p: 0 }, { p: 1, duration: 1.6, ease: "none", onUpdate: drawSpark }, 2.8);
+
+      window.__timelines["smoke"] = tl;
+    </script>
+
+    <!-- three.js WebGL layer: renders from HyperFrames time via the hf-seek event. -->
+    <script type="module">
+      import * as THREE from "three";
+      const canvas = document.getElementById("three-layer");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+      renderer.setPixelRatio(1);
+      renderer.setSize(760, 400, false);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, 760 / 400, 0.1, 100);
+      camera.position.set(0, 0, 6);
+      const mesh = new THREE.Mesh(
+        new THREE.TorusKnotGeometry(1.1, 0.35, 160, 24),
+        new THREE.MeshStandardMaterial({ color: 0x64d2ff, roughness: 0.35, metalness: 0.2 })
+      );
+      scene.add(mesh);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x223344, 2.2));
+      const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(3, 4, 5); scene.add(key);
+      function renderAt(t) {
+        mesh.rotation.y = t * 1.2;
+        mesh.rotation.x = 0.4 + Math.sin(t * 0.8) * 0.2;
+        renderer.render(scene, camera);
+      }
+      window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+      renderAt(window.__hfThreeTime || 0);
+    </script>
+  </body>
+</html>

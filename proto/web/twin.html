@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Aircraft twin — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/addons/" } }</script>
+<style>
+  .t-grid { display: grid; grid-template-columns: 248px minmax(0,1fr) 392px; grid-template-rows: minmax(0,1fr) 104px; gap: 16px; height: 100%; }
+  /* tree */
+  .tree { padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+  .search { height: 38px; border-radius: 10px; background: var(--bg-2); display: flex; align-items: center; gap: 8px; padding: 0 12px; color: var(--ink-4); font-size: 13.5px; margin-bottom: 6px; }
+  .tn { display: flex; align-items: center; gap: 8px; height: 31px; padding: 0 8px; border-radius: 8px; font-size: 13.5px; color: var(--ink-2); }
+  .tn .c { color: var(--ink-4); width: 14px; height: 14px; }
+  .tn .s { width: 7px; height: 7px; border-radius: 50%; margin-left: auto; }
+  .tn .n { margin-left: auto; font: 600 11.5px var(--mono); color: var(--ink-4); }
+  .tn.l2 { padding-left: 30px; font-size: 13px; }
+  .tn.l1 { font-weight: 650; color: var(--ink); }
+  .tn.sel { background: var(--accent-wash); color: var(--accent-ink); font-weight: 650; box-shadow: inset 2px 0 0 var(--accent); }
+  .tn .ser { font: 500 11px var(--mono); color: var(--ink-4); margin-left: auto; }
+  .tree .sep { height: 1px; background: var(--line); margin: 6px 4px; }
+  /* viewport */
+  .vp { position: relative; overflow: hidden; border-radius: var(--r-lg); background:
+      radial-gradient(1200px 600px at 50% 40%, #fff 0%, #FAFAF8 60%, #F4F4F1 100%); border: 1px solid var(--line); }
+  .vp canvas { position: absolute; inset: 0; }
+  .vp .bpgrid { position: absolute; inset: 0; background-image: linear-gradient(var(--line-2) 1px, transparent 1px), linear-gradient(90deg, var(--line-2) 1px, transparent 1px); background-size: 48px 48px; opacity: .5; mask-image: radial-gradient(closest-side, rgba(0,0,0,.6), transparent); }
+  .vp-top { position: absolute; left: 16px; right: 16px; top: 14px; display: flex; align-items: center; gap: 10px; z-index: 3; }
+  .tools { display: flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 3px; }
+  .tools span { width: 34px; height: 32px; display: grid; place-items: center; border-radius: 8px; color: var(--ink-3); }
+  .tools span.on { background: var(--ink); color: #fff; }
+  .seg.glass { background: rgba(255,255,255,.86); border: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .lbl { position: absolute; z-index: 4; transform: translate(-50%, -50%); pointer-events: none; }
+  .tag { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px 8px; box-shadow: var(--shadow-pop); white-space: nowrap; }
+  .tag .k { font: 700 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+  .tag .v { font-size: 13.5px; font-weight: 650; margin-top: 2px; }
+  .tag .s { font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+  .tag.rep .k { color: var(--wire); } .tag.sus .k { color: var(--accent-ink); } .tag.sus2 .k { color: #9A6406; }
+  .tag.sus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-wash), var(--shadow-pop); }
+  .leaders { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+  .anchor { position: absolute; z-index: 4; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%,-50%); border: 2px solid #fff; }
+  .vp-legend { position: absolute; left: 16px; bottom: 14px; z-index: 3; display: flex; gap: 14px; align-items: center; background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 11px; padding: 9px 13px; font-size: 12.5px; color: var(--ink-3); }
+  .vp-legend i { display: inline-block; vertical-align: middle; margin-right: 6px; }
+  .vp-foot { position: absolute; right: 16px; bottom: 14px; z-index: 3; display: flex; gap: 10px; align-items: center; font: 500 11.5px var(--mono); color: var(--ink-4); }
+  .insight-float { position: absolute; left: 16px; bottom: 62px; z-index: 3; width: 292px; background: rgba(255,255,255,.96); color: var(--ink); border: 1px solid var(--accent-line); border-radius: 14px; padding: 14px 16px; box-shadow: 0 0 0 4px var(--accent-wash), var(--shadow-pop); }
+  .insight-float .label { color: var(--accent-ink); }
+  .insight-float b { font-size: 15px; display: block; margin: 6px 0 6px; line-height: 1.35; letter-spacing: -0.01em; }
+  .insight-float p { font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+  .swaps { display: flex; gap: 2.5px; margin-top: 10px; flex-wrap: wrap; }
+  .swaps i { width: 7px; height: 14px; border-radius: 2px; background: var(--line); display: block; }
+  .swaps i.r { background: var(--accent); }
+  /* component panel */
+  .panel { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  .ph { padding: 14px 20px 12px; border-bottom: 1px solid var(--line); }
+  .ph h2 { font-size: 20px; font-weight: 650; letter-spacing: -0.02em; margin-top: 4px; }
+  .psec { padding: 10px 20px; border-bottom: 1px solid var(--line-2); }
+  .psec .st { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .kv { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; font-size: 13px; }
+  .kv span:nth-child(odd) { color: var(--ink-3); }
+  .kv span:nth-child(even) { font-weight: 650; text-align: right; }
+  .obar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; gap: 1.5px; margin: 6px 0 6px; }
+  .verdict { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .verdict div { border-radius: 9px; padding: 7px 8px; font-size: 11.5px; color: var(--ink-3); background: var(--bg-2); line-height: 1.25; }
+  .verdict div b { display: block; font-size: 12.5px; color: var(--ink); margin-top: 2px; }
+  .verdict div.on { background: var(--wire-wash); color: var(--wire); box-shadow: inset 0 0 0 1.5px var(--wire); }
+  .verdict div.on b { color: var(--wire); }
+  .rec { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line-2); }
+  .rec:first-of-type { border-top: 0; }
+  .rec .a { font: 650 12.5px var(--mono); }
+  .rec .p { font-size: 12px; color: var(--ink-3); grid-column: 1 / -1; }
+  .pfoot { margin-top: auto; padding: 10px 20px 12px; font: 500 11px var(--mono); color: var(--ink-4); background: var(--bg-2); line-height: 1.6; }
+  /* scrubber */
+  .scrub { grid-column: 1 / -1; padding: 12px 20px 10px; display: grid; grid-template-columns: 150px 1fr; gap: 0 16px; }
+  .scrub .rl { font-size: 12px; color: var(--ink-3); height: 19px; display: flex; align-items: center; gap: 8px; }
+  #scrubsvg { grid-row: 1 / span 4; grid-column: 2; }
+  #lenses span { white-space: nowrap; }
+  .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; color: var(--ink); }
+  .search input::placeholder { color: var(--ink-4); }
+  .vp-notes { display: none; }
+  .scrubwrap { display: contents; }
+
+  /* ---- tablet + phone (below 1200 px): the page scrolls; tree | viewport, then the finding card, the
+     component panel and the timeline. The 3D canvas is sized from #vp when it is created (and rebuilt on resize). */
+  @media (max-width: 1199px) {
+    .t-grid { grid-template-columns: 250px minmax(0, 1fr); grid-template-rows: none; height: auto; gap: 16px;
+      grid-template-areas: "tree vp" "tree notes" "panel panel" "scrub scrub"; }
+    .tree { grid-area: tree; min-width: 0; }
+    .vp { grid-area: vp; height: 560px; height: clamp(420px, 56svh, 620px); }
+    .vp-notes { grid-area: notes; display: flex; flex-direction: column; gap: 12px; padding: 14px; min-width: 0; }
+    .panel { grid-area: panel; }
+    .scrub { grid-area: scrub; }
+    .t-grid > * { min-width: 0; }
+
+    .tn { height: auto; min-height: 40px; }
+    .tn.l2 { font-size: 13.5px; }
+    .search { height: 44px; }
+    .search input { font-size: 16px; }
+    .search .kbd { display: none; }
+
+    /* viewport overlays: one row of lens tabs that scrolls sideways; tags a little smaller */
+    .vp-top { left: 12px; right: 12px; top: 12px; }
+    .vp-top .seg { overflow-x: auto; scrollbar-width: none; max-width: 100%; flex: 0 1 auto; min-width: 0; }
+    .vp-top .seg::-webkit-scrollbar { display: none; }
+    .vp-top .seg span { flex: none; height: 36px; }
+    .tools { flex: none; }
+    .tools span { width: 38px; height: 36px; }
+    .vp .tag { padding: 6px 9px 7px; }
+    .vp .tag .v { font-size: 13px; }
+    #vpsrc { top: 60px !important; left: 12px !important; right: 12px; flex-wrap: wrap; row-gap: 2px; }
+    .vp-foot { right: 12px; bottom: 12px; }
+
+    /* the finding card and legend, out of the viewport */
+    .vp-notes .insight-float { position: static; width: auto; box-shadow: none; border: 0; padding: 4px 4px 0; background: none; bottom: auto !important; }
+    .vp-notes .insight-float b { font-size: 16px; }
+    .vp-notes .insight-float p { font-size: 13.5px; }
+    .vp-notes .vp-legend { position: static; max-width: none !important; background: var(--bg-2); border: 0; flex-wrap: wrap; row-gap: 6px !important; font-size: 13px; }
+    .vp-notes.only-legend { padding: 10px; }
+
+    /* component panel */
+    .ph { padding: 16px 20px 14px; }
+    .ph h2 { font-size: 21px; }
+    .psec { padding: 14px 20px; }
+    .kv { font-size: 14px; gap: 7px 12px; }
+    .verdict div { font-size: 12.5px; }
+    .verdict div b { font-size: 13.5px; }
+    .rec .a { font-size: 13px; overflow-wrap: anywhere; }
+    .rec .p { font-size: 13px; }
+    .pfoot { font-size: 11.5px; overflow-wrap: anywhere; padding: 12px 20px 14px; }
+
+    /* timeline */
+    .scrub { padding: 14px 18px 12px; }
+    .scrub .rl { font-size: 13px; }
+  }
+
+  @media (max-width: 699px) {
+    .t-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; grid-template-areas: "tree" "vp" "notes" "panel" "scrub"; }
+    .tree { padding: 12px 10px; }
+    .vp { height: 58vh; height: clamp(320px, 58svh, 560px); }
+    .vp .tag .s { display: none; }
+    .vp .tag .k { font-size: 10px; }
+    .vp .tag .v { font-size: 12.5px; }
+    .vp-foot { font-size: 10.5px; }
+    .ph, .psec { padding-left: 16px; padding-right: 16px; }
+    .pfoot { padding-left: 16px; padding-right: 16px; }
+    .verdict { grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+    .verdict div { padding: 7px 7px; font-size: 11.5px; }
+
+    /* timeline: legend above, the strip scrolls sideways inside its card (opens at today, on the right) */
+    .scrub { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 14px 14px 10px; }
+    .scrub .rl { height: auto; }
+    .scrub .rl:first-child { flex-basis: 100%; }
+    .scrubwrap { display: block; order: 5; flex-basis: 100%; overflow-x: auto; margin-top: 6px; padding-bottom: 6px; scrollbar-width: thin; }
+    #scrubsvg { min-width: 640px; display: block; }
+  }
+</style>
+</head>
+<body data-page="twin">
+<div id="content">
+<div class="t-grid">
+  <!-- component tree -->
+  <div class="card tree" data-shot="tree">
+    <div class="search"><i data-i="search" class="ico-sm"></i><input id="q" placeholder="Tail, serial, code, job…" autocomplete="off"><span class="kbd" style="margin-left:auto">⌘K</span></div>
+    <div id="tree" style="display:contents"></div>
+    <div style="margin-top:auto" class="well" >
+      <div style="padding:12px 12px 11px;font-size:12px;color:var(--ink-3);line-height:1.45" id="sync"></div>
+    </div>
+  </div>
+
+  <!-- 3D viewport -->
+  <div class="vp" id="vp" data-shot="viewport">
+    <div class="bpgrid"></div>
+    <div class="vp-top">
+      <div class="seg glass" id="lenses"></div>
+      <div class="grow"></div>
+      <div class="tools"><span class="on"><i data-i="xray" class="ico-sm"></i></span><span id="explodeBtn"><i data-i="explode" class="ico-sm"></i></span><span><i data-i="section" class="ico-sm"></i></span><span><i data-i="target" class="ico-sm"></i></span></div>
+    </div>
+    <svg class="leaders" id="leaders"></svg>
+    <div id="labels"></div>
+    <div class="insight-float" data-shot="swap-insight" id="insight"></div>
+    <div class="vp-legend" id="legend"></div>
+    <div class="vp-foot" id="vpfoot"></div>
+    <div class="vp-foot" id="vpsrc" style="left:16px;right:auto;top:62px;bottom:auto"></div>
+  </div>
+  <!-- tablet / phone only: the finding card and the legend move here, under the viewport -->
+  <div class="card vp-notes" id="vpnotes"></div>
+
+  <!-- component panel -->
+  <div class="card panel" data-shot="panel" id="panel"></div>
+
+  <!-- as-of scrubber -->
+  <div class="card scrub" data-shot="scrubber">
+    <div class="rl"><b style="color:var(--ink);font-size:12.5px">As of</b><span class="mono" style="color:var(--accent-ink)" id="asof"></span></div>
+    <div class="scrubwrap" id="scrubwrap"><svg id="scrubsvg" height="80" style="width:100%;cursor:pointer"></svg></div>
+    <div class="rl"><i style="width:10px;height:4px;background:var(--fmc);border-radius:2px"></i>Availability</div>
+    <div class="rl"><i style="width:4px;height:10px;background:var(--accent);border-radius:1px"></i><span id="lbl-sorties"></span></div>
+    <div class="rl"><i data-i="wrench" class="ico-sm" style="color:var(--ink-2)"></i><span id="lbl-removals"></span></div>
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/twin-view.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const PILL = { FMC: 'fmc', PMCM: 'pmc', NMCM_S: 'nmcm', NMCM_U: 'nmcm', NMCS: 'nmcs', NMCD: 'nmcd' };
+const PILLT = { PMCM: 'PMC', NMCM_S: 'NMCM', NMCM_U: 'NMCM' };
+const pill = (st, style = 'margin-left:auto;height:20px') => `<span class="pill ${PILL[st] || 'grey'}" style="${style}">${esc(PILLT[st] || st)}</span>`;
+const short = sn => (sn ? sn.replace(/^([A-Z0-9]+)-0*(\d*?)(\d{3})$/, '$1-…$3') : '—');
+const TAGCOL = { rep: 'var(--wire)', sus: 'var(--accent)', sus2: '#C98512' };
+const UI = { lens: null, sel: null, open: {} };
+
+PHX_API.boot({ page: 'twin', title: 'Aircraft twin',
+  async load(A) {
+    await Promise.all([A.want('epoch'), A.want('board'), A.want('readiness')]);
+    const B = window.PHX_DEC, R = window.PHX_DATA, focus = B && (B.board.find(r => r.id === B.focus) || {}).tail;
+    const tail = A.q.get('tail') || (R && R.focus) || focus || (R && R.fleet[0] || {}).tail || 'TJ107';
+    await A.need('twin', tail);
+  },
+  render() {
+    const T = PHX_TWIN;
+    UI.lens = PHX_API.q.get('lens') && T.lenses.some(l => l.id === PHX_API.q.get('lens')) ? PHX_API.q.get('lens') : T.lens;
+    UI.sel = T.selected; T.systems.forEach(s => { UI.open[s.id] = !!s.open || s.items.some(i => i.node && i.node === T.selected); });
+    tree(); panel(); sync(); insight(); lensBar(); legend();
+    $('asof').textContent = (T.strip && T.strip.asof_label) || PHX.asofShort(T.asof);
+    $('lbl-sorties').textContent = (T.strip && T.strip.labels.sorties) || 'Sorties';
+    $('lbl-removals').textContent = (T.strip && T.strip.labels.removals) || 'Removals';
+    return { page: 'twin', title: `Aircraft twin · ${T.tail}`, sub: 'One state per tail and per serial · every colour computed from the twin as of the snapshot',
+      chips: [{ i: 'clock', t: `As of <b>${esc(T.asof_label)}</b>` }, { i: 'history', t: `Last ingest <b>${esc(T.last_ingest || '—')}</b>` }, { k: 'accent', i: 'link', t: `<span id="lens-chip">${lensChip(lens())}</span>` }]
+        .concat(PHX_API.asof ? [{ k: 'warn', i: 'history', t: `<span id="to-now" style="cursor:pointer">History · <b style="color:inherit">back to now</b></span>` }] : []),
+      after() { placeNotes(); legend(); scrubber(); wire(); start3d(); } };
+  } });
+
+// the lens chip names the lens; its source label sits under the lens bar (#vpsrc)
+const lensChip = L => `${esc(L.label)} lens`;
+const lens = () => PHX_TWIN.lenses.find(l => l.id === UI.lens) || PHX_TWIN.lenses[0];
+const item = node => { for (const s of PHX_TWIN.systems) for (const i of s.items) if (i.node === node) return i; return null; };
+
+function tree() {
+  const T = PHX_TWIN;
+  let selDone = false;
+  let h = `<div class="tn l1" id="tailpick" style="cursor:pointer"><i data-i="twin" class="ico-sm"></i>${esc(T.tail)}${pill(T.status)}</div>`;
+  T.systems.forEach(s => {
+    const open = UI.open[s.id], dot = s.tone ? `<span class="s" style="background:var(--${s.tone})"></span>` : '';
+    h += `<div class="tn" data-sys="${esc(s.id)}" style="cursor:pointer"><i data-i="${open ? 'chevDown' : 'chevRight'}" class="c"></i>${open ? `<b style="font-weight:650">${esc(s.name)}</b>` : esc(s.name)}${dot}${s.count ? `<span class="n">${esc(s.count)}</span>` : ''}</div>`;
+    if (open) s.items.forEach(i => { const on = i.node && i.node === UI.sel && !selDone; if (on) selDone = true; h += `<div class="tn l2 ${on ? 'sel' : ''}"${i.node ? ` data-node="${esc(i.node)}" style="cursor:pointer"` : ''}>${esc(i.label)}<span class="ser">${esc(short(i.serial))}</span></div>`; });
+  });
+  h += '<div class="sep"></div><div class="tn"><i data-i="grid" class="c"></i>Zones</div><div class="tn" id="lineage" style="cursor:pointer"><i data-i="history" class="c"></i>Serial lineage</div>';
+  $('tree').innerHTML = h; PHX.icons($('tree'));
+}
+function sync() {
+  const T = PHX_TWIN, u = T.usage || {};
+  const use = [u.sorties != null ? `${u.sorties} sorties` : null, u.fh != null ? `${u.fh} FH` : null, u.landings != null ? `${u.landings} landings` : null].filter(Boolean).join(' · ');
+  $('sync').innerHTML = `<div class="label" style="margin-bottom:6px">Synchronised</div>
+        Last ingest <b style="color:var(--ink)">${esc(T.last_ingest || '—')}</b><br>${esc(use || '—')}<br>Snapshot sealed ${esc(T.snapshot.at)}`;
+}
+function insight() {
+  const I = PHX_TWIN.insight, el = $('insight');
+  if (!I) { el.style.display = 'none'; return; }
+  el.innerHTML = `<span class="label">${esc(I.label)}</span><b>${esc(I.title)}</b><p>${esc(I.text)}</p><div class="swaps">${(I.swaps || []).map(r => `<i class="${r ? 'r' : ''}"></i>`).join('')}</div>`;
+}
+function lensBar() {
+  $('lenses').innerHTML = PHX_TWIN.lenses.map(l => `<span class="${l.id === UI.lens ? 'on' : ''}" data-lens="${esc(l.id)}" style="cursor:pointer">${esc(l.label)}</span>`).join('');
+  PHX.icons($('lenses'));
+}
+function legend() {
+  const L = lens(), sw = { dot: 'width:11px;height:11px;border-radius:50%', bar: 'width:22px;height:4px;border-radius:2px', line: 'width:22px;height:2px;border-radius:2px' };
+  $('legend').innerHTML = (L.legend || []).map(g => g.kind === 'text' ? `<span class="faint">${esc(g.text)}</span>` : `<span><i style="${sw[g.kind]};background:${esc(g.color)}"></i>${esc(g.text)}</span>`).join('');
+  $('vpfoot').innerHTML = '<span>schematic placement</span><span>·</span><span>x-ray</span>';
+  // a long legend wraps upward instead of running under the footer; the finding card moves up with it
+  const lg = $('legend'), vw = $('vp').clientWidth, fw = $('vpfoot').offsetWidth;
+  lg.style.flexWrap = 'wrap'; lg.style.rowGap = '4px'; lg.style.maxWidth = Math.max(320, vw - fw - 48) + 'px';
+  $('insight').style.bottom = (14 + lg.offsetHeight + 10) + 'px';
+  $('vpsrc').innerHTML = `<span>source · ${esc(L.source)}</span>${L.model ? `<span>·</span><span>${esc(L.model)}</span>` : ''}`;
+  const c = document.getElementById('lens-chip'); if (c) c.innerHTML = lensChip(L);
+}
+// below 1200 px the finding card and legend sit in their own card under the viewport (#vpnotes), so the
+// 3D view is not covered on a narrow screen; on desktop they stay inside the viewport, where the markup puts them
+const COMPACT = matchMedia('(max-width: 1199px)');
+function placeNotes() {
+  const vp = $('vp'), notes = $('vpnotes'), ins = $('insight'), lg = $('legend');
+  if (COMPACT.matches) { if (ins.parentNode !== notes) { notes.appendChild(ins); notes.appendChild(lg); } }
+  else if (ins.parentNode !== vp) { vp.insertBefore(ins, $('vpfoot')); vp.insertBefore(lg, $('vpfoot')); }
+  notes.classList.toggle('only-legend', ins.style.display === 'none');
+}
+function kvs(rows) {
+  return rows.map(r => `<span>${esc(r.k)}</span><span${r.ci || r.num ? ' class="num"' : ''}>${r.code ? `<span class="code">${esc(r.code)}</span> ` : ''}${esc(r.v)}${r.ci ? ` <span class="faint" style="font-weight:500">${esc(r.ci)}</span>` : ''}</span>`).join('');
+}
+function panel() {
+  const T = PHX_TWIN, it = item(UI.sel) || {};
+  const P = T.panels[UI.sel] || { title: it.label || UI.sel || 'Component', serial: it.serial, tiers: ['DESC'],
+    status: { pill: T.status, kv: [{ k: 'Open issue', v: 'none on this component' }] }, foot: T.foot };
+  let h = `<div class="ph">
+      <div class="row"><span class="label">Component</span><div class="grow"></div>${(P.tiers || []).map(t => `<span class="tier ${t.toLowerCase()}">${t}</span>`).join('')}</div>
+      <h2>${esc(P.title)}</h2>
+      <div class="row gap8" style="margin-top:8px"><span class="code">${esc(P.serial || 'serial not recorded')}</span>${P.inferred ? '<span class="pill grey hatch" style="color:var(--ink-2)">inferred</span>' : ''}</div>
+      ${P.note ? `<div class="xs faint" style="margin-top:6px">${esc(P.note)}</div>` : ''}
+    </div>`;
+  const last = [P.assessment, P.projection, P.recommended].filter(Boolean).length === 0;
+  h += `<div class="psec"${last ? ' style="border-bottom:0"' : ''}><div class="st"><span class="label">Status</span><div class="grow"></div>${pill(P.status.pill, '')}</div><div class="kv">${kvs(P.status.kv || [])}</div></div>`;
+  const A = P.assessment;
+  if (A) h += `<div class="psec">
+      <div class="st"><span class="label">Assessment</span><div class="grow"></div><span class="xs faint">${esc(A.scope)}</span></div>
+      <div class="obar">${A.bar.map(b => `<div style="flex:${b.n};background:var(--${b.tone})"></div>`).join('')}</div>
+      <div class="row xs muted" style="gap:12px">${A.bar.map(b => `<span${b.tone === 'accent' ? ' style="color:var(--accent-ink)"' : ''}>${esc(b.label)}</span>`).join('')}<span style="margin-left:auto;color:var(--ink);font-weight:650">${esc(A.confirmed)}</span></div>
+      <div class="kv" style="margin-top:10px">${kvs(A.kv)}</div>
+      ${A.verdict ? `<div class="verdict">${A.verdict.map(v => `<div${v.on ? ' class="on"' : ''}>${esc(v.label)}<b>${esc(v.value)}</b></div>`).join('')}</div>` : ''}
+    </div>`;
+  if (P.projection) h += `<div class="psec"><div class="st"><span class="label">Projection</span></div><div class="kv">${kvs(P.projection.kv)}</div></div>`;
+  const R = P.recommended;
+  if (R) h += `<div class="psec" style="border-bottom:0">
+      <div class="st"><span class="label">Recommended</span><div class="grow"></div><span class="xs faint">${esc(R.basis)}</span></div>
+      ${R.items.map(r => `<div class="rec"><span class="a">${esc(r.action)}</span><span class="auth ${r.authority === 'HUMAN' ? 'human' : 'agent'}">${r.icon ? `<i data-i="${r.authority === 'HUMAN' ? 'signature' : 'cpu'}" class="ico-sm"></i>` : ''}${esc(r.label)}</span>${r.note ? `<span class="p">${esc(r.note)}</span>` : ''}</div>`).join('')}
+    </div>`;
+  h += `<div class="pfoot">${(P.foot || T.foot || []).map(esc).join('<br>')}</div>`;
+  $('panel').innerHTML = h; PHX.icons($('panel'));
+}
+function scrubber() {
+  const el = $('scrubsvg'), W = el.clientWidth || el.parentNode.clientWidth - 186, D = PHX_TWIN.strip;
+  if (!D) { el.setAttribute('viewBox', `0 0 ${W} 80`); el.innerHTML = `<text x="6" y="40" font-size="12" font-family="Manrope" fill="var(--ink-4)">No sortie history for ${esc(PHX_TWIN.tail)} in this data</text>`; return; }
+  const X = d => 6 + (W - 12) * d / D.T;
+  const col = { FMC: '#1F8A4C', PMCM: '#5E9F3A', NMCM_S: '#C98512', NMCM_U: '#C98512', NMCS: '#D4492A', NMCD: '#5B4FCF' };
+  let g = '';
+  D.state.forEach((s, i) => { const x0 = X(s[0]), x1 = X(i < D.state.length - 1 ? D.state[i + 1][0] : D.T); g += `<rect x="${x0}" y="4" width="${Math.max(.6, x1 - x0)}" height="9" fill="${col[s[1]]}" />`; });
+  D.sorties.forEach(s => { g += `<rect x="${X(s[0]) - 1}" y="${s[1] ? 25 : 29}" width="2.2" height="${s[1] ? 13 : 9}" rx="1" fill="${s[1] ? '#E8743B' : '#B9BDC2'}"/>`; });
+  D.removals.forEach(r => { g += `<path d="M${X(r[0])} 46 l4.5 7 h-9z" fill="#31353B"/>`; });
+  PHX.months(D.t0, D.T).forEach(([m, d]) => { g += `<line x1="${X(d)}" x2="${X(d)}" y1="0" y2="62" stroke="var(--line)"/><text x="${X(d) + 5}" y="74" font-size="11" font-family="JetBrains Mono" fill="var(--ink-4)">${m}</text>`; });
+  const xt = X(D.T); g += `<line x1="${xt}" x2="${xt}" y1="0" y2="64" stroke="var(--ink)" stroke-width="2"/><circle cx="${xt}" cy="64" r="6" fill="var(--ink)" stroke="#fff" stroke-width="2"/>`;
+  (D.marks || []).forEach(mk => { const xg = X(mk.day); g += `<line x1="${xg}" x2="${xg}" y1="0" y2="64" stroke="var(--ink-4)" stroke-dasharray="3 3"/><rect x="${xg - 34}" y="62" width="68" height="17" rx="5" fill="var(--bg-2)" stroke="var(--line)"/><text x="${xg}" y="74" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono" fill="var(--ink-3)">${esc(mk.label)}</text>`; });
+  el.setAttribute('viewBox', `0 0 ${W} 80`); el.setAttribute('width', W); el.innerHTML = g;
+  const sw = $('scrubwrap'); if (sw.scrollWidth > sw.clientWidth) sw.scrollLeft = sw.scrollWidth;   // phone: the strip scrolls; open it at today
+  // click → re-read the twin as of that day (06:00 IST)
+  el.addEventListener('click', e => { const r = el.getBoundingClientRect(), d = Math.max(0, Math.min(D.T, (e.clientX - r.left - 6) / (r.width - 12) * D.T));
+    const t = new Date(Date.parse(D.t0 + 'T00:00:00Z') + Math.floor(d) * 864e5).toISOString().slice(0, 10);
+    location.href = PHX_API.href('twin.html', { tail: PHX_TWIN.tail, asof: `${t}T06:00+05:30` }); });
+}
+function tags() {
+  const L = lens(); return (L.tags || []).map((t, i) => ({ ...t, id: t.node, dx: t.dx ?? (i % 2 ? -170 : 190), dy: t.dy ?? (-120 + i * 100), color: TAGCOL[t.kind] || 'var(--wire)' }));
+}
+let TW = null, TAGS = [];
+function drawTags() {
+  TAGS = tags().filter(t => TW && TW.nodes[t.id]);
+  $('labels').innerHTML = TAGS.map((l, i) => `<div class="anchor" id="an-${i}" style="background:${l.color}"></div><div class="lbl" id="lb-${i}"><div class="tag ${l.kind}"><div class="k">${esc(l.k)}</div><div class="v">${esc(l.v)}</div><div class="s">${esc(l.s)}</div></div></div>`).join('');
+  if (!TAGS.length) $('leaders').innerHTML = '';
+}
+async function start3d() {
+  const { createTwin } = await import('./assets/twin3d.js');
+  const host = $('vp');
+  let size = '';
+  // createTwin sizes its canvas once, from the viewport's size at that moment; when the viewport changes size
+  // (a phone rotated, a window resized across the 1200 px line) the twin is rebuilt at the new size
+  const mount = () => {
+  const prev = TW;
+  // the framing (dist 23.5) is set for the wide desktop viewport; a narrower (taller) viewport pulls the camera back
+  // so the whole airframe stays in view
+  const aspect = host.clientWidth / Math.max(1, host.clientHeight), dist = COMPACT.matches ? 23.5 * Math.max(1, 1.2 / aspect) : 23.5;
+  TW = createTwin(host, { spec: lens(), selected: UI.sel, az: 0.74, el: 0.44, dist, onFrame(screenOf) {
+    let svg = '';
+    TAGS.forEach((l, i) => { const [x, y] = screenOf(l.id); const a = document.getElementById('an-' + i), b = document.getElementById('lb-' + i); if (!a) return;
+      // keep each tag inside the viewport, clear of the lens bar (top) and the legend (bottom)
+      const VW = host.clientWidth, VH = host.clientHeight, w = b.offsetWidth || 200, h = b.offsetHeight || 60;
+      const tx = Math.max(w / 2 + 12, Math.min(VW - w / 2 - 12, x + l.dx)), ty = Math.max(h / 2 + 60, Math.min(VH - h / 2 - 64, y + l.dy)), dx = tx - x, dy = ty - y;
+      a.style.left = x + 'px'; a.style.top = y + 'px'; b.style.left = tx + 'px'; b.style.top = ty + 'px';
+      svg += `<path d="M${x} ${y} L${x + dx * .55} ${y + dy} L${x + dx} ${y + dy}" fill="none" stroke="${l.color}" stroke-width="1.4" opacity=".9"/>`; });
+    if (TAGS.length) $('leaders').innerHTML = svg;
+  } });
+  if (prev) { TW.state.explode = prev.state.explode; prev.renderer.domElement.remove(); prev.renderer.dispose(); prev.renderer.forceContextLoss(); }
+  else drawTags();
+  const cv = TW.renderer.domElement;
+  cv.style.zIndex = 1;
+  window.__twin = TW;
+  cv.addEventListener('click', e => { const id = TW.pick(e.clientX, e.clientY); if (id) select(id); });
+  size = host.clientWidth + 'x' + host.clientHeight;
+  };
+  mount();
+  let rt = 0;
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => {
+    placeNotes(); legend();
+    if (host.clientWidth && host.clientHeight && host.clientWidth + 'x' + host.clientHeight !== size) mount(); }, 200); });
+  let ex = 0; $('explodeBtn').addEventListener('click', e => { ex = ex ? 0 : 1; e.currentTarget.classList.toggle('on', !!ex);
+    const a0 = TW.state.explode, t0 = performance.now(); const step = () => { const k = Math.min(1, (performance.now() - t0) / 700); TW.state.explode = a0 + (ex - a0) * (1 - Math.pow(1 - k, 3)); if (k < 1) requestAnimationFrame(step); }; step(); });
+  if (PHX_API.q.get('explode')) TW.state.explode = +PHX_API.q.get('explode');
+  const t0 = performance.now();
+  const loop = () => { TW.renderAt((performance.now() - t0) / 1000); requestAnimationFrame(loop); };
+  loop();
+}
+function select(node) {
+  UI.sel = node; if (TW) TW.select(node);
+  const s = PHX_TWIN.systems.find(sy => sy.items.some(i => i.node === node)); if (s) UI.open[s.id] = true;
+  tree(); panel();
+}
+function wire() {
+  // leave history mode: same tail, no as-of (CARRY would otherwise keep ?asof= on every link)
+  document.getElementById('to-now')?.closest('.chip').addEventListener('click', () => {
+    const p = new URLSearchParams(location.search); p.delete('asof'); location.search = p.toString(); });
+  $('lenses').addEventListener('click', e => { const sp = e.target.closest('[data-lens]'); if (!sp) return;
+    UI.lens = sp.dataset.lens; lensBar(); legend(); if (TW) { TW.setLensSpec(lens()); drawTags(); } });
+  $('tree').addEventListener('click', async e => {
+    const sys = e.target.closest('[data-sys]'), nd = e.target.closest('[data-node]');
+    if (nd) { select(nd.dataset.node); return; }
+    if (sys) { UI.open[sys.dataset.sys] = !UI.open[sys.dataset.sys]; tree(); return; }
+    if (e.target.closest('#tailpick')) {
+      const sh = PHX.sheet(`<span class="kick">Aircraft twin</span><div class="t2" style="margin-top:6px">Choose a tail</div><div class="rows2" style="margin-top:16px">${((window.PHX_DATA && PHX_DATA.fleet) || []).map(f => `<div class="r2" style="grid-template-columns:90px minmax(0,1fr) auto;min-height:56px;cursor:pointer" data-href="${esc(PHX_API.href('twin.html', { tail: f.tail }))}"><span class="tailtag">${esc(f.tail)}</span><span class="why" style="margin:0">${esc((f.card && f.card.headline) || '')}</span>${pill(f.state, '')}</div>`).join('')}</div>`);
+      PHX.links(sh); return;
+    }
+    if (e.target.closest('#lineage')) lineagePicker();
+  });
+  let timer = 0;
+  $('q').addEventListener('input', e => { clearTimeout(timer); const v = e.target.value.trim(); timer = setTimeout(() => search(v), 180); });
+  document.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('q').focus(); } if (e.key === 'Escape') { $('q').value = ''; search(''); PHX.closeSheet(); } });
+}
+async function search(v) {
+  if (!v) { tree(); return; }
+  let res; try { res = await PHX_API.get('search', v); } catch (err) { $('tree').innerHTML = `<div class="tn" style="color:var(--ink-4)">Search unavailable · ${esc(err.status || 'no answer')}</div>`; return; }
+  const IC = { tail: 'twin', serial: 'history', code: 'alert', job: 'wrench' };
+  $('tree').innerHTML = res.results.length ? res.results.map((r, i) => `<div class="tn" data-hit="${i}" style="cursor:pointer"><i data-i="${IC[r.kind] || 'dot'}" class="c"></i>${esc(r.label)}<span class="ser">${esc(r.sub || r.kind)}</span></div>`).join('')
+    : `<div class="tn" style="color:var(--ink-4)">No match for “${esc(v)}”</div>`;
+  PHX.icons($('tree'));
+  $('tree').querySelectorAll('[data-hit]').forEach(el => el.addEventListener('click', ev => { ev.stopPropagation(); const r = res.results[+el.dataset.hit];
+    if (r.kind === 'serial') return lineage(r.tail || PHX_TWIN.tail, r.id);
+    if ((r.kind === 'code' || r.kind === 'job') && r.issue_id) return (location.href = PHX_API.href('decision.html', { issue: r.issue_id }));
+    if (r.tail) location.href = PHX_API.href('twin.html', { tail: r.tail }); }));
+}
+function lineagePicker() {
+  const S = PHX_TWIN.systems.flatMap(s => s.items).filter(i => i.serial);
+  const sh = PHX.sheet(`<span class="kick">Serial lineage · ${esc(PHX_TWIN.tail)}</span><div class="t2" style="margin-top:6px">Which serial?</div><div class="rows2" style="margin-top:16px">${S.length ? S.map(i => `<div class="r2" style="grid-template-columns:minmax(0,1fr) auto;min-height:52px;cursor:pointer" data-sn="${esc(i.serial)}"><span class="ttl" style="font-size:14.5px">${esc(i.label)}</span><span class="code">${esc(i.serial)}</span></div>`).join('') : '<div class="note">No serials recorded for this tail yet.</div>'}</div>`);
+  sh.querySelectorAll('[data-sn]').forEach(el => el.addEventListener('click', () => lineage(PHX_TWIN.tail, el.dataset.sn)));
+}
+async function lineage(tail, sn) {
+  let L; try { L = await PHX_API.get('serial', tail, sn); } catch (err) { PHX.closeSheet(); PHX.notice(err.status === 404 ? `No lineage for ${esc(sn)} yet` : `Lineage unavailable · ${esc(err.status || 'no answer')}`); return; }
+  const fmt = b => b.value == null ? (b.note || 'INSUFFICIENT_EVIDENCE') : `${b.value}${b.lo != null ? ` [${b.lo}, ${b.hi}]` : ''}`;
+  PHX.sheet(`<span class="kick">Serial lineage · health follows the serial</span><div class="t2" style="margin-top:6px">${esc(L.serial)}</div>
+    <div class="sub2">${esc([L.klass, L.part_no].filter(Boolean).join(' · '))} · world ${esc(L.tail)}${L.asof ? ' · as of ' + esc(PHX.asofLabel(L.asof)) : ''}</div>
+    <div class="rows2" style="margin-top:14px;max-height:330px;overflow:auto">${L.history.map(h => `<div class="r2" style="grid-template-columns:70px minmax(0,1fr) auto;min-height:48px"><span class="tailtag" style="font-size:13px">${esc(h.tail || L.tail)}</span><div><div class="ttl" style="font-size:14px">${esc(h.installed || '…')} → ${esc(h.removed || 'fitted')}</div><div class="why">${esc(h.position || '')}${h.job_no ? ' · ' + esc(h.job_no) : ''}</div></div>${h.finding ? `<span class="pill grey">${esc(h.finding)}</span>` : '<span></span>'}</div>`).join('')}</div>
+    <div class="kv2" style="margin:18px 0 22px;font-size:14px">${(L.beliefs || []).map(b => `<span>${esc(b.name)} <span class="faint">· ${esc(b.source)} · ${esc(b.model_id)} ${esc(b.model_version)}</span></span><span>${esc(fmt(b))}</span>`).join('')}</div>
+    <button class="btn" data-close>Close</button>`);
+}
+</script>
+</body></html>

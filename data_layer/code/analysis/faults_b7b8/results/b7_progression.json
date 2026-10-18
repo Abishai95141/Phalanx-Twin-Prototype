@@ -1,0 +1,45 @@
+{
+ "brake_tyre": {
+  "brake_life_landings": 1493.4354413076055,
+  "brake_wear_per_landing": 0.0006695970728566821,
+  "landings_per_wheel": 2000,
+  "n_wheels": 40,
+  "tyre_life_landings": 8.039300148486072,
+  "tyre_wear_per_landing": 0.12438893703804751
+ },
+ "erosion_fouling": {
+  "3000_flights": {
+   "hpc_eta_loss_mean": 0.029292840911282828,
+   "hpc_eta_loss_sd": 0.005043200388096829,
+   "hpc_gamma_over_eta": 1.8,
+   "hpt_eta_loss_mean": 0.025985682428843252,
+   "hpt_eta_loss_sd": 0.003967958026127787
+  },
+  "5000_flights": {
+   "hpc_eta_loss_mean": 0.0692419139887055,
+   "hpc_eta_loss_sd": 0.009118629222266436,
+   "hpc_gamma_over_eta": 1.8,
+   "hpt_eta_loss_mean": 0.043552650021869393,
+   "hpt_eta_loss_sd": 0.0053337857523343205
+  },
+  "fouling_500h": {
+   "mean": 0.01020180590365185,
+   "n": 200,
+   "sd": 0.0021496173786407194
+  }
+ },
+ "pump": {
+  "flat_end_median_days": 133.0,
+  "flat_end_q10_q90": [
+   86.9,
+   184.0
+  ],
+  "limit_median_days": 288.5,
+  "limit_not_reached": 0,
+  "limit_q10_q90": [
+   241.0,
+   341.0
+  ],
+  "n_pumps": 200
+ }
+}

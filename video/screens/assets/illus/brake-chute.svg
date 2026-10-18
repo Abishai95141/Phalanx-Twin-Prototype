@@ -1,0 +1,298 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-chute" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-chute-title ill-chute-desc">
+  <title id="ill-chute-title">Brake chute — canister and deployed chute</title>
+  <desc id="ill-chute-desc">Aft fuselage with the brake-chute canister at the fin base, a cutaway detail of the packed chute and the deployed ring-slot chute with its pilot chute; a 45-tick streamings life ring.</desc>
+  <defs><pattern id="chute-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="chute-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="chute-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="chute-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="chute-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="chute-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="chute-airframe" class="view">
+    <path id="chute-airframe-outline" class="draw" d="M70 404.44 L117.2 371.4 L335.5 141.3 L447.6 137.76 L506.6 400.9 L565.6 435.12 L565.6 515.36 L494.8 527.16 L353.2 546.04 L70 562.56 L70 562.56" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M70 404.44 L70 469.5 L79 479.5 L61 487.5 L70 497.5 L70 562.56" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M414.56 385.56 L438.16 138.94" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M211.6 380.84 L424 385.56" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M497.16 527.16 L497.16 426.86" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="501.88" y1="504.74" x2="563.24" y2="496.01" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="501.88" y1="479.96" x2="563.24" y2="475.24" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="501.88" y1="455.18" x2="563.24" y2="454.47" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <path d="M70 522.44 L331.96 522.44" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="105.4" y="538.96" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">aft fuselage</text>
+    <text x="329.6" y="277" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">fin</text>
+  </g>
+  <g id="chute-canister" class="part">
+    <path class="draw" d="M471.2 430.4 L539.64 430.4 L539.64 405.62 L485.36 398.54 L471.2 403.26 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="chute-packed-small" d="M478.28 425.68 L530.2 425.68 L530.2 407.98 L487.72 403.26 L478.28 407.98 Z" fill="url(#chute-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M539.64 432.76 L539.64 403.26" fill="none" stroke="#0B0D10" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle id="chute-hook-small" cx="532.56" cy="435.12" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+  </g>
+  <g id="chute-deployed" class="subject">
+    <g id="chute-riser">
+      <path class="draw" d="M536.56 435.12 L740 430.36" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M766 429.86 L930 426" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="741" y1="440.36" x2="751" y2="420.36" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="755" y1="440.36" x2="765" y2="420.36" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="753" y="458.36" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">riser · shown shortened</text>
+    </g>
+    <g id="chute-lines">
+      <line x1="930" y1="426" x2="1130" y2="302" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="930" y1="426" x2="1130" y2="550" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="930" y1="426" x2="1130" y2="324.43" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="930" y1="426" x2="1130" y2="527.57" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="930" y1="426" x2="1130" y2="373.6" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="930" y1="426" x2="1130" y2="478.4" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="930" y1="426" x2="1130" y2="426" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <circle cx="930" cy="426" r="3.2" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5"/>
+    </g>
+    <g id="chute-canopy">
+      <path class="draw" d="M1130 302 L1136.6 300.78 L1143.2 299.57 L1149.8 298.38 L1156.4 297.21 L1163 296.08 L1169.6 295 L1176.2 293.97 L1182.8 293 L1189.4 292.1 L1196 291.28 L1202.6 290.53 L1209.2 289.88 L1215.8 289.31 L1222.4 288.84 L1229 288.48 L1235.6 288.21 L1242.2 288.05 L1248.8 288 L1255.4 288.14 L1262 288.57 L1268.6 289.29 L1275.2 290.3 L1281.8 291.61 L1288.4 293.23 L1295 295.17 L1301.6 297.45 L1308.2 300.08 L1314.8 303.08 L1321.4 306.49 L1328 310.34 L1334.6 314.67 L1341.2 319.55 L1347.8 325.05 L1354.4 331.28 L1361 338.41 L1367.6 346.66 L1374.2 356.43 L1380.8 368.51 L1387.4 384.87 L1394 417 L1394 435 L1387.4 467.13 L1380.8 483.49 L1374.2 495.57 L1367.6 505.34 L1361 513.59 L1354.4 520.72 L1347.8 526.95 L1341.2 532.45 L1334.6 537.33 L1328 541.66 L1321.4 545.51 L1314.8 548.92 L1308.2 551.92 L1301.6 554.55 L1295 556.83 L1288.4 558.77 L1281.8 560.39 L1275.2 561.7 L1268.6 562.71 L1262 563.43 L1255.4 563.86 L1248.8 564 L1242.2 563.95 L1235.6 563.79 L1229 563.52 L1222.4 563.16 L1215.8 562.69 L1209.2 562.12 L1202.6 561.47 L1196 560.72 L1189.4 559.9 L1182.8 559 L1176.2 558.03 L1169.6 557 L1163 555.92 L1156.4 554.79 L1149.8 553.62 L1143.2 552.43 L1136.6 551.22 L1130 550 Z" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1130 324.43 L1136.6 323.43 L1143.2 322.43 L1149.8 321.46 L1156.4 320.5 L1163 319.58 L1169.6 318.69 L1176.2 317.85 L1182.8 317.05 L1189.4 316.32 L1196 315.64 L1202.6 315.03 L1209.2 314.49 L1215.8 314.03 L1222.4 313.65 L1229 313.35 L1235.6 313.13 L1242.2 313 L1248.8 312.96 L1255.4 313.07 L1262 313.43 L1268.6 314.01 L1275.2 314.84 L1281.8 315.92 L1288.4 317.24 L1295 318.83 L1301.6 320.7 L1308.2 322.85 L1314.8 325.31 L1321.4 328.1 L1328 331.25 L1334.6 334.8 L1341.2 338.8 L1347.8 343.31 L1354.4 348.41 L1361 354.25 L1367.6 361 L1374.2 369.01 L1380.8 378.91 L1387.4 392.31 L1394 418.63" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1130 527.57 L1136.6 528.57 L1143.2 529.57 L1149.8 530.54 L1156.4 531.5 L1163 532.42 L1169.6 533.31 L1176.2 534.15 L1182.8 534.95 L1189.4 535.68 L1196 536.36 L1202.6 536.97 L1209.2 537.51 L1215.8 537.97 L1222.4 538.35 L1229 538.65 L1235.6 538.87 L1242.2 539 L1248.8 539.04 L1255.4 538.93 L1262 538.57 L1268.6 537.99 L1275.2 537.16 L1281.8 536.08 L1288.4 534.76 L1295 533.17 L1301.6 531.3 L1308.2 529.15 L1314.8 526.69 L1321.4 523.9 L1328 520.75 L1334.6 517.2 L1341.2 513.2 L1347.8 508.69 L1354.4 503.59 L1361 497.75 L1367.6 491 L1374.2 482.99 L1380.8 473.09 L1387.4 459.69 L1394 433.37" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1130 373.6 L1136.6 373.08 L1143.2 372.57 L1149.8 372.06 L1156.4 371.57 L1163 371.09 L1169.6 370.64 L1176.2 370.2 L1182.8 369.79 L1189.4 369.41 L1196 369.06 L1202.6 368.75 L1209.2 368.47 L1215.8 368.23 L1222.4 368.04 L1229 367.88 L1235.6 367.77 L1242.2 367.7 L1248.8 367.68 L1255.4 367.74 L1262 367.92 L1268.6 368.22 L1275.2 368.65 L1281.8 369.2 L1288.4 369.89 L1295 370.71 L1301.6 371.67 L1308.2 372.78 L1314.8 374.05 L1321.4 375.49 L1328 377.12 L1334.6 378.95 L1341.2 381.01 L1347.8 383.34 L1354.4 385.97 L1361 388.98 L1367.6 392.47 L1374.2 396.6 L1380.8 401.7 L1387.4 408.62 L1394 422.2" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1130 478.4 L1136.6 478.92 L1143.2 479.43 L1149.8 479.94 L1156.4 480.43 L1163 480.91 L1169.6 481.36 L1176.2 481.8 L1182.8 482.21 L1189.4 482.59 L1196 482.94 L1202.6 483.25 L1209.2 483.53 L1215.8 483.77 L1222.4 483.96 L1229 484.12 L1235.6 484.23 L1242.2 484.3 L1248.8 484.32 L1255.4 484.26 L1262 484.08 L1268.6 483.78 L1275.2 483.35 L1281.8 482.8 L1288.4 482.11 L1295 481.29 L1301.6 480.33 L1308.2 479.22 L1314.8 477.95 L1321.4 476.51 L1328 474.88 L1334.6 473.05 L1341.2 470.99 L1347.8 468.66 L1354.4 466.03 L1361 463.02 L1367.6 459.53 L1374.2 455.4 L1380.8 450.3 L1387.4 443.38 L1394 429.8" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1130 426 L1136.6 426 L1143.2 426 L1149.8 426 L1156.4 426 L1163 426 L1169.6 426 L1176.2 426 L1182.8 426 L1189.4 426 L1196 426 L1202.6 426 L1209.2 426 L1215.8 426 L1222.4 426 L1229 426 L1235.6 426 L1242.2 426 L1248.8 426 L1255.4 426 L1262 426 L1268.6 426 L1275.2 426 L1281.8 426 L1288.4 426 L1295 426 L1301.6 426 L1308.2 426 L1314.8 426 L1321.4 426 L1328 426 L1334.6 426 L1341.2 426 L1347.8 426 L1354.4 426 L1361 426 L1367.6 426 L1374.2 426 L1380.8 426 L1387.4 426 L1394 426" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="1156.4" y1="297.21" x2="1156.4" y2="554.79" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1163" y1="296.08" x2="1163" y2="555.92" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1188.08" y1="292.27" x2="1188.08" y2="559.73" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1194.68" y1="291.43" x2="1194.68" y2="560.57" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1219.76" y1="289.02" x2="1219.76" y2="562.98" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1226.36" y1="288.61" x2="1226.36" y2="563.39" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1251.44" y1="288.02" x2="1251.44" y2="563.98" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1258.04" y1="288.28" x2="1258.04" y2="563.72" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1283.12" y1="291.91" x2="1283.12" y2="560.09" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1289.72" y1="293.59" x2="1289.72" y2="558.41" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1314.8" y1="303.08" x2="1314.8" y2="548.92" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1321.4" y1="306.49" x2="1321.4" y2="545.51" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1346.48" y1="323.9" x2="1346.48" y2="528.1" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1353.08" y1="329.97" x2="1353.08" y2="522.03" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M1394 417 L1394 435" fill="none" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line id="chute-bridle" x1="1394" y1="426" x2="1446" y2="426" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <path id="chute-pilot" d="M1446 400 L1448.3 392.04 L1450.6 392.17 L1452.9 392.38 L1455.2 392.69 L1457.5 393.08 L1459.8 393.57 L1462.1 394.15 L1464.4 394.84 L1466.7 395.64 L1469 396.56 L1471.3 397.6 L1473.6 398.8 L1475.9 400.16 L1478.2 401.72 L1480.5 403.51 L1482.8 405.6 L1485.1 408.09 L1487.4 411.18 L1489.7 415.38 L1492 426 L1492 426 L1489.7 436.62 L1487.4 440.82 L1485.1 443.91 L1482.8 446.4 L1480.5 448.49 L1478.2 450.28 L1475.9 451.84 L1473.6 453.2 L1471.3 454.4 L1469 455.44 L1466.7 456.36 L1464.4 457.16 L1462.1 457.85 L1459.8 458.43 L1457.5 458.92 L1455.2 459.31 L1452.9 459.62 L1450.6 459.83 L1448.3 459.96 L1446 452 Z" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="1459.8" y1="393.57" x2="1459.8" y2="458.43" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1473.6" y1="398.8" x2="1473.6" y2="453.2" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+    </g>
+    <g id="chute-airflow">
+      <path class="draw" d="M760 300 L900 300" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M900 300 L891 302.6 L891 297.4 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <text x="760" y="288" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">relative airflow</text>
+  </g>
+  <g id="chute-signal" class="signal">
+    <circle cx="483" cy="433.4" r="2.4" fill="#2563C9" stroke="none"/>
+    <path d="M483 433.4 L483 470.4 L363 470.4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="163" y="461.4" width="200" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <text x="263" y="474.4" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">CHUTE.STATE → BHEEM EU</text>
+  </g>
+  <g id="chute-detail-d" class="detail">
+    <text x="70" y="652" font-size="12" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">DETAIL D</text>
+    <text x="70" y="668" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">canister cutaway · enlarged</text>
+    <path d="M212.12 691.02 L275.84 681.47 L428.77 710.14 L428.77 719.7 L275.84 691.02 L212.12 700.58 Z" fill="url(#chute-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="draw" d="M237.61 783.42 L422.39 783.42 L422.39 716.51 M275.84 697.4 L237.61 710.14 L237.61 783.42" fill="none" stroke="#0B0D10" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="chute-packed" d="M247.16 773.86 L393.72 773.86 L393.72 726.07 L279.02 710.14 L247.16 719.7 Z" fill="url(#chute-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M253.54 740.41 L257.92 748.41 L262.3 732.41 L266.68 748.41 L271.06 732.41 L275.44 748.41 L279.82 732.41 L284.2 748.41 L288.58 740.41" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M422.39 789.79 L422.39 713.33" fill="none" stroke="#0B0D10" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="422.39" cy="713.33" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+    <path d="M422.39 713.33 L486.11 703.77" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="10 3 2 3 2 3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="chute-hook" d="M383.28 782.16 L397.28 782.16 Q413.28 782.16 413.28 796.16 Q413.28 808.16 399.28 806.16" fill="none" stroke="#0B0D10" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M413.28 798.16 L473.28 810.16" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="383.28" cy="782.16" r="3" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    <circle cx="340" cy="742" r="112" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="5 3"/>
+  </g>
+  <g id="chute-detail-mark">
+    <circle cx="505.42" cy="415.06" r="34" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="5 3"/>
+    <text x="471.42" y="377.06" font-size="13" font-weight="700" fill="#0B0D10">D</text>
+  </g>
+  <g id="chute-streamings" class="counter">
+    <line id="chute-tick-1" class="tick" x1="660" y1="671" x2="660" y2="660" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-2" class="tick" x1="669.88" y1="667.69" x2="670.86" y2="660.76" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-3" class="tick" x1="679.57" y1="669.75" x2="681.5" y2="663.02" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-4" class="tick" x1="688.88" y1="673.14" x2="691.73" y2="666.74" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-5" class="tick" x1="697.62" y1="677.79" x2="701.33" y2="671.85" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-6" class="tick" x1="703.07" y1="686.68" x2="710.14" y2="678.25" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-7" class="tick" x1="712.76" y1="690.49" x2="717.97" y2="685.81" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-8" class="tick" x1="718.86" y1="698.3" x2="724.66" y2="694.38" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-9" class="tick" x1="723.81" y1="706.88" x2="730.11" y2="703.81" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-10" class="tick" x1="727.53" y1="716.06" x2="734.18" y2="713.9" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-11" class="tick" x1="725.98" y1="726.37" x2="736.82" y2="724.46" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-12" class="tick" x1="730.96" y1="735.52" x2="737.95" y2="735.28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-13" class="tick" x1="730.61" y1="745.42" x2="737.57" y2="746.15" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-14" class="tick" x1="728.89" y1="755.18" x2="735.68" y2="756.87" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-15" class="tick" x1="725.83" y1="764.6" x2="732.32" y2="767.22" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-16" class="tick" x1="718.02" y1="771.5" x2="727.55" y2="777" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-17" class="tick" x1="715.95" y1="781.71" x2="721.46" y2="786.02" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-18" class="tick" x1="709.32" y1="789.07" x2="714.18" y2="794.11" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-19" class="tick" x1="701.73" y1="795.44" x2="705.85" y2="801.1" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-20" class="tick" x1="693.33" y1="800.69" x2="696.62" y2="806.87" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-21" class="tick" x1="682.92" y1="800.96" x2="686.68" y2="811.3" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-22" class="tick" x1="674.76" y1="807.45" x2="676.22" y2="814.3" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-23" class="tick" x1="664.95" y1="808.83" x2="665.44" y2="815.81" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-24" class="tick" x1="655.05" y1="808.83" x2="654.56" y2="815.81" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-25" class="tick" x1="645.24" y1="807.45" x2="643.78" y2="814.3" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-26" class="tick" x1="637.08" y1="800.96" x2="633.32" y2="811.3" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-27" class="tick" x1="626.67" y1="800.69" x2="623.38" y2="806.87" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-28" class="tick" x1="618.27" y1="795.44" x2="614.15" y2="801.1" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-29" class="tick" x1="610.68" y1="789.07" x2="605.82" y2="794.11" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-30" class="tick" x1="604.05" y1="781.71" x2="598.54" y2="786.02" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-31" class="tick" x1="601.98" y1="771.5" x2="592.45" y2="777" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-32" class="tick" x1="594.17" y1="764.6" x2="587.68" y2="767.22" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-33" class="tick" x1="591.11" y1="755.18" x2="584.32" y2="756.87" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-34" class="tick" x1="589.39" y1="745.42" x2="582.43" y2="746.15" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-35" class="tick" x1="589.04" y1="735.52" x2="582.05" y2="735.28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-36" class="tick" x1="594.02" y1="726.37" x2="583.18" y2="724.46" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-37" class="tick" x1="592.47" y1="716.06" x2="585.82" y2="713.9" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-38" class="tick" x1="596.19" y1="706.88" x2="589.89" y2="703.81" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-39" class="tick" x1="601.14" y1="698.3" x2="595.34" y2="694.38" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-40" class="tick" x1="607.24" y1="690.49" x2="602.03" y2="685.81" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-41" class="tick" x1="616.93" y1="686.68" x2="609.86" y2="678.25" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line id="chute-tick-42" class="tick" x1="622.38" y1="677.79" x2="618.67" y2="671.85" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-43" class="tick" x1="631.12" y1="673.14" x2="628.27" y2="666.74" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-44" class="tick" x1="640.43" y1="669.75" x2="638.5" y2="663.02" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line id="chute-tick-45" class="tick" x1="650.12" y1="667.69" x2="649.14" y2="660.76" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text id="chute-life-count" x="660" y="754" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="50" font-weight="600" fill="#0B0D10" text-anchor="middle">45</text>
+    <text x="660" y="772" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">streamings</text>
+    <text x="760" y="720" font-size="14" font-weight="650" fill="#0B0D10">Streamings life</text>
+    <text x="760" y="738" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">USAGE.CHUTE_STREAMINGS</text>
+    <text x="760" y="754" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">life limit 45 · one tick each</text>
+  </g>
+  <g id="chute-callouts" class="callouts">
+    <g id="chute-c1" class="callout">
+      <path class="leader draw" d="M549.04 325.86 L479.46 404.44" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="479.46" cy="404.44" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="556" cy="318" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="556" y="318.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <g id="chute-c2" class="callout">
+      <path class="leader draw" d="M603.73 368.47 L539.64 418.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="539.64" cy="418.6" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="612" cy="362" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="612" y="362.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <g id="chute-c3" class="callout">
+      <path class="leader draw" d="M592.37 492.79 L534.56 438.12" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="534.56" cy="438.12" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="600" cy="500" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="600" y="500.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g id="chute-c4" class="callout">
+      <path class="leader draw" d="M690 489.5 L690 431.51" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="690" cy="431.51" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="690" cy="500" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="690" y="500.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <g id="chute-c5" class="callout">
+      <path class="leader draw" d="M994.57 309.45 L1020 362" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1020" cy="362" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="990" cy="300" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="990" y="300.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+    <g id="chute-c6" class="callout">
+      <path class="leader draw" d="M1257.42 259.42 L1290 292" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1290" cy="292" r="1.9" fill="#E8743B" stroke="none"/>
+      <circle class="bubble" cx="1250" cy="252" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="1250" y="252.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">6</text>
+    </g>
+    <g id="chute-c7" class="callout">
+      <path class="leader draw" d="M1485.3 349.39 L1462 396" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1462" cy="396" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="1490" cy="340" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1490" y="340.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+    </g>
+  </g>
+  <g id="chute-list" class="legend">
+    <g class="callout">
+      <circle class="bubble" cx="1011" cy="648" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1011" y="648.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <text x="1030" y="647" font-size="13" font-weight="650" fill="#0B0D10">Chute canister</text>
+    <text x="1030" y="661" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">at the fin base</text>
+    <g class="callout">
+      <circle class="bubble" cx="1011" cy="684" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1011" y="684.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <text x="1030" y="683" font-size="13" font-weight="650" fill="#0B0D10">Door / cap</text>
+    <text x="1030" y="697" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">opens on deploy</text>
+    <g class="callout">
+      <circle class="bubble" cx="1011" cy="720" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1011" y="720.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <text x="1030" y="719" font-size="13" font-weight="650" fill="#0B0D10">Attach + jettison hook</text>
+    <g class="callout">
+      <circle class="bubble" cx="1011" cy="756" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1011" y="756.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <text x="1030" y="755" font-size="13" font-weight="650" fill="#0B0D10">Riser</text>
+    <g class="callout">
+      <circle class="bubble" cx="1241" cy="648" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1241" y="648.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+    <text x="1260" y="647" font-size="13" font-weight="650" fill="#0B0D10">Suspension lines</text>
+    <g class="callout">
+      <circle class="bubble" cx="1241" cy="684" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="1241" y="684.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">6</text>
+    </g>
+    <text x="1260" y="683" font-size="13" font-weight="650" fill="#E8743B">Ring-slot canopy</text>
+    <text x="1260" y="697" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">the brake chute</text>
+    <g class="callout">
+      <circle class="bubble" cx="1241" cy="720" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1241" y="720.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+    </g>
+    <text x="1260" y="719" font-size="13" font-weight="650" fill="#0B0D10">Pilot chute</text>
+  </g>
+  <text x="70" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">BRAKE CHUTE · STOWED AND STREAMED</text>
+  <g id="chute-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="chute-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">Brake chute — canister and canopy</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">life 45 streamings · CHUTE.STATE</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-06</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 6 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

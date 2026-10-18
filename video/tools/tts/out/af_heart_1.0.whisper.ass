@@ -1,0 +1,42 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Helvetica Neue,54,&H00100D0B,&H00100D0B,&H00FFFFFF,&H33FFFFFF,0,0,0,0,100,100,0,0,3,14,0,2,160,160,70,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:00.54,Cap,,0,0,0,,{\c&H3B74E8&}Every{\c&H100D0B&} morning, before eight,
+Dialogue: 0,0:00:00.54,0:00:01.18,Cap,,0,0,0,,Every {\c&H3B74E8&}morning,{\c&H100D0B&} before eight,
+Dialogue: 0,0:00:01.18,0:00:01.40,Cap,,0,0,0,,Every morning, {\c&H3B74E8&}before{\c&H100D0B&} eight,
+Dialogue: 0,0:00:01.40,0:00:01.87,Cap,,0,0,0,,Every morning, before {\c&H3B74E8&}eight,{\c&H100D0B&}
+Dialogue: 0,0:00:02.16,0:00:02.22,Cap,,0,0,0,,{\c&H3B74E8&}a{\c&H100D0B&} squadron engineering officer decides
+Dialogue: 0,0:00:02.22,0:00:02.62,Cap,,0,0,0,,a {\c&H3B74E8&}squadron{\c&H100D0B&} engineering officer decides
+Dialogue: 0,0:00:02.62,0:00:03.20,Cap,,0,0,0,,a squadron {\c&H3B74E8&}engineering{\c&H100D0B&} officer decides
+Dialogue: 0,0:00:03.20,0:00:03.82,Cap,,0,0,0,,a squadron engineering {\c&H3B74E8&}officer{\c&H100D0B&} decides
+Dialogue: 0,0:00:03.82,0:00:04.37,Cap,,0,0,0,,a squadron engineering officer {\c&H3B74E8&}decides{\c&H100D0B&}
+Dialogue: 0,0:00:04.38,0:00:04.64,Cap,,0,0,0,,{\c&H3B74E8&}which{\c&H100D0B&} aircraft will fly.
+Dialogue: 0,0:00:04.64,0:00:05.08,Cap,,0,0,0,,which {\c&H3B74E8&}aircraft{\c&H100D0B&} will fly.
+Dialogue: 0,0:00:05.08,0:00:05.38,Cap,,0,0,0,,which aircraft {\c&H3B74E8&}will{\c&H100D0B&} fly.
+Dialogue: 0,0:00:05.38,0:00:05.91,Cap,,0,0,0,,which aircraft will {\c&H3B74E8&}fly.{\c&H100D0B&}
+Dialogue: 0,0:00:06.68,0:00:07.06,Cap,,0,0,0,,{\c&H3B74E8&}Phalanx{\c&H100D0B&} Twin turns the fleet's evidence
+Dialogue: 0,0:00:07.06,0:00:07.32,Cap,,0,0,0,,Phalanx {\c&H3B74E8&}Twin{\c&H100D0B&} turns the fleet's evidence
+Dialogue: 0,0:00:07.32,0:00:07.84,Cap,,0,0,0,,Phalanx Twin {\c&H3B74E8&}turns{\c&H100D0B&} the fleet's evidence
+Dialogue: 0,0:00:07.84,0:00:08.02,Cap,,0,0,0,,Phalanx Twin turns {\c&H3B74E8&}the{\c&H100D0B&} fleet's evidence
+Dialogue: 0,0:00:08.02,0:00:08.34,Cap,,0,0,0,,Phalanx Twin turns the {\c&H3B74E8&}fleet's{\c&H100D0B&} evidence
+Dialogue: 0,0:00:08.34,0:00:08.67,Cap,,0,0,0,,Phalanx Twin turns the fleet's {\c&H3B74E8&}evidence{\c&H100D0B&}
+Dialogue: 0,0:00:08.68,0:00:09.00,Cap,,0,0,0,,{\c&H3B74E8&}into{\c&H100D0B&} a handful of signed decisions —
+Dialogue: 0,0:00:09.00,0:00:09.18,Cap,,0,0,0,,into {\c&H3B74E8&}a{\c&H100D0B&} handful of signed decisions —
+Dialogue: 0,0:00:09.18,0:00:09.52,Cap,,0,0,0,,into a {\c&H3B74E8&}handful{\c&H100D0B&} of signed decisions —
+Dialogue: 0,0:00:09.52,0:00:09.82,Cap,,0,0,0,,into a handful {\c&H3B74E8&}of{\c&H100D0B&} signed decisions —
+Dialogue: 0,0:00:09.82,0:00:10.08,Cap,,0,0,0,,into a handful of {\c&H3B74E8&}signed{\c&H100D0B&} decisions —
+Dialogue: 0,0:00:10.08,0:00:10.69,Cap,,0,0,0,,into a handful of signed {\c&H3B74E8&}decisions —{\c&H100D0B&}
+Dialogue: 0,0:00:11.10,0:00:11.32,Cap,,0,0,0,,{\c&H3B74E8&}and{\c&H100D0B&} shows exactly why.
+Dialogue: 0,0:00:11.32,0:00:11.62,Cap,,0,0,0,,and {\c&H3B74E8&}shows{\c&H100D0B&} exactly why.
+Dialogue: 0,0:00:11.62,0:00:12.16,Cap,,0,0,0,,and shows {\c&H3B74E8&}exactly{\c&H100D0B&} why.
+Dialogue: 0,0:00:12.16,0:00:12.73,Cap,,0,0,0,,and shows exactly {\c&H3B74E8&}why.{\c&H100D0B&}

@@ -1,0 +1,7 @@
+{
+ "configs": [
+  "bank19",
+  "bank27"
+ ],
+ "why": "the two lowest joint distances of the governed objective set in the bank design (both on its Pareto front)"
+}

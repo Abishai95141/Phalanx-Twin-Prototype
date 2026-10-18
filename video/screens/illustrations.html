@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Illustration plates — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  html, body { background: #fff; }
+  .ils-sheet { position: absolute; inset: 0; padding: 40px 56px 36px; display: flex; flex-direction: column; }
+  .ils-hd { display: flex; align-items: baseline; gap: 18px; margin-bottom: 22px; }
+  .ils-hd .k { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .ils-hd h1 { font-size: 26px; font-weight: 650; letter-spacing: -0.02em; }
+  .ils-hd .s { color: var(--ink-3); font-size: 15px; }
+  .ils-hd .pg { margin-left: auto; font: 500 13px var(--mono); color: var(--ink-4); }
+  .ils-grid { flex: 1; display: grid; gap: 22px 28px; align-content: center; justify-content: center; }
+  .ils-cell { display: flex; flex-direction: column; gap: 8px; }
+  .ils-art { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+  .ils-art svg { display: block; width: 100%; height: auto; }
+  .ils-cap { display: flex; gap: 12px; align-items: baseline; font-size: 14px; }
+  .ils-cap b { font: 600 12px var(--mono); color: var(--ink-4); }
+  .ils-cap span { font-weight: 650; }
+  .ils-cap em { font-style: normal; color: var(--ink-3); font-size: 13px; }
+  .ils-cap code { margin-left: auto; font: 500 12px var(--mono); color: var(--ink-4); }
+  body.one .ils-sheet { padding: 0; align-items: center; justify-content: center; }
+  body.one .ils-art { border: 0; border-radius: 0; width: 1600px; }
+</style>
+</head>
+<body>
+<div class="ils-sheet" id="ils-sheet"></div>
+<script>
+const PLATES = [
+  ['aircraft-3view.svg',   'General arrangement',        'top · side · front, equipment zones'],
+  ['hydraulic-system.svg', 'Hydraulic systems',          'SYS1 / SYS2 and the pressure-indication path'],
+  ['hyd-pump.svg',         'Engine-driven pump',         'axial-piston cutaway + exploded view'],
+  ['f404-engine.svg',      'F404 turbofan',              'gas-path stations and FADEC'],
+  ['main-gear-tyre.svg',   'Main gear and tyre',         'tread depth, landings 7 / 8'],
+  ['brake-chute.svg',      'Brake chute',                'canister at the fin base, streamings'],
+  ['avionics-lru.svg',     'Avionics LRU',               'BHEEM EU: connectors, BIT, data plate'],
+  ['station-server.svg',   'Station server',             'air-gapped appliance, runtime slots'],
+  ['sortie-download.svg',  'Sortie download',            'recorder to contract topics'],
+  ['contract-gate.svg',    'Release gate',               'five topics, checks, as-of store'],
+  ['hash-chain.svg',       'Hash-chained log',           'prev_hash to hash, epoch 22 Jun'],
+  ['mapek-loop.svg',       'The daily loop',             '06:00 snapshot to reconcile'],
+  ['assistant-tools.svg',  'Assistant tools',            'five read-only tools around the plan'],
+  ['style-key.svg',        'Style key',                  'weights, line types, colour, type'],
+];
+const PAGES = { 1: [0, 1, 2, 3], 2: [4, 5, 6, 7], 3: [8, 9, 10, 11], 4: [12, 13] };
+const q = new URLSearchParams(location.search);
+const sheet = document.getElementById('ils-sheet');
+const one = q.get('one');
+function cell(i, w) {
+  const [f, t, s] = PLATES[i];
+  const c = document.createElement('div'); c.className = 'ils-cell'; c.style.width = w + 'px';
+  c.innerHTML = `<div class="ils-art" data-f="${f}"></div>` + (one ? '' :
+    `<div class="ils-cap"><b>${i < 13 ? String(i + 1).padStart(2, '0') : 'key'}</b><span>${t}</span><em>${s}</em><code>${f}</code></div>`);
+  fetch('assets/illus/' + f).then(r => r.text()).then(x => { c.querySelector('.ils-art').innerHTML = x; });
+  return c;
+}
+if (one) {
+  document.body.classList.add('one');
+  const z = +(q.get('z') || 1), c = cell(+one - 1, 1600 * z);
+  if (z !== 1) {   // zoom for close inspection: ?one=N&z=2&cx=800&cy=450 (plate coordinates)
+    const cx = +(q.get('cx') || 800), cy = +(q.get('cy') || 450);
+    Object.assign(c.style, { position: 'absolute', left: (960 - cx * z) + 'px', top: (540 - cy * z) + 'px' });
+    c.querySelector('.ils-art').style.width = (1600 * z) + 'px';
+  }
+  sheet.appendChild(c);
+} else {
+  const p = +(q.get('p') || 1), idx = PAGES[p] || PAGES[1];
+  sheet.innerHTML = `<div class="ils-hd"><span class="k">Illustration plates</span><h1>Phalanx Twin · blueprint library</h1>
+    <span class="s">white-film line art · one accent per plate · blue for data</span><span class="pg">page ${p} / 4</span></div>`;
+  const g = document.createElement('div'); g.className = 'ils-grid'; sheet.appendChild(g);
+  g.style.gridTemplateColumns = 'repeat(2, 760px)';
+  idx.forEach(i => g.appendChild(cell(i, 760)));
+}
+</script>
+</body>
+</html>

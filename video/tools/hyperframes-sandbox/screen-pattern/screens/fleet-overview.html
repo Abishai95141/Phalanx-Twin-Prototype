@@ -1,0 +1,90 @@
+<!doctype html>
+<!--
+  A product "screen": a plain, standalone 1920x1080 HTML page with its own CSS.
+  Open it directly in a browser and it renders as a normal static page.
+  The ONLY HyperFrames-specific thing is the attribute set on #app
+  (data-composition-id / data-width / data-height / data-no-timeline), which lets
+  a video composition mount it with data-composition-src. No scripts, no GSAP here:
+  all motion is directed from the video side. All data is synthetic.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Fleet overview (screen)</title>
+    <style>
+      /* Deliberately generic selectors (body, h2, .card, table) to prove HyperFrames scopes them. */
+      * { box-sizing: border-box; }
+      body { margin: 0; width: 1920px; height: 1080px; background: #f5f7fb; font-family: Inter, sans-serif; color: #0f1b2d; }
+      #app { position: relative; width: 1920px; height: 1080px; display: grid; grid-template-columns: 280px 1fr; background: #ffffff; overflow: hidden; }
+      .side { background: #f4f6fa; border-right: 1px solid #e3e7ee; padding: 36px 24px; }
+      .brand { font-weight: 900; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 40px; }
+      .nav { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+      .nav li { font-size: 18px; color: #4a5568; padding: 12px 14px; border-radius: 10px; }
+      .nav li.active { background: #e6eefc; color: #1d4ed8; font-weight: 700; }
+      .main { padding: 40px 48px; display: flex; flex-direction: column; gap: 28px; }
+      .topbar { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+      h2 { margin: 0; font-size: 34px; letter-spacing: -0.02em; }
+      .search { display: flex; align-items: center; gap: 10px; width: 520px; height: 56px; padding: 0 18px; border: 1.5px solid #d6dde8; border-radius: 12px; background: #fff; }
+      .search svg { flex: none; }
+      .search input { border: 0; outline: 0; font: 500 20px Inter, sans-serif; color: #0f1b2d; width: 100%; background: transparent; }
+      .search.focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); }
+      .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .card { background: #ffffff; border: 1px solid #e3e7ee; border-radius: 16px; padding: 24px 28px; box-shadow: 0 1px 2px rgba(15, 27, 45, 0.05); }
+      .label { font-size: 16px; color: #64748b; margin-bottom: 10px; }
+      .value { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+      .bar { margin-top: 16px; height: 10px; border-radius: 999px; background: #eef2f7; overflow: hidden; }
+      .bar > i { display: block; width: 100%; height: 100%; background: #2563eb; transform-origin: 0 50%; transform: scaleX(0.784); }
+      table { width: 100%; border-collapse: collapse; font-size: 18px; }
+      th { text-align: left; font-size: 14px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px; border-bottom: 1px solid #e3e7ee; }
+      td { padding: 14px; border-bottom: 1px solid #eef2f7; }
+      tbody tr { position: relative; }
+      .tag { font-size: 14px; padding: 4px 10px; border-radius: 999px; background: #dcfce7; color: #15803d; font-weight: 700; }
+      .tag.warn { background: #fee2e2; color: #b91c1c; }
+      .mini { width: 160px; height: 8px; border-radius: 999px; background: #eef2f7; overflow: hidden; }
+      .mini > i { display: block; height: 100%; width: 100%; background: #10b981; transform-origin: 0 50%; }
+    </style>
+  </head>
+  <body>
+    <div id="app" data-composition-id="fleet-overview" data-width="1920" data-height="1080" data-no-timeline>
+      <aside class="side">
+        <div class="brand">Phalanx</div>
+        <ul class="nav">
+          <li class="active">Fleet overview</li>
+          <li>Tail health</li>
+          <li>Maintenance plan</li>
+          <li>Orders</li>
+        </ul>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <h2>Fleet overview</h2>
+          <label class="search" id="fo-search">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.2"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+            <input id="fo-search-input" type="text" placeholder="Search tails, serials, work orders" />
+          </label>
+        </div>
+        <div class="kpis">
+          <div class="card" id="fo-kpi-avail">
+            <div class="label">Fleet availability (synthetic)</div>
+            <div class="value"><span id="fo-avail-num">78.4</span>%</div>
+            <div class="bar"><i id="fo-avail-bar"></i></div>
+          </div>
+          <div class="card"><div class="label">Tails due inspection</div><div class="value" id="fo-due">3</div></div>
+          <div class="card"><div class="label">Open work orders</div><div class="value" id="fo-wo">12</div></div>
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Tail</th><th>Component</th><th>Risk score</th><th>Remaining life</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr id="fo-row-1"><td>T-01</td><td>Engine module A</td><td>0.12</td><td><div class="mini"><i style="transform: scaleX(0.82)"></i></div></td><td><span class="tag">OK</span></td></tr>
+              <tr id="fo-row-2"><td>T-04</td><td>Fuel pump B</td><td>0.71</td><td><div class="mini"><i id="fo-row2-life" style="transform: scaleX(0.21); background: #ef4444"></i></div></td><td><span class="tag warn">Watch</span></td></tr>
+              <tr id="fo-row-3"><td>T-06</td><td>Gearbox C</td><td>0.09</td><td><div class="mini"><i style="transform: scaleX(0.9)"></i></div></td><td><span class="tag">OK</span></td></tr>
+              <tr id="fo-row-4"><td>T-07</td><td>Hydraulic actuator D</td><td>0.18</td><td><div class="mini"><i style="transform: scaleX(0.66)"></i></div></td><td><span class="tag">OK</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

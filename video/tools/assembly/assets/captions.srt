@@ -1,0 +1,23 @@
+1
+00:00:00,275 --> 00:00:02,065
+Every morning, before eight,
+
+2
+00:00:02,075 --> 00:00:04,477
+a squadron engineering officer decides
+
+3
+00:00:04,487 --> 00:00:06,400
+which aircraft will fly.
+
+4
+00:00:06,475 --> 00:00:08,777
+Phalanx Twin turns the fleet's evidence
+
+5
+00:00:08,787 --> 00:00:11,152
+into a handful of signed decisions —
+
+6
+00:00:11,162 --> 00:00:13,075
+and shows exactly why.

@@ -1,0 +1,346 @@
+format: phalanx.params/1
+module: M18
+# M18 maintenance, logistics and records (W1.8). Item-class values live in M18/catalogue.yaml; code tables and
+# record text templates in M18/codes.yaml (both SYNTHETIC, AD-19). Values are converted to SI on load.
+sets:
+  org:
+    tz_offset:
+      value: 5.5
+      units: h
+      description: Local civil time offset from UTC at the bases (India Standard Time, UTC+05:30); shifts and job numbers use local days.
+      evidence: {tag: DIRECT, source: "Indian Standard Time UTC+05:30 (architecture §2: Indian bases)"}
+    shift_start:
+      value: 6.0
+      units: h
+      description: Local start of the daily maintenance working window (two shifts).
+      evidence: {tag: ASSUMPTION, source: "no IAF shift pattern public; report §14 (M18 checks tradesmen and shifts)"}
+      sweep: [0.0, 8.0]
+      assumption_id: A-W1.8-1
+    shift_end:
+      value: 22.0
+      units: h
+      description: Local end of the daily maintenance working window.
+      evidence: {tag: ASSUMPTION, source: "no IAF shift pattern public"}
+      sweep: [16.0, 24.0]
+      assumption_id: A-W1.8-1
+    teams_per_base:
+      value: 4
+      units: "1"
+      description: Concurrent maintenance teams per base (jobs in work at once); others wait AWAITING_MAINTENANCE.
+      evidence: {tag: ASSUMPTION, source: "CAG 38/2015 (Su-30 squadron manpower not sanctioned 19 years after induction) shows manpower limits availability; size not public"}
+      sweep: [2, 8]
+      assumption_id: A-W1.8-1
+    crew_size:
+      value: 3
+      units: "1"
+      description: Technicians per team; man-hours = elapsed working hours x crew.
+      evidence: {tag: "TRANSFER: USN NAMP example work orders", source: "NAMP 4790.2E Fig 15-6 (11.0 MH / 3.0 elapsed h) and Fig 15-8 (34.3 MH / 13.5 elapsed h): 2.5-3.7 technicians"}
+    servicing_slots:
+      value: 2
+      units: "1"
+      description: Concurrent periodic servicings (hangar slots) per base.
+      evidence: {tag: ASSUMPTION, source: "report §14 (hangar slots are an M18 resource); count not public"}
+      sweep: [1, 4]
+      assumption_id: A-W1.8-1
+    bin_width:
+      value: 15.0
+      units: min
+      description: Availability (SCIR) bin width; the highest degraded state in a bin wins.
+      evidence: {tag: "TRANSFER: USN NAMP SCIR binning", source: "NAMP 4790.2E §9.2 (15-minute increments of the highest degraded priority)"}
+  timing:
+    sortie_entry_delay:
+      value: 0.5
+      units: h
+      description: Delay from landing to the flight record (SORTIE) being entered; recorded usage accrues then.
+      evidence: {tag: ASSUMPTION, source: "NAMP §5.3.5 (NAVFLIR entered immediately after each flight)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.8-2
+    debrief_delay:
+      value: 0.3
+      units: h
+      description: Delay from landing to the pilot write-up (debrief) work order.
+      evidence: {tag: ASSUMPTION, source: "research_notes maintenance_records_and_events.md chain 1 (landing 11:52, debrief 12:10)"}
+      sweep: [0.1, 1.0]
+      assumption_id: A-W1.8-2
+    hms_review_delay:
+      value: 0.33
+      units: h
+      description: Delay from BIT/HMS event ingest (download) to the work order (maintenance-control review).
+      evidence: {tag: ASSUMPTION, source: "maintenance_records_and_events.md chain 1 (download 12:20, troubleshooting 12:40); NAMP §10.37.4 (review HMS data after each flight)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.8-2
+    check_hours:
+      value: 0.5
+      units: h
+      description: Operational check plus inspector sign-off after a repair.
+      evidence: {tag: ASSUMPTION, source: "maintenance_records_and_events.md chain 1 (install done 18:30, sign-off 18:45)"}
+      sweep: [0.25, 2.0]
+      assumption_id: A-W1.8-2
+    duration_sigma:
+      value: 0.5
+      units: "1"
+      description: Log-normal shape of every elapsed-time draw around its median (troubleshoot, R/R, inspection).
+      evidence: {tag: ASSUMPTION, source: "NAMP example timelines span hours to weeks (Figs 15-6, 15-8, 15-12)"}
+      sweep: [0.2, 0.9]
+      assumption_id: A-W1.8-2
+  troubleshoot:
+    monitor_flights:
+      value: 3
+      units: "1"
+      description: Flights a non-grounding BIT-only code is deferred and monitored before an administrative close.
+      evidence: {tag: "TRANSFER: F-35 HRC workflow", source: "COMNAVAIRFORINST 4790.35D §15.2.4 (deferred and monitored for three consecutive flights)"}
+    p_replace_unconfirmed:
+      value: 0.35
+      units: "1"
+      description: Probability maintainers replace the top suspect when a grounding report cannot be duplicated on the ground (main NFF/RTOK source).
+      evidence: {tag: ASSUMPTION, source: "report §9 (NFF 29.5-63 % by LRU technology; avionics removals NFF 30-60 %, Khan et al.)"}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.8-6
+  supply:
+    aog_bin_upper_days:
+      value: [15.0, 30.0, 180.0]
+      units: day
+      description: Upper edges of the CAG AOG-demand timeliness bins (<=15 d, 16 d-1 month, 1-6 months; last bin >6 months).
+      evidence: {tag: DIRECT, source: "CAG Report 24/2017 para 2.7.4(a) Tables 2-5 (IL-76 AOG demands 2010-15); maintenance_records_and_events.md Q5"}
+    aog_bin_share:
+      value: [0.1083, 0.0341, 0.2518, 0.2249]
+      units: "1"
+      description: Share of 2,899 IL-76 AOG demands met in each bin (<=15 d, 16 d-1 mo, 1-6 mo, >6 mo). The four shares sum to 0.619; CAG Table 2 itself does not account for the other 1,104 demands (38.1 %), and the fit uses the distribution conditional on the four bins. The gap and its effect are logged in A-W1.8-10 (E1-HY).
+      evidence: {tag: DIRECT, source: "CAG Report 24/2017 para 2.7.4(a) Table 2 (IL-76, 2010-15: 2,899 demands raised; 314/99/730/652 met in the four bins = 10.83/3.41/25.18/22.49 %; the 'Per cent' row has no column for the remaining 1,104); maintenance_records_and_events.md Q5"}
+    tejas_supply_factor:
+      value: 0.3
+      units: "1"
+      description: Multiplier on the CAG-fitted wholesale lead time for an OEM-supported F404 fleet (the IL-76 priors are pessimistic).
+      evidence: {tag: ASSUMPTION, source: "architecture §10 (CAG priors pessimistic for an OEM-supported F404 fleet; Tejas supply-chain layer on top)"}
+      sweep: [0.1, 1.0]
+      assumption_id: A-W1.8-10
+    priority_mult:
+      value: [1.0, 1.5, 2.5]
+      units: "1"
+      description: Lead-time multipliers for priorities AOG, MCM, PHU (IAF definitions of MCM/PHU are not public).
+      evidence: {tag: ASSUMPTION, source: "IAF RTI Handbook (AOG/MCM/PHU spares priorities exist; definitions not public)"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W1.8-10
+    issue_delay:
+      value: 2.0
+      units: h
+      description: Issue time of a stocked spare to the aircraft.
+      evidence: {tag: "TRANSFER: USN NAMP local issue standards", source: "NAMP §6.6.2 (priority 1-8 within 2 h); CAG 24/2017 (IAF norm: AOG spares in stock issued within 24 h)"}
+    expedite_factor:
+      value: 0.5
+      units: "1"
+      description: Remaining lead time multiplier after an EXPEDITE_SPARES order.
+      evidence: {tag: ASSUMPTION, source: "order vocabulary (report §14); effect size not public"}
+      sweep: [0.25, 0.8]
+      assumption_id: A-W1.8-10
+    transfer_days:
+      value: 2.0
+      units: day
+      description: Transit time of a TRANSFER_STOCK order between bases.
+      evidence: {tag: ASSUMPTION, source: "no IAF inter-base transit data"}
+      sweep: [0.5, 7.0]
+      assumption_id: A-W1.8-10
+  shop:
+    p_condemn:
+      value: 0.05
+      units: "1"
+      description: Probability a depot-inducted unit is condemned (removed from the pool) instead of repaired.
+      evidence: {tag: ASSUMPTION, source: "TO 00-20-2 NRTS code 9 (condemned) exists; rate not public"}
+      sweep: [0.0, 0.2]
+      assumption_id: A-W1.8-7
+  servicing:
+    interval_fh:
+      value: [25.0, 100.0, 300.0, 1200.0]
+      units: h
+      description: Flight-hour interval of SRV-L1, SRV-L2-MINOR, SRV-L2-MAJOR and ROH (sweep is a relative multiplier).
+      evidence: {tag: ASSUMPTION, source: "Tejas intervals not public; IAF IL-76 2nd-line servicings at 300/900/1800 FH (CAG 24/2017) anchor the form"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.8-3
+    interval_days:
+      value: [15.0, 180.0, 365.0, 2920.0]
+      units: day
+      description: Calendar interval of the same servicing types, whichever comes first (sweep is a relative multiplier).
+      evidence: {tag: ASSUMPTION, source: "IAF maintains on flown hours and calendar life (41st Report 16th LS para 3.20); values not public"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.8-3
+    duration_days:
+      value: [0.5, 3.0, 15.0, 120.0]
+      units: day
+      description: Prescribed duration of the same servicing types (sweep is a relative multiplier).
+      evidence: {tag: ASSUMPTION, source: "CAG 24/2017 (IL-76 2nd-line servicings prescribed 22/35/50 days); fighter values not public"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.8-3
+    on_time_fraction:
+      value: 0.34
+      units: "1"
+      description: Fraction of servicings completed within the prescribed duration (sets the overrun log-normal median).
+      evidence: {tag: "TRANSFER: IAF IL-76/IL-78 2nd-line servicing", source: "CAG 24/2017 para 2.7.4(b) (36.84 % IL-76, 30 % IL-78 within prescribed time)"}
+    overrun_sigma:
+      value: 0.4
+      units: "1"
+      description: Log-normal shape of servicing duration.
+      evidence: {tag: ASSUMPTION, source: "only the on-time fraction is public (CAG 24/2017)"}
+      sweep: [0.2, 0.8]
+      assumption_id: A-W1.8-3
+    pod:
+      value: [0.3, 0.5, 0.7, 0.9]
+      units: "1"
+      description: Probability each servicing type finds a latent fault on an item it inspects (sweep is a relative multiplier).
+      evidence: {tag: ASSUMPTION, source: "report §9 (inspections have location-dependent detection probabilities); faults_and_degradation.md §9c"}
+      sweep: [0.5, 1.3]
+      assumption_id: A-W1.8-4
+  inspection:
+    pod_borescope:
+      value: 0.7
+      units: "1"
+      description: Probability a borescope inspection finds a latent engine fault (some stages are not accessible).
+      evidence: {tag: ASSUMPTION, source: "faults_and_degradation.md (5th-stage HPC vanes not borescope-accessible; detection probability by location)"}
+      sweep: [0.4, 0.95]
+      assumption_id: A-W1.8-4
+    pod_ndt:
+      value: 0.8
+      units: "1"
+      description: Probability an NDT inspection finds a latent fault on the targeted item.
+      evidence: {tag: ASSUMPTION, source: "report §14 (inspect: borescope, conditional, NDT); POD not public"}
+      sweep: [0.5, 0.95]
+      assumption_id: A-W1.8-4
+    pod_conditional:
+      value: 0.7
+      units: "1"
+      description: Probability a conditional (exceedance) inspection finds a latent fault on the inspected item.
+      evidence: {tag: ASSUMPTION, source: "NAMP §9.2.3.3(b) (conditional inspection); POD not public"}
+      sweep: [0.4, 0.95]
+      assumption_id: A-W1.8-4
+    inspection_hours:
+      value: 3.0
+      units: h
+      description: Median elapsed time of a borescope / NDT / conditional inspection.
+      evidence: {tag: ASSUMPTION, source: "no fighter value public"}
+      sweep: [1.0, 8.0]
+      assumption_id: A-W1.8-4
+    p_out_of_limits:
+      value: 0.1
+      units: "1"
+      description: Probability a conditional inspection after an exceedance finds the item out of limits with no prior fault (removal), chain 3.
+      evidence: {tag: ASSUMPTION, source: "report §12 chain 3 (close, or engine removal); rate not public"}
+      sweep: [0.02, 0.3]
+      assumption_id: A-W1.8-4
+  cann:
+    min_awp_hours:
+      value: 24.0
+      units: h
+      description: Status-quo maintenance-control rule - cannibalise for a grounded aircraft awaiting parts at least this long when a donor exists.
+      evidence: {tag: ASSUMPTION, source: "GAO-02-86 (CANN used to meet readiness; 'may be indicative of support problems'); rule thresholds not public"}
+      sweep: [4.0, 96.0]
+      assumption_id: A-W1.8-13
+    extra_mh:
+      value: 6.2
+      units: h
+      description: Additional man-hours per cannibalisation.
+      evidence: {tag: "TRANSFER: US services FY1996-2000", source: "GAO-02-86 p.2 (~850,000 CANNs needing ~5.3 million additional maintenance hours: 6.2 MH each)"}
+  mods:
+    mod_hours:
+      value: 8.0
+      units: h
+      description: Median elapsed hours to embody a modification on one aircraft.
+      evidence: {tag: ASSUMPTION, source: "no value public"}
+      sweep: [2.0, 40.0]
+      assumption_id: A-W1.8-11
+    sw_load_hours:
+      value: 2.0
+      units: h
+      description: Median elapsed hours for a software load plus BIT check.
+      evidence: {tag: ASSUMPTION, source: "no value public"}
+      sweep: [0.5, 8.0]
+      assumption_id: A-W1.8-11
+    wash_hours:
+      value: 2.0
+      units: h
+      description: Median elapsed hours for an engine compressor wash (or a fluid servicing).
+      evidence: {tag: ASSUMPTION, source: "JOAST 66(1) 2014 (compressor wash at regular intervals in the Indian environment); duration not public"}
+      sweep: [0.5, 4.0]
+      assumption_id: A-W1.8-11
+  defects:
+    cann_underreport:
+      value: 0.25
+      units: "1"
+      description: Fraction of cannibalisation records not reported (deleted after truth; manifest keeps them).
+      evidence: {tag: ASSUMPTION, source: "GAO-02-86 (Navy CANN data understated by as much as 50 %; Air Force under-reports)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W1.8-12
+    missing_part_record:
+      value: 0.05
+      units: "1"
+      description: Fraction of component life (install/remove) records missing.
+      evidence: {tag: ASSUMPTION, source: "GAO-20-316 (213 of 263 delivered spares, 81 %, lacked electronic records at one F-35 site)"}
+      sweep: [0.0, 0.81]
+      assumption_id: A-W1.8-12
+    wrong_form:
+      value: 0.01
+      units: "1"
+      description: Fraction of records filed under the wrong record type (form).
+      evidence: {tag: ASSUMPTION, source: "UK SI Hawk XX204 paras 1.4.50-1.4.52 (weight recorded on MF701 instead of MF702)"}
+      sweep: [0.0, 0.05]
+      assumption_id: A-W1.8-12
+    recon_lag_fraction:
+      value: 0.3
+      units: "1"
+      description: Fraction of shop, supply and component-life records entered late (reconciliation lag).
+      evidence: {tag: ASSUMPTION, source: "Hagan & Slack (NAS Lemoore I-level reconciliation); fraction not public"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.8-12
+    recon_lag_mean:
+      value: 14.0
+      units: day
+      description: Mean reconciliation lag (exponential) of a late record.
+      evidence: {tag: "TRANSFER: USN NAS Lemoore I-level", source: "Hagan & Slack (DTIC ADA462668): average 14 days; report §12 defect table"}
+    text_noise_rate:
+      value: 0.03
+      units: "1"
+      description: Per-token probability of a free-text corruption (transposition, dropped letter, abbreviation variant).
+      evidence: {tag: ASSUMPTION, source: "maintenance_records_and_events.md Q4 (1-5 % of tokens; MaintNet 97/106 non-standard tokens; NAMP typos)"}
+      sweep: [0.01, 0.05]
+      assumption_id: A-W1.8-12
+    xxx_serial:
+      value: 0.02
+      units: "1"
+      description: Fraction of records whose serial number is the default 'XXX'.
+      evidence: {tag: ASSUMPTION, source: "NAMP / OOMA default 'XXX' S/N (report §12 defect table)"}
+      sweep: [0.0, 0.1]
+      assumption_id: A-W1.8-12
+    duplicate_snag:
+      value: 0.03
+      units: "1"
+      description: Fraction of defect work orders entered twice (duplicate snag with a new job number).
+      evidence: {tag: ASSUMPTION, source: "TO 00-20-1 §5.4.1.1 (review entries to avoid duplicates); report §12"}
+      sweep: [0.0, 0.1]
+      assumption_id: A-W1.8-12
+    unfilled_logbook:
+      value: 0.5
+      units: "1"
+      description: Fraction of depot-returned item install records with empty item hours/cycles (log book not filled).
+      evidence: {tag: ASSUMPTION, source: "CAG 24/2017 para 2.7.4(c) (the OEM did not fill up the engine log books, IL-76)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.8-12
+    underreported_tail:
+      value: 0.0
+      units: "1"
+      description: Fraction of tails whose availability records are not reported at all (off by default).
+      evidence: {tag: ASSUMPTION, source: "CAG 24/2017 para 2.7.2 (a squadron reported 12 of 14 aircraft held)"}
+      sweep: [0.0, 0.15]
+      assumption_id: A-W1.8-12
+  cost:
+    mh_cost:
+      value: 0.01
+      units: "1"
+      description: Relative cost of one man-hour in cost-proxy units (engine = 100).
+      evidence: {tag: ASSUMPTION, source: "cost proxy is relative only (report §14 KPI list)"}
+      sweep: [0.002, 0.05]
+      assumption_id: A-W1.8-11
+    expedite_premium:
+      value: 0.5
+      units: "1"
+      description: Expedite premium as a fraction of the unit cost.
+      evidence: {tag: ASSUMPTION, source: "cost proxy is relative only"}
+      sweep: [0.1, 2.0]
+      assumption_id: A-W1.8-11

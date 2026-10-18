@@ -1,0 +1,24 @@
+# Platform manifest for the Tejas-class dictionary (M01). The compiler reads this file, the tables it lists and every
+# sources/*.yaml file, and produces dictionary.<dict_version>.json (canonical, blake2b-hashed).
+# Bump dict_version (semver) on every content change and record the new hash in releases.yaml; the test suite
+# fails if the compiled hash of the current sources is not the hash recorded for dict_version.
+format: phalanx.dictionary.manifest/1
+platform: tejas
+title: "Phalanx virtual Tejas-class fleet: HAL Tejas Mk1A-class airframe, F404-GE-IN20 composite engine"
+dict_version: 0.1.3
+release_date: "2026-10-15"
+synthetic_icd: true
+synthetic_label: "SYNTHETIC Phalanx ICD - bus map, RT/SA/word and label allocations are synthetic, NOT the real Tejas ICD"
+tables:
+  lrus: tables/lrus.yaml
+  buses: tables/buses.yaml
+  rate_groups: tables/rate_groups.yaml
+  sinks: tables/sinks.yaml
+  code_tables: tables/code_tables.yaml
+  rules: tables/rules.yaml
+  constants: tables/constants.yaml
+sources_dir: sources
+# Generators run by `build` after compilation. Built-in names, or "module.path:function" import strings (the hook the
+# coordinator uses to add the W0.4 contract generator, e.g. "phalanx.dictionary.generators:contract_v0_generator";
+# tools/build_contract_docs.py passes it through build(extra_generators=...) instead).
+generators: [tmats, icd, param_table, assumptions]

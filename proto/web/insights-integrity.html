@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Can the records be trusted — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: grid; grid-template-rows: auto minmax(0,1fr); row-gap: 24px; height: 100%; }
+  .tabs2 span { cursor: pointer; }
+  .kick .tier { margin-left: 6px; }
+  .v2 { grid-template-rows: minmax(0,1fr); }
+  .ig { grid-template-columns: 96px minmax(0,1fr) auto; min-height: 98px; padding: 0 16px; }
+  .ig .n { font-size: 30px; font-weight: 650; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .ig .why { font-size: 13px; }
+  .stp { font: 700 11.5px var(--mono); letter-spacing: .06em; padding: 6px 10px; border-radius: 8px; white-space: nowrap; }
+  .stp.rep { background: var(--ok-wash); color: #17693A; }
+  .stp.flag { background: var(--warn-wash); color: #8A5A12; }
+  .stp.held { background: var(--bg-3); color: var(--ink-2); }
+  .ax { font: 500 11px var(--mono); fill: var(--ink-4); }
+  .focus .big { color: var(--accent-ink); }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; grid-template-columns: minmax(0, 1fr); }
+    #lat { height: auto; display: block; margin-top: 28px !important; }
+    #lkv { margin-top: 24px !important; }
+    [data-shot] .push { margin-top: 20px; }
+    .ig { min-height: 84px; }
+  }
+  @media (max-width: 699px) {
+    .ig { grid-template-columns: minmax(0,1fr) auto; row-gap: 8px; padding: 14px 12px; min-height: 0; }
+    .ig > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+    .ig .n { font-size: 26px; }
+    .ax { font-size: 12px; }
+  }
+</style>
+</head>
+<body data-page="insights">
+<div id="content">
+<div class="pg">
+  <div class="tabs2"><span onclick="location.href='insights.html'">Where availability went</span><span onclick="location.href='insights-nff.html'">Alarms that find nothing</span><span class="on">Can the records be trusted?</span></div>
+  <div class="v2">
+
+    <section class="panel2 c7" data-shot="integrity">
+      <div class="kick">Record integrity · as of 06:00<span class="tier desc">DESC</span></div>
+      <div class="t2">Five things the twin repaired or flagged before use</div>
+      <div class="sub2">Each would mislead a planner or a model if it were read as written.</div>
+      <div class="rows2" id="chk" style="margin-top:20px"></div>
+      <div class="push"><span class="lnk">Open data foundation<i data-i="chevRight" class="ico-sm"></i></span></div>
+    </section>
+
+    <section class="panel2 c5" data-shot="latency">
+      <div class="kick">Decision latency<span class="tier desc">DESC</span></div>
+      <div class="t2">The daily loop decides within one epoch</div>
+      <div style="margin-top:22px;display:flex;align-items:baseline;gap:12px"><span class="big" id="lb"></span><span class="t3" style="color:var(--ink-3)">of evidence waits past a day today</span></div>
+      <div class="ci" id="lci" style="margin-top:8px"></div>
+      <svg id="lat" width="100%" style="margin-top:40px"></svg>
+      <div class="kv2" id="lkv" style="margin-top:32px"></div>
+      <div class="push"><span class="lnk">Policy what-if<i data-i="chevRight" class="ico-sm"></i></span></div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-insights.js"></script>
+<script src="assets/data-data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const I = window.PHX_INS, DF = window.PHX_DF;
+const $ = id => document.getElementById('content').querySelector('#' + id);
+const f1 = (x, d = 1) => Number(x).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
+const N = x => Number(x).toLocaleString('en-IN');
+
+/* ---------- integrity rows: one number each ---------- */
+(function () {
+  const Dm = I.demands, X = I.xxx, S = I.shop, LM = DF.lag_maint, w = I.demands_waiting[0];
+  const late = LM.COMPONENT_LIFE.over24 + LM.SUPPLY_DEMAND.over24 + LM.SHOP_FINDING.over24;
+  const rows = [
+    [Dm.stale.length, 'AOG demands still open after the part was fitted', `${Dm.open} open in all · only ${w.tail}'s brake chute is truly waiting`, 'flag', 'FLAGGED', true],
+    [X.entities, 'Records with an unreadable serial', `${X.repairable_from_text} recovered from job text, with provenance · ${X.entities - X.repairable_from_text} stay flagged`, 'rep', `${X.repairable_from_text} REPAIRED`],
+    [I.install_lag.length, 'Fits named in job text with no install record', 'Positions inferred and marked, as for TJ107 hydraulic pump 1', 'flag', 'INFERRED'],
+    [late, 'Records that arrived more than a day late', `Component life ${LM.COMPONENT_LIFE.over24} · supply demands ${LM.SUPPLY_DEMAND.over24} · shop findings ${LM.SHOP_FINDING.over24}`, 'flag', 'LATE'],
+    [S.asof_unlinked, 'Shop findings with no aircraft link', `${S.asof_linked} of ${S.asof_rows} linked by job and serial · a fleet-wide dedupe would drop ${S.asof_rows - S.naive_global_dedupe_asof}`, 'held', 'HELD']];
+  $('chk').innerHTML = rows.map(([n, t, why, k, st, on]) => `<div class="r2 ig ${on ? 'on' : ''}"><div class="n">${N(n)}</div>
+     <div><div class="ttl">${t}</div><div class="why">${why}</div></div><span class="stp ${k}">${st}</span></div>`).join('');
+})();
+
+/* ---------- latency: two quantile dotplots on a log axis ---------- */
+(function () {
+  const Lq = I.latency, S = Lq.status_quo, P = Lq.loop;
+  $('lb').innerHTML = `${Math.round(S.over24 / S.n * 100)}<small>%</small>`;
+  $('lci').textContent = `Status quo, evidence ingested → job closed · n ${S.n} jobs`;
+  const PH = matchMedia('(max-width: 699px)').matches, W = PH ? 390 : matchMedia('(max-width: 1199px)').matches ? 700 : 538, H = 260, pl = 14, pr = 14, xmin = 1, xmax = 1100, K = 25;
+  const lx = v => pl + (W - pl - pr) * (Math.log10(Math.max(xmin, Math.min(xmax, v)))) / Math.log10(xmax);
+  const qd = arr => Array.from({ length: K }, (_, i) => { const q = (i + .5) / K, idx = q * (arr.length - 1), lo = Math.floor(idx), hi = Math.ceil(idx); return arr[lo] + (arr[hi] - arr[lo]) * (idx - lo); });
+  const r = 5, step = 2 * r + 1.5;
+  const stack = (vals, base, dir, color) => { const bins = {}; let o = '';
+    vals.forEach(v => { const b = Math.round((lx(v) - pl) / step); bins[b] = (bins[b] || 0) + 1;
+      o += `<circle cx="${pl + b * step}" cy="${base + dir * (r + 1 + (bins[b] - 1) * step)}" r="${r}" fill="${color}"/>`; }); return o; };
+  const mid = 130;
+  let g = `<rect x="${pl}" y="16" width="${lx(24) - pl}" height="${H - 36}" rx="6" fill="var(--accent-wash)"/>`;
+  [[1, '1 h'], [4, '4 h'], [12, PH ? '' : '12 h'], [24, '1 d'], [72, '3 d'], [168, '7 d'], [720, '30 d']].forEach(([v, t]) =>
+    g += `<line x1="${lx(v)}" x2="${lx(v)}" y1="16" y2="${H - 20}" stroke="var(--line-2)"/><text class="ax" x="${lx(v)}" y="${H - 4}" text-anchor="middle">${t}</text>`);
+  g += `<line x1="${lx(24)}" x2="${lx(24)}" y1="10" y2="${H - 20}" stroke="var(--accent)" stroke-width="1.5"/>`;
+  g += `<line x1="${pl}" x2="${W - pr}" y1="${mid}" y2="${mid}" stroke="var(--line-strong)"/>`;
+  g += stack(qd(Lq.sq_values), mid - 3, -1, 'var(--ink-3)') + stack(qd(Lq.loop_values), mid + 3, 1, 'var(--accent)');
+  g += `<text x="${W - pr}" y="36" text-anchor="end" style="font:650 15px var(--font);fill:var(--ink-2)">Status quo</text>
+        <text x="${W - pr}" y="54" text-anchor="end" style="font:500 13px var(--font);fill:var(--ink-4)">evidence → job closed</text>
+        <text x="${W - pr}" y="${mid + 30}" text-anchor="end" style="font:650 15px var(--font);fill:var(--accent-ink)">Daily loop</text>
+        <text x="${W - pr}" y="${mid + 48}" text-anchor="end" style="font:500 13px var(--font);fill:var(--ink-4)">evidence → order, next 08:00</text>
+        <text x="${lx(24) - 8}" y="30" text-anchor="end" style="font:650 13px var(--font);fill:var(--accent-ink)">one epoch</text>`;
+  const el = $('lat'); el.setAttribute('viewBox', `0 0 ${W} ${H}`); el.setAttribute('height', H); el.innerHTML = g;
+  $('lkv').innerHTML = `<span>Status quo · median, 90th percentile</span><span>${f1(S.median)} h · ${f1(S.p90, 0)} h</span>
+     <span>Daily loop · median, worst case</span><span>${f1(P.median)} h · ${f1(P.max)} h</span>`;
+})();
+
+PHX.mount({
+  page: 'insights', title: 'Fleet insights', sub: 'Command view · where availability is lost, and which fix buys the most back',
+  chips: [{ t: 'As of <b>Mon 22 Jun 06:00 IST</b>', i: 'clock' }, { t: '<b>168 d</b> · 8 aircraft', i: 'calendar' }]
+});
+</script>
+</body></html>

@@ -1,0 +1,239 @@
+{
+ "source_label": "Simulated fleet history",
+ "model_id": "hazard",
+ "model_version": "0.2.0",
+ "note": "Backtest on simulated (synthetic, unvalidated) training worlds: shows the pipeline works, not that it predicts real failures.",
+ "seeds": {
+  "fit_for_selection": [
+   1,
+   2
+  ],
+  "validation": [
+   3
+  ],
+  "train": [
+   1,
+   2,
+   3
+  ],
+  "test": [
+   4
+  ]
+ },
+ "horizon_fh": 15.0,
+ "landmark_step_fh": 10.0,
+ "penalizer": 0.1,
+ "min_events": 10,
+ "train_events_by_class": {
+  "ADC": 0,
+  "AMAGB": 0,
+  "BCU": 0,
+  "BRAKE": 0,
+  "CHUTE": 0,
+  "DFCC": 0,
+  "ENG": 1,
+  "FADEC": 0,
+  "FQGS": 0,
+  "GEN": 1,
+  "HYDP": 59,
+  "INGPS": 0,
+  "JFS": 0,
+  "OBOGS": 0,
+  "RADAR": 1,
+  "TYRE": 0
+ },
+ "fit_classes": [
+  "HYDP"
+ ],
+ "insufficient_evidence_classes": [
+  "ADC",
+  "AMAGB",
+  "BCU",
+  "BRAKE",
+  "CHUTE",
+  "DFCC",
+  "ENG",
+  "FADEC",
+  "FQGS",
+  "GEN",
+  "INGPS",
+  "JFS",
+  "OBOGS",
+  "RADAR",
+  "TYRE"
+ ],
+ "kinds": {
+  "class_exp": "class-exposure baseline (events / flight hours per class)",
+  "age": "Weibull AFT on age, partially pooled",
+  "landmark": "landmark Weibull AFT with spell covariates, partially pooled"
+ },
+ "challenger_selection_on_validation": {
+  "age": {
+   "fit_seeds": [
+    1,
+    2
+   ],
+   "validation_seeds": [
+    3
+   ],
+   "landmarks": 450,
+   "events_in_window": 34,
+   "brier": 0.059313,
+   "auc": 0.8216,
+   "c_index": 0.7667
+  },
+  "landmark": {
+   "fit_seeds": [
+    1,
+    2
+   ],
+   "validation_seeds": [
+    3
+   ],
+   "landmarks": 450,
+   "events_in_window": 34,
+   "brier": 0.069978,
+   "auc": 0.8523,
+   "c_index": 0.7525
+  }
+ },
+ "challenger": "age",
+ "test_scores_fit_classes": {
+  "class_exp": {
+   "landmarks": 346,
+   "events_in_window": 28,
+   "brier": 0.074414,
+   "auc": 0.5,
+   "c_index": 0.5
+  },
+  "age": {
+   "landmarks": 346,
+   "events_in_window": 28,
+   "brier": 0.059378,
+   "auc": 0.903,
+   "c_index": 0.8302
+  },
+  "landmark": {
+   "landmarks": 346,
+   "events_in_window": 28,
+   "brier": 0.075439,
+   "auc": 0.896,
+   "c_index": 0.8225
+  }
+ },
+ "champion": {
+  "kind": "age",
+  "label": "Weibull AFT on age, partially pooled",
+  "why": "chosen over the other challenger on validation seed 3; beats the class-exposure baseline on held-out seed 4 (Brier 0.059378 vs 0.074414)",
+  "held_out": {
+   "landmarks": 346,
+   "events_in_window": 28,
+   "brier": 0.059378,
+   "auc": 0.903,
+   "c_index": 0.8302
+  }
+ },
+ "candidates": [
+  {
+   "name": "class_exp",
+   "label": "class-exposure baseline (events / flight hours per class)",
+   "brier": 0.074414,
+   "auc": 0.5,
+   "c_index": 0.5,
+   "promoted": false,
+   "role": "baseline"
+  },
+  {
+   "name": "age",
+   "label": "Weibull AFT on age, partially pooled",
+   "brier": 0.059378,
+   "auc": 0.903,
+   "c_index": 0.8302,
+   "promoted": true,
+   "role": "challenger"
+  },
+  {
+   "name": "landmark",
+   "label": "landmark Weibull AFT with spell covariates, partially pooled",
+   "brier": 0.075439,
+   "auc": 0.896,
+   "c_index": 0.8225,
+   "promoted": false,
+   "role": "not selected"
+  }
+ ],
+ "promoted": true,
+ "calibration_champion_quintiles": [
+  {
+   "bin": 1,
+   "n": 70,
+   "mean_predicted": 0.00259,
+   "observed": 0.01429
+  },
+  {
+   "bin": 2,
+   "n": 69,
+   "mean_predicted": 0.01764,
+   "observed": 0.0
+  },
+  {
+   "bin": 3,
+   "n": 69,
+   "mean_predicted": 0.04885,
+   "observed": 0.0
+  },
+  {
+   "bin": 4,
+   "n": 69,
+   "mean_predicted": 0.09844,
+   "observed": 0.04348
+  },
+  {
+   "bin": 5,
+   "n": 69,
+   "mean_predicted": 0.2022,
+   "observed": 0.34783
+  }
+ ],
+ "landmark_covariate_effects_log_scale": {
+  "age_fh": -0.0014,
+  "alarms_last10": -0.0476,
+  "alarm_rate": 0.0779,
+  "prior_rtok": -0.0254,
+  "inferred_install": 0.0083
+ },
+ "landmark_covariate_note": "AFT coefficients on log residual-life scale: negative = shorter residual life = higher risk",
+ "c_index_note": "Harrell's C over landmark rows (residual life vs predicted risk); rows of one spell are correlated. The class-exposure baseline gives one value per class, so its C-index within a class is 0.5.",
+ "final_model": {
+  "path": "/home/linux1/phalanx/Phalanx-Solution/proto/runs/train/hazard_model.json",
+  "kind": "age",
+  "seeds": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "events_by_class": {
+   "ADC": 0,
+   "AMAGB": 0,
+   "BCU": 0,
+   "BRAKE": 0,
+   "CHUTE": 0,
+   "DFCC": 0,
+   "ENG": 1,
+   "FADEC": 0,
+   "FQGS": 0,
+   "GEN": 1,
+   "HYDP": 77,
+   "INGPS": 0,
+   "JFS": 0,
+   "OBOGS": 0,
+   "RADAR": 1,
+   "TYRE": 0
+  },
+  "fit_classes": [
+   "HYDP"
+  ],
+  "champion_note": "held-out seed 4: Brier 0.059378 vs class-exposure baseline 0.074414"
+ }
+}

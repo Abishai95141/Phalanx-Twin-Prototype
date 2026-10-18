@@ -1,0 +1,15 @@
+# Phalanx proxy-mode dictionary (DASHlink Tail 687; W2.4a, AD-33/AD-43). Hand-maintained source.
+# FADEC lanes: TRANSFER of the Tejas FADEC lane definitions (the proxy runs the same M08 structure, AD-43).
+# Recorded words: MEASURED on DASHlink Tail 687 archive 1 (analysis/dashlink_texture, round-1/2 results).
+format: phalanx.dictionary.sinks/1
+sinks:
+  INTERNAL:
+    name: Consumed inside the controller (signal validation, control law)
+    kind: consumer
+    evidence: {tag: 'TRANSFER: Phalanx Tejas dictionary FADEC lanes', source: architecture §7; configs/tejas/dictionary/tables/sinks.yaml INTERNAL}
+  ACMS_REC:
+    name: DASHlink ACMS recording (the MAT files)
+    kind: recorder
+    default_group: ACMS4
+    lru: ACMS
+    evidence: {tag: MEASURED, source: DASHlink Tail 687 MAT files (analysis/dashlink_texture/results/param_table.csv)}

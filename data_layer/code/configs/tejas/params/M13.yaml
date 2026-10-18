@@ -1,0 +1,880 @@
+# M13 acquisition and residual texture: Tejas parameters (W1.6). Structure (which rule applies to which channel)
+# is in M13/acquisition_map.yaml. Native steps, recorder LSBs, ranges, rates and EU conversions come from the
+# dictionary (M01), never from here. Proxy (DASHlink) texture values appear only in tests, except where a Tejas value
+# is an explicit ASSUMPTION transferred from them (stated in the source).
+#
+# Noise sigmas are in units of the channel's native step ("steps", sigma_steps) or in the channel's engineering
+# unit (sigma_eu); ceilings of measured classes are in EU (percent of rated speed, degC, lb/h), as measured; the
+# default ceiling is in steps. Channels with a dictionary converter_step (the FADEC lanes, quantised at the FADEC
+# converter resolution since the dictionary 0.1.2 migration, W2.2) must have noise and ceiling in EU.
+format: phalanx.params/1
+module: M13
+sets:
+  noise_default:
+    sigma_steps:
+      value: 0.144
+      units: "1"
+      description: Idiosyncratic noise standard deviation in native steps (half the quantiser standard deviation 1/sqrt(12))
+      evidence: {tag: ASSUMPTION, source: "Round-2 REPORT §3.5: idiosyncratic sensor noise sits at or below the quantiser variance ([MEASURED] proxy, N1/N2/EGT/FF); midpoint of [0, ceiling] for classes with no measurement"}
+      sweep: [0.0, 0.2887]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Correlation time of the AR(1) noise (0 = white at the acquisition rate)
+      evidence: {tag: ASSUMPTION, source: "No idiosyncratic ACF measured outside the engine families"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability per sample
+      evidence: {tag: ASSUMPTION, source: "report §8 component 4: rare scaled draws giving 0.1-0.5 % beyond 4 sigma ([MEASURED] proxy, total residual)"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Scale of a heavy-tail draw
+      evidence: {tag: ASSUMPTION, source: "report §8 component 4 (excess kurtosis 0.3-3)"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Noise multiplier per flight-phase code 0-15 (0-7 UNKNOWN..ROLLOUT; 8-15 ENGINE_START, MISSION, DESCENT, PATTERN, TOUCH_AND_GO, SHUTDOWN, GROUND_RUN, HOT_REFUEL; dictionary 0.1.2)
+      evidence: {tag: ASSUMPTION, source: "DASHlink heteroscedasticity (x10 roll, x1.3-1.8 approach; hetero_summary_phase.csv) is in the TOTAL residual, i.e. coupled dynamics owned by M03/M07; the idiosyncratic multiplier is left at 1"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_n1:
+    sigma_eu:
+      value: 0.0190625
+      units: "1"
+      description: N1 lane idiosyncratic noise in %RPM (channel EU; = 0.61 steps of the 0.03125 % recorded-word grid, the W1.6 value). In EU since the dictionary 0.1.2 migration (W2.2), because N1 lanes quantise at the FADEC converter_step
+      evidence: {tag: ASSUMPTION, source: "Transfer of the 687-CAL median idiosyncratic sigma 0.013-0.031 %RPM (median 0.019 %) of round-2 M-B (analysis/settling_experiment_round2/results/frozen/S/mb.json, [MEASURED] proxy)"}
+      sweep: [0.0, 0.03125]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.34
+      units: s
+      description: N1 noise correlation time (lag-1 phi about 0.48 at 4 Hz)
+      evidence: {tag: ASSUMPTION, source: "mb.json phi 0.42-0.51 at 4 Hz ([MEASURED] proxy): tau_c = -0.25 s / ln(0.48)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_p"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_k"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: N1 noise multiplier per phase code
+      evidence: {tag: ASSUMPTION, source: "as noise_default.regime_mult (the x3 mid-power engine-speed peak is total residual)"}
+      sweep: [1.0, 1.6]
+      assumption_id: A-W1.6-22
+  noise_n2:
+    sigma_eu:
+      value: 0.005
+      units: "1"
+      description: N2 lane idiosyncratic noise in %RPM (channel EU; = 0.16 steps of the 0.03125 % recorded-word grid, the W1.6 value). In EU since the dictionary 0.1.2 migration (W2.2), because N2 lanes quantise at the FADEC converter_step
+      evidence: {tag: ASSUMPTION, source: "Transfer of the 687-CAL idiosyncratic sigma 0-0.0082 %RPM (median 0.005 %) of round-2 M-B (mb.json, [MEASURED] proxy)"}
+      sweep: [0.0, 0.008125]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.26
+      units: s
+      description: N2 noise correlation time (lag-1 phi about 0.38 at 4 Hz)
+      evidence: {tag: ASSUMPTION, source: "mb.json phi 0.35-0.41 at 4 Hz ([MEASURED] proxy)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_p"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Heavy-tail scale
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_k"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: N2 noise multiplier per phase code
+      evidence: {tag: ASSUMPTION, source: "as noise_default.regime_mult"}
+      sweep: [1.0, 1.6]
+      assumption_id: A-W1.6-22
+  # ---- FADEC converter-step lanes without their own measurement (PLA, A8, PS3, T1): noise_default in EU -------
+  # Dictionary 0.1.2 migration (W2.2): these lanes quantise at the FADEC converter_step (span / 2^14,
+  # R-FADEC-ADC), so a noise in steps would change meaning when 0.1.3 moves that step into native_step. Each value
+  # is noise_default's 0.144 steps of the channel's recorded-word step (the step the W0.5/round-2 evidence is
+  # measured against), written in the channel EU: the lane noise in EU is unchanged by the migration.
+  noise_fadec_pla:
+    sigma_eu:
+      value: 0.012672
+      units: "1"
+      description: PLA lane idiosyncratic noise in degrees (channel EU; = 0.144 x the 0.088 deg word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of noise_default (Round-2 REPORT §3.5: idiosyncratic sensor noise at or below the quantiser variance, [MEASURED] proxy on the engine families; midpoint of [0, ceiling]); W2.2 converter-step migration"}
+      sweep: [0.0, 0.0254056]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Correlation time of the AR(1) noise (0 = white at the acquisition rate)
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tau_c"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability per sample
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_p"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Scale of a heavy-tail draw
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_k"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Noise multiplier per flight-phase code 0-15
+      evidence: {tag: ASSUMPTION, source: "as noise_default.regime_mult"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_fadec_a8:
+    sigma_eu:
+      value: 0.0144
+      units: "1"
+      description: A8 (nozzle LVDT) lane idiosyncratic noise in percent stroke (channel EU; = 0.144 x the 0.1 % word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of noise_default (Round-2 REPORT §3.5, [MEASURED] proxy on the engine families); W2.2 converter-step migration"}
+      sweep: [0.0, 0.02887]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Correlation time of the AR(1) noise (0 = white at the acquisition rate)
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tau_c"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability per sample
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_p"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Scale of a heavy-tail draw
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_k"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Noise multiplier per flight-phase code 0-15
+      evidence: {tag: ASSUMPTION, source: "as noise_default.regime_mult"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_fadec_ps3:
+    sigma_eu:
+      value: 0.072
+      units: "1"
+      description: PS3 lane idiosyncratic noise in psi (channel EU; = 0.144 x the 0.5 psi word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of noise_default (Round-2 REPORT §3.5, [MEASURED] proxy on the engine families); W2.2 converter-step migration"}
+      sweep: [0.0, 0.14435]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Correlation time of the AR(1) noise (0 = white at the acquisition rate)
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tau_c"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability per sample
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_p"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Scale of a heavy-tail draw
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_k"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Noise multiplier per flight-phase code 0-15
+      evidence: {tag: ASSUMPTION, source: "as noise_default.regime_mult"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_fadec_t1:
+    sigma_eu:
+      value: 0.144
+      units: "1"
+      description: T1 (inlet RTD) lane idiosyncratic noise in degC (channel EU; = 0.144 x the 1 degC word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of noise_default (Round-2 REPORT §3.5, [MEASURED] proxy on the engine families); W2.2 converter-step migration"}
+      sweep: [0.0, 0.2887]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Correlation time of the AR(1) noise (0 = white at the acquisition rate)
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tau_c"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.002
+      units: "1"
+      description: Heavy-tail mixture probability per sample
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_p"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 3.0
+      units: "1"
+      description: Scale of a heavy-tail draw
+      evidence: {tag: ASSUMPTION, source: "as noise_default.tail_k"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Noise multiplier per flight-phase code 0-15
+      evidence: {tag: ASSUMPTION, source: "as noise_default.regime_mult"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_egt:
+    sigma_steps:
+      value: 0.0
+      units: "1"
+      description: T5 (EGT) idiosyncratic noise (zero, as measured)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). T5 (EGT): idiosyncratic sigma 0 on the proxy: round-2 M-B on 687-CAL, EGT_1-4 = 0 (unexplained variance below the quantiser variance; analysis/settling_experiment_round2/results/frozen/S/mb.json, [MEASURED] proxy). A zero estimate is a boundary value: the true level is somewhere at or below the quantiser variance (round-2 REPORT §3.5), hence the sweep to q/sqrt(12) (= noise_default range), joint with the ceiling_egt sweep"}
+      sweep: [0.0, 0.2887]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when the sweep makes sigma > 0; noise_default.tau_c range)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.0
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when sigma > 0; noise_default.tail_p range)"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 1.0
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when sigma > 0; noise_default.tail_k range)"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when sigma > 0; noise_default.regime_mult range)"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_ff:
+    sigma_steps:
+      value: 0.0
+      units: "1"
+      description: Main fuel-flow idiosyncratic noise (zero, as measured)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). Main fuel flow: idiosyncratic sigma 0 on the proxy: round-2 M-B on 687-CAL, FF_1-4 = 0 (unexplained variance below the quantiser variance; analysis/settling_experiment_round2/results/frozen/S/mb.json, [MEASURED] proxy). A zero estimate is a boundary value: the true level is somewhere at or below the quantiser variance (round-2 REPORT §3.5), hence the sweep to q/sqrt(12) (= noise_default range), joint with the ceiling_ff sweep"}
+      sweep: [0.0, 0.2887]
+      assumption_id: A-W1.6-22
+    tau_c:
+      value: 0.0
+      units: s
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when the sweep makes sigma > 0; noise_default.tau_c range)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-22
+    tail_p:
+      value: 0.0
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when sigma > 0; noise_default.tail_p range)"}
+      sweep: [0.0, 0.005]
+      assumption_id: A-W1.6-22
+    tail_k:
+      value: 1.0
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when sigma > 0; noise_default.tail_k range)"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.6-22
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). as sigma_steps (used only when sigma > 0; noise_default.regime_mult range)"}
+      sweep: [1.0, 2.0]
+      assumption_id: A-W1.6-22
+  noise_computed:
+    sigma_steps:
+      value: 0.0
+      units: "1"
+      description: LRU-computed words (voted, averaged, gauged totals) carry no independent sensor noise; their texture comes from their inputs
+      evidence: {tag: ASSUMPTION, source: "architecture §7 (n_indep is sensor noise); FADEC-validated substitutes are smoother than raw (texture_and_fault_gap_closure.md Synthesis b)"}
+      sweep: [0.0, 0.0]
+      assumption_id: A-W1.6-32
+    tau_c:
+      value: 0.0
+      units: s
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "as sigma_steps"}
+      sweep: [0.0, 0.0]
+      assumption_id: A-W1.6-32
+    tail_p:
+      value: 0.0
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "as sigma_steps"}
+      sweep: [0.0, 0.0]
+      assumption_id: A-W1.6-32
+    tail_k:
+      value: 1.0
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "as sigma_steps"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.6-32
+    regime_mult:
+      value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+      units: "1"
+      description: Unused (sigma 0)
+      evidence: {tag: ASSUMPTION, source: "as sigma_steps"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.6-32
+
+  # ---- noise ceilings (W0.5 finding: +-1 LSB of extra independent noise FAILs B1, B3 (i), B4) -----------------
+  ceiling_n1:
+    sigma_eu:
+      value: 0.03128
+      units: "1"
+      description: Largest measured N1 idiosyncratic sigma, in %RPM (channel EU)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). Round-2 M-B, 687-CAL: N1_1-4 sigma 0.0195/0.0313/0.0130/0.0186 %RPM (analysis/settling_experiment_round2/results/frozen/S/mb.json, [MEASURED] proxy, n = 4); the Tejas ceiling is the proxy maximum transferred. Sweep: 0 to the proxy maximum (the N1 noise sweep stays below it)"}
+      sweep: [0.0, 0.03128]
+      assumption_id: A-W1.6-23
+  ceiling_n2:
+    sigma_eu:
+      value: 0.00824
+      units: "1"
+      description: Largest measured N2 idiosyncratic sigma, in %RPM
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). Round-2 M-B, 687-CAL: N2_1-4 sigma 0.0026/0.0075/0.0082/0.0 %RPM (mb.json, [MEASURED] proxy, n = 4); the proxy maximum transferred. Sweep: 0 to q/sqrt(12) of the 0.03125 % grid (0.00902 %), the resolution limit of a zero estimate"}
+      sweep: [0.0, 0.00902]
+      assumption_id: A-W1.6-23
+  ceiling_egt:
+    sigma_eu:
+      value: 0.0
+      units: "1"
+      description: Measured EGT idiosyncratic sigma, degC (zero)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). Round-2 M-B, 687-CAL: EGT_1-4 sigma 0 (mb.json, [MEASURED] proxy, n = 4); a zero estimate means below the quantiser variance. Sweep: 0 to q/sqrt(12) of the T5 harness native step (1 degC: 0.2887 degC), joint with the noise_egt sweep"}
+      sweep: [0.0, 0.2887]
+      assumption_id: A-W1.6-23
+  ceiling_ff:
+    sigma_eu:
+      value: 0.0
+      units: "1"
+      description: Measured FF idiosyncratic sigma, lb/h (zero)
+      evidence: {tag: ASSUMPTION, source: "Applied to the Tejas, a proxy measurement is an ASSUMPTION (M13 header; RULES.md rule 3; E1 verifier §7, E1-HY). Round-2 M-B, 687-CAL: FF_1-4 sigma 0 (mb.json, [MEASURED] proxy, n = 4); a zero estimate means below the quantiser variance. Sweep: 0 to q/sqrt(12) of the WFM native step (8 lb/h: 2.309 lb/h), joint with the noise_ff sweep"}
+      sweep: [0.0, 2.309]
+      assumption_id: A-W1.6-23
+  # ceilings of the FADEC converter-step lanes without a measurement: ceiling_default in EU (W2.2 migration;
+  # q/sqrt(12) of the recorded-word step, the step the evidence is measured against)
+  ceiling_fadec_pla:
+    sigma_eu:
+      value: 0.0254034
+      units: "1"
+      description: PLA lane noise ceiling in degrees (channel EU; = 0.288675 x the 0.088 deg word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of ceiling_default (Round-2 REPORT §3.5: idiosyncratic noise at or below the quantiser variance, [MEASURED] on the engine families, transferred); W2.2 converter-step migration"}
+      sweep: [0.0, 0.0254034]
+      assumption_id: A-W1.6-23
+  ceiling_fadec_a8:
+    sigma_eu:
+      value: 0.0288675
+      units: "1"
+      description: A8 lane noise ceiling in percent stroke (channel EU; = 0.288675 x the 0.1 % word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of ceiling_default (Round-2 REPORT §3.5, [MEASURED] on the engine families, transferred); W2.2 converter-step migration"}
+      sweep: [0.0, 0.0288675]
+      assumption_id: A-W1.6-23
+  ceiling_fadec_ps3:
+    sigma_eu:
+      value: 0.1443375
+      units: "1"
+      description: PS3 lane noise ceiling in psi (channel EU; = 0.288675 x the 0.5 psi word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of ceiling_default (Round-2 REPORT §3.5, [MEASURED] on the engine families, transferred); W2.2 converter-step migration"}
+      sweep: [0.0, 0.1443375]
+      assumption_id: A-W1.6-23
+  ceiling_fadec_t1:
+    sigma_eu:
+      value: 0.288675
+      units: "1"
+      description: T1 lane noise ceiling in degC (channel EU; = 0.288675 x the 1 degC word step)
+      evidence: {tag: ASSUMPTION, source: "EU form of ceiling_default (Round-2 REPORT §3.5, [MEASURED] on the engine families, transferred); W2.2 converter-step migration"}
+      sweep: [0.0, 0.288675]
+      assumption_id: A-W1.6-23
+  ceiling_default:
+    sigma_steps:
+      value: 0.288675
+      units: "1"
+      description: Default ceiling = quantiser standard deviation (1/sqrt(12) native steps)
+      evidence: {tag: ASSUMPTION, source: "Round-2 REPORT §3.5 ('idiosyncratic sensor noise sits at or below the quantiser variance', [MEASURED] on the engine families) transferred to classes without a measurement"}
+      sweep: [0.0, 0.288675]
+      assumption_id: A-W1.6-23
+
+  # ---- validity gating, deadband, freeze, glitch ------------------------------------------------------------------
+  gate_n2:
+    threshold_eu:
+      value: 4.854
+      units: "1"
+      description: N2 reading below which the speed signal is not detected (816 rpm / 16,810 rpm, in %N2) -> 0 with NO_COMPUTED_DATA
+      evidence: {tag: "TRANSFER: F404-400", source: "NH sensing range 816-18,515 rpm (alternator 195-4,425 Hz), CR-191195 §3.1/§4.8.2 (candidate_engine_and_ehm_data.md line 143); 100 % N2 = 16,810 rpm (dictionary channel_reference)"}
+  gate_n1:
+    threshold_eu:
+      value: 2.0
+      units: "1"
+      description: N1 reading (%N1) below which the eddy-current pulses are not detected
+      evidence: {tag: ASSUMPTION, source: "Eddy-current amplitude falls with speed (1-2 Vpp at 2.8 kHz, CR-1998-208416 §3.3.3); detection floor not public; proxy gate 1.2-2.0 %N1 on 687-CAL (model_params_primary.json fixed.gate, [MEASURED])"}
+      sweep: [1.0, 30.0]
+      assumption_id: A-W1.6-28
+  deadband_pla:
+    width_eu:
+      value: 0.0
+      units: "1"
+      description: Throttle-transducer deadband / backlash width in degrees (off by default)
+      evidence: {tag: ASSUMPTION, source: "DASHlink PLA_1 about 1 deg deadband on 1 of 4 engines (dropouts_stuck.csv, [MEASURED] proxy; empirical_dashlink_texture.md Q2); a per-installation defect, not a fleet property"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-27
+  freeze_egt:
+    rate:
+      value: 0.04
+      units: 1/hour
+      description: Episodic freeze start rate per airborne hour (T5 harness channels)
+      evidence: {tag: ASSUMPTION, source: "687-CAL EGT_1-4 0.016-0.098 per airborne hour (round-2 mb.json fixed.freeze, [MEASURED] proxy)"}
+      sweep: [0.0, 0.1]
+      assumption_id: A-W1.6-26
+    dur_min:
+      value: 30.0
+      units: s
+      description: Minimum freeze duration (the proxy detection rule required >= 30 s)
+      evidence: {tag: ASSUMPTION, source: "dashlink_texture/dropouts.py sibling-stuck rule (>= 30 s)"}
+      sweep: [5.0, 30.0]
+      assumption_id: A-W1.6-26
+    dur_mean_excess:
+      value: 12.0
+      units: s
+      description: Mean freeze duration beyond the minimum (exponential)
+      evidence: {tag: ASSUMPTION, source: "mb.json EGT durations 30-84 s, median about 38 s ([MEASURED] proxy)"}
+      sweep: [5.0, 60.0]
+      assumption_id: A-W1.6-26
+  freeze_ff:
+    rate:
+      value: 0.05
+      units: 1/hour
+      description: Episodic freeze start rate per airborne hour (main fuel flow)
+      evidence: {tag: ASSUMPTION, source: "687-CAL FF_1 0.19 per airborne hour, FF_2-4 zero (mb.json, [MEASURED] proxy)"}
+      sweep: [0.0, 0.2]
+      assumption_id: A-W1.6-26
+    dur_min:
+      value: 30.0
+      units: s
+      description: Minimum freeze duration
+      evidence: {tag: ASSUMPTION, source: "dashlink_texture/dropouts.py sibling-stuck rule (>= 30 s)"}
+      sweep: [5.0, 30.0]
+      assumption_id: A-W1.6-26
+    dur_mean_excess:
+      value: 60.0
+      units: s
+      description: Mean freeze duration beyond the minimum (exponential)
+      evidence: {tag: ASSUMPTION, source: "mb.json FF_1 durations 31-775 s, median about 60 s ([MEASURED] proxy)"}
+      sweep: [10.0, 300.0]
+      assumption_id: A-W1.6-26
+  glitch_default:
+    rate:
+      value: 5.0e-5
+      units: 1/hour
+      description: All-ones (top-of-scale) glitch word rate per record-hour per channel
+      evidence: {tag: ASSUMPTION, source: "report §8 component 7: all-ones at 1e-5 to 1e-4 per record-hour ([MEASURED] DASHlink); 687-CAL engine channels 0 (mb.json)"}
+      sweep: [0.0, 1.0e-4]
+      assumption_id: A-W1.6-25
+
+  # ---- acquisition clock domains and analog slip (per acquiring LRU) -------------------------------------------
+  clock_fadec:
+    offset_ppm:
+      value: 50.0
+      units: "1"
+      description: FADEC oscillator fractional frequency offset, in ppm (must equal the M08 FADEC clock domain)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 'per-LRU Delta' (unavoidable assumption); crystal tolerance tens of ppm"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W1.6-21
+    phase:
+      value: 0.0031
+      units: s
+      description: FADEC first-sample instant (phase of its 60 Hz frame against kernel time 0)
+      evidence: {tag: ASSUMPTION, source: "no public value; non-zero so FADEC samples fall between truth frames"}
+      sweep: [0.0, 0.0166]
+      assumption_id: A-W1.6-21
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: Analog slip-window sentinels on this LRU's analog channels (0/1)
+      evidence: {tag: ASSUMPTION, source: "slip needs a converter clock distinct from the read clock (DASHlink DFDAU, report §8); engine/flight controllers assumed to sample their own ADCs synchronously"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-24
+  clock_dfcc:
+    offset_ppm:
+      value: 0.0
+      units: "1"
+      description: DFCC frame offset (80 Hz rate group, exact); the ADC frames are taken as synchronised to it
+      evidence: {tag: ASSUMPTION, source: "architecture §8 (DFCC 80 Hz exact rate group, DIRECT 80 Hz); ADC-DFCC synchronisation assumed"}
+      sweep: [0.0, 0.0]
+      assumption_id: A-W1.6-21
+    phase:
+      value: 0.0
+      units: s
+      description: DFCC frame phase (frames on truth steps k = 0 mod 3)
+      evidence: {tag: ASSUMPTION, source: "architecture §8, AD-36 (rate groups on k mod divisor)"}
+      sweep: [0.0, 0.0]
+      assumption_id: A-W1.6-21
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip on DFCC/ADC channels (synchronous sampling)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-24
+  clock_bheem_eu:
+    offset_ppm:
+      value: 30.0
+      units: "1"
+      description: Utility EU oscillator offset, ppm
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W1.6-21
+    phase:
+      value: 0.0017
+      units: s
+      description: Utility EU first-sample instant
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.025]
+      assumption_id: A-W1.6-21
+    slip_enabled:
+      value: 1.0
+      units: "1"
+      description: Analog slip-window sentinels on utility-EU analog channels
+      evidence: {tag: ASSUMPTION, source: "DASHlink analog acquisition (DFDAU) shows slip sentinels (report §8, AD-06, [MEASURED] proxy); a monitoring acquisition unit with a multiplexed converter is the closest analogue"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-24
+    conv_offset_ppm:
+      value: 910.0
+      units: "1"
+      description: Converter-vs-read clock offset, ppm (sets the slip period 1/(f Delta))
+      evidence: {tag: ASSUMPTION, source: "DASHlink recorder-vs-source Delta 910.5 ppm (round-1 mechanism_summary.json P1, [MEASURED] proxy) transferred"}
+      sweep: [20.0, 1000.0]
+      assumption_id: A-W1.6-24
+    window:
+      value: 0.002
+      units: s
+      description: Collision window around a converter update
+      evidence: {tag: ASSUMPTION, source: "DASHlink 9-22 ms at 1-8 Hz (report §8, [MEASURED] proxy); scaled down to stay well inside the 25 ms frame of a 40 Hz unit"}
+      sweep: [0.0005, 0.01]
+      assumption_id: A-W1.6-24
+    p_in:
+      value: 0.25
+      units: "1"
+      description: Probability that a read inside the collision window returns the sentinel
+      evidence: {tag: ASSUMPTION, source: "DASHlink in-window loss 0.15-0.35 (dropout_bursts.csv, [MEASURED] proxy)"}
+      sweep: [0.15, 0.35]
+      assumption_id: A-W1.6-24
+  clock_ecfm_c:
+    offset_ppm:
+      value: -40.0
+      units: "1"
+      description: ECFM-C oscillator offset, ppm
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W1.6-21
+    phase:
+      value: 0.0093
+      units: s
+      description: ECFM-C first-sample instant
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.025]
+      assumption_id: A-W1.6-21
+    slip_enabled:
+      value: 1.0
+      units: "1"
+      description: Analog slip-window sentinels on ECFM-C analog channels
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.slip_enabled"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-24
+    conv_offset_ppm:
+      value: 910.0
+      units: "1"
+      description: Converter-vs-read clock offset, ppm
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.conv_offset_ppm"}
+      sweep: [20.0, 1000.0]
+      assumption_id: A-W1.6-24
+    window:
+      value: 0.002
+      units: s
+      description: Collision window
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.window"}
+      sweep: [0.0005, 0.01]
+      assumption_id: A-W1.6-24
+    p_in:
+      value: 0.25
+      units: "1"
+      description: In-window sentinel probability
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.p_in"}
+      sweep: [0.15, 0.35]
+      assumption_id: A-W1.6-24
+  clock_ingps:
+    offset_ppm:
+      value: 12.0
+      units: "1"
+      description: INS/GPS (SIGMA 95N-class) oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0013
+      units: s
+      description: INS/GPS (SIGMA 95N-class) first-sample instant inside its 100 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0100]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_ahrs:
+    offset_ppm:
+      value: -18.0
+      units: "1"
+      description: standby AHRS oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0041
+      units: s
+      description: standby AHRS first-sample instant inside its 100 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0100]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_radalt:
+    offset_ppm:
+      value: 27.0
+      units: "1"
+      description: radar altimeter oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0115
+      units: s
+      description: radar altimeter first-sample instant inside its 25 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0400]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_sms:
+    offset_ppm:
+      value: -9.0
+      units: "1"
+      description: stores management system oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0072
+      units: s
+      description: stores management system first-sample instant inside its 50 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0200]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_cws:
+    offset_ppm:
+      value: 6.0
+      units: "1"
+      description: centralised warning system oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0088
+      units: s
+      description: centralised warning system first-sample instant inside its 40 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0250]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_oac:
+    offset_ppm:
+      value: -33.0
+      units: "1"
+      description: open-architecture mission computer (bus monitor) oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0029
+      units: s
+      description: open-architecture mission computer (bus monitor) first-sample instant inside its 50 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0200]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_radar:
+    offset_ppm:
+      value: 21.0
+      units: "1"
+      description: fire-control radar oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0157
+      units: s
+      description: fire-control radar first-sample instant inside its 50 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0200]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_ecms:
+    offset_ppm:
+      value: -14.0
+      units: "1"
+      description: engine condition monitoring system oscillator offset, ppm (W2.2 phase B)
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta; no public value (distinct per LRU, inside the +-100 ppm sweep of the other LRU domains)"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W2.2-13
+    phase:
+      value: 0.0061
+      units: s
+      description: engine condition monitoring system first-sample instant inside its 10 Hz frame
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.1000]
+      assumption_id: A-W2.2-13
+    slip_enabled:
+      value: 0.0
+      units: "1"
+      description: No analog slip (digital LRU outputs computed and buffered by the LRU itself)
+      evidence: {tag: ASSUMPTION, source: "as clock_fadec.slip_enabled (no separate converter clock on an LRU-computed output)"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W2.2-13
+  clock_fti_das:
+    offset_ppm:
+      value: 20.0
+      units: "1"
+      description: FTI DAS oscillator offset, ppm
+      evidence: {tag: ASSUMPTION, source: "architecture §19 per-LRU Delta"}
+      sweep: [-100.0, 100.0]
+      assumption_id: A-W1.6-21
+    phase:
+      value: 0.0041
+      units: s
+      description: FTI DAS first-sample instant
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.0, 0.0156]
+      assumption_id: A-W1.6-21
+    slip_enabled:
+      value: 1.0
+      units: "1"
+      description: Analog slip-window sentinels on FTI analog channels
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.slip_enabled"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.6-24
+    conv_offset_ppm:
+      value: 910.0
+      units: "1"
+      description: Converter-vs-read clock offset, ppm
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.conv_offset_ppm"}
+      sweep: [20.0, 1000.0]
+      assumption_id: A-W1.6-24
+    window:
+      value: 0.002
+      units: s
+      description: Collision window
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.window"}
+      sweep: [0.0005, 0.01]
+      assumption_id: A-W1.6-24
+    p_in:
+      value: 0.25
+      units: "1"
+      description: In-window sentinel probability
+      evidence: {tag: ASSUMPTION, source: "as clock_bheem_eu.p_in"}
+      sweep: [0.15, 0.35]
+      assumption_id: A-W1.6-24

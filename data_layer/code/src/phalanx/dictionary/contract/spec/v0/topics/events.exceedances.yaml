@@ -1,0 +1,68 @@
+# Exceedance events (architecture §12 "Event record", §10 exceedance / conditional inspection; M14).
+name: events.exceedances
+description: >-
+  Limit exceedances declared by on-board monitoring (ECMS/HUMS/OAC): over-temperature, overspeed, over-g, hard
+  landing. Each exceedance can trigger a conditional inspection in maint.records.
+basis: "ARCH §12"
+restricted: false
+event_time: t_occurrence
+ingest_time: t_ingest
+partition_by: [tail_no, sortie_id]
+json_schema: false
+record_id_key:
+  - {name: provenance, type: str, source: column}
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+  - name: channel_id
+    type: str
+    source: path
+    description: "Full path: Ch10 channel ID of the event channel, decimal. Fast path: 'direct:<source_lru>'."
+  - {name: event_code, type: str, source: column}
+  - name: seq
+    type: u64
+    source: path
+    description: >-
+      Full path: cumulative packet counter of that channel. Fast path: occurrence index of (source_lru,
+      event_code) within the sortie, in t_occurrence order.
+  - name: msg_index
+    type: u64
+    source: path
+    description: "Full path: event index inside the packet. Fast path: 0."
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_occurrence}
+  - {check: order, left: snapshot_t_end, op: ">=", right: snapshot_t_start}
+  - {check: order, left: t_end, op: ">=", right: t_occurrence}
+fields:
+  - include: record_header
+  - include: event_core
+  - name: param_id
+    type: string
+    nullable: false
+    basis: "ARCH §10 (exceedance); ASSUMPTION: A-W0.4-10"
+    description: Dictionary parameter whose limit was exceeded.
+  - name: limit_id
+    type: string
+    nullable: false
+    basis: "ARCH §6 M01 (limits); ASSUMPTION: A-W0.4-10"
+    description: Dictionary limit identifier that was exceeded (limit values may be [ASSUMPTION], swept).
+  - name: limit_value
+    type: float64
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-10"
+    description: Limit value in `units`.
+  - name: peak_value
+    type: float64
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-10"
+    description: Peak (or extreme) value of the parameter during the exceedance, in `units`.
+  - name: units
+    type: string
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-10"
+    description: Engineering unit of limit_value and peak_value.
+  - name: t_end
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-10"
+    description: End of the exceedance; null if still active at the end of the recording.

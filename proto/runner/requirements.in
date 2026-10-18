@@ -1,0 +1,4 @@
+# Runner (fleet side): the data layer's exact pins plus the HTTP service.
+-r requirements.datalayer.lock.txt
+fastapi
+uvicorn

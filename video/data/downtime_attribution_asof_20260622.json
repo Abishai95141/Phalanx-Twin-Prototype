@@ -1,0 +1,34 @@
+{
+ "NMCS": {
+  "total": 262.6,
+  "by": {
+   "SYN-PN-TYRE": 92.4,
+   "SYN-PN-CHUTE": 88.6,
+   "SYN-PN-HYDP": 32.6,
+   "SYN-PN-ENG-F404": 32.4,
+   "none": 14.7,
+   "SYN-PN-JFS": 1.1,
+   "SYN-PN-BCU": 0.7
+  }
+ },
+ "NMCM": {
+  "total": 237.8,
+  "by": {
+   "SRV-L2-MAJOR": 94.5,
+   "none": 52.7,
+   "SRV-L1": 37.7,
+   "SYN-PN-TYRE": 26.2,
+   "SRV-L2-MINOR": 20.7,
+   "SYN-PN-HYDP": 3.2,
+   "SYN-PN-CHUTE": 1.6,
+   "SYN-PN-BRAKE": 0.7,
+   "SYN-PN-ENG-F404": 0.6
+  }
+ },
+ "NMCD": {
+  "total": 25.9,
+  "by": {
+   "ROH": 25.9
+  }
+ }
+}

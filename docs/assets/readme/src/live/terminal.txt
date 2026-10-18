@@ -1,0 +1,16 @@
+$ uname -m
+s390x
+$ lscpu | grep -E "Byte Order|Machine type|Hypervisor:"
+Byte Order:                              Big Endian
+Machine type:                            9175
+Hypervisor:                              z/VM 7.3.0
+$ grep PRETTY_NAME /etc/os-release
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+$ systemctl is-active phx-runner phx-ground nginx | paste -sd " "
+active active active
+$ grep -c "\"identical_all_columns\": true" proto/runs/gonogo/gonogo_report.json
+12
+$ grep "\"verdict\"" proto/runs/gonogo/gonogo_report.json
+  "verdict": "GO"
+$ curl -s localhost:8700/api/health | head -c 64; echo …
+{"status":"ok","run":"live","default_asof":"2026-06-22T06:00+05:…

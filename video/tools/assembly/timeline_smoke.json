@@ -1,0 +1,85 @@
+{
+  "fps": 30,
+  "size": [
+    1920,
+    1080
+  ],
+  "background": "white",
+  "video": [
+    {
+      "src": "assets/ui_mock.png",
+      "dur": 8.0,
+      "kenburns": {
+        "z0": 1.0,
+        "z1": 1.08,
+        "cx": 0.35,
+        "cy": 0.45
+      }
+    },
+    {
+      "src": "assets/WeibullCurves.mp4",
+      "in": 0,
+      "dur": 9.2,
+      "transition": {
+        "type": "fade",
+        "dur": 0.6
+      }
+    }
+  ],
+  "overlays": [
+    {
+      "src": "assets/BayesEquation_alpha_qtrle.mov",
+      "at": 0.8,
+      "in": 0.0,
+      "dur": 6.4,
+      "scale": 0.5,
+      "x": "W-w-40",
+      "y": "H-h-150",
+      "fade_in": 0.2,
+      "fade_out": 0.5
+    }
+  ],
+  "audio": {
+    "narration": [
+      {
+        "src": "assets/narration.wav",
+        "at": 1.0,
+        "speech": [
+          0.275,
+          13.075
+        ]
+      }
+    ],
+    "music": {
+      "src": "assets/music_bed.wav",
+      "gain_db": -4,
+      "fade_in": 1.0,
+      "fade_out": 2.0,
+      "duck": {
+        "mode": "envelope",
+        "depth_db": -12,
+        "attack": 0.25,
+        "release": 0.6,
+        "merge_gap": 1.2
+      }
+    }
+  },
+  "captions": {
+    "ass": "assets/captions.ass",
+    "offset": 1.0,
+    "fontsdir": "../fonts/static"
+  },
+  "loudness": {
+    "I": -16,
+    "TP": -1.5,
+    "LRA": 11
+  },
+  "encode": {
+    "crf": 18,
+    "preset": "medium"
+  },
+  "out": "out/smoke_ffmpeg.mp4",
+  "debug_outputs": {
+    "ducked_music": "out/smoke_ffmpeg.ducked_music.wav"
+  }
+}

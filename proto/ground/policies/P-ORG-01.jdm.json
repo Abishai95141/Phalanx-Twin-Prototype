@@ -1,0 +1,160 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "inputNode",
+      "name": "issue",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "dt",
+      "type": "decisionTableNode",
+      "name": "P-ORG-01 deferral limits",
+      "position": {
+        "x": 320,
+        "y": 120
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "gr",
+            "name": "Grounding defect",
+            "field": "defect.grounding"
+          },
+          {
+            "id": "sev",
+            "name": "Severity",
+            "field": "severity"
+          },
+          {
+            "id": "fl",
+            "name": "Fault list",
+            "field": "fault_list"
+          },
+          {
+            "id": "me",
+            "name": "Mission-essential",
+            "field": "mission_essential"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "dfr",
+            "name": "Deferrable",
+            "field": "limit.deferrable"
+          },
+          {
+            "id": "fh",
+            "name": "Max FH",
+            "field": "limit.max_fh"
+          },
+          {
+            "id": "why",
+            "name": "Rationale",
+            "field": "limit.rationale_id"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "gr": "true",
+            "sev": "",
+            "fl": "",
+            "me": "",
+            "dfr": "false",
+            "fh": "0",
+            "why": "'GROUNDING_NOT_DEFERRABLE'"
+          },
+          {
+            "_id": "r2",
+            "gr": "",
+            "sev": "'WARNING'",
+            "fl": "",
+            "me": "",
+            "dfr": "false",
+            "fh": "0",
+            "why": "'WARNING_NOT_DEFERRABLE'"
+          },
+          {
+            "_id": "r3",
+            "gr": "",
+            "sev": "'CAUTION'",
+            "fl": "",
+            "me": "true",
+            "dfr": "true",
+            "fh": "10",
+            "why": "'CAUTION_ME_10FH'"
+          },
+          {
+            "_id": "r4",
+            "gr": "",
+            "sev": "",
+            "fl": "'PFL'",
+            "me": "true",
+            "dfr": "true",
+            "fh": "10",
+            "why": "'PFL_ME_10FH'"
+          },
+          {
+            "_id": "r5",
+            "gr": "",
+            "sev": "'ADVISORY'",
+            "fl": "",
+            "me": "",
+            "dfr": "true",
+            "fh": "25",
+            "why": "'ADVISORY_25FH'"
+          },
+          {
+            "_id": "r6",
+            "gr": "",
+            "sev": "",
+            "fl": "'MFL'",
+            "me": "",
+            "dfr": "true",
+            "fh": "25",
+            "why": "'MFL_25FH'"
+          },
+          {
+            "_id": "r7",
+            "gr": "",
+            "sev": "",
+            "fl": "",
+            "me": "",
+            "dfr": "true",
+            "fh": "10",
+            "why": "'DEFAULT_10FH'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "out",
+      "type": "outputNode",
+      "name": "rec",
+      "position": {
+        "x": 640,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceId": "in",
+      "targetId": "dt",
+      "type": "edge"
+    },
+    {
+      "id": "e2",
+      "sourceId": "dt",
+      "targetId": "out",
+      "type": "edge"
+    }
+  ]
+}

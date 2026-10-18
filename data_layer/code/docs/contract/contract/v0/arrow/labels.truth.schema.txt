@@ -1,0 +1,97 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+label_kind: string not null
+  -- field metadata --
+  phalanx.description: 'Kind of label.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'LabelKind'
+  phalanx.enum_symbols: '["TRUTH_SAMPLE","HIDDEN_STATE","FAULT","DEFECT"]'
+subject_id: string not null
+  -- field metadata --
+  phalanx.description: 'param_id (TRUTH_SAMPLE), hidden-state id (HIDDEN_STATE, from not_measured_states.csv), fault id (FAULT) or defect id (DEFECT).'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+tail_no: string
+  -- field metadata --
+  phalanx.description: 'Tail the label belongs to.'
+  phalanx.basis: 'ARCH §5.3'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+sortie_id: string
+  -- field metadata --
+  phalanx.description: 'Sortie the label belongs to, if any.'
+  phalanx.basis: 'ARCH §5.3'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+serial_no: string
+  -- field metadata --
+  phalanx.description: 'Serial of the component or engine the label belongs to, if any.'
+  phalanx.basis: 'ARCH §5.3, §9.1 (hidden state per serial)'
+  phalanx.restricted: 'false'
+t_true: int64 not null
+  -- field metadata --
+  phalanx.description: 'Physics time the label refers to (start time for faults and defects). The event time of the record.'
+  phalanx.basis: 'ARCH §8 (t_true only in CIR and labels)'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_end: int64
+  -- field metadata --
+  phalanx.description: 'End time for faults or defects with a duration.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+value: double
+  -- field metadata --
+  phalanx.description: 'Truth value (TRUTH_SAMPLE, HIDDEN_STATE) or fault severity, in `units`.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+units: string
+  -- field metadata --
+  phalanx.description: 'Unit of value.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+category: string
+  -- field metadata --
+  phalanx.description: 'Fault mode, defect type or observability class.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+related_record_id: fixed_size_binary[16]
+  -- field metadata --
+  phalanx.description: 'Contract record this label refers to (the sample behind a TRUTH_SAMPLE, the defected record of a DEFECT).'
+  phalanx.basis: 'ARCH §10 (defect manifest); ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+source_module: string not null
+  -- field metadata --
+  phalanx.description: 'Module that produced the label (e.g. M10, M11, M13, M18).'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-16'
+  phalanx.restricted: 'false'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'labels.truth'
+phalanx.topic_restricted: 'true'
+phalanx.event_time: 't_true'
+phalanx.ingest_time: ''
+phalanx.partition_by: '["tail_no","sortie_id"]'
+phalanx.record_id_key: '["label_kind","subject_id","tail_no","sortie_id","serial_no","related_record_id","t_true"]'
+phalanx.audience: 'full'

@@ -1,0 +1,164 @@
+S3 belief m=0 sq=2.5s tr=3.0s
+S3 belief m=1 sq=3.4s tr=3.2s
+S3 belief m=2 sq=2.8s tr=3.7s
+S3 belief m=3 sq=2.8s tr=3.4s
+S3 belief m=4 sq=3.5s tr=3.1s
+S3 belief m=5 sq=2.9s tr=3.1s
+S3 belief m=6 sq=2.7s tr=3.1s
+S3 belief m=7 sq=4.6s tr=4.8s
+S3 belief m=8 sq=6.2s tr=4.4s
+S3 belief m=9 sq=3.4s tr=3.8s
+S3 belief m=10 sq=7.2s tr=6.5s
+S3 belief m=11 sq=4.4s tr=3.9s
+S3 belief m=12 sq=2.4s tr=2.5s
+S3 belief m=13 sq=2.7s tr=2.6s
+S3 belief m=14 sq=4.7s tr=4.4s
+S3 belief m=15 sq=3.4s tr=3.5s
+S3 belief m=16 sq=4.3s tr=3.5s
+S3 belief m=17 sq=3.0s tr=2.9s
+S3 belief m=18 sq=3.6s tr=3.6s
+S3 belief m=19 sq=2.7s tr=2.8s
+S3 belief m=20 sq=2.9s tr=2.8s
+S3 belief m=21 sq=3.8s tr=3.7s
+S3 belief m=22 sq=2.2s tr=2.3s
+S3 belief m=23 sq=3.6s tr=3.1s
+S3 belief m=24 sq=1.7s tr=1.7s
+S3 belief m=25 sq=1.4s tr=1.4s
+S3 belief m=26 sq=1.4s tr=1.7s
+S3 belief m=27 sq=2.2s tr=2.0s
+S3 belief m=28 sq=1.9s tr=2.1s
+S3 belief m=29 sq=1.9s tr=1.5s
+S3 ensemble m=0 sq=1.6s tr=1.8s
+S3 ensemble m=1 sq=1.8s tr=1.9s
+S3 ensemble m=2 sq=1.6s tr=1.8s
+S3 ensemble m=3 sq=1.8s tr=1.9s
+S3 ensemble m=4 sq=1.9s tr=1.4s
+S3 ensemble m=5 sq=1.4s tr=1.4s
+S3 ensemble m=6 sq=1.2s tr=1.2s
+S3 ensemble m=7 sq=1.7s tr=2.6s
+S3 ensemble m=8 sq=3.3s tr=3.5s
+S3 ensemble m=9 sq=2.4s tr=2.5s
+S3 ensemble m=10 sq=3.3s tr=3.1s
+S3 ensemble m=11 sq=2.3s tr=2.3s
+S3 ensemble m=12 sq=2.3s tr=2.2s
+S3 ensemble m=13 sq=2.4s tr=2.3s
+S3 ensemble m=14 sq=3.0s tr=2.7s
+S3 ensemble m=15 sq=2.1s tr=2.0s
+S3 ensemble m=16 sq=2.4s tr=2.4s
+S3 ensemble m=17 sq=2.0s tr=2.1s
+S3 ensemble m=18 sq=2.4s tr=2.4s
+S3 ensemble m=19 sq=1.7s tr=1.9s
+S3 ensemble m=20 sq=1.9s tr=1.7s
+S3 ensemble m=21 sq=2.1s tr=2.0s
+S3 ensemble m=22 sq=1.3s tr=1.5s
+S3 ensemble m=23 sq=1.7s tr=1.7s
+S3 ensemble m=24 sq=1.9s tr=1.9s
+S3 ensemble m=25 sq=1.6s tr=1.6s
+S3 ensemble m=26 sq=1.6s tr=1.7s
+S3 ensemble m=27 sq=1.8s tr=2.0s
+S3 ensemble m=28 sq=1.4s tr=1.5s
+S3 ensemble m=29 sq=1.6s tr=2.0s
+{
+ "belief": {
+  "mc": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "fmc": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "nmcs": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "nmcm": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "flown_fh": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "aog_days": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "cost": {
+   "n": 30,
+   "mean": 0.2866666666666667,
+   "sd": 0.13578211078487265,
+   "ci_low": 0.23596479323762704,
+   "ci_high": 0.3373685400957063
+  }
+ },
+ "ensemble": {
+  "mc": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "fmc": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "nmcs": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "nmcm": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "flown_fh": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "aog_days": {
+   "n": 30,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0
+  },
+  "cost": {
+   "n": 30,
+   "mean": 0.2866666666666667,
+   "sd": 0.13578211078487265,
+   "ci_low": 0.23596479323762704,
+   "ci_high": 0.3373685400957063
+  }
+ }
+}

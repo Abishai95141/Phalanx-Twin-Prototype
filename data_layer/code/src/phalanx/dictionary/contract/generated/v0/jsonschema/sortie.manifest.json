@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:phalanx:contract:0.2.0:sortie.manifest:consumer",
+  "title": "sortie.manifest record (Phalanx contract 0.2.0)",
+  "description": "One record per sortie: configuration and provenance of the data (tail, engine and LRU serials, software configuration, mission, dictionary and contract versions, code commit, library versions). Seeds and the RNG stream table are restricted fields (A-W0.4-12).",
+  "x-phalanx-contract-hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "dict_version",
+    "dict_hash",
+    "tail_no",
+    "sortie_id",
+    "base",
+    "mission_type",
+    "crew_id",
+    "sw_config_id",
+    "engine_serials",
+    "lru_serials",
+    "t_start",
+    "t_takeoff",
+    "t_landing",
+    "t_end",
+    "t_ingest",
+    "contract_version",
+    "config_hash",
+    "code_commit",
+    "library_versions",
+    "run_manifest_hash",
+    "provenance"
+  ],
+  "properties": {
+    "record_id": {
+      "description": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "dict_version": {
+      "description": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "type": "string"
+    },
+    "dict_hash": {
+      "description": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{16,128}$"
+    },
+    "tail_no": {
+      "description": "Aircraft tail number (linkage key).",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "sortie_id": {
+      "description": "Sortie identifier (tail + date + take-off time, M02).",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "base": {
+      "description": "Operating base of the sortie.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mission_type": {
+      "description": "Mission type from the M02 mission mix.",
+      "type": "string"
+    },
+    "crew_id": {
+      "description": "Pseudonymous crew identifier (no latent pilot traits).",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sw_config_id": {
+      "description": "Software-configuration identifier of the aircraft for this sortie.",
+      "type": "string"
+    },
+    "engine_serials": {
+      "description": "Installed engine serials by position.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "position",
+          "serial"
+        ],
+        "properties": {
+          "position": {
+            "description": "Engine position (e.g. '1').",
+            "type": "string"
+          },
+          "serial": {
+            "description": "Engine serial number.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "lru_serials": {
+      "description": "Installed serialised LRUs (component triplet).",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lru",
+          "part_no",
+          "serial_no",
+          "maker"
+        ],
+        "properties": {
+          "lru": {
+            "description": "LRU name.",
+            "type": "string"
+          },
+          "part_no": {
+            "description": "Part number.",
+            "type": "string"
+          },
+          "serial_no": {
+            "description": "Serial number.",
+            "type": "string"
+          },
+          "maker": {
+            "description": "Maker.",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "t_start": {
+      "description": "Start of the sortie record (engine start or recorder start). The event time of the record.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807,
+      "x-phalanx-time-unit": "ns",
+      "x-phalanx-time-scale": "sim_utc"
+    },
+    "t_takeoff": {
+      "description": "Take-off time; null for a ground abort.",
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036854775807,
+          "x-phalanx-time-unit": "ns",
+          "x-phalanx-time-scale": "sim_utc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "t_landing": {
+      "description": "Landing time; null if not airborne.",
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036854775807,
+          "x-phalanx-time-unit": "ns",
+          "x-phalanx-time-scale": "sim_utc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "t_end": {
+      "description": "End of the sortie record (engine shutdown or recorder stop).",
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036854775807,
+          "x-phalanx-time-unit": "ns",
+          "x-phalanx-time-scale": "sim_utc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "t_ingest": {
+      "description": "When the manifest reached the ground (download).",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807,
+      "x-phalanx-time-unit": "ns",
+      "x-phalanx-time-scale": "sim_utc"
+    },
+    "contract_version": {
+      "description": "Contract semantic version the sortie's records conform to.",
+      "type": "string"
+    },
+    "config_hash": {
+      "description": "Hash of the run configuration.",
+      "type": "string"
+    },
+    "code_commit": {
+      "description": "Git commit of the generating code.",
+      "type": "string"
+    },
+    "library_versions": {
+      "description": "Library versions, sorted by name.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version"
+        ],
+        "properties": {
+          "name": {
+            "description": "Library name.",
+            "type": "string"
+          },
+          "version": {
+            "description": "Library version.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "run_manifest_hash": {
+      "description": "Content hash of the full run manifest (core/manifest.py) this sortie belongs to.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provenance": {
+      "description": "direct (manifests are produced on the ground) or full_path (decoded from a recording).",
+      "type": "string",
+      "enum": [
+        "full_path",
+        "direct"
+      ]
+    }
+  }
+}

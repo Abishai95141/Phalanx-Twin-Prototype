@@ -1,0 +1,10 @@
+# Phalanx proxy-mode dictionary (DASHlink Tail 687; W2.4a, AD-33/AD-43). Hand-maintained source.
+# FADEC lanes: TRANSFER of the Tejas FADEC lane definitions (the proxy runs the same M08 structure, AD-43).
+# Recorded words: MEASURED on DASHlink Tail 687 archive 1 (analysis/dashlink_texture, round-1/2 results).
+format: phalanx.dictionary.code_tables/1
+tables:
+  flight_phase:
+    title: DASHlink flight phase (PH codes)
+    synthetic: false
+    prov: R-CODES-PHASE
+    codes: {'0': UNKNOWN, '1': PREFLIGHT, '2': TAXI, '3': TAKEOFF, '4': CLIMB, '5': CRUISE, '6': APPROACH, '7': ROLLOUT, '15': INVALID}

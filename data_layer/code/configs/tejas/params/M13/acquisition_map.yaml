@@ -1,0 +1,67 @@
+# M13 acquisition map (structure only; every number is in ../M13.yaml with provenance).
+# Each rule list is matched top to bottom on the channel id (fnmatch glob); the first match picks the parameter
+# set. A list with no match for a channel leaves that effect off (no noise set -> error: every channel needs one).
+format: phalanx.acquisition.map/1
+platform: tejas
+noise:
+  - {match: "*.V", set: noise_computed}
+  - {match: "ENG.T5", set: noise_computed}
+  - {match: "ENG.N1.*", set: noise_n1}
+  - {match: "ENG.N2.*", set: noise_n2}
+  - {match: "ENG.T5.*", set: noise_egt}
+  - {match: "ENG.WFM", set: noise_ff}
+  # FADEC converter-step lanes: noise in EU (dictionary 0.1.2 migration, W2.2)
+  - {match: "ENG.PLA.[AB]", set: noise_fadec_pla}
+  - {match: "ENG.A8.[AB]", set: noise_fadec_a8}
+  - {match: "ENG.PS3.[AB]", set: noise_fadec_ps3}
+  - {match: "ENG.T1.[AB]", set: noise_fadec_t1}
+  # M12 avionics computed outputs (AD-51, W2.2): their texture comes from the avionics error models and the
+  # digitised lanes they are computed from, so the recorder adds no independent noise (A-W1.6-32)
+  - {match: "AD.H*", set: noise_computed}
+  - {match: "AD.CAS", set: noise_computed}
+  - {match: "AD.TAS", set: noise_computed}
+  - {match: "AD.MACH", set: noise_computed}
+  - {match: "AD.QBAR", set: noise_computed}
+  - {match: "AD.SAT", set: noise_computed}
+  - {match: "AD.AOA", set: noise_computed}
+  - {match: "AD.BETA", set: noise_computed}
+  - {match: "NAV.*", set: noise_computed}
+  - {match: "*", set: noise_default}
+ceiling:
+  - {match: "ENG.N1.*", set: ceiling_n1}
+  - {match: "ENG.N2.*", set: ceiling_n2}
+  - {match: "ENG.T5*", set: ceiling_egt}
+  - {match: "ENG.WFM", set: ceiling_ff}
+  - {match: "ENG.PLA.[AB]", set: ceiling_fadec_pla}
+  - {match: "ENG.A8.[AB]", set: ceiling_fadec_a8}
+  - {match: "ENG.PS3.[AB]", set: ceiling_fadec_ps3}
+  - {match: "ENG.T1.[AB]", set: ceiling_fadec_t1}
+  - {match: "*", set: ceiling_default}
+gate:
+  - {match: "ENG.N2.*", set: gate_n2}
+  - {match: "ENG.N1.*", set: gate_n1}
+deadband:
+  - {match: "ENG.PLA.*", set: deadband_pla}
+freeze:
+  - {match: "ENG.T5.HARNESS_*", set: freeze_egt}
+  - {match: "ENG.WFM", set: freeze_ff}
+glitch:
+  - {match: "*", set: glitch_default}
+# acquisition clock domain per acquiring LRU (dictionary acq_lru); slip applies to `signal: analog` channels of
+# LRUs whose clock set enables it
+clocks:
+  FADEC: clock_fadec
+  DFCC: clock_dfcc
+  ADC: clock_dfcc
+  BHEEM_EU: clock_bheem_eu
+  ECFM_C: clock_ecfm_c
+  FTI_DAS: clock_fti_das
+  # W2.2 phase B: avionics and digital LRU domains (words and computed outputs)
+  INGPS: clock_ingps
+  AHRS: clock_ahrs
+  RADALT: clock_radalt
+  SMS: clock_sms
+  CWS: clock_cws
+  OAC: clock_oac
+  RADAR: clock_radar
+  ECMS: clock_ecms

@@ -1,0 +1,54 @@
+S3 ensemble m=0 sq=1.7s tr=1.9s
+{
+ "ensemble": {
+  "mc": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "fmc": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "nmcs": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "nmcm": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "flown_fh": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "aog_days": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "cost": {
+   "n": 1,
+   "mean": 0.40000000000000036,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  }
+ }
+}

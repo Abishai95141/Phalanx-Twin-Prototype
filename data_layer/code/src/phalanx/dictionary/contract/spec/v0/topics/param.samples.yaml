@@ -1,0 +1,156 @@
+# Canonical sample record (architecture §12 "Canonical sample record", §8 six timestamps).
+name: param.samples
+description: >-
+  Decoded parameter samples: one record per parameter value per acquisition, with six-time provenance (t_true is
+  CIR- and labels-only), validity, quality flags and data-path provenance.
+basis: "ARCH §12"
+restricted: false
+event_time: t_sample
+ingest_time: t_ingest
+partition_by: [tail_no, sortie_id]
+json_schema: false
+record_id_key:
+  - {name: provenance, type: str, source: column}
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+  - name: channel_id
+    type: str
+    source: path
+    description: >-
+      Full path: the IRIG 106 Ch10 channel ID, decimal, written '<recording_id>:<channel ID>' when the record's
+      recording_id is set (0.2.0, A-W0.4-22: Ch10 channel IDs are unique only within one recording; a null
+      recording_id keeps the 0.1.0 form). Fast path: 'direct:<source_lru>:<lane or empty>' (A-W0.4-3).
+  - {name: param_id, type: str, source: column}
+  - name: seq
+    type: u64
+    source: path
+    description: >-
+      Full path: cumulative, non-wrapping packet counter of the channel within the recording (the Ch10 8-bit
+      sequence number wraps, so the decoder counts packets). Fast path: CIR sample_index.
+  - name: msg_index
+    type: u64
+    source: path
+    description: "Full path: message (and word) index inside the packet. Fast path: 0."
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_sample}
+  - {check: order, left: t_bus, op: ">=", right: t_sample}
+fields:
+  - include: record_header
+  - name: param_id
+    type: string
+    nullable: false
+    basis: "ARCH §12"
+    description: Parameter-dictionary key (M01).
+  - include: tail_sortie
+  - name: engine_serial
+    type: string
+    nullable: true
+    basis: "ARCH §12 (where relevant); ASSUMPTION: A-W0.4-7"
+    description: Serial of the engine the parameter belongs to; null for non-engine parameters.
+  - name: source_lru
+    type: string
+    nullable: false
+    pattern: "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-7 (pattern)"
+    description: LRU that acquired or computed the value (data-path provenance).
+  - name: lane
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9]+$"
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-7"
+    description: Redundancy lane or channel of a redundant source (e.g. DFCC channel); null if not redundant.
+  - name: bus
+    type: string
+    nullable: true
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-7"
+    description: Bus the value travelled on (synthetic Phalanx ICD bus name); null on the fast path and for direct analog channels.
+  - name: rt_sa_word
+    type: string
+    nullable: true
+    pattern: "^RT([0-2][0-9]|3[01])/SA([0-2][0-9]|3[01])/W([0-2][0-9]|3[01])$"
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-7 (format)"
+    description: MIL-STD-1553 location 'RTnn/SAnn/Wnn' (remote terminal, subaddress, data-word index) in the synthetic Phalanx ICD; null if not 1553.
+  - name: label_sdi
+    type: string
+    nullable: true
+    pattern: "^L[0-3][0-7][0-7]/SDI[0-3]$"
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-7 (format)"
+    description: ARINC 429 location 'Looo/SDIn' (octal label, source/destination identifier) in the synthetic Phalanx ICD; null if not ARINC 429.
+  - name: t_sample
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §8, §12; ASSUMPTION: A-W0.4-1 (scale)"
+    description: When the owning LRU acquired the value, on its drifting oscillator. The event time of the record.
+  - name: t_bus
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ARCH §8, §12; ASSUMPTION: A-W0.4-4"
+    description: When the value appeared on the bus, at the Ch10-defined bit. Null on the fast path and for non-bus channels.
+  - name: t_record
+    type: time_ns
+    time_scale: recorder_rtc
+    nullable: true
+    basis: "ARCH §8, §12; ASSUMPTION: A-W0.4-4"
+    description: Recorder RTC time of the sample (per-recording origin). Null on the fast path.
+  - name: t_utc
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ARCH §8, §12; ASSUMPTION: A-W0.4-4"
+    description: Absolute time from the aircraft's simulated GPS/IRIG time source (TIME_SOURCE_INTERNAL when lock is lost). Fast path sets t_utc = t_sample (PROXY).
+  - name: t_ingest
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §8, §12, I5; ASSUMPTION: A-W0.4-5"
+    description: Arrival at the ground (per-sortie download burst). Consumers see a record only once t_ingest <= t_now (I5).
+  - name: value_eu
+    type: float64
+    nullable: false
+    basis: "ARCH §12; MEASURED: E1 (no NaN); ASSUMPTION: A-W0.4-7"
+    description: Decoded engineering value in `units`. Never NaN; a sentinel is carried as its value with the SENTINEL flag.
+  - name: raw_counts
+    type: int64
+    nullable: true
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-4"
+    description: Raw bus word or ADC counts before engineering-unit conversion. Null on the fast path.
+  - name: units
+    type: string
+    nullable: false
+    basis: "ARCH §12"
+    description: Engineering unit of value_eu as declared by the dictionary (pint-parseable).
+  - name: validity
+    type: enum:Validity
+    nullable: false
+    basis: "ARCH §12"
+    description: Validity state (ARINC 429 SSM semantics plus 1553 BUS_INVALID).
+  - name: quality_flags
+    type: flags:QualityFlags
+    nullable: false
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-8"
+    description: Quality flag bit set (see QualityFlags).
+  - name: provenance
+    type: enum:Provenance
+    nullable: false
+    basis: "ARCH §12"
+    description: full_path (bus, Ch10, decoder) or direct (fast path).
+  # ---- added in 0.2.0 (W2.2, additive; appended after the 0.1.0 fields) ----------------------------------------
+  - name: recording_id
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §17 AD-25, AD-45; ASSUMPTION: A-W0.4-22"
+    description: >-
+      On-board recording the record was decoded from (one recording per recorder sink and sortie, AD-25), unique
+      within (tail_no, sortie_id). t_record and the Ch10 channel ID are comparable only within one recording.
+      Null on the fast path and for a sortie's single unattributed bus-monitor capture (the 0.1.0 full path).
+  - name: sink
+    type: string
+    nullable: true
+    pattern: "^[A-Z][A-Z0-9_]*$"
+    basis: "ARCH §17 AD-25; ASSUMPTION: A-W0.4-22"
+    description: >-
+      Dictionary sink (M01 sinks table: CDR, ECMS_HUMS, MPDRU, FTI) whose recording carried the record; null
+      exactly when recording_id is null.

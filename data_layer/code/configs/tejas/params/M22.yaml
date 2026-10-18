@@ -1,0 +1,19 @@
+format: phalanx.params/1
+module: M22
+# M22 snapshot and fork service (W1.8): defaults of the what-if comparison.
+sets:
+  compare:
+    ci_level:
+      value: 0.95
+      units: "1"
+      description: Two-sided confidence level of CRN-paired KPI differences (Student t over replicate pairs).
+      evidence: {tag: ASSUMPTION, source: "statistical convention; report §14 (branches compared by CRN-paired differences with confidence intervals)"}
+      sweep: [0.8, 0.99]
+      assumption_id: A-W1.8-21
+    min_pairs:
+      value: 3
+      units: "1"
+      description: Minimum replicate pairs before a confidence interval is reported.
+      evidence: {tag: ASSUMPTION, source: "a t interval needs at least 2 degrees of freedom to be informative"}
+      sweep: [3, 30]
+      assumption_id: A-W1.8-21

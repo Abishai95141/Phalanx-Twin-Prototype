@@ -1,0 +1,107 @@
+# M15 Bus encoder and clock domains (architecture §6 M15, §8; W1.7). Channel semantics (bus map, rates, LSBs,
+# validity layout) live in the M01 dictionary; this file holds only the timing model of the data path.
+format: phalanx.params/1
+module: M15
+sets:
+  clocks:
+    lru_offset_sigma:
+      value: 20
+      units: ppm
+      description: >-
+        SD of the per-LRU-unit oscillator fractional frequency offset (installation property, constant across
+        sorties; drawn per unit serial). Sets the slip period 1/(f * dDelta) between producer updates and BC polls.
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          report §13 ('a crystal's tolerance of tens of ppm'); architecture §8 (per-LRU oscillator offset);
+          DASHlink recorder-vs-source 910 ppm is a nominal-rate mismatch, not crystal error (report §13, E2).
+          Conflict with report §8 (which calls 910 ppm the per-LRU offset) logged as A-W1.7-18 (E1-HY): 20 ppm
+          applies to crystals; 910 ppm only to M13's analog converter-vs-read beat (A-W1.6-24)
+      sweep: [1, 100]
+      assumption_id: A-W1.7-1
+    processing_latency:
+      value: 8
+      units: ms
+      description: >-
+        Acquisition-to-transmit-buffer latency of every RT LRU (data acquired at an LRU tick are written to the
+        1553 transmit buffer / sent on ARINC-429 this long after the tick).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          Tejas DFCC 'onboard computer computation delay of 8 ms modeled as a transportation lag' (Patel, Deodhare
+          & Chetty, JOAST 58(4) 2006 p.279, via research_notes tejas_airframe_aero_fcs.md Q3), extrapolated to all
+          RT LRUs; report §13 (t_bus = LRU compute latency + wait for the next poll)
+      sweep: [1, 25]
+      assumption_id: A-W1.7-2
+    relay_latency:
+      value: 1
+      units: ms
+      description: >-
+        Extra latency of an item an RT relays from another LRU (ADC words relayed by the DFCC over RS-422; ECMS
+        words relayed by the FADEC gateway).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          buses.yaml ADC-DFCC RS-422 link (rule R-ICD-RS422); no public figure; bounded by one DFCC frame (12.5 ms)
+      sweep: [0, 12.5]
+      assumption_id: A-W1.7-3
+  mil1553:
+    rt_response_min:
+      value: 5.7
+      units: us
+      description: Lower bound of the per-RT-unit response time (GAP1 definition, mid-parity to mid-sync).
+      evidence:
+        tag: "TRANSFER: KC-135 public Ch10 sample (pyChapter10 tests/sample.c10)"
+        source: >-
+          GAP1 p5 5.7 us, median 6.2 us, p95 6.3 us over 448 recorded 1553 responses of the public sample
+          (tests/integration/test_recorder_sample_c10.py::test_kc135_sample_response_times_back_the_m15_band);
+          inside the MIL-STD-1553B 4-12 us bound (data_pathway_and_formats.md Q2)
+    rt_response_max:
+      value: 6.3
+      units: us
+      description: Upper bound of the per-RT-unit response time (GAP1 definition).
+      evidence:
+        tag: "TRANSFER: KC-135 public Ch10 sample (pyChapter10 tests/sample.c10)"
+        source: >-
+          GAP1 p95 6.3 us in the public sample (same test); MIL-STD-1553B 4-12 us bound
+    intermessage_gap:
+      value: 28
+      units: us
+      description: BC inter-message gap (end of one message to the next command word).
+      evidence:
+        tag: "TRANSFER: KC-135 public Ch10 sample (pyChapter10 tests/sample.c10)"
+        source: >-
+          median 28.2 us between the end of a message and the next command word in the public sample
+          (time tags at the first command bit, TTB 01; same test);
+          MIL-STD-1553B minimum 4 us (Alta 1553 tutorial, research_sources/data_pathway/alta_1553_tutorial.txt)
+    minor_frame_start:
+      value: 0
+      units: us
+      description: Delay from the BC minor-frame tick to the first command word of the frame.
+      evidence:
+        tag: ASSUMPTION
+        source: No public BC schedule (data_pathway_and_formats.md Q2 Gaps); a constant only shifts every poll
+      sweep: [0, 1000]
+      assumption_id: A-W1.7-4
+  arinc429:
+    word_gap_bits:
+      value: 4
+      units: "1"
+      description: Bit times between consecutive ARINC-429 words (minimum null gap).
+      evidence:
+        tag: "TRANSFER: ARINC 429 (Wikipedia / UEI tutorial)"
+        source: data_pathway_and_formats.md pipeline table row 2b ('>=4-bit word gap (tutorial-level)')
+    high_speed_rate:
+      value: 100000
+      units: Hz
+      description: ARINC-429 high-speed bit rate (bits per second).
+      evidence:
+        tag: "TRANSFER: ARINC 429"
+        source: data_pathway_and_formats.md Q2 ('high speed 100kHz +/- 1%'); IRIG 106 §10.6.8 bus-speed flag
+    low_speed_rate:
+      value: 12500
+      units: Hz
+      description: ARINC-429 low-speed bit rate (bits per second).
+      evidence:
+        tag: "TRANSFER: ARINC 429"
+        source: data_pathway_and_formats.md Q2 ('low speed 12.5 kHz (12-14.5 kHz)')

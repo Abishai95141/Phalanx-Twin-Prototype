@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Readiness — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: 148px minmax(0, 1fr); }
+  .kp { padding: 24px 28px; }
+  .kp .big { margin-top: 14px; }
+  .kp .ci { margin-top: 8px; }
+  .kp.due { flex-direction: row; align-items: center; gap: 20px; }
+  .dots { display: flex; gap: 6px; margin-top: 12px; }
+  .dots i { width: 14px; height: 14px; border-radius: 5px; background: var(--fmc); display: block; }
+  .dots i.nmcs { background: var(--nmcs); } .dots i.nmcd { background: var(--nmcd); }
+  .fleet { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 1fr 1fr; gap: 24px; min-height: 0; }
+  .ac { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 24px 24px 20px; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+  .ac .tail { font: 700 22px var(--mono); letter-spacing: -0.03em; }
+  .ac .pill { position: absolute; right: 22px; top: 24px; }
+  .ac .pf { position: absolute; right: 28px; top: 70px; }
+  .ac .drv { margin-top: auto; padding-right: 116px; }
+  .ac .drv b { display: block; font-size: 16px; font-weight: 650; letter-spacing: -0.012em; line-height: 1.3; }
+  .ac .drv span { display: block; font-size: 13.5px; color: var(--ink-3); margin-top: 5px; line-height: 1.4; }
+  .ac .since { font-size: 13px; color: var(--ink-4); margin-top: 4px; }
+  .ac.sel { border-color: var(--accent-line); box-shadow: 0 0 0 4px var(--accent-wash); }
+  .ac.down { background: var(--bg-2); border-color: transparent; }
+</style>
+</head>
+<body data-page="readiness">
+<div id="content">
+<div class="v2">
+  <div class="panel2 c3 kp focus" data-shot="kpi-now">
+    <span class="kick acc">Mission capable now</span>
+    <div class="big">6<small>of 8 aircraft</small></div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="panel2 c3 kp" data-shot="kpi-mc">
+    <div class="row"><span class="kick">Mission capable · 30 days</span><div class="grow"></div><span class="tier desc">DESC</span></div>
+    <div class="big">54.5<small>%</small></div>
+    <div class="ci">norm 75 % · fully capable 52.6 %</div>
+  </div>
+  <div class="panel2 c3 kp" data-shot="kpi-parts">
+    <span class="kick">Waiting for parts · 30 days</span>
+    <div class="big">25.4<small>%</small></div>
+    <div class="ci">of possessed time · the largest single loss</div>
+  </div>
+  <div class="panel2 c3 kp" data-shot="kpi-due">
+    <div class="row"><span class="kick">Decisions due</span><div class="grow"></div><span class="lnk">Open board <i data-i="arrowRight"></i></span></div>
+    <div class="big">7<small>before 07:45</small></div>
+    <div class="ci">from 1,192 alert rows this season</div>
+  </div>
+
+  <div class="c12 fleet" id="fleet" data-shot="fleet"></div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/aircraft.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const D = window.PHX_DATA;
+const CARDS = {
+  TJ101: { zone: [], tone: 'nmcd', b: 'At depot for overhaul', s: 'In depot 26 days' },
+  TJ102: { zone: [{ zone: 'HYD_PUMP', color: 'var(--nmcm)' }], b: 'Hydraulic alarm recurring', s: '24 flights since 9 Apr' },
+  TJ103: { zone: [{ zone: 'MLG_L', color: 'var(--p1)' }, { zone: 'MLG_R', color: 'var(--p1)' }], b: 'Gear unsafe warning', s: 'Twice in ten days' },
+  TJ104: { zone: [], b: 'Flying normally', s: 'Two advisory defects deferred' },
+  TJ105: { zone: [{ zone: 'MLG_L', color: 'var(--accent)' }, { zone: 'MLG_R', color: 'var(--accent)' }], b: 'Tyre change due', s: 'Next landing is 8 of 8' },
+  TJ106: { zone: [{ zone: 'MLG_L', color: 'var(--p1)' }, { zone: 'MLG_R', color: 'var(--p1)' }], b: 'Gear unsafe warning', s: 'Twice in twelve days' },
+  TJ107: { zone: [{ zone: 'HYD_PUMP', color: 'var(--accent)' }], b: 'Alarm that never clears', s: '34 flights · 28 removals found nothing', sel: true },
+  TJ108: { zone: [{ zone: 'CHUTE', color: 'var(--nmcs)' }], tone: 'nmcs', b: 'Waiting for a brake chute', s: 'Grounded 80 days' }
+};
+const pillCls = { FMC: 'fmc', PMCM: 'pmc', NMCM_S: 'nmcm', NMCM_U: 'nmcm', NMCS: 'nmcs', NMCD: 'nmcd' };
+const pillTxt = { FMC: 'FMC', PMCM: 'PMC', NMCM_S: 'NMCM', NMCM_U: 'NMCM', NMCS: 'NMCS', NMCD: 'NMCD' };
+document.getElementById('fleet').innerHTML = D.fleet.map(f => {
+  const c = CARDS[f.tail], down = ['NMCS', 'NMCD'].includes(f.state);
+  const tint = c.tone === 'nmcd' ? 'var(--nmcd-wash)' : c.tone === 'nmcs' ? 'var(--nmcs-wash)' : '#fff';
+  const strokeC = c.tone === 'nmcd' ? 'var(--nmcd)' : c.tone === 'nmcs' ? 'var(--nmcs)' : 'var(--ink-4)';
+  const pf = PHX_AC.planform({ scale: 11, pad: 2, fill: tint, stroke: strokeC, sw: 1.1, canopy: 'var(--line)', highlight: c.zone, detail: true });
+  return `<div class="ac ${c.sel ? 'sel' : ''} ${down ? 'down' : ''}" data-tail="${f.tail}">
+    <div class="tail">${f.tail}</div>
+    <div class="since">${down ? 'down ' + f.since_days.toFixed(0) + ' days' : f.fh30.toFixed(1) + ' FH flown · 30 days'}</div>
+    <span class="pill ${pillCls[f.state]}"><span class="d"></span>${pillTxt[f.state]}</span>
+    <div class="pf">${pf}</div>
+    <div class="drv"><b>${c.b}</b><span>${c.s}</span></div>
+  </div>`;
+}).join('');
+document.getElementById('dots').innerHTML = D.fleet.map(f => `<i class="${f.state === 'NMCS' ? 'nmcs' : f.state === 'NMCD' ? 'nmcd' : ''}"></i>`).join('');
+PHX.mount({ page: 'readiness', title: 'Readiness', sub: 'What can fly today, what cannot, and why',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'warn', i: 'decisions', t: 'Board closes 07:45' }],
+  });
+</script>
+</body></html>

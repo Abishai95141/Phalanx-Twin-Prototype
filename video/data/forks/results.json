@@ -1,0 +1,5427 @@
+{
+  "label": "PREVIEW v0.9 data-layer simulator. Synthetic fleet, synthetic codes and part numbers; behaviour NOT validated; cost is a relative proxy. Not real Tejas/IAF data.",
+  "generated_utc": "2026-10-15T19:59:36Z",
+  "how": "see README.md in this folder",
+  "provenance": {
+    "data_layer_source": "/Users/abishaikc/Downloads/phalanx_data_layer_preview/code (read-only)",
+    "world": {
+      "scenario": "preview09-ops",
+      "root_seed": "0x9f1ee7",
+      "start": "2026-01-05",
+      "fleet_days_built": 205,
+      "m14_regime": "immature",
+      "policy": "scheduled/1.0.0",
+      "dict_version": "0.1.3",
+      "dict_hash": "9428d30f578f0318161737a6e6235f332632b2827b76eb6d853064544e7fbc8b",
+      "contract_version": "0.2.0",
+      "contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566"
+    },
+    "python": "3.12.12",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pyarrow": "26.0.0",
+      "numba": "0.68.0",
+      "jsonschema": "4.26.0"
+    },
+    "scripts": "video/tools/forks/{phx_forks,reproduce,run_forks,assemble}.py"
+  },
+  "conventions": {
+    "difference": "treatment minus status quo, CRN-paired by ensemble member (ForkService.compare paired=True); Student t 95 % interval over pairs",
+    "arm_interval": "Student t 95 % interval of the arm mean over members (not paired)",
+    "fractions": "mc, fmc, nmcs, nmcm, nmcd are fractions of the window (0-1) for the one tail",
+    "kpi_scope": "each scenario's world holds one tail (preview per-tail worlds), so KPIs are that tail's",
+    "modes": {
+      "belief": "IN-LOOP number (what the product can show): data layer's reference SurvivalPosterior (PROXY)",
+      "ensemble": "OFFLINE evaluation only (true state, privileged)",
+      "oracle": "not reported; used once per scenario only to validate bitwise continuation"
+    }
+  },
+  "reproduction": {
+    "TJ101": {
+      "snapshot_id": "fadd87ecbdf09704701ab3fe5a48413ca4d34dad25f785bab51dcde12f803c8f",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 850,
+          "preview": 850,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 1,
+          "preview": 1,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 4,
+          "preview_incl_colliding_worlds": 8,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 76,
+          "preview": 76,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 19,
+          "preview": 19,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 2,
+          "preview": 2,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "NMCD",
+          "since_ist": "2026-05-27 08:00 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 11.69
+    },
+    "TJ102": {
+      "snapshot_id": "295391eca781b4ce8a46cdacb874fff18924133874479f449b0220745a1674c9",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 1322,
+          "preview": 1322,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 1,
+          "preview": 1,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 4,
+          "preview_incl_colliding_worlds": 8,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 158,
+          "preview": 158,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 55,
+          "preview": 55,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 47,
+          "preview": 47,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "FMC",
+          "since_ist": "2026-06-19 11:45 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 13.21
+    },
+    "TJ103": {
+      "snapshot_id": "4329cfed1efb027b4e89aeccb4db39a239ab3f3d12952c30407e1e7c9e1cd563",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 971,
+          "preview": 971,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 1,
+          "preview": 1,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 4,
+          "preview_incl_colliding_worlds": 4,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 98,
+          "preview": 98,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 29,
+          "preview": 29,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 0,
+          "preview": 0,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "FMC",
+          "since_ist": "2026-06-20 06:45 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 9.62
+    },
+    "TJ104": {
+      "snapshot_id": "053f4c59818586f338d2f4478ecfad2b0f6b0956d0ebec45bd2258a90e43015e",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 873,
+          "preview": 873,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 1,
+          "preview": 1,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 4,
+          "preview_incl_colliding_worlds": 4,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 105,
+          "preview": 105,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 10,
+          "preview": 10,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 0,
+          "preview": 0,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "FMC",
+          "since_ist": "2026-06-18 20:30 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 6.12
+    },
+    "TJ105": {
+      "snapshot_id": "9f1ecc80bfd311e4bd69eef6a78d17dbd551176f917f7766cb4109c2771ce3f5",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 1104,
+          "preview": 1104,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 1,
+          "preview": 1,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 4,
+          "preview_incl_colliding_worlds": 4,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 96,
+          "preview": 96,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 48,
+          "preview": 48,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 3,
+          "preview": 3,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "FMC",
+          "since_ist": "2026-06-20 08:30 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 11.49
+    },
+    "TJ106": {
+      "snapshot_id": "021710c234253161e02c43469e4b1550963e7235116a65309b6ad2d4402990e1",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 1487,
+          "preview": 1487,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 1,
+          "preview": 1,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 4,
+          "preview_incl_colliding_worlds": 4,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 210,
+          "preview": 210,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 24,
+          "preview": 24,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 4,
+          "preview": 4,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "FMC",
+          "since_ist": "2026-06-19 21:45 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 10.24
+    },
+    "TJ107": {
+      "snapshot_id": "366d18f6c1946c13a7536156d354eeccdf173205045a42ec9bf37efae33124fb",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 1343,
+          "preview": 1343,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 0,
+          "preview": 0,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 0,
+          "preview_incl_colliding_worlds": 0,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 126,
+          "preview": 126,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 74,
+          "preview": 74,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 63,
+          "preview": 63,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "FMC",
+          "since_ist": "2026-06-19 13:45 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 6.36
+    },
+    "TJ108": {
+      "snapshot_id": "7983867847c28d30c502044a33a45e97425289ab616a934162f753d46411392b",
+      "all_consumer_rows_before_epoch_identical": true,
+      "checks": {
+        "maint.records_rows_before_epoch": {
+          "session": 655,
+          "preview": 655,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.commands_rows_before_epoch": {
+          "session": 0,
+          "preview": 0,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "orders.status_rows_before_epoch": {
+          "session": 0,
+          "preview_incl_colliding_worlds": 0,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "note": "compared as session-rows subset of preview rows (order_id collisions)"
+        },
+        "events.bit_faults_rows_before_epoch": {
+          "session": 52,
+          "preview": 52,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "events.cautions_rows_before_epoch": {
+          "session": 12,
+          "preview": 12,
+          "identical_all_columns": true,
+          "only_in_session": 0,
+          "only_in_preview": 0
+        },
+        "hyd101_bit_faults_ingested_by_2026-06-22_0600_IST": {
+          "session": 2,
+          "preview": 2,
+          "same_record_ids": true
+        },
+        "availability_state_at_epoch": {
+          "state": "NMCS",
+          "since_ist": "2026-04-03 08:00 IST"
+        }
+      },
+      "wall_s_run_to_epoch": 5.42
+    }
+  },
+  "belief_posterior_footprint": {
+    "what": "modules whose state differs between the belief fork and the ensemble fork of the same member at the epoch (the posterior's footprint); module names only",
+    "result": {
+      "TJ107": [
+        {
+          "member": 0,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        },
+        {
+          "member": 1,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        },
+        {
+          "member": 2,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        }
+      ],
+      "TJ108": [
+        {
+          "member": 0,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        },
+        {
+          "member": 1,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        },
+        {
+          "member": 2,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        }
+      ],
+      "TJ105": [
+        {
+          "member": 0,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        },
+        {
+          "member": 1,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        },
+        {
+          "member": 2,
+          "modules_whose_state_differs": [
+            "m10"
+          ]
+        }
+      ]
+    }
+  },
+  "scenarios": {
+    "S1": {
+      "title": "TJ107 recurring HYD-101: filter the code (HUMAN) + troubleshoot once (AGENT)",
+      "tail": "TJ107",
+      "epoch": {
+        "t_utc_ns": 1782095400000000000,
+        "utc": "2026-06-22T02:30:00Z",
+        "ist": "2026-06-22 08:00 IST"
+      },
+      "horizon_days": 30,
+      "window": {
+        "start_ist": "2026-06-22 08:00 IST",
+        "end_ist": "2026-07-22 08:00 IST"
+      },
+      "snapshot_id": "366d18f6c1946c13a7536156d354eeccdf173205045a42ec9bf37efae33124fb",
+      "fleet_days_built": 205,
+      "status_quo": "ScheduledPolicy scheduled/1.0.0 at every 08:00 IST decision epoch, no extra orders",
+      "treatment": "ScheduledPolicy scheduled/1.0.0 + the orders below, issued at the epoch",
+      "orders": [
+        {
+          "order_id": "phx-demo:S1:20260622T023000Z:troubleshoot",
+          "issuer_id": "PHALANX-PDM-AGENT",
+          "issuer_kind": "AGENT",
+          "t_issued": 1782095400000000000,
+          "t_issued_utc": "2026-06-22T02:30:00Z",
+          "t_issued_ist": "2026-06-22 08:00 IST",
+          "t_effective": 1782095400000000000,
+          "action": "TROUBLESHOOT",
+          "parameters": {
+            "code": "HYD-101"
+          },
+          "priority": "ROUTINE",
+          "target_tail_no": "TJ107",
+          "target_base": null,
+          "evidence": [
+            "849f5403e7e040e1ba77b45889e55be0",
+            "661fc9d5c15a7723531708c3b2bb2b86",
+            "3ca4c8db6267cbecefeb5f9031aa64eb",
+            "b8b089f9b054b6f9b79ba808957f5e7e",
+            "2b73925cc495e29f0609c6899c2168a0",
+            "fcf0b94962735ffc27d5f5664c2c4d02"
+          ],
+          "policy_version": "phalanx-solution-demo/0.1"
+        },
+        {
+          "order_id": "phx-demo:S1:20260622T023000Z:monitoring-config",
+          "issuer_id": "HUMAN-ENGG-OFFICER",
+          "issuer_kind": "HUMAN",
+          "t_issued": 1782095400000000000,
+          "t_issued_utc": "2026-06-22T02:30:00Z",
+          "t_issued_ist": "2026-06-22 08:00 IST",
+          "t_effective": 1782095400000000000,
+          "action": "CHANGE_MONITORING_CONFIG",
+          "parameters": {
+            "filter_codes_add": [
+              "HYD-101"
+            ]
+          },
+          "priority": "ROUTINE",
+          "target_tail_no": "TJ107",
+          "target_base": null,
+          "evidence": [
+            "849f5403e7e040e1ba77b45889e55be0",
+            "661fc9d5c15a7723531708c3b2bb2b86",
+            "3ca4c8db6267cbecefeb5f9031aa64eb",
+            "b8b089f9b054b6f9b79ba808957f5e7e",
+            "2b73925cc495e29f0609c6899c2168a0",
+            "fcf0b94962735ffc27d5f5664c2c4d02"
+          ],
+          "policy_version": null
+        }
+      ],
+      "evidence_record_ids": [
+        "2b73925cc495e29f0609c6899c2168a0",
+        "3ca4c8db6267cbecefeb5f9031aa64eb",
+        "661fc9d5c15a7723531708c3b2bb2b86",
+        "849f5403e7e040e1ba77b45889e55be0",
+        "b8b089f9b054b6f9b79ba808957f5e7e",
+        "fcf0b94962735ffc27d5f5664c2c4d02"
+      ],
+      "decision_context": {
+        "hyd101_bit_events_ingested_by_epoch": 63,
+        "evidence_events": [
+          {
+            "record_id": "849f5403e7e040e1ba77b45889e55be0",
+            "topic": "events.bit_faults",
+            "event_code": "HYD-101",
+            "severity": "CAUTION",
+            "sortie_id": "TJ107-20260611T0630",
+            "t_occurrence_ist": "2026-06-11 12:08 IST",
+            "t_ingest_ist": "2026-06-11 13:25 IST"
+          },
+          {
+            "record_id": "661fc9d5c15a7723531708c3b2bb2b86",
+            "topic": "events.bit_faults",
+            "event_code": "HYD-101",
+            "severity": "CAUTION",
+            "sortie_id": "TJ107-20260611T1430",
+            "t_occurrence_ist": "2026-06-11 20:15 IST",
+            "t_ingest_ist": "2026-06-11 21:20 IST"
+          },
+          {
+            "record_id": "3ca4c8db6267cbecefeb5f9031aa64eb",
+            "topic": "events.bit_faults",
+            "event_code": "HYD-101",
+            "severity": "CAUTION",
+            "sortie_id": "TJ107-20260615T0630",
+            "t_occurrence_ist": "2026-06-15 12:09 IST",
+            "t_ingest_ist": "2026-06-15 13:45 IST"
+          },
+          {
+            "record_id": "b8b089f9b054b6f9b79ba808957f5e7e",
+            "topic": "events.bit_faults",
+            "event_code": "HYD-101",
+            "severity": "CAUTION",
+            "sortie_id": "TJ107-20260615T1430",
+            "t_occurrence_ist": "2026-06-15 20:14 IST",
+            "t_ingest_ist": "2026-06-15 21:54 IST"
+          },
+          {
+            "record_id": "2b73925cc495e29f0609c6899c2168a0",
+            "topic": "events.bit_faults",
+            "event_code": "HYD-101",
+            "severity": "CAUTION",
+            "sortie_id": "TJ107-20260618T0630",
+            "t_occurrence_ist": "2026-06-18 12:12 IST",
+            "t_ingest_ist": "2026-06-18 13:31 IST"
+          },
+          {
+            "record_id": "fcf0b94962735ffc27d5f5664c2c4d02",
+            "topic": "events.bit_faults",
+            "event_code": "HYD-101",
+            "severity": "CAUTION",
+            "sortie_id": "TJ107-20260618T1430",
+            "t_occurrence_ist": "2026-06-18 20:08 IST",
+            "t_ingest_ist": "2026-06-18 21:08 IST"
+          }
+        ]
+      },
+      "gateway_verdicts_at_epoch": [
+        {
+          "order_id": "phx-demo:S1:20260622T023000Z:troubleshoot",
+          "verdict": "ACCEPTED",
+          "reason": null,
+          "t_apply_ist": "2026-06-22 08:00 IST"
+        },
+        {
+          "order_id": "phx-demo:S1:20260622T023000Z:monitoring-config",
+          "verdict": "ACCEPTED",
+          "reason": null,
+          "t_apply_ist": "2026-06-22 08:00 IST"
+        }
+      ],
+      "oracle_continuation_check": {
+        "maint.records": {
+          "rows_session": 137,
+          "rows_preview": 137,
+          "identical_all_columns": true
+        },
+        "events.bit_faults": {
+          "rows_session": 15,
+          "rows_preview": 15,
+          "identical_all_columns": true
+        },
+        "events.cautions": {
+          "rows_session": 9,
+          "rows_preview": 9,
+          "identical_all_columns": true
+        },
+        "compared_window_ist": [
+          "2026-06-22 08:00 IST",
+          "2026-07-04 05:30 IST"
+        ],
+        "note": "validation of bitwise continuation only; oracle results are never reported as what-if numbers",
+        "wall_s": 3.13
+      },
+      "results": {
+        "belief": {
+          "mode": "belief",
+          "mode_note": "IN-LOOP what-if: hidden state resampled from observations by the data layer's reference SurvivalPosterior (PROXY A-W1.8-23), then run as ensemble member m. See README for what it does and does not resample.",
+          "n_pairs": 30,
+          "headline_kpis": [
+            "man_hours",
+            "nmcs",
+            "nmcm",
+            "mc",
+            "fmc",
+            "aog_days",
+            "in_flight_failures",
+            "cost",
+            "flown_fh"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.630185185185185,
+                "ci_low": 0.5925207680788858,
+                "ci_high": 0.6678496022914842,
+                "sd": 0.1008671615129319
+              },
+              "treatment": {
+                "mean": 0.8475347222222223,
+                "ci_low": 0.8112167510002518,
+                "ci_high": 0.8838526934441927,
+                "sd": 0.09726131321054841
+              },
+              "paired_difference": {
+                "mean": 0.21734953703703705,
+                "sd": 0.13557524863642517,
+                "ci_low": 0.16672490720369065,
+                "ci_high": 0.26797416687038345,
+                "n": 30
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.6280208333333331,
+                "ci_low": 0.5908531338518812,
+                "ci_high": 0.6651885328147851,
+                "sd": 0.09953692728282583
+              },
+              "treatment": {
+                "mean": 0.819212962962963,
+                "ci_low": 0.7820743430103245,
+                "ci_high": 0.8563515829156014,
+                "sd": 0.09945905087440375
+              },
+              "paired_difference": {
+                "mean": 0.19119212962962964,
+                "sd": 0.13175331751530794,
+                "ci_low": 0.14199463233117518,
+                "ci_high": 0.2403896269280841,
+                "n": 30
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 0.1649537037037037,
+                "ci_low": 0.12284557694465062,
+                "ci_high": 0.2070618304627568,
+                "sd": 0.1127676345242595
+              },
+              "treatment": {
+                "mean": 0.04236111111111111,
+                "ci_low": 0.008003884745057373,
+                "ci_high": 0.07671833747716486,
+                "sd": 0.09201034204831784
+              },
+              "paired_difference": {
+                "mean": -0.12259259259259257,
+                "sd": 0.14242134196066852,
+                "ci_low": -0.1757735956860301,
+                "ci_high": -0.06941158949915505,
+                "n": 30
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.20486111111111113,
+                "ci_low": 0.1936271957335425,
+                "ci_high": 0.21609502648867976,
+                "sd": 0.030084977914667164
+              },
+              "treatment": {
+                "mean": 0.11010416666666667,
+                "ci_low": 0.09833464920654893,
+                "ci_high": 0.12187368412678441,
+                "sd": 0.03151934663500794
+              },
+              "paired_difference": {
+                "mean": -0.09475694444444442,
+                "sd": 0.03765592030829389,
+                "ci_low": -0.10881789617283533,
+                "ci_high": -0.08069599271605352,
+                "n": 30
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.4133255560748986,
+                "ci_low": 0.38207837511702347,
+                "ci_high": 0.4445727370327738,
+                "sd": 0.0836814874794564
+              },
+              "treatment": {
+                "mean": 0.6373206864034452,
+                "ci_low": 0.601178207799603,
+                "ci_high": 0.6734631650072874,
+                "sd": 0.0967913353476996
+              },
+              "paired_difference": {
+                "mean": 0.22399513032854668,
+                "sd": 0.10392634052939097,
+                "ci_low": 0.18518839700406003,
+                "ci_high": 0.2628018636530333,
+                "n": 30
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 11.872944444444443,
+                "ci_low": 11.22505576366391,
+                "ci_high": 12.520833125224975,
+                "sd": 1.7350777531549992
+              },
+              "treatment": {
+                "mean": 18.501259259259253,
+                "ci_low": 17.36112739485792,
+                "ci_high": 19.641391123660586,
+                "sd": 3.053329209583753
+              },
+              "paired_difference": {
+                "mean": 6.628314814814816,
+                "sd": 3.525174996134267,
+                "ci_low": 5.311992838112069,
+                "ci_high": 7.9446367915175635,
+                "n": 30
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 14.033333333333333,
+                "ci_low": 13.27070083357136,
+                "ci_high": 14.795965833095307,
+                "sd": 2.042367343994731
+              },
+              "treatment": {
+                "mean": 21.733333333333334,
+                "ci_low": 20.54063538668389,
+                "ci_high": 22.92603127998278,
+                "sd": 3.194103763276126
+              },
+              "paired_difference": {
+                "mean": 7.7,
+                "sd": 3.9405058313491366,
+                "ci_low": 6.228590940643153,
+                "ci_high": 9.171409059356847,
+                "n": 30
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 4.94861111111111,
+                "ci_low": 3.6853673083395178,
+                "ci_high": 6.211854913882703,
+                "sd": 3.383029035727785
+              },
+              "treatment": {
+                "mean": 1.2708333333333333,
+                "ci_low": 0.24011654235172109,
+                "ci_high": 2.3015501243149457,
+                "sd": 2.7603102614495354
+              },
+              "paired_difference": {
+                "mean": -3.677777777777778,
+                "sd": 4.272640258820056,
+                "ci_low": -5.273207870580904,
+                "ci_high": -2.0823476849746525,
+                "n": 30
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 339.85833333333323,
+                "ci_low": 324.0043845465423,
+                "ci_high": 355.71228212012414,
+                "sd": 42.45765461819766
+              },
+              "treatment": {
+                "mean": 224.17876666666672,
+                "ci_low": 209.43677922662687,
+                "ci_high": 238.92075410670657,
+                "sd": 39.47976744043176
+              },
+              "paired_difference": {
+                "mean": -115.67956666666664,
+                "sd": 45.436104115774945,
+                "ci_low": -132.64568677387697,
+                "ci_high": -98.71344655945632,
+                "n": 30
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 7.225250000000001,
+                "ci_low": 5.736065068538782,
+                "ci_high": 8.71443493146122,
+                "sd": 3.988110491140488
+              },
+              "treatment": {
+                "mean": 3.3751210000000005,
+                "ci_low": 3.1958778964617314,
+                "ci_high": 3.5543641035382696,
+                "sd": 0.4800218472423938
+              },
+              "paired_difference": {
+                "mean": -3.850129000000001,
+                "sd": 4.177787657605852,
+                "ci_low": -5.410140549422274,
+                "ci_high": -2.2901174505777275,
+                "n": 30
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 0.03333333333333333,
+                "ci_low": -0.034840988071090116,
+                "ci_high": 0.10150765473775678,
+                "sd": 0.18257418583505536
+              },
+              "treatment": {
+                "mean": 0.1,
+                "ci_low": -0.013936883013668952,
+                "ci_high": 0.21393688301366898,
+                "sd": 0.30512857662936466
+              },
+              "paired_difference": {
+                "mean": 0.06666666666666667,
+                "sd": 0.2537081317024625,
+                "ci_low": -0.0280695066564651,
+                "ci_high": 0.16140283998979843,
+                "n": 30
+              }
+            }
+          },
+          "derived": {
+            "removals": {
+              "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+              "status_quo": {
+                "mean": 11.5,
+                "ci_low": 10.781069871288006,
+                "ci_high": 12.218930128711994,
+                "sd": 1.925330244847397
+              },
+              "treatment": {
+                "mean": 10.233333333333333,
+                "ci_low": 9.6002240660445,
+                "ci_high": 10.866442600622165,
+                "sd": 1.69549775690744
+              },
+              "paired_difference": {
+                "mean": -1.2666666666666666,
+                "sd": 2.6901266901756506,
+                "ci_low": -2.2711764814350106,
+                "ci_high": -0.2621568518983226,
+                "n": 30
+              }
+            }
+          },
+          "paired_difference_first_10_pairs": {
+            "mc": {
+              "mean": 0.1806597222222222,
+              "sd": 0.14426961928074408,
+              "ci_low": 0.07745545374798338,
+              "ci_high": 0.28386399069646107,
+              "n": 10
+            },
+            "fmc": {
+              "mean": 0.15086805555555555,
+              "sd": 0.13878345245622306,
+              "ci_low": 0.05158835440654498,
+              "ci_high": 0.2501477567045661,
+              "n": 10
+            },
+            "nmcs": {
+              "mean": -0.07274305555555556,
+              "sd": 0.14774687499596528,
+              "ci_low": -0.17843480291950384,
+              "ci_high": 0.032948691808392716,
+              "n": 10
+            },
+            "nmcm": {
+              "mean": -0.10791666666666666,
+              "sd": 0.045879723063028524,
+              "ci_low": -0.1407370434038257,
+              "ci_high": -0.07509628992950762,
+              "n": 10
+            },
+            "nmcd": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flying_task": {
+              "mean": 0.1828143251493814,
+              "sd": 0.12597037981212272,
+              "ci_low": 0.0927005440030318,
+              "ci_high": 0.272928106295731,
+              "n": 10
+            },
+            "flown_fh": {
+              "mean": 5.316249999999999,
+              "sd": 4.167875913518416,
+              "ci_low": 2.334731182035808,
+              "ci_high": 8.29776881796419,
+              "n": 10
+            },
+            "sorties": {
+              "mean": 6.3,
+              "sd": 4.620004810002307,
+              "ci_low": 2.9950476535471613,
+              "ci_high": 9.604952346452839,
+              "n": 10
+            },
+            "aog_days": {
+              "mean": -2.182291666666667,
+              "sd": 4.432406249878959,
+              "ci_low": -5.353044087585115,
+              "ci_high": 0.9884607542517814,
+              "n": 10
+            },
+            "cann_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "man_hours": {
+              "mean": -135.5596,
+              "sd": 47.626366358235764,
+              "ci_low": -169.62945008065287,
+              "ci_high": -101.4897499193471,
+              "n": 10
+            },
+            "cost": {
+              "mean": -5.375596000000001,
+              "sd": 5.886985167820434,
+              "ci_low": -9.58689149514722,
+              "ci_high": -1.1643005048527808,
+              "n": 10
+            },
+            "in_flight_failures": {
+              "mean": 0.2,
+              "sd": 0.42163702135578396,
+              "ci_low": -0.10162095503976065,
+              "ci_high": 0.5016209550397607,
+              "n": 10
+            }
+          },
+          "order_final_status_counts": {
+            "phx-demo:S1:20260622T023000Z:troubleshoot": {
+              "COMPLETED": 30
+            },
+            "phx-demo:S1:20260622T023000Z:monitoring-config": {
+              "COMPLETED": 30
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 60
+          },
+          "wall_s": {
+            "mode_total": 249.6,
+            "per_branch_mean": 4.156,
+            "per_branch_max": 9.697,
+            "per_pair_mean": 8.311,
+            "per_pair_max": 14.958
+          }
+        },
+        "ensemble": {
+          "mode": "ensemble",
+          "mode_note": "OFFLINE evaluation: the TRUE snapshot state (privileged) with ensemble member m's exogenous future; not available to a deployed product.",
+          "n_pairs": 30,
+          "headline_kpis": [
+            "man_hours",
+            "nmcs",
+            "nmcm",
+            "mc",
+            "fmc",
+            "aog_days",
+            "in_flight_failures",
+            "cost",
+            "flown_fh"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.630185185185185,
+                "ci_low": 0.5925207680788858,
+                "ci_high": 0.6678496022914842,
+                "sd": 0.1008671615129319
+              },
+              "treatment": {
+                "mean": 0.8475347222222223,
+                "ci_low": 0.8112167510002518,
+                "ci_high": 0.8838526934441927,
+                "sd": 0.09726131321054841
+              },
+              "paired_difference": {
+                "mean": 0.21734953703703705,
+                "sd": 0.13557524863642517,
+                "ci_low": 0.16672490720369065,
+                "ci_high": 0.26797416687038345,
+                "n": 30
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.6280208333333331,
+                "ci_low": 0.5908531338518812,
+                "ci_high": 0.6651885328147851,
+                "sd": 0.09953692728282583
+              },
+              "treatment": {
+                "mean": 0.819212962962963,
+                "ci_low": 0.7820743430103245,
+                "ci_high": 0.8563515829156014,
+                "sd": 0.09945905087440375
+              },
+              "paired_difference": {
+                "mean": 0.19119212962962964,
+                "sd": 0.13175331751530794,
+                "ci_low": 0.14199463233117518,
+                "ci_high": 0.2403896269280841,
+                "n": 30
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 0.1649537037037037,
+                "ci_low": 0.12284557694465062,
+                "ci_high": 0.2070618304627568,
+                "sd": 0.1127676345242595
+              },
+              "treatment": {
+                "mean": 0.04236111111111111,
+                "ci_low": 0.008003884745057373,
+                "ci_high": 0.07671833747716486,
+                "sd": 0.09201034204831784
+              },
+              "paired_difference": {
+                "mean": -0.12259259259259257,
+                "sd": 0.14242134196066852,
+                "ci_low": -0.1757735956860301,
+                "ci_high": -0.06941158949915505,
+                "n": 30
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.20486111111111113,
+                "ci_low": 0.1936271957335425,
+                "ci_high": 0.21609502648867976,
+                "sd": 0.030084977914667164
+              },
+              "treatment": {
+                "mean": 0.11010416666666667,
+                "ci_low": 0.09833464920654893,
+                "ci_high": 0.12187368412678441,
+                "sd": 0.03151934663500794
+              },
+              "paired_difference": {
+                "mean": -0.09475694444444442,
+                "sd": 0.03765592030829389,
+                "ci_low": -0.10881789617283533,
+                "ci_high": -0.08069599271605352,
+                "n": 30
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.4133255560748986,
+                "ci_low": 0.38207837511702347,
+                "ci_high": 0.4445727370327738,
+                "sd": 0.0836814874794564
+              },
+              "treatment": {
+                "mean": 0.6373206864034452,
+                "ci_low": 0.601178207799603,
+                "ci_high": 0.6734631650072874,
+                "sd": 0.0967913353476996
+              },
+              "paired_difference": {
+                "mean": 0.22399513032854668,
+                "sd": 0.10392634052939097,
+                "ci_low": 0.18518839700406003,
+                "ci_high": 0.2628018636530333,
+                "n": 30
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 11.872944444444443,
+                "ci_low": 11.22505576366391,
+                "ci_high": 12.520833125224975,
+                "sd": 1.7350777531549992
+              },
+              "treatment": {
+                "mean": 18.501259259259253,
+                "ci_low": 17.36112739485792,
+                "ci_high": 19.641391123660586,
+                "sd": 3.053329209583753
+              },
+              "paired_difference": {
+                "mean": 6.628314814814816,
+                "sd": 3.525174996134267,
+                "ci_low": 5.311992838112069,
+                "ci_high": 7.9446367915175635,
+                "n": 30
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 14.033333333333333,
+                "ci_low": 13.27070083357136,
+                "ci_high": 14.795965833095307,
+                "sd": 2.042367343994731
+              },
+              "treatment": {
+                "mean": 21.733333333333334,
+                "ci_low": 20.54063538668389,
+                "ci_high": 22.92603127998278,
+                "sd": 3.194103763276126
+              },
+              "paired_difference": {
+                "mean": 7.7,
+                "sd": 3.9405058313491366,
+                "ci_low": 6.228590940643153,
+                "ci_high": 9.171409059356847,
+                "n": 30
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 4.94861111111111,
+                "ci_low": 3.6853673083395178,
+                "ci_high": 6.211854913882703,
+                "sd": 3.383029035727785
+              },
+              "treatment": {
+                "mean": 1.2708333333333333,
+                "ci_low": 0.24011654235172109,
+                "ci_high": 2.3015501243149457,
+                "sd": 2.7603102614495354
+              },
+              "paired_difference": {
+                "mean": -3.677777777777778,
+                "sd": 4.272640258820056,
+                "ci_low": -5.273207870580904,
+                "ci_high": -2.0823476849746525,
+                "n": 30
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 339.85833333333323,
+                "ci_low": 324.0043845465423,
+                "ci_high": 355.71228212012414,
+                "sd": 42.45765461819766
+              },
+              "treatment": {
+                "mean": 224.17876666666672,
+                "ci_low": 209.43677922662687,
+                "ci_high": 238.92075410670657,
+                "sd": 39.47976744043176
+              },
+              "paired_difference": {
+                "mean": -115.67956666666664,
+                "sd": 45.436104115774945,
+                "ci_low": -132.64568677387697,
+                "ci_high": -98.71344655945632,
+                "n": 30
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 7.225250000000001,
+                "ci_low": 5.736065068538782,
+                "ci_high": 8.71443493146122,
+                "sd": 3.988110491140488
+              },
+              "treatment": {
+                "mean": 3.3751210000000005,
+                "ci_low": 3.1958778964617314,
+                "ci_high": 3.5543641035382696,
+                "sd": 0.4800218472423938
+              },
+              "paired_difference": {
+                "mean": -3.850129000000001,
+                "sd": 4.177787657605852,
+                "ci_low": -5.410140549422274,
+                "ci_high": -2.2901174505777275,
+                "n": 30
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 0.03333333333333333,
+                "ci_low": -0.034840988071090116,
+                "ci_high": 0.10150765473775678,
+                "sd": 0.18257418583505536
+              },
+              "treatment": {
+                "mean": 0.1,
+                "ci_low": -0.013936883013668952,
+                "ci_high": 0.21393688301366898,
+                "sd": 0.30512857662936466
+              },
+              "paired_difference": {
+                "mean": 0.06666666666666667,
+                "sd": 0.2537081317024625,
+                "ci_low": -0.0280695066564651,
+                "ci_high": 0.16140283998979843,
+                "n": 30
+              }
+            }
+          },
+          "derived": {
+            "removals": {
+              "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+              "status_quo": {
+                "mean": 11.5,
+                "ci_low": 10.781069871288006,
+                "ci_high": 12.218930128711994,
+                "sd": 1.925330244847397
+              },
+              "treatment": {
+                "mean": 10.233333333333333,
+                "ci_low": 9.6002240660445,
+                "ci_high": 10.866442600622165,
+                "sd": 1.69549775690744
+              },
+              "paired_difference": {
+                "mean": -1.2666666666666666,
+                "sd": 2.6901266901756506,
+                "ci_low": -2.2711764814350106,
+                "ci_high": -0.2621568518983226,
+                "n": 30
+              }
+            }
+          },
+          "paired_difference_first_10_pairs": {
+            "mc": {
+              "mean": 0.1806597222222222,
+              "sd": 0.14426961928074408,
+              "ci_low": 0.07745545374798338,
+              "ci_high": 0.28386399069646107,
+              "n": 10
+            },
+            "fmc": {
+              "mean": 0.15086805555555555,
+              "sd": 0.13878345245622306,
+              "ci_low": 0.05158835440654498,
+              "ci_high": 0.2501477567045661,
+              "n": 10
+            },
+            "nmcs": {
+              "mean": -0.07274305555555556,
+              "sd": 0.14774687499596528,
+              "ci_low": -0.17843480291950384,
+              "ci_high": 0.032948691808392716,
+              "n": 10
+            },
+            "nmcm": {
+              "mean": -0.10791666666666666,
+              "sd": 0.045879723063028524,
+              "ci_low": -0.1407370434038257,
+              "ci_high": -0.07509628992950762,
+              "n": 10
+            },
+            "nmcd": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flying_task": {
+              "mean": 0.1828143251493814,
+              "sd": 0.12597037981212272,
+              "ci_low": 0.0927005440030318,
+              "ci_high": 0.272928106295731,
+              "n": 10
+            },
+            "flown_fh": {
+              "mean": 5.316249999999999,
+              "sd": 4.167875913518416,
+              "ci_low": 2.334731182035808,
+              "ci_high": 8.29776881796419,
+              "n": 10
+            },
+            "sorties": {
+              "mean": 6.3,
+              "sd": 4.620004810002307,
+              "ci_low": 2.9950476535471613,
+              "ci_high": 9.604952346452839,
+              "n": 10
+            },
+            "aog_days": {
+              "mean": -2.182291666666667,
+              "sd": 4.432406249878959,
+              "ci_low": -5.353044087585115,
+              "ci_high": 0.9884607542517814,
+              "n": 10
+            },
+            "cann_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "man_hours": {
+              "mean": -135.5596,
+              "sd": 47.626366358235764,
+              "ci_low": -169.62945008065287,
+              "ci_high": -101.4897499193471,
+              "n": 10
+            },
+            "cost": {
+              "mean": -5.375596000000001,
+              "sd": 5.886985167820434,
+              "ci_low": -9.58689149514722,
+              "ci_high": -1.1643005048527808,
+              "n": 10
+            },
+            "in_flight_failures": {
+              "mean": 0.2,
+              "sd": 0.42163702135578396,
+              "ci_low": -0.10162095503976065,
+              "ci_high": 0.5016209550397607,
+              "n": 10
+            }
+          },
+          "order_final_status_counts": {
+            "phx-demo:S1:20260622T023000Z:troubleshoot": {
+              "COMPLETED": 30
+            },
+            "phx-demo:S1:20260622T023000Z:monitoring-config": {
+              "COMPLETED": 30
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 60
+          },
+          "wall_s": {
+            "mode_total": 166.62,
+            "per_branch_mean": 2.771,
+            "per_branch_max": 4.601,
+            "per_pair_mean": 5.543,
+            "per_pair_max": 7.349
+          }
+        }
+      },
+      "belief_vs_ensemble": {
+        "members_compared": 30,
+        "identical_record_digests": {
+          "status_quo": 30,
+          "treatment": 30
+        },
+        "identical_kpis": {
+          "status_quo": 30,
+          "treatment": 30
+        },
+        "meaning": "belief member m vs ensemble member m share the exogenous future; identical digests mean the reference belief posterior's resampling did not change any emitted record in the window"
+      },
+      "wall_s": {
+        "run_to_epoch": 11.09,
+        "total": 435.54
+      },
+      "per_member_file": "scenario_S1.json"
+    },
+    "S2": {
+      "title": "TJ108 AOG since 2026-04-03: expedite the brake-chute AOG demand (AGENT)",
+      "tail": "TJ108",
+      "epoch": {
+        "t_utc_ns": 1782095400000000000,
+        "utc": "2026-06-22T02:30:00Z",
+        "ist": "2026-06-22 08:00 IST"
+      },
+      "horizon_days": 30,
+      "window": {
+        "start_ist": "2026-06-22 08:00 IST",
+        "end_ist": "2026-07-22 08:00 IST"
+      },
+      "snapshot_id": "7983867847c28d30c502044a33a45e97425289ab616a934162f753d46411392b",
+      "fleet_days_built": 205,
+      "status_quo": "ScheduledPolicy scheduled/1.0.0 at every 08:00 IST decision epoch, no extra orders",
+      "treatment": "ScheduledPolicy scheduled/1.0.0 + the orders below, issued at the epoch",
+      "orders": [
+        {
+          "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+          "issuer_id": "PHALANX-PDM-AGENT",
+          "issuer_kind": "AGENT",
+          "t_issued": 1782095400000000000,
+          "t_issued_utc": "2026-06-22T02:30:00Z",
+          "t_issued_ist": "2026-06-22 08:00 IST",
+          "t_effective": 1782095400000000000,
+          "action": "EXPEDITE_SPARES",
+          "parameters": {
+            "demand_no": "D-sulur-26093-0002"
+          },
+          "priority": "AOG",
+          "target_tail_no": "TJ108",
+          "target_base": "sulur",
+          "evidence": [
+            "9531749ae89a0cc67c771e3f8c6803fb",
+            "538009832804198691b4a8a246f0ae2d",
+            "5c24ba776ce2bb1d588e6fc61e4ec084"
+          ],
+          "policy_version": "phalanx-solution-demo/0.1"
+        }
+      ],
+      "evidence_record_ids": [
+        "538009832804198691b4a8a246f0ae2d",
+        "5c24ba776ce2bb1d588e6fc61e4ec084",
+        "9531749ae89a0cc67c771e3f8c6803fb"
+      ],
+      "decision_context": {
+        "tech_log_at_epoch": {
+          "t_event_ist": "2026-06-11 11:49 IST",
+          "availability_state": "NMCS",
+          "limitations_text": "U/S: sulur-26093-0003; DEFERRED: sulur-26091-0001 sulur-26091-0002 sulur-26092-0001"
+        },
+        "open_aog_demands_in_consumer_view": [
+          {
+            "demand_no": "D-sulur-26055-0001",
+            "part_no": "SYN-PN-TYRE",
+            "job_no": "sulur-26055-0002",
+            "t_open_ist": "2026-02-24 08:00 IST",
+            "job_open": false,
+            "job_us_in_tech_log": false
+          },
+          {
+            "demand_no": "D-sulur-26093-0002",
+            "part_no": "SYN-PN-CHUTE",
+            "job_no": "sulur-26093-0003",
+            "t_open_ist": "2026-04-03 08:00 IST",
+            "job_open": true,
+            "job_us_in_tech_log": true
+          }
+        ],
+        "selected_demand": {
+          "demand_no": "D-sulur-26093-0002",
+          "part_no": "SYN-PN-CHUTE",
+          "job_no": "sulur-26093-0003",
+          "job_text": "REPLACE BRAKE PARACHUTE DUE TO HI-TIME (45 STREAMINGS).",
+          "t_open_ist": "2026-04-03 08:00 IST",
+          "why": "oldest open AOG demand whose job is still open and is the U/S (grounding) entry of the latest TECH_LOG record; older 'open' AOG demands in the consumer view belong to closed jobs (stale or lagged supply records, a deliberate data-quality defect)"
+        },
+        "evidence_records": [
+          {
+            "record_id": "9531749ae89a0cc67c771e3f8c6803fb",
+            "record_type": "SUPPLY_DEMAND",
+            "key": "D-sulur-26093-0002"
+          },
+          {
+            "record_id": "538009832804198691b4a8a246f0ae2d",
+            "record_type": "DEFECT_WO",
+            "key": "sulur-26093-0003"
+          },
+          {
+            "record_id": "5c24ba776ce2bb1d588e6fc61e4ec084",
+            "record_type": "TECH_LOG",
+            "key": "TL-TJ108"
+          }
+        ]
+      },
+      "gateway_verdicts_at_epoch": [
+        {
+          "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+          "verdict": "ACCEPTED",
+          "reason": null,
+          "t_apply_ist": "2026-06-22 08:00 IST"
+        }
+      ],
+      "oracle_continuation_check": {
+        "maint.records": {
+          "rows_session": 5,
+          "rows_preview": 5,
+          "identical_all_columns": true
+        },
+        "events.bit_faults": {
+          "rows_session": 0,
+          "rows_preview": 0,
+          "identical_all_columns": true
+        },
+        "events.cautions": {
+          "rows_session": 0,
+          "rows_preview": 0,
+          "identical_all_columns": true
+        },
+        "compared_window_ist": [
+          "2026-06-22 08:00 IST",
+          "2026-07-04 05:30 IST"
+        ],
+        "note": "validation of bitwise continuation only; oracle results are never reported as what-if numbers",
+        "wall_s": 0.58
+      },
+      "results": {
+        "belief": {
+          "mode": "belief",
+          "mode_note": "IN-LOOP what-if: hidden state resampled from observations by the data layer's reference SurvivalPosterior (PROXY A-W1.8-23), then run as ensemble member m. See README for what it does and does not resample.",
+          "n_pairs": 30,
+          "headline_kpis": [
+            "aog_days",
+            "nmcs",
+            "mc",
+            "flown_fh",
+            "cost",
+            "fmc",
+            "nmcm"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 30.0,
+                "ci_low": 30.0,
+                "ci_high": 30.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 30.0,
+                "ci_low": 30.0,
+                "ci_high": 30.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 77.8119,
+                "ci_low": 73.41009513627591,
+                "ci_high": 82.21370486372408,
+                "sd": 11.788249925243356
+              },
+              "treatment": {
+                "mean": 77.8119,
+                "ci_low": 73.41009513627591,
+                "ci_high": 82.21370486372408,
+                "sd": 11.788249925243356
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 0.7781189999999999,
+                "ci_low": 0.7341009513627591,
+                "ci_high": 0.8221370486372407,
+                "sd": 0.11788249925243353
+              },
+              "treatment": {
+                "mean": 0.7781189999999999,
+                "ci_low": 0.7341009513627591,
+                "ci_high": 0.8221370486372407,
+                "sd": 0.11788249925243353
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "derived": {
+            "removals": {
+              "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "paired_difference_first_10_pairs": {
+            "mc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "fmc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcs": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcm": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcd": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flying_task": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flown_fh": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "sorties": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "aog_days": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "man_hours": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cost": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "in_flight_failures": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            }
+          },
+          "order_final_status_counts": {
+            "phx-demo:S2:20260622T023000Z:expedite": {
+              "COMPLETED": 30
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 30
+          },
+          "wall_s": {
+            "mode_total": 61.9,
+            "per_branch_mean": 1.03,
+            "per_branch_max": 1.676,
+            "per_pair_mean": 2.06,
+            "per_pair_max": 3.013
+          },
+          "nmcs_exit_per_member": [
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            }
+          ]
+        },
+        "ensemble": {
+          "mode": "ensemble",
+          "mode_note": "OFFLINE evaluation: the TRUE snapshot state (privileged) with ensemble member m's exogenous future; not available to a deployed product.",
+          "n_pairs": 30,
+          "headline_kpis": [
+            "aog_days",
+            "nmcs",
+            "mc",
+            "flown_fh",
+            "cost",
+            "fmc",
+            "nmcm"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 30.0,
+                "ci_low": 30.0,
+                "ci_high": 30.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 30.0,
+                "ci_low": 30.0,
+                "ci_high": 30.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 77.8119,
+                "ci_low": 73.41009513627591,
+                "ci_high": 82.21370486372408,
+                "sd": 11.788249925243356
+              },
+              "treatment": {
+                "mean": 77.8119,
+                "ci_low": 73.41009513627591,
+                "ci_high": 82.21370486372408,
+                "sd": 11.788249925243356
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 0.7781189999999999,
+                "ci_low": 0.7341009513627591,
+                "ci_high": 0.8221370486372407,
+                "sd": 0.11788249925243353
+              },
+              "treatment": {
+                "mean": 0.7781189999999999,
+                "ci_low": 0.7341009513627591,
+                "ci_high": 0.8221370486372407,
+                "sd": 0.11788249925243353
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "derived": {
+            "removals": {
+              "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "paired_difference_first_10_pairs": {
+            "mc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "fmc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcs": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcm": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcd": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flying_task": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flown_fh": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "sorties": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "aog_days": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "man_hours": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cost": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "in_flight_failures": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            }
+          },
+          "order_final_status_counts": {
+            "phx-demo:S2:20260622T023000Z:expedite": {
+              "COMPLETED": 30
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 30
+          },
+          "wall_s": {
+            "mode_total": 67.81,
+            "per_branch_mean": 1.128,
+            "per_branch_max": 2.672,
+            "per_pair_mean": 2.255,
+            "per_pair_max": 4.557
+          },
+          "nmcs_exit_per_member": [
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            },
+            {
+              "status_quo": null,
+              "treatment": null
+            }
+          ]
+        }
+      },
+      "belief_vs_ensemble": {
+        "members_compared": 30,
+        "identical_record_digests": {
+          "status_quo": 30,
+          "treatment": 30
+        },
+        "identical_kpis": {
+          "status_quo": 30,
+          "treatment": 30
+        },
+        "meaning": "belief member m vs ensemble member m share the exogenous future; identical digests mean the reference belief posterior's resampling did not change any emitted record in the window"
+      },
+      "wall_s": {
+        "run_to_epoch": 9.51,
+        "total": 145.03
+      },
+      "per_member_file": "scenario_S2.json"
+    },
+    "S3": {
+      "title": "TJ105 tyres at 7 of 8 landings: requisition 2 tyres for the base (AGENT)",
+      "tail": "TJ105",
+      "epoch": {
+        "t_utc_ns": 1782095400000000000,
+        "utc": "2026-06-22T02:30:00Z",
+        "ist": "2026-06-22 08:00 IST"
+      },
+      "horizon_days": 30,
+      "window": {
+        "start_ist": "2026-06-22 08:00 IST",
+        "end_ist": "2026-07-22 08:00 IST"
+      },
+      "snapshot_id": "9f1ecc80bfd311e4bd69eef6a78d17dbd551176f917f7766cb4109c2771ce3f5",
+      "fleet_days_built": 205,
+      "status_quo": "ScheduledPolicy scheduled/1.0.0 at every 08:00 IST decision epoch, no extra orders",
+      "treatment": "ScheduledPolicy scheduled/1.0.0 + the orders below, issued at the epoch",
+      "orders": [
+        {
+          "order_id": "phx-demo:S3:20260622T023000Z:requisition-tyres",
+          "issuer_id": "PHALANX-PDM-AGENT",
+          "issuer_kind": "AGENT",
+          "t_issued": 1782095400000000000,
+          "t_issued_utc": "2026-06-22T02:30:00Z",
+          "t_issued_ist": "2026-06-22 08:00 IST",
+          "t_effective": 1782095400000000000,
+          "action": "REQUISITION_SPARES",
+          "parameters": {
+            "part_no": "SYN-PN-TYRE",
+            "quantity": 2
+          },
+          "priority": "MCM",
+          "target_tail_no": null,
+          "target_base": "sulur",
+          "evidence": [
+            "5c6b07c27b7aaeebc11923c313ee33ec",
+            "e05999a98367ee3af85c86c4598a0bfd",
+            "72260e735c197742696b12a953e0a547",
+            "0adf6ad884bdd7487e845dd618a1a0ba",
+            "257b288af732947465ae434e627c14d0",
+            "1dbebf4255b9efc25d700e8196ee1d83",
+            "b8d779e5dc3de275964ea8f28d8862ee"
+          ],
+          "policy_version": "phalanx-solution-demo/0.1"
+        }
+      ],
+      "evidence_record_ids": [
+        "0adf6ad884bdd7487e845dd618a1a0ba",
+        "1dbebf4255b9efc25d700e8196ee1d83",
+        "257b288af732947465ae434e627c14d0",
+        "5c6b07c27b7aaeebc11923c313ee33ec",
+        "72260e735c197742696b12a953e0a547",
+        "b8d779e5dc3de275964ea8f28d8862ee",
+        "e05999a98367ee3af85c86c4598a0bfd"
+      ],
+      "decision_context": {
+        "last_tyre_install": {
+          "record_id": "5c6b07c27b7aaeebc11923c313ee33ec",
+          "serial_no": "TYRE-000038",
+          "t_event_ist": "2026-06-05 11:41 IST"
+        },
+        "landings_since_last_tyre_install": 7,
+        "tyre_life_landings_catalogue": 8,
+        "sorties_since_install": [
+          {
+            "record_id": "e05999a98367ee3af85c86c4598a0bfd",
+            "sortie_id": "TJ105-20260610T0300",
+            "landings": 2
+          },
+          {
+            "record_id": "72260e735c197742696b12a953e0a547",
+            "sortie_id": "TJ105-20260612T0630",
+            "landings": 1
+          },
+          {
+            "record_id": "0adf6ad884bdd7487e845dd618a1a0ba",
+            "sortie_id": "TJ105-20260615T0630",
+            "landings": 1
+          },
+          {
+            "record_id": "257b288af732947465ae434e627c14d0",
+            "sortie_id": "TJ105-20260615T1430",
+            "landings": 1
+          },
+          {
+            "record_id": "1dbebf4255b9efc25d700e8196ee1d83",
+            "sortie_id": "TJ105-20260618T1430",
+            "landings": 1
+          },
+          {
+            "record_id": "b8d779e5dc3de275964ea8f28d8862ee",
+            "sortie_id": "TJ105-20260619T1430",
+            "landings": 1
+          }
+        ],
+        "lever_choice": "REQUISITION_SPARES raises base stock (M18 _o_requisition_spares -> supply demands); WASH_SERVICE TYRES only resets M10 tyre pressure-loss states (servicing), it does not renew tyre landing life, so it is not the lever for a hard-time tyre change",
+        "priority_choice": "MCM (lead-time multiplier 1.5; M18 replenishes consumed spares at MCM); ROUTINE would map to PHU (2.5x), AOG (1.0x) is reserved for an aircraft on ground"
+      },
+      "gateway_verdicts_at_epoch": [
+        {
+          "order_id": "phx-demo:S3:20260622T023000Z:requisition-tyres",
+          "verdict": "ACCEPTED",
+          "reason": null,
+          "t_apply_ist": "2026-06-22 08:00 IST"
+        }
+      ],
+      "oracle_continuation_check": {
+        "maint.records": {
+          "rows_session": 67,
+          "rows_preview": 67,
+          "identical_all_columns": true
+        },
+        "events.bit_faults": {
+          "rows_session": 4,
+          "rows_preview": 4,
+          "identical_all_columns": true
+        },
+        "events.cautions": {
+          "rows_session": 3,
+          "rows_preview": 3,
+          "identical_all_columns": true
+        },
+        "compared_window_ist": [
+          "2026-06-22 08:00 IST",
+          "2026-07-04 05:30 IST"
+        ],
+        "note": "validation of bitwise continuation only; oracle results are never reported as what-if numbers",
+        "wall_s": 2.11
+      },
+      "results": {
+        "belief": {
+          "mode": "belief",
+          "mode_note": "IN-LOOP what-if: hidden state resampled from observations by the data layer's reference SurvivalPosterior (PROXY A-W1.8-23), then run as ensemble member m. See README for what it does and does not resample.",
+          "n_pairs": 30,
+          "headline_kpis": [
+            "nmcs",
+            "aog_days",
+            "mc",
+            "fmc",
+            "nmcm",
+            "flown_fh",
+            "cost"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.3171412037037038,
+                "ci_low": 0.2720619950442879,
+                "ci_high": 0.3622204123631197,
+                "sd": 0.12072433798435164
+              },
+              "treatment": {
+                "mean": 0.3171412037037038,
+                "ci_low": 0.2720619950442879,
+                "ci_high": 0.3622204123631197,
+                "sd": 0.12072433798435164
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.3087615740740741,
+                "ci_low": 0.2644961014745375,
+                "ci_high": 0.35302704667361073,
+                "sd": 0.11854511279286409
+              },
+              "treatment": {
+                "mean": 0.3087615740740741,
+                "ci_low": 0.2644961014745375,
+                "ci_high": 0.35302704667361073,
+                "sd": 0.11854511279286409
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 0.01646990740740741,
+                "ci_low": 0.001669860021918563,
+                "ci_high": 0.03126995479289625,
+                "sd": 0.03963525482998854
+              },
+              "treatment": {
+                "mean": 0.01646990740740741,
+                "ci_low": 0.001669860021918563,
+                "ci_high": 0.03126995479289625,
+                "sd": 0.03963525482998854
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.6663888888888888,
+                "ci_low": 0.6248128496196942,
+                "ci_high": 0.7079649281580834,
+                "sd": 0.11134267805600731
+              },
+              "treatment": {
+                "mean": 0.6663888888888888,
+                "ci_low": 0.6248128496196942,
+                "ci_high": 0.7079649281580834,
+                "sd": 0.11134267805600731
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.27213349957960437,
+                "ci_low": 0.24136916388518195,
+                "ci_high": 0.3028978352740268,
+                "sd": 0.08238840411546897
+              },
+              "treatment": {
+                "mean": 0.27213349957960437,
+                "ci_low": 0.24136916388518195,
+                "ci_high": 0.3028978352740268,
+                "sd": 0.08238840411546897
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 7.969194444444444,
+                "ci_low": 7.037649475695763,
+                "ci_high": 8.900739413193126,
+                "sd": 2.4947232438018405
+              },
+              "treatment": {
+                "mean": 7.969194444444444,
+                "ci_low": 7.037649475695763,
+                "ci_high": 8.900739413193126,
+                "sd": 2.4947232438018405
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 9.5,
+                "ci_low": 8.32428684733001,
+                "ci_high": 10.67571315266999,
+                "sd": 3.148617649612013
+              },
+              "treatment": {
+                "mean": 9.5,
+                "ci_low": 8.32428684733001,
+                "ci_high": 10.67571315266999,
+                "sd": 3.148617649612013
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 0.49409722222222224,
+                "ci_low": 0.050095800657556866,
+                "ci_high": 0.9380986437868877,
+                "sd": 1.1890576448996562
+              },
+              "treatment": {
+                "mean": 0.49409722222222224,
+                "ci_low": 0.050095800657556866,
+                "ci_high": 0.9380986437868877,
+                "sd": 1.1890576448996562
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 552.1732333333334,
+                "ci_low": 398.48127160585125,
+                "ci_high": 705.8651950608156,
+                "sd": 411.59463275518397
+              },
+              "treatment": {
+                "mean": 552.1732333333334,
+                "ci_low": 398.48127160585125,
+                "ci_high": 705.8651950608156,
+                "sd": 411.59463275518397
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 7.111732333333333,
+                "ci_low": 5.5022030072803085,
+                "ci_high": 8.721261659386359,
+                "sd": 4.310398698925804
+              },
+              "treatment": {
+                "mean": 7.3983989999999995,
+                "ci_low": 5.795460742891404,
+                "ci_high": 9.001337257108595,
+                "sd": 4.292747492114763
+              },
+              "paired_difference": {
+                "mean": 0.2866666666666667,
+                "sd": 0.13578211078487265,
+                "ci_low": 0.23596479323762704,
+                "ci_high": 0.3373685400957063,
+                "n": 30
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 0.03333333333333333,
+                "ci_low": -0.034840988071090116,
+                "ci_high": 0.10150765473775678,
+                "sd": 0.18257418583505533
+              },
+              "treatment": {
+                "mean": 0.03333333333333333,
+                "ci_low": -0.034840988071090116,
+                "ci_high": 0.10150765473775678,
+                "sd": 0.18257418583505533
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "derived": {
+            "removals": {
+              "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+              "status_quo": {
+                "mean": 5.733333333333333,
+                "ci_low": 5.047371661072189,
+                "ci_high": 6.419295005594478,
+                "sd": 1.8370390969378307
+              },
+              "treatment": {
+                "mean": 5.733333333333333,
+                "ci_low": 5.047371661072189,
+                "ci_high": 6.419295005594478,
+                "sd": 1.8370390969378307
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "paired_difference_first_10_pairs": {
+            "mc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "fmc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcs": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcm": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcd": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flying_task": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flown_fh": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "sorties": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "aog_days": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "man_hours": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cost": {
+              "mean": 0.2999999999999998,
+              "sd": 0.14142135623730956,
+              "ci_low": 0.1988332561639029,
+              "ci_high": 0.40116674383609674,
+              "n": 10
+            },
+            "in_flight_failures": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            }
+          },
+          "order_final_status_counts": {
+            "phx-demo:S3:20260622T023000Z:requisition-tyres": {
+              "COMPLETED": 16,
+              "QUEUED": 14
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 30
+          },
+          "wall_s": {
+            "mode_total": 192.87,
+            "per_branch_mean": 3.172,
+            "per_branch_max": 7.23,
+            "per_pair_mean": 6.344,
+            "per_pair_max": 13.765
+          },
+          "tyre_jobs_per_member": [
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 8,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 8,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            }
+          ]
+        },
+        "ensemble": {
+          "mode": "ensemble",
+          "mode_note": "OFFLINE evaluation: the TRUE snapshot state (privileged) with ensemble member m's exogenous future; not available to a deployed product.",
+          "n_pairs": 30,
+          "headline_kpis": [
+            "nmcs",
+            "aog_days",
+            "mc",
+            "fmc",
+            "nmcm",
+            "flown_fh",
+            "cost"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.3171412037037038,
+                "ci_low": 0.2720619950442879,
+                "ci_high": 0.3622204123631197,
+                "sd": 0.12072433798435164
+              },
+              "treatment": {
+                "mean": 0.3171412037037038,
+                "ci_low": 0.2720619950442879,
+                "ci_high": 0.3622204123631197,
+                "sd": 0.12072433798435164
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.3087615740740741,
+                "ci_low": 0.2644961014745375,
+                "ci_high": 0.35302704667361073,
+                "sd": 0.11854511279286409
+              },
+              "treatment": {
+                "mean": 0.3087615740740741,
+                "ci_low": 0.2644961014745375,
+                "ci_high": 0.35302704667361073,
+                "sd": 0.11854511279286409
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 0.01646990740740741,
+                "ci_low": 0.001669860021918563,
+                "ci_high": 0.03126995479289625,
+                "sd": 0.03963525482998854
+              },
+              "treatment": {
+                "mean": 0.01646990740740741,
+                "ci_low": 0.001669860021918563,
+                "ci_high": 0.03126995479289625,
+                "sd": 0.03963525482998854
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.6663888888888888,
+                "ci_low": 0.6248128496196942,
+                "ci_high": 0.7079649281580834,
+                "sd": 0.11134267805600731
+              },
+              "treatment": {
+                "mean": 0.6663888888888888,
+                "ci_low": 0.6248128496196942,
+                "ci_high": 0.7079649281580834,
+                "sd": 0.11134267805600731
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.27213349957960437,
+                "ci_low": 0.24136916388518195,
+                "ci_high": 0.3028978352740268,
+                "sd": 0.08238840411546897
+              },
+              "treatment": {
+                "mean": 0.27213349957960437,
+                "ci_low": 0.24136916388518195,
+                "ci_high": 0.3028978352740268,
+                "sd": 0.08238840411546897
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 7.969194444444444,
+                "ci_low": 7.037649475695763,
+                "ci_high": 8.900739413193126,
+                "sd": 2.4947232438018405
+              },
+              "treatment": {
+                "mean": 7.969194444444444,
+                "ci_low": 7.037649475695763,
+                "ci_high": 8.900739413193126,
+                "sd": 2.4947232438018405
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 9.5,
+                "ci_low": 8.32428684733001,
+                "ci_high": 10.67571315266999,
+                "sd": 3.148617649612013
+              },
+              "treatment": {
+                "mean": 9.5,
+                "ci_low": 8.32428684733001,
+                "ci_high": 10.67571315266999,
+                "sd": 3.148617649612013
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 0.49409722222222224,
+                "ci_low": 0.050095800657556866,
+                "ci_high": 0.9380986437868877,
+                "sd": 1.1890576448996562
+              },
+              "treatment": {
+                "mean": 0.49409722222222224,
+                "ci_low": 0.050095800657556866,
+                "ci_high": 0.9380986437868877,
+                "sd": 1.1890576448996562
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 552.1732333333334,
+                "ci_low": 398.48127160585125,
+                "ci_high": 705.8651950608156,
+                "sd": 411.59463275518397
+              },
+              "treatment": {
+                "mean": 552.1732333333334,
+                "ci_low": 398.48127160585125,
+                "ci_high": 705.8651950608156,
+                "sd": 411.59463275518397
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 7.111732333333333,
+                "ci_low": 5.5022030072803085,
+                "ci_high": 8.721261659386359,
+                "sd": 4.310398698925804
+              },
+              "treatment": {
+                "mean": 7.3983989999999995,
+                "ci_low": 5.795460742891404,
+                "ci_high": 9.001337257108595,
+                "sd": 4.292747492114763
+              },
+              "paired_difference": {
+                "mean": 0.2866666666666667,
+                "sd": 0.13578211078487265,
+                "ci_low": 0.23596479323762704,
+                "ci_high": 0.3373685400957063,
+                "n": 30
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 0.03333333333333333,
+                "ci_low": -0.034840988071090116,
+                "ci_high": 0.10150765473775678,
+                "sd": 0.18257418583505533
+              },
+              "treatment": {
+                "mean": 0.03333333333333333,
+                "ci_low": -0.034840988071090116,
+                "ci_high": 0.10150765473775678,
+                "sd": 0.18257418583505533
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "derived": {
+            "removals": {
+              "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+              "status_quo": {
+                "mean": 5.733333333333333,
+                "ci_low": 5.047371661072189,
+                "ci_high": 6.419295005594478,
+                "sd": 1.8370390969378307
+              },
+              "treatment": {
+                "mean": 5.733333333333333,
+                "ci_low": 5.047371661072189,
+                "ci_high": 6.419295005594478,
+                "sd": 1.8370390969378307
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 30
+              }
+            }
+          },
+          "paired_difference_first_10_pairs": {
+            "mc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "fmc": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcs": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcm": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "nmcd": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flying_task": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "flown_fh": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "sorties": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "aog_days": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann_rate": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cann": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "man_hours": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            },
+            "cost": {
+              "mean": 0.2999999999999998,
+              "sd": 0.14142135623730956,
+              "ci_low": 0.1988332561639029,
+              "ci_high": 0.40116674383609674,
+              "n": 10
+            },
+            "in_flight_failures": {
+              "mean": 0.0,
+              "sd": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 10
+            }
+          },
+          "order_final_status_counts": {
+            "phx-demo:S3:20260622T023000Z:requisition-tyres": {
+              "COMPLETED": 16,
+              "QUEUED": 14
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 30
+          },
+          "wall_s": {
+            "mode_total": 122.02,
+            "per_branch_mean": 2.006,
+            "per_branch_max": 3.507,
+            "per_pair_mean": 4.013,
+            "per_pair_max": 6.818
+          },
+          "tyre_jobs_per_member": [
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 8,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 8,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 6,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 7,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 5,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 2,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            },
+            {
+              "status_quo": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              },
+              "treatment": {
+                "tyre_jobs_opened": 4,
+                "tyre_jobs_awaiting_parts": 0
+              }
+            }
+          ]
+        }
+      },
+      "belief_vs_ensemble": {
+        "members_compared": 30,
+        "identical_record_digests": {
+          "status_quo": 30,
+          "treatment": 30
+        },
+        "identical_kpis": {
+          "status_quo": 30,
+          "treatment": 30
+        },
+        "meaning": "belief member m vs ensemble member m share the exogenous future; identical digests mean the reference belief posterior's resampling did not change any emitted record in the window"
+      },
+      "wall_s": {
+        "run_to_epoch": 13.57,
+        "total": 335.82
+      },
+      "per_member_file": "scenario_S3.json"
+    }
+  },
+  "supplementary": {
+    "S2_h400": {
+      "title": "TJ108 AOG since 2026-04-03: expedite the brake-chute AOG demand (AGENT)",
+      "tail": "TJ108",
+      "epoch": {
+        "t_utc_ns": 1782095400000000000,
+        "utc": "2026-06-22T02:30:00Z",
+        "ist": "2026-06-22 08:00 IST"
+      },
+      "horizon_days": 400,
+      "window": {
+        "start_ist": "2026-06-22 08:00 IST",
+        "end_ist": "2027-07-27 08:00 IST"
+      },
+      "snapshot_id": "7983867847c28d30c502044a33a45e97425289ab616a934162f753d46411392b",
+      "fleet_days_built": 600,
+      "status_quo": "ScheduledPolicy scheduled/1.0.0 at every 08:00 IST decision epoch, no extra orders",
+      "treatment": "ScheduledPolicy scheduled/1.0.0 + the orders below, issued at the epoch",
+      "orders": [
+        {
+          "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+          "issuer_id": "PHALANX-PDM-AGENT",
+          "issuer_kind": "AGENT",
+          "t_issued": 1782095400000000000,
+          "t_issued_utc": "2026-06-22T02:30:00Z",
+          "t_issued_ist": "2026-06-22 08:00 IST",
+          "t_effective": 1782095400000000000,
+          "action": "EXPEDITE_SPARES",
+          "parameters": {
+            "demand_no": "D-sulur-26093-0002"
+          },
+          "priority": "AOG",
+          "target_tail_no": "TJ108",
+          "target_base": "sulur",
+          "evidence": [
+            "9531749ae89a0cc67c771e3f8c6803fb",
+            "538009832804198691b4a8a246f0ae2d",
+            "5c24ba776ce2bb1d588e6fc61e4ec084"
+          ],
+          "policy_version": "phalanx-solution-demo/0.1"
+        }
+      ],
+      "evidence_record_ids": [
+        "538009832804198691b4a8a246f0ae2d",
+        "5c24ba776ce2bb1d588e6fc61e4ec084",
+        "9531749ae89a0cc67c771e3f8c6803fb"
+      ],
+      "decision_context": {
+        "tech_log_at_epoch": {
+          "t_event_ist": "2026-06-11 11:49 IST",
+          "availability_state": "NMCS",
+          "limitations_text": "U/S: sulur-26093-0003; DEFERRED: sulur-26091-0001 sulur-26091-0002 sulur-26092-0001"
+        },
+        "open_aog_demands_in_consumer_view": [
+          {
+            "demand_no": "D-sulur-26055-0001",
+            "part_no": "SYN-PN-TYRE",
+            "job_no": "sulur-26055-0002",
+            "t_open_ist": "2026-02-24 08:00 IST",
+            "job_open": false,
+            "job_us_in_tech_log": false
+          },
+          {
+            "demand_no": "D-sulur-26093-0002",
+            "part_no": "SYN-PN-CHUTE",
+            "job_no": "sulur-26093-0003",
+            "t_open_ist": "2026-04-03 08:00 IST",
+            "job_open": true,
+            "job_us_in_tech_log": true
+          }
+        ],
+        "selected_demand": {
+          "demand_no": "D-sulur-26093-0002",
+          "part_no": "SYN-PN-CHUTE",
+          "job_no": "sulur-26093-0003",
+          "job_text": "REPLACE BRAKE PARACHUTE DUE TO HI-TIME (45 STREAMINGS).",
+          "t_open_ist": "2026-04-03 08:00 IST",
+          "why": "oldest open AOG demand whose job is still open and is the U/S (grounding) entry of the latest TECH_LOG record; older 'open' AOG demands in the consumer view belong to closed jobs (stale or lagged supply records, a deliberate data-quality defect)"
+        },
+        "evidence_records": [
+          {
+            "record_id": "9531749ae89a0cc67c771e3f8c6803fb",
+            "record_type": "SUPPLY_DEMAND",
+            "key": "D-sulur-26093-0002"
+          },
+          {
+            "record_id": "538009832804198691b4a8a246f0ae2d",
+            "record_type": "DEFECT_WO",
+            "key": "sulur-26093-0003"
+          },
+          {
+            "record_id": "5c24ba776ce2bb1d588e6fc61e4ec084",
+            "record_type": "TECH_LOG",
+            "key": "TL-TJ108"
+          }
+        ]
+      },
+      "gateway_verdicts_at_epoch": [
+        {
+          "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+          "verdict": "ACCEPTED",
+          "reason": null,
+          "t_apply_ist": "2026-06-22 08:00 IST"
+        }
+      ],
+      "oracle_continuation_check": null,
+      "results": {
+        "belief": {
+          "mode": "belief",
+          "mode_note": "IN-LOOP what-if: hidden state resampled from observations by the data layer's reference SurvivalPosterior (PROXY A-W1.8-23), then run as ensemble member m. See README for what it does and does not resample.",
+          "n_pairs": 10,
+          "headline_kpis": [
+            "aog_days",
+            "nmcs",
+            "mc",
+            "flown_fh",
+            "cost",
+            "fmc",
+            "nmcm"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.022341145833333333,
+                "ci_low": 0.01249468955461559,
+                "ci_high": 0.03218760211205107,
+                "sd": 0.013764396759904247
+              },
+              "treatment": {
+                "mean": 0.15933333333333333,
+                "ci_low": 0.11133045203435178,
+                "ci_high": 0.20733621463231489,
+                "sd": 0.06710340097136079
+              },
+              "paired_difference": {
+                "mean": 0.1369921875,
+                "sd": 0.06722119347211625,
+                "ci_low": 0.08890504252213148,
+                "ci_high": 0.1850793324778685,
+                "n": 10
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.0221484375,
+                "ci_low": 0.01247167871670897,
+                "ci_high": 0.03182519628329103,
+                "sd": 0.013527176018746444
+              },
+              "treatment": {
+                "mean": 0.15557291666666667,
+                "ci_low": 0.10878673682659386,
+                "ci_high": 0.2023590965067395,
+                "sd": 0.06540256961186228
+              },
+              "paired_difference": {
+                "mean": 0.13342447916666667,
+                "sd": 0.06551418256088412,
+                "ci_low": 0.08655845623271533,
+                "ci_high": 0.180290502100618,
+                "n": 10
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 0.9694999999999998,
+                "ci_low": 0.956863220195097,
+                "ci_high": 0.9821367798049027,
+                "sd": 0.017665000085175766
+              },
+              "treatment": {
+                "mean": 0.8142005208333334,
+                "ci_low": 0.7584332252818297,
+                "ci_high": 0.8699678163848371,
+                "sd": 0.07795730367044312
+              },
+              "paired_difference": {
+                "mean": -0.1552994791666667,
+                "sd": 0.07584109659789856,
+                "ci_low": -0.2095529313743617,
+                "ci_high": -0.10104602695897169,
+                "n": 10
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.008158854166666667,
+                "ci_low": 0.004088949049754366,
+                "ci_high": 0.012228759283578968,
+                "sd": 0.005689335047922498
+              },
+              "treatment": {
+                "mean": 0.026466145833333336,
+                "ci_low": 0.017549983120287143,
+                "ci_high": 0.035382308546379526,
+                "sd": 0.01246393602777608
+              },
+              "paired_difference": {
+                "mean": 0.018307291666666666,
+                "sd": 0.010571612364814468,
+                "ci_low": 0.010744815754251767,
+                "ci_high": 0.025869767579081566,
+                "n": 10
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 10
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.013524685338452214,
+                "ci_low": 0.006959244094898555,
+                "ci_high": 0.020090126582005874,
+                "sd": 0.009177854003722856
+              },
+              "treatment": {
+                "mean": 0.11414175479909947,
+                "ci_low": 0.0793087601452129,
+                "ci_high": 0.14897474945298603,
+                "sd": 0.0486931689107297
+              },
+              "paired_difference": {
+                "mean": 0.10061706946064723,
+                "sd": 0.04813907526441451,
+                "ci_low": 0.06618044952320672,
+                "ci_high": 0.13505368939808776,
+                "n": 10
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 4.519611111111111,
+                "ci_low": 2.3613086624674877,
+                "ci_high": 6.677913559754733,
+                "sd": 3.0170987805241527
+              },
+              "treatment": {
+                "mean": 38.349222222222224,
+                "ci_low": 26.608593568054506,
+                "ci_high": 50.089850876389946,
+                "sd": 16.41226715807952
+              },
+              "paired_difference": {
+                "mean": 33.829611111111106,
+                "sd": 16.350474249465723,
+                "ci_low": 22.133186440860282,
+                "ci_high": 45.52603578136193,
+                "n": 10
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 5.6,
+                "ci_low": 2.8980081714302757,
+                "ci_high": 8.301991828569724,
+                "sd": 3.777124126457412
+              },
+              "treatment": {
+                "mean": 46.8,
+                "ci_low": 32.35522162196492,
+                "ci_high": 61.24477837803507,
+                "sd": 20.19240781415959
+              },
+              "paired_difference": {
+                "mean": 41.2,
+                "sd": 20.087585995114274,
+                "ci_low": 26.830206634115402,
+                "ci_high": 55.56979336588461,
+                "n": 10
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 387.80000000000007,
+                "ci_low": 382.7452880780389,
+                "ci_high": 392.8547119219612,
+                "sd": 7.066000034070294
+              },
+              "treatment": {
+                "mean": 325.6802083333333,
+                "ci_low": 303.37329011273187,
+                "ci_high": 347.9871265539348,
+                "sd": 31.182921468177238
+              },
+              "paired_difference": {
+                "mean": -62.11979166666667,
+                "sd": 30.336438639159407,
+                "ci_low": -83.82117254974466,
+                "ci_high": -40.418410783588676,
+                "n": 10
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 10
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 10
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 2242.6836000000003,
+                "ci_low": 2029.1488763588611,
+                "ci_high": 2456.2183236411392,
+                "sd": 298.5009606517949
+              },
+              "treatment": {
+                "mean": 2540.2139000000006,
+                "ci_low": 2301.3753840448067,
+                "ci_high": 2779.0524159551946,
+                "sd": 333.8732232285016
+              },
+              "paired_difference": {
+                "mean": 297.5303000000003,
+                "sd": 142.72738349271955,
+                "ci_low": 195.42928054735992,
+                "ci_high": 399.6313194526407,
+                "n": 10
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 23.946836,
+                "ci_low": 21.947076830993186,
+                "ci_high": 25.946595169006816,
+                "sd": 2.7954705578655865
+              },
+              "treatment": {
+                "mean": 36.202139,
+                "ci_low": 30.75514338173093,
+                "ci_high": 41.64913461826907,
+                "sd": 7.614374828573254
+              },
+              "paired_difference": {
+                "mean": 12.255303000000001,
+                "sd": 6.613054560646692,
+                "ci_low": 7.52460875048059,
+                "ci_high": 16.985997249519414,
+                "n": 10
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 2.3,
+                "ci_low": 1.6213528511605384,
+                "ci_high": 2.9786471488394612,
+                "sd": 0.9486832980505138
+              },
+              "treatment": {
+                "mean": 2.6,
+                "ci_low": 1.7603227977234321,
+                "ci_high": 3.439677202276568,
+                "sd": 1.1737877907772674
+              },
+              "paired_difference": {
+                "mean": 0.3,
+                "sd": 1.8287822299126937,
+                "ci_low": -1.0082319976844774,
+                "ci_high": 1.6082319976844774,
+                "n": 10
+              }
+            }
+          },
+          "derived": {},
+          "paired_difference_first_10_pairs": {},
+          "order_final_status_counts": {
+            "phx-demo:S2:20260622T023000Z:expedite": {
+              "COMPLETED": 10
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 10
+          },
+          "wall_s": {
+            "mode_total": 306.28,
+            "per_branch_mean": 15.308,
+            "per_branch_max": 27.694,
+            "per_pair_mean": 30.617,
+            "per_pair_max": 43.583
+          },
+          "nmcs_exit_per_member": [
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            }
+          ]
+        },
+        "ensemble": {
+          "mode": "ensemble",
+          "mode_note": "OFFLINE evaluation: the TRUE snapshot state (privileged) with ensemble member m's exogenous future; not available to a deployed product.",
+          "n_pairs": 10,
+          "headline_kpis": [
+            "aog_days",
+            "nmcs",
+            "mc",
+            "flown_fh",
+            "cost",
+            "fmc",
+            "nmcm"
+          ],
+          "kpis": {
+            "mc": {
+              "status_quo": {
+                "mean": 0.022341145833333333,
+                "ci_low": 0.01249468955461559,
+                "ci_high": 0.03218760211205107,
+                "sd": 0.013764396759904247
+              },
+              "treatment": {
+                "mean": 0.15933333333333333,
+                "ci_low": 0.11133045203435178,
+                "ci_high": 0.20733621463231489,
+                "sd": 0.06710340097136079
+              },
+              "paired_difference": {
+                "mean": 0.1369921875,
+                "sd": 0.06722119347211625,
+                "ci_low": 0.08890504252213148,
+                "ci_high": 0.1850793324778685,
+                "n": 10
+              }
+            },
+            "fmc": {
+              "status_quo": {
+                "mean": 0.0221484375,
+                "ci_low": 0.01247167871670897,
+                "ci_high": 0.03182519628329103,
+                "sd": 0.013527176018746444
+              },
+              "treatment": {
+                "mean": 0.15557291666666667,
+                "ci_low": 0.10878673682659386,
+                "ci_high": 0.2023590965067395,
+                "sd": 0.06540256961186228
+              },
+              "paired_difference": {
+                "mean": 0.13342447916666667,
+                "sd": 0.06551418256088412,
+                "ci_low": 0.08655845623271533,
+                "ci_high": 0.180290502100618,
+                "n": 10
+              }
+            },
+            "nmcs": {
+              "status_quo": {
+                "mean": 0.9694999999999998,
+                "ci_low": 0.956863220195097,
+                "ci_high": 0.9821367798049027,
+                "sd": 0.017665000085175766
+              },
+              "treatment": {
+                "mean": 0.8142005208333334,
+                "ci_low": 0.7584332252818297,
+                "ci_high": 0.8699678163848371,
+                "sd": 0.07795730367044312
+              },
+              "paired_difference": {
+                "mean": -0.1552994791666667,
+                "sd": 0.07584109659789856,
+                "ci_low": -0.2095529313743617,
+                "ci_high": -0.10104602695897169,
+                "n": 10
+              }
+            },
+            "nmcm": {
+              "status_quo": {
+                "mean": 0.008158854166666667,
+                "ci_low": 0.004088949049754366,
+                "ci_high": 0.012228759283578968,
+                "sd": 0.005689335047922498
+              },
+              "treatment": {
+                "mean": 0.026466145833333336,
+                "ci_low": 0.017549983120287143,
+                "ci_high": 0.035382308546379526,
+                "sd": 0.01246393602777608
+              },
+              "paired_difference": {
+                "mean": 0.018307291666666666,
+                "sd": 0.010571612364814468,
+                "ci_low": 0.010744815754251767,
+                "ci_high": 0.025869767579081566,
+                "n": 10
+              }
+            },
+            "nmcd": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 10
+              }
+            },
+            "flying_task": {
+              "status_quo": {
+                "mean": 0.013524685338452214,
+                "ci_low": 0.006959244094898555,
+                "ci_high": 0.020090126582005874,
+                "sd": 0.009177854003722856
+              },
+              "treatment": {
+                "mean": 0.11414175479909947,
+                "ci_low": 0.0793087601452129,
+                "ci_high": 0.14897474945298603,
+                "sd": 0.0486931689107297
+              },
+              "paired_difference": {
+                "mean": 0.10061706946064723,
+                "sd": 0.04813907526441451,
+                "ci_low": 0.06618044952320672,
+                "ci_high": 0.13505368939808776,
+                "n": 10
+              }
+            },
+            "flown_fh": {
+              "status_quo": {
+                "mean": 4.519611111111111,
+                "ci_low": 2.3613086624674877,
+                "ci_high": 6.677913559754733,
+                "sd": 3.0170987805241527
+              },
+              "treatment": {
+                "mean": 38.349222222222224,
+                "ci_low": 26.608593568054506,
+                "ci_high": 50.089850876389946,
+                "sd": 16.41226715807952
+              },
+              "paired_difference": {
+                "mean": 33.829611111111106,
+                "sd": 16.350474249465723,
+                "ci_low": 22.133186440860282,
+                "ci_high": 45.52603578136193,
+                "n": 10
+              }
+            },
+            "sorties": {
+              "status_quo": {
+                "mean": 5.6,
+                "ci_low": 2.8980081714302757,
+                "ci_high": 8.301991828569724,
+                "sd": 3.777124126457412
+              },
+              "treatment": {
+                "mean": 46.8,
+                "ci_low": 32.35522162196492,
+                "ci_high": 61.24477837803507,
+                "sd": 20.19240781415959
+              },
+              "paired_difference": {
+                "mean": 41.2,
+                "sd": 20.087585995114274,
+                "ci_low": 26.830206634115402,
+                "ci_high": 55.56979336588461,
+                "n": 10
+              }
+            },
+            "aog_days": {
+              "status_quo": {
+                "mean": 387.80000000000007,
+                "ci_low": 382.7452880780389,
+                "ci_high": 392.8547119219612,
+                "sd": 7.066000034070294
+              },
+              "treatment": {
+                "mean": 325.6802083333333,
+                "ci_low": 303.37329011273187,
+                "ci_high": 347.9871265539348,
+                "sd": 31.182921468177238
+              },
+              "paired_difference": {
+                "mean": -62.11979166666667,
+                "sd": 30.336438639159407,
+                "ci_low": -83.82117254974466,
+                "ci_high": -40.418410783588676,
+                "n": 10
+              }
+            },
+            "cann_rate": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 10
+              }
+            },
+            "cann": {
+              "status_quo": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "treatment": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "sd": 0.0
+              },
+              "paired_difference": {
+                "mean": 0.0,
+                "sd": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0,
+                "n": 10
+              }
+            },
+            "man_hours": {
+              "status_quo": {
+                "mean": 2242.6836000000003,
+                "ci_low": 2029.1488763588611,
+                "ci_high": 2456.2183236411392,
+                "sd": 298.5009606517949
+              },
+              "treatment": {
+                "mean": 2540.2139000000006,
+                "ci_low": 2301.3753840448067,
+                "ci_high": 2779.0524159551946,
+                "sd": 333.8732232285016
+              },
+              "paired_difference": {
+                "mean": 297.5303000000003,
+                "sd": 142.72738349271955,
+                "ci_low": 195.42928054735992,
+                "ci_high": 399.6313194526407,
+                "n": 10
+              }
+            },
+            "cost": {
+              "status_quo": {
+                "mean": 23.946836,
+                "ci_low": 21.947076830993186,
+                "ci_high": 25.946595169006816,
+                "sd": 2.7954705578655865
+              },
+              "treatment": {
+                "mean": 36.202139,
+                "ci_low": 30.75514338173093,
+                "ci_high": 41.64913461826907,
+                "sd": 7.614374828573254
+              },
+              "paired_difference": {
+                "mean": 12.255303000000001,
+                "sd": 6.613054560646692,
+                "ci_low": 7.52460875048059,
+                "ci_high": 16.985997249519414,
+                "n": 10
+              }
+            },
+            "in_flight_failures": {
+              "status_quo": {
+                "mean": 2.3,
+                "ci_low": 1.6213528511605384,
+                "ci_high": 2.9786471488394612,
+                "sd": 0.9486832980505138
+              },
+              "treatment": {
+                "mean": 2.6,
+                "ci_low": 1.7603227977234321,
+                "ci_high": 3.439677202276568,
+                "sd": 1.1737877907772674
+              },
+              "paired_difference": {
+                "mean": 0.3,
+                "sd": 1.8287822299126937,
+                "ci_low": -1.0082319976844774,
+                "ci_high": 1.6082319976844774,
+                "n": 10
+              }
+            }
+          },
+          "derived": {},
+          "paired_difference_first_10_pairs": {},
+          "order_final_status_counts": {
+            "phx-demo:S2:20260622T023000Z:expedite": {
+              "COMPLETED": 10
+            }
+          },
+          "gateway_verdict_counts": {
+            "ACCEPTED": 10
+          },
+          "wall_s": {
+            "mode_total": 317.1,
+            "per_branch_mean": 15.849,
+            "per_branch_max": 28.958,
+            "per_pair_mean": 31.698,
+            "per_pair_max": 40.566
+          },
+          "nmcs_exit_per_member": [
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            },
+            {
+              "status_quo": "2027-07-06 21:30 IST",
+              "treatment": "2027-04-12 07:30 IST"
+            }
+          ]
+        }
+      },
+      "belief_vs_ensemble": {
+        "members_compared": 10,
+        "identical_record_digests": {
+          "status_quo": 10,
+          "treatment": 10
+        },
+        "identical_kpis": {
+          "status_quo": 10,
+          "treatment": 10
+        },
+        "meaning": "belief member m vs ensemble member m share the exogenous future; identical digests mean the reference belief posterior's resampling did not change any emitted record in the window"
+      },
+      "wall_s": {
+        "run_to_epoch": 9.47,
+        "total": 635.24
+      },
+      "per_member_file": "scenario_S2_h400.json"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+screen at 687200107202208.mat 14554-15034: governed 0.998
+screen at 687200105031623.mat 11905-12385: governed 0.998
+screen at 687200108150546.mat 5241-5721: governed 0.998
+screen at 687200107181544.mat 9766-10246: governed 0.998
+screen man 687200107202208.mat 18559-19199: governed 0.944
+screen man 687200105031623.mat 18276-18916: governed 0.941
+screen man 687200107181544.mat 13769-14409: governed 0.956
+[1 plant] 4 segments, ('i_lp', 'i_hp', 'tau_egt', 'tau_ff') from [3.093  1.3599 0.81   0.218 ]
+    it 1: cost 52160270.7 theta [3.3693 0.6753 0.5164 0.1083]
+    it 2: cost 51750508.8 theta [3.0583 0.3353 0.2565 0.0538]
+    it 3: cost 51623826.6 theta [2.9775 0.1665 0.1274 0.0267]
+    it 4: cost 51591288.4 theta [2.945  0.0827 0.0632 0.0133]

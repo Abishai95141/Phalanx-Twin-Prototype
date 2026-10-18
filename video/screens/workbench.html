@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Workbench — TJ107 — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: auto 412px auto; height: auto; }
+  .tabs-row { grid-column: 1 / -1; margin-top: -6px; }
+  .cause .r2 { grid-template-columns: minmax(0, 1fr) 80px; min-height: 0; padding: 12px 4px; row-gap: 9px; }
+  .cause .bar { grid-column: 1 / -1; height: 8px; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+  .cause .bar i { display: block; height: 100%; border-radius: 4px; }
+  .cause .p { text-align: right; font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .tests { flex-direction: row; gap: 0; padding: 0; }
+  .tests .tc { flex: 1; padding: 26px 28px; border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+  .tests .tc:first-child { border-left: 0; }
+  .tests .tc.best { background: var(--accent-wash); border-radius: 20px 0 0 20px; }
+  .tests .rank { font: 700 12px var(--mono); color: var(--ink-4); }
+  .tests .tc.best .rank { color: var(--accent-ink); }
+  .tests .nm { font-size: 18px; font-weight: 650; letter-spacing: -0.015em; margin-top: 10px; }
+  .tests .dt { font-size: 14px; color: var(--ink-3); margin-top: 6px; }
+  .tests .ig { display: flex; align-items: center; gap: 12px; margin-top: 34px; }
+  .tests .ig .b { flex: 1; height: 8px; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+  .tests .ig .b i { display: block; height: 100%; background: var(--ink); border-radius: 4px; }
+  .tests .tc.best .ig .b i { background: var(--accent); }
+  .tests .ig span { font: 600 13px var(--mono); color: var(--ink-3); white-space: nowrap; }
+</style>
+</head>
+<body data-page="decisions">
+<div id="content">
+<div class="v2">
+  <div class="tabs-row"><div class="tabs2"><span>Recommendation</span><span>Why</span><span>Why not</span><span>What if</span><span class="on">Workbench</span></div></div>
+
+  <div class="panel2 c8" data-shot="strip">
+    <div class="row"><span class="kick">Sensor or component?</span><div class="grow"></div><span class="tier diag">DIAG</span></div>
+    <div class="t2">The alarm follows the aircraft, not the pump</div>
+    <div class="row" style="align-items:flex-end;margin-top:14px;gap:28px">
+      <div><div class="big">59<small>of 61 sorties</small></div><div class="ci" style="margin-top:6px">HYD-101 fired, whichever pump was fitted</div></div>
+      <div class="grow"></div>
+      <div class="note" style="text-align:right">Each band is one pump serial in system 1 · ten serials since January</div>
+    </div>
+    <svg id="strip" style="width:100%;margin-top:22px" height="150"></svg>
+  </div>
+
+  <div class="panel2 c4 cause" data-shot="cause">
+    <div class="row"><span class="kick">Most likely cause</span><div class="grow"></div><span class="tier pred">PRED</span></div>
+    <div class="t2">Updated by every outcome</div>
+    <div class="rows2" style="margin-top:10px">
+      <div class="r2"><div><div class="ttl">Indication path</div><div class="why">Pressure switch · harness · EU channel</div></div><span class="p">0.56</span><span class="bar"><i style="width:56%;background:var(--accent)"></i></span></div>
+      <div class="r2"><div><div class="ttl">AMAGB drive</div><div class="why">Gearbox drive to the pump</div></div><span class="p">0.44</span><span class="bar"><i style="width:44%;background:var(--ink-4)"></i></span></div>
+      <div class="r2"><div><div class="ttl">Hydraulic pump</div><div class="why">Ruled out in every assumption tested</div></div><span class="p" style="color:var(--ink-4)">&lt;0.0001</span><span class="bar"><i style="width:.4%;background:var(--ink-5)"></i></span></div>
+    </div>
+    <div class="ci push">Central assumptions · 24 assumption settings swept</div>
+  </div>
+
+  <div class="panel2 c12 tests" data-shot="tests">
+    <div class="tc best"><span class="rank">BEST NEXT TEST</span><div class="nm">Indication-path isolation</div><div class="dt">BHEEM EU channel · pressure switch · harness · PHX-FIM-HYD</div>
+      <div class="ig"><span class="b"><i style="width:100%"></i></span><span>7.3 man-h · best in 19 of 24</span></div></div>
+    <div class="tc"><span class="rank">2</span><div class="nm">AMAGB drive check</div><div class="dt">Pad spline · oil · drive to the system 1 pump</div>
+      <div class="ig"><span class="b"><i style="width:91%"></i></span><span>8.3 man-h · best in 5 of 24</span></div></div>
+    <div class="tc"><span class="rank">3</span><div class="nm">Remove the pump again</div><div class="dt">Today's habit · bench test of the removed unit</div>
+      <div class="ig"><span class="b"><i style="width:0%"></i></span><span>18.7 man-h · tells us nothing new</span></div></div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-workbench.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  PHX.mount({ page: 'decisions', title: 'TJ107 · hydraulic alarm HYD-101', sub: 'Workbench · is it the pump, and what should we test next?',
+    chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { i: 'book', t: 'PHX-FIM-HYD' }] });
+  (function () {
+    const el = document.getElementById('strip'), W = el.clientWidth || 940, H = 150, S = PHX_WB.sorties, n = S.length;
+    const pad = 4, cw = (W - pad * 2) / n, y0 = 30, h = 70;
+    const serials = [...new Set(S.map(s => s[2]))];
+    let g = '', prev = null, bandStart = 0, band = 0;
+    const bands = [];
+    S.forEach((s, i) => { if (s[2] !== prev) { if (prev) bands.push([bandStart, i, prev]); bandStart = i; prev = s[2]; } });
+    bands.push([bandStart, n, prev]);
+    bands.forEach(([a, b, ser], k) => {
+      const x = pad + a * cw, w = (b - a) * cw;
+      g += `<rect x="${x + 1}" y="${y0}" width="${w - 2}" height="${h}" rx="6" fill="${k % 2 ? '#F1F1EE' : '#F7F7F5'}"/>`;
+      if (w > 38) g += `<text x="${x + w / 2}" y="${y0 - 10}" text-anchor="middle" font-size="11" font-family="JetBrains Mono" fill="var(--ink-4)">…${ser.slice(-3)}</text>`;
+    });
+    S.forEach((s, i) => { const cx = pad + (i + .5) * cw;
+      g += s[1] ? `<circle cx="${cx}" cy="${y0 + h / 2}" r="${Math.min(5.5, cw * .34)}" fill="var(--accent)"/>` : `<circle cx="${cx}" cy="${y0 + h / 2}" r="${Math.min(5.5, cw * .34)}" fill="none" stroke="var(--ink-4)" stroke-width="1.5"/>`; });
+    const months = [['Jan', 0], ['Feb', 27], ['Mar', 55], ['Apr', 86], ['May', 116], ['Jun', 147]];
+    months.forEach(([m, d]) => { const idx = S.findIndex(s => s[0] >= d); if (idx < 0) return; const x = pad + idx * cw;
+      g += `<text x="${x + 2}" y="${y0 + h + 24}" font-size="11" font-family="JetBrains Mono" fill="var(--ink-4)">${m}</text>`; });
+    g += `<text x="${W - pad}" y="${y0 + h + 24}" text-anchor="end" font-size="11" font-family="JetBrains Mono" fill="var(--ink-3)">● fired  ○ quiet</text>`;
+    el.setAttribute('viewBox', `0 0 ${W} ${H}`); el.innerHTML = g;
+  })();
+</script>
+</body></html>

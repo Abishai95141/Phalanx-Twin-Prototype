@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-key" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-key-title ill-key-desc">
+  <title id="ill-key-title">Plate library — style key</title>
+  <desc id="ill-key-desc">Line weights, hatching, line types, dimensions, callouts, fills, colours and type used by every Phalanx Twin illustration plate.</desc>
+  <defs><pattern id="key-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="key-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="key-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="key-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="key-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="key-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <text x="96" y="120" font-size="13" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">STYLE KEY · ONE SYSTEM FOR EVERY PLATE</text>
+  <text x="96" y="146" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">white sheet · ink line art · one accent for the subject · blue for data</text>
+  <g id="key-weights">
+    <text class="kicker" x="96" y="214" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">LINE WEIGHTS</text>
+    <line x1="96" y1="254" x2="316" y2="254" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="342" y="259" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10">1.5  primary outline</text>
+    <line x1="96" y1="294" x2="316" y2="294" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="342" y="299" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10">0.9  secondary detail</text>
+    <line x1="96" y1="334" x2="316" y2="334" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="342" y="339" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10">0.6  hatching · construction</text>
+  </g>
+  <g id="key-types">
+    <text class="kicker" x="96" y="426" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">LINE TYPES</text>
+    <line x1="96" y1="466" x2="316" y2="466" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <text x="342" y="471" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10">centre line</text>
+    <line x1="96" y1="506" x2="316" y2="506" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="5 3" stroke-linecap="round"/>
+    <text x="342" y="511" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10">hidden detail</text>
+    <line x1="96" y1="546" x2="316" y2="546" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="10 3 2 3 2 3" stroke-linecap="round"/>
+    <text x="342" y="551" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10">phantom / alternate</text>
+  </g>
+  <g id="key-hatch">
+    <text class="kicker" x="620" y="214" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">SECTION HATCHING · 45° · 4 PX</text>
+    <rect x="620" y="236" width="150" height="96" fill="url(#key-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+    <rect x="790" y="236" width="150" height="96" fill="url(#key-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+    <text x="620" y="356" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">cut material</text>
+    <text x="790" y="356" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">subject (accent)</text>
+  </g>
+  <g id="key-dim">
+    <text class="kicker" x="620" y="426" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">DIMENSION</text>
+    <g class="dim">
+      <line class="draw" x1="620" y1="500" x2="940" y2="500" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M620 500 L627.5 498.3 L627.5 501.7 Z" fill="#0B0D10" stroke="none"/>
+      <path d="M940 500 L932.5 501.7 L932.5 498.3 Z" fill="#0B0D10" stroke="none"/>
+      <text class="dim-label" x="780" y="494" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="500" fill="#0B0D10" text-anchor="middle" dominant-baseline="auto" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">13.2 m</text>
+    </g>
+    <line x1="620" y1="470" x2="620" y2="512" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="940" y1="470" x2="940" y2="512" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+  </g>
+  <g id="key-callouts">
+    <text class="kicker" x="620" y="566" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">CALLOUTS</text>
+    <g class="callout">
+      <path class="leader draw" d="M649.66 610.11 L720 640" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="720" cy="640" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="640" cy="606" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="640" y="606.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <text x="660" y="611" font-size="14" font-weight="600" fill="#0B0D10">part</text>
+    <g class="callout">
+      <path class="leader draw" d="M809.66 610.11 L880 640" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="880" cy="640" r="1.9" fill="#E8743B" stroke="none"/>
+      <circle class="bubble" cx="800" cy="606" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="800" y="606.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <text x="820" y="611" font-size="14" font-weight="600" fill="#E8743B">subject</text>
+  </g>
+  <g id="key-colours">
+    <text class="kicker" x="1110" y="214" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">COLOUR CARRIES MEANING</text>
+    <rect x="1110" y="240" width="44" height="36" rx="6" fill="#0B0D10" stroke="none" stroke-linejoin="round"/>
+    <text x="1172" y="256" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="600" fill="#0B0D10">#0B0D10</text>
+    <text x="1172" y="272" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="500" fill="#62676F">ink · lines and type</text>
+    <rect x="1110" y="292" width="44" height="36" rx="6" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <text x="1172" y="308" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="600" fill="#0B0D10">#F7F7F5</text>
+    <text x="1172" y="324" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="500" fill="#62676F">light fill</text>
+    <rect x="1110" y="344" width="44" height="36" rx="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <text x="1172" y="360" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="600" fill="#0B0D10">#EFEFEC</text>
+    <text x="1172" y="376" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="500" fill="#62676F">light fill</text>
+    <rect x="1110" y="396" width="44" height="36" rx="6" fill="#E8743B" stroke="none" stroke-linejoin="round"/>
+    <text x="1172" y="412" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="600" fill="#0B0D10">#E8743B</text>
+    <text x="1172" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="500" fill="#62676F">accent · the subject only</text>
+    <rect x="1110" y="448" width="44" height="36" rx="6" fill="#2563C9" stroke="none" stroke-linejoin="round"/>
+    <text x="1172" y="464" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="14" font-weight="600" fill="#0B0D10">#2563C9</text>
+    <text x="1172" y="480" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="500" fill="#62676F">blue · data, evidence, signal</text>
+  </g>
+  <g id="key-type">
+    <text class="kicker" x="1110" y="566" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">TYPE</text>
+    <text x="1110" y="604" font-size="20" font-weight="650" fill="#0B0D10">Manrope · labels</text>
+    <text x="1110" y="636" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="17" font-weight="500" fill="#0B0D10">JetBrains Mono · ids, dims</text>
+  </g>
+  <g id="key-notes">
+    <line x1="96" y1="700" x2="1504" y2="700" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="96" y="734" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">viewBox 1600 × 900 · 1 : 1 at 1600 px wide · strokes in px at 1 : 1</text>
+    <text x="96" y="758" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">ids prefixed per plate (ac-, hyd-, pump-, eng-, mlg-, chute-, lru-, srv-, dl-, gate-, chain-, loop-, tool-)</text>
+    <text x="96" y="782" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">class "draw" on stroke paths for draw-on · title block + frame grouped as #&lt;prefix&gt;-sheet (hideable)</text>
+    <text x="96" y="806" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="13" font-weight="500" fill="#62676F">no gradients, blur, shadows, raster or text-as-image · every value is from the data layer or the screens</text>
+  </g>
+</svg>

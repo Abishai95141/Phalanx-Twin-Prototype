@@ -1,0 +1,20 @@
+quick look: fit 30 CAL flights, eval 20 other CAL flights, K=5
+loaded 2s
+fit batch: 2885050 samples in 124 running segments
+    FF: rms 127.9 bias -0.9106 (nfev 50, status 2)
+  M-A stage FF done 60s
+    N2: rms 3.235 bias 0.002398 (nfev 7, status 2)
+  M-A stage N2 done 66s
+    N1: rms 4.665 bias -0.002994 (nfev 8, status 2)
+  M-A stage N1 done 72s
+    EGT: rms 23.4 bias 0.002084 (nfev 27, status 2)
+  M-A stage EGT done 106s
+M-A fitted 109s
+out-of-sample fit quality (eval flights): {"cal": {"N1": {"rmse": 3.037906060964348, "bias": 0.3700962931359054, "R2": 0.9870651612040002}, "N2": {"rmse": 2.4699747582603155, "bias": 0.1955808234495171, "R2": 0.9740525300219953}, "EGT": {"rmse": 21.655853689294826, "bias": 0.4986833046360342, "R2": 0.9130541228288813}, "FF": {"rmse": 83.16631784749218, "bias": 7.467789275992856, "R2": 0.9782637270054886}}, "prior": {"N1": {"rmse": 4.884106376314259, "bias": 0.333001698499243, "R2": 0.9662205219886841}, "N2": {"rmse": 3.670597278214702, "bias": 0.15391791630177154, "R2": 0.9424360284051608}, "EGT": {"rmse": 26.15276190758276, "bias": 0.5801065741245011, "R2": 0.873190988069164}, "FF": {"rmse": 119.98970964150175, "bias": 7.340086168373017, "R2": 0.9545571282640135}}}
+  M-B phi0 N1: 1.0400 LSB, mismatch 0, unused residues [3, 8, 12, 17, 21, 26, 31]
+  M-B phi0 N2: 1.0400 LSB, mismatch 0, unused residues [3, 8, 12, 17, 21, 26, 31]
+  M-B phi0 EGT: 0.0488 LSB, mismatch 0, unused residues [1, 4, 7]
+M-B noise sigma: {"N1_1": 0.0233, "N1_2": 0.0124, "N1_3": 0.0139, "N1_4": 0.01, "N2_1": 0.0, "N2_2": 0.0035, "N2_3": 0.0068, "N2_4": 0.0, "EGT_1": 0.0, "EGT_2": 0.0, "EGT_3": 0.0, "EGT_4": 0.0, "FF_1": 0.0, "FF_2": 0.0, "FF_3": 0.0, "FF_4": 0.0}
+M-B noise phi: {"N1_1": 0.491, "N1_2": 0.399, "N1_3": 0.402, "N1_4": 0.386, "N2_1": 0.342, "N2_2": 0.335, "N2_3": 0.303, "N2_4": 0.319, "EGT_1": 0.487, "EGT_2": 0.456, "EGT_3": 0.448, "EGT_4": 0.464, "FF_1": 0.461, "FF_2": 0.456, "FF_3": 0.447, "FF_4": 0.471}
+synthesised 20 flights 111s
+R1-ref generated 113s

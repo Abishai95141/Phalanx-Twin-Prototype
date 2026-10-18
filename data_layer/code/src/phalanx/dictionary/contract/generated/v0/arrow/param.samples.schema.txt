@@ -1,0 +1,162 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+param_id: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary key (M01).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+tail_no: string not null
+  -- field metadata --
+  phalanx.description: 'Aircraft tail number (linkage key).'
+  phalanx.basis: 'ARCH §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+sortie_id: string not null
+  -- field metadata --
+  phalanx.description: 'Sortie identifier (tail + date + take-off time, M02).'
+  phalanx.basis: 'ARCH §5.3, §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+engine_serial: string
+  -- field metadata --
+  phalanx.description: 'Serial of the engine the parameter belongs to; null for non-engine parameters.'
+  phalanx.basis: 'ARCH §12 (where relevant); ASSUMPTION: A-W0.4-7'
+  phalanx.restricted: 'false'
+source_lru: string not null
+  -- field metadata --
+  phalanx.description: 'LRU that acquired or computed the value (data-path provenance).'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-7 (pattern)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9_.-]*$'
+lane: string
+  -- field metadata --
+  phalanx.description: 'Redundancy lane or channel of a redundant source (e.g. DFCC channel); null if not redundant.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-7'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9]+$'
+bus: string
+  -- field metadata --
+  phalanx.description: 'Bus the value travelled on (synthetic Phalanx ICD bus name); null on the fast path and for direct analog channels.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-7'
+  phalanx.restricted: 'false'
+rt_sa_word: string
+  -- field metadata --
+  phalanx.description: 'MIL-STD-1553 location 'RTnn/SAnn/Wnn' (remote terminal, subaddress, data-word index) in the synthetic Phalanx ICD; null if not 1553.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-7 (format)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^RT([0-2][0-9]|3[01])/SA([0-2][0-9]|3[01])/W([0-2][0-9]|3[01])$'
+label_sdi: string
+  -- field metadata --
+  phalanx.description: 'ARINC 429 location 'Looo/SDIn' (octal label, source/destination identifier) in the synthetic Phalanx ICD; null if not ARINC 429.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-7 (format)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^L[0-3][0-7][0-7]/SDI[0-3]$'
+t_sample: int64 not null
+  -- field metadata --
+  phalanx.description: 'When the owning LRU acquired the value, on its drifting oscillator. The event time of the record.'
+  phalanx.basis: 'ARCH §8, §12; ASSUMPTION: A-W0.4-1 (scale)'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_bus: int64
+  -- field metadata --
+  phalanx.description: 'When the value appeared on the bus, at the Ch10-defined bit. Null on the fast path and for non-bus channels.'
+  phalanx.basis: 'ARCH §8, §12; ASSUMPTION: A-W0.4-4'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_record: int64
+  -- field metadata --
+  phalanx.description: 'Recorder RTC time of the sample (per-recording origin). Null on the fast path.'
+  phalanx.basis: 'ARCH §8, §12; ASSUMPTION: A-W0.4-4'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'recorder_rtc'
+t_utc: int64
+  -- field metadata --
+  phalanx.description: 'Absolute time from the aircraft's simulated GPS/IRIG time source (TIME_SOURCE_INTERNAL when lock is lost). Fast path sets t_utc = t_sample (PROXY).'
+  phalanx.basis: 'ARCH §8, §12; ASSUMPTION: A-W0.4-4'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_ingest: int64 not null
+  -- field metadata --
+  phalanx.description: 'Arrival at the ground (per-sortie download burst). Consumers see a record only once t_ingest <= t_now (I5).'
+  phalanx.basis: 'ARCH §8, §12, I5; ASSUMPTION: A-W0.4-5'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+value_eu: double not null
+  -- field metadata --
+  phalanx.description: 'Decoded engineering value in `units`. Never NaN; a sentinel is carried as its value with the SENTINEL flag.'
+  phalanx.basis: 'ARCH §12; MEASURED: E1 (no NaN); ASSUMPTION: A-W0.4-7'
+  phalanx.restricted: 'false'
+raw_counts: int64
+  -- field metadata --
+  phalanx.description: 'Raw bus word or ADC counts before engineering-unit conversion. Null on the fast path.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-4'
+  phalanx.restricted: 'false'
+units: string not null
+  -- field metadata --
+  phalanx.description: 'Engineering unit of value_eu as declared by the dictionary (pint-parseable).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+validity: string not null
+  -- field metadata --
+  phalanx.description: 'Validity state (ARINC 429 SSM semantics plus 1553 BUS_INVALID).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Validity'
+  phalanx.enum_symbols: '["NORMAL","NO_COMPUTED_DATA","FUNCTIONAL_TEST","FAILURE_WARNING","BUS_INVALID"]'
+quality_flags: uint32 not null
+  -- field metadata --
+  phalanx.description: 'Quality flag bit set (see QualityFlags).'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-8'
+  phalanx.restricted: 'false'
+  phalanx.flags: 'QualityFlags'
+  phalanx.flag_bits: '{"SENTINEL":0,"GATED":1,"HELD_STALE":2,"DUPLICATE_POLL":3,"SUBSTITUTED":4,"VOTED_OUT":5,"OUT_OF_RANGE":6,"CLOCK_SUSPECT":7,"TIME_SOURCE_INTERNAL":8,"DUPLICATE_DOWNLOAD":9,"DECODER_INTERPOLATED":10}'
+provenance: string not null
+  -- field metadata --
+  phalanx.description: 'full_path (bus, Ch10, decoder) or direct (fast path).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Provenance'
+  phalanx.enum_symbols: '["full_path","direct"]'
+recording_id: string
+  -- field metadata --
+  phalanx.description: 'On-board recording the record was decoded from (one recording per recorder sink and sortie, AD-25), unique within (tail_no, sortie_id). t_record and the Ch10 channel ID are comparable only within one recording. Null on the fast path and for a sortie's single unattributed bus-monitor capture (the 0.1.0 full path).'
+  phalanx.basis: 'ARCH §17 AD-25, AD-45; ASSUMPTION: A-W0.4-22'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+sink: string
+  -- field metadata --
+  phalanx.description: 'Dictionary sink (M01 sinks table: CDR, ECMS_HUMS, MPDRU, FTI) whose recording carried the record; null exactly when recording_id is null.'
+  phalanx.basis: 'ARCH §17 AD-25; ASSUMPTION: A-W0.4-22'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Z][A-Z0-9_]*$'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'param.samples'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_sample'
+phalanx.ingest_time: 't_ingest'
+phalanx.partition_by: '["tail_no","sortie_id"]'
+phalanx.record_id_key: '["provenance","tail_no","sortie_id","channel_id","param_id","seq","msg_index"]'
+phalanx.audience: 'full'

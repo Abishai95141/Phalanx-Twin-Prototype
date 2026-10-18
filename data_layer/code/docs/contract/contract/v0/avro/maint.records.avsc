@@ -1,0 +1,649 @@
+{
+  "type": "record",
+  "name": "maint_records",
+  "namespace": "phalanx.contract.v0",
+  "doc": "The §10 record types in one topic, discriminated by record_type, with linkage keys (tail, sortie, job number, component triplet, demand number, engine serial, sw_config_id, telemetry record_id). Each status change of a record is a new record version. Codes are synthetic IAF-relabelled tables (AD-19). Data-quality defects are injected after truth and listed only in labels.truth.",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": "string",
+      "doc": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": "string",
+      "doc": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "record_type",
+      "type": {
+        "type": "enum",
+        "name": "MaintRecordType",
+        "doc": "The §10 record types.",
+        "symbols": [
+          "SORTIE",
+          "TECH_LOG",
+          "DEFECT_WO",
+          "COMPONENT_LIFE",
+          "INSPECTION",
+          "SUPPLY_DEMAND",
+          "CANNIBALISATION",
+          "MODIFICATION",
+          "EXCEEDANCE_INSPECTION",
+          "SHOP_FINDING",
+          "AVAILABILITY_STATE"
+        ]
+      },
+      "doc": "Record type.",
+      "phalanx.basis": "ARCH §10",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "record_key",
+      "type": "string",
+      "doc": "Natural identity of the record across its versions (job number, demand number, or a synthetic key for logs and bins).",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-13",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "record_version",
+      "type": "long",
+      "doc": "Version of the record; a new version is emitted at every status change.",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-13",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "status",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "MaintStatus",
+          "doc": "Lifecycle state of a maintenance record version.",
+          "symbols": [
+            "OPEN",
+            "IN_WORK",
+            "AWAITING_PARTS",
+            "AWAITING_MAINTENANCE",
+            "DEFERRED",
+            "CLOSED"
+          ]
+        }
+      ],
+      "doc": "Lifecycle state of this version; null for records without a lifecycle (e.g. availability bins).",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP job status; ASSUMPTION: A-W0.4-13",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "tail_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Aircraft tail; null for base-level records (e.g. stock).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "base",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Base or maintenance organisation.",
+      "default": null,
+      "phalanx.basis": "ARCH §10; ASSUMPTION: A-W0.4-13",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sortie_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Sortie the record refers to (sortie records, write-ups).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "job_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Job ('snag') number.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (linkage: job number)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "linked_job_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Linked job number (cannibalisation donor/recipient, troubleshooting parent).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (cannibalisation: two linked jobs)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "demand_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Supply demand number.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (linkage: demand number)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "engine_serial",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Engine serial.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "part_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Part number of the item concerned.",
+      "default": null,
+      "phalanx.basis": "ARCH §5.3 (component triplet)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "serial_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Serial number of the item concerned (may be a defective default such as 'XXX', ARCH §10).",
+      "default": null,
+      "phalanx.basis": "ARCH §5.3 (component triplet)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "maker",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Maker of the item concerned.",
+      "default": null,
+      "phalanx.basis": "ARCH §5.3 (component triplet)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sw_config_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Software configuration identifier (modification / software load records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "order_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Order that caused the record, if any.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (every executed order produces normal records)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "evidence_record_ids",
+      "type": {
+        "type": "array",
+        "items": "phalanx.contract.v0.RecordId"
+      },
+      "doc": "Telemetry or event record_ids that triggered or support the record; empty if none.",
+      "phalanx.basis": "ARCH §10 (linkage: telemetry record_id)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "when_discovered",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "When-discovered code (synthetic Phalanx table).",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP/TO 00-20 When-Discovered; ARCH AD-19 (synthetic codes)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "system_code",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "System / work-unit code (synthetic Phalanx table).",
+      "default": null,
+      "phalanx.basis": "TRANSFER: WUC; ARCH AD-19 (synthetic codes)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "malfunction_code",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "How-malfunctioned code (synthetic Phalanx table).",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP MAL / USAF HMC; ARCH AD-19 (synthetic codes)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "action_taken_code",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Action-taken code (synthetic Phalanx table).",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP/USAF Action Taken; ARCH AD-19 (synthetic codes)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "type_maint_code",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Type-of-maintenance code (synthetic Phalanx table).",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP Type Maintenance; ARCH AD-19 (synthetic codes)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "discrepancy_text",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Discrepancy narrative (free text, may carry injected noise).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (free text)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "corrective_action_text",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Corrective-action narrative.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (free text)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "limitations_text",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Limitations or deferral conditions (technical log).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (technical log: limitations, deferred defects)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "corrected_by",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Pseudonymous identifier of the technician who did the work.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (signatures)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "inspected_by",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Pseudonymous identifier of the inspector.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (signatures)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "man_hours",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Man-hours booked.",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP MAN HRS",
+      "phalanx.restricted": false,
+      "phalanx.units": "h"
+    },
+    {
+      "name": "priority",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "SupplyPriority",
+          "doc": "Supply demand priority.",
+          "symbols": [
+            "AOG",
+            "MCM",
+            "PHU"
+          ]
+        }
+      ],
+      "doc": "Supply demand priority.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (demand priority AOG/MCM/PHU)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "quantity",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Quantity demanded or issued.",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP requisition QTY",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "install_action",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "InstallAction",
+          "doc": "Component life-record action.",
+          "symbols": [
+            "INSTALL",
+            "REMOVE"
+          ]
+        }
+      ],
+      "doc": "Install or remove (component life records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (component life record)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "item_hours",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Item operating hours at removal or installation.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (time at removal/installation)",
+      "phalanx.restricted": false,
+      "phalanx.units": "h"
+    },
+    {
+      "name": "item_cycles",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Item cycles at removal or installation.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (cycles at removal/installation)",
+      "phalanx.restricted": false,
+      "phalanx.units": "count"
+    },
+    {
+      "name": "donor_tail_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Donor tail of a cannibalisation.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (cannibalisation donor)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "inspection_type",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Inspection or servicing type (e.g. scheduled, conditional, borescope), synthetic table.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (inspection / servicing)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "shop_finding",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "ShopFinding",
+          "doc": "Shop or depot finding on a turned-in item.",
+          "symbols": [
+            "CONFIRMED",
+            "RTOK",
+            "BCM"
+          ]
+        }
+      ],
+      "doc": "Shop finding on a turned-in item.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (shop / depot finding)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "compliance_status",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "ComplianceStatus",
+          "doc": "Compliance status of a modification or software-load order.",
+          "symbols": [
+            "ISSUED",
+            "COMPLIED",
+            "NOT_APPLICABLE"
+          ]
+        }
+      ],
+      "doc": "Compliance status of a modification or software load.",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (modification compliance status)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "availability_state",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "AvailabilityState",
+          "doc": "Mission-capability state of one 15-minute bin, highest degraded priority wins.",
+          "symbols": [
+            "FMC",
+            "PMCM",
+            "PMCS",
+            "NMCM_S",
+            "NMCM_U",
+            "NMCS",
+            "NMCD"
+          ]
+        }
+      ],
+      "doc": "Mission-capability state of the 15-minute bin starting at t_event (AVAILABILITY_STATE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (15-min mission-capability bins)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "mission_type",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Mission flown (SORTIE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: mission)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "crew_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Pseudonymous crew identifier (SORTIE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: crew)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "flight_hours",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Flight hours (SORTIE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: hours)",
+      "phalanx.restricted": false,
+      "phalanx.units": "h"
+    },
+    {
+      "name": "landings",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Landings (SORTIE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: landings)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "engine_cycles",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Engine cycles (SORTIE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: cycles)",
+      "phalanx.restricted": false,
+      "phalanx.units": "count"
+    },
+    {
+      "name": "engine_starts",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Engine starts (SORTIE records).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: starts)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_event",
+      "type": "long",
+      "doc": "Instant this record version refers to (discovery, status change, bin start). The event time of the record.",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-13",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_open",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "When the job or record was opened.",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP RECEIVED date-time",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_close",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "When the job or record was closed.",
+      "default": null,
+      "phalanx.basis": "TRANSFER: NAMP COMPLETED date-time",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_ingest",
+      "type": "long",
+      "doc": "When this record version became visible in the maintenance system (includes reconciliation lag).",
+      "phalanx.basis": "ARCH §10 (reconciliation lag), I5",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "provenance",
+      "type": {
+        "type": "enum",
+        "name": "Provenance",
+        "doc": "How the record reached the contract. full_path = via bus, Ch10 recorder and ground decoder; direct = fast path or a direct ground producer (M18 records, M21 order status, manifests).",
+        "symbols": [
+          "full_path",
+          "direct"
+        ]
+      },
+      "doc": "direct (records are produced on the ground by M18).",
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-13",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "maint.records",
+  "phalanx.restricted": false
+}

@@ -1,0 +1,30 @@
+{
+  "abort": null,
+  "ch10_bytes": 17337068,
+  "ch10_file": "ch10/TJ201-20260106T0300.ch10",
+  "cir_rows": 9318083,
+  "code_commit": "6d4dc52f52eb1359bc244d36648ef1058876129b",
+  "completed_window": true,
+  "deliveries": [
+    {
+      "attempt": 0,
+      "bytes": 17337068,
+      "complete": true,
+      "t_ingest": 1767702068851324764
+    }
+  ],
+  "duplicates_dropped": 0,
+  "kind": "full_path",
+  "preview": "PREVIEW: behaviour not yet validated",
+  "rows": {
+    "labels.truth": 2138566,
+    "param.samples": 3173220,
+    "sortie.manifest": 1
+  },
+  "sortie_id": "TJ201-20260106T0300",
+  "t_end": 1767668349994790139,
+  "t_start": 1767667749994790139,
+  "tail_no": "TJ201",
+  "wall_s": 89.2,
+  "window_s": 600.0
+}

@@ -1,0 +1,91 @@
+<!doctype html>
+<!-- Frame-exact animation for triage.gif: render(t) draws time t seconds; render_anim.sh captures ?t=… frames. -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../build/fonts.css">
+<style>
+  html,body{margin:0;background:#fff;width:1200px;height:560px;overflow:hidden;font-family:Manrope,sans-serif;color:#0B0D10}
+  canvas{position:absolute;left:0;top:0}
+  .k{position:absolute;left:56px;top:40px;font-size:13px;font-weight:700;letter-spacing:.14em;color:#E8743B}
+  .h{position:absolute;left:56px;top:62px;font-size:32px;font-weight:800;letter-spacing:-.025em}
+  .col{position:absolute;top:128px;width:260px}
+  .n{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .l{font-size:14px;font-weight:700;margin-top:6px}
+  .s{font-size:12px;color:#8A8F98;margin-top:3px}
+  .card{position:absolute;left:872px;width:300px;height:28px;border-radius:8px;background:#F7F7F5;border:1px solid #E6E6E2;
+        font-size:12px;display:flex;align-items:center;gap:8px;padding:0 10px;box-sizing:border-box;white-space:nowrap;overflow:hidden}
+  .b{font-size:10px;font-weight:800;color:#fff;border-radius:4px;padding:2px 5px}
+  .foot{position:absolute;left:56px;bottom:22px;font-size:12px;color:#8A8F98}
+</style></head><body>
+<canvas id="c" width="1200" height="560"></canvas>
+<div class="k">TRIAGE · EVERY MORNING AT 06:04</div>
+<div class="h">How 1,192 alerts became 9 decisions</div>
+<div class="col" id="c0" style="left:56px"><div class="n" id="n0">1,192</div><div class="l">alert rows</div><div class="s">faults and cautions · 168 days · 8 aircraft</div></div>
+<div class="col" id="c1" style="left:356px"><div class="n" id="n1">326</div><div class="l">issues</div><div class="s">repeats grouped into episodes</div></div>
+<div class="col" id="c2" style="left:636px"><div class="n" id="n2">33</div><div class="l">still open</div><div class="s">the rest closed or explained</div></div>
+<div class="col" id="c3" style="left:880px"><div class="n" id="n3" style="color:#E8743B">9</div><div class="l">decisions before 07:45</div><div class="s">ranked by consequence × urgency</div></div>
+<div id="cards"></div>
+<div class="foot">Live board of the deployed system · gates, consequence × urgency, zen-engine decision tables · simulated fleet</div>
+<script>
+const BOARD = [["P1","TJ103","Gear unsafe warning"],["P1","TJ106","Gear unsafe warning"],["P2","TJ108","Waiting for a brake chute"],
+  ["P2","TJ107","Hydraulic alarm that never clears"],["P2","TJ102","Hydraulic alarm that never clears"],["P3","TJ105","Tyre at 7 of 8 landings"],
+  ["P3","TJ102","Hydraulic pump fault"],["P3","TJ105","JFS start fail"],["P4","Fleet","Fourteen advisory issues, grouped"]];
+const BAND = {P1:"#D4492A",P2:"#E8743B",P3:"#C98512",P4:"#8A8F98"};
+const cards = document.getElementById('cards');
+BOARD.forEach(([b,t,l],i)=>{ const d=document.createElement('div'); d.className='card'; d.style.top=(226+i*31)+'px';
+  d.innerHTML=`<span class="b" style="background:${BAND[b]}">${b}</span><b>${t}</b><span style="color:#4B5563">${l}</span>`; cards.appendChild(d); });
+let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+const N = 1192, NI = 326, NO = 33;
+const dots = [];
+for (let i = 0; i < N; i++) {
+  const c = i % NI;
+  dots.push({ x0: 60 + rnd() * 250, y0: 230 + rnd() * 270, c, warm: rnd() < 271 / 1192, j: rnd() });
+}
+// issue grid in column B, open issues in column C, decisions = first 9 open issues → card slots
+const issuePos = c => ({ x: 364 + (c % 18) * 13.5, y: 236 + Math.floor(c / 18) * 14 });
+const openPos = k => ({ x: 648 + (k % 6) * 30, y: 240 + Math.floor(k / 6) * 34 });
+const cardPos = k => ({ x: 884, y: 240 + k * 31 });
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const seg = (t, a, b) => ease((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+function render(t) {
+  const g = document.getElementById('c').getContext('2d');
+  g.clearRect(0, 0, 1200, 560);
+  const a = seg(t, 0.0, 0.8), m1 = seg(t, 1.0, 2.4), m2 = seg(t, 2.8, 4.0), m3 = seg(t, 4.4, 5.6);
+  for (const d of dots) {
+    const st = d.j * 0.35;
+    const k1 = seg(t, 1.0 + st, 2.4 + st), open = d.c < NO, dec = d.c < 9;
+    const ip = issuePos(d.c);
+    let x = lerp(d.x0, ip.x, k1), y = lerp(d.y0, ip.y, k1), r = lerp(2.2, 4.2, k1), alpha = a;
+    let col = d.warm ? "#C98512" : "#4B5563";
+    if (open) {
+      const op = openPos(d.c), k2 = seg(t, 2.8 + st * .5, 4.0 + st * .5);
+      x = lerp(x, op.x, k2); y = lerp(y, op.y, k2); r = lerp(r, 9, k2);
+      col = k2 > 0 ? "#E8743B" : col;
+      if (dec && seg(t, 4.4, 5.4) > 0) { g.globalAlpha = alpha * .45; g.fillStyle = "#E8743B"; g.beginPath(); g.arc(op.x, op.y, 9, 0, 7); g.fill(); }
+      if (dec) { const cp = cardPos(d.c), k3 = seg(t, 4.4 + d.c * .08, 5.4 + d.c * .08);
+        x = lerp(x, cp.x, k3); y = lerp(y, cp.y, k3); r = lerp(r, 5, k3); col = k3 > .5 ? BAND[BOARD[d.c][0]] : col; }
+      else { alpha *= 1 - .55 * seg(t, 4.4, 5.4); }
+    } else {
+      alpha *= 1 - .8 * seg(t, 2.8, 3.8);
+      col = seg(t, 2.8, 3.8) > .3 ? "#D6D6D1" : col;
+    }
+    g.globalAlpha = alpha; g.fillStyle = col; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill();
+  }
+  g.globalAlpha = 1;
+  // arrows between columns
+  g.strokeStyle = "#D6D6D1"; g.lineWidth = 2;
+  [[322, 1.0], [612, 2.8], [858, 4.4]].forEach(([x, at]) => { const k = seg(t, at - .3, at);
+    g.globalAlpha = k; g.beginPath(); g.moveTo(x - 6, 360); g.lineTo(x + 8, 360); g.moveTo(x + 2, 354); g.lineTo(x + 8, 360); g.lineTo(x + 2, 366); g.stroke(); });
+  g.globalAlpha = 1;
+  const fmt = v => Math.round(v).toLocaleString('en-US');
+  document.getElementById('c0').style.opacity = a;
+  document.getElementById('c1').style.opacity = seg(t, 1.0, 1.6);
+  document.getElementById('n1').textContent = fmt(lerp(1192, 326, m1));
+  document.getElementById('c2').style.opacity = seg(t, 2.8, 3.4);
+  document.getElementById('n2').textContent = fmt(lerp(326, 33, m2));
+  document.getElementById('c3').style.opacity = seg(t, 4.4, 5.0);
+  document.getElementById('n3').textContent = fmt(lerp(33, 9, m3));
+  [...cards.children].forEach((c, i) => { const k = seg(t, 4.9 + i * .08, 5.6 + i * .08); c.style.opacity = k; c.style.transform = `translateX(${(1 - k) * 24}px)`; });
+}
+render(parseFloat(new URLSearchParams(location.search).get('t') || '7'));
+</script></body></html>

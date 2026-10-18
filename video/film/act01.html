@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Phalanx Twin film · Act 0–1 (Promise + Pain)</title>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/phx-film.js"></script>
+<script src="assets/act01/act01-data.js"></script>
+<style>
+  @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; font-display: block; }
+  @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; font-display: block; }
+  :root {
+    --ink: #0B0D10; --ink-2: #31353B; --ink-3: #62676F; --ink-4: #8E939A; --ink-5: #B9BDC2;
+    --line: #E6E6E2; --line-2: #EFEFEC; --line-strong: #D6D6D1; --bg-2: #F7F7F5; --bg-3: #F1F1EE;
+    --accent: #E8743B; --accent-ink: #B4511F; --accent-wash: #FDF1EA; --accent-line: #F6CDB6;
+    --fmc: #1F8A4C; --fmc-wash: #EAF6EF; --nmcm: #C98512; --nmcm-wash: #FCF5E6; --nmcs: #D4492A; --nmcs-wash: #FCEDE9;
+    --nmcd: #5B4FCF; --nmcd-wash: #EFEEFC; --wire: #2563C9; --wire-wash: #EAF1FC;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #FFFFFF; }
+  #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #FFFFFF;
+    font-family: "Manrope", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1; }
+  .mono { font-family: var(--mono); letter-spacing: -0.01em; }
+  #grid { position: absolute; inset: 0; background-color: #fff;
+    background-image: linear-gradient(#EFEFEC 1px, transparent 1px), linear-gradient(90deg, #EFEFEC 1px, transparent 1px);
+    background-size: 48px 48px; background-position: 0 12px, 0 0; }
+  .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+  .scene { position: absolute; inset: 0; }
+  .in { position: absolute; inset: 0; }
+  .abs { position: absolute; }
+  svg { display: block; overflow: visible; }
+
+  /* type */
+  .kick { position: absolute; font-weight: 700; font-size: 22px; line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+  .kick.grey { color: var(--ink-4); font: 500 16px/1 var(--mono); letter-spacing: .16em; }
+  .h1 { position: absolute; font-weight: 650; font-size: 64px; line-height: 1.06; letter-spacing: -0.03em; color: var(--ink); white-space: nowrap; }
+  .h1 .mono { font-weight: 700; letter-spacing: -0.04em; }
+  .wd { display: inline-block; }
+
+  /* planforms */
+  .pf-o { fill: none; stroke: var(--ink); stroke-width: calc(var(--sw) * 1px); stroke-linejoin: round; stroke-linecap: round; }
+  .pf-det { fill: none; stroke: var(--ink-2); stroke-width: calc(var(--sw) * .6px); stroke-linecap: round; }
+  .pf-body { fill: none; stroke: var(--ink-4); stroke-width: calc(var(--sw) * .55px); stroke-dasharray: 2.6 1.8; }
+  .pf-can { fill: rgba(255,255,255,.42); stroke: var(--ink); stroke-width: calc(var(--sw) * .75px); }
+  .pf-fill { stroke: none; }
+
+  /* S02 fleet labels */
+  .fl { position: absolute; width: 170px; text-align: center; }
+  .fl .tail { font: 700 25px/1 var(--mono); letter-spacing: -0.03em; color: var(--ink); }
+  .pill { display: inline-flex; align-items: center; gap: 6px; margin-top: 11px; font: 650 13px/1 var(--mono); letter-spacing: .04em;
+    padding: 5px 10px 5px 9px; border-radius: 999px; }
+  .pill i { width: 7px; height: 7px; border-radius: 50%; display: block; background: currentColor; }
+  .pill.F { color: var(--fmc); background: var(--fmc-wash); }
+  .pill.S { color: var(--nmcs); background: var(--nmcs-wash); }
+  .pill.D { color: var(--nmcd); background: var(--nmcd-wash); }
+  .legend { position: absolute; display: flex; gap: 34px; font: 500 20px/1 "Manrope"; color: var(--ink-3); white-space: nowrap; }
+  .legend span { display: flex; align-items: center; gap: 10px; }
+  .legend b { font: 650 14px/1 var(--mono); letter-spacing: .04em; }
+  .sw { width: 16px; height: 16px; border-radius: 4px; display: block; }
+  .clock { position: absolute; right: 120px; top: 112px; display: flex; align-items: center; gap: 18px; }
+  .clock .t { font: 600 60px/1 var(--mono); letter-spacing: -0.04em; color: var(--ink); }
+  .clock .t small { font: 600 20px/1 var(--mono); color: var(--ink-3); letter-spacing: 0; margin-left: 8px; }
+  .clock .d { font: 500 15px/1 var(--mono); letter-spacing: .14em; color: var(--ink-4); margin-bottom: 10px; }
+
+  /* S03 lanes */
+  .lane-l { position: absolute; left: 236px; display: flex; align-items: baseline; gap: 14px; white-space: nowrap; }
+  .lane-l .n { font: 700 17px/1 var(--mono); color: var(--accent); letter-spacing: .02em; }
+  .lane-l .t { font: 650 31px/1 "Manrope"; letter-spacing: -0.025em; color: var(--ink); }
+  .lane-s { position: absolute; left: 268px; font: 500 14px/1 var(--mono); color: var(--ink-4); letter-spacing: .02em; white-space: nowrap; }
+  .tr-l { position: absolute; width: 120px; text-align: right; font: 500 13px/1 var(--mono); color: var(--ink-4); }
+  .it { position: absolute; left: 0; height: 34px; display: flex; align-items: center; gap: 10px; padding: 0 13px; border-radius: 9px;
+    background: #fff; border: 1px solid var(--line-strong); font: 500 15px/1 var(--mono); color: var(--ink-2); white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(16,18,22,.05), 0 6px 14px -8px rgba(16,18,22,.12); }
+  .it b { color: var(--ink); font-weight: 700; }
+  .it .rid { color: var(--wire); }
+  .it .mu { color: var(--ink-4); }
+  .it .dot { width: 8px; height: 8px; border-radius: 50%; display: block; }
+  .it .aog { font: 700 11px/1 var(--mono); color: #fff; background: var(--nmcs); padding: 4px 6px; border-radius: 5px; letter-spacing: .04em; }
+  .it.code { font-weight: 650; color: var(--ink); }
+  .rh-t { position: absolute; font: 500 13px/1 var(--mono); color: var(--wire); white-space: nowrap; }
+  #node { position: absolute; left: -60px; top: -60px; width: 120px; height: 120px; }
+
+  /* S04 */
+  #logo { position: absolute; left: 430px; top: 408px; width: 1060px; height: 124px; }
+  .sub { position: absolute; left: 0; width: 1920px; top: 572px; text-align: center; font: 500 36px/1 "Manrope"; letter-spacing: .01em; color: var(--ink-2); white-space: pre; }
+  .sub .c { display: inline-block; }
+  .sub .dt { color: var(--accent); }
+  #s04rule { position: absolute; left: 880px; top: 640px; width: 160px; height: 2px; background: var(--accent); }
+  .credit { position: absolute; left: 120px; top: 846px; font: 500 18px/1 var(--mono); color: var(--ink-3); letter-spacing: .02em; white-space: nowrap; }
+  .credit b { color: var(--ink); font-weight: 650; }
+
+  /* S05 document */
+  .doc { position: absolute; left: 300px; top: 196px; width: 1320px; background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: 50px 64px 54px; box-shadow: 0 0 0 1px rgba(16,18,22,.03), 0 30px 70px -30px rgba(16,18,22,.20), 0 8px 20px -10px rgba(16,18,22,.08); }
+  .doc-top { display: flex; align-items: center; gap: 16px; }
+  .badge { font: 650 16px/1 var(--mono); color: #fff; background: var(--ink); padding: 8px 12px; border-radius: 8px; letter-spacing: .02em; }
+  .doc-top .k { font: 500 15px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); }
+  .doc-top .tags { margin-left: auto; display: flex; gap: 10px; }
+  .doc-top .tags span { font: 500 15px/1 "Manrope"; color: var(--ink-3); border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; }
+  .doc-title { margin-top: 26px; font: 650 40px/1.12 "Manrope"; letter-spacing: -0.025em; }
+  .doc-org { margin-top: 10px; font: 500 21px/1.3 "Manrope"; color: var(--ink-3); }
+  .doc-rule { margin: 28px 0 26px; height: 1px; background: var(--line); }
+  .doc-body { font: 500 33px/1.5 "Manrope"; letter-spacing: -0.012em; color: var(--ink-2); }
+  .doc-body .w { display: inline-block; }
+  .hl { background-image: linear-gradient(#FBDCC8, #FBDCC8); background-repeat: no-repeat; background-size: 0% 100%; background-position: 0 0;
+    border-radius: 4px; padding: 0 3px; margin: 0 -3px; }
+  .ul { background-image: linear-gradient(var(--wire), var(--wire)); background-repeat: no-repeat; background-size: 0% 3px; background-position: 0 92%; }
+  .doc-foot { margin-top: 30px; display: flex; gap: 22px; align-items: center; font: 500 15px/1 var(--mono); color: var(--ink-4); letter-spacing: .02em; }
+  .doc-foot i { width: 22px; height: 3px; display: block; border-radius: 2px; }
+
+  /* S06 tiles */
+  .tile { position: absolute; top: 330px; height: 446px; width: 538px; background: #fff; border: 1px solid var(--line); border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(16,18,22,.04), 0 18px 40px -26px rgba(16,18,22,.16); overflow: hidden; }
+  .tile .ti { position: absolute; inset: 0; padding: 34px 38px 30px; display: flex; flex-direction: column; }
+  .tile .tg { font: 600 15px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+  .tile .big { margin-top: 30px; font: 650 92px/1 "Manrope"; letter-spacing: -0.045em; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tile .big small { font-size: 48px; color: var(--ink-3); letter-spacing: -0.02em; margin-left: 6px; font-weight: 600; }
+  .tile .quote { margin-top: 26px; font: 650 50px/1.08 "Manrope"; letter-spacing: -0.03em; color: var(--ink); }
+  .tile .quote .w { display: inline-block; }
+  .meter { position: relative; margin-top: 30px; height: 8px; border-radius: 4px; background: var(--bg-3); }
+  .meter .f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--ink); }
+  .meter .nm { position: absolute; top: -9px; width: 2px; height: 26px; background: var(--accent); }
+  .meter .nl { position: absolute; top: 24px; font: 600 14px/1 var(--mono); color: var(--accent-ink); white-space: nowrap; transform: translateX(-50%); }
+  .meter .sc { position: absolute; top: 24px; font: 500 13px/1 var(--mono); color: var(--ink-5); }
+  .tile .desc { margin-top: 44px; font: 500 26px/1.3 "Manrope"; color: var(--ink-2); letter-spacing: -0.01em; }
+  .tile .src { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line-2); font: 500 17px/1.2 var(--mono); color: var(--ink-3); }
+  .tile .src b { color: var(--ink); font-weight: 650; }
+  .subl { position: absolute; left: 120px; top: 238px; font: 500 30px/1 "Manrope"; color: var(--ink-3); white-space: nowrap; letter-spacing: -0.01em; }
+  .subl span { display: inline-block; }
+  .subl .acc { color: var(--accent-ink); font-weight: 650; }
+
+  /* S07 */
+  .tagchip { position: absolute; display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 18px; border-radius: 12px;
+    background: var(--wire-wash); border: 1px solid #C9DAF6; font: 500 19px/1 var(--mono); color: var(--wire); white-space: nowrap; }
+  .tagchip b { color: var(--ink); font-weight: 650; }
+  .counter { position: absolute; white-space: nowrap; font: 650 132px/1 "Manrope"; letter-spacing: -0.05em; color: var(--nmcs); font-variant-numeric: tabular-nums; }
+  .counter small { font: 600 34px/1 "Manrope"; color: var(--ink-3); letter-spacing: -0.01em; margin-left: 12px; }
+  .axl { position: absolute; font: 500 15px/1 var(--mono); color: var(--ink-4); white-space: nowrap; }
+  .cap { position: absolute; font: 500 26px/1.35 "Manrope"; color: var(--ink-2); white-space: nowrap; letter-spacing: -0.01em; }
+  .cap b { color: var(--ink); font-weight: 650; }
+  .blk-l { position: absolute; font: 650 17px/1 "Manrope"; color: var(--nmcs); background: #fff; padding: 8px 12px; border-radius: 8px; white-space: nowrap; letter-spacing: .005em; box-shadow: 0 2px 8px -2px rgba(120,30,10,.35); }
+
+  /* S08 */
+  .tray { position: absolute; left: 1440px; top: 330px; width: 360px; height: 372px; border-radius: 18px; background: var(--bg-2); border: 1px solid var(--line); }
+  .tray .th { position: absolute; left: 22px; right: 22px; top: 20px; display: flex; flex-direction: column; gap: 9px; }
+  .tray .th b { font: 650 22px/1 "Manrope"; letter-spacing: -0.02em; }
+  .tray .th span { font: 600 18px/1 var(--mono); color: var(--accent-ink); }
+  .stamp { position: absolute; width: 60px; height: 28px; border: 2px solid var(--ink-2); border-radius: 6px; background: #fff;
+    font: 800 14px/24px var(--mono); text-align: center; color: var(--ink-2); letter-spacing: .06em; }
+  .stats { position: absolute; left: 120px; top: 772px; display: flex; gap: 0; }
+  .stat { display: flex; align-items: baseline; gap: 14px; padding: 0 48px; border-left: 1px solid var(--line); white-space: nowrap; }
+  .stat:first-child { padding-left: 0; border-left: 0; }
+  .stat .v { font: 650 80px/1 "Manrope"; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .stat .l { font: 500 26px/1 "Manrope"; color: var(--ink-3); }
+  .stat.acc .v { color: var(--accent); }
+  .stat.acc .l { color: var(--accent-ink); font-weight: 650; }
+  .codechip { display: inline-flex; align-items: center; gap: 10px; font: 650 46px/1 var(--mono); letter-spacing: -0.03em; }
+
+  /* S09 */
+  #rain { position: absolute; left: 0; top: 0; }
+  .bignum { position: absolute; font: 650 168px/1 "Manrope"; letter-spacing: -0.055em; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .lab { position: absolute; font: 500 36px/1.2 "Manrope"; color: var(--ink-2); white-space: nowrap; letter-spacing: -0.015em; }
+  .lab2 { position: absolute; font: 500 19px/1 var(--mono); color: var(--ink-4); white-space: nowrap; letter-spacing: .01em; }
+  .sev { position: absolute; display: flex; gap: 26px; font: 500 17px/1 var(--mono); color: var(--ink-3); white-space: nowrap; }
+  .sev span { display: flex; align-items: center; gap: 9px; }
+  .sev i { width: 22px; height: 7px; border-radius: 2px; display: block; }
+  .more { position: absolute; display: flex; align-items: center; gap: 16px; font: 600 28px/1 "Manrope"; color: var(--ink-2); white-space: nowrap; letter-spacing: -0.015em; }
+  .more i { width: 34px; height: 10px; border: 1.5px solid var(--ink-3); border-radius: 2px; display: block; background: #fff; }
+
+  /* S10 */
+  .tr-row { position: absolute; left: 230px; display: flex; align-items: flex-start; gap: 40px; }
+  .tr-ic { width: 84px; height: 84px; flex: none; }
+  .tr-ic * { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .tr-ic .a { stroke: var(--accent); }
+  .tr-tx { padding-top: 4px; }
+  .tr-st { font: 600 54px/1.1 "Manrope"; letter-spacing: -0.03em; color: var(--ink); white-space: nowrap; }
+  .tr-tg { margin-top: 16px; display: inline-flex; align-items: center; gap: 10px; font: 650 17px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-4); padding: 8px 12px; border-radius: 8px; background: var(--bg-2); }
+  .tr-tg i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; display: block; }
+  #bloom { position: absolute; inset: -200px; background: radial-gradient(closest-side, #fff 0%, #fff 55%, rgba(255,255,255,0) 100%); }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="66.5999" data-width="1920" data-height="1080">
+  <div id="grid"></div>
+
+  <!-- ============ S01–S03 world (planform plate, flight line, data streams) ============ -->
+  <div id="w1cam" class="cam" data-layout-allow-overflow>
+    <div id="w1imp" class="cam" data-layout-allow-overflow>
+      <svg id="plate" width="1920" height="1080" viewBox="0 0 1920 1080">
+        <defs>
+          <pattern id="hatch" width="3.2" height="3.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="3.2" height="3.2" fill="#E4E1FA"/><rect width="1.25" height="3.2" fill="#5B4FCF"/>
+          </pattern>
+        </defs>
+        <g id="s1ann"></g>
+        <g id="s2apron"></g>
+        <g id="s3wires"></g>
+        <g id="fleet"></g>
+        <g id="s2stubs"></g>
+      </svg>
+      <div id="fleetlab"></div>
+      <div id="lanes"></div>
+    </div>
+    <div id="node"><svg width="120" height="120" viewBox="0 0 120 120">
+      <g id="nodeRings"></g>
+      <circle id="nodeHalo" cx="60" cy="60" r="20" fill="#FDF1EA" stroke="#F6CDB6" stroke-width="1.2"/>
+      <circle id="nodeDot" cx="60" cy="60" r="8" fill="#E8743B"/>
+    </svg></div>
+  </div>
+
+  <div id="s01" class="scene"><div class="in">
+    <div id="s01k" class="kick grey" style="left:120px;top:116px">Delta-wing planform · schematic</div>
+  </div></div>
+
+  <div id="s02" class="scene"><div class="in">
+    <div id="s02k" class="kick" style="left:120px;top:116px">Flight line · morning snapshot</div>
+    <div id="s02h" class="h1" style="left:116px;top:150px">Station Sulur</div>
+    <div id="s02c" class="clock">
+      <svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="28" fill="none" stroke="#0B0D10" stroke-width="2"/>
+        <g stroke="#B9BDC2" stroke-width="2" stroke-linecap="round"><line x1="31" y1="6.5" x2="31" y2="10"/><line x1="55.5" y1="31" x2="52" y2="31"/><line x1="31" y1="55.5" x2="31" y2="52"/><line x1="6.5" y1="31" x2="10" y2="31"/></g>
+        <line id="hHand" x1="31" y1="31" x2="31" y2="45" stroke="#0B0D10" stroke-width="3" stroke-linecap="round"/>
+        <line id="mHand" x1="31" y1="31" x2="31" y2="12" stroke="#E8743B" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="31" cy="31" r="2.6" fill="#0B0D10"/></svg>
+      <div><div class="d">MON 22 JUN 2026</div><div class="t">06:00<small>IST</small></div></div>
+    </div>
+    <div id="s02lg" class="legend" style="left:0;top:770px;width:1920px;justify-content:center">
+      <span><i class="sw" style="background:#1F8A4C"></i><b style="color:#1F8A4C">FMC</b>mission capable</span>
+      <span><i class="sw" style="background:#D4492A"></i><b style="color:#D4492A">NMCS</b>awaiting parts</span>
+      <span><svg width="16" height="16" viewBox="0 0 16 16"><defs><pattern id="hatchL" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#E4E1FA"/><rect width="1.6" height="4" fill="#5B4FCF"/></pattern></defs><rect width="16" height="16" rx="4" fill="url(#hatchL)"/></svg><b style="color:#5B4FCF">NMCD</b>at depot</span>
+    </div>
+  </div></div>
+
+  <!-- ============ S04 logotype ============ -->
+  <div id="s03" class="scene"><div class="in">
+    <div id="s03k" class="kick" style="left:120px;top:116px">What the fleet already knows</div>
+  </div></div>
+
+  <div id="s04" class="scene"><div class="in" id="s04in">
+    <svg id="logo" viewBox="361 452 3284 384" width="1060" height="124">
+      <g id="logoG" transform="translate(0.000000,1334.000000) scale(0.100000,-0.100000)" fill="#0B0D10">
+<path d="M35709 8748 c-74 -52 -101 -79 -841 -814 l-718 -712 0 -95 c0 -53 3 -102 6 -111 l6 -16 425 0 425 0 202 203 c356 356 1005 987 1169 1135 l37 34 0 192 0 192 -12 12 -12 12 -321 0 -322 0 -44 -32z"/>
+<path d="M4271 8754 l-23 -17 6 -310 6 -310 -11 -13 -11 -14 -237 0 -237 0 -40 -42 c-23 -24 -48 -54 -58 -68 l-16 -24 0 -1462 0 -1462 13 -10 13 -11 355 0 c195 0 370 4 389 8 l35 7 5 1509 5 1510 1510 5 c831 3 1515 1 1520 -3 6 -4 10 -32 10 -61 l-1 -52 -29 -50 -30 -49 0 -410 0 -410 28 -51 c15 -29 27 -68 27 -88 l0 -35 -19 -11 -20 -10 -1280 0 -1280 0 -21 -22 -20 -22 0 -358 0 -358 1237 0 1237 0 76 39 c41 22 98 45 125 52 l50 13 179 174 c98 95 241 230 316 298 139 127 149 138 169 209 l12 40 -3 600 -3 600 -10 16 c-5 9 -48 51 -95 94 -102 94 -359 336 -485 456 l-90 85 -40 14 -40 14 -1600 3 -1600 4 -24 -17z"/>
+<path d="M8741 8757 l-11 -14 0 -1858 c0 -1022 2 -1860 4 -1862 2 -2 180 -5 396 -7 l392 -2 14 14 14 13 0 1849 c0 1017 -3 1855 -6 1864 l-6 16 -393 0 -393 0 -11 -13z"/>
+<path d="M12267 8752 l-17 -19 0 -746 0 -746 -19 -11 -20 -10 -1104 0 -1105 0 -26 -31 -26 -31 0 -317 0 -317 14 -20 14 -19 1134 -5 1133 -5 3 -728 2 -727 453 2 452 3 0 1870 0 1870 -436 3 -436 2 -16 -18z"/>
+<path d="M14330 8752 c-19 -11 -47 -39 -61 -63 l-26 -44 9 -180 c4 -99 7 -223 6 -275 l-3 -95 -247 -3 -247 -2 -55 -62 -56 -61 2 -1471 3 -1471 405 0 405 0 3 518 2 517 1053 0 1053 0 12 12 12 12 0 326 0 326 -12 12 -12 12 -1052 0 -1052 0 -4 613 c-2 336 -1 626 2 642 l6 30 1279 0 1280 0 5 -1510 5 -1510 405 -3 405 -2 13 17 12 17 0 1490 c0 820 -4 1507 -9 1527 l-8 36 -79 75 c-44 41 -104 97 -134 123 -30 27 -142 132 -248 234 l-193 186 -52 20 -52 20 -1370 3 -1370 2 -35 -18z"/>
+<path d="M18397 8752 l-16 -17 -1 -1455 c-1 -800 -1 -1465 -1 -1478 1 -13 11 -33 24 -45 56 -53 240 -230 469 -450 l246 -238 50 -14 50 -15 1458 2 1459 3 3 369 2 370 -12 8 c-7 4 -664 8 -1460 8 l-1448 0 0 1475 0 1474 -19 11 -20 10 -384 0 -384 0 -16 -18z"/>
+<path d="M23217 8740 c-19 -17 -41 -45 -49 -63 l-14 -32 9 -269 10 -268 -14 -9 c-8 -5 -120 -9 -250 -9 l-236 0 -56 -59 -57 -59 0 -1476 0 -1476 394 0 394 0 11 13 11 14 2 504 3 504 1057 5 c581 3 1060 8 1064 12 4 4 9 155 12 335 l5 328 -15 13 -15 12 -1054 2 -1054 3 0 640 0 640 1280 0 1280 0 3 -1499 2 -1499 11 -14 11 -13 403 0 403 0 6 16 c3 9 6 701 6 1538 l0 1523 -287 269 c-159 148 -313 293 -343 322 -30 29 -71 58 -90 65 l-35 12 -1387 3 -1387 2 -34 -30z"/>
+<path d="M27331 8744 l-31 -26 0 -274 0 -275 15 -29 c19 -37 17 -36 255 -49 344 -19 457 -21 1515 -27 l1040 -7 36 -31 c21 -17 40 -44 44 -61 5 -16 6 -682 4 -1480 l-4 -1450 423 -5 c233 -3 428 -3 432 0 4 3 10 671 11 1485 l4 1480 -17 37 -16 36 -333 331 -332 331 -51 18 -51 17 -1457 3 -1456 2 -31 -26z"/>
+<path d="M31487 8763 c-4 -3 -7 -63 -7 -133 l0 -127 82 -79 c45 -44 141 -135 212 -204 215 -206 583 -570 886 -875 157 -158 304 -300 327 -316 l42 -29 298 0 299 0 50 25 c27 13 60 33 73 43 l23 19 14 89 c7 49 13 97 14 108 0 10 -44 61 -103 120 -56 55 -156 157 -222 226 -66 69 -342 353 -613 633 l-494 507 -437 0 c-241 0 -441 -3 -444 -7z"/>
+<path d="M27196 7758 l-15 -23 -1 -1340 c-1 -737 -1 -1346 -1 -1352 l1 -13 363 0 363 0 26 28 26 27 4 1348 3 1347 -377 0 -378 0 -14 -22z"/>
+<path d="M33070 6753 c-76 -12 -29 31 -855 -784 -176 -173 -413 -405 -527 -515 l-207 -199 2 -115 2 -115 441 -3 440 -2 20 19 c10 10 337 338 727 728 l707 709 0 136 0 135 -37 7 c-40 6 -671 6 -713 -1z"/>
+<path d="M34635 6741 c-16 -5 -91 -9 -166 -10 l-137 -1 -12 -15 c-7 -8 -19 -15 -26 -15 -8 0 -23 -9 -34 -20 l-20 -20 0 -113 0 -113 709 -712 709 -712 374 7 c205 3 375 8 378 10 3 3 5 80 5 171 l0 167 -668 665 c-368 366 -687 676 -710 690 l-41 25 -166 2 c-91 1 -178 -2 -195 -6z"/>
+      </g>
+    </svg>
+    <div id="s04sub" class="sub"></div>
+    <div id="s04rule"></div>
+    <div id="s04cr" class="credit"><b>Dilijens</b> · IBM Z Datathon</div>
+  </div></div>
+
+  <!-- ============ S05 problem statement ============ -->
+  <div id="s05" class="scene"><div class="in" id="s05in"><div id="s05cam" class="cam" data-layout-allow-overflow>
+    <div id="doc" class="doc">
+      <div class="doc-top"><span class="badge">Problem</span><span class="k">Problem statement · Ministry of Defence</span>
+        <span class="tags"><span>Software</span><span>Transportation &amp; Logistics</span></span></div>
+      <div class="doc-title">Air Power – Predictive Maintenance &amp; Fleet Availability</div>
+      <div class="doc-org">Ministry of Defence · Defence Services Staff College</div>
+      <div class="doc-rule"></div>
+      <p id="docBody" class="doc-body"><span class="hl" id="hl0">Low aircraft availability</span> due to <span class="hl" id="hl1">fragmented and largely reactive</span> maintenance practices across the air fleet. Maintenance data from <span class="ul" id="ul0">aircraft health-monitoring systems, technical records, spares and maintenance agencies</span> is <span class="hl" id="hl2">not adequately integrated</span>, resulting in <span class="hl" id="hl3">delayed fault prediction</span>, <span class="hl" id="hl4">avoidable aircraft downtime</span> and sub-optimal utilisation of critical assets.</p>
+    </div>
+  </div></div></div>
+
+  <!-- ============ S06 audit evidence ============ -->
+  <div id="s06" class="scene"><div class="in" id="s06in">
+    <div id="s06k" class="kick" style="left:120px;top:116px">Audit evidence</div>
+    <div id="s06h" class="h1" style="left:116px;top:150px"><span class="wd">Aircraft</span> <span class="wd">are</span> <span class="wd">lost</span> <span class="wd">to</span> <span class="wd">waiting.</span></div>
+    <div id="s06s" class="subl"><span>for parts</span><span style="margin:0 14px;color:#B9BDC2">·</span><span>for repair</span><span style="margin:0 14px;color:#B9BDC2">·</span><span class="acc">for a decision</span></div>
+    <div id="tiles">
+      <div class="tile" id="tile0" style="left:120px"><div class="ti">
+        <div class="tg">Su-30MKI · serviceability</div>
+        <div class="big"><span id="t0a">0.0</span>–<span id="t0b">0.0</span><small>%</small></div>
+        <div class="meter"><div class="f" id="t0f" style="left:55.5%;width:4.2%"></div><div class="nm" id="t0n" style="left:75%"></div>
+          <div class="nl" id="t0nl" style="left:75%">75 % norm</div><div class="sc" style="left:0">0</div><div class="sc" style="right:0">100 %</div></div>
+        <div class="desc">serviceability vs a 75 % norm</div>
+        <div class="src" id="t0s"><b>CAG</b> Report 38/2015</div>
+      </div></div>
+      <div class="tile" id="tile1" style="left:691px"><div class="ti">
+        <div class="tg">IL-76 · spares support</div>
+        <div class="big"><span id="t1a">0.0</span><small>%</small></div>
+        <div class="meter"><div class="f" id="t1f" style="width:10.8%"></div><div class="sc" style="left:0;top:24px">0</div><div class="sc" style="right:0">100 %</div></div>
+        <div class="desc">of AOG demands met within 15 days</div>
+        <div class="src" id="t1s"><b>CAG</b> Report 24/2017</div>
+      </div></div>
+      <div class="tile" id="tile2" style="left:1262px"><div class="ti">
+        <div class="tg">US DoD · predictive maintenance</div>
+        <div class="quote" id="t2q"><span class="w">“a</span> <span class="w">lack</span> <span class="w">of</span> <span class="w">quality</span> <span class="w">data”</span></div>
+        <div class="desc" id="t2d" style="margin-top:28px">No weapon system had fully implemented predictive maintenance — the main obstacle.</div>
+        <div class="src" id="t2s"><b>DoD IG</b> · 2022</div>
+      </div></div>
+    </div>
+  </div></div>
+
+  <!-- ============ S07 waiting: TJ108 ribbon ============ -->
+  <div id="s07" class="scene"><div class="in" id="s07in">
+    <div id="s07k" class="kick" style="left:120px;top:116px">Waiting · in our fleet</div>
+    <div id="s07h" class="h1" style="left:116px;top:150px;font-size:60px"><span class="wd" id="s07h0"><span class="mono">TJ108</span></span><span class="wd" id="s07h1">&nbsp;· 80 days</span><span class="wd" id="s07h2">&nbsp;· awaiting brake chute</span></div>
+    <div id="s07pf" class="abs" style="left:1676px;top:96px"></div>
+    <div id="s07lg" class="legend" style="left:120px;top:240px;font-size:22px;gap:26px">
+      <span style="color:#62676F">Availability at 06:00, every morning · 168 days</span>
+      <span><i class="sw" style="background:#1F8A4C;width:13px;height:13px"></i><b style="color:#1F8A4C">FMC</b></span>
+      <span><i class="sw" style="background:#C98512;width:13px;height:13px"></i><b style="color:#C98512">NMCM</b></span>
+      <span><i class="sw" style="background:#D4492A;width:13px;height:13px"></i><b style="color:#D4492A">NMCS</b></span>
+    </div>
+    <div id="s07drift" class="cam" data-layout-allow-overflow>
+      <svg id="rib" class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+      <div id="s07axis"></div>
+      <div id="s07ph" class="axl" style="color:#0B0D10;font-weight:600"></div>
+      <div id="s07cnt" class="counter" style="left:0;top:296px"><span id="s07n">0</span><small>days on the ground</small></div>
+      <div id="s07blk" class="blk-l"></div>
+      <div id="s07tag" class="tagchip"><b>AOG demand</b>D-sulur-26093-0002 · open 80 d</div>
+      <div id="s07ch" class="abs" style="left:560px;top:742px;display:flex;gap:22px;align-items:center">
+        <svg id="chuteIc" width="76" height="76" viewBox="0 0 76 76"><g fill="none" stroke="#0B0D10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path id="chC" d="M10 30 C14 10 62 10 66 30 C58 26 50 26 46 30 C42 26 34 26 30 30 C26 26 18 26 10 30 Z"/>
+          <path id="chL" d="M10 30 L38 62 M30 30 L38 62 M46 30 L38 62 M66 30 L38 62"/><circle cx="38" cy="64" r="2.4" fill="#0B0D10"/></g></svg>
+        <div class="cap" style="position:relative"><div id="s07c1"><b>Brake chute</b> — a consumable.</div><div id="s07c2">Its demand follows landings.</div></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- ============ S08 false alarms: TJ107 ============ -->
+  <div id="s08" class="scene"><div class="in" id="s08in">
+    <div id="s08k" class="kick" style="left:120px;top:116px">False alarms · another aircraft</div>
+    <div id="s08h" class="h1" style="left:116px;top:150px;font-size:60px"><span class="mono">TJ107</span> · <span id="s08code" class="wd" style="color:#B4511F">HYD-101</span> on 59 of 61 sorties</div>
+    <div id="s08pf" class="abs" style="left:1676px;top:96px"></div>
+    <svg id="sor" class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+    <div id="s08axis"></div>
+    <div class="tray" id="tray"><div class="th"><b>Pump shop findings</b><span><span id="rtokN">0</span> of 33 RTOK</span></div></div>
+    <div id="stamps"></div>
+    <div class="stats" id="stats">
+      <div class="stat" id="st0"><span class="v" id="st0v">0</span><span class="l">removals</span></div>
+      <div class="stat" id="st1"><span class="v" id="st1v">0</span><span class="l">pumps</span></div>
+      <div class="stat" id="st2"><span class="v" id="st2v">0</span><span class="l">man-hours</span></div>
+      <div class="stat acc" id="st3"><span class="v">0</span><span class="l">confirmed</span></div>
+    </div>
+  </div></div>
+
+  <!-- ============ S09 alert flood ============ -->
+  <div id="s09" class="scene" style="-webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 49.4%,#000 50.6%,#000 100%);mask-image:linear-gradient(90deg,transparent 0,transparent 49.4%,#000 50.6%,#000 100%);-webkit-mask-size:200% 100%;mask-size:200% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat"><div class="in" id="s09in">
+    <canvas id="rain" width="1920" height="1080"></canvas>
+    <svg id="funnel" class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+    <div id="s09k" class="kick" style="left:120px;top:116px">Alert flood · this season</div>
+    <div id="s09n" class="bignum" style="left:110px;top:318px">0</div>
+    <div id="s09l" class="lab" style="left:120px;top:500px">alert rows · 168 days</div>
+    <div id="s09l2" class="lab2" style="left:120px;top:560px">921 BIT events + 271 cautions</div>
+    <div id="s09sev" class="sev" style="left:120px;top:604px">
+      <span><i style="background:#C8321F"></i>warning</span><span><i style="background:#C98512"></i>caution</span><span><i style="background:#B9BDC2"></i>advisory</span></div>
+    <div id="s09m" class="more" style="left:120px;top:704px"><i></i>More prediction alone adds more.</div>
+  </div></div>
+
+  <!-- ============ S10 trust ============ -->
+  <div id="s10" class="scene"><div class="in" id="s10in">
+    <div id="s10k" class="kick" style="left:230px;top:236px">Any answer must be</div>
+    <div class="tr-row" id="tr0" style="top:304px">
+      <svg class="tr-ic" viewBox="0 0 84 84"><path d="M22 8 H52 L66 22 V76 H22 Z"/><path d="M52 8 V22 H66"/><path d="M31 36 H57 M31 46 H50"/>
+        <path class="a" d="M30 64 C34 56 37 56 38 62 C39 67 42 58 45 58 C47 58 47 64 50 63 C52 62 54 60 58 60"/></svg>
+      <div class="tr-tx"><div class="tr-st">A black box can’t sign for airworthiness.</div><div class="tr-tg" id="tg0"><i></i>explainable</div></div>
+    </div>
+    <div class="tr-row" id="tr1" style="top:476px">
+      <svg class="tr-ic" viewBox="0 0 84 84"><rect x="10" y="16" width="64" height="58" rx="7"/><path d="M10 32 H74 M26 9 V22 M58 9 V22"/>
+        <path d="M50 40 L70 60 M50 50 L64 64 M58 40 L72 54"/><path class="a" d="M44 30 V78"/></svg>
+      <div class="tr-tx"><div class="tr-st">A model that peeks at tomorrow’s data is wrong today.</div><div class="tr-tg" id="tg1"><i></i>honest about time</div></div>
+    </div>
+    <div class="tr-row" id="tr2" style="top:648px">
+      <svg class="tr-ic" viewBox="0 0 84 84"><path d="M42 8 L70 18 V40 C70 58 58 70 42 77 C26 70 14 58 14 40 V18 Z"/>
+        <rect x="31" y="40" width="22" height="17" rx="3"/><path d="M35 40 V34 C35 26 49 26 49 34 V40"/><path class="a" d="M8 78 L76 10"/></svg>
+      <div class="tr-tx"><div class="tr-st">Nothing leaves an air-gapped base.</div><div class="tr-tg" id="tg2"><i></i>runs fully offline</div></div>
+    </div>
+  </div></div>
+
+  <div id="bloom"></div>
+</div>
+
+<script>
+(function () {
+  const $ = s => document.querySelector(s), $$ = s => Array.from(document.querySelectorAll(s));
+  const A = window.ACT01, SH = A.shots;
+  const NS = 'http://www.w3.org/2000/svg';
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9'’-]/g, '');
+  // act time of a spoken word (start, or end with e=true)
+  const W = (k, word, n = 0, e = false) => { const L = A.vo[k].filter(x => norm(x[0]) === norm(word)); if (!L[n]) throw new Error('word ' + k + ' ' + word); return SH[k].vo + L[n][e ? 2 : 1]; };
+  const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => cl((t - a) / (b - a));
+  const lerp = (a, b, u) => a + (b - a) * u;
+  const EZ = {}; const ez = n => EZ[n] || (EZ[n] = gsap.parseEase(n));
+  let seed = 1234567; const rnd = () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  const svgs = (parent, html) => { parent.insertAdjacentHTML('beforeend', html); return parent.lastElementChild; };
+  const fmt = (v, d = 0) => v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  const tl = gsap.timeline({ paused: true });
+  const inn = (el, at, o = {}) => { const { y = 18, x = 0, d = 0.6, ease = 'power3.out', s } = o;
+    const f = { opacity: 0, y, x }, to = { opacity: 1, y: 0, x: 0, duration: d, ease }; if (s != null) { f.scale = s; to.scale = 1; }
+    tl.fromTo(el, f, to, at); };
+  const out = (el, at, o = {}) => { const { y = -10, x = 0, d = 0.35, ease = 'power2.in' } = o;
+    tl.fromTo(el, { opacity: 1, y: 0, x: 0 }, { opacity: 0, y, x, duration: d, ease, immediateRender: false }, at); };
+  const span = (el, a, b) => { tl.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.001, ease: 'none' }, a);
+    if (b != null) tl.fromTo(el, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.001, ease: 'none', immediateRender: false }, b); };
+  const proc = (at, dur, fn) => { const o = { t: 0 }; tl.fromTo(o, { t: 0 }, { t: dur, duration: dur, ease: 'none', onUpdate: () => fn(at + o.t) }, at); fn(at); };
+  const drawOn = (els, at, dur, stagger = 0, ease = 'power2.inOut') => PHXF.draw(tl, els, at, dur, stagger, ease);
+
+  /* ---------------------------------------------------------------- geometry -- */
+  const HALF = [[0, 0], [0.35, 0.05], [0.9, 0.22], [1.6, 0.36], [2.3, 0.45], [3.0, 0.52], [3.7, 0.62], [4.05, 0.98], [4.6, 1.02],
+    [7.29, 2.40], [9.32, 4.10], [10.72, 4.10], [11.22, 1.02], [11.9, 0.80], [12.55, 0.58], [12.62, 0.50], [13.2, 0.44], [13.2, 0]];
+  const pt = (x, y) => `${(y * 10).toFixed(2)} ${(x * 10).toFixed(2)}`;     // decimetres: X = buttline, Y = station
+  const SIDE_R = 'M' + HALF.map(([x, y]) => pt(x, y)).join(' L');
+  const SIDE_L = 'M' + HALF.map(([x, y]) => pt(x, -y)).join(' L');
+  const RING = HALF.concat(HALF.slice(1, -1).reverse().map(([x, y]) => [x, -y]));
+  const OUT = 'M' + RING.map(([x, y]) => pt(x, y)).join(' L') + ' Z';
+  const ELV = [[10.72, 4.04], [10.98, 2.45], [11.14, 1.35]];
+  const DET = 'M' + ELV.map(([x, y]) => pt(x, y)).join(' L') + ' M' + ELV.map(([x, y]) => pt(x, -y)).join(' L') +
+    ' M0 94 L0.8 98 L0.8 126 L0 131 L-0.8 126 L-0.8 98 Z';
+  const BODY = 'M10.2 46 L10.2 112.2 M-10.2 46 L-10.2 112.2';
+  const pfIcon = (s, fill, extra = '') => `<svg width="${(90 * s).toFixed(0)}" height="${(140 * s).toFixed(0)}" viewBox="-45 -4 90 140">
+    <path d="${OUT}" fill="${fill}" stroke="#0B0D10" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+    <path d="${DET}" fill="none" stroke="#31353B" stroke-width=".8" vector-effect="non-scaling-stroke"/>
+    <ellipse cx="0" cy="35.5" rx="3.4" ry="10" fill="rgba(255,255,255,.5)" stroke="#0B0D10" stroke-width="1" vector-effect="non-scaling-stroke"/>${extra}</svg>`;
+
+  /* ================================================================ S01 · plate == */
+  const tS02 = SH.S02.start, tS03 = SH.S03.start, tS04 = SH.S04.start;
+  const HERO = { x: 960, y: 190, s: 5 };
+  const ROW = i => ({ x: 960 + (i - 3.5) * 200, y: 362, s: 1.75 });
+  const COL = i => ({ x: 112, y: 252 + i * 82, s: 0.56 });
+  const SWp = s => (s >= 4 ? 1.7 : s >= 1 ? 1.35 : 1.05) / s;   // stroke px → user units
+  const ST = ['D', 'F', 'F', 'F', 'F', 'F', 'F', 'S'];
+  const FILL = { F: '#1F8A4C', S: '#D4492A', D: 'url(#hatch)' };
+  const fleet = $('#fleet');
+  for (let i = 0; i < 8; i++) {
+    svgs(fleet, `<g class="pf" id="pf${i}">
+      <clipPath id="pfc${i}" clipPathUnits="userSpaceOnUse"><rect id="pfr${i}" x="-46" y="133" width="92" height="0"/></clipPath>
+      <path class="pf-fill" d="${OUT}" fill="${FILL[ST[i]]}" clip-path="url(#pfc${i})"/>
+      <path class="pf-body" id="pfb${i}" d="${BODY}"/>
+      <path class="pf-det" id="pfd${i}" d="${DET}"/>
+      <ellipse class="pf-can" id="pfk${i}" cx="0" cy="35.5" rx="3.4" ry="10"/>
+      <path class="pf-o" id="pfR${i}" d="${SIDE_R}"/><path class="pf-o" id="pfL${i}" d="${SIDE_L}"/>
+      <line class="stub" id="stub${i}" x1="0" y1="-5" x2="0" y2="-5" stroke="#2563C9" stroke-width="1" stroke-dasharray="2 3.2" stroke-linecap="round" opacity="0"/></g>`);
+    const p = i === 3 ? HERO : ROW(i);
+    gsap.set('#pf' + i, { x: p.x, y: p.y, scale: p.s, svgOrigin: '0 0', '--sw': SWp(p.s) });
+  }
+  // annotations (stage px)
+  const ann = $('#s1ann');
+  const RX = 690, DX = 1232, Y0 = 190, Y1 = 850;
+  let a = '';
+  a += `<line id="cl" x1="960" y1="146" x2="960" y2="146" stroke="#8E939A" stroke-width="1" stroke-dasharray="16 5 3 5"/>`;
+  [[606, 132, 1, 1], [1314, 132, -1, 1], [606, 908, 1, -1], [1314, 908, -1, -1]].forEach(([x, y, sx, sy]) =>
+    a += `<path class="crop" d="M${x} ${y + 22 * sy} V${y} H${x + 22 * sx}" fill="none" stroke="#B9BDC2" stroke-width="1.2"/>`);
+  a += `<line id="rul" x1="${RX}" y1="${Y0}" x2="${RX}" y2="${Y0}" stroke="#0B0D10" stroke-width="1.3"/>`;
+  a += `<text id="rulT" x="${RX}" y="${Y0 - 20}" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#8E939A" letter-spacing="1.5">STA · m</text>`;
+  for (let k = 0; k <= 26; k++) {
+    const y = Y0 + k * 25, maj = k % 2 === 0;
+    a += `<line class="tick" x1="${RX}" y1="${y}" x2="${RX + (maj ? 14 : 7)}" y2="${y}" stroke="#0B0D10" stroke-width="${maj ? 1.3 : 1}"/>`;
+    if (k % 4 === 0) a += `<text class="tick" x="${RX - 12}" y="${y + 4.5}" text-anchor="end" font-family="JetBrains Mono" font-size="13" fill="#8E939A">${k / 2}</text>`;
+  }
+  a += `<line class="tick" x1="${RX}" y1="${Y1}" x2="${RX + 14}" y2="${Y1}" stroke="#0B0D10" stroke-width="1.3"/>`;
+  a += `<line class="ext" x1="974" y1="${Y0}" x2="${DX + 16}" y2="${Y0}" stroke="#8E939A" stroke-width=".9"/>`;
+  a += `<line class="ext" x1="996" y1="${Y1}" x2="${DX + 16}" y2="${Y1}" stroke="#8E939A" stroke-width=".9"/>`;
+  a += `<line id="dimA" x1="${DX}" y1="494" x2="${DX}" y2="${Y0 + 1}" stroke="#0B0D10" stroke-width="1.3"/>`;
+  a += `<line id="dimB" x1="${DX}" y1="546" x2="${DX}" y2="${Y1 - 1}" stroke="#0B0D10" stroke-width="1.3"/>`;
+  a += `<path class="arr" d="M${DX} ${Y0} l-5.5 14 h11 z" fill="#0B0D10"/><path class="arr" d="M${DX} ${Y1} l-5.5 -14 h11 z" fill="#0B0D10"/>`;
+  a += `<text id="dimT" x="${DX}" y="528" text-anchor="middle" font-family="JetBrains Mono" font-size="23" font-weight="500" fill="#0B0D10">13.2 m</text>`;
+  ann.innerHTML = a;
+
+  // grid + kicker
+  tl.fromTo('#grid', { opacity: 0 }, { opacity: 1, duration: 1.4, ease: 'power1.inOut' }, 0);
+  span('#s01', 0, 4.6);
+  inn('#s01k', 0.55, { y: 0, d: 0.8, ease: 'power2.out' });
+  tl.fromTo('.crop', { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.06, ease: 'power2.out' }, 0.15);
+  // hero draw-on: both halves from the nose, 2.4 s
+  ['#pf0', '#pf1', '#pf2', '#pf4', '#pf5', '#pf6', '#pf7'].forEach(s => gsap.set(s, { opacity: 0 }));
+  drawOn([$('#pfR3'), $('#pfL3')], 0.35, 2.4, 0, 'power2.inOut');
+  tl.fromTo('#cl', { attr: { y2: 146 } }, { attr: { y2: 894 }, duration: 1.5, ease: 'power2.inOut' }, 0.55);
+  drawOn([$('#pfk3')], 1.45, 0.8, 0, 'power2.out');
+  tl.fromTo(['#pfd3', '#pfb3'], { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'power1.out' }, 2.15);
+  tl.fromTo('#rul', { attr: { y2: Y0 } }, { attr: { y2: Y1 } , duration: 0.7, ease: 'power2.inOut' }, 1.85);
+  tl.fromTo('#rulT', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.9);
+  tl.fromTo('#s1ann .tick', { opacity: 0, x: -4 }, { opacity: 1, x: 0, duration: 0.25, stagger: 0.04, ease: 'power2.out' }, 2.0);
+  tl.fromTo('.ext', { opacity: 0 }, { opacity: 1, duration: 0.45, ease: 'power1.out' }, 2.5);
+  tl.fromTo('#dimA', { attr: { y2: 494 } }, { attr: { y2: Y0 + 1 }, duration: 0.55, ease: 'power3.out' }, 2.75);
+  tl.fromTo('#dimB', { attr: { y2: 546 } }, { attr: { y2: Y1 - 1 }, duration: 0.55, ease: 'power3.out' }, 2.75);
+  tl.fromTo('.arr', { opacity: 0 }, { opacity: 1, duration: 0.15 }, 3.22);
+  const tAir = W('S01', 'aircraft');
+  tl.fromTo('#dimT', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, tAir - 0.1);
+  // camera: 4 % slow push, then back for the match cut
+  tl.fromTo('#w1cam', { scale: 1, x: 0, y: 0 }, { scale: 1.04, x: 960 * -0.04, y: 540 * -0.04, duration: 4.3, ease: 'sine.inOut' }, 0);
+  tl.fromTo('#w1cam', { scale: 1.04, x: 960 * -0.04, y: 540 * -0.04 }, { scale: 1, x: 0, y: 0, duration: 1.45, ease: 'expo.inOut', immediateRender: false }, 4.3);
+  // match cut: annotations clear, hero shrinks into the flight line as TJ104
+  tl.fromTo('#s1ann', { opacity: 1 }, { opacity: 0, duration: 0.4, ease: 'power2.in', immediateRender: false }, 4.1);
+  out('#s01k', 4.1, { y: 0 });
+  const r3 = ROW(3);
+  tl.fromTo('#pf3', { x: HERO.x, y: HERO.y, scale: HERO.s, '--sw': SWp(HERO.s) }, { x: r3.x, y: r3.y, scale: r3.s, '--sw': SWp(r3.s), duration: 1.45, ease: 'expo.inOut', immediateRender: false }, 4.3);
+  [0, 1, 2, 4, 5, 6, 7].forEach(i => { const p = ROW(i);
+    tl.fromTo('#pf' + i, { opacity: 0, y: p.y + 16 }, { opacity: 1, y: p.y, duration: 0.7, ease: 'power3.out' }, 5.05 + Math.abs(i - 3) * 0.07); });
+
+  /* ================================================================ S02 · flight line == */
+  span('#s02', tS02 - 0.2, tS03 + 0.2);
+  const ap = $('#s2apron');
+  ap.innerHTML = `<line id="apL" x1="960" y1="616" x2="960" y2="616" stroke="#D6D6D1" stroke-width="1.2"/><line id="apR" x1="960" y1="616" x2="960" y2="616" stroke="#D6D6D1" stroke-width="1.2"/>` +
+    [...Array(8)].map((_, i) => `<path class="stand" d="M${ROW(i).x - 10} 616 H${ROW(i).x + 10} M${ROW(i).x} 609 V623" stroke="#8E939A" stroke-width="1.3"/>`).join('');
+  tl.fromTo('#apL', { attr: { x2: 960 } }, { attr: { x2: 150 }, duration: 0.9, ease: 'power3.out' }, 5.55);
+  tl.fromTo('#apR', { attr: { x2: 960 } }, { attr: { x2: 1770 }, duration: 0.9, ease: 'power3.out' }, 5.55);
+  tl.fromTo('.stand', { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.04 }, 5.7);
+  const fl = $('#fleetlab');
+  const PILL = { F: 'FMC', S: 'NMCS', D: 'NMCD' };
+  for (let i = 0; i < 8; i++) fl.insertAdjacentHTML('beforeend', `<div class="fl" id="fl${i}" style="left:${ROW(i).x - 85}px;top:636px">
+    <div class="tail">TJ10${i + 1}</div><div class="pill ${ST[i]}" id="flp${i}"><i></i>${PILL[ST[i]]}</div></div>`);
+  for (let i = 0; i < 8; i++) inn('#fl' + i + ' .tail', 5.65 + i * 0.045, { y: 10, d: 0.5 });
+  inn('#s02k', tS02 + 0.1, { y: 0, d: 0.6, ease: 'power2.out' });
+  inn('#s02h', tS02 + 0.2, { y: 22, d: 0.7 });
+  inn('#s02c', tS02 + 0.3, { y: 14, d: 0.7 });
+  tl.fromTo('#mHand', { rotation: -30, svgOrigin: '31 31' }, { rotation: 0, svgOrigin: '31 31', duration: 0.5, ease: 'back.out(3)' }, tS02 + 0.75);
+  tl.fromTo('#hHand', { rotation: -6, svgOrigin: '31 31' }, { rotation: 0, svgOrigin: '31 31', duration: 0.5, ease: 'back.out(3)' }, tS02 + 0.75);
+  const tFill = W('S02', 'decision') - 0.04;
+  for (let i = 0; i < 8; i++) {
+    tl.fromTo('#pfr' + i, { attr: { y: 133, height: 0 } }, { attr: { y: -2, height: 135 }, duration: 0.6, ease: 'power2.out' }, tFill + i * 0.09);
+    inn('#flp' + i, tFill + i * 0.09 + 0.22, { y: 6, d: 0.45 });
+  }
+  inn('#s02lg', W('S02', 'everything') - 0.1, { y: 12, d: 0.6 });
+  tl.fromTo('#w1cam', { x: 0 }, { x: -26, duration: tS03 - 0.4 - 5.75, ease: 'power1.inOut', immediateRender: false }, 5.75);
+  // the fleet starts to stream: dashed uplinks rise from each nose
+  const tKnow = W('S02', 'knows') - 0.12;
+  $$('.stub').forEach((s, i) => {
+    tl.fromTo(s, { attr: { y2: -5 }, opacity: 0 }, { attr: { y2: -42 }, opacity: 1, duration: 0.45, ease: 'power2.out' }, tKnow + i * 0.03);
+    tl.fromTo(s, { strokeDashoffset: 0 }, { strokeDashoffset: 21, duration: 1.4, ease: 'none' }, tKnow);
+    tl.fromTo(s, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: 'power1.in', immediateRender: false }, tS03 - 0.5 + i * 0.035);
+  });
+  ['#s02k', '#s02h', '#s02c', '#s02lg'].forEach((s, i) => out(s, tS03 - 0.6 + i * 0.03, { y: -8 }));
+  out('#fleetlab', tS03 - 0.6, { y: 8 });
+  tl.fromTo('#s2apron', { opacity: 1 }, { opacity: 0, duration: 0.35, ease: 'power2.in', immediateRender: false }, tS03 - 0.6);
+
+  /* ================================================================ S03 · four streams == */
+  const tMove = tS03 - 0.55;
+  for (let i = 0; i < 8; i++) { const r = ROW(i), c = COL(i);
+    tl.fromTo('#pf' + i, { x: r.x, y: r.y, scale: r.s, '--sw': SWp(r.s) }, { x: c.x, y: c.y, scale: c.s, '--sw': SWp(c.s), duration: 0.95, ease: 'expo.inOut', immediateRender: false }, tMove + i * 0.035); }
+  // camera: pull back 8 % (to 0.92) while the streams build
+  const CS = 0.92, CX = 960 * (1 - CS), CY = 540 * (1 - CS);
+  tl.fromTo('#w1cam', { scale: 1, x: -26, y: 0 }, { scale: CS, x: CX, y: CY, duration: 4.6, ease: 'power2.inOut', immediateRender: false }, tMove);
+  const NODE = { x: 1700, y: 540 };
+  const LANES = [
+    { wy: 410, n: '01', t: 'Health data', s: 'sortie traces · BIT codes', at: W('S03', 'health') - 0.06 },
+    { wy: 520, n: '02', t: 'Technical records', s: 'maintenance records', at: W('S03', 'technical') - 0.06 },
+    { wy: 630, n: '03', t: 'Spares', s: 'demands · AOG', at: W('S03', 'spares') - 0.06 },
+    { wy: 740, n: '04', t: 'Work in progress', s: 'open jobs', at: W('S03', 'work') - 0.06 } ];
+  const wires = $('#s3wires');
+  const cy = i => COL(i).y + 66 * COL(i).s;   // planform centre (station 6.6 m)
+  let wv = `<line id="bus" x1="204" y1="${cy(0)}" x2="204" y2="${cy(0)}" stroke="#8E939A" stroke-width="1.3"/>`;
+  for (let i = 0; i < 8; i++) wv += `<line class="conn" x1="${COL(i).x + 26}" y1="${cy(i)}" x2="${COL(i).x + 26}" y2="${cy(i)}" stroke="#8E939A" stroke-width="1.1"/><circle class="cdot" cx="204" cy="${cy(i)}" r="2.6" fill="#8E939A"/>`;
+  LANES.forEach((L, k) => {
+    const d = `M204 ${L.wy} H1400 C1540 ${L.wy} 1566 ${NODE.y} ${NODE.x} ${NODE.y}`;
+    wv += `<path class="wire" id="wire${k}" d="${d}" fill="none" stroke="#D6D6D1" stroke-width="1.3"/>`;
+    wv += `<path class="flow" id="flow${k}" d="M600 ${L.wy} H1400 C1540 ${L.wy} 1566 ${NODE.y} ${NODE.x} ${NODE.y}" fill="none" stroke="#2563C9" stroke-width="1.8" stroke-dasharray="2 12" stroke-linecap="round" opacity="0"/>`;
+    wv += `<circle class="jdot" id="jd${k}" cx="204" cy="${L.wy}" r="4" fill="#2563C9"/>`;
+  });
+  // real sortie traces (TJ212, 1 Hz, decimated) — x 600→1400
+  const TR = [{ k: 'N2', lab: 'ENG.N2', y: 262 }, { k: 'T5', lab: 'ENG.T5', y: 306 }, { k: 'HYD', lab: 'HYD.SYS1.P', y: 350 }];
+  TR.forEach(tr => { const v = A.tel[tr.k].v, n = v.length;
+    const d = 'M' + v.map((q, j) => `${(600 + j / (n - 1) * 800).toFixed(1)} ${(tr.y + 38 - q / 1000 * 38).toFixed(1)}`).join(' L');
+    wv += `<path class="trace" id="tr${tr.k}" d="${d}" fill="none" stroke="#31353B" stroke-width="1.35" stroke-linejoin="round"/>`; });
+  wv = wv.replace(/<path class="trace"/g, '<path class="trace" clip-path="url(#trClip)"');
+  wv += `<clipPath id="trClip"><rect id="trClipR" x="596" y="240" width="0" height="170"/></clipPath>`;
+  wv += `<line id="rh" x1="600" y1="254" x2="600" y2="394" stroke="#2563C9" stroke-width="1.4"/>`;
+  wires.innerHTML = wv;
+  const lanes = $('#lanes');
+  LANES.forEach((L, k) => {
+    lanes.insertAdjacentHTML('beforeend', `<div class="lane-l" id="ll${k}" style="top:${L.wy - 46}px"><span class="n">${L.n}</span><span class="t">${L.t}</span></div><div class="lane-s" id="ls${k}" style="top:${L.wy + 13}px">${L.s}</div>`);
+  });
+  TR.forEach(tr => lanes.insertAdjacentHTML('beforeend', `<div class="tr-l" id="trl${tr.k}" style="left:466px;top:${tr.y + 12}px">${tr.lab}</div>`));
+  lanes.insertAdjacentHTML('beforeend', `<div class="rh-t" id="rht" style="left:0;top:236px">T+00:00:00</div>`);
+  // stream items (real ids)
+  const ITEMS = [
+    [0, `<span class="dot" style="background:#C98512"></span>HYD-101`, 'code'], [0, `<span class="dot" style="background:#B9BDC2"></span>ENG-201`, 'code'], [0, `<span class="dot" style="background:#C8321F"></span>LGB-501`, 'code'],
+    [1, `<b>TJ107</b><span class="rid">sulur-26169-0006</span>HYD-101<span class="mu">AT-RR</span>`], [1, `<b>TJ106</b><span class="rid">sulur-26169-0003</span>LGB-501<span class="mu">AT-CND</span>`],
+    [1, `<b>TJ103</b><span class="rid">sulur-26166-0003</span>LGB-501<span class="mu">AT-RR</span>`], [1, `<b>TJ106</b><span class="rid">sulur-26168-0001</span>ENG-201<span class="mu">AT-CND</span>`],
+    [2, `<b>TJ108</b><span class="rid">D-sulur-26093-0002</span><span class="aog">AOG</span>brake chute`], [2, `<b>TJ108</b><span class="rid">D-sulur-26093-0001</span>tyre`],
+    [3, `<b>TJ108</b><span class="rid">sulur-26093-0003</span><span class="mu">AWAITING_PARTS</span>`], [3, `<b>TJ101</b>ROH overhaul<span class="mu">· depot</span>`] ];
+  ITEMS.forEach((it, j) => lanes.insertAdjacentHTML('beforeend', `<div class="it ${it[2] || ''}" id="it${j}" style="top:${LANES[it[0]].wy - 17}px">${it[1]}</div>`));
+
+  const nodeRings = $('#nodeRings');
+  gsap.set('#node', { x: NODE.x, y: NODE.y });
+
+  function buildS03() {
+    span('#s03', tS03 - 0.4, tS04);
+    inn('#s03k', tS03 - 0.1, { y: 0, d: 0.6, ease: 'power2.out' });
+    out('#s03k', tImp - 0.05, { y: -8, d: 0.35 });
+    // bus + connectors
+    tl.fromTo('#bus', { attr: { y2: cy(0) } }, { attr: { y2: cy(7) }, duration: 0.6, ease: 'power2.inOut' }, tS03 - 0.05);
+    $$('.conn').forEach((c, i) => tl.fromTo(c, { attr: { x2: COL(i).x + 26 } }, { attr: { x2: 204 }, duration: 0.35, ease: 'power2.out' }, tS03 + 0.05 + i * 0.03));
+    tl.fromTo('.cdot', { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.03 }, tS03 + 0.2);
+    // node appears
+    tl.fromTo('#node', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(2)' }, LANES[0].at + 0.2);
+    LANES.forEach((L, k) => {
+      const wAt = k === 0 ? tS03 + 0.2 : L.at - 0.15;
+      drawOn([$('#wire' + k)], wAt, 0.9, 0, 'power2.out');
+      tl.fromTo('#jd' + k, { scale: 0, svgOrigin: `204 ${L.wy}` }, { scale: 1, svgOrigin: `204 ${L.wy}`, duration: 0.35, ease: 'back.out(3)' }, wAt);
+      tl.fromTo('#flow' + k, { opacity: 0 }, { opacity: 0.6, duration: 0.4 }, wAt + 0.75);
+      tl.fromTo('#ll' + k, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out' }, L.at);
+      tl.fromTo('#ls' + k, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power1.out' }, L.at + 0.18);
+      tl.fromTo('#ll' + k + ' .n', { color: '#E8743B' }, { color: '#E8743B', duration: 0.01 }, L.at);
+    });
+    tl.fromTo('.flow', { strokeDashoffset: 0 }, { strokeDashoffset: -280, duration: 6, ease: 'none' }, tS03);
+    // traces at sortie time scale (6,174 s → 1.6 s) with a read head
+    const trA = LANES[0].at + 0.02, trD = 1.6;
+    const trc = $('#trClipR');
+    TR.forEach(tr => tl.fromTo('#trl' + tr.k, { opacity: 0 }, { opacity: 1, duration: 0.4 }, trA + 0.05));
+    const rh = $('#rh'), rht = $('#rht'), NS_ = A.tel.n;
+    proc(trA, trD + 0.01, t => { const u = seg(t, trA, trA + trD), x = 600 + u * 800;
+      rh.setAttribute('x1', x); rh.setAttribute('x2', x); trc.setAttribute('width', (x - 596).toFixed(1)); const s = Math.round(u * (NS_ - 1));
+      rht.textContent = 'T+' + [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map(q => String(q).padStart(2, '0')).join(':');
+      gsap.set(rht, { x: x - 34 }); });
+    tl.fromTo(['#rh', '#rht'], { opacity: 0 }, { opacity: 1, duration: 0.2 }, trA);
+    tl.fromTo(['#rh', '#rht'], { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, trA + trD + 0.05);
+    // items ride the wires; each one sends a pulse into the node
+    const SPAWN = { 0: [LANES[0].at + 0.42, LANES[0].at + 0.82, LANES[0].at + 1.22], 1: [LANES[1].at, LANES[1].at + 0.64, LANES[1].at + 1.28, LANES[1].at + 1.92],
+      2: [LANES[2].at, LANES[2].at + 0.66], 3: [LANES[3].at - 0.02, LANES[3].at + 0.5] };
+    const cnt = { 0: 0, 1: 0, 2: 0, 3: 0 };
+    ITEMS.forEach((it, j) => {
+      const k = it[0], L = LANES[k], el = $('#it' + j), w = el.offsetWidth, at = SPAWN[k][cnt[k]++];
+      const x0 = 600, x1 = 1400 - w, D = Math.max(0.75, (x1 - x0) / 560);
+      tl.fromTo(el, { x: x0, opacity: 0 }, { x: x1, duration: D, ease: 'none' }, at);
+      tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power1.out', immediateRender: false }, at);
+      tl.fromTo(el, { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.86, duration: 0.24, ease: 'power2.in', immediateRender: false }, at + D - 0.12);
+      // pulse along the converging curve
+      const pd = `M1400 ${L.wy} C1540 ${L.wy} 1566 ${NODE.y} ${NODE.x} ${NODE.y}`;
+      const p = svgs(wires, `<path d="${pd}" fill="none" stroke="#2563C9" stroke-width="3" stroke-linecap="round" opacity=".95"/>`);
+      const len = p.getTotalLength(); p.style.strokeDasharray = `46 ${len + 60}`;
+      tl.fromTo(p, { strokeDashoffset: 46 }, { strokeDashoffset: -len, duration: 0.55, ease: 'power1.in' }, at + D - 0.1);
+      const ring = svgs(nodeRings, `<circle cx="60" cy="60" r="10" fill="none" stroke="#E8743B" stroke-width="2"/>`);
+      tl.fromTo(ring, { attr: { r: 10 }, opacity: 0 }, { attr: { r: 52 }, opacity: 0, duration: 0.7, ease: 'power2.out', keyframes: undefined }, at + D + 0.42);
+      tl.fromTo(ring, { opacity: 0.7 }, { opacity: 0, duration: 0.7, ease: 'power1.out', immediateRender: false }, at + D + 0.42);
+      tl.fromTo('#nodeHalo', { scale: 1.25, svgOrigin: '60 60' }, { scale: 1, svgOrigin: '60 60', duration: 0.45, ease: 'power2.out', immediateRender: false }, at + D + 0.42);
+    });
+  }
+
+  /* ================================================================ S04 · logotype == */
+  const tImp = tS04 - 0.82, tLogo = tS04 - 0.02;
+  function buildS04() {
+    tl.fromTo('#w1imp', { scale: 1, opacity: 1, transformOrigin: `${NODE.x}px ${NODE.y}px` },
+      { scale: 0.05, opacity: 0, transformOrigin: `${NODE.x}px ${NODE.y}px`, duration: 0.55, ease: 'power3.in' }, tImp);
+    // node glides to the logo centre (camera is at CS/CX/CY now)
+    const tgt = { x: (960 - CX) / CS, y: (470 - CY) / CS };
+    tl.fromTo('#node', { x: NODE.x, y: NODE.y }, { x: tgt.x, y: tgt.y, duration: 0.75, ease: 'power3.inOut', immediateRender: false }, tImp + 0.32);
+    tl.fromTo('#node', { scale: 1, opacity: 1 }, { scale: 1.6, opacity: 0, duration: 0.45, ease: 'power2.in', immediateRender: false }, tLogo + 0.15);
+    span('#s04', tLogo - 0.05, SH.S05.start + 0.05);
+    const paths = $$('#logoG path');
+    const bb = paths.map(p => { const b = p.getBBox(); return b.x + b.width / 2; });
+    const mid = 20030;
+    const order = paths.map((p, i) => [p, Math.abs(bb[i] - mid)]).sort((a, b) => a[1] - b[1]);
+    paths.forEach(p => { p.setAttribute('stroke', '#2563C9'); p.setAttribute('stroke-width', '62'); p.setAttribute('stroke-linejoin', 'round'); });
+    order.forEach(([p, dd], i) => {
+      const L = p.getTotalLength(); p.style.strokeDasharray = L;
+      const at = tLogo + dd / 16000 * 0.32;
+      tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: 0.85, ease: 'power2.inOut' }, at);
+    });
+    // stroke → fill (0.6 s) on "Phalanx Twin"
+    const tFillL = W('S04', 'phalanx') + 0.3;
+    tl.fromTo(paths, { fillOpacity: 0, stroke: '#2563C9' }, { fillOpacity: 1, stroke: '#0B0D10', duration: 0.6, ease: 'power2.inOut' }, tFillL);
+    tl.fromTo(paths, { strokeOpacity: 1 }, { strokeOpacity: 0, duration: 0.35, ease: 'power1.out', immediateRender: false }, tFillL + 0.5);
+    tl.fromTo('#logo', { scale: 1.0 }, { scale: 1.025, duration: SH.S05.start - tFillL, ease: 'none', transformOrigin: '50% 50%' }, tFillL);
+    // subtitle: character stagger
+    const sub = $('#s04sub'), txt = 'one state · one loop · one log';
+    sub.innerHTML = [...txt].map(ch => `<span class="c${ch === '·' ? ' dt' : ''}">${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
+    tl.fromTo('#s04sub .c', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.42, ease: 'power3.out', stagger: 0.022 }, W('S04', 'brings') - 0.05);
+    tl.fromTo('#s04rule', { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'expo.out' }, W('S04', 'decisions'));
+    inn('#s04cr', W('S04', 'together'), { y: 10, d: 0.7 });
+    // push-through to S05
+    tl.fromTo('#s04in', { scale: 1, opacity: 1, transformOrigin: '960px 500px' }, { scale: 1.07, opacity: 0, duration: 0.4, ease: 'power2.in', immediateRender: false }, SH.S05.start - 0.62);
+    span('#w1cam', 0, tS04 + 0.4);
+  }
+
+  /* ================================================================ S05 · problem statement == */
+  const t5 = SH.S05.start;
+  function buildS05() {
+    span('#s05', t5 - 0.25, SH.S06.start + 0.6);
+    // split body into words (keeps highlight spans intact)
+    const walk = n => { [...n.childNodes].forEach(c => {
+      if (c.nodeType === 3) { const frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) frag.appendChild(document.createTextNode(tok));
+          else { const s = document.createElement('span'); s.className = 'w'; s.textContent = tok; frag.appendChild(s); } });
+        c.replaceWith(frag); } else walk(c); }); };
+    walk($('#docBody'));
+    tl.fromTo('#doc', { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' }, t5 - 0.17);
+    tl.fromTo('#docBody .w', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.012 }, t5 + 0.2);
+    tl.fromTo('#s05cam', { scale: 1, x: 0, y: 0 }, { scale: 1.055, x: 960 * -0.055, y: 560 * -0.055, duration: SH.S06.start - t5, ease: 'sine.inOut' }, t5);
+    const hl = (id, at, d = 0.4) => {
+      tl.fromTo(id, { backgroundSize: '0% 100%', color: '#31353B' }, { backgroundSize: '100% 100%', color: '#B4511F', duration: d, ease: 'power1.inOut' }, at); };
+    hl('#hl0', W('S05', 'availability') - 0.05, 0.5);
+    hl('#hl1', W('S05', 'reactive') - 0.3);
+    tl.fromTo('#ul0', { backgroundSize: '0% 3px', color: '#31353B' }, { backgroundSize: '100% 3px', color: '#0B0D10', duration: 0.75, ease: 'power1.inOut' }, W('S05', 'data') - 0.05);
+    hl('#hl2', W('S05', 'integrated') - 0.3);
+    hl('#hl3', W('S05', 'integrated', 0, true) - 0.25, 0.32);
+    hl('#hl4', W('S05', 'integrated', 0, true) + 0.0, 0.32);
+    // card slides left; tiles enter right
+    tl.fromTo('#s05in', { x: 0 }, { x: -1500, duration: 0.85, ease: 'expo.inOut', immediateRender: false }, SH.S06.start - 0.3);
+  }
+
+  /* ================================================================ S06 · audits == */
+  const t6 = SH.S06.start;
+  function buildS06() {
+    span('#s06', t6 - 0.3, SH.S07.start + 0.35);
+    [0, 1, 2].forEach(i => tl.fromTo('#tile' + i, { x: 1500 }, { x: 0, duration: 0.85, ease: 'expo.inOut' }, t6 - 0.3 + i * 0.06));
+    inn('#s06k', t6 + 0.15, { y: 0, d: 0.6, ease: 'power2.out' });
+    const tA = W('S06', 'audits');
+    const o = { a: 0, b: 0 }, ea = $('#t0a'), eb = $('#t0b');
+    tl.fromTo(o, { a: 0, b: 0 }, { a: 55.5, b: 59.7, duration: 0.8, ease: 'power2.out', onUpdate: () => { ea.textContent = o.a.toFixed(1); eb.textContent = o.b.toFixed(1); } }, tA);
+    tl.fromTo('#t0f', { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: 0.5, ease: 'power2.out' }, tA + 0.45);
+    tl.fromTo(['#t0n', '#t0nl'], { opacity: 0 }, { opacity: 1, duration: 0.3 }, tA + 0.75);
+    inn('#t0s', tA + 1.0, { y: 6, d: 0.4 });
+    const tB = tA + 0.3;
+    PHXF.count(tl, '#t1a', 0, 10.8, tB, 0.8, v => v.toFixed(1));
+    tl.fromTo('#t1f', { width: '0%' }, { width: '10.8%', duration: 0.8, ease: 'power2.out' }, tB);
+    inn('#t1s', tB + 1.0, { y: 6, d: 0.4 });
+    const tC = tA + 0.6;
+    tl.fromTo('#t2q .w', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.09 }, tC);
+    inn('#t2d', tC + 0.45, { y: 8, d: 0.5 });
+    inn('#t2s', tC + 1.0, { y: 6, d: 0.4 });
+    // headline lands on the words
+    const hw = $$('#s06h .wd'), ht = [W('S06', 'aircraft'), W('S06', 'are'), W('S06', 'lost'), W('S06', 'to', 0), W('S06', 'waiting')];
+    hw.forEach((e, i) => inn(e, ht[i] - 0.06, { y: 20, d: 0.55 }));
+    const sp = $$('#s06s > span');
+    inn(sp[0], W('S06', 'parts') - 0.12, { y: 10, d: 0.45 });
+    inn(sp[1], W('S06', 'repair') - 0.2, { y: 0, d: 0.3 }); inn(sp[2], W('S06', 'repair') - 0.12, { y: 10, d: 0.45 });
+    inn(sp[3], W('S06', 'decision') - 0.2, { y: 0, d: 0.3 }); inn(sp[4], W('S06', 'decision') - 0.12, { y: 10, d: 0.45 });
+    tl.fromTo('#tiles', { scale: 1 }, { scale: 1.012, transformOrigin: '960px 550px', duration: SH.S07.start - t6, ease: 'none' }, t6);
+    // collapse into one timeline bar (S07 ribbon: x 120–1800, y 500–564)
+    const tc = SH.S07.start - 0.62;
+    ['#s06k', '#s06h', '#s06s'].forEach(s => out(s, tc - 0.12, { y: -10, d: 0.3 }));
+    tl.fromTo('.tile .ti', { opacity: 1 }, { opacity: 0, duration: 0.22, ease: 'power1.in', immediateRender: false }, tc - 0.08);
+    [0, -11, -22].forEach((dx, i) => {
+      tl.fromTo('#tile' + i, { x: 0, scaleX: 1, transformOrigin: '0% 50%', clipPath: 'inset(0px 0px 0px 0px round 20px)', backgroundColor: '#ffffff', borderColor: '#E6E6E2' },
+        { x: dx, scaleX: 560 / 538, clipPath: 'inset(170px 0px 212px 0px round 7px)', backgroundColor: '#F1F1EE', borderColor: '#F1F1EE', duration: 0.62, ease: 'expo.inOut', immediateRender: false }, tc);
+    });
+    tl.fromTo('#tiles', { opacity: 1 }, { opacity: 0, duration: 0.2, immediateRender: false }, SH.S07.start + 0.12);
+  }
+
+  /* ================================================================ S07 · waiting == */
+  const t7 = SH.S07.start;
+  const R = A.tj108.s, ND = R.length, B0 = R.indexOf('S'.repeat(80));   // first day of the open NMCS block
+  const COLR = { F: '#1F8A4C', M: '#C98512', S: '#D4492A', P: '#5E9F3A', D: '#5B4FCF' };
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], MD = [31, 28, 31, 30, 31, 30, 31];
+  const dayLab = d => { let m = 0, dd = 6 + d; while (dd > MD[m]) { dd -= MD[m]; m++; } return String(dd).padStart(2, '0') + ' ' + MON[m]; };
+  function buildS07() {
+    span('#s07', t7 - 0.15, SH.S08.start + 0.45);
+    const rib = $('#rib');
+    let h = '';
+    for (let d = 0; d < ND; d++) h += `<rect class="rc" x="0" y="500" width="9" height="64" rx="1.5" fill="#F1F1EE"/>`;
+    h += `<line id="phl" x1="0" y1="486" x2="0" y2="578" stroke="#0B0D10" stroke-width="2"/>`;
+    h += `<path id="ldr" d="M0 0" fill="none" stroke="#2563C9" stroke-width="1.4"/>`;
+    rib.innerHTML = h;
+    const rc = $$('#rib .rc'), phl = $('#phl'), ldr = $('#ldr');
+    const axis = $('#s07axis');
+    const TICKS = [[0, '06 Jan'], [26, 'Feb'], [54, 'Mar'], [85, 'Apr'], [115, 'May'], [146, 'Jun'], [ND - 1, '22 Jun']];
+    TICKS.forEach(([d, l], i) => axis.insertAdjacentHTML('beforeend', `<div class="axl" id="ax${i}" style="top:588px">${l}</div>`));
+    const axEl = TICKS.map((_, i) => $('#ax' + i));
+    const blk = $('#s07blk'); blk.textContent = 'NMCS · awaiting parts since 3 Apr 08:00';
+    const tag = $('#s07tag'), cnt = $('#s07cnt'), cntN = $('#s07n'), ph = $('#s07ph');
+    cntN.textContent = '80'; const cW = cnt.offsetWidth, tW = tag.offsetWidth, bW = blk.offsetWidth; cntN.textContent = '0';
+    const tR0 = t7 + 0.32, tR1 = W('S07', 'one') + 0.85;              // sweep the first 88 days
+    const tB0 = tR1 + 0.08, tB1 = W('S07', 'days') + 0.05;            // NMCS block grows 0→80 on "eighty days"
+    const tZ0 = tB1 + 0.12, tZ1 = tZ0 + 1.1;                          // push into the red block
+    const tTag = W('S07', 'brake') - 0.1;
+    const X0 = 120, X1 = 1800;
+    const xs = z => lerp(X0 + B0 * 10, 560, z);
+    const xOf = (d, z) => { const s = xs(z); return d <= B0 ? X0 + d * (s - X0) / B0 : s + (d - B0) * (X1 - s) / (ND - B0); };
+    proc(t7 - 0.15, SH.S08.start - t7 + 0.6, t => {
+      const z = ez('expo.inOut')(seg(t, tZ0, tZ1));
+      const r1 = ez('power1.inOut')(seg(t, tR0, tR1)) * B0, r2 = seg(t, tB0, tB1) * (ND - B0);
+      const rev = r2 > 0 ? B0 + r2 : r1;
+      for (let d = 0; d < ND; d++) {
+        const x = xOf(d, z), x2 = xOf(d + 1, z), pitch = x2 - x, g = Math.min(2, pitch * 0.2);
+        const e = rc[d]; e.setAttribute('x', x.toFixed(2)); e.setAttribute('width', Math.max(0.5, pitch - g).toFixed(2));
+        const u = cl(rev - d); e.setAttribute('fill', u >= 1 ? COLR[R[d]] : u > 0 ? COLR[R[d]] : '#F1F1EE');
+        e.setAttribute('opacity', u > 0 && u < 1 ? (0.35 + 0.65 * u).toFixed(2) : 1);
+      }
+      const px = xOf(Math.min(rev, ND), z);
+      phl.setAttribute('x1', px); phl.setAttribute('x2', px);
+      ph.textContent = dayLab(Math.min(ND - 1, Math.floor(rev)));
+      gsap.set(ph, { x: px - 26, y: 458 });
+      TICKS.forEach(([d], i) => { const w = axEl[i].offsetWidth; const x = xOf(d, z) + (i === TICKS.length - 1 ? 9 - w : 0); gsap.set(axEl[i], { x }); });
+      const n = Math.round(seg(t, tB0, tB1) * 80); cntN.textContent = n;
+      gsap.set(cnt, { x: X1 - cW - 4 });
+      gsap.set(blk, { x: xs(z) + 22, y: 516 });
+      const bx = xs(z) + 30;
+      gsap.set(tag, { x: bx - 8, y: 640 });
+      ldr.setAttribute('d', `M${bx + 14} 566 V${640}`);
+    });
+    tl.fromTo('#s07drift', { scale: 1 }, { scale: 1.012, transformOrigin: '960px 540px', duration: SH.S08.start - t7, ease: 'none' }, t7);
+    tl.fromTo('#rib .rc', { opacity: 1 }, { opacity: 1, duration: 0.01 }, t7 - 0.2);
+    tl.fromTo(['#phl', '#s07ph'], { opacity: 0 }, { opacity: 1, duration: 0.2 }, tR0);
+    tl.fromTo(['#phl', '#s07ph'], { opacity: 1 }, { opacity: 0, duration: 0.25, immediateRender: false }, tB1 + 0.05);
+    inn('#s07lg', t7 + 0.15, { y: 8, d: 0.5 });
+    tl.fromTo('#s07axis', { opacity: 0 }, { opacity: 1, duration: 0.5 }, t7 + 0.2);
+    inn('#s07k', t7 + 0.1, { y: 0, d: 0.6, ease: 'power2.out' });
+    inn('#s07h0', W('S07', 'one') - 0.1, { y: 20, d: 0.55 });
+    inn('#s07h1', W('S07', 'eighty') - 0.05, { y: 20, d: 0.55 });
+    inn('#s07h2', tTag + 0.05, { y: 20, d: 0.55 });
+    $('#s07pf').innerHTML = pfIcon(1.06, '#FCEDE9', `<path d="${OUT}" fill="none" stroke="#D4492A" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`);
+    inn('#s07pf', W('S07', 'one') - 0.1, { y: 16, d: 0.7 });
+    tl.fromTo('#s07cnt', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, tB0 - 0.05);
+    tl.fromTo('#s07blk', { opacity: 0 }, { opacity: 1, duration: 0.4 }, tZ1 - 0.25);
+    tl.fromTo('#ldr', { opacity: 0 }, { opacity: 1, duration: 0.3 }, tTag - 0.1);
+    tl.fromTo('#s07tag', { opacity: 0, scale: 0.94, transformOrigin: '0% 0%' }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, tTag);
+    const tCon = W('S07', 'consumable') - 0.15;
+    inn('#s07ch', tCon - 0.05, { y: 12, d: 0.6 });
+    tl.fromTo('#s07c1', { opacity: 0 }, { opacity: 1, duration: 0.4 }, tCon);
+    tl.fromTo('#s07c2', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, W('S07', 'demand') - 0.1);
+    drawOn([$('#chC'), $('#chL')], tCon, 0.9, 0.15, 'power2.out');
+    // chute "streams" on landings: slow breathing
+    tl.fromTo('#chC', { scaleY: 1, svgOrigin: '38 30' }, { scaleY: 0.86, svgOrigin: '38 30', duration: 0.9, ease: 'sine.inOut', repeat: 3, yoyo: true }, W('S07', 'follows') - 0.6);
+    // whip-pan out
+    const tw = SH.S08.start - 0.3;
+    tl.fromTo('#s07in', { x: 0, filter: 'blur(0px)' }, { x: -1100, filter: 'blur(14px)', duration: 0.36, ease: 'power3.in', immediateRender: false }, tw);
+  }
+
+  /* ================================================================ S08 · false alarms == */
+  const t8 = SH.S08.start;
+  function buildS08() {
+    span('#s08', t8 - 0.08, SH.S09.start + 0.3);
+    tl.fromTo('#s08in', { x: 1100, filter: 'blur(14px)' }, { x: 0, filter: 'blur(0px)', duration: 0.42, ease: 'power3.out' }, t8 - 0.04);
+    const T7 = A.tj107, SO = T7.sorties, RM = T7.removals, TT = T7.T, NS7 = SO.length;
+    const X0 = 120, XW = 1210, BY = 596, CH = 210, PT = XW / NS7;          // one column per sortie, in sortie order
+    const xc = j => X0 + (j + 0.5) * PT;
+    // removal position in sortie-index space (between the sorties it fell between)
+    const rIdx = RM.map(([d]) => { let j = -1; while (j + 1 < NS7 && SO[j + 1][0] <= d) j++;
+      const a = j < 0 ? 0 : SO[j][0], b = j + 1 < NS7 ? SO[j + 1][0] : TT; return j + cl((d - a) / (b - a), 0.15, 0.85); });
+    const sor = $('#sor');
+    let h = `<line x1="${X0 - 4}" y1="${BY + 0.5}" x2="${X0 + XW + 4}" y2="${BY + 0.5}" stroke="#D6D6D1" stroke-width="1.2"/>`;
+    SO.forEach(([d], j) => h += `<rect class="sc" x="${(xc(j) - 6).toFixed(1)}" y="${BY - CH}" width="12" height="${CH}" rx="2.5" fill="#D6D6D1"/>`);
+    h += `<line id="swp" x1="0" y1="${BY - CH - 16}" x2="0" y2="${BY + 4}" stroke="#0B0D10" stroke-width="1.6"/>`;
+    h += `<text x="${X0}" y="${BY - CH - 30}" font-family="JetBrains Mono" font-size="15" fill="#8E939A" letter-spacing=".5">61 sorties in order · TJ107 · 05 Jan → 22 Jun</text>`;
+    h += `<g id="wr"></g>`;
+    sor.innerHTML = h;
+    const WR = 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z';
+    const wr = $('#wr'), wx = j => X0 + (rIdx[j] + 0.5) * PT, wy = j => BY + 30 + (j % 2) * 30;
+    RM.forEach(([d, s], j) => { const unread = s === 'XXX';
+      wr.insertAdjacentHTML('beforeend', `<g class="wrc"><g transform="translate(-10 -10) scale(.84)"><path d="${WR}" fill="${unread ? 'none' : '#FFFFFF'}" stroke="${unread ? '#B9BDC2' : '#31353B'}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" ${unread ? 'stroke-dasharray="2 2.4"' : ''}/></g></g>`); });
+    const axis = $('#s08axis');
+    [[0, 'Jan'], [27, 'Feb'], [55, 'Mar'], [86, 'Apr'], [116, 'May'], [147, 'Jun']].forEach(([d, l]) => { let j = 0; while (j < NS7 && SO[j][0] < d) j++;
+      axis.insertAdjacentHTML('beforeend', `<div class="axl" style="left:${(X0 + j * PT).toFixed(1)}px;top:${BY + 92}px">${l}</div><div class="abs" style="left:${(X0 + j * PT).toFixed(1)}px;top:${BY + 84}px;width:1px;height:6px;background:#B9BDC2"></div>`); });
+    $('#s08pf').innerHTML = pfIcon(1.06, '#FFFFFF', `<circle cx="4.2" cy="75.5" r="6" fill="#E8743B" opacity=".18"/><circle cx="4.2" cy="75.5" r="2.6" fill="#E8743B"/>`);
+    const sc = $$('#sor .sc'), wrc = $$('#wr .wrc'), swp = $('#swp');
+    const tF0 = W('S08', 'another') - 0.1, tF1 = W('S08', 'times') + 0.05;
+    const dt = (tF1 - tF0) / (NS7 - 1);
+    const fire = j => tF0 + j * dt;
+    const tRm = rIdx.map(k => tF0 + Math.max(0, k + 0.5) * dt);
+    const v0 = $('#st0v'), v1 = $('#st1v');
+    proc(t8 - 0.1, SH.S09.start - t8 + 0.4, t => {
+      SO.forEach(([d, hy], j) => { const u = ez('power3.out')(seg(t, fire(j), fire(j) + 0.26)), lit = seg(t, fire(j) + 0.06, fire(j) + 0.2);
+        const e = sc[j]; e.setAttribute('height', (CH * u).toFixed(1)); e.setAttribute('y', (BY - CH * u).toFixed(1));
+        e.setAttribute('fill', hy ? (lit > 0 ? '#E8743B' : '#D6D6D1') : '#C9CCD0'); });
+      const k = cl((t - tF0) / dt, -0.5, NS7 - 0.5), sx = X0 + (k + 0.5) * PT;
+      swp.setAttribute('x1', sx); swp.setAttribute('x2', sx);
+      swp.setAttribute('opacity', t > tF0 - 0.05 && t < fire(NS7 - 1) + 0.25 ? 1 : 0);
+      let nR = 0; const ser = new Set();
+      RM.forEach(([d, s], j) => { const u = seg(t, tRm[j], tRm[j] + 0.3); if (u > 0) { nR++; if (s !== 'XXX') ser.add(s); }
+        const e = wrc[j]; e.setAttribute('transform', `translate(${wx(j).toFixed(1)} ${(wy(j) - 18 * (1 - ez('power3.out')(u))).toFixed(1)})`); e.setAttribute('opacity', u.toFixed(2)); });
+      v0.textContent = nR; v1.textContent = ser.size;
+    });
+    inn('#s08k', t8 + 0.1, { y: 0, d: 0.6, ease: 'power2.out' });
+    inn('#s08h', t8 + 0.2, { y: 18, d: 0.6 });
+    inn('#s08pf', t8 + 0.3, { y: 16, d: 0.7 });
+    inn('#tray', W('S08', 'removed') - 0.2, { y: 16, d: 0.6 });
+    inn('#stats', tF0 + 0.1, { y: 14, d: 0.6 });
+    tl.fromTo('#st3', { opacity: 0 }, { opacity: 0, duration: 0.01 }, tF0);
+    // one alarm
+    const tAl = W('S08', 'alarm') - 0.1;
+    tl.fromTo('#s08code', { scale: 1, transformOrigin: '50% 60%' }, { scale: 1.08, duration: 0.22, ease: 'power2.out', yoyo: true, repeat: 1 }, tAl);
+    PHXF.count(tl, '#st2v', 0, 792, tAl - 0.1, 0.9, v => fmt(v));
+    // RTOK stamps stack on the tray (33 of 33)
+    const st = $('#stamps'), tS0 = W('S08', 'every') - 0.05, tS1 = W('S08', 'no') - 0.15;
+    seed = 42;
+    for (let k = 0; k < 33; k++) { const c = k % 5, r = Math.floor(k / 5);
+      const x = 1454 + c * 68 + (rnd() - 0.5) * 6, y = 646 - r * 37 + (rnd() - 0.5) * 5, rot = (rnd() - 0.5) * 12;
+      st.insertAdjacentHTML('beforeend', `<div class="stamp" id="sp${k}" style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px">RTOK</div>`);
+      const at = tS0 + k * (tS1 - tS0) / 32;
+      tl.fromTo('#sp' + k, { opacity: 0, scale: 1.7, rotation: rot * 2.2 }, { opacity: 1, scale: 1, rotation: rot, duration: 0.2, ease: 'power4.in' }, at);
+    }
+    PHXF.count(tl, '#rtokN', 0, 33, tS0, tS1 - tS0 + 0.2, v => Math.round(v), 'none');
+    // parallax on the stamps
+    tl.fromTo('#stamps', { y: 6 }, { y: -6, duration: SH.S09.start - tS0, ease: 'none' }, tS0);
+    // 0 confirmed — on "no fault found"
+    const tNo = W('S08', 'no') - 0.08;
+    tl.fromTo('#st3', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', immediateRender: false }, tNo);
+    tl.fromTo('#st3 .v', { scale: 1.25, transformOrigin: '50% 70%' }, { scale: 1, duration: 0.5, ease: 'back.out(2)' }, tNo);
+    // stamps fly up and become falling alert rows
+    const tUp = SH.S09.start - 0.45;
+    for (let k = 0; k < 33; k++) tl.fromTo('#sp' + k, { y: 0 }, { y: -820 - (k % 5) * 30, duration: 0.55, ease: 'power3.in', immediateRender: false }, tUp + ((k * 7) % 33) * 0.007);
+    ['#s08k', '#s08h', '#s08pf', '#sor', '#s08axis', '#tray', '#stats'].forEach((s, i) => tl.fromTo(s, { opacity: 1 }, { opacity: 0, duration: 0.32, ease: 'power2.in', immediateRender: false }, tUp + 0.08 + i * 0.015));
+  }
+
+  /* ================================================================ S09 · alert flood == */
+  const t9 = SH.S09.start;
+  function buildS09() {
+    span('#s09', t9 - 0.12, SH.S10.start + 0.25);
+    const FC = 1290, RIM = 330, NECK = 700, HWR = 380, HWN = 52;
+    const hw = y => y >= RIM ? HWN + (NECK - y) / (NECK - RIM) * (HWR - HWN) : HWR - (RIM - y) * 1.6;
+    // funnel line art
+    $('#funnel').innerHTML = `<g fill="none" stroke="#0B0D10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <path id="fnL" d="M${FC - HWR} ${RIM} L${FC - HWN} ${NECK} L${FC - HWN + 8} ${NECK + 92}"/>
+      <path id="fnR" d="M${FC + HWR} ${RIM} L${FC + HWN} ${NECK} L${FC + HWN - 8} ${NECK + 92}"/>
+      <ellipse id="fnE" cx="${FC}" cy="${RIM}" rx="${HWR}" ry="24" stroke="#8E939A" stroke-width="1.4"/>
+      <path id="fnN" d="M${FC - HWN + 8} ${NECK + 92} H${FC + HWN - 8}" stroke="#8E939A" stroke-width="1.4" stroke-dasharray="3 4"/></g>
+      <text id="fnT" x="${FC}" y="${NECK + 128}" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#8E939A" letter-spacing="1">triage · clogged</text>`;
+    // pile slots (bottom-up), 1,192 real rows + hypothetical extra rows
+    const RW = 16, RH = 4.6, PX = 18.5, PY = 6.6;
+    const slots = []; let y = NECK - 5, layer = 0;
+    while (slots.length < 1450 && y > 80) { const w = Math.max(0, hw(y) - 10), n = Math.floor(2 * w / PX), x0 = FC - (n - 1) * PX / 2 + ((layer % 2) ? PX * 0.25 : -PX * 0.25);
+      for (let k = 0; k < n; k++) slots.push([x0 + k * PX, y]); y -= PY; layer++; }
+    seed = 9001;
+    const sev = [...Array(31).fill('#C8321F'), ...Array(511).fill('#C98512'), ...Array(650).fill('#B9BDC2')];
+    for (let i = sev.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [sev[i], sev[j]] = [sev[j], sev[i]]; }
+    const N = 1192, NG = 150, tSp0 = t9 + 0.02, tSp1 = W('S09', 'alerts', 0, true) - 0.08;
+    const tG0 = W('S09', 'more') - 0.05, tG1 = SH.S10.start - 1.1;
+    const P = [];
+    for (let i = 0; i < N + NG; i++) {
+      const g = i >= N, [sx, sy] = slots[i];
+      const s = g ? tG0 + ((i - N) / NG) * (tG1 - tG0) : tSp0 + Math.pow(i / (N - 1), 0.92) * (tSp1 - tSp0);
+      const x0 = cl(sx + (rnd() - 0.5) * 420, FC - HWR + 20, FC + HWR - 20), y0 = -24 - rnd() * 160;
+      const fd = 0.55 + rnd() * 0.3, r0 = (rnd() - 0.5) * 1.2, r1 = (rnd() - 0.5) * 0.28;
+      let tx = sx, ty = sy, xs0 = x0; if (g && (i % 3 === 0)) { const side = rnd() < 0.5 ? -1 : 1; tx = FC + side * (HWR + 8 + rnd() * 36); xs0 = tx - side * 30; ty = 1150; }
+      P.push({ g, s, x0: xs0, y0, fd: g && ty > 1000 ? fd + 0.7 : fd, r0, r1, tx, ty, c: g ? null : sev[i] });
+    }
+    const cv = $('#rain'), cx = cv.getContext('2d'), nEl = $('#s09n');
+    const easeY = ez('power2.in'), easeX = ez('power2.out');
+    proc(t9 - 0.12, SH.S10.start - t9 + 0.4, t => {
+      cx.clearRect(0, 0, 1920, 1080);
+      let spawned = 0;
+      for (let i = 0; i < P.length; i++) { const p = P[i]; if (t < p.s) continue; if (!p.g) spawned++;
+        const u = cl((t - p.s) / p.fd), x = lerp(p.x0, p.tx, easeX(u)), yy = lerp(p.y0, p.ty, easeY(u)), r = lerp(p.r0, p.r1, u);
+        cx.save(); cx.translate(x, yy); cx.rotate(r);
+        if (p.g) { cx.globalAlpha = p.ty > 1000 ? 1 - u * 0.5 : 1; cx.fillStyle = '#FFFFFF'; cx.fillRect(-RW / 2, -RH / 2, RW, RH); cx.strokeStyle = '#62676F'; cx.lineWidth = 1.2; cx.strokeRect(-RW / 2, -RH / 2, RW, RH); }
+        else { cx.fillStyle = p.c; cx.fillRect(-RW / 2, -RH / 2, RW, RH); }
+        cx.restore(); }
+      cx.globalAlpha = 1; cx.setLineDash([]);
+      nEl.textContent = fmt(spawned);
+    });
+    drawOn([$('#fnL'), $('#fnR')], t9 + 0.1, 0.7, 0, 'power2.out');
+    tl.fromTo(['#fnE', '#fnN', '#fnT'], { opacity: 0 }, { opacity: 1, duration: 0.5 }, t9 + 0.2);
+    inn('#s09k', t9 + 0.05, { y: 0, d: 0.6, ease: 'power2.out' });
+    inn('#s09n', t9 + 0.05, { y: 20, d: 0.6 });
+    inn('#s09l', W('S09', 'alerts') - 0.1, { y: 12, d: 0.55 });
+    inn('#s09l2', W('S09', 'season') - 0.1, { y: 10, d: 0.5 });
+    inn('#s09sev', W('S09', 'season') + 0.15, { y: 10, d: 0.5 });
+    inn('#s09m', tG0 + 0.05, { y: 12, d: 0.55 });
+    tl.fromTo(['#rain', '#funnel'], { scale: 1 }, { scale: 1.02, transformOrigin: '1290px 560px', duration: SH.S10.start - t9, ease: 'none' }, t9);
+    // feathered white wipe left → right
+    const tWp = SH.S10.start - 0.32;
+    tl.fromTo('#s09', { maskPosition: '100% 0%', webkitMaskPosition: '100% 0%' }, { maskPosition: '0% 0%', webkitMaskPosition: '0% 0%', duration: 0.62, ease: 'power2.inOut' }, tWp);
+  }
+
+  /* ================================================================ S10 · trust == */
+  const t10 = SH.S10.start;
+  function buildS10() {
+    span('#s10', t10 - 0.3, null);
+    inn('#s10k', t10 - 0.05, { y: 0, x: -24, d: 0.6 });
+    const rows = [[W('S10', 'answer') + 0.05, W('S10', 'explainable')], [W('S10', 'honest') - 0.28, W('S10', 'honest')], [W('S10', 'run') - 0.25, W('S10', 'offline')]];
+    rows.forEach(([a, b], i) => {
+      inn('#tr' + i, a, { x: -30, y: 0, d: 0.7 });
+      drawOn($$('#tr' + i + ' .tr-ic *'), a, 0.8, 0.06, 'power2.out');
+      tl.fromTo('#tg' + i, { color: '#8E939A', backgroundColor: '#F7F7F5' }, { color: '#B4511F', backgroundColor: '#FDF1EA', duration: 0.35, ease: 'power2.out' }, b - 0.05);
+      tl.fromTo('#tg' + i + ' i', { scale: 1 }, { scale: 1.6, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out' }, b - 0.05);
+    });
+    tl.fromTo('#s10in', { x: 0 }, { x: 14, duration: A.dur - t10, ease: 'none' }, t10);
+    // soft white bloom → Act 2
+    const tb = A.dur - 0.62;
+    tl.fromTo('#s10in', { opacity: 1, filter: 'blur(0px)' }, { opacity: 0, filter: 'blur(5px)', duration: 0.5, ease: 'power2.in', immediateRender: false }, tb);
+    tl.fromTo('#bloom', { opacity: 0, scale: 0.3, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1.6, duration: 0.55, ease: 'power2.in' }, tb - 0.05);
+    tl.fromTo('#grid', { opacity: 1 }, { opacity: 0, duration: 0.5, ease: 'power2.in', immediateRender: false }, tb);
+  }
+
+  const ready = Promise.all([document.fonts.load('650 32px "Manrope"'), document.fonts.load('500 16px "JetBrains Mono"'), document.fonts.load('700 16px "JetBrains Mono"')]);
+  ready.then(() => document.fonts.ready).then(() => {
+    buildS03(); buildS04(); buildS05(); buildS06(); buildS07(); buildS08(); buildS09(); buildS10();
+    window.__timelines = window.__timelines || {};
+    window.__timelines['main'] = tl;
+  });
+})();
+</script>
+</body></html>

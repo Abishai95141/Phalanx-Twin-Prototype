@@ -1,0 +1,5 @@
+pass A done (152 CAL flights) 20s
+VRTG lattice {'VRTG': {'a': 0.00228899996727705, 'b': -3.375, 'n_unique_cal': 478, 'exact_fraction': 1.0}}
+fc=primary done 149s
+fc=low done 282s
+fc=high done 388s

@@ -1,0 +1,6135 @@
+{
+  "scenario": "S2",
+  "tail": "TJ108",
+  "label": "PREVIEW v0.9 simulator, synthetic fleet, behaviour not validated",
+  "epoch": {
+    "t_utc_ns": 1782095400000000000,
+    "utc": "2026-06-22T02:30:00Z",
+    "ist": "2026-06-22 08:00 IST"
+  },
+  "horizon_days": 30,
+  "window": {
+    "start_ist": "2026-06-22 08:00 IST",
+    "end_ist": "2026-07-22 08:00 IST"
+  },
+  "snapshot_id": "7983867847c28d30c502044a33a45e97425289ab616a934162f753d46411392b",
+  "snapshot_t_kernel_ns": 14524200000000000,
+  "root_seed": "0x9f1ee7",
+  "scenario_key": "preview09-ops",
+  "fleet_days_built": 205,
+  "status_quo": "ScheduledPolicy scheduled/1.0.0 at every 08:00 IST decision epoch, no extra orders",
+  "treatment": "ScheduledPolicy scheduled/1.0.0 + the orders below, issued at the epoch",
+  "orders": [
+    {
+      "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+      "issuer_id": "PHALANX-PDM-AGENT",
+      "issuer_kind": "AGENT",
+      "t_issued": 1782095400000000000,
+      "t_issued_utc": "2026-06-22T02:30:00Z",
+      "t_issued_ist": "2026-06-22 08:00 IST",
+      "t_effective": 1782095400000000000,
+      "action": "EXPEDITE_SPARES",
+      "parameters": {
+        "demand_no": "D-sulur-26093-0002"
+      },
+      "priority": "AOG",
+      "target_tail_no": "TJ108",
+      "target_base": "sulur",
+      "evidence": [
+        "9531749ae89a0cc67c771e3f8c6803fb",
+        "538009832804198691b4a8a246f0ae2d",
+        "5c24ba776ce2bb1d588e6fc61e4ec084"
+      ],
+      "policy_version": "phalanx-solution-demo/0.1"
+    }
+  ],
+  "decision_context": {
+    "tech_log_at_epoch": {
+      "t_event_ist": "2026-06-11 11:49 IST",
+      "availability_state": "NMCS",
+      "limitations_text": "U/S: sulur-26093-0003; DEFERRED: sulur-26091-0001 sulur-26091-0002 sulur-26092-0001"
+    },
+    "open_aog_demands_in_consumer_view": [
+      {
+        "demand_no": "D-sulur-26055-0001",
+        "part_no": "SYN-PN-TYRE",
+        "job_no": "sulur-26055-0002",
+        "t_open_ist": "2026-02-24 08:00 IST",
+        "job_open": false,
+        "job_us_in_tech_log": false
+      },
+      {
+        "demand_no": "D-sulur-26093-0002",
+        "part_no": "SYN-PN-CHUTE",
+        "job_no": "sulur-26093-0003",
+        "t_open_ist": "2026-04-03 08:00 IST",
+        "job_open": true,
+        "job_us_in_tech_log": true
+      }
+    ],
+    "selected_demand": {
+      "demand_no": "D-sulur-26093-0002",
+      "part_no": "SYN-PN-CHUTE",
+      "job_no": "sulur-26093-0003",
+      "job_text": "REPLACE BRAKE PARACHUTE DUE TO HI-TIME (45 STREAMINGS).",
+      "t_open_ist": "2026-04-03 08:00 IST",
+      "why": "oldest open AOG demand whose job is still open and is the U/S (grounding) entry of the latest TECH_LOG record; older 'open' AOG demands in the consumer view belong to closed jobs (stale or lagged supply records, a deliberate data-quality defect)"
+    },
+    "evidence_records": [
+      {
+        "record_id": "9531749ae89a0cc67c771e3f8c6803fb",
+        "record_type": "SUPPLY_DEMAND",
+        "key": "D-sulur-26093-0002"
+      },
+      {
+        "record_id": "538009832804198691b4a8a246f0ae2d",
+        "record_type": "DEFECT_WO",
+        "key": "sulur-26093-0003"
+      },
+      {
+        "record_id": "5c24ba776ce2bb1d588e6fc61e4ec084",
+        "record_type": "TECH_LOG",
+        "key": "TL-TJ108"
+      }
+    ]
+  },
+  "wall_s": {
+    "run_to_epoch": 9.51,
+    "total": 145.03
+  },
+  "modes": {
+    "belief": {
+      "mode": "belief",
+      "mode_note": "IN-LOOP what-if: hidden state resampled from observations by the data layer's reference SurvivalPosterior (PROXY A-W1.8-23), then run as ensemble member m. See README for what it does and does not resample.",
+      "n_pairs": 30,
+      "kpis": {
+        "mc": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "fmc": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "nmcs": {
+          "status_quo": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "nmcm": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "nmcd": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "flying_task": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "flown_fh": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "sorties": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "aog_days": {
+          "status_quo": {
+            "mean": 30.0,
+            "sd": 0.0,
+            "ci_low": 30.0,
+            "ci_high": 30.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 30.0,
+            "sd": 0.0,
+            "ci_low": 30.0,
+            "ci_high": 30.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "cann_rate": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "cann": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "man_hours": {
+          "status_quo": {
+            "mean": 77.8119,
+            "sd": 11.788249925243356,
+            "ci_low": 73.41009513627591,
+            "ci_high": 82.21370486372408,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 77.8119,
+            "sd": 11.788249925243356,
+            "ci_low": 73.41009513627591,
+            "ci_high": 82.21370486372408,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "cost": {
+          "status_quo": {
+            "mean": 0.7781189999999999,
+            "sd": 0.11788249925243353,
+            "ci_low": 0.7341009513627591,
+            "ci_high": 0.8221370486372407,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.7781189999999999,
+            "sd": 0.11788249925243353,
+            "ci_low": 0.7341009513627591,
+            "ci_high": 0.8221370486372407,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "in_flight_failures": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        }
+      },
+      "derived": {
+        "removals": {
+          "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        }
+      },
+      "headline_kpis": [
+        "aog_days",
+        "nmcs",
+        "mc",
+        "flown_fh",
+        "cost",
+        "fmc",
+        "nmcm"
+      ],
+      "paired_difference_first_10_pairs": {
+        "mc": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "fmc": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "nmcs": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "nmcm": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "nmcd": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "flying_task": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "flown_fh": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "sorties": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "aog_days": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "cann_rate": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "cann": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "man_hours": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "cost": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "in_flight_failures": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        }
+      },
+      "wall_s": {
+        "mode_total": 61.9,
+        "per_branch_mean": 1.03,
+        "per_branch_max": 1.676,
+        "per_pair_mean": 2.06,
+        "per_pair_max": 3.013
+      },
+      "members": [
+        {
+          "member": 0,
+          "root": "0xacbdc443b8b24b03347dcdb57f26db0a",
+          "wall_s": {
+            "status_quo": 0.658,
+            "treatment": 0.681,
+            "pair": 1.338
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.66499999999999,
+            "cost": 0.77665,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.66499999999999,
+            "cost": 0.77665,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "e00340a354bcde4601c7ee72355e985e93cbc0a101b7c1d2c020e9bd59bd5975",
+            "treatment": "48c671f56bc20d0595f712f23bc3c4653e08379603fbc4abdbce5f594017fdfc"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 1,
+          "root": "0x7e407a2f7b7162983ad6d5266f4627e8",
+          "wall_s": {
+            "status_quo": 0.637,
+            "treatment": 0.62,
+            "pair": 1.258
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 105.36099999999999,
+            "cost": 1.05361,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 105.36099999999999,
+            "cost": 1.05361,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "7d94125fdbb8e673a8565da9e0c4700027ebc386659194f2d09131a3deacef21",
+            "treatment": "ea50be67a32c3ce91b3f97e1bc52d6b589d0c0af028500e6dd284105661e534c"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 2,
+          "root": "0xa4203b96d3a01c332f341ecff591c9b0",
+          "wall_s": {
+            "status_quo": 0.675,
+            "treatment": 0.633,
+            "pair": 1.308
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "f62cce92f559f17fb7a1692551c0b6e245113aba9d4258430de968de4e051b41",
+            "treatment": "c61b937cfb22a6528c5ef4ca761c7a5bb8db700b67303273920cdc1e8cd2cf8c"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 3,
+          "root": "0xb3a820e0288000a5137855b6b1aefd50",
+          "wall_s": {
+            "status_quo": 0.622,
+            "treatment": 0.619,
+            "pair": 1.241
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "c9004227c081c66df2ed4731225a1b6a4a654cc2d95f2ccf59e86df855f364ef",
+            "treatment": "2384794d374a71ca6cd54b249d0a121e7dbbf4784316114a3cc996a215e2c262"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 4,
+          "root": "0xc5eff41432851b2ef69088178b9df6de",
+          "wall_s": {
+            "status_quo": 0.773,
+            "treatment": 0.734,
+            "pair": 1.507
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.17699999999999,
+            "cost": 0.81177,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.17699999999999,
+            "cost": 0.81177,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "d7e341938ec1b65cd47a5c3629529cb7f79a10c43c45a2c7d1599c055f973145",
+            "treatment": "551d2c450f39f784cd6c3252ad4bd7cfeaf387c1ba1bbdb47bd15bede69080a1"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 5,
+          "root": "0x1f9e9e22a6ddea5492d85d151704dd61",
+          "wall_s": {
+            "status_quo": 0.763,
+            "treatment": 0.772,
+            "pair": 1.534
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.884,
+            "cost": 0.7588400000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.884,
+            "cost": 0.7588400000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "77545840b267fd4b5e74b9107ee05efedf4fe18295899fe05103c630eb595bd8",
+            "treatment": "08fcad2a618f6e8feefdbee94ccc0a82b918d0fc8ee276d1586d82eb947bc362"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 6,
+          "root": "0x1ea3d520dd499ac53834e86489c4306b",
+          "wall_s": {
+            "status_quo": 0.921,
+            "treatment": 0.984,
+            "pair": 1.905
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.227,
+            "cost": 0.63227,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.227,
+            "cost": 0.63227,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "d5ba65ba7dcda0871181fdf4c85c623b428d5ffb932e4da546dfd079dc943db3",
+            "treatment": "95ad9e08d1cb10bb10e77f3466771443ac9f862ca41697cadaabfcd156e054ea"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 7,
+          "root": "0xfd06ecc752ff6d811f3db6c672feab5d",
+          "wall_s": {
+            "status_quo": 0.895,
+            "treatment": 0.895,
+            "pair": 1.791
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 104.642,
+            "cost": 1.04642,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 104.642,
+            "cost": 1.04642,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "0da5b4d86b8b8eeb784b2c6b0561c10be3751982e8a37ded9b4455a1d40148a2",
+            "treatment": "209aeead07b5fc25aea2dcc3cb9d5009a98be3563df711958075f173ca4c6860"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 8,
+          "root": "0x402bb9f2d22250cf3913d945927e533a",
+          "wall_s": {
+            "status_quo": 1.134,
+            "treatment": 0.887,
+            "pair": 2.021
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 91.38300000000001,
+            "cost": 0.9138300000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 91.38300000000001,
+            "cost": 0.9138300000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "6df9140d153e5d0f08508317a5d228ef279b8f9ca31d66208c7dc6a1218b30bf",
+            "treatment": "7d5dd379a99dd94a6489661c18c40edf98f84f3309c85708990c3c1aada4accf"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 9,
+          "root": "0x7770bf4f175cc8c0f3b9aaea3a380a72",
+          "wall_s": {
+            "status_quo": 0.776,
+            "treatment": 0.781,
+            "pair": 1.557
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.325,
+            "cost": 0.81325,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.325,
+            "cost": 0.81325,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "45e55325ab83e77cd25d825c98cfda88fdf222aefaed518c0d04f1a9a4a2d7ea",
+            "treatment": "8b968b5a542a2f7e6864a7ff9b4c71d97f08a4e3243514435483d719f9ba410e"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 10,
+          "root": "0x485aa8948344a29aeffb229111f3040a",
+          "wall_s": {
+            "status_quo": 0.878,
+            "treatment": 0.822,
+            "pair": 1.701
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.474000000000004,
+            "cost": 0.6347400000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.474000000000004,
+            "cost": 0.6347400000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "8ffd46d357bf97464db28385136a682fb9a4414604b4a924267f7a3064431e94",
+            "treatment": "d69df7bb2897db77d5e9ad6e65b5c2bcdcc57891150b0b6cd1a776f4701b6caa"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 11,
+          "root": "0x3bd9221c6a8d15009cee34e18daae19",
+          "wall_s": {
+            "status_quo": 1.049,
+            "treatment": 1.16,
+            "pair": 2.209
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 83.459,
+            "cost": 0.83459,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 83.459,
+            "cost": 0.83459,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "9b8c673341ad212eba6cd84aeaa5f531663253b62beadd1a498a302da371c87b",
+            "treatment": "214ab54d1ee4815a577761726b9871378a789db67752a40733333e279fa82f61"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 12,
+          "root": "0xbf773214bbbdd8dd060b994f9d12a2ce",
+          "wall_s": {
+            "status_quo": 0.809,
+            "treatment": 0.959,
+            "pair": 1.768
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 87.314,
+            "cost": 0.8731399999999999,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 87.314,
+            "cost": 0.8731399999999999,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "405b353b35b17fd4e3803b71dc38c28c30151ab537ed603778eb08f1987a8687",
+            "treatment": "3f8b864ec39fd0a11282d585668262d2826e5c6e64c749094d772fd99c6fda35"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 13,
+          "root": "0x7ed9b51249c1dd6edb44ded998fa0efe",
+          "wall_s": {
+            "status_quo": 1.017,
+            "treatment": 1.483,
+            "pair": 2.5
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 64.547,
+            "cost": 0.64547,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 64.547,
+            "cost": 0.64547,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "76fc1cc8db75a46baf922aac56ccf22db535ada365ef45d6a70543e1ae98313c",
+            "treatment": "5be8ba3468a8d416cccaf4a1e68ed4e3b2fdd7d2674596b8cf4c9eb8724e8c37"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 14,
+          "root": "0x6ec60adc460617bf410d8d44521e2b2d",
+          "wall_s": {
+            "status_quo": 0.877,
+            "treatment": 0.979,
+            "pair": 1.856
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.61500000000001,
+            "cost": 0.8161500000000002,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.61500000000001,
+            "cost": 0.8161500000000002,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "e50c5abce5973d08693d7f1046efab30eb655d5a06b09818e584aba052695c0e",
+            "treatment": "ca982f89adaa591aa809d02e944be156a07305f74ff8afa6117aa88965d9c083"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 15,
+          "root": "0xb4c0ca1dcdf14bb615f4f75c193cdbd0",
+          "wall_s": {
+            "status_quo": 0.877,
+            "treatment": 0.871,
+            "pair": 1.748
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.86699999999999,
+            "cost": 0.77867,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.86699999999999,
+            "cost": 0.77867,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "5c9f7ccbb054e635ceb122513b4dcdf13abaccdb87246988aea4009c817ef7b5",
+            "treatment": "19dbd5c2abe61bc6931bdc610df3b7d784b2feac54e64efb4532cb9ed1da59b2"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 16,
+          "root": "0x4ed045c969641383f283fe1ad033a524",
+          "wall_s": {
+            "status_quo": 1.179,
+            "treatment": 1.033,
+            "pair": 2.212
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.079,
+            "cost": 0.6307900000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.079,
+            "cost": 0.6307900000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "42ae4c718517ce2147a6a323f7ceea92e4fd3bbd27f84ba853ac280cf66bcf85",
+            "treatment": "b4f761b426cad6f32c9b3f99b3e98fbf86134f406bf4e26d15f8bcbab603c698"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 17,
+          "root": "0xadccff42f18d8a0e7b73b3afaa65b0c3",
+          "wall_s": {
+            "status_quo": 1.004,
+            "treatment": 1.139,
+            "pair": 2.143
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 76.819,
+            "cost": 0.76819,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 76.819,
+            "cost": 0.76819,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "8625fd1767ffd96d80bc0adebcf7ec506da844f00fadff568ac26fb160a8570c",
+            "treatment": "bcf68c7210da255dacf1871aa2958d53ecbaf76ac9f28c82baf801f243298494"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 18,
+          "root": "0x6564a4c96368971370481257602e1acb",
+          "wall_s": {
+            "status_quo": 1.393,
+            "treatment": 1.307,
+            "pair": 2.7
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 73.49,
+            "cost": 0.7349,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 73.49,
+            "cost": 0.7349,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "071063669496c3b18f386e74777b87bba44eab962a9753270a422ec075c0dcc3",
+            "treatment": "d582999a7bfbe05aa762b5661f5139ffcf19d9a15564d72c3b0a620215d92c1e"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 19,
+          "root": "0x18684cbcee107c0e1c93ef35fb66a68e",
+          "wall_s": {
+            "status_quo": 1.31,
+            "treatment": 1.205,
+            "pair": 2.515
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 62.316,
+            "cost": 0.62316,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 62.316,
+            "cost": 0.62316,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "9d01f1ddd93e6bfd11fc6250555af68a20ef29047814abf67117c10c380405f0",
+            "treatment": "e4a84c2cdb1a9ff3efb11a7ce5527a1d99041e7bbde1eaf7fa63382cc2ee8d63"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 20,
+          "root": "0x6f5093a1a68ed6760bd387a891dc2d7c",
+          "wall_s": {
+            "status_quo": 1.028,
+            "treatment": 1.159,
+            "pair": 2.187
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 79.04499999999999,
+            "cost": 0.7904499999999999,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 79.04499999999999,
+            "cost": 0.7904499999999999,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "8e428dd76e53823f9a670091f6845e65880c2198822462151742e69074b3a299",
+            "treatment": "1000464e39909f0bcc2bd0626ce692176e09b389df4f7f463e60d4f8b138f8d8"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 21,
+          "root": "0x232d449e64bf3e9832814a268debf239",
+          "wall_s": {
+            "status_quo": 1.096,
+            "treatment": 1.308,
+            "pair": 2.403
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.22800000000001,
+            "cost": 0.8422800000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.22800000000001,
+            "cost": 0.8422800000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "ed40443e01dfdb397be1e378afdb6da0e3726654042e2615e8fe42700bf7435f",
+            "treatment": "8ab51380824d6c6ac75d7ba9ee80ab743442f892a50c5b470e607261e5ea77e0"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 22,
+          "root": "0x8a18a62ebdce32be0c5e9a5122dea00",
+          "wall_s": {
+            "status_quo": 1.033,
+            "treatment": 1.115,
+            "pair": 2.147
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 65.929,
+            "cost": 0.65929,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 65.929,
+            "cost": 0.65929,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "6cb1878b830b1a1af96f7d1a1a8d5073bdbd6d36986de9ec3d16df15b1ad7c53",
+            "treatment": "8df47635af2d8b31dc6f0d5ae27b7c56c085eb58f1c8bd36efcb3154836d6b7c"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 23,
+          "root": "0xcb7cd383decceef90bff9da8c63dbf17",
+          "wall_s": {
+            "status_quo": 1.318,
+            "treatment": 1.045,
+            "pair": 2.363
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 71.275,
+            "cost": 0.7127500000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 71.275,
+            "cost": 0.7127500000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "203850f9cf582e7cdb7cda2b131a8ff5ef0b095efabb16a8054c5b6793c1b67a",
+            "treatment": "3511a4c019409c2542f320736133e0405b486d98d6fca59d86c703a32ce3d9e1"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 24,
+          "root": "0xa6e3d8eac34c1e75caaa772e6972304a",
+          "wall_s": {
+            "status_quo": 1.119,
+            "treatment": 1.117,
+            "pair": 2.236
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 60.203,
+            "cost": 0.6020300000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 60.203,
+            "cost": 0.6020300000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "ccbd06a106007373900cc594de1444a06e1407c5647a5776322edd824bcde377",
+            "treatment": "9f1f19ae423c19cf2defd0ac21699bf494d91ae1eb7867e6563545fd25d26a93"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 25,
+          "root": "0x8fd122c620ee74c100bf33517fd4e433",
+          "wall_s": {
+            "status_quo": 1.279,
+            "treatment": 1.518,
+            "pair": 2.797
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 66.819,
+            "cost": 0.6681900000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 66.819,
+            "cost": 0.6681900000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "72d9e52e1d582b5d527b229d2e072a1146f72a38d7d9743b7fefdaff953723b9",
+            "treatment": "2f7724d18d3e35d052786b16ace8e513468b904dffab00e98590434c7cd4ff25"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 26,
+          "root": "0xa9671ad663ce4b73f956160433145c6f",
+          "wall_s": {
+            "status_quo": 1.305,
+            "treatment": 1.339,
+            "pair": 2.645
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 94.864,
+            "cost": 0.94864,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 94.864,
+            "cost": 0.94864,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "0e1c121e9d9ebf7cff5b1e0db8daeee2b2c45ede315015ada92b44c7e01a2178",
+            "treatment": "3addac70894af4ec7000cf1b97242510d083a8f35708efeeaa1a7e75331efada"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 27,
+          "root": "0x300492eb2e07ecb6929b9824c50e7227",
+          "wall_s": {
+            "status_quo": 1.338,
+            "treatment": 1.676,
+            "pair": 3.013
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "595e7db3406a4704aaa68b827d451f29ea016feb9b8e4839c7b9bc52997c0314",
+            "treatment": "c7f9b28ef182e76aea3f493da435a6e072bd9862b08323776a15f4d459756af5"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 28,
+          "root": "0xc85780c3c4ef09d0e75abcfb35ff3105",
+          "wall_s": {
+            "status_quo": 1.08,
+            "treatment": 1.403,
+            "pair": 2.482
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.488,
+            "cost": 0.75488,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.488,
+            "cost": 0.75488,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "ba17607dc501f9c5fc9242b1b7e684f45fbf42256d6ea44640d3ab0376ed0941",
+            "treatment": "9de0f1170b13a568f492a4a244187c3d08a2646b911e6a1d7ecc662b75c23a56"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 29,
+          "root": "0x5b67c64b110b6044c8462c1c356fa8e",
+          "wall_s": {
+            "status_quo": 1.142,
+            "treatment": 1.572,
+            "pair": 2.714
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 69.862,
+            "cost": 0.6986199999999999,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 69.862,
+            "cost": 0.6986199999999999,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "3b22e458f053404d22e181f2df6fae657fb1d25e2f0a56154cb5b2899e0184c9",
+            "treatment": "58f46813e3d7a64d6f2024aa121aca4187717704e72908106aa0e233625b40c6"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        }
+      ]
+    },
+    "ensemble": {
+      "mode": "ensemble",
+      "mode_note": "OFFLINE evaluation: the TRUE snapshot state (privileged) with ensemble member m's exogenous future; not available to a deployed product.",
+      "n_pairs": 30,
+      "kpis": {
+        "mc": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "fmc": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "nmcs": {
+          "status_quo": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "nmcm": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "nmcd": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "flying_task": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "flown_fh": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "sorties": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "aog_days": {
+          "status_quo": {
+            "mean": 30.0,
+            "sd": 0.0,
+            "ci_low": 30.0,
+            "ci_high": 30.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 30.0,
+            "sd": 0.0,
+            "ci_low": 30.0,
+            "ci_high": 30.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "cann_rate": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "cann": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "man_hours": {
+          "status_quo": {
+            "mean": 77.8119,
+            "sd": 11.788249925243356,
+            "ci_low": 73.41009513627591,
+            "ci_high": 82.21370486372408,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 77.8119,
+            "sd": 11.788249925243356,
+            "ci_low": 73.41009513627591,
+            "ci_high": 82.21370486372408,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "cost": {
+          "status_quo": {
+            "mean": 0.7781189999999999,
+            "sd": 0.11788249925243353,
+            "ci_low": 0.7341009513627591,
+            "ci_high": 0.8221370486372407,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.7781189999999999,
+            "sd": 0.11788249925243353,
+            "ci_low": 0.7341009513627591,
+            "ci_high": 0.8221370486372407,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        },
+        "in_flight_failures": {
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        }
+      },
+      "derived": {
+        "removals": {
+          "definition": "component removals in the window (COMPONENT_LIFE REMOVE rows of the branch record log); derived here, not a fork-service KPI; same paired statistics as ForkService.compare",
+          "status_quo": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "treatment": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0,
+            "n": 30
+          },
+          "paired_difference_treatment_minus_status_quo": {
+            "n": 30,
+            "mean": 0.0,
+            "sd": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.0
+          }
+        }
+      },
+      "headline_kpis": [
+        "aog_days",
+        "nmcs",
+        "mc",
+        "flown_fh",
+        "cost",
+        "fmc",
+        "nmcm"
+      ],
+      "paired_difference_first_10_pairs": {
+        "mc": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "fmc": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "nmcs": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "nmcm": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "nmcd": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "flying_task": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "flown_fh": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "sorties": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "aog_days": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "cann_rate": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "cann": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "man_hours": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "cost": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "in_flight_failures": {
+          "n": 10,
+          "mean": 0.0,
+          "sd": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        }
+      },
+      "wall_s": {
+        "mode_total": 67.81,
+        "per_branch_mean": 1.128,
+        "per_branch_max": 2.672,
+        "per_pair_mean": 2.255,
+        "per_pair_max": 4.557
+      },
+      "members": [
+        {
+          "member": 0,
+          "root": "0xacbdc443b8b24b03347dcdb57f26db0a",
+          "wall_s": {
+            "status_quo": 1.556,
+            "treatment": 1.246,
+            "pair": 2.802
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.66499999999999,
+            "cost": 0.77665,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.66499999999999,
+            "cost": 0.77665,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "e00340a354bcde4601c7ee72355e985e93cbc0a101b7c1d2c020e9bd59bd5975",
+            "treatment": "48c671f56bc20d0595f712f23bc3c4653e08379603fbc4abdbce5f594017fdfc"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 1,
+          "root": "0x7e407a2f7b7162983ad6d5266f4627e8",
+          "wall_s": {
+            "status_quo": 1.042,
+            "treatment": 0.949,
+            "pair": 1.991
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 105.36099999999999,
+            "cost": 1.05361,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 105.36099999999999,
+            "cost": 1.05361,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "7d94125fdbb8e673a8565da9e0c4700027ebc386659194f2d09131a3deacef21",
+            "treatment": "ea50be67a32c3ce91b3f97e1bc52d6b589d0c0af028500e6dd284105661e534c"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 2,
+          "root": "0xa4203b96d3a01c332f341ecff591c9b0",
+          "wall_s": {
+            "status_quo": 0.939,
+            "treatment": 0.907,
+            "pair": 1.846
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "f62cce92f559f17fb7a1692551c0b6e245113aba9d4258430de968de4e051b41",
+            "treatment": "c61b937cfb22a6528c5ef4ca761c7a5bb8db700b67303273920cdc1e8cd2cf8c"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 3,
+          "root": "0xb3a820e0288000a5137855b6b1aefd50",
+          "wall_s": {
+            "status_quo": 1.012,
+            "treatment": 0.985,
+            "pair": 1.997
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "c9004227c081c66df2ed4731225a1b6a4a654cc2d95f2ccf59e86df855f364ef",
+            "treatment": "2384794d374a71ca6cd54b249d0a121e7dbbf4784316114a3cc996a215e2c262"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 4,
+          "root": "0xc5eff41432851b2ef69088178b9df6de",
+          "wall_s": {
+            "status_quo": 1.004,
+            "treatment": 0.956,
+            "pair": 1.961
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.17699999999999,
+            "cost": 0.81177,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.17699999999999,
+            "cost": 0.81177,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "d7e341938ec1b65cd47a5c3629529cb7f79a10c43c45a2c7d1599c055f973145",
+            "treatment": "551d2c450f39f784cd6c3252ad4bd7cfeaf387c1ba1bbdb47bd15bede69080a1"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 5,
+          "root": "0x1f9e9e22a6ddea5492d85d151704dd61",
+          "wall_s": {
+            "status_quo": 1.001,
+            "treatment": 0.925,
+            "pair": 1.927
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.884,
+            "cost": 0.7588400000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.884,
+            "cost": 0.7588400000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "77545840b267fd4b5e74b9107ee05efedf4fe18295899fe05103c630eb595bd8",
+            "treatment": "08fcad2a618f6e8feefdbee94ccc0a82b918d0fc8ee276d1586d82eb947bc362"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 6,
+          "root": "0x1ea3d520dd499ac53834e86489c4306b",
+          "wall_s": {
+            "status_quo": 1.345,
+            "treatment": 0.957,
+            "pair": 2.303
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.227,
+            "cost": 0.63227,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.227,
+            "cost": 0.63227,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "d5ba65ba7dcda0871181fdf4c85c623b428d5ffb932e4da546dfd079dc943db3",
+            "treatment": "95ad9e08d1cb10bb10e77f3466771443ac9f862ca41697cadaabfcd156e054ea"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 7,
+          "root": "0xfd06ecc752ff6d811f3db6c672feab5d",
+          "wall_s": {
+            "status_quo": 0.843,
+            "treatment": 1.027,
+            "pair": 1.87
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 104.642,
+            "cost": 1.04642,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 104.642,
+            "cost": 1.04642,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "0da5b4d86b8b8eeb784b2c6b0561c10be3751982e8a37ded9b4455a1d40148a2",
+            "treatment": "209aeead07b5fc25aea2dcc3cb9d5009a98be3563df711958075f173ca4c6860"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 8,
+          "root": "0x402bb9f2d22250cf3913d945927e533a",
+          "wall_s": {
+            "status_quo": 1.549,
+            "treatment": 2.078,
+            "pair": 3.628
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 91.38300000000001,
+            "cost": 0.9138300000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 91.38300000000001,
+            "cost": 0.9138300000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "6df9140d153e5d0f08508317a5d228ef279b8f9ca31d66208c7dc6a1218b30bf",
+            "treatment": "7d5dd379a99dd94a6489661c18c40edf98f84f3309c85708990c3c1aada4accf"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 9,
+          "root": "0x7770bf4f175cc8c0f3b9aaea3a380a72",
+          "wall_s": {
+            "status_quo": 2.672,
+            "treatment": 1.885,
+            "pair": 4.557
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.325,
+            "cost": 0.81325,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.325,
+            "cost": 0.81325,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "45e55325ab83e77cd25d825c98cfda88fdf222aefaed518c0d04f1a9a4a2d7ea",
+            "treatment": "8b968b5a542a2f7e6864a7ff9b4c71d97f08a4e3243514435483d719f9ba410e"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 10,
+          "root": "0x485aa8948344a29aeffb229111f3040a",
+          "wall_s": {
+            "status_quo": 1.765,
+            "treatment": 1.297,
+            "pair": 3.062
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.474000000000004,
+            "cost": 0.6347400000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.474000000000004,
+            "cost": 0.6347400000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "8ffd46d357bf97464db28385136a682fb9a4414604b4a924267f7a3064431e94",
+            "treatment": "d69df7bb2897db77d5e9ad6e65b5c2bcdcc57891150b0b6cd1a776f4701b6caa"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 11,
+          "root": "0x3bd9221c6a8d15009cee34e18daae19",
+          "wall_s": {
+            "status_quo": 1.084,
+            "treatment": 1.231,
+            "pair": 2.315
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 83.459,
+            "cost": 0.83459,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 83.459,
+            "cost": 0.83459,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "9b8c673341ad212eba6cd84aeaa5f531663253b62beadd1a498a302da371c87b",
+            "treatment": "214ab54d1ee4815a577761726b9871378a789db67752a40733333e279fa82f61"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 12,
+          "root": "0xbf773214bbbdd8dd060b994f9d12a2ce",
+          "wall_s": {
+            "status_quo": 1.258,
+            "treatment": 1.439,
+            "pair": 2.697
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 87.314,
+            "cost": 0.8731399999999999,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 87.314,
+            "cost": 0.8731399999999999,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "405b353b35b17fd4e3803b71dc38c28c30151ab537ed603778eb08f1987a8687",
+            "treatment": "3f8b864ec39fd0a11282d585668262d2826e5c6e64c749094d772fd99c6fda35"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 13,
+          "root": "0x7ed9b51249c1dd6edb44ded998fa0efe",
+          "wall_s": {
+            "status_quo": 1.437,
+            "treatment": 1.355,
+            "pair": 2.792
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 64.547,
+            "cost": 0.64547,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 64.547,
+            "cost": 0.64547,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "76fc1cc8db75a46baf922aac56ccf22db535ada365ef45d6a70543e1ae98313c",
+            "treatment": "5be8ba3468a8d416cccaf4a1e68ed4e3b2fdd7d2674596b8cf4c9eb8724e8c37"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 14,
+          "root": "0x6ec60adc460617bf410d8d44521e2b2d",
+          "wall_s": {
+            "status_quo": 1.037,
+            "treatment": 0.894,
+            "pair": 1.932
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.61500000000001,
+            "cost": 0.8161500000000002,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 81.61500000000001,
+            "cost": 0.8161500000000002,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "e50c5abce5973d08693d7f1046efab30eb655d5a06b09818e584aba052695c0e",
+            "treatment": "ca982f89adaa591aa809d02e944be156a07305f74ff8afa6117aa88965d9c083"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 15,
+          "root": "0xb4c0ca1dcdf14bb615f4f75c193cdbd0",
+          "wall_s": {
+            "status_quo": 0.726,
+            "treatment": 0.738,
+            "pair": 1.464
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.86699999999999,
+            "cost": 0.77867,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 77.86699999999999,
+            "cost": 0.77867,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "5c9f7ccbb054e635ceb122513b4dcdf13abaccdb87246988aea4009c817ef7b5",
+            "treatment": "19dbd5c2abe61bc6931bdc610df3b7d784b2feac54e64efb4532cb9ed1da59b2"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 16,
+          "root": "0x4ed045c969641383f283fe1ad033a524",
+          "wall_s": {
+            "status_quo": 0.826,
+            "treatment": 0.81,
+            "pair": 1.635
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.079,
+            "cost": 0.6307900000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 63.079,
+            "cost": 0.6307900000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "42ae4c718517ce2147a6a323f7ceea92e4fd3bbd27f84ba853ac280cf66bcf85",
+            "treatment": "b4f761b426cad6f32c9b3f99b3e98fbf86134f406bf4e26d15f8bcbab603c698"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 17,
+          "root": "0xadccff42f18d8a0e7b73b3afaa65b0c3",
+          "wall_s": {
+            "status_quo": 0.717,
+            "treatment": 0.72,
+            "pair": 1.437
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 76.819,
+            "cost": 0.76819,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 76.819,
+            "cost": 0.76819,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "8625fd1767ffd96d80bc0adebcf7ec506da844f00fadff568ac26fb160a8570c",
+            "treatment": "bcf68c7210da255dacf1871aa2958d53ecbaf76ac9f28c82baf801f243298494"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 18,
+          "root": "0x6564a4c96368971370481257602e1acb",
+          "wall_s": {
+            "status_quo": 0.892,
+            "treatment": 0.775,
+            "pair": 1.667
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 73.49,
+            "cost": 0.7349,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 73.49,
+            "cost": 0.7349,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "071063669496c3b18f386e74777b87bba44eab962a9753270a422ec075c0dcc3",
+            "treatment": "d582999a7bfbe05aa762b5661f5139ffcf19d9a15564d72c3b0a620215d92c1e"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 19,
+          "root": "0x18684cbcee107c0e1c93ef35fb66a68e",
+          "wall_s": {
+            "status_quo": 0.812,
+            "treatment": 0.694,
+            "pair": 1.506
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 62.316,
+            "cost": 0.62316,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 62.316,
+            "cost": 0.62316,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "9d01f1ddd93e6bfd11fc6250555af68a20ef29047814abf67117c10c380405f0",
+            "treatment": "e4a84c2cdb1a9ff3efb11a7ce5527a1d99041e7bbde1eaf7fa63382cc2ee8d63"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 20,
+          "root": "0x6f5093a1a68ed6760bd387a891dc2d7c",
+          "wall_s": {
+            "status_quo": 0.699,
+            "treatment": 0.894,
+            "pair": 1.593
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 79.04499999999999,
+            "cost": 0.7904499999999999,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 79.04499999999999,
+            "cost": 0.7904499999999999,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "8e428dd76e53823f9a670091f6845e65880c2198822462151742e69074b3a299",
+            "treatment": "1000464e39909f0bcc2bd0626ce692176e09b389df4f7f463e60d4f8b138f8d8"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 21,
+          "root": "0x232d449e64bf3e9832814a268debf239",
+          "wall_s": {
+            "status_quo": 1.104,
+            "treatment": 1.134,
+            "pair": 2.238
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.22800000000001,
+            "cost": 0.8422800000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.22800000000001,
+            "cost": 0.8422800000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "ed40443e01dfdb397be1e378afdb6da0e3726654042e2615e8fe42700bf7435f",
+            "treatment": "8ab51380824d6c6ac75d7ba9ee80ab743442f892a50c5b470e607261e5ea77e0"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 22,
+          "root": "0x8a18a62ebdce32be0c5e9a5122dea00",
+          "wall_s": {
+            "status_quo": 1.036,
+            "treatment": 1.209,
+            "pair": 2.245
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 65.929,
+            "cost": 0.65929,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 65.929,
+            "cost": 0.65929,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "6cb1878b830b1a1af96f7d1a1a8d5073bdbd6d36986de9ec3d16df15b1ad7c53",
+            "treatment": "8df47635af2d8b31dc6f0d5ae27b7c56c085eb58f1c8bd36efcb3154836d6b7c"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 23,
+          "root": "0xcb7cd383decceef90bff9da8c63dbf17",
+          "wall_s": {
+            "status_quo": 1.299,
+            "treatment": 1.062,
+            "pair": 2.361
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 71.275,
+            "cost": 0.7127500000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 71.275,
+            "cost": 0.7127500000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "203850f9cf582e7cdb7cda2b131a8ff5ef0b095efabb16a8054c5b6793c1b67a",
+            "treatment": "3511a4c019409c2542f320736133e0405b486d98d6fca59d86c703a32ce3d9e1"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 24,
+          "root": "0xa6e3d8eac34c1e75caaa772e6972304a",
+          "wall_s": {
+            "status_quo": 1.086,
+            "treatment": 1.145,
+            "pair": 2.231
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 60.203,
+            "cost": 0.6020300000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 60.203,
+            "cost": 0.6020300000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "ccbd06a106007373900cc594de1444a06e1407c5647a5776322edd824bcde377",
+            "treatment": "9f1f19ae423c19cf2defd0ac21699bf494d91ae1eb7867e6563545fd25d26a93"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 25,
+          "root": "0x8fd122c620ee74c100bf33517fd4e433",
+          "wall_s": {
+            "status_quo": 1.212,
+            "treatment": 1.12,
+            "pair": 2.332
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 66.819,
+            "cost": 0.6681900000000001,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 66.819,
+            "cost": 0.6681900000000001,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "72d9e52e1d582b5d527b229d2e072a1146f72a38d7d9743b7fefdaff953723b9",
+            "treatment": "2f7724d18d3e35d052786b16ace8e513468b904dffab00e98590434c7cd4ff25"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 26,
+          "root": "0xa9671ad663ce4b73f956160433145c6f",
+          "wall_s": {
+            "status_quo": 1.199,
+            "treatment": 1.299,
+            "pair": 2.498
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 94.864,
+            "cost": 0.94864,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 94.864,
+            "cost": 0.94864,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "0e1c121e9d9ebf7cff5b1e0db8daeee2b2c45ede315015ada92b44c7e01a2178",
+            "treatment": "3addac70894af4ec7000cf1b97242510d083a8f35708efeeaa1a7e75331efada"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 27,
+          "root": "0x300492eb2e07ecb6929b9824c50e7227",
+          "wall_s": {
+            "status_quo": 1.043,
+            "treatment": 1.125,
+            "pair": 2.168
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 84.0,
+            "cost": 0.84,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "595e7db3406a4704aaa68b827d451f29ea016feb9b8e4839c7b9bc52997c0314",
+            "treatment": "c7f9b28ef182e76aea3f493da435a6e072bd9862b08323776a15f4d459756af5"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 28,
+          "root": "0xc85780c3c4ef09d0e75abcfb35ff3105",
+          "wall_s": {
+            "status_quo": 1.214,
+            "treatment": 1.172,
+            "pair": 2.385
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.488,
+            "cost": 0.75488,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 75.488,
+            "cost": 0.75488,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "ba17607dc501f9c5fc9242b1b7e684f45fbf42256d6ea44640d3ab0376ed0941",
+            "treatment": "9de0f1170b13a568f492a4a244187c3d08a2646b911e6a1d7ecc662b75c23a56"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        },
+        {
+          "member": 29,
+          "root": "0x5b67c64b110b6044c8462c1c356fa8e",
+          "wall_s": {
+            "status_quo": 1.134,
+            "treatment": 1.09,
+            "pair": 2.224
+          },
+          "status_quo": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 69.862,
+            "cost": 0.6986199999999999,
+            "in_flight_failures": 0.0
+          },
+          "treatment": {
+            "mc": 0.0,
+            "fmc": 0.0,
+            "nmcs": 1.0,
+            "nmcm": 0.0,
+            "nmcd": 0.0,
+            "flying_task": 0.0,
+            "flown_fh": 0.0,
+            "sorties": 0.0,
+            "aog_days": 30.0,
+            "cann_rate": 0.0,
+            "cann": 0.0,
+            "man_hours": 69.862,
+            "cost": 0.6986199999999999,
+            "in_flight_failures": 0.0
+          },
+          "record_digest": {
+            "status_quo": "3b22e458f053404d22e181f2df6fae657fb1d25e2f0a56154cb5b2899e0184c9",
+            "treatment": "58f46813e3d7a64d6f2024aa121aca4187717704e72908106aa0e233625b40c6"
+          },
+          "order_log_hash": {
+            "status_quo": "0b7ac3e324afc01c5e4573d655c4ef300349b331a02f703ed5d17711c41e6c80",
+            "treatment": "10dcb87b01393fab6f804136f4aa50c307d8ef58726655cb2613cd2f2601c517"
+          },
+          "gateway_verdicts": [
+            {
+              "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+              "verdict": "ACCEPTED",
+              "reason": null
+            }
+          ],
+          "order_status": {
+            "phx-demo:S2:20260622T023000Z:expedite": [
+              {
+                "status": "ACCEPTED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              },
+              {
+                "status": "COMPLETED",
+                "reason": null,
+                "t_status_ist": "2026-06-22 08:00 IST"
+              }
+            ]
+          },
+          "removals": {
+            "status_quo": {
+              "total": 0,
+              "by_part_no": {}
+            },
+            "treatment": {
+              "total": 0,
+              "by_part_no": {}
+            }
+          },
+          "nmcs_exit": {
+            "status_quo": null,
+            "treatment": null
+          }
+        }
+      ]
+    }
+  },
+  "gateway_verdicts_at_epoch": [
+    {
+      "order_id": "phx-demo:S2:20260622T023000Z:expedite",
+      "verdict": "ACCEPTED",
+      "reason": null,
+      "t_apply_ist": "2026-06-22 08:00 IST"
+    }
+  ],
+  "oracle_continuation_check": {
+    "maint.records": {
+      "rows_session": 5,
+      "rows_preview": 5,
+      "identical_all_columns": true
+    },
+    "events.bit_faults": {
+      "rows_session": 0,
+      "rows_preview": 0,
+      "identical_all_columns": true
+    },
+    "events.cautions": {
+      "rows_session": 0,
+      "rows_preview": 0,
+      "identical_all_columns": true
+    },
+    "compared_window_ist": [
+      "2026-06-22 08:00 IST",
+      "2026-07-04 05:30 IST"
+    ],
+    "note": "validation of bitwise continuation only; oracle results are never reported as what-if numbers",
+    "wall_s": 0.58
+  },
+  "kpi_definitions": {
+    "mc": "mission-capable fraction of equipment-in-service time in the window (NAMP SCIR, from AVAILABILITY_STATE bins)",
+    "fmc": "fully-mission-capable fraction",
+    "nmcs": "fraction of time not mission capable, supply",
+    "nmcm": "fraction of time not mission capable, maintenance (scheduled + unscheduled)",
+    "nmcd": "fraction of time not mission capable, depot",
+    "flying_task": "flown / planned flight hours",
+    "flown_fh": "flight hours flown in the window",
+    "sorties": "sorties flown",
+    "aog_days": "aircraft-days in NMCS",
+    "cann": "cannibalisations",
+    "cann_rate": "cannibalisations per 100 sorties",
+    "man_hours": "man-hours booked on jobs closed in the window",
+    "cost": "RELATIVE cost proxy (A-W1.8-11): new spares + 0.3 x unit cost per depot repair + man-hours x mh_cost + expedite premiums; unitless, not money",
+    "in_flight_failures": "defects first reported from the air (WD-AIR / WD-ABT)"
+  }
+}

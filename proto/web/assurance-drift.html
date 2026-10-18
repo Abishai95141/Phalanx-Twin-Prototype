@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Drift — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 750px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+  .chart svg text { font-family: var(--mono); font-size: 11px; fill: var(--ink-4); }
+  .chart svg .lab { font-family: var(--font); font-size: 12.5px; fill: var(--ink-2); font-weight: 600; }
+  .chart svg .lab2 { font-family: var(--font); font-size: 12px; fill: var(--ink-3); }
+  .cls .r2 { grid-template-columns: minmax(0,1fr) auto; min-height: 84px; }
+  .tag2 { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 8px; font: 700 11.5px var(--mono); letter-spacing: .04em; white-space: nowrap; background: var(--bg-3); color: var(--ink-2); }
+  .tag2.acc { background: var(--accent-wash); color: var(--accent-ink); }
+  .key { display: flex; gap: 22px; font-size: 13px; color: var(--ink-3); margin-top: 6px; }
+  .key i { display: inline-block; vertical-align: middle; margin-right: 8px; }
+
+  /* compact: tablet + phone */
+  @media (max-width: 1199px) {
+    .chart svg { display: block; width: 100%; height: auto; }
+    /* the chart draws at ~0.8x here; lift the SVG type back to ~10 px on screen */
+    .chart svg text { font-size: 12.5px !important; }
+    .chart svg .lab { font-size: 14px !important; }
+    .chart svg .lab2 { font-size: 13px !important; }
+    .key { flex-wrap: wrap; row-gap: 8px; margin-top: 10px; }
+    .cls .r2 { min-height: 72px; }
+  }
+  /* phone: the 24-week chart keeps a legible size and scrolls inside its card */
+  @media (max-width: 699px) {
+    #chart { overflow-x: auto; margin-left: -18px; margin-right: -18px; padding: 0 18px; -webkit-overflow-scrolling: touch; }
+    #chart svg { width: 700px; max-width: none; }
+    section[data-shot="drift-chart"] > div[style*="align-items:flex-end"] { flex-wrap: wrap; row-gap: 6px; }
+    .key { flex-direction: column; gap: 8px; }
+    .cls .r2 { column-gap: 12px; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c8" data-shot="drift-chart">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Drift · BIT alerts per flight hour</div>
+        <div class="t2">The alert rate has held steady for 24 weeks</div>
+        <div class="sub2">Fleet BIT events ÷ flight hours each week, annotated with the change-points the system already knows about.</div>
+      </div>
+      <span class="tier diag">DIAG</span>
+    </div>
+    <div style="margin-top:26px;display:flex;align-items:flex-end;gap:16px">
+      <div class="mid" id="rate"></div>
+      <div class="ci" style="padding-bottom:3px" id="rate-ci"></div>
+    </div>
+    <div class="chart" id="chart" style="margin-top:20px"></div>
+    <div class="key">
+      <span><i style="width:9px;height:9px;border-radius:50%;background:var(--ink)"></i>weekly rate · 95 % interval</span>
+      <span><i style="width:10px;height:10px;transform:rotate(45deg);background:var(--accent)"></i>engine wash order</span>
+      <span><i style="width:0;height:14px;border-left:2px dashed var(--ink-4)"></i>largest unexplained split</span>
+    </div>
+  </section>
+
+  <section class="panel2 c4 cls" data-shot="drift-rules">
+    <div class="kick">Change-point classification</div>
+    <div class="t2">Only harmful shifts page anyone</div>
+    <div class="sub2">Known events re-baseline; surprises are tested for harm before anyone is paged.</div>
+    <div style="margin-top:24px;display:flex;align-items:flex-end;gap:14px">
+      <div class="big">0<small>pages</small></div>
+    </div>
+    <div class="ci" style="margin-top:8px" id="hs"></div>
+    <div class="rows2" style="margin-top:22px" id="cls"></div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-assurance.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const A = window.PHX_ASSURE, D = A.drift;
+const TABS = [['Models','assurance.html'],['Backtests','assurance-backtest.html'],['Drift','assurance-drift.html'],null,['Decision table','policies.html'],['Policy lifecycle','policies-lifecycle.html'],['Authority','policies-authority.html'],null,['Why this order','provenance.html']];
+const here = location.pathname.split('/').pop();
+document.getElementById('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1]===here?'on':''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+const S = D.series, nEv = S.reduce((a, x) => a + x.n, 0), fh = S.reduce((a, x) => a + x.fh, 0);
+document.getElementById('rate').innerHTML = `${D.fleet_rate.toFixed(2)}<small style="font-size:17px;color:var(--ink-3);font-weight:600;margin-left:8px">alerts per flight hour</small>`;
+document.getElementById('rate-ci').textContent = `${nEv} events over ${fh.toFixed(1)} FH · 5 Jan – 21 Jun`;
+
+(function () {
+  const W = 905, Hh = 470, l = 36, r = 10, t = 54, b = 34, ymax = 4;
+  const n = S.length, bw = (W - l - r) / n, X = i => l + bw * (i + 0.5), Y = v => t + (Hh - t - b) * (1 - v / ymax);
+  let g = '';
+  [0, 1, 2, 3, 4].forEach(v => g += `<line x1="${l}" x2="${W - r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-2)"/><text x="${l - 10}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`);
+  const mon = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun' };
+  S.forEach((x, i) => { if (i % 4 === 0 || i === n - 1) g += `<text x="${X(i)}" y="${Hh - 12}" text-anchor="middle">${+x.start.slice(8)} ${mon[x.start.slice(5, 7)]}</text>`; });
+  // release / dictionary at week 0
+  g += `<line x1="${l + 2}" x2="${l + 2}" y1="${t - 30}" y2="${Hh - b}" stroke="var(--ink)" stroke-width="1.5"/>`;
+  g += `<text class="lab" x="${l + 10}" y="${t - 30}">Release v0.9 · dictionary 0.1.3 adopted</text><text class="lab2" x="${l + 10}" y="${t - 14}">BIT code table unchanged</text>`;
+  // GLR split
+  const k = D.glr_week, xs = l + bw * k;
+  g += `<line x1="${xs}" x2="${xs}" y1="${t - 30}" y2="${Hh - b}" stroke="var(--ink-4)" stroke-dasharray="5 4"/>`;
+  g += `<text class="lab" x="${xs - 10}" y="${t - 30}" text-anchor="end">Largest unexplained split · ${+D.glr_week_start.slice(8)} May</text><text class="lab2" x="${xs - 10}" y="${t - 14}" text-anchor="end">${D.rate_before.toFixed(2)} → ${D.rate_after.toFixed(2)} per FH · p ${D.p_value.toFixed(2)}, not significant</text>`;
+  // segment means
+  const mb = D.rate_before, ma = D.rate_after;
+  g += `<line x1="${l}" x2="${xs}" y1="${Y(mb)}" y2="${Y(mb)}" stroke="var(--ink-4)" stroke-width="1.2" stroke-dasharray="2 4"/>`;
+  g += `<line x1="${xs}" x2="${W - r}" y1="${Y(ma)}" y2="${Y(ma)}" stroke="var(--ink-4)" stroke-width="1.2" stroke-dasharray="2 4"/>`;
+  // CI + points
+  S.forEach((x, i) => {
+    g += `<line x1="${X(i)}" x2="${X(i)}" y1="${Y(Math.min(ymax, x.hi))}" y2="${Y(x.lo)}" stroke="var(--line-strong)" stroke-width="5" stroke-linecap="round"/>`;
+  });
+  g += `<polyline fill="none" stroke="var(--ink)" stroke-width="1.6" points="${S.map((x, i) => X(i) + ',' + Y(x.rate)).join(' ')}"/>`;
+  S.forEach((x, i) => g += `<circle cx="${X(i)}" cy="${Y(x.rate)}" r="4.5" fill="var(--ink)" stroke="#fff" stroke-width="1.5"/>`);
+  // washes
+  const W0 = Date.parse('2026-01-05T00:00:00+05:30');
+  const XD = ms => l + (W - l - r) * (ms - W0) / (n * 7 * 864e5);
+  const ws = A.wash_events.map(e => ({ tail: e.tail, ms: Date.parse(e.t.replace(' ', 'T') + ':00+05:30') })).sort((a, b) => a.ms - b.ms);
+  const groups = []; ws.forEach(w => { const gp = groups[groups.length - 1]; if (gp && w.ms - gp[gp.length - 1].ms < 10 * 864e5) gp.push(w); else groups.push([w]); });
+  const y = Y(0.72);
+  groups.forEach(gp => {
+    gp.forEach(w => { const x = XD(w.ms); g += `<rect x="${x - 5.5}" y="${y - 5.5}" width="11" height="11" transform="rotate(45 ${x} ${y})" fill="var(--accent)" stroke="#fff" stroke-width="1.5"/>`; });
+    const xc = (XD(gp[0].ms) + XD(gp[gp.length - 1].ms)) / 2;
+    gp.forEach((w, j) => g += `<text x="${xc}" y="${y + 24 + 14 * j}" text-anchor="middle" style="fill:var(--accent-ink);font-size:11px">${w.tail}</text>`);
+  });
+  document.getElementById('chart').innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" width="${W}" height="${Hh}">${g}</svg>`;
+})();
+
+const HS = A.harmful, sg = x => (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(3);
+document.getElementById('hs').textContent = `Harmful-shift test on matured labels: Brier ${sg(HS.delta)}, lower bound ${sg(HS.lower05)} — below the ${HS.tolerance} tolerance.`;
+const wr = A.washes, pu = A.pumps;
+const ROWS = [
+  ['Release v0.9 · dictionary 0.1.3', '104 alert codes unchanged · 15 channels changed', 'GATE', 'Engine residual model sent back to re-validation'],
+  [`Engine washes · ${A.wash_events.length} orders`, `Engine alerts ×${wr.pooled_eng_rate_ratio[0].toFixed(2)} per FH after · p ${wr.pooled_eng_rate_ratio[1].toFixed(2)}`, 'EXPECTED', ''],
+  [`Pump installs on TJ107 · ${pu.tj107_installs}`, `HYD-101 ${pu.before.fired}/${pu.before.sorties} sorties before · ${pu.after.fired}/${pu.after.sorties} after`, 'NO SHIFT', ''],
+  ['Unexplained shift scan', `Best split ${+D.glr_week_start.slice(8)} May · p ${D.p_value.toFixed(2)}`, 'LOG ONLY', ''],
+];
+document.getElementById('cls').innerHTML = ROWS.map(r => `<div class="r2"><div><div class="ttl">${r[0]}</div><div class="why">${r[1]}</div></div><span class="tag2 ${r[2] === 'GATE' ? 'acc' : ''}">${r[2]}</span></div>`).join('');
+
+PHX.mount({ page: 'assurance', title: 'Assurance', sub: 'Drift is read against known change-points, so expected shifts never become alarms',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'ok', i: 'shield', t: '0 harmful shifts' }] });
+</script>
+</body></html>

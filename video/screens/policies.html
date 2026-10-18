@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Policies — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 490px 236px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+  .rail { grid-row: 2 / span 2; }
+  .tablecard { grid-column: 4 / span 9; }
+  .tracecard { grid-column: 4 / span 9; }
+
+  /* layer rail */
+  .layers { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; position: relative; }
+  .ly { border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; background: var(--bg); }
+  .ly .n { width: 34px; height: 34px; border-radius: 10px; background: var(--bg-2); display: grid; place-items: center; font: 700 13px var(--mono); color: var(--ink-2); }
+  .ly .nm { font-size: 15px; font-weight: 650; letter-spacing: -0.01em; }
+  .ly .wh { font-size: 13px; color: var(--ink-3); margin-top: 3px; line-height: 1.4; }
+  .ly.on { border-color: var(--accent-line); background: var(--accent-wash); }
+  .ly.on .n { background: var(--accent); color: #fff; }
+  .prec { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-3); margin-top: 18px; }
+
+  /* decision table editor */
+  .dtab { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 18px; font-size: 13px; table-layout: fixed; }
+  .dtab th { font-size: 12px; font-weight: 650; color: var(--ink-3); text-align: left; padding: 8px 8px; white-space: nowrap; border-bottom: 1px solid var(--line); vertical-align: bottom; line-height: 1.25; }
+  .dtab th.grp { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); border-bottom: 0; padding-bottom: 2px; }
+  .dtab th.out, .dtab td.out { background: var(--bg-2); }
+  .dtab th.out.first, .dtab td.out.first { border-left: 1px solid var(--line); }
+  .dtab td { padding: 0 8px; height: 38px; border-bottom: 1px solid var(--line-2); font: 500 13px var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dtab td.any { color: var(--ink-5); }
+  .dtab td.id { font-weight: 700; color: var(--ink); }
+  .dtab td.rat { font-size: 12px; }
+  .dtab tr.test td { background: var(--wire-wash); color: var(--wire); font-weight: 600; border-bottom: 1px solid var(--line); }
+  .dtab tr.test td.id { color: var(--wire); font-family: var(--font); font-size: 12px; letter-spacing: .02em; }
+  .dtab tr.hit td { background: var(--accent-wash); color: var(--ink); font-weight: 650; border-top: 1px solid var(--accent-line); border-bottom: 1px solid var(--accent-line); }
+  .dtab tr.hit td:first-child { border-left: 1px solid var(--accent-line); border-radius: 10px 0 0 10px; }
+  .dtab tr.hit td:last-child { border-right: 1px solid var(--accent-line); border-radius: 0 10px 10px 0; }
+  .dtab td.fail { color: var(--ink-4); text-decoration: line-through; text-decoration-color: var(--ink-4); }
+  .dtab tr.after td { color: var(--ink-4); }
+  .vtag { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-strong); font: 600 13px var(--mono); color: var(--ink-2); white-space: nowrap; }
+  .hp { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 8px; background: var(--bg-2); font: 700 11.5px var(--mono); letter-spacing: .06em; color: var(--ink-2); }
+
+  /* trace */
+  .tr-body { display: grid; grid-template-columns: 250px minmax(0,1fr) 290px; column-gap: 28px; margin-top: 16px; flex: 1; min-height: 0; }
+  .well2 { background: var(--bg-2); border-radius: 14px; padding: 14px 16px; }
+  .kvm { display: grid; grid-template-columns: auto 1fr; column-gap: 18px; row-gap: 7px; font-size: 13px; }
+  .kvm span:nth-child(odd) { color: var(--ink-3); }
+  .kvm span:nth-child(even) { font: 600 13px var(--mono); color: var(--ink); text-align: right; }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c3 rail" data-shot="layers">
+    <div class="kick">Policy layers</div>
+    <div class="t2">Higher layers always win</div>
+    <div class="sub2">Hard limits are tested code; planners edit only tables and bounded weights.</div>
+    <div class="layers" id="layers"></div>
+    <div class="prec"><i data-i="arrowUpRight" class="ico-sm"></i>Conflicts resolve upward; then the safer action; then a person.</div>
+  </section>
+
+  <section class="panel2 tablecard" data-shot="decision-table">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Decision table · Recurring deferred BIT code</div>
+        <div class="t2">TJ107's standing HYD-101 matched row r3: troubleshoot, don't replace again</div>
+        <div class="sub2">First matching row wins · version <span class="mono" style="color:var(--ink-2)" id="ver"></span></div>
+      </div>
+      <span class="tier presc">PRESC</span>
+    </div>
+    <table class="dtab" id="dtab"></table>
+  </section>
+
+  <section class="panel2 tracecard" data-shot="trace">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Evaluation trace · zen-engine <span id="zv"></span></div>
+      </div>
+    </div>
+    <div class="tr-body">
+      <div>
+        <div class="mid" id="perf"></div>
+        <div class="ci" style="margin-top:8px" id="perf-ci"></div>
+      </div>
+      <div class="well2"><div class="kvm" id="inputs"></div></div>
+      <div class="well2"><div class="kvm" id="outputs"></div></div>
+    </div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-policies.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const P = window.PHX_POLICIES;
+const TABS = [['Models','assurance.html'],['Backtests','assurance-backtest.html'],['Drift','assurance-drift.html'],null,['Decision table','policies.html'],['Policy lifecycle','policies-lifecycle.html'],['Authority','policies-authority.html'],null,['Why this order','provenance.html']];
+const here = location.pathname.split('/').pop();
+document.getElementById('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1]===here?'on':''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+const LAYERS = [
+  ['L1', 'Hard constraints', 'Authority, evidence ingested, no release with a grounding defect · typed Python, unit-tested'],
+  ['L2', 'Organisational rules', 'Deferral limits, cannibalisation, mission-essential lists · decision tables, Engineering Officer'],
+  ['L3', 'Decision rules', 'When to inspect, troubleshoot or remove · decision tables, policy owner', true],
+  ['L4', 'Preferences', 'Tie-break weights within fixed ranges · planners, never above L1–L3'],
+];
+document.getElementById('layers').innerHTML = LAYERS.map(l => `<div class="ly ${l[3] ? 'on' : ''}"><span class="n">${l[0]}</span><div><div class="nm">${l[1]}</div><div class="wh">${l[2]}</div></div></div>`).join('');
+
+const pv = P.policies['P-DEC-01'];
+document.getElementById('ver').textContent = pv.policy_version;
+const dt = P.jdm.nodes.find(n => n.type === 'decisionTableNode').content;
+const strip = v => v === '' ? '—' : v.replace(/'/g, '');
+const chk = Object.fromEntries(P.row_checks.map(r => [r.row, r]));
+const matched = P.trace.traceData.rule._id;
+const ins = dt.inputs, outs = dt.outputs;
+const inp = P.input, inVal = { severity: inp.severity, 'job.status': inp.job.status, occ_10d: inp.occ_10d, consec_flights: inp.consec_flights, corroborated: String(inp.corroborated), 'code.nofault_rate': inp.code.nofault_rate.toFixed(3) };
+const widths = [62, 92, 92, 86, 96, 104, 96, 120, 48, 234];
+let h = `<colgroup>${widths.map(w => `<col style="width:${w}px">`).join('')}</colgroup>`;
+h += `<tr><th class="grp"></th><th class="grp" colspan="${ins.length}">Inputs</th><th class="grp out first" colspan="${outs.length}">Outputs</th></tr>`;
+const SHORT = { severity: 'Severity', 'job.status': 'Job status', occ_10d: 'In 10 days', consec_flights: 'Flights in a row', corroborated: 'Corroborated', 'code.nofault_rate': 'No-fault rate' };
+h += `<tr><th>Row</th>${ins.map(i => `<th>${SHORT[i.field]}</th>`).join('')}${outs.map((o, k) => `<th class="out ${k ? '' : 'first'}">${o.name}</th>`).join('')}</tr>`;
+h += `<tr class="test"><td class="id">TJ107</td>${ins.map(i => `<td>${inVal[i.field]}</td>`).join('')}${outs.map((o, k) => `<td class="out ${k ? '' : 'first'}"></td>`).join('')}</tr>`;
+let past = false;
+dt.rules.forEach(r => {
+  const hit = r._id === matched, c = chk[r._id];
+  const fails = new Set(c.cells.filter(x => !x.ok).map(x => x.input));
+  h += `<tr class="${hit ? 'hit' : past ? 'after' : ''}"><td class="id">${hit ? '✓ ' : ''}${r._id}</td>` +
+    ins.map(i => `<td class="${r[i.id] === '' ? 'any' : ''} ${!past && !hit && fails.has(i.id) ? 'fail' : ''}">${strip(r[i.id])}</td>`).join('') +
+    outs.map((o, k) => `<td class="out ${k ? '' : 'first'} ${k === 2 ? 'rat' : ''}">${strip(r[o.id])}</td>`).join('') + '</tr>';
+  if (hit) past = true;
+});
+document.getElementById('dtab').innerHTML = h;
+
+document.getElementById('zv').textContent = P.engine.version;
+document.getElementById('perf').innerHTML = `${P.engine_performance.replace('µs', '')}<small style="font-size:17px;color:var(--ink-3);font-weight:600;margin-left:6px">µs</small>`;
+document.getElementById('perf-ci').innerHTML = `engine time for the whole decision<br>${P.timing.warm_median_us} µs end to end, median of ${P.timing.runs.toLocaleString('en-GB')} runs<br>first call ${P.timing.cold_ms} ms (compile)`;
+const src = P.input_sources;
+document.getElementById('inputs').innerHTML = [
+  ['Occurrences, last 10 days', inp.occ_10d], ['Consecutive flights with code', `${inp.consec_flights} of 61`],
+  ['Fleet no-fault rate, HYD-101', `71 / 107 = ${inp.code.nofault_rate.toFixed(3)}`], ['Corroborated by another code', String(inp.corroborated)],
+  ['Rows checked before match', `r1 ✗ · r2 ✗ · ${matched} ✓`],
+].map(r => `<span>${r[0]}</span><span>${r[1]}</span>`).join('');
+const o = P.result.rec;
+document.getElementById('outputs').innerHTML = [['Action', o.action], ['Band', o.band], ['Rationale', o.rationale_id], ['Trace hash', P.trace_hash.slice(0, 12)], ['Clock reads', '0']]
+  .map(r => `<span>${r[0]}</span><span>${r[1]}</span>`).join('');
+
+PHX.mount({ page: 'assurance', title: 'Policies', sub: 'Rules are versioned tables, evaluated the same way every time',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'ok', i: 'check', t: '0 gaps · 0 lint findings' }] });
+</script>
+</body></html>

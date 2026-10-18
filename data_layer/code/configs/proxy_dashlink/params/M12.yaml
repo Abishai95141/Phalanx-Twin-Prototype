@@ -1,0 +1,169 @@
+# M12 sensor physics and dynamics of the DASHlink proxy (W2.4a). Structure in M12/channel_map.yaml.
+# Recorded-word dynamics are the round-2 MEASURED proxy values (FF meter lag tau_FFs 0.218 s; thermocouple
+# tau_TC,ref 0.81 s with tau proportional to W^-0.5, reference flow = N1c 90 % at SLS); the M08 controller lanes
+# transfer the Tejas classes (AD-43, same method structure).
+format: phalanx.params/1
+module: M12
+sets:
+  constants:
+    p_sl:
+      value: 101325.0
+      units: Pa
+      description: ISA sea-level static pressure
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562)"}
+    t_sl:
+      value: 288.15
+      units: K
+      description: ISA sea-level temperature
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562)"}
+    rho_sl:
+      value: 1.225
+      units: kg/m**3
+      description: ISA sea-level density
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562)"}
+    gamma:
+      value: 1.4
+      units: "1"
+      description: Ratio of specific heats of air
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    sutherland_s:
+      value: 110.4
+      units: K
+      description: Sutherland constant of air
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 eq. 51"}
+    g0:
+      value: 9.80665
+      units: m/s**2
+      description: Standard gravity
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976"}
+    n_sub:
+      value: 8
+      units: "1"
+      description: Trapezoidal sub-steps per frame for second-order elements (none in the proxy map; numerical)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml constants.n_sub (A-W1.6-1)"}
+  rtd_inlet:
+    tau:
+      value: 2.0
+      units: s
+      description: T1 RTD time constant at the reference airflow (proxy controller lane)
+      evidence: {tag: ASSUMPTION, source: "Tejas M12 rtd_inlet.tau (A-W1.6-3) transferred to the proxy controller lane; not public"}
+      sweep: [0.5, 5.0]
+      assumption_id: A-W2.4a-11
+    w_ref:
+      value: 122.65
+      units: kg/s
+      description: Reference airflow of the flux law (proxy design airflow)
+      evidence: {tag: ASSUMPTION, source: "proxy M07 design airflow (configs/proxy_dashlink/params/M07.yaml closure, A-W2.4a-2)"}
+      sweep: [100.0, 150.0]
+      assumption_id: A-W2.4a-11
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: Exponent of the mass-flux law tau = tau_ref (W/W_ref)^-n
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23; round-2 PREREGISTRATION A6"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref in the flux law (numerical)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml rtd_inlet.w_min_frac (A-W1.6-3)"}
+    deice_bias:
+      value: 0.0
+      units: K
+      description: Hot-air de-icing heating error (none modelled for the proxy lane)
+      evidence: {tag: ASSUMPTION, source: "no proxy de-icing data; Tejas value 0.2 K (A-W1.6-3)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W2.4a-11
+  tc_t5:
+    tau:
+      value: 0.81
+      units: s
+      description: Controller T5 harness probe time constant at W_ref (each of the 2 x 4 probes) - the measured proxy thermocouple lag
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S tau_TC,ref 0.806 s (CV 0.55-1.18 s), 687-CAL (analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; REPORT §3.2)"}
+    w_ref:
+      value: 112.37
+      units: kg/s
+      description: Reference airflow of the measured thermocouple law (proxy M07 airflow at N1c 90 %, SLS - the round-2 reference condition wrel = 1)
+      evidence: {tag: ASSUMPTION, source: "round-2 ma_model.py wrel = delta/sqrt(theta) N1c/90 (reference N1c 90 % SLS); proxy M07 steady airflow at that point (derived; recomputed for the W2.4a-2 identified plant by analysis/proxy_quicklook/code/st_schedules.py)"}
+      sweep: [70.0, 130.0]
+      assumption_id: A-W2.4a-11
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: Thermocouple mass-flux exponent
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23; round-2 W_EXP -0.5 (ma_model.py)"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref (numerical)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml tc_t5.w_min_frac (A-W1.6-4)"}
+    pattern:
+      value: 0.0
+      units: K
+      description: Per-probe circumferential pattern offset (none)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml tc_t5.pattern (A-W1.6-4)"}
+  tc_t25:
+    tau:
+      value: 1.0
+      units: s
+      description: T25 sensor time constant at W_ref (proxy controller)
+      evidence: {tag: ASSUMPTION, source: "Tejas M12 tc_t25.tau (A-W1.6-5) transferred; not public"}
+      sweep: [0.3, 3.0]
+      assumption_id: A-W2.4a-11
+    w_ref:
+      value: 122.65
+      units: kg/s
+      description: Reference airflow of the T25 flux law (proxy design airflow)
+      evidence: {tag: ASSUMPTION, source: "proxy M07 design airflow (A-W2.4a-2)"}
+      sweep: [100.0, 150.0]
+      assumption_id: A-W2.4a-11
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: T25 mass-flux exponent
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref (numerical)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml tc_t25.w_min_frac (A-W1.6-5)"}
+  ps3_transducer:
+    tau:
+      value: 0.02
+      units: s
+      description: PS3 transducer plus sense-line lag (proxy controller)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml ps3_transducer.tau (A-W1.6-6)"}
+  egt_indication:
+    tau:
+      value: 4.3340
+      units: s
+      description: "PROXY (A-W2.4a-11): EGT indication (DASHlink EGT_k source) lag at W_ref, the thermocouple flux law tau = tau_ref (W/W_ref)^-0.5 (about 1.4 x tau_ref at cruise airflow). It carries all of the slowness the CAL transients show between the model T5 and the recorded EGT word as a recorded-indication lag; whether part of it is gas-path heat storage is not separable from the words (no released heat-capacity value), so this is a stand-in, not probe physics"
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage 5 (analysis/proxy_quicklook/results/stage5): staged indirect transient-weighted output-error identification on 687-CAL, n = 4 A/T windows of 120 s, shape residual, with the round-2 prior as a Gaussian penalty (posterior 4.33 s, free 4.35 s). CONFLICT stated: round-2 frozen M-A variant S 0.806 s was fitted under the misspecified open-loop model (REPORT §3.2); the DASHlink step responses (EGT tau 3-6 s, research_notes empirical_dashlink_texture.md Q7, MEASURED) support the slower value; coordinator decision 2026-10-15: keep for the quick look, labelled PROXY"}
+      proxy: true
+      sweep: [0.55, 6.0]
+      assumption_id: A-W2.4a-11
+    w_ref:
+      value: 112.37
+      units: kg/s
+      description: Reference airflow of the measured law (proxy M07 airflow at N1c 90 %, SLS)
+      evidence: {tag: ASSUMPTION, source: "round-2 ma_model.py wrel reference (N1c 90 % SLS); proxy M07 steady airflow there (recomputed for the W2.4a-2 identified plant, st_schedules.py)"}
+      sweep: [70.0, 130.0]
+      assumption_id: A-W2.4a-11
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: Thermocouple mass-flux exponent
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23; round-2 W_EXP -0.5"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref (numerical)
+      evidence: {tag: "TRANSFER: Phalanx Tejas M12", source: "configs/tejas/params/M12.yaml tc_t5.w_min_frac"}
+  ff_indication:
+    tau:
+      value: 1.5340
+      units: s
+      description: "PROXY (A-W2.4a-11): recorded FF indication / damping path (DASHlink FF_k source), first-order lag. Not the meter physics: a fuel-flow transducer does not respond in 1.5 s; the lag stands in for the slowness the CAL transients show between the model's fuel flow and the recorded word (indication damping, or fuel-control dynamics the closed-loop M08 does not carry). Exposed by tests/integration/test_proxy_word_lags.py"
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage 5 (analysis/proxy_quicklook/results/stage5): staged indirect transient-weighted output-error identification on 687-CAL, n = 4 A/T windows of 120 s, shape residual. CONFLICT stated: round-2 frozen M-A variant S tau_FFs 0.218 s was fitted under the misspecified open-loop model whose fuel-control rate limit (262 lb/h/s) carried the slowness (REPORT §3.2); the DASHlink step responses (FF tau about 1.3 s, as slow as N2; empirical_dashlink_texture.md Q7) support the slower value; coordinator decision 2026-10-15: keep for the quick look, labelled PROXY"}
+      proxy: true
+      sweep: [0.1, 2.0]
+      assumption_id: A-W2.4a-11

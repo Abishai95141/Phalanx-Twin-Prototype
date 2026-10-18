@@ -1,0 +1,23 @@
+{
+ "erosion_fouling": {
+  "3000_flights": {
+   "hpc_eta_loss_mean": 0.02092345737530429,
+   "hpc_eta_loss_sd": 0.003602285919452012,
+   "hpc_gamma_over_eta": 1.8,
+   "hpt_eta_loss_mean": 0.025985682428843252,
+   "hpt_eta_loss_sd": 0.003967958026127787
+  },
+  "5000_flights": {
+   "hpc_eta_loss_mean": 0.04945850900276228,
+   "hpc_eta_loss_sd": 0.006513306457067035,
+   "hpc_gamma_over_eta": 1.8,
+   "hpt_eta_loss_mean": 0.043552650021869393,
+   "hpt_eta_loss_sd": 0.0053337857523343205
+  },
+  "fouling_500h": {
+   "mean": 0.01020180590365185,
+   "n": 200,
+   "sd": 0.0021496173786407194
+  }
+ }
+}

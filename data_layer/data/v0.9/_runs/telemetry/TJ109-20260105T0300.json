@@ -1,0 +1,43 @@
+{
+  "abort": {
+    "kind": "ground_impact",
+    "message": "[ground_impact] at step 1144196 (t = 4767.48 s, PATTERN): airborne phase with height above ground 0.97 m",
+    "phase": "PATTERN",
+    "t_s": 4767.483333333334
+  },
+  "cir_rows": 74032047,
+  "code_commit": "6d4dc52f52eb1359bc244d36648ef1058876129b",
+  "completed": false,
+  "deliveries": [
+    {
+      "attempt": 0,
+      "complete": true,
+      "t_ingest": 1767607862063719499
+    }
+  ],
+  "flown_s": 4767.0,
+  "kind": "telemetry",
+  "mission_type": "INST_NAV",
+  "planned_window_s": 5620.282090628,
+  "preview": "PREVIEW: behaviour not yet validated",
+  "recorded_channels": 231,
+  "root_seed_hex": "000000000000000000000000000000a5",
+  "rows": {
+    "events.bit_faults": 2,
+    "events.cautions": 31,
+    "events.exceedances": 30,
+    "param.samples": 34656372,
+    "sortie.manifest": 1,
+    "usage.counters": 0
+  },
+  "scenario": "gate",
+  "sortie_id": "TJ109-20260105T0300",
+  "t_end": 1767585843537985073,
+  "t_ingest": 1767607862063719499,
+  "t_landing": null,
+  "t_start": 1767581076537985073,
+  "t_takeoff": 1767582032492151739,
+  "tail_no": "TJ109",
+  "truncated": false,
+  "wall_s": 542.4
+}

@@ -1,0 +1,43 @@
+687200104141245.mat {'cruise': 6, 'climb': 9, 'ground_idle': 0}
+687200104161114.mat {'cruise': 1, 'climb': 9, 'ground_idle': 2}
+687200104181334.mat {'cruise': 0, 'climb': 7, 'ground_idle': 4}
+687200104181801.mat {'cruise': 1, 'climb': 12, 'ground_idle': 1}
+687200104201125.mat {'cruise': 0, 'climb': 5, 'ground_idle': 4}
+687200104260757.mat {'cruise': 9, 'climb': 10, 'ground_idle': 0}
+687200104261350.mat {'cruise': 1, 'climb': 2, 'ground_idle': 6}
+687200104300621.mat {'cruise': 2, 'climb': 3, 'ground_idle': 3}
+687200107041258.mat {'cruise': 4, 'climb': 3, 'ground_idle': 0}
+687200107050507.mat {'cruise': 4, 'climb': 7, 'ground_idle': 1}
+687200107060507.mat {'cruise': 0, 'climb': 9, 'ground_idle': 3}
+687200107140721.mat {'cruise': 3, 'climb': 6, 'ground_idle': 8}
+687200107150546.mat {'cruise': 1, 'climb': 4, 'ground_idle': 7}
+687200107171131.mat {'cruise': 1, 'climb': 2, 'ground_idle': 9}
+687200107171608.mat {'cruise': 1, 'climb': 2, 'ground_idle': 6}
+687200107190506.mat {'cruise': 0, 'climb': 3, 'ground_idle': 3}
+687200107192334.mat {'cruise': 13, 'climb': 7, 'ground_idle': 4}
+687200107211146.mat {'cruise': 9, 'climb': 10, 'ground_idle': 3}
+687200107221719.mat {'cruise': 1, 'climb': 3, 'ground_idle': 6}
+687200107261123.mat {'cruise': 6, 'climb': 6, 'ground_idle': 0}
+687200107281824.mat {'cruise': 4, 'climb': 7, 'ground_idle': 3}
+687200108031000.mat {'cruise': 1, 'climb': 3, 'ground_idle': 11}
+687200108041956.mat {'cruise': 3, 'climb': 3, 'ground_idle': 3}
+687200108101254.mat {'cruise': 1, 'climb': 4, 'ground_idle': 7}
+687200108110851.mat {'cruise': 7, 'climb': 10, 'ground_idle': 4}
+687200108151000.mat {'cruise': 1, 'climb': 3, 'ground_idle': 5}
+687200108161629.mat {'cruise': 3, 'climb': 5, 'ground_idle': 6}
+687200108170757.mat {'cruise': 1, 'climb': 8, 'ground_idle': 3}
+687200108171456.mat {'cruise': 0, 'climb': 5, 'ground_idle': 3}
+687200108212101.mat {'cruise': 1, 'climb': 9, 'ground_idle': 4}
+687200108231430.mat {'cruise': 0, 'climb': 6, 'ground_idle': 5}
+687200108261844.mat {'cruise': 1, 'climb': 6, 'ground_idle': 2}
+687200108270507.mat {'cruise': 4, 'climb': 4, 'ground_idle': 7}
+687200108281858.mat {'cruise': 2, 'climb': 2, 'ground_idle': 6}
+687200109011816.mat {'cruise': 1, 'climb': 6, 'ground_idle': 2}
+687200109041600.mat {'cruise': 1, 'climb': 8, 'ground_idle': 4}
+687200109060729.mat {'cruise': 2, 'climb': 3, 'ground_idle': 4}
+687200109061347.mat {'cruise': 0, 'climb': 0, 'ground_idle': 2}
+687200109131035.mat {'cruise': 2, 'climb': 6, 'ground_idle': 7}
+687200109131813.mat {'cruise': 1, 'climb': 8, 'ground_idle': 3}
+/Users/abishaikc/Phalanx/analysis/dashlink_texture/texture.py:242: RuntimeWarning: Mean of empty slice
+  npz[f"acf|{key[0]}|{key[1]}"] = np.nanmean([a[:nl] for a in lst], axis=0)
+windows 26959 summary rows 171

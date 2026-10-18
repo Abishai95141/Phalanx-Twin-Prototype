@@ -1,0 +1,132 @@
+# M14 BIT / exceedance / caution code BEHAVIOUR (W2.1c; dictionary 0.1.2, AD-48 item 5). The codes themselves -
+# identity and meaning: desc, severity, fault list, mechanism, source LRU, lane, src, CWS legend and voice channel,
+# monitor channel / limit / sense / gate, groups - are the dictionary's single SYNTHETIC table
+# `code_tables.bit_codes` (AD-19), read with `Dictionary.bit_codes()` / `bit_code(c)`. A code's index is its
+# dictionary index. Every dictionary code has exactly one row here and every row is a dictionary code (checked on
+# load). FADEC-reported codes are dictionary codes (M08 re-keyed, W2.1b); `MonitoringConfig(fadec_codes="M08")`
+# reads a not-yet-re-keyed M08 through the dictionary's legacy map instead.
+#
+# Per code (M14 behaviour, SYNTHETIC / ASSUMPTION as A-W1.5-36): tech (LRU technology for CND/NFF propensity),
+#   displayed (reaches the cockpit; default true), suspects ([lru, isolation confidence]), regime (bit | ehm: the
+#   threshold regime of an internal test), sympathetic ([code, p, delay lo, hi] s), monitor (cir codes: persist_s,
+#   clear_s).
+format: phalanx.m14_codes/2
+cnd_by_tech: {rf: 0.295, digital: 0.445, analog: 0.63, electromech: 0.30, sensor: 0.40}
+codes:
+  # ---- engine sensors and FADEC (lane faults reported by the FADEC signal validator, M08)
+  ENG-001: {tech: sensor, suspects: [[FADEC, 0.2], [N1_PICKUP_A, 0.8]]}
+  ENG-002: {tech: sensor, suspects: [[FADEC, 0.2], [N1_PICKUP_B, 0.8]]}
+  ENG-003: {tech: sensor, suspects: [[FADEC, 0.2], [ALTERNATOR, 0.8]]}
+  ENG-004: {tech: sensor, suspects: [[FADEC, 0.2], [ALTERNATOR, 0.8]]}
+  ENG-005: {tech: sensor, suspects: [[T5_HARNESS_A, 0.85], [FADEC, 0.15]]}
+  ENG-006: {tech: sensor, suspects: [[T5_HARNESS_B, 0.85], [FADEC, 0.15]]}
+  ENG-007: {tech: sensor, suspects: [[PS3_TRANSDUCER, 0.7], [PS3_LINE, 0.3]]}
+  ENG-008: {tech: sensor, suspects: [[PS3_TRANSDUCER, 0.7], [PS3_LINE, 0.3]]}
+  ENG-009: {tech: sensor, suspects: [[T1_RTD, 0.9]]}
+  ENG-010: {tech: sensor, suspects: [[T1_RTD, 0.9]]}
+  ENG-011: {tech: sensor, suspects: [[A8_LVDT, 0.7], [NOZZLE_ACTUATOR, 0.3]]}
+  ENG-012: {tech: analog, suspects: [[OIL_P_TRANSMITTER, 0.8]]}
+  ENG-014: {tech: sensor, suspects: [[T25_SENSOR, 0.9]]}
+  ENG-024: {tech: sensor, suspects: [[T25_SENSOR, 0.9]]}
+  ENG-031: {tech: sensor, suspects: [[N1_PICKUP, 0.6], [FADEC, 0.4]]}
+  ENG-032: {tech: sensor, suspects: [[ALTERNATOR, 0.6], [FADEC, 0.4]]}
+  ENG-033: {tech: sensor, suspects: [[T1_RTD, 0.6], [FADEC, 0.4]]}
+  ENG-034: {tech: sensor, suspects: [[T25_SENSOR, 0.6], [FADEC, 0.4]]}
+  ENG-035: {tech: sensor, suspects: [[PS3_TRANSDUCER, 0.6], [FADEC, 0.4]]}
+  ENG-036: {tech: sensor, suspects: [[T5_HARNESS, 0.6], [FADEC, 0.4]]}
+  ENG-041: {tech: sensor, suspects: [[N1_PICKUP, 0.6], [FADEC, 0.4]]}
+  ENG-042: {tech: sensor, suspects: [[ALTERNATOR, 0.6], [FADEC, 0.4]]}
+  ENG-043: {tech: sensor, suspects: [[T1_RTD, 0.6], [FADEC, 0.4]]}
+  ENG-044: {tech: sensor, suspects: [[T25_SENSOR, 0.6], [FADEC, 0.4]]}
+  ENG-045: {tech: sensor, suspects: [[PS3_TRANSDUCER, 0.6], [FADEC, 0.4]]}
+  ENG-046: {tech: sensor, suspects: [[T5_HARNESS, 0.6], [FADEC, 0.4]]}
+  ENG-051: {tech: sensor, suspects: [[N1_PICKUP, 0.7], [FADEC, 0.3]]}
+  ENG-052: {tech: sensor, suspects: [[ALTERNATOR, 0.7], [FADEC, 0.3]]}
+  ENG-053: {tech: sensor, suspects: [[T1_RTD, 0.7], [FADEC, 0.3]]}
+  ENG-054: {tech: sensor, suspects: [[T25_SENSOR, 0.7], [FADEC, 0.3]]}
+  ENG-055: {tech: sensor, suspects: [[PS3_TRANSDUCER, 0.7], [FADEC, 0.3]]}
+  ENG-056: {tech: sensor, suspects: [[T5_HARNESS, 0.7], [FADEC, 0.3]]}
+  ENG-508: {tech: digital, suspects: [[FADEC, 0.6], [ENGINE_SENSORS, 0.4]]}
+  ENG-101: {tech: electromech, suspects: [[NOZZLE_ACTUATOR, 0.7], [FADEC, 0.3]]}
+  ENG-102: {tech: electromech, suspects: [[VG_ACTUATOR, 0.7], [FADEC, 0.3]]}
+  ENG-103: {tech: electromech, suspects: [[FMU, 0.8], [FADEC, 0.2]]}
+  ENG-201: {tech: digital, suspects: [[FADEC, 0.95]]}
+  ENG-202: {tech: digital, suspects: [[FADEC, 0.95]]}
+  ENG-401: {tech: digital, suspects: [[FADEC, 0.6], [FADEC_ALTERNATOR, 0.4]], sympathetic: [[ENG-201, 0.5, 0.0, 0.5], [ENG-202, 0.5, 0.0, 0.5]]}
+  ENG-501: {tech: digital, suspects: [[ENGINE, 0.6], [PS3_TRANSDUCER, 0.2], [INLET, 0.2]]}
+  ENG-502: {tech: digital, suspects: [[ENGINE, 0.8], [FMU, 0.2]]}
+  ENG-503: {tech: digital, suspects: [[AB_IGNITER, 0.5], [AB_SPRAYBAR, 0.3], [FADEC, 0.2]]}
+  ENG-504: {tech: digital, suspects: [[FMU, 0.4], [JFS, 0.3], [IGNITION, 0.3]]}
+  ENG-505: {tech: digital, suspects: [[FMU, 0.6], [FADEC, 0.4]]}
+  ENG-506: {tech: digital, suspects: [[ENGINE, 0.9]]}
+  ENG-701: {tech: digital, suspects: [[ENGINE, 0.7], [T5_HARNESS_A, 0.15], [T5_HARNESS_B, 0.15]], monitor: {persist_s: 0.3, clear_s: 1.0}}
+  ENG-702: {tech: digital, suspects: [[FADEC, 0.5], [ENGINE, 0.5]], monitor: {persist_s: 0.3, clear_s: 1.0}}
+  ENG-703: {tech: digital, suspects: [[FADEC, 0.5], [ENGINE, 0.5]], monitor: {persist_s: 0.3, clear_s: 1.0}}
+  # ---- engine condition monitoring (ECMS)
+  ECM-001: {tech: electromech, suspects: [[ENGINE_BEARING, 0.6], [AMAGB, 0.4]], monitor: {persist_s: 1.0, clear_s: 5.0}}
+  ECM-002: {tech: digital, suspects: [[ECMS, 0.95]]}
+  ECM-501: {tech: digital, suspects: [[ENGINE, 0.8], [ENGINE_SENSORS, 0.2]], regime: ehm}
+  ECM-701: {tech: analog, suspects: [[ENGINE, 0.6], [VIB_PICKUP, 0.4]], monitor: {persist_s: 5.0, clear_s: 5.0}}
+  ECM-702: {tech: analog, suspects: [[ENGINE_OIL_SYSTEM, 0.6], [OIL_P_TRANSMITTER, 0.4]], monitor: {persist_s: 30.0, clear_s: 5.0}}
+  # ---- flight control (DFCC CBIT; lane faults reported by the DFCC, M05)
+  FCS-001: {tech: sensor, suspects: [[RSA, 0.9]]}
+  FCS-005: {tech: sensor, suspects: [[ASA, 0.9]]}
+  FCS-101: {tech: electromech, suspects: [[SERVO_ACTUATOR, 0.7], [DFCC, 0.3]]}
+  FCS-102: {tech: electromech, suspects: [[SLAT_ACTUATOR, 0.8], [DFCC, 0.2]]}
+  FCS-201: {tech: digital, suspects: [[DFCC, 0.9]], sympathetic: [[FCS-001, 0.3, 0.0, 0.2], [FCS-005, 0.3, 0.0, 0.2]]}
+  FCS-501: {tech: digital, suspects: [[ADC, 0.5], [AOA_VANE, 0.5]]}
+  FCS-502: {tech: digital, suspects: [[DFCC, 0.5], [ADC, 0.5]]}
+  # ---- air data
+  ADC-001: {tech: sensor, suspects: [[AOA_VANE, 0.9]]}
+  ADC-002: {tech: analog, suspects: [[ADC, 0.8], [PITOT_STATIC, 0.2]]}
+  ADC-401: {tech: electromech, suspects: [[PROBE_HEATER, 0.9]]}
+  ADC-501: {tech: digital, suspects: [[ADC, 0.6], [PITOT_STATIC, 0.4]]}
+  # ---- navigation and avionics
+  NAV-001: {tech: rf, suspects: [[INGPS, 0.9]]}
+  NAV-201: {tech: digital, suspects: [[INGPS, 0.95]]}
+  AVI-201: {tech: rf, suspects: [[RADAR, 0.8]]}
+  AVI-202: {tech: digital, suspects: [[SMS, 0.85]]}
+  AVI-203: {tech: rf, suspects: [[INGPS, 0.85]]}
+  AVI-204: {tech: sensor, suspects: [[AHRS, 0.9]]}
+  AVI-205: {tech: digital, suspects: [[MC, 0.9]]}
+  AVI-301: {tech: digital, suspects: [[MUX_BUS, 0.5], [MC, 0.5]], sympathetic: [[AVI-201, 0.4, 0.0, 2.0], [AVI-202, 0.4, 0.0, 2.0], [AVI-203, 0.4, 0.0, 2.0]]}
+  # ---- hydraulics
+  HYD-001: {tech: electromech, suspects: [[HYD_FILTER, 0.95]]}
+  HYD-101: {tech: electromech, suspects: [[HYD_PUMP, 0.8], [AMAGB, 0.2]]}
+  HYD-501: {tech: analog, suspects: [[HYD_PUMP, 0.5], [HYD_LEAK, 0.5]], monitor: {persist_s: 2.0, clear_s: 2.0}}
+  HYD-502: {tech: analog, suspects: [[HYD_PUMP, 0.5], [HYD_LEAK, 0.5]], monitor: {persist_s: 2.0, clear_s: 2.0}}
+  HYD-701: {tech: analog, suspects: [[HYD_COOLER, 0.6], [HYD_PUMP, 0.4]], monitor: {persist_s: 10.0, clear_s: 10.0}}
+  # ---- fuel
+  FUE-001: {tech: analog, suspects: [[FUEL_PROBE, 0.9]]}
+  FUE-401: {tech: electromech, suspects: [[BOOST_PUMP, 0.9]]}
+  FUE-501: {tech: analog, suspects: [], monitor: {persist_s: 5.0, clear_s: 5.0}}
+  # ---- electrical
+  ELE-401: {tech: electromech, suspects: [[GENERATOR, 0.6], [GCU, 0.4]]}
+  ELE-702: {tech: analog, suspects: [[TRU, 0.5], [GENERATOR, 0.5]], monitor: {persist_s: 1.0, clear_s: 1.0}}
+  ELE-703: {tech: analog, suspects: [[BATTERY, 0.9]], monitor: {persist_s: 5.0, clear_s: 5.0}}
+  ELE-404: {tech: electromech, suspects: [[GENERATOR, 0.6], [GCU, 0.4]]}
+  ELE-405: {tech: analog, suspects: [[TRU, 0.9]]}
+  ELE-701: {tech: analog, suspects: [[GCU, 0.6], [GENERATOR, 0.4]], monitor: {persist_s: 2.0, clear_s: 2.0}}
+  # ---- ECS and life support
+  ECS-501: {tech: electromech, suspects: [[ECS_PACK, 0.6], [HX, 0.4]]}
+  ECS-701: {tech: analog, suspects: [[PRECOOLER, 0.6], [BLEED_VALVE, 0.4]], monitor: {persist_s: 5.0, clear_s: 5.0}}
+  ECS-503: {tech: analog, suspects: [[OBOGS, 0.8]], monitor: {persist_s: 10.0, clear_s: 10.0}}
+  # ---- landing gear and brakes
+  LGB-501: {tech: electromech, suspects: [[GEAR_PROXIMITY, 0.6], [GEAR_ACTUATOR, 0.4]]}
+  LGB-502: {tech: sensor, suspects: [[WOW_SWITCH, 0.7], [STRUT, 0.3]]}
+  LGB-503: {tech: electromech, suspects: [[BRAKE_CONTROL, 0.5], [BRAKE_VALVE, 0.5]]}
+  # ---- secondary power, fire
+  SPS-001: {tech: electromech, suspects: [[AMAGB, 0.9]]}
+  SPS-501: {tech: electromech, suspects: [[JFS, 0.7], [BATTERY, 0.3]]}
+  FIR-501: {tech: electromech, suspects: [[ENGINE, 0.8], [FIRE_LOOP, 0.2]], monitor: {persist_s: 0.5, clear_s: 5.0}}
+  # ---- structure and flight-envelope exceedances (OAC) and the 4 voice warnings (CWS)
+  STR-701: {tech: digital, suspects: [], monitor: {persist_s: 0.1, clear_s: 0.5}}
+  STR-702: {tech: digital, suspects: [], monitor: {persist_s: 0.1, clear_s: 0.5}}
+  STR-703: {tech: digital, suspects: [], monitor: {persist_s: 1.0, clear_s: 1.0}}
+  CWS-701: {tech: digital, suspects: [], monitor: {persist_s: 0.5, clear_s: 1.0}}
+  CWS-702: {tech: digital, suspects: [], monitor: {persist_s: 1.0, clear_s: 2.0}}
+  CWS-703: {tech: digital, suspects: []}
+  CWS-704: {tech: digital, suspects: []}
+  # ---- dictionary 0.1.2 additions (M08 AB faults, formerly folded into ENG-503 by the translation)
+  ENG-509: {tech: digital, suspects: [[AB_IGNITER, 0.5], [AB_SPRAYBAR, 0.3], [FADEC, 0.2]]}  # dictionary 0.1.2 (AB lockout after exhausted light-off retries): behaviour as ENG-503 (A-W1.5-36)
+  ENG-510: {tech: digital, suspects: [[AB_IGNITER, 0.5], [AB_SPRAYBAR, 0.3], [FADEC, 0.2]]}  # dictionary 0.1.2 (AB blowout): behaviour as ENG-503 (A-W1.5-36)

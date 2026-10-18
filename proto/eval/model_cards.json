@@ -1,0 +1,98 @@
+{
+ "note": "S3 model cards, 17 Oct 2026. Not registered on the event log yet (S1 builds it). Synthetic simulator output; nothing here is real Tejas / IAF / F404 data or validated physics. These results show the pipeline works on simulated or generated data, not that it would predict real failures.",
+ "training_worlds": {
+  "source_label": "Simulated fleet history",
+  "builder": "proto/runner/train_worlds.py: TailRunner(tail, 735, root=0x7A10000 + seed), station routine, Arrow IPC store (ipcstore.store_class)",
+  "seeds": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "worlds": 32,
+  "horizon_days": 730,
+  "tail_years": 63.96,
+  "where": "LinuxONE server, 2 workers, numba stand-in; 3,441 s wall; 104-261 s and up to 773 MB per world",
+  "outputs": "server proto/runs/train/seed=<k>/fleet (+ _restricted_labels/fleet); counts proto/eval/train_counts.{json,md}"
+ },
+ "models": [
+  {
+   "model_id": "hazard",
+   "model_version": "0.2.0",
+   "file": "proto/ground/engines/hazard.py",
+   "artifact": "proto/runs/train/hazard_model.json (kind age, fitted on seeds 1-4; server copy is what the live twin reads)",
+   "source": "train",
+   "source_label": "Simulated fleet history",
+   "method": "installation spells from COMPONENT_LIFE (redacted serials repaired); event = removal with a CONFIRMED or BCM shop finding, not hard-time (MAL-HT), linked by job + serial + time (ties and redacted serials by item hours); three kinds, ridge 0.1 partial pooling across classes: class_exp (events per FH), age (Weibull AFT on time since install, class in scale and shape), landmark (Weibull AFT on residual life at 10-FH landmarks with age, class alarms in last 10 FH, alarm rate, prior RTOKs of the serial, inferred-install flag); challenger chosen on validation seed 3, promoted only if it beats class_exp on held-out seed 4; INSUFFICIENT_EVIDENCE under 10 events; removal_risk_30d with 80 % interval",
+   "outputs": [
+    "removal_risk_30d"
+   ],
+   "gates": {
+    "G-COUNT-BEFORE-FIT": {
+     "result": "PASS",
+     "evidence": "train_counts.md written before any fit: 1,427 shop findings, 123 CONFIRMED (62 linked and not hard-time, 15 not linkable), 27 BCM, 1,277 RTOK, 102 not linkable; 80 hazard events (77 HYDP, 1 ENG, 1 GEN, 1 RADAR); 89 linked fault-confirmed findings, 9 of which were not attached to an installation spell (not investigated further)"
+    },
+    "G-MIN-EVENTS": {
+     "result": "PASS",
+     "evidence": "fitted: HYDP (77 events). INSUFFICIENT_EVIDENCE: ADC, AMAGB, BCU, BRAKE, CHUTE, DFCC, ENG, FADEC, FQGS, GEN, INGPS, JFS, OBOGS, RADAR, TYRE. BRAKE CONFIRMED findings are hard-time wear (31 of 39; 8 unlinked). No stress scenario used (trimmed scope)."
+    },
+    "G-BACKTEST": {
+     "result": "PASS: age promoted over the class-exposure baseline",
+     "evidence": "train 1-3, test 4, 15-FH horizon, HYDP, 346 landmarks / 28 events: class-exposure Brier 0.074414 (AUC 0.5, C 0.5); age Brier 0.059378 (AUC 0.903, C-index 0.8302); landmark covariates Brier 0.075439 (AUC 0.896, C 0.8225)"
+    },
+    "G-CALIBRATION": {
+     "result": "WEAK",
+     "evidence": "champion quintiles predicted / observed: 0.003/0.014, 0.018/0.000, 0.049/0.000, 0.098/0.043, 0.202/0.348 \u2014 under-predicts the oldest spells"
+    },
+    "G-CHALLENGER-SELECTION": {
+     "result": "age",
+     "evidence": "validation seed 3 (fit on 1-2), HYDP landmark Brier: age 0.059313, landmark covariates 0.069978"
+    },
+    "G-COVARIATES": {
+     "result": "not promoted",
+     "evidence": "landmark AFT effects (log residual life): age -0.0014, alarms_last10 -0.0476, alarm_rate +0.0779, prior_rtok -0.0254, inferred_install +0.0083 \u2014 alarms add almost nothing: in these worlds HYDP alarms are mostly not pump faults"
+    }
+   },
+   "champion": {
+    "kind": "age",
+    "label": "Weibull AFT on age, partially pooled",
+    "why": "beats the class-exposure baseline on held-out seed 4; chosen over the landmark covariate model on validation seed 3",
+    "lens_text": "hazard 0.2.0 age \u2014 champion: Weibull AFT on age (held-out Brier 0.0594 vs class-exposure baseline 0.0744); classes under 10 confirmed removals: INSUFFICIENT_EVIDENCE"
+   }
+  },
+  {
+   "model_id": "engine_health",
+   "model_version": "0.1.0",
+   "file": "proto/ground/engines/engine_health.py",
+   "source": "overlay",
+   "source_label": "Generated engine trend (overlay v0.1)",
+   "method": "takeoff-snapshot corrected EGT margin (830 degC redline, theta^0.5 correction); Kalman local linear trend in engine flight hours; one-sided CUSUM on standardised innovations (k 0.5, h 5); washes (fleet INSPECTION/WASH CLOSED) as known change points; days to margin limit = 10th percentile of Monte Carlo over the (level, slope) posterior at the engine's 30-day flying rate",
+   "outputs": [
+    "egt_margin_c",
+    "egt_margin_trend_c_per_10efh",
+    "days_to_margin_limit_p10",
+    "egt_step_alert",
+    "egt_trend_alert"
+   ],
+   "tuning": "settings fixed by hand before evaluation; not tuned on the evaluated data",
+   "gates": {
+    "G-OVERLAY-CONTRACT": {
+     "result": "PASS",
+     "evidence": "overlay_gonogo_check.json: 598 overlay files (Arrow IPC) all carry contract 0.2.0 hash a4396f1d...; delta rows inside (22 Jun 06:00, 23 Jun 06:00] IST; fleet/ tree unchanged; repeat call identical"
+    },
+    "G-DETECT-PLANTED": {
+     "result": "PASS",
+     "evidence": "training overlay (4 worlds, 730 d): 8 of 8 planted faults detected, all before the true margin reached 0 degC, median 6.95 d after onset; live gonogo run: 2 of 2 (7.9 d and 1.1 d after onset)"
+    },
+    "G-LEAD-TIME": {
+     "result": "PASS",
+     "evidence": "6 faults reached the true limit within the data: lead time from alert to limit 77.1-301.8 d (median 156.9 d); 2 did not reach it (3.6 and 18.0 degC left)"
+    },
+    "G-FALSE-ALARMS": {
+     "result": "PASS",
+     "evidence": "training overlay: 3 episodes in 9,025 healthy flights = 0.033 per 100 flights; gonogo: 0 in 531; tracking RMSE 0.77-0.90 degC"
+    }
+   }
+  }
+ ]
+}

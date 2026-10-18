@@ -1,0 +1,777 @@
+# M05 FCS (quadruplex DFCC replica) and the 13 actuators (W1.2). Format phalanx.params/1.
+# Evidence notes: "notes" = research_notes/Virtual fighter telemetry layer research/. Published Tejas facts are DIRECT
+# (Kala JOAST 67(2A) 2015; Patel et al. JOAST 58(4) 2006; DSJ 71(2) 2021; AeSI FTG 2005); gain tables, voting
+# thresholds and actuator internals are not public and are ASSUMPTION (swept; docs/assumptions.md W1.2 section).
+# For table and vector entries the sweep is a multiplicative factor on the whole table/vector ([1.0, 1.0] = not swept).
+# The hinge-moment model used by the actuators is the M06 aero database (M06.yaml set "hinge").
+format: phalanx.params/1
+module: M05
+sets:
+  dfcc:
+    frame_rate:
+      value: 80
+      units: Hz
+      description: DFCC minor frame rate (12.5 ms frame; exact rate group, divisor 3 of 240 Hz)
+      evidence: {tag: DIRECT, source: "Kala JOAST 67(2A) 2015 ('75% of 12.5 msec'); AeSI FTG 2005 §6 ('updated every 12.5 milli secs'); notes tejas_airframe_aero_fcs.md Q3 #42"}
+    compute_delay:
+      value: 0.008
+      units: s
+      description: Onboard computation delay from sampling to actuator command (applied at the first truth frame after it -> 8.33 ms)
+      evidence: {tag: DIRECT, source: "Patel, Deodhare & Chetty JOAST 58(4) 2006 p.279 ('computation delay of 8 ms modeled as a transportation lag'); report §0"}
+    n_sub_act:
+      value: 2
+      units: "1"
+      description: RK4 sub-steps per 240 Hz tick for the actuators
+      evidence: {tag: ASSUMPTION, source: "numerical configuration; servo poles ~57 rad/s give h|lambda| < 0.15 at 2 sub-steps (this WP)"}
+      sweep: [1, 4]
+      assumption_id: A-W1.2-20
+    crit_subsystems:
+      value: [0, 1, 3, 6, 7, 10]
+      units: "1"
+      description: "Indices (layout.SUBSYSTEMS) of the per-channel subsystems whose failure drops the channel: CPU, MEMORY, WATCHDOG, DA_CONVERTER, AD_CONVERTER, PSU"
+      evidence: {tag: ASSUMPTION, source: "23 subsystems per channel (JOAST 57(4) 2005, DIRECT); which ones are channel-critical is not public (notes tejas_avionics_and_parameter_inventory.md Q3)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-27
+  laws:
+    n_ref:
+      value: 1.0
+      units: standard_gravity
+      description: Normal-acceleration normaliser of the blended pitch error
+      evidence: {tag: ASSUMPTION, source: "C*-type blend normalisation (this WP); law structure q/Nz feedback DIRECT (JOAST 58(4))"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    q_ref:
+      value: 0.05
+      units: rad/s
+      description: Pitch-rate normaliser of the blended pitch error (~g/V at 200 m/s, C* crossover-velocity sense)
+      evidence: {tag: ASSUMPTION, source: "C* crossover velocity ~200 m/s (this WP)"}
+      sweep: [0.03, 0.1]
+      assumption_id: A-W1.2-22
+    blend_m0:
+      value: 0.90
+      units: "1"
+      description: Mach below which the pitch law integrates pitch-rate error (rate command)
+      evidence: {tag: ASSUMPTION, source: "ADMIRE blends q to Nz at M0.58-0.62 (TRANSFER: ADMIRE, FOI-R--1624--SE); moved to M0.90-1.00 because the Nz-integral design cannot meet the margin template in the Tejas high-instability band M0.55-0.9 on this airframe model (design exploration, this WP)"}
+      sweep: [0.58, 0.95]
+      assumption_id: A-W1.2-22
+    blend_m1:
+      value: 1.00
+      units: "1"
+      description: Mach above which the pitch law integrates normal-acceleration error (Nz command)
+      evidence: {tag: ASSUMPTION, source: "as blend_m0"}
+      sweep: [0.62, 1.1]
+      assumption_id: A-W1.2-22
+    q_max:
+      value: 20.0
+      units: deg/s
+      description: Pitch-rate command at full stick (rate-command region)
+      evidence: {tag: ASSUMPTION, source: "fighter practice; Tejas stick gradients not public (notes tejas_airframe_aero_fcs.md Q3 gaps)"}
+      sweep: [12.0, 30.0]
+      assumption_id: A-W1.2-23
+    nz_min:
+      value: -3.5
+      units: standard_gravity
+      description: Negative load-factor limit
+      evidence: {tag: DIRECT, source: "MoD DDP LCA Tejas (+8/-3.5 g); ADA AR 2019-20 (Navy +8g to -3.5g); dictionary constant nz_envelope_min"}
+    tau_pf_pitch:
+      value: 0.5
+      units: s
+      description: Command-path low-pass prefilter on pitch stick
+      evidence: {tag: ASSUMPTION, source: "JOAST 58(4): 'a low-pass filter added in the command path to meet the handling quality requirements' (DIRECT existence); 0.5 s keeps the pitch-rate overshoot ratio below 1.5 on this design (step-response study, this WP)"}
+      sweep: [0.05, 0.8]
+      assumption_id: A-W1.2-23
+    tau_pf_roll:
+      value: 0.1
+      units: s
+      description: Command-path low-pass prefilter on roll stick
+      evidence: {tag: ASSUMPTION, source: "as tau_pf_pitch"}
+      sweep: [0.05, 0.3]
+      assumption_id: A-W1.2-23
+    alpha_min:
+      value: -10.0
+      units: deg
+      description: Negative AoA limit of the carefree limiter (one-sided allowance on the predicted AoA, as the positive scheduled limit)
+      evidence: {tag: ASSUMPTION, source: "the Tejas CLAW is carefree with AoA and g limiting (DIRECT: ADA IFCS; tejas.gov.in FBW); structure TRANSFER from the NAL carefree design on ADMIRE (DSJ 73(3) 2023: maximum positive and negative AoA via one-sided feedback loops); the negative value is not public: it keeps alpha inside the Tejas WT data range (-15..30 deg, AeSI FTG 2005) with margin and above the elevon-effectiveness decline of M06 (0.905 at -10 deg, 0.714 at -20 deg); validation: Tejas negative-AoA clearance if released"}
+      sweep: [-15.0, -6.0]
+      assumption_id: A-W2.1-13
+    alpha_lead:
+      value: 0.3
+      units: s
+      description: AoA-limiter anticipation - the allowance uses the predicted AoA alpha + lead x pitch rate
+      evidence: {tag: ASSUMPTION, source: "carefree AoA protection engaging only when pilot inputs would exceed the limit (DSJ 73(3), ADMIRE stand-in); alpha-rate anticipation is limiter practice; Tejas algorithm not public"}
+      sweep: [0.1, 0.8]
+      assumption_id: A-W1.2-23
+    de_max:
+      value: 25.0
+      units: deg
+      description: Elevon command limit (symmetric plus differential)
+      evidence: {tag: DIRECT, source: "elevon +/-25 deg (Alpha Defense 2026, secondary; AeSI FTG 2005 Fig-8 25 deg axes); notes tejas_airframe_aero_fcs.md #35"}
+    da_max:
+      value: 18.0
+      units: deg
+      description: Differential elevon ('aileron') command limit
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5 ('aileron ... +/-18 deg')"}
+    da_rate:
+      value: 45.0
+      units: deg/s
+      description: Differential elevon command rate limit
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5 ('+/-45 deg/sec')"}
+    dr_max:
+      value: 30.0
+      units: deg
+      description: Rudder command limit
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5 (+/-30 deg); AeSI FTG 2005 spin charts (30 deg)"}
+    dr_rate:
+      value: 100.0
+      units: deg/s
+      description: Rudder command rate limit
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5 ('+/-100 deg/sec')"}
+    tau_washout:
+      value: 1.0
+      units: s
+      description: Yaw-rate washout time constant
+      evidence: {tag: ASSUMPTION, source: "lateral law feeds back stability-axis yaw rate (DSJ 71(2)); washout constant not public"}
+      sweep: [0.5, 3.0]
+      assumption_id: A-W1.2-22
+    k_pedal:
+      value: 0.5
+      units: "1"
+      description: Rudder deflection per unit pedal as a fraction of the rudder limit (direct pedal path)
+      evidence: {tag: ASSUMPTION, source: "pedal shaping not public (this WP)"}
+      sweep: [0.2, 1.0]
+      assumption_id: A-W1.2-22
+    slat_alpha0:
+      value: 4.0
+      units: deg
+      description: Slat schedule start (slats begin to deploy above this AoA)
+      evidence: {tag: ASSUMPTION, source: "slats 'automatically scheduled with AoA and IMN' (AeSI FTG 2005 §5, DIRECT); schedule not public"}
+      sweep: [0.0, 8.0]
+      assumption_id: A-W1.2-28
+    slat_alpha1:
+      value: 16.0
+      units: deg
+      description: AoA of full slat deployment
+      evidence: {tag: ASSUMPTION, source: "as slat_alpha0"}
+      sweep: [10.0, 22.0]
+      assumption_id: A-W1.2-28
+    slat_mach0:
+      value: 0.80
+      units: "1"
+      description: Mach where the slat schedule starts to fade
+      evidence: {tag: ASSUMPTION, source: "as slat_alpha0"}
+      sweep: [0.7, 0.9]
+      assumption_id: A-W1.2-28
+    slat_mach1:
+      value: 0.90
+      units: "1"
+      description: Mach above which slats are retracted
+      evidence: {tag: ASSUMPTION, source: "as slat_alpha0"}
+      sweep: [0.8, 1.0]
+      assumption_id: A-W1.2-28
+    slat_reversion:
+      value: 1.0
+      units: "1"
+      description: Slat fraction held in the fixed-gain reversion (no air data)
+      evidence: {tag: ASSUMPTION, source: "AeSI FTG 2005 §25: slats simplex in hydraulics, 'safer to set them in the safer extended position'"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.2-28
+    airbrake_open:
+      value: 50.0
+      units: deg
+      description: Airbrake commanded open angle (open-loop jacks run to the stop)
+      evidence: {tag: ASSUMPTION, source: "airbrakes are open-loop jacks operated from the cockpit (Kala 2015, DIRECT); angle = M06 airbrake_max (ASSUMPTION)"}
+      sweep: [30.0, 60.0]
+      assumption_id: A-W1.2-9
+    k_gnd_pitch:
+      value: 1.0
+      units: "1"
+      description: Ground law - elevon per unit pitch stick as a fraction of de_max (direct link)
+      evidence: {tag: ASSUMPTION, source: "WoW-selected ground law (report §3 coupling map, TRANSFER: F-35 AIB); Tejas ground law not public"}
+      sweep: [0.3, 1.0]
+      assumption_id: A-W1.2-26
+    k_gnd_q:
+      value: 0.0
+      units: s
+      description: Ground law - elevon per unit pitch rate (rate damping kept on the ground)
+      evidence: {tag: ASSUMPTION, source: "as k_gnd_pitch; zero = pure direct link (worst case of the false-WoW cascade)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W1.2-26
+    k_gnd_roll:
+      value: 1.0
+      units: "1"
+      description: Ground law - differential elevon per unit roll stick as a fraction of da_max
+      evidence: {tag: ASSUMPTION, source: "as k_gnd_pitch"}
+      sweep: [0.3, 1.0]
+      assumption_id: A-W1.2-26
+    k_gnd_yaw:
+      value: 1.0
+      units: "1"
+      description: Ground law - rudder per unit pedal as a fraction of dr_max
+      evidence: {tag: ASSUMPTION, source: "as k_gnd_pitch"}
+      sweep: [0.3, 1.0]
+      assumption_id: A-W1.2-26
+    p_max_fixed:
+      value: 90.0
+      units: deg/s
+      description: Roll-rate command at full stick in the fixed-gain reversion
+      evidence: {tag: ASSUMPTION, source: "reversion flown over a restricted envelope (JOAST 58(4)); value not public"}
+      sweep: [45.0, 150.0]
+      assumption_id: A-W1.2-26
+    g_ny_fixed:
+      value: -0.3
+      units: rad
+      description: Fixed-gain reversion - rudder per g of lateral acceleration (sideslip substitute without air data)
+      evidence: {tag: ASSUMPTION, source: "fixed-gain mode uses inertial sensors only (JOAST 58(4), DIRECT); gain not public"}
+      sweep: [-1.0, 0.0]
+      assumption_id: A-W1.2-26
+    nz_max_fixed:
+      value: 6.0
+      units: standard_gravity
+      description: Load-factor limit used by the g limiter in the fixed-gain reversion
+      evidence: {tag: ASSUMPTION, source: "restricted reversion envelope (JOAST 58(4)); IOC 6 g (JOAST 66(1))"}
+      sweep: [4.0, 8.0]
+      assumption_id: A-W1.2-26
+  schedule:
+    sched_mach:
+      table: {file: schedule.csv, column: mach}
+      units: "1"
+      description: Mach breakpoints of the limiter, roll-rate and ARI schedules
+      evidence: {tag: ASSUMPTION, source: "this WP (breakpoints at the published anchors)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-23
+    alpha_lim:
+      table: {file: schedule.csv, column: alpha_lim_deg}
+      units: deg
+      description: AoA limit vs Mach (26 deg subsonic, ~4 deg at M1.55)
+      evidence: {tag: ASSUMPTION, source: "26 deg subsonic and 1.55 M at 4 deg AoA cleared (ADA AR 2018-19, DIRECT anchors); shape between and beyond assumed (notes tejas_airframe_aero_fcs.md Q7 inferences)"}
+      sweep: [0.9, 1.05]
+      assumption_id: A-W1.2-23
+    nz_max:
+      table: {file: schedule.csv, column: nz_max_g}
+      units: standard_gravity
+      description: Positive load-factor limit vs Mach (+8 g subsonic operational, 6 g at M1.2)
+      evidence: {tag: ASSUMPTION, source: "+8 g operational (MoD DDP), 6 g at M1.2 (ADA AR 2018-19) DIRECT anchors; transonic fairing assumed; DFCC v7307 allows 8.5 g subsonic"}
+      sweep: [0.9, 1.07]
+      assumption_id: A-W1.2-23
+    p_max:
+      table: {file: schedule.csv, column: p_max_dps}
+      units: deg/s
+      description: Stability-axis roll-rate command at full roll stick vs Mach
+      evidence: {tag: ASSUMPTION, source: "ADMIRE baseline ~180 deg/s velocity-vector roll (DSJ 73(3), TRANSFER stand-in); Tejas value not public"}
+      sweep: [0.6, 1.3]
+      assumption_id: A-W1.2-23
+    ari:
+      table: {file: schedule.csv, column: ari}
+      units: "1"
+      description: "Aileron-to-rudder interconnect gain (rad rudder per rad differential elevon, Phalanx signs: -DSJ value) vs Mach; rows with ari_direct=1 carry the published values"
+      evidence: {tag: ASSUMPTION, source: "DSJ 71(2) 2021 Table 2 (6 km): +3.47 at M0.26, -0.60 at M0.7, -0.319 at M1.3 (DIRECT-unnamed); sign mapping to the Phalanx convention, interpolation and altitude-independence assumed"}
+      sweep: [0.67, 1.5]
+      assumption_id: A-W1.2-22
+    t_alpha_sched:
+      table: {file: schedule.csv, column: t_alpha_s}
+      units: s
+      description: AoA-limiter time constant vs Mach - pitch-rate allowance = (alpha_lim - alpha - lead q) / t_alpha (slow at low speed where the elevons saturate, fast where the g limit governs)
+      evidence: {tag: ASSUMPTION, source: "limiter structure and values set by the closed-loop limiter tests (this WP); Tejas algorithm not public"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-23
+  gain_schedule:
+    gs_mach:
+      table: {file: gains.csv, column: mach}
+      units: "1"
+      description: Mach of each designed gain row (full Mach x altitude grid; generated by phalanx.fcs.design.main)
+      evidence: {tag: ASSUMPTION, source: "Phalanx design on the M06 model (A-W1.2-22); gains scheduled on Mach and altitude (JOAST 58(4), DIRECT structure)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    gs_alt:
+      table: {file: gains.csv, column: alt}
+      units: m
+      description: Pressure altitude of each designed gain row
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    gs_g_n:
+      table: {file: gains.csv, column: g_n}
+      units: rad
+      description: Pitch - elevon per g of (ASA nz - 1)
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_q:
+      table: {file: gains.csv, column: g_q}
+      units: s
+      description: Pitch - elevon per rad/s of pitch rate
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_i:
+      table: {file: gains.csv, column: g_i}
+      units: rad/s
+      description: Pitch - elevon per unit of the integrated normalised error
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_ff:
+      table: {file: gains.csv, column: g_ff}
+      units: rad
+      description: Pitch - elevon per unit normalised command (feed-forward)
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_pr:
+      table: {file: gains.csv, column: g_pr}
+      units: s
+      description: Roll - differential elevon per rad/s of roll-rate error
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_ir:
+      table: {file: gains.csv, column: g_ir}
+      units: "1"
+      description: Roll - differential elevon per rad of integrated roll-rate error
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_b:
+      table: {file: gains.csv, column: g_b}
+      units: "1"
+      description: Yaw - rudder per rad of sideslip
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    gs_g_r:
+      table: {file: gains.csv, column: g_r}
+      units: s
+      description: Yaw - rudder per rad/s of washed-out stability-axis yaw rate
+      evidence: {tag: ASSUMPTION, source: "as gs_mach"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-22
+    fx_g_n:
+      table: {file: fixed_gains.csv, column: g_n}
+      units: rad
+      description: Fixed-gain reversion sets (row 0 undercarriage up, row 1 down) - g_n
+      evidence: {tag: ASSUMPTION, source: "Phalanx design at the fixed_* design points (A-W1.2-26); undercarriage-dependent fixed gains (JOAST 58(4), DIRECT)"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_q:
+      table: {file: fixed_gains.csv, column: g_q}
+      units: s
+      description: Fixed-gain sets - g_q
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_i:
+      table: {file: fixed_gains.csv, column: g_i}
+      units: rad/s
+      description: Fixed-gain sets - g_i
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_ff:
+      table: {file: fixed_gains.csv, column: g_ff}
+      units: rad
+      description: Fixed-gain sets - g_ff
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_pr:
+      table: {file: fixed_gains.csv, column: g_pr}
+      units: s
+      description: Fixed-gain sets - g_pr
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_ir:
+      table: {file: fixed_gains.csv, column: g_ir}
+      units: "1"
+      description: Fixed-gain sets - g_ir
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_b:
+      table: {file: fixed_gains.csv, column: g_b}
+      units: "1"
+      description: Fixed-gain sets - g_b (unused in reversion, which has no air data)
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+    fx_g_r:
+      table: {file: fixed_gains.csv, column: g_r}
+      units: s
+      description: Fixed-gain sets - g_r
+      evidence: {tag: ASSUMPTION, source: "as fx_g_n"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-26
+  monitors:
+    mon_thr_abs:
+      table: {file: monitors.csv, column: thr_abs}
+      units: "1"
+      description: "Lane mistrack threshold (absolute part) per voted signal in the signal's SI unit (rad/s, m/s2, rad, Pa, fraction of travel, m; row order = ports.VOTED_SIGNALS)"
+      evidence: {tag: ASSUMPTION, source: "mistrack thresholds and persistence not public (notes tejas_airframe_aero_fcs.md Q3 gaps); quad-FBW practice"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-24
+    mon_thr_rel:
+      table: {file: monitors.csv, column: thr_rel}
+      units: "1"
+      description: Lane mistrack threshold (relative part, fraction of the voted value)
+      evidence: {tag: ASSUMPTION, source: "as mon_thr_abs"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.2-24
+    mon_n:
+      table: {file: monitors.csv, column: n_persist}
+      units: "1"
+      description: Consecutive 80 Hz frames of mistrack before a lane is failed (8 = 100 ms)
+      evidence: {tag: ASSUMPTION, source: "as mon_thr_abs; F404 FADEC rate checks use 4 frames (report §9) - same order"}
+      sweep: [0.5, 3.0]
+      assumption_id: A-W1.2-24
+    vane_mistrack:
+      value: 5.0
+      units: deg
+      description: Left/right AoA vane disagreement threshold (after calibration)
+      evidence: {tag: ASSUMPTION, source: "'+/-2 deg tolerance where AoA calibration is not accurate' (AeSI FTG 2005 §20) plus sideslip-induced L/R difference; threshold not public"}
+      sweep: [3.0, 10.0]
+      assumption_id: A-W1.2-24
+    n_vane:
+      value: 8
+      units: "1"
+      description: Frames of vane disagreement before both vanes are excluded
+      evidence: {tag: ASSUMPTION, source: "as vane_mistrack"}
+      sweep: [4, 40]
+      assumption_id: A-W1.2-24
+  modes:
+    n_wow:
+      value: 2
+      units: "1"
+      description: Frames of main-gear WoW before the ground law is selected
+      evidence: {tag: ASSUMPTION, source: "WoW persistence not public; a false WoW selected the ground law in flight on an F-35A (report §3 coupling map, TRANSFER: F-35 AIB)"}
+      sweep: [1, 40]
+      assumption_id: A-W1.2-26
+    wow_interlock:
+      value: 0
+      units: "1"
+      description: 1 = refuse the ground law when the voted qbar exceeds wow_qbar_max (off by default, reproducing the AIB vulnerability)
+      evidence: {tag: ASSUMPTION, source: "Tejas WoW logic not public; the AIB cascade requires no airspeed interlock"}
+      sweep: [0, 1]
+      assumption_id: A-W1.2-26
+    wow_qbar_max:
+      value: 6000.0
+      units: Pa
+      description: Dynamic pressure above which the optional interlock rejects WoW (~100 m/s at sea level)
+      evidence: {tag: ASSUMPTION, source: "approach speeds 75-77 m/s (notes tejas_airframe_aero_fcs.md Q6 inferences)"}
+      sweep: [3000.0, 12000.0]
+      assumption_id: A-W1.2-26
+  airdata:
+    vane_k1:
+      value: 1.5
+      units: "1"
+      description: AoA vane local-flow calibration slope (local = k1 alpha + c0); must equal the M12 vane upwash model's nominal slope (1 + ku, M12 vane_aoa.ku 0.5)
+      evidence: {tag: ASSUMPTION, source: "local flow angles vary linearly with free-stream alpha/beta, independent of Mach to M1.6 (Krishna & Singh DSJ 52(1) 2002, DIRECT form); slope = the M12 nominal from the Tejas side-probe local-alpha slope 1.4-1.6 (Nusrath/DSJ 60(6), DIRECT at the SADP). W2.1a take-off fix: was 1.0, so the DFCC read 1.5x the free-stream alpha and the AoA limiter cut in at 2/3 of its limit"}
+      sweep: [1.06, 1.6]
+      assumption_id: A-W1.2-25
+    vane_c0:
+      value: 0.0
+      units: deg
+      description: AoA vane local-flow calibration offset
+      evidence: {tag: ASSUMPTION, source: "as vane_k1"}
+      sweep: [-2.0, 2.0]
+      assumption_id: A-W1.2-25
+    aoss_k1:
+      value: 1.11
+      units: "1"
+      description: AoSS vane local-flow calibration slope; must equal the M12 sidewash model's nominal slope (1 + ku, M12 vane_aoss.ku 0.11)
+      evidence: {tag: ASSUMPTION, source: "as vane_k1; slope = the M12 nominal (F-104 noseboom sidewash 0.105-0.115, TM-101714, TRANSFER). W2.1a: was 1.0 (DFCC beta 1.11x free stream)"}
+      sweep: [1.05, 1.3]
+      assumption_id: A-W1.2-25
+    aoss_c0:
+      value: 0.0
+      units: deg
+      description: AoSS vane local-flow calibration offset
+      evidence: {tag: ASSUMPTION, source: "as vane_k1"}
+      sweep: [-2.0, 2.0]
+      assumption_id: A-W1.2-25
+    isa_p0:
+      value: 101325.0
+      units: Pa
+      description: ICAO standard sea-level pressure (pressure altitude)
+      evidence: {tag: "TRANSFER: ICAO Doc 7488 standard atmosphere", source: "ICAO Doc 7488 / USSA-76"}
+    isa_t0:
+      value: 288.15
+      units: K
+      description: ICAO standard sea-level temperature
+      evidence: {tag: "TRANSFER: ICAO Doc 7488 standard atmosphere", source: "ICAO Doc 7488 / USSA-76"}
+    isa_lapse:
+      value: 0.0065
+      units: K/m
+      description: Tropospheric lapse rate
+      evidence: {tag: "TRANSFER: ICAO Doc 7488 standard atmosphere", source: "ICAO Doc 7488 / USSA-76"}
+    r_air:
+      value: 287.05287
+      units: J/kg/K
+      description: Specific gas constant of dry air
+      evidence: {tag: "TRANSFER: ICAO Doc 7488 standard atmosphere", source: "USSA-76"}
+    gamma_air:
+      value: 1.4
+      units: "1"
+      description: Ratio of specific heats (pitot-static Mach equations)
+      evidence: {tag: "TRANSFER: ICAO Doc 7488 standard atmosphere", source: "NACA Report 1135"}
+    isa_h_trop:
+      value: 11000.0
+      units: m
+      description: Tropopause (pressure-altitude formula switch)
+      evidence: {tag: "TRANSFER: ICAO Doc 7488 standard atmosphere", source: "ICAO Doc 7488"}
+    g0:
+      value: 9.80665
+      units: m/s**2
+      description: Standard gravity (g units of the ASA lanes)
+      evidence: {tag: "TRANSFER: ISO 80000-3 standard gravity", source: "BIPM SI Brochure"}
+  bit:
+    n_cbit:
+      value: 3
+      units: "1"
+      description: CBIT persistence (frames) before a channel or servo fault is latched
+      evidence: {tag: ASSUMPTION, source: "CBIT every frame with persistence counters (notes tejas_avionics_and_parameter_inventory.md Q3 inferences); value not public"}
+      sweep: [1, 10]
+      assumption_id: A-W1.2-27
+    pbit_time:
+      value: 60.0
+      units: s
+      description: PBIT duration on the ground
+      evidence: {tag: ASSUMPTION, source: "TD-1 FBW diagnostic ~10 min (Livefist 2025, DIRECT for the prototype); modern LRUs seconds to a minute (notes tejas_avionics_and_parameter_inventory.md Q3)"}
+      sweep: [10.0, 600.0]
+      assumption_id: A-W1.2-27
+    mbit_time:
+      value: 300.0
+      units: s
+      description: Maintenance BIT duration
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [60.0, 1200.0]
+      assumption_id: A-W1.2-27
+    reset_time:
+      value: 1.0
+      units: s
+      description: Time the CHANNEL_RESET status bit stays set after a reset
+      evidence: {tag: ASSUMPTION, source: "status-word semantics (dictionary FCS.CH.STATUS); duration not public"}
+      sweep: [0.1, 5.0]
+      assumption_id: A-W1.2-27
+  actuators:
+    pos_min:
+      value: [-25.0, -25.0, -25.0, -25.0, -30.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      units: deg
+      description: Lower position stop per surface (fcs.surf_pos order)
+      evidence: {tag: DIRECT, source: "elevons +/-25 (secondary), rudder +/-30 (DSJ 71(2)); slats 0 retracted; airbrakes 0 closed (notes tejas_airframe_aero_fcs.md Q2)"}
+    pos_max:
+      value: [25.0, 25.0, 25.0, 25.0, 30.0, 30.0, 27.5, 17.5, 17.5, 27.5, 30.0, 50.0, 50.0]
+      units: deg
+      description: Upper position stop per surface (slats OB 30 / MB 27.5 / IB 17.5; airbrake = M06 airbrake_max)
+      evidence: {tag: ASSUMPTION, source: "DIRECT secondary for elevon/rudder/slat limits (notes #35-#39); airbrake 50 deg assumed (A-W1.2-9)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-9
+    rate_noload:
+      value: [80.0, 80.0, 80.0, 80.0, 100.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 25.0, 25.0]
+      units: deg/s
+      description: No-load surface rate at rated supply pressure (elevons, rudder, slats, airbrakes)
+      evidence: {tag: ASSUMPTION, source: "rudder 100 deg/s DIRECT-unnamed (DSJ 71(2)); symmetric elevon 60-80 deg/s ASSUMPTION (F-16 60, ADMIRE 4.0 50; notes tejas_airframe_aero_fcs.md Q2 inferences); slats ~20 deg/s (ADMIRE LEF); airbrake ~2 s to open"}
+      sweep: [0.75, 1.25]
+      assumption_id: A-W1.2-20
+    servo_wn:
+      value: [9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0]
+      units: Hz
+      description: Servo natural frequency (closed-loop actuator response ~9 Hz)
+      evidence: {tag: ASSUMPTION, source: "The published figure is DIRECT: Kala JOAST 67(2A) 2015 'These servo actuators have a frequency response of 9 Hz' (notes tejas_airframe_aero_fcs.md Q2 cited findings and Gaps: the sentence may cover all servo actuators or only the secondaries). Using it as the natural frequency of a second-order servo for all 13 actuators is an ASSUMPTION (notes Q2 inference 'omega_n ~ 2 pi 9'; A-W1.2-20; E1 verifier §7, E1-HY). Sweep x0.75-1.25 as the A-W1.2-20 rate sweep. The M05 gain schedule (gains.csv) is designed at the nominal 9 Hz (fcs.design.DesignSettings.servo_wn): a swept servo needs a re-design or carries the margin change the E1-HY report quantifies"}
+      sweep: [0.75, 1.25]
+      assumption_id: A-W1.2-20
+    servo_zeta:
+      value: 0.7
+      units: "1"
+      description: Servo damping ratio
+      evidence: {tag: ASSUMPTION, source: "notes tejas_airframe_aero_fcs.md Q2 inferences (second-order servo, zeta ~0.7)"}
+      sweep: [0.5, 0.9]
+      assumption_id: A-W1.2-20
+    piston_area:
+      value: [1.75e-3, 1.75e-3, 1.75e-3, 1.75e-3, 1.05e-3, 7.0e-4, 7.0e-4, 7.0e-4, 7.0e-4, 7.0e-4, 7.0e-4, 1.4e-3, 1.4e-3]
+      units: m**2
+      description: Piston area per hydraulic section (stall loads 10 t elevon, 6 t rudder, 2 t slat, 4 t airbrake at 280 bar)
+      evidence: {tag: ASSUMPTION, source: "stall load 2-10 t and 280 bar DIRECT (Kala 2015); split per surface assumed"}
+      sweep: [0.7, 1.3]
+      assumption_id: A-W1.2-21
+    arm:
+      value: [0.12, 0.12, 0.12, 0.12, 0.10, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.15, 0.15]
+      units: m
+      description: Actuator crank arm (piston stroke per rad of surface)
+      evidence: {tag: ASSUMPTION, source: "not public (this WP)"}
+      sweep: [0.7, 1.3]
+      assumption_id: A-W1.2-21
+    n_sections:
+      value: [2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+      units: "1"
+      description: Hydraulic sections per actuator (primaries tandem dual-hydraulic; slats single hydraulic; airbrake jacks single)
+      evidence: {tag: DIRECT, source: "Kala 2015: primaries 'quadruplex in electrical and dual in hydraulics'; slats 'single hydraulics'; airbrakes open-loop jacks"}
+    system:
+      value: [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
+      units: "1"
+      description: Hydraulic system (0 or 1) of single-section actuators (ignored for tandem primaries)
+      evidence: {tag: ASSUMPTION, source: "allocation not public; slats on system 2, airbrakes on system 1 (this WP)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-21
+    g_null:
+      value: 1.2e-13
+      units: m**3/s/Pa
+      description: Quiescent (null) valve leakage conductance per section (~0.2 L/min at 280 bar), scaled by 1 + health.actuator
+      evidence: {tag: ASSUMPTION, source: "DDV null leakage 0.1-0.5 L/min typical (servo-valve practice); not public"}
+      sweep: [4.0e-14, 4.0e-13]
+      assumption_id: A-W1.2-20
+    g_crossport:
+      value: 8.3e-14
+      units: m**3/s/Pa
+      description: Piston cross-port leakage conductance per section, scaled by 1 + health.actuator (droop under load)
+      evidence: {tag: ASSUMPTION, source: "seal leakage practice; not public"}
+      sweep: [1.0e-14, 1.0e-12]
+      assumption_id: A-W1.2-20
+    dp_rated:
+      value: 280.0
+      units: bar
+      description: Rated supply pressure (no-load rates are quoted at this pressure)
+      evidence: {tag: DIRECT, source: "Kala 2015: 'operating pressure is 280 bars'; report §1 Actuation row"}
+    dp_min:
+      value: 20.0
+      units: bar
+      description: Supply below which a hydraulic section is treated as lost
+      evidence: {tag: ASSUMPTION, source: "not public (this WP)"}
+      sweep: [5.0, 50.0]
+      assumption_id: A-W1.2-20
+  design:
+    x_asa:
+      value: 1.0
+      units: m
+      description: ASA (accelerometer) station forward of the reference CG; the M12 ASA lane model must use the same station
+      evidence: {tag: ASSUMPTION, source: "'Nz measured at a sensor forward of the CG' (JOAST 58(4), DIRECT); distance not public; 1 m maximised the design margins (design exploration, this WP)"}
+      sweep: [0.0, 3.0]
+      assumption_id: A-W1.2-22
+    rsa_wn:
+      value: 50.0
+      units: Hz
+      description: Rate-gyro (RSA) natural frequency used in the design loop model (M12 owns the sensor dynamics)
+      evidence: {tag: DIRECT, source: "Kala JOAST 67(2A) 2015 ('natural frequency of 50 Hz')"}
+    asa_wn:
+      value: 100.0
+      units: Hz
+      description: Accelerometer (ASA) natural frequency used in the design loop model
+      evidence: {tag: DIRECT, source: "Kala JOAST 67(2A) 2015 ('natural frequency of 100Hz')"}
+    sensor_zeta:
+      value: 0.7
+      units: "1"
+      description: Sensor damping ratio in the design loop model
+      evidence: {tag: ASSUMPTION, source: "notes tejas_airframe_aero_fcs.md Q5 inferences (RSA second order, zeta ~0.7)"}
+      sweep: [0.5, 0.9]
+      assumption_id: A-W1.2-22
+    zeta_sp_candidates:
+      value: [0.5, 0.6, 0.75, 0.9]
+      units: "1"
+      description: Candidate closed-loop short-period damping ratios searched by the gain design
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    w_sp_candidates:
+      value: [3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+      units: rad/s
+      description: Candidate closed-loop short-period frequencies searched by the gain design
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP); gain crossover ~1 Hz on Tejas (JOAST 58(4))"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    p_i_candidates:
+      value: [0.25, 0.4, 0.55, 0.7, 0.85, 1.0]
+      units: "1"
+      description: Candidate integrator poles as fractions of the short-period frequency
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP)"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    gm_ref:
+      value: 10.0
+      units: "1"
+      description: Gain-margin normaliser (dB) of the design score min(GM/gm_ref, PM/pm_ref)
+      evidence: {tag: ASSUMPTION, source: "flight-estimated margins 9.3-17.1 dB / 58-68 deg (JOAST 58(4), DIRECT target)"}
+      sweep: [6.0, 12.0]
+      assumption_id: A-W1.2-22
+    pm_ref:
+      value: 60.0
+      units: deg
+      description: Phase-margin normaliser of the design score
+      evidence: {tag: ASSUMPTION, source: "as gm_ref"}
+      sweep: [35.0, 68.0]
+      assumption_id: A-W1.2-22
+    w_roll:
+      value: 4.0
+      units: rad/s
+      description: Closed-loop roll-mode frequency of the roll-rate PI design
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP)"}
+      sweep: [2.0, 8.0]
+      assumption_id: A-W1.2-22
+    zeta_roll:
+      value: 0.9
+      units: "1"
+      description: Closed-loop roll-mode damping of the roll-rate PI design
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP)"}
+      sweep: [0.6, 1.0]
+      assumption_id: A-W1.2-22
+    w_dr_min:
+      value: 2.5
+      units: rad/s
+      description: Minimum closed-loop Dutch-roll frequency of the yaw design
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP); MIL-F-8785C / MIL-F-9490D design basis (DSJ 71(2))"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W1.2-22
+    zeta_dr:
+      value: 0.6
+      units: "1"
+      description: Closed-loop Dutch-roll damping of the yaw design
+      evidence: {tag: ASSUMPTION, source: "as w_dr_min"}
+      sweep: [0.4, 0.8]
+      assumption_id: A-W1.2-22
+    grid_mach:
+      value: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0, 1.1, 1.2, 1.4, 1.6, 1.8]
+      units: "1"
+      description: Mach breakpoints of the designed gain schedule
+      evidence: {tag: ASSUMPTION, source: "gains scheduled on Mach and altitude (JOAST 58(4), DIRECT structure); grid this WP"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    grid_alt:
+      value: [0.0, 2000.0, 4000.0, 6000.0, 8000.0, 10000.0, 12000.0, 14000.0, 16000.0]
+      units: m
+      description: Pressure-altitude breakpoints of the designed gain schedule
+      evidence: {tag: ASSUMPTION, source: "as grid_mach"}
+      sweep: [1.0, 1.0]
+      assumption_id: A-W1.2-22
+    alpha_feasible:
+      value: 20.0
+      units: deg
+      description: Grid points whose trim AoA exceeds this copy the gains of the next lower altitude (outside the usable envelope)
+      evidence: {tag: ASSUMPTION, source: "design procedure (this WP); AoA limit 26 deg minus the limiter band"}
+      sweep: [16.0, 24.0]
+      assumption_id: A-W1.2-22
+    fixed_up_mach:
+      value: 0.5
+      units: "1"
+      description: Design point (Mach) of the fixed-gain reversion set, undercarriage up
+      evidence: {tag: ASSUMPTION, source: "fixed gains depend on undercarriage position, reduced when retracted (JOAST 58(4), DIRECT behaviour); design points this WP"}
+      sweep: [0.4, 0.7]
+      assumption_id: A-W1.2-26
+    fixed_up_alt:
+      value: 3000.0
+      units: m
+      description: Design point (altitude) of the fixed-gain set, undercarriage up
+      evidence: {tag: ASSUMPTION, source: "as fixed_up_mach"}
+      sweep: [1000.0, 6000.0]
+      assumption_id: A-W1.2-26
+    fixed_down_mach:
+      value: 0.25
+      units: "1"
+      description: Design point (Mach) of the fixed-gain set, undercarriage down
+      evidence: {tag: ASSUMPTION, source: "as fixed_up_mach (gear-change gain step near 370 km/h CAS)"}
+      sweep: [0.2, 0.3]
+      assumption_id: A-W1.2-26
+    fixed_down_alt:
+      value: 300.0
+      units: m
+      description: Design point (altitude) of the fixed-gain set, undercarriage down
+      evidence: {tag: ASSUMPTION, source: "as fixed_up_mach"}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.2-26

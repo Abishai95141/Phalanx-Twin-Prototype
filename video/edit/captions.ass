@@ -1,0 +1,699 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Manrope SemiBold,40,&H00100D0B,&H00100D0B,&H0AFFFFFF,&H00000000,0,0,0,0,100,100,0,0,3,13,0,2,200,200,44,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.36,0:00:00.63,Cap,,0,0,0,,{\c&H003B74E8}Every{\c&H00100D0B} morning, before eight,
+Dialogue: 0,0:00:00.63,0:00:01.07,Cap,,0,0,0,,Every {\c&H003B74E8}morning,{\c&H00100D0B} before eight,
+Dialogue: 0,0:00:01.07,0:00:01.43,Cap,,0,0,0,,Every morning, {\c&H003B74E8}before{\c&H00100D0B} eight,
+Dialogue: 0,0:00:01.43,0:00:02.05,Cap,,0,0,0,,Every morning, before {\c&H003B74E8}eight,{\c&H00100D0B}
+Dialogue: 0,0:00:02.07,0:00:02.34,Cap,,0,0,0,,{\c&H003B74E8}someone{\c&H00100D0B} decides which aircraft will fly.
+Dialogue: 0,0:00:02.34,0:00:02.82,Cap,,0,0,0,,someone {\c&H003B74E8}decides{\c&H00100D0B} which aircraft will fly.
+Dialogue: 0,0:00:02.82,0:00:03.01,Cap,,0,0,0,,someone decides {\c&H003B74E8}which{\c&H00100D0B} aircraft will fly.
+Dialogue: 0,0:00:03.01,0:00:03.54,Cap,,0,0,0,,someone decides which {\c&H003B74E8}aircraft{\c&H00100D0B} will fly.
+Dialogue: 0,0:00:03.54,0:00:03.72,Cap,,0,0,0,,someone decides which aircraft {\c&H003B74E8}will{\c&H00100D0B} fly.
+Dialogue: 0,0:00:03.72,0:00:04.53,Cap,,0,0,0,,someone decides which aircraft will {\c&H003B74E8}fly.{\c&H00100D0B}
+Dialogue: 0,0:00:06.04,0:00:06.27,Cap,,0,0,0,,{\c&H003B74E8}That{\c&H00100D0B} decision should rest on everything the
+Dialogue: 0,0:00:06.27,0:00:06.90,Cap,,0,0,0,,That {\c&H003B74E8}decision{\c&H00100D0B} should rest on everything the
+Dialogue: 0,0:00:06.90,0:00:07.09,Cap,,0,0,0,,That decision {\c&H003B74E8}should{\c&H00100D0B} rest on everything the
+Dialogue: 0,0:00:07.09,0:00:07.38,Cap,,0,0,0,,That decision should {\c&H003B74E8}rest{\c&H00100D0B} on everything the
+Dialogue: 0,0:00:07.38,0:00:07.55,Cap,,0,0,0,,That decision should rest {\c&H003B74E8}on{\c&H00100D0B} everything the
+Dialogue: 0,0:00:07.55,0:00:08.00,Cap,,0,0,0,,That decision should rest on {\c&H003B74E8}everything{\c&H00100D0B} the
+Dialogue: 0,0:00:08.00,0:00:08.08,Cap,,0,0,0,,That decision should rest on everything {\c&H003B74E8}the{\c&H00100D0B}
+Dialogue: 0,0:00:08.10,0:00:08.44,Cap,,0,0,0,,{\c&H003B74E8}fleet{\c&H00100D0B} already knows.
+Dialogue: 0,0:00:08.44,0:00:08.82,Cap,,0,0,0,,fleet {\c&H003B74E8}already{\c&H00100D0B} knows.
+Dialogue: 0,0:00:08.82,0:00:09.64,Cap,,0,0,0,,fleet already {\c&H003B74E8}knows.{\c&H00100D0B}
+Dialogue: 0,0:00:10.20,0:00:10.45,Cap,,0,0,0,,{\c&H003B74E8}Health{\c&H00100D0B} data.
+Dialogue: 0,0:00:10.45,0:00:10.86,Cap,,0,0,0,,Health {\c&H003B74E8}data.{\c&H00100D0B}
+Dialogue: 0,0:00:10.88,0:00:11.35,Cap,,0,0,0,,{\c&H003B74E8}Technical{\c&H00100D0B} records.
+Dialogue: 0,0:00:11.35,0:00:12.16,Cap,,0,0,0,,Technical {\c&H003B74E8}records.{\c&H00100D0B}
+Dialogue: 0,0:00:12.18,0:00:12.89,Cap,,0,0,0,,{\c&H003B74E8}Spares.{\c&H00100D0B}
+Dialogue: 0,0:00:12.91,0:00:13.16,Cap,,0,0,0,,{\c&H003B74E8}Work{\c&H00100D0B} in progress.
+Dialogue: 0,0:00:13.16,0:00:13.28,Cap,,0,0,0,,Work {\c&H003B74E8}in{\c&H00100D0B} progress.
+Dialogue: 0,0:00:13.28,0:00:14.23,Cap,,0,0,0,,Work in {\c&H003B74E8}progress.{\c&H00100D0B}
+Dialogue: 0,0:00:15.20,0:00:15.70,Cap,,0,0,0,,{\c&H003B74E8}Phalanx{\c&H00100D0B} Twin brings it together
+Dialogue: 0,0:00:15.70,0:00:16.11,Cap,,0,0,0,,Phalanx {\c&H003B74E8}Twin{\c&H00100D0B} brings it together
+Dialogue: 0,0:00:16.11,0:00:16.39,Cap,,0,0,0,,Phalanx Twin {\c&H003B74E8}brings{\c&H00100D0B} it together
+Dialogue: 0,0:00:16.39,0:00:16.47,Cap,,0,0,0,,Phalanx Twin brings {\c&H003B74E8}it{\c&H00100D0B} together
+Dialogue: 0,0:00:16.47,0:00:17.14,Cap,,0,0,0,,Phalanx Twin brings it {\c&H003B74E8}together{\c&H00100D0B}
+Dialogue: 0,0:00:17.16,0:00:17.23,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:00:17.25,0:00:17.37,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} turns it into decisions.
+Dialogue: 0,0:00:17.37,0:00:17.70,Cap,,0,0,0,,and {\c&H003B74E8}turns{\c&H00100D0B} it into decisions.
+Dialogue: 0,0:00:17.70,0:00:17.79,Cap,,0,0,0,,and turns {\c&H003B74E8}it{\c&H00100D0B} into decisions.
+Dialogue: 0,0:00:17.79,0:00:18.00,Cap,,0,0,0,,and turns it {\c&H003B74E8}into{\c&H00100D0B} decisions.
+Dialogue: 0,0:00:18.00,0:00:19.02,Cap,,0,0,0,,and turns it into {\c&H003B74E8}decisions.{\c&H00100D0B}
+Dialogue: 0,0:00:20.95,0:00:21.03,Cap,,0,0,0,,{\c&H003B74E8}The{\c&H00100D0B} problem statement is blunt.
+Dialogue: 0,0:00:21.03,0:00:21.48,Cap,,0,0,0,,The {\c&H003B74E8}problem{\c&H00100D0B} statement is blunt.
+Dialogue: 0,0:00:21.48,0:00:22.04,Cap,,0,0,0,,The problem {\c&H003B74E8}statement{\c&H00100D0B} is blunt.
+Dialogue: 0,0:00:22.04,0:00:22.21,Cap,,0,0,0,,The problem statement {\c&H003B74E8}is{\c&H00100D0B} blunt.
+Dialogue: 0,0:00:22.21,0:00:23.09,Cap,,0,0,0,,The problem statement is {\c&H003B74E8}blunt.{\c&H00100D0B}
+Dialogue: 0,0:00:23.11,0:00:23.99,Cap,,0,0,0,,{\c&H003B74E8}Availability{\c&H00100D0B} is low because maintenance is
+Dialogue: 0,0:00:23.99,0:00:24.16,Cap,,0,0,0,,Availability {\c&H003B74E8}is{\c&H00100D0B} low because maintenance is
+Dialogue: 0,0:00:24.16,0:00:24.60,Cap,,0,0,0,,Availability is {\c&H003B74E8}low{\c&H00100D0B} because maintenance is
+Dialogue: 0,0:00:24.60,0:00:24.96,Cap,,0,0,0,,Availability is low {\c&H003B74E8}because{\c&H00100D0B} maintenance is
+Dialogue: 0,0:00:24.96,0:00:25.58,Cap,,0,0,0,,Availability is low because {\c&H003B74E8}maintenance{\c&H00100D0B} is
+Dialogue: 0,0:00:25.58,0:00:25.71,Cap,,0,0,0,,Availability is low because maintenance {\c&H003B74E8}is{\c&H00100D0B}
+Dialogue: 0,0:00:25.73,0:00:26.76,Cap,,0,0,0,,{\c&H003B74E8}reactive{\c&H00100D0B} —
+Dialogue: 0,0:00:26.76,0:00:26.83,Cap,,0,0,0,,reactive {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:00:26.85,0:00:26.96,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} the data that could prevent it isn't integrated.
+Dialogue: 0,0:00:26.96,0:00:27.06,Cap,,0,0,0,,and {\c&H003B74E8}the{\c&H00100D0B} data that could prevent it isn't integrated.
+Dialogue: 0,0:00:27.06,0:00:27.43,Cap,,0,0,0,,and the {\c&H003B74E8}data{\c&H00100D0B} that could prevent it isn't integrated.
+Dialogue: 0,0:00:27.43,0:00:27.58,Cap,,0,0,0,,and the data {\c&H003B74E8}that{\c&H00100D0B} could prevent it isn't integrated.
+Dialogue: 0,0:00:27.58,0:00:27.70,Cap,,0,0,0,,and the data that {\c&H003B74E8}could{\c&H00100D0B} prevent it isn't integrated.
+Dialogue: 0,0:00:27.70,0:00:28.13,Cap,,0,0,0,,and the data that could {\c&H003B74E8}prevent{\c&H00100D0B} it isn't integrated.
+Dialogue: 0,0:00:28.13,0:00:28.31,Cap,,0,0,0,,and the data that could prevent {\c&H003B74E8}it{\c&H00100D0B} isn't integrated.
+Dialogue: 0,0:00:28.31,0:00:28.65,Cap,,0,0,0,,and the data that could prevent it {\c&H003B74E8}isn't{\c&H00100D0B} integrated.
+Dialogue: 0,0:00:28.65,0:00:29.70,Cap,,0,0,0,,and the data that could prevent it isn't {\c&H003B74E8}integrated.{\c&H00100D0B}
+Dialogue: 0,0:00:30.23,0:00:30.58,Cap,,0,0,0,,{\c&H003B74E8}Audits{\c&H00100D0B} keep finding the same thing:
+Dialogue: 0,0:00:30.58,0:00:30.83,Cap,,0,0,0,,Audits {\c&H003B74E8}keep{\c&H00100D0B} finding the same thing:
+Dialogue: 0,0:00:30.83,0:00:31.22,Cap,,0,0,0,,Audits keep {\c&H003B74E8}finding{\c&H00100D0B} the same thing:
+Dialogue: 0,0:00:31.22,0:00:31.31,Cap,,0,0,0,,Audits keep finding {\c&H003B74E8}the{\c&H00100D0B} same thing:
+Dialogue: 0,0:00:31.31,0:00:31.58,Cap,,0,0,0,,Audits keep finding the {\c&H003B74E8}same{\c&H00100D0B} thing:
+Dialogue: 0,0:00:31.58,0:00:32.30,Cap,,0,0,0,,Audits keep finding the same {\c&H003B74E8}thing:{\c&H00100D0B}
+Dialogue: 0,0:00:32.32,0:00:32.87,Cap,,0,0,0,,{\c&H003B74E8}aircraft{\c&H00100D0B} are lost to waiting
+Dialogue: 0,0:00:32.87,0:00:32.98,Cap,,0,0,0,,aircraft {\c&H003B74E8}are{\c&H00100D0B} lost to waiting
+Dialogue: 0,0:00:32.98,0:00:33.33,Cap,,0,0,0,,aircraft are {\c&H003B74E8}lost{\c&H00100D0B} to waiting
+Dialogue: 0,0:00:33.33,0:00:33.46,Cap,,0,0,0,,aircraft are lost {\c&H003B74E8}to{\c&H00100D0B} waiting
+Dialogue: 0,0:00:33.46,0:00:34.06,Cap,,0,0,0,,aircraft are lost to {\c&H003B74E8}waiting{\c&H00100D0B}
+Dialogue: 0,0:00:34.08,0:00:34.14,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:00:34.16,0:00:34.31,Cap,,0,0,0,,{\c&H003B74E8}for{\c&H00100D0B} parts, for repair, for a decision.
+Dialogue: 0,0:00:34.31,0:00:34.78,Cap,,0,0,0,,for {\c&H003B74E8}parts,{\c&H00100D0B} for repair, for a decision.
+Dialogue: 0,0:00:34.78,0:00:34.91,Cap,,0,0,0,,for parts, {\c&H003B74E8}for{\c&H00100D0B} repair, for a decision.
+Dialogue: 0,0:00:34.91,0:00:35.46,Cap,,0,0,0,,for parts, for {\c&H003B74E8}repair,{\c&H00100D0B} for a decision.
+Dialogue: 0,0:00:35.46,0:00:35.57,Cap,,0,0,0,,for parts, for repair, {\c&H003B74E8}for{\c&H00100D0B} a decision.
+Dialogue: 0,0:00:35.57,0:00:35.62,Cap,,0,0,0,,for parts, for repair, for {\c&H003B74E8}a{\c&H00100D0B} decision.
+Dialogue: 0,0:00:35.62,0:00:36.56,Cap,,0,0,0,,for parts, for repair, for a {\c&H003B74E8}decision.{\c&H00100D0B}
+Dialogue: 0,0:00:37.07,0:00:37.15,Cap,,0,0,0,,{\c&H003B74E8}In{\c&H00100D0B} our fleet, one aircraft has been on the
+Dialogue: 0,0:00:37.15,0:00:37.35,Cap,,0,0,0,,In {\c&H003B74E8}our{\c&H00100D0B} fleet, one aircraft has been on the
+Dialogue: 0,0:00:37.35,0:00:37.83,Cap,,0,0,0,,In our {\c&H003B74E8}fleet,{\c&H00100D0B} one aircraft has been on the
+Dialogue: 0,0:00:37.83,0:00:38.07,Cap,,0,0,0,,In our fleet, {\c&H003B74E8}one{\c&H00100D0B} aircraft has been on the
+Dialogue: 0,0:00:38.07,0:00:38.63,Cap,,0,0,0,,In our fleet, one {\c&H003B74E8}aircraft{\c&H00100D0B} has been on the
+Dialogue: 0,0:00:38.63,0:00:38.77,Cap,,0,0,0,,In our fleet, one aircraft {\c&H003B74E8}has{\c&H00100D0B} been on the
+Dialogue: 0,0:00:38.77,0:00:38.93,Cap,,0,0,0,,In our fleet, one aircraft has {\c&H003B74E8}been{\c&H00100D0B} on the
+Dialogue: 0,0:00:38.93,0:00:39.03,Cap,,0,0,0,,In our fleet, one aircraft has been {\c&H003B74E8}on{\c&H00100D0B} the
+Dialogue: 0,0:00:39.03,0:00:39.10,Cap,,0,0,0,,In our fleet, one aircraft has been on {\c&H003B74E8}the{\c&H00100D0B}
+Dialogue: 0,0:00:39.12,0:00:39.52,Cap,,0,0,0,,{\c&H003B74E8}ground{\c&H00100D0B} for eighty days,
+Dialogue: 0,0:00:39.52,0:00:39.68,Cap,,0,0,0,,ground {\c&H003B74E8}for{\c&H00100D0B} eighty days,
+Dialogue: 0,0:00:39.68,0:00:39.97,Cap,,0,0,0,,ground for {\c&H003B74E8}eighty{\c&H00100D0B} days,
+Dialogue: 0,0:00:39.97,0:00:40.71,Cap,,0,0,0,,ground for eighty {\c&H003B74E8}days,{\c&H00100D0B}
+Dialogue: 0,0:00:40.73,0:00:41.14,Cap,,0,0,0,,{\c&H003B74E8}waiting{\c&H00100D0B} for a brake chute
+Dialogue: 0,0:00:41.14,0:00:41.25,Cap,,0,0,0,,waiting {\c&H003B74E8}for{\c&H00100D0B} a brake chute
+Dialogue: 0,0:00:41.25,0:00:41.32,Cap,,0,0,0,,waiting for {\c&H003B74E8}a{\c&H00100D0B} brake chute
+Dialogue: 0,0:00:41.32,0:00:41.63,Cap,,0,0,0,,waiting for a {\c&H003B74E8}brake{\c&H00100D0B} chute
+Dialogue: 0,0:00:41.63,0:00:42.33,Cap,,0,0,0,,waiting for a brake {\c&H003B74E8}chute{\c&H00100D0B}
+Dialogue: 0,0:00:42.35,0:00:42.42,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:00:42.44,0:00:42.52,Cap,,0,0,0,,{\c&H003B74E8}a{\c&H00100D0B} consumable whose demand simply follows landings.
+Dialogue: 0,0:00:42.52,0:00:43.17,Cap,,0,0,0,,a {\c&H003B74E8}consumable{\c&H00100D0B} whose demand simply follows landings.
+Dialogue: 0,0:00:43.17,0:00:43.39,Cap,,0,0,0,,a consumable {\c&H003B74E8}whose{\c&H00100D0B} demand simply follows landings.
+Dialogue: 0,0:00:43.39,0:00:44.09,Cap,,0,0,0,,a consumable whose {\c&H003B74E8}demand{\c&H00100D0B} simply follows landings.
+Dialogue: 0,0:00:44.09,0:00:44.53,Cap,,0,0,0,,a consumable whose demand {\c&H003B74E8}simply{\c&H00100D0B} follows landings.
+Dialogue: 0,0:00:44.53,0:00:44.97,Cap,,0,0,0,,a consumable whose demand simply {\c&H003B74E8}follows{\c&H00100D0B} landings.
+Dialogue: 0,0:00:44.97,0:00:45.97,Cap,,0,0,0,,a consumable whose demand simply follows {\c&H003B74E8}landings.{\c&H00100D0B}
+Dialogue: 0,0:00:46.51,0:00:46.89,Cap,,0,0,0,,{\c&H003B74E8}Another{\c&H00100D0B} has had its hydraulic pump removed
+Dialogue: 0,0:00:46.89,0:00:47.06,Cap,,0,0,0,,Another {\c&H003B74E8}has{\c&H00100D0B} had its hydraulic pump removed
+Dialogue: 0,0:00:47.06,0:00:47.25,Cap,,0,0,0,,Another has {\c&H003B74E8}had{\c&H00100D0B} its hydraulic pump removed
+Dialogue: 0,0:00:47.25,0:00:47.36,Cap,,0,0,0,,Another has had {\c&H003B74E8}its{\c&H00100D0B} hydraulic pump removed
+Dialogue: 0,0:00:47.36,0:00:47.99,Cap,,0,0,0,,Another has had its {\c&H003B74E8}hydraulic{\c&H00100D0B} pump removed
+Dialogue: 0,0:00:47.99,0:00:48.29,Cap,,0,0,0,,Another has had its hydraulic {\c&H003B74E8}pump{\c&H00100D0B} removed
+Dialogue: 0,0:00:48.29,0:00:48.75,Cap,,0,0,0,,Another has had its hydraulic pump {\c&H003B74E8}removed{\c&H00100D0B}
+Dialogue: 0,0:00:48.77,0:00:49.29,Cap,,0,0,0,,{\c&H003B74E8}twenty-eight{\c&H00100D0B} times for one alarm.
+Dialogue: 0,0:00:49.29,0:00:49.71,Cap,,0,0,0,,twenty-eight {\c&H003B74E8}times{\c&H00100D0B} for one alarm.
+Dialogue: 0,0:00:49.71,0:00:49.86,Cap,,0,0,0,,twenty-eight times {\c&H003B74E8}for{\c&H00100D0B} one alarm.
+Dialogue: 0,0:00:49.86,0:00:50.04,Cap,,0,0,0,,twenty-eight times for {\c&H003B74E8}one{\c&H00100D0B} alarm.
+Dialogue: 0,0:00:50.04,0:00:50.96,Cap,,0,0,0,,twenty-eight times for one {\c&H003B74E8}alarm.{\c&H00100D0B}
+Dialogue: 0,0:00:50.98,0:00:51.31,Cap,,0,0,0,,{\c&H003B74E8}Every{\c&H00100D0B} pump the shop tested came back:
+Dialogue: 0,0:00:51.31,0:00:51.60,Cap,,0,0,0,,Every {\c&H003B74E8}pump{\c&H00100D0B} the shop tested came back:
+Dialogue: 0,0:00:51.60,0:00:51.73,Cap,,0,0,0,,Every pump {\c&H003B74E8}the{\c&H00100D0B} shop tested came back:
+Dialogue: 0,0:00:51.73,0:00:52.01,Cap,,0,0,0,,Every pump the {\c&H003B74E8}shop{\c&H00100D0B} tested came back:
+Dialogue: 0,0:00:52.01,0:00:52.41,Cap,,0,0,0,,Every pump the shop {\c&H003B74E8}tested{\c&H00100D0B} came back:
+Dialogue: 0,0:00:52.41,0:00:52.64,Cap,,0,0,0,,Every pump the shop tested {\c&H003B74E8}came{\c&H00100D0B} back:
+Dialogue: 0,0:00:52.64,0:00:53.34,Cap,,0,0,0,,Every pump the shop tested came {\c&H003B74E8}back:{\c&H00100D0B}
+Dialogue: 0,0:00:53.36,0:00:53.65,Cap,,0,0,0,,{\c&H003B74E8}no{\c&H00100D0B} fault found.
+Dialogue: 0,0:00:53.65,0:00:53.94,Cap,,0,0,0,,no {\c&H003B74E8}fault{\c&H00100D0B} found.
+Dialogue: 0,0:00:53.94,0:00:54.79,Cap,,0,0,0,,no fault {\c&H003B74E8}found.{\c&H00100D0B}
+Dialogue: 0,0:00:55.32,0:00:55.67,Cap,,0,0,0,,{\c&H003B74E8}Nearly{\c&H00100D0B} twelve hundred alerts this season.
+Dialogue: 0,0:00:55.67,0:00:55.99,Cap,,0,0,0,,Nearly {\c&H003B74E8}twelve{\c&H00100D0B} hundred alerts this season.
+Dialogue: 0,0:00:55.99,0:00:56.38,Cap,,0,0,0,,Nearly twelve {\c&H003B74E8}hundred{\c&H00100D0B} alerts this season.
+Dialogue: 0,0:00:56.38,0:00:56.79,Cap,,0,0,0,,Nearly twelve hundred {\c&H003B74E8}alerts{\c&H00100D0B} this season.
+Dialogue: 0,0:00:56.79,0:00:56.97,Cap,,0,0,0,,Nearly twelve hundred alerts {\c&H003B74E8}this{\c&H00100D0B} season.
+Dialogue: 0,0:00:56.97,0:00:57.81,Cap,,0,0,0,,Nearly twelve hundred alerts this {\c&H003B74E8}season.{\c&H00100D0B}
+Dialogue: 0,0:00:57.83,0:00:58.07,Cap,,0,0,0,,{\c&H003B74E8}More{\c&H00100D0B} prediction alone would only add more.
+Dialogue: 0,0:00:58.07,0:00:58.52,Cap,,0,0,0,,More {\c&H003B74E8}prediction{\c&H00100D0B} alone would only add more.
+Dialogue: 0,0:00:58.52,0:00:58.92,Cap,,0,0,0,,More prediction {\c&H003B74E8}alone{\c&H00100D0B} would only add more.
+Dialogue: 0,0:00:58.92,0:00:59.07,Cap,,0,0,0,,More prediction alone {\c&H003B74E8}would{\c&H00100D0B} only add more.
+Dialogue: 0,0:00:59.07,0:00:59.38,Cap,,0,0,0,,More prediction alone would {\c&H003B74E8}only{\c&H00100D0B} add more.
+Dialogue: 0,0:00:59.38,0:00:59.64,Cap,,0,0,0,,More prediction alone would only {\c&H003B74E8}add{\c&H00100D0B} more.
+Dialogue: 0,0:00:59.64,0:01:00.32,Cap,,0,0,0,,More prediction alone would only add {\c&H003B74E8}more.{\c&H00100D0B}
+Dialogue: 0,0:01:00.80,0:01:00.95,Cap,,0,0,0,,{\c&H003B74E8}And{\c&H00100D0B} any answer must be explainable,
+Dialogue: 0,0:01:00.95,0:01:01.15,Cap,,0,0,0,,And {\c&H003B74E8}any{\c&H00100D0B} answer must be explainable,
+Dialogue: 0,0:01:01.15,0:01:01.55,Cap,,0,0,0,,And any {\c&H003B74E8}answer{\c&H00100D0B} must be explainable,
+Dialogue: 0,0:01:01.55,0:01:01.74,Cap,,0,0,0,,And any answer {\c&H003B74E8}must{\c&H00100D0B} be explainable,
+Dialogue: 0,0:01:01.74,0:01:01.88,Cap,,0,0,0,,And any answer must {\c&H003B74E8}be{\c&H00100D0B} explainable,
+Dialogue: 0,0:01:01.88,0:01:02.92,Cap,,0,0,0,,And any answer must be {\c&H003B74E8}explainable,{\c&H00100D0B}
+Dialogue: 0,0:01:02.94,0:01:03.29,Cap,,0,0,0,,{\c&H003B74E8}honest{\c&H00100D0B} about time —
+Dialogue: 0,0:01:03.29,0:01:03.58,Cap,,0,0,0,,honest {\c&H003B74E8}about{\c&H00100D0B} time —
+Dialogue: 0,0:01:03.58,0:01:04.19,Cap,,0,0,0,,honest about {\c&H003B74E8}time{\c&H00100D0B} —
+Dialogue: 0,0:01:04.19,0:01:04.26,Cap,,0,0,0,,honest about time {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:01:04.28,0:01:04.40,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} run fully offline.
+Dialogue: 0,0:01:04.40,0:01:04.73,Cap,,0,0,0,,and {\c&H003B74E8}run{\c&H00100D0B} fully offline.
+Dialogue: 0,0:01:04.73,0:01:05.03,Cap,,0,0,0,,and run {\c&H003B74E8}fully{\c&H00100D0B} offline.
+Dialogue: 0,0:01:05.03,0:01:06.05,Cap,,0,0,0,,and run fully {\c&H003B74E8}offline.{\c&H00100D0B}
+Dialogue: 0,0:01:06.97,0:01:07.48,Cap,,0,0,0,,{\c&H003B74E8}Phalanx{\c&H00100D0B} Twin is a decision-support digital
+Dialogue: 0,0:01:07.48,0:01:08.14,Cap,,0,0,0,,Phalanx {\c&H003B74E8}Twin{\c&H00100D0B} is a decision-support digital
+Dialogue: 0,0:01:08.14,0:01:08.28,Cap,,0,0,0,,Phalanx Twin {\c&H003B74E8}is{\c&H00100D0B} a decision-support digital
+Dialogue: 0,0:01:08.28,0:01:08.34,Cap,,0,0,0,,Phalanx Twin is {\c&H003B74E8}a{\c&H00100D0B} decision-support digital
+Dialogue: 0,0:01:08.34,0:01:09.19,Cap,,0,0,0,,Phalanx Twin is a {\c&H003B74E8}decision-support{\c&H00100D0B} digital
+Dialogue: 0,0:01:09.19,0:01:09.57,Cap,,0,0,0,,Phalanx Twin is a decision-support {\c&H003B74E8}digital{\c&H00100D0B}
+Dialogue: 0,0:01:09.59,0:01:10.05,Cap,,0,0,0,,{\c&H003B74E8}twin{\c&H00100D0B} for the flight line.
+Dialogue: 0,0:01:10.05,0:01:10.18,Cap,,0,0,0,,twin {\c&H003B74E8}for{\c&H00100D0B} the flight line.
+Dialogue: 0,0:01:10.18,0:01:10.27,Cap,,0,0,0,,twin for {\c&H003B74E8}the{\c&H00100D0B} flight line.
+Dialogue: 0,0:01:10.27,0:01:10.52,Cap,,0,0,0,,twin for the {\c&H003B74E8}flight{\c&H00100D0B} line.
+Dialogue: 0,0:01:10.52,0:01:11.32,Cap,,0,0,0,,twin for the flight {\c&H003B74E8}line.{\c&H00100D0B}
+Dialogue: 0,0:01:11.77,0:01:11.89,Cap,,0,0,0,,{\c&H003B74E8}It{\c&H00100D0B} answers four questions:
+Dialogue: 0,0:01:11.89,0:01:12.33,Cap,,0,0,0,,It {\c&H003B74E8}answers{\c&H00100D0B} four questions:
+Dialogue: 0,0:01:12.33,0:01:12.57,Cap,,0,0,0,,It answers {\c&H003B74E8}four{\c&H00100D0B} questions:
+Dialogue: 0,0:01:12.57,0:01:13.57,Cap,,0,0,0,,It answers four {\c&H003B74E8}questions:{\c&H00100D0B}
+Dialogue: 0,0:01:13.59,0:01:13.82,Cap,,0,0,0,,{\c&H003B74E8}what's{\c&H00100D0B} happening, why, what happens next
+Dialogue: 0,0:01:13.82,0:01:14.39,Cap,,0,0,0,,what's {\c&H003B74E8}happening,{\c&H00100D0B} why, what happens next
+Dialogue: 0,0:01:14.39,0:01:14.77,Cap,,0,0,0,,what's happening, {\c&H003B74E8}why,{\c&H00100D0B} what happens next
+Dialogue: 0,0:01:14.77,0:01:14.92,Cap,,0,0,0,,what's happening, why, {\c&H003B74E8}what{\c&H00100D0B} happens next
+Dialogue: 0,0:01:14.92,0:01:15.32,Cap,,0,0,0,,what's happening, why, what {\c&H003B74E8}happens{\c&H00100D0B} next
+Dialogue: 0,0:01:15.32,0:01:15.78,Cap,,0,0,0,,what's happening, why, what happens {\c&H003B74E8}next{\c&H00100D0B}
+Dialogue: 0,0:01:15.80,0:01:15.84,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:01:15.86,0:01:15.97,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} what we should do.
+Dialogue: 0,0:01:15.97,0:01:16.11,Cap,,0,0,0,,and {\c&H003B74E8}what{\c&H00100D0B} we should do.
+Dialogue: 0,0:01:16.11,0:01:16.25,Cap,,0,0,0,,and what {\c&H003B74E8}we{\c&H00100D0B} should do.
+Dialogue: 0,0:01:16.25,0:01:16.47,Cap,,0,0,0,,and what we {\c&H003B74E8}should{\c&H00100D0B} do.
+Dialogue: 0,0:01:16.47,0:01:17.14,Cap,,0,0,0,,and what we should {\c&H003B74E8}do.{\c&H00100D0B}
+Dialogue: 0,0:01:17.66,0:01:18.11,Cap,,0,0,0,,{\c&H003B74E8}Everything{\c&H00100D0B} starts from one frozen data contract.
+Dialogue: 0,0:01:18.11,0:01:18.46,Cap,,0,0,0,,Everything {\c&H003B74E8}starts{\c&H00100D0B} from one frozen data contract.
+Dialogue: 0,0:01:18.46,0:01:18.67,Cap,,0,0,0,,Everything starts {\c&H003B74E8}from{\c&H00100D0B} one frozen data contract.
+Dialogue: 0,0:01:18.67,0:01:19.04,Cap,,0,0,0,,Everything starts from {\c&H003B74E8}one{\c&H00100D0B} frozen data contract.
+Dialogue: 0,0:01:19.04,0:01:19.58,Cap,,0,0,0,,Everything starts from one {\c&H003B74E8}frozen{\c&H00100D0B} data contract.
+Dialogue: 0,0:01:19.58,0:01:19.88,Cap,,0,0,0,,Everything starts from one frozen {\c&H003B74E8}data{\c&H00100D0B} contract.
+Dialogue: 0,0:01:19.88,0:01:21.02,Cap,,0,0,0,,Everything starts from one frozen data {\c&H003B74E8}contract.{\c&H00100D0B}
+Dialogue: 0,0:01:21.04,0:01:21.16,Cap,,0,0,0,,{\c&H003B74E8}A{\c&H00100D0B} release gate admits it,
+Dialogue: 0,0:01:21.16,0:01:21.58,Cap,,0,0,0,,A {\c&H003B74E8}release{\c&H00100D0B} gate admits it,
+Dialogue: 0,0:01:21.58,0:01:21.83,Cap,,0,0,0,,A release {\c&H003B74E8}gate{\c&H00100D0B} admits it,
+Dialogue: 0,0:01:21.83,0:01:22.24,Cap,,0,0,0,,A release gate {\c&H003B74E8}admits{\c&H00100D0B} it,
+Dialogue: 0,0:01:22.24,0:01:22.76,Cap,,0,0,0,,A release gate admits {\c&H003B74E8}it,{\c&H00100D0B}
+Dialogue: 0,0:01:22.78,0:01:22.89,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} an as-of store guarantees we only use
+Dialogue: 0,0:01:22.89,0:01:22.99,Cap,,0,0,0,,and {\c&H003B74E8}an{\c&H00100D0B} as-of store guarantees we only use
+Dialogue: 0,0:01:22.99,0:01:23.33,Cap,,0,0,0,,and an {\c&H003B74E8}as-of{\c&H00100D0B} store guarantees we only use
+Dialogue: 0,0:01:23.33,0:01:23.61,Cap,,0,0,0,,and an as-of {\c&H003B74E8}store{\c&H00100D0B} guarantees we only use
+Dialogue: 0,0:01:23.61,0:01:24.44,Cap,,0,0,0,,and an as-of store {\c&H003B74E8}guarantees{\c&H00100D0B} we only use
+Dialogue: 0,0:01:24.44,0:01:24.62,Cap,,0,0,0,,and an as-of store guarantees {\c&H003B74E8}we{\c&H00100D0B} only use
+Dialogue: 0,0:01:24.62,0:01:24.94,Cap,,0,0,0,,and an as-of store guarantees we {\c&H003B74E8}only{\c&H00100D0B} use
+Dialogue: 0,0:01:24.94,0:01:25.17,Cap,,0,0,0,,and an as-of store guarantees we only {\c&H003B74E8}use{\c&H00100D0B}
+Dialogue: 0,0:01:25.19,0:01:25.32,Cap,,0,0,0,,{\c&H003B74E8}what{\c&H00100D0B} was known at the time.
+Dialogue: 0,0:01:25.32,0:01:25.48,Cap,,0,0,0,,what {\c&H003B74E8}was{\c&H00100D0B} known at the time.
+Dialogue: 0,0:01:25.48,0:01:25.82,Cap,,0,0,0,,what was {\c&H003B74E8}known{\c&H00100D0B} at the time.
+Dialogue: 0,0:01:25.82,0:01:25.89,Cap,,0,0,0,,what was known {\c&H003B74E8}at{\c&H00100D0B} the time.
+Dialogue: 0,0:01:25.89,0:01:25.98,Cap,,0,0,0,,what was known at {\c&H003B74E8}the{\c&H00100D0B} time.
+Dialogue: 0,0:01:25.98,0:01:26.83,Cap,,0,0,0,,what was known at the {\c&H003B74E8}time.{\c&H00100D0B}
+Dialogue: 0,0:01:27.31,0:01:27.44,Cap,,0,0,0,,{\c&H003B74E8}If{\c&H00100D0B} a record wasn't ingested by six,
+Dialogue: 0,0:01:27.44,0:01:27.53,Cap,,0,0,0,,If {\c&H003B74E8}a{\c&H00100D0B} record wasn't ingested by six,
+Dialogue: 0,0:01:27.53,0:01:27.93,Cap,,0,0,0,,If a {\c&H003B74E8}record{\c&H00100D0B} wasn't ingested by six,
+Dialogue: 0,0:01:27.93,0:01:28.22,Cap,,0,0,0,,If a record {\c&H003B74E8}wasn't{\c&H00100D0B} ingested by six,
+Dialogue: 0,0:01:28.22,0:01:28.71,Cap,,0,0,0,,If a record wasn't {\c&H003B74E8}ingested{\c&H00100D0B} by six,
+Dialogue: 0,0:01:28.71,0:01:28.92,Cap,,0,0,0,,If a record wasn't ingested {\c&H003B74E8}by{\c&H00100D0B} six,
+Dialogue: 0,0:01:28.92,0:01:29.70,Cap,,0,0,0,,If a record wasn't ingested by {\c&H003B74E8}six,{\c&H00100D0B}
+Dialogue: 0,0:01:29.72,0:01:29.96,Cap,,0,0,0,,{\c&H003B74E8}no{\c&H00100D0B} model, rule or order can use it.
+Dialogue: 0,0:01:29.96,0:01:30.66,Cap,,0,0,0,,no {\c&H003B74E8}model,{\c&H00100D0B} rule or order can use it.
+Dialogue: 0,0:01:30.66,0:01:31.06,Cap,,0,0,0,,no model, {\c&H003B74E8}rule{\c&H00100D0B} or order can use it.
+Dialogue: 0,0:01:31.06,0:01:31.21,Cap,,0,0,0,,no model, rule {\c&H003B74E8}or{\c&H00100D0B} order can use it.
+Dialogue: 0,0:01:31.21,0:01:31.56,Cap,,0,0,0,,no model, rule or {\c&H003B74E8}order{\c&H00100D0B} can use it.
+Dialogue: 0,0:01:31.56,0:01:31.73,Cap,,0,0,0,,no model, rule or order {\c&H003B74E8}can{\c&H00100D0B} use it.
+Dialogue: 0,0:01:31.73,0:01:31.97,Cap,,0,0,0,,no model, rule or order can {\c&H003B74E8}use{\c&H00100D0B} it.
+Dialogue: 0,0:01:31.97,0:01:32.56,Cap,,0,0,0,,no model, rule or order can use {\c&H003B74E8}it.{\c&H00100D0B}
+Dialogue: 0,0:01:33.04,0:01:33.27,Cap,,0,0,0,,{\c&H003B74E8}That{\c&H00100D0B} builds one state:
+Dialogue: 0,0:01:33.27,0:01:33.62,Cap,,0,0,0,,That {\c&H003B74E8}builds{\c&H00100D0B} one state:
+Dialogue: 0,0:01:33.62,0:01:33.84,Cap,,0,0,0,,That builds {\c&H003B74E8}one{\c&H00100D0B} state:
+Dialogue: 0,0:01:33.84,0:01:34.63,Cap,,0,0,0,,That builds one {\c&H003B74E8}state:{\c&H00100D0B}
+Dialogue: 0,0:01:34.65,0:01:34.74,Cap,,0,0,0,,{\c&H003B74E8}a{\c&H00100D0B} belief about every aircraft and every serialised
+Dialogue: 0,0:01:34.74,0:01:35.17,Cap,,0,0,0,,a {\c&H003B74E8}belief{\c&H00100D0B} about every aircraft and every serialised
+Dialogue: 0,0:01:35.17,0:01:35.48,Cap,,0,0,0,,a belief {\c&H003B74E8}about{\c&H00100D0B} every aircraft and every serialised
+Dialogue: 0,0:01:35.48,0:01:35.79,Cap,,0,0,0,,a belief about {\c&H003B74E8}every{\c&H00100D0B} aircraft and every serialised
+Dialogue: 0,0:01:35.79,0:01:36.47,Cap,,0,0,0,,a belief about every {\c&H003B74E8}aircraft{\c&H00100D0B} and every serialised
+Dialogue: 0,0:01:36.47,0:01:36.63,Cap,,0,0,0,,a belief about every aircraft {\c&H003B74E8}and{\c&H00100D0B} every serialised
+Dialogue: 0,0:01:36.63,0:01:36.99,Cap,,0,0,0,,a belief about every aircraft and {\c&H003B74E8}every{\c&H00100D0B} serialised
+Dialogue: 0,0:01:36.99,0:01:37.65,Cap,,0,0,0,,a belief about every aircraft and every {\c&H003B74E8}serialised{\c&H00100D0B}
+Dialogue: 0,0:01:37.67,0:01:38.24,Cap,,0,0,0,,{\c&H003B74E8}part{\c&H00100D0B} —
+Dialogue: 0,0:01:38.24,0:01:38.30,Cap,,0,0,0,,part {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:01:38.32,0:01:38.48,Cap,,0,0,0,,{\c&H003B74E8}with{\c&H00100D0B} its uncertainty.
+Dialogue: 0,0:01:38.48,0:01:38.64,Cap,,0,0,0,,with {\c&H003B74E8}its{\c&H00100D0B} uncertainty.
+Dialogue: 0,0:01:38.64,0:01:39.82,Cap,,0,0,0,,with its {\c&H003B74E8}uncertainty.{\c&H00100D0B}
+Dialogue: 0,0:01:40.94,0:01:41.41,Cap,,0,0,0,,{\c&H003B74E8}Engines{\c&H00100D0B} read that state.
+Dialogue: 0,0:01:41.41,0:01:41.64,Cap,,0,0,0,,Engines {\c&H003B74E8}read{\c&H00100D0B} that state.
+Dialogue: 0,0:01:41.64,0:01:41.89,Cap,,0,0,0,,Engines read {\c&H003B74E8}that{\c&H00100D0B} state.
+Dialogue: 0,0:01:41.89,0:01:42.79,Cap,,0,0,0,,Engines read that {\c&H003B74E8}state.{\c&H00100D0B}
+Dialogue: 0,0:01:42.81,0:01:42.98,Cap,,0,0,0,,{\c&H003B74E8}We{\c&H00100D0B} chose models that fit sparse,
+Dialogue: 0,0:01:42.98,0:01:43.31,Cap,,0,0,0,,We {\c&H003B74E8}chose{\c&H00100D0B} models that fit sparse,
+Dialogue: 0,0:01:43.31,0:01:43.76,Cap,,0,0,0,,We chose {\c&H003B74E8}models{\c&H00100D0B} that fit sparse,
+Dialogue: 0,0:01:43.76,0:01:43.98,Cap,,0,0,0,,We chose models {\c&H003B74E8}that{\c&H00100D0B} fit sparse,
+Dialogue: 0,0:01:43.98,0:01:44.24,Cap,,0,0,0,,We chose models that {\c&H003B74E8}fit{\c&H00100D0B} sparse,
+Dialogue: 0,0:01:44.24,0:01:45.06,Cap,,0,0,0,,We chose models that fit {\c&H003B74E8}sparse,{\c&H00100D0B}
+Dialogue: 0,0:01:45.08,0:01:45.54,Cap,,0,0,0,,{\c&H003B74E8}censored{\c&H00100D0B} maintenance data
+Dialogue: 0,0:01:45.54,0:01:46.06,Cap,,0,0,0,,censored {\c&H003B74E8}maintenance{\c&H00100D0B} data
+Dialogue: 0,0:01:46.06,0:01:46.62,Cap,,0,0,0,,censored maintenance {\c&H003B74E8}data{\c&H00100D0B}
+Dialogue: 0,0:01:46.64,0:01:46.73,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:01:46.75,0:01:47.34,Cap,,0,0,0,,{\c&H003B74E8}calibrated{\c&H00100D0B} classifiers,
+Dialogue: 0,0:01:47.34,0:01:48.43,Cap,,0,0,0,,calibrated {\c&H003B74E8}classifiers,{\c&H00100D0B}
+Dialogue: 0,0:01:48.45,0:01:48.96,Cap,,0,0,0,,{\c&H003B74E8}Bayesian{\c&H00100D0B} isolation, survival models
+Dialogue: 0,0:01:48.96,0:01:49.98,Cap,,0,0,0,,Bayesian {\c&H003B74E8}isolation,{\c&H00100D0B} survival models
+Dialogue: 0,0:01:49.98,0:01:50.54,Cap,,0,0,0,,Bayesian isolation, {\c&H003B74E8}survival{\c&H00100D0B} models
+Dialogue: 0,0:01:50.54,0:01:51.24,Cap,,0,0,0,,Bayesian isolation, survival {\c&H003B74E8}models{\c&H00100D0B}
+Dialogue: 0,0:01:51.26,0:01:51.32,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:01:51.34,0:01:51.48,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} kept time-series foundation models as
+Dialogue: 0,0:01:51.48,0:01:51.80,Cap,,0,0,0,,and {\c&H003B74E8}kept{\c&H00100D0B} time-series foundation models as
+Dialogue: 0,0:01:51.80,0:01:52.54,Cap,,0,0,0,,and kept {\c&H003B74E8}time-series{\c&H00100D0B} foundation models as
+Dialogue: 0,0:01:52.54,0:01:53.14,Cap,,0,0,0,,and kept time-series {\c&H003B74E8}foundation{\c&H00100D0B} models as
+Dialogue: 0,0:01:53.14,0:01:53.58,Cap,,0,0,0,,and kept time-series foundation {\c&H003B74E8}models{\c&H00100D0B} as
+Dialogue: 0,0:01:53.58,0:01:53.72,Cap,,0,0,0,,and kept time-series foundation models {\c&H003B74E8}as{\c&H00100D0B}
+Dialogue: 0,0:01:53.74,0:01:54.73,Cap,,0,0,0,,{\c&H003B74E8}baselines,{\c&H00100D0B} not decision-makers.
+Dialogue: 0,0:01:54.73,0:01:54.96,Cap,,0,0,0,,baselines, {\c&H003B74E8}not{\c&H00100D0B} decision-makers.
+Dialogue: 0,0:01:54.96,0:01:56.34,Cap,,0,0,0,,baselines, not {\c&H003B74E8}decision-makers.{\c&H00100D0B}
+Dialogue: 0,0:01:57.23,0:01:57.73,Cap,,0,0,0,,{\c&H003B74E8}Triage{\c&H00100D0B} turns twelve hundred alerts into seven
+Dialogue: 0,0:01:57.73,0:01:58.09,Cap,,0,0,0,,Triage {\c&H003B74E8}turns{\c&H00100D0B} twelve hundred alerts into seven
+Dialogue: 0,0:01:58.09,0:01:58.43,Cap,,0,0,0,,Triage turns {\c&H003B74E8}twelve{\c&H00100D0B} hundred alerts into seven
+Dialogue: 0,0:01:58.43,0:01:58.72,Cap,,0,0,0,,Triage turns twelve {\c&H003B74E8}hundred{\c&H00100D0B} alerts into seven
+Dialogue: 0,0:01:58.72,0:01:59.10,Cap,,0,0,0,,Triage turns twelve hundred {\c&H003B74E8}alerts{\c&H00100D0B} into seven
+Dialogue: 0,0:01:59.10,0:01:59.35,Cap,,0,0,0,,Triage turns twelve hundred alerts {\c&H003B74E8}into{\c&H00100D0B} seven
+Dialogue: 0,0:01:59.35,0:01:59.65,Cap,,0,0,0,,Triage turns twelve hundred alerts into {\c&H003B74E8}seven{\c&H00100D0B}
+Dialogue: 0,0:01:59.67,0:02:00.68,Cap,,0,0,0,,{\c&H003B74E8}decisions.{\c&H00100D0B}
+Dialogue: 0,0:02:01.23,0:02:01.63,Cap,,0,0,0,,{\c&H003B74E8}Versioned{\c&H00100D0B} policies and optimisers propose
+Dialogue: 0,0:02:01.63,0:02:02.28,Cap,,0,0,0,,Versioned {\c&H003B74E8}policies{\c&H00100D0B} and optimisers propose
+Dialogue: 0,0:02:02.28,0:02:02.42,Cap,,0,0,0,,Versioned policies {\c&H003B74E8}and{\c&H00100D0B} optimisers propose
+Dialogue: 0,0:02:02.42,0:02:03.16,Cap,,0,0,0,,Versioned policies and {\c&H003B74E8}optimisers{\c&H00100D0B} propose
+Dialogue: 0,0:02:03.16,0:02:03.67,Cap,,0,0,0,,Versioned policies and optimisers {\c&H003B74E8}propose{\c&H00100D0B}
+Dialogue: 0,0:02:03.69,0:02:04.64,Cap,,0,0,0,,{\c&H003B74E8}orders,{\c&H00100D0B} simulation tests them against the
+Dialogue: 0,0:02:04.64,0:02:05.39,Cap,,0,0,0,,orders, {\c&H003B74E8}simulation{\c&H00100D0B} tests them against the
+Dialogue: 0,0:02:05.39,0:02:05.72,Cap,,0,0,0,,orders, simulation {\c&H003B74E8}tests{\c&H00100D0B} them against the
+Dialogue: 0,0:02:05.72,0:02:05.91,Cap,,0,0,0,,orders, simulation tests {\c&H003B74E8}them{\c&H00100D0B} against the
+Dialogue: 0,0:02:05.91,0:02:06.29,Cap,,0,0,0,,orders, simulation tests them {\c&H003B74E8}against{\c&H00100D0B} the
+Dialogue: 0,0:02:06.29,0:02:06.36,Cap,,0,0,0,,orders, simulation tests them against {\c&H003B74E8}the{\c&H00100D0B}
+Dialogue: 0,0:02:06.38,0:02:06.81,Cap,,0,0,0,,{\c&H003B74E8}status{\c&H00100D0B} quo, a person approves
+Dialogue: 0,0:02:06.81,0:02:07.54,Cap,,0,0,0,,status {\c&H003B74E8}quo,{\c&H00100D0B} a person approves
+Dialogue: 0,0:02:07.54,0:02:07.66,Cap,,0,0,0,,status quo, {\c&H003B74E8}a{\c&H00100D0B} person approves
+Dialogue: 0,0:02:07.66,0:02:08.08,Cap,,0,0,0,,status quo, a {\c&H003B74E8}person{\c&H00100D0B} approves
+Dialogue: 0,0:02:08.08,0:02:09.02,Cap,,0,0,0,,status quo, a person {\c&H003B74E8}approves{\c&H00100D0B}
+Dialogue: 0,0:02:09.04,0:02:09.11,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:02:09.13,0:02:09.29,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} every step lands on one tamper-evident
+Dialogue: 0,0:02:09.29,0:02:09.61,Cap,,0,0,0,,and {\c&H003B74E8}every{\c&H00100D0B} step lands on one tamper-evident
+Dialogue: 0,0:02:09.61,0:02:09.93,Cap,,0,0,0,,and every {\c&H003B74E8}step{\c&H00100D0B} lands on one tamper-evident
+Dialogue: 0,0:02:09.93,0:02:10.36,Cap,,0,0,0,,and every step {\c&H003B74E8}lands{\c&H00100D0B} on one tamper-evident
+Dialogue: 0,0:02:10.36,0:02:10.57,Cap,,0,0,0,,and every step lands {\c&H003B74E8}on{\c&H00100D0B} one tamper-evident
+Dialogue: 0,0:02:10.57,0:02:10.92,Cap,,0,0,0,,and every step lands on {\c&H003B74E8}one{\c&H00100D0B} tamper-evident
+Dialogue: 0,0:02:10.92,0:02:11.66,Cap,,0,0,0,,and every step lands on one {\c&H003B74E8}tamper-evident{\c&H00100D0B}
+Dialogue: 0,0:02:11.68,0:02:12.48,Cap,,0,0,0,,{\c&H003B74E8}log.{\c&H00100D0B}
+Dialogue: 0,0:02:14.18,0:02:14.53,Cap,,0,0,0,,{\c&H003B74E8}Monday,{\c&H00100D0B} 06:00.
+Dialogue: 0,0:02:14.53,0:02:16.38,Cap,,0,0,0,,Monday, {\c&H003B74E8}06:00.{\c&H00100D0B}
+Dialogue: 0,0:02:16.40,0:02:16.69,Cap,,0,0,0,,{\c&H003B74E8}Six{\c&H00100D0B} of eight aircraft are mission capable.
+Dialogue: 0,0:02:16.69,0:02:16.78,Cap,,0,0,0,,Six {\c&H003B74E8}of{\c&H00100D0B} eight aircraft are mission capable.
+Dialogue: 0,0:02:16.78,0:02:16.98,Cap,,0,0,0,,Six of {\c&H003B74E8}eight{\c&H00100D0B} aircraft are mission capable.
+Dialogue: 0,0:02:16.98,0:02:17.58,Cap,,0,0,0,,Six of eight {\c&H003B74E8}aircraft{\c&H00100D0B} are mission capable.
+Dialogue: 0,0:02:17.58,0:02:17.73,Cap,,0,0,0,,Six of eight aircraft {\c&H003B74E8}are{\c&H00100D0B} mission capable.
+Dialogue: 0,0:02:17.73,0:02:18.08,Cap,,0,0,0,,Six of eight aircraft are {\c&H003B74E8}mission{\c&H00100D0B} capable.
+Dialogue: 0,0:02:18.08,0:02:19.00,Cap,,0,0,0,,Six of eight aircraft are mission {\c&H003B74E8}capable.{\c&H00100D0B}
+Dialogue: 0,0:02:19.53,0:02:19.70,Cap,,0,0,0,,{\c&H003B74E8}This{\c&H00100D0B} season, most of the waiting came from
+Dialogue: 0,0:02:19.70,0:02:20.39,Cap,,0,0,0,,This {\c&H003B74E8}season,{\c&H00100D0B} most of the waiting came from
+Dialogue: 0,0:02:20.39,0:02:20.66,Cap,,0,0,0,,This season, {\c&H003B74E8}most{\c&H00100D0B} of the waiting came from
+Dialogue: 0,0:02:20.66,0:02:20.74,Cap,,0,0,0,,This season, most {\c&H003B74E8}of{\c&H00100D0B} the waiting came from
+Dialogue: 0,0:02:20.74,0:02:20.83,Cap,,0,0,0,,This season, most of {\c&H003B74E8}the{\c&H00100D0B} waiting came from
+Dialogue: 0,0:02:20.83,0:02:21.20,Cap,,0,0,0,,This season, most of the {\c&H003B74E8}waiting{\c&H00100D0B} came from
+Dialogue: 0,0:02:21.20,0:02:21.48,Cap,,0,0,0,,This season, most of the waiting {\c&H003B74E8}came{\c&H00100D0B} from
+Dialogue: 0,0:02:21.48,0:02:21.67,Cap,,0,0,0,,This season, most of the waiting came {\c&H003B74E8}from{\c&H00100D0B}
+Dialogue: 0,0:02:21.69,0:02:22.25,Cap,,0,0,0,,{\c&H003B74E8}tyres{\c&H00100D0B} and brake chutes
+Dialogue: 0,0:02:22.25,0:02:22.38,Cap,,0,0,0,,tyres {\c&H003B74E8}and{\c&H00100D0B} brake chutes
+Dialogue: 0,0:02:22.38,0:02:22.66,Cap,,0,0,0,,tyres and {\c&H003B74E8}brake{\c&H00100D0B} chutes
+Dialogue: 0,0:02:22.66,0:02:23.39,Cap,,0,0,0,,tyres and brake {\c&H003B74E8}chutes{\c&H00100D0B}
+Dialogue: 0,0:02:23.41,0:02:23.48,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:02:23.50,0:02:23.98,Cap,,0,0,0,,{\c&H003B74E8}demand{\c&H00100D0B} you can predict from the flying plan.
+Dialogue: 0,0:02:23.98,0:02:24.08,Cap,,0,0,0,,demand {\c&H003B74E8}you{\c&H00100D0B} can predict from the flying plan.
+Dialogue: 0,0:02:24.08,0:02:24.20,Cap,,0,0,0,,demand you {\c&H003B74E8}can{\c&H00100D0B} predict from the flying plan.
+Dialogue: 0,0:02:24.20,0:02:24.65,Cap,,0,0,0,,demand you can {\c&H003B74E8}predict{\c&H00100D0B} from the flying plan.
+Dialogue: 0,0:02:24.65,0:02:24.79,Cap,,0,0,0,,demand you can predict {\c&H003B74E8}from{\c&H00100D0B} the flying plan.
+Dialogue: 0,0:02:24.79,0:02:24.89,Cap,,0,0,0,,demand you can predict from {\c&H003B74E8}the{\c&H00100D0B} flying plan.
+Dialogue: 0,0:02:24.89,0:02:25.30,Cap,,0,0,0,,demand you can predict from the {\c&H003B74E8}flying{\c&H00100D0B} plan.
+Dialogue: 0,0:02:25.30,0:02:26.15,Cap,,0,0,0,,demand you can predict from the flying {\c&H003B74E8}plan.{\c&H00100D0B}
+Dialogue: 0,0:02:26.66,0:02:27.04,Cap,,0,0,0,,{\c&H003B74E8}Today's{\c&H00100D0B} board has seven issues
+Dialogue: 0,0:02:27.04,0:02:27.39,Cap,,0,0,0,,Today's {\c&H003B74E8}board{\c&H00100D0B} has seven issues
+Dialogue: 0,0:02:27.39,0:02:27.60,Cap,,0,0,0,,Today's board {\c&H003B74E8}has{\c&H00100D0B} seven issues
+Dialogue: 0,0:02:27.60,0:02:27.94,Cap,,0,0,0,,Today's board has {\c&H003B74E8}seven{\c&H00100D0B} issues
+Dialogue: 0,0:02:27.94,0:02:28.71,Cap,,0,0,0,,Today's board has seven {\c&H003B74E8}issues{\c&H00100D0B}
+Dialogue: 0,0:02:28.73,0:02:28.83,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:02:28.85,0:02:29.12,Cap,,0,0,0,,{\c&H003B74E8}each{\c&H00100D0B} with the evidence and the score behind
+Dialogue: 0,0:02:29.12,0:02:29.23,Cap,,0,0,0,,each {\c&H003B74E8}with{\c&H00100D0B} the evidence and the score behind
+Dialogue: 0,0:02:29.23,0:02:29.35,Cap,,0,0,0,,each with {\c&H003B74E8}the{\c&H00100D0B} evidence and the score behind
+Dialogue: 0,0:02:29.35,0:02:29.90,Cap,,0,0,0,,each with the {\c&H003B74E8}evidence{\c&H00100D0B} and the score behind
+Dialogue: 0,0:02:29.90,0:02:30.03,Cap,,0,0,0,,each with the evidence {\c&H003B74E8}and{\c&H00100D0B} the score behind
+Dialogue: 0,0:02:30.03,0:02:30.11,Cap,,0,0,0,,each with the evidence and {\c&H003B74E8}the{\c&H00100D0B} score behind
+Dialogue: 0,0:02:30.11,0:02:30.40,Cap,,0,0,0,,each with the evidence and the {\c&H003B74E8}score{\c&H00100D0B} behind
+Dialogue: 0,0:02:30.40,0:02:30.79,Cap,,0,0,0,,each with the evidence and the score {\c&H003B74E8}behind{\c&H00100D0B}
+Dialogue: 0,0:02:30.81,0:02:31.39,Cap,,0,0,0,,{\c&H003B74E8}it.{\c&H00100D0B}
+Dialogue: 0,0:02:31.84,0:02:33.57,Cap,,0,0,0,,{\c&H003B74E8}TJ107.{\c&H00100D0B}
+Dialogue: 0,0:02:33.59,0:02:33.72,Cap,,0,0,0,,{\c&H003B74E8}The{\c&H00100D0B} system doesn't say replace the pump.
+Dialogue: 0,0:02:33.72,0:02:34.04,Cap,,0,0,0,,The {\c&H003B74E8}system{\c&H00100D0B} doesn't say replace the pump.
+Dialogue: 0,0:02:34.04,0:02:34.33,Cap,,0,0,0,,The system {\c&H003B74E8}doesn't{\c&H00100D0B} say replace the pump.
+Dialogue: 0,0:02:34.33,0:02:34.69,Cap,,0,0,0,,The system doesn't {\c&H003B74E8}say{\c&H00100D0B} replace the pump.
+Dialogue: 0,0:02:34.69,0:02:35.12,Cap,,0,0,0,,The system doesn't say {\c&H003B74E8}replace{\c&H00100D0B} the pump.
+Dialogue: 0,0:02:35.12,0:02:35.22,Cap,,0,0,0,,The system doesn't say replace {\c&H003B74E8}the{\c&H00100D0B} pump.
+Dialogue: 0,0:02:35.22,0:02:35.85,Cap,,0,0,0,,The system doesn't say replace the {\c&H003B74E8}pump.{\c&H00100D0B}
+Dialogue: 0,0:02:35.87,0:02:36.04,Cap,,0,0,0,,{\c&H003B74E8}It{\c&H00100D0B} says stop —
+Dialogue: 0,0:02:36.04,0:02:36.27,Cap,,0,0,0,,It {\c&H003B74E8}says{\c&H00100D0B} stop —
+Dialogue: 0,0:02:36.27,0:02:36.68,Cap,,0,0,0,,It says {\c&H003B74E8}stop{\c&H00100D0B} —
+Dialogue: 0,0:02:36.68,0:02:36.72,Cap,,0,0,0,,It says stop {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:02:36.74,0:02:36.88,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} shows why.
+Dialogue: 0,0:02:36.88,0:02:37.22,Cap,,0,0,0,,and {\c&H003B74E8}shows{\c&H00100D0B} why.
+Dialogue: 0,0:02:37.22,0:02:37.97,Cap,,0,0,0,,and shows {\c&H003B74E8}why.{\c&H00100D0B}
+Dialogue: 0,0:02:38.50,0:02:38.59,Cap,,0,0,0,,{\c&H003B74E8}In{\c&H00100D0B} the twin, the alarm's reporter and its
+Dialogue: 0,0:02:38.59,0:02:38.69,Cap,,0,0,0,,In {\c&H003B74E8}the{\c&H00100D0B} twin, the alarm's reporter and its
+Dialogue: 0,0:02:38.69,0:02:39.33,Cap,,0,0,0,,In the {\c&H003B74E8}twin,{\c&H00100D0B} the alarm's reporter and its
+Dialogue: 0,0:02:39.33,0:02:39.48,Cap,,0,0,0,,In the twin, {\c&H003B74E8}the{\c&H00100D0B} alarm's reporter and its
+Dialogue: 0,0:02:39.48,0:02:39.95,Cap,,0,0,0,,In the twin, the {\c&H003B74E8}alarm's{\c&H00100D0B} reporter and its
+Dialogue: 0,0:02:39.95,0:02:40.66,Cap,,0,0,0,,In the twin, the alarm's {\c&H003B74E8}reporter{\c&H00100D0B} and its
+Dialogue: 0,0:02:40.66,0:02:40.79,Cap,,0,0,0,,In the twin, the alarm's reporter {\c&H003B74E8}and{\c&H00100D0B} its
+Dialogue: 0,0:02:40.79,0:02:40.88,Cap,,0,0,0,,In the twin, the alarm's reporter and {\c&H003B74E8}its{\c&H00100D0B}
+Dialogue: 0,0:02:40.90,0:02:41.76,Cap,,0,0,0,,{\c&H003B74E8}suspects{\c&H00100D0B} light up where they sit in the aircraft.
+Dialogue: 0,0:02:41.76,0:02:42.01,Cap,,0,0,0,,suspects {\c&H003B74E8}light{\c&H00100D0B} up where they sit in the aircraft.
+Dialogue: 0,0:02:42.01,0:02:42.16,Cap,,0,0,0,,suspects light {\c&H003B74E8}up{\c&H00100D0B} where they sit in the aircraft.
+Dialogue: 0,0:02:42.16,0:02:42.29,Cap,,0,0,0,,suspects light up {\c&H003B74E8}where{\c&H00100D0B} they sit in the aircraft.
+Dialogue: 0,0:02:42.29,0:02:42.44,Cap,,0,0,0,,suspects light up where {\c&H003B74E8}they{\c&H00100D0B} sit in the aircraft.
+Dialogue: 0,0:02:42.44,0:02:42.66,Cap,,0,0,0,,suspects light up where they {\c&H003B74E8}sit{\c&H00100D0B} in the aircraft.
+Dialogue: 0,0:02:42.66,0:02:42.74,Cap,,0,0,0,,suspects light up where they sit {\c&H003B74E8}in{\c&H00100D0B} the aircraft.
+Dialogue: 0,0:02:42.74,0:02:42.83,Cap,,0,0,0,,suspects light up where they sit in {\c&H003B74E8}the{\c&H00100D0B} aircraft.
+Dialogue: 0,0:02:42.83,0:02:43.88,Cap,,0,0,0,,suspects light up where they sit in the {\c&H003B74E8}aircraft.{\c&H00100D0B}
+Dialogue: 0,0:02:44.38,0:02:44.53,Cap,,0,0,0,,{\c&H003B74E8}It{\c&H00100D0B} stayed with this aircraft through ten different
+Dialogue: 0,0:02:44.53,0:02:44.84,Cap,,0,0,0,,It {\c&H003B74E8}stayed{\c&H00100D0B} with this aircraft through ten different
+Dialogue: 0,0:02:44.84,0:02:44.96,Cap,,0,0,0,,It stayed {\c&H003B74E8}with{\c&H00100D0B} this aircraft through ten different
+Dialogue: 0,0:02:44.96,0:02:45.13,Cap,,0,0,0,,It stayed with {\c&H003B74E8}this{\c&H00100D0B} aircraft through ten different
+Dialogue: 0,0:02:45.13,0:02:45.73,Cap,,0,0,0,,It stayed with this {\c&H003B74E8}aircraft{\c&H00100D0B} through ten different
+Dialogue: 0,0:02:45.73,0:02:45.93,Cap,,0,0,0,,It stayed with this aircraft {\c&H003B74E8}through{\c&H00100D0B} ten different
+Dialogue: 0,0:02:45.93,0:02:46.23,Cap,,0,0,0,,It stayed with this aircraft through {\c&H003B74E8}ten{\c&H00100D0B} different
+Dialogue: 0,0:02:46.23,0:02:46.51,Cap,,0,0,0,,It stayed with this aircraft through ten {\c&H003B74E8}different{\c&H00100D0B}
+Dialogue: 0,0:02:46.53,0:02:47.41,Cap,,0,0,0,,{\c&H003B74E8}pumps.{\c&H00100D0B}
+Dialogue: 0,0:02:47.43,0:02:47.58,Cap,,0,0,0,,{\c&H003B74E8}The{\c&H00100D0B} evidence follows the tail
+Dialogue: 0,0:02:47.58,0:02:48.06,Cap,,0,0,0,,The {\c&H003B74E8}evidence{\c&H00100D0B} follows the tail
+Dialogue: 0,0:02:48.06,0:02:48.48,Cap,,0,0,0,,The evidence {\c&H003B74E8}follows{\c&H00100D0B} the tail
+Dialogue: 0,0:02:48.48,0:02:48.59,Cap,,0,0,0,,The evidence follows {\c&H003B74E8}the{\c&H00100D0B} tail
+Dialogue: 0,0:02:48.59,0:02:49.19,Cap,,0,0,0,,The evidence follows the {\c&H003B74E8}tail{\c&H00100D0B}
+Dialogue: 0,0:02:49.21,0:02:49.28,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:02:49.30,0:02:49.51,Cap,,0,0,0,,{\c&H003B74E8}not{\c&H00100D0B} the part.
+Dialogue: 0,0:02:49.51,0:02:49.60,Cap,,0,0,0,,not {\c&H003B74E8}the{\c&H00100D0B} part.
+Dialogue: 0,0:02:49.60,0:02:50.35,Cap,,0,0,0,,not the {\c&H003B74E8}part.{\c&H00100D0B}
+Dialogue: 0,0:02:51.40,0:02:51.73,Cap,,0,0,0,,{\c&H003B74E8}Learned{\c&H00100D0B} from outcomes, the chance this pump
+Dialogue: 0,0:02:51.73,0:02:51.90,Cap,,0,0,0,,Learned {\c&H003B74E8}from{\c&H00100D0B} outcomes, the chance this pump
+Dialogue: 0,0:02:51.90,0:02:52.85,Cap,,0,0,0,,Learned from {\c&H003B74E8}outcomes,{\c&H00100D0B} the chance this pump
+Dialogue: 0,0:02:52.85,0:02:52.99,Cap,,0,0,0,,Learned from outcomes, {\c&H003B74E8}the{\c&H00100D0B} chance this pump
+Dialogue: 0,0:02:52.99,0:02:53.33,Cap,,0,0,0,,Learned from outcomes, the {\c&H003B74E8}chance{\c&H00100D0B} this pump
+Dialogue: 0,0:02:53.33,0:02:53.50,Cap,,0,0,0,,Learned from outcomes, the chance {\c&H003B74E8}this{\c&H00100D0B} pump
+Dialogue: 0,0:02:53.50,0:02:53.76,Cap,,0,0,0,,Learned from outcomes, the chance this {\c&H003B74E8}pump{\c&H00100D0B}
+Dialogue: 0,0:02:53.78,0:02:53.94,Cap,,0,0,0,,{\c&H003B74E8}is{\c&H00100D0B} actually faulty is half a percent.
+Dialogue: 0,0:02:53.94,0:02:54.40,Cap,,0,0,0,,is {\c&H003B74E8}actually{\c&H00100D0B} faulty is half a percent.
+Dialogue: 0,0:02:54.40,0:02:54.91,Cap,,0,0,0,,is actually {\c&H003B74E8}faulty{\c&H00100D0B} is half a percent.
+Dialogue: 0,0:02:54.91,0:02:55.09,Cap,,0,0,0,,is actually faulty {\c&H003B74E8}is{\c&H00100D0B} half a percent.
+Dialogue: 0,0:02:55.09,0:02:55.34,Cap,,0,0,0,,is actually faulty is {\c&H003B74E8}half{\c&H00100D0B} a percent.
+Dialogue: 0,0:02:55.34,0:02:55.40,Cap,,0,0,0,,is actually faulty is half {\c&H003B74E8}a{\c&H00100D0B} percent.
+Dialogue: 0,0:02:55.40,0:02:56.42,Cap,,0,0,0,,is actually faulty is half a {\c&H003B74E8}percent.{\c&H00100D0B}
+Dialogue: 0,0:02:56.44,0:02:56.84,Cap,,0,0,0,,{\c&H003B74E8}Remove{\c&H00100D0B} it again, and it's ninety-eight percent
+Dialogue: 0,0:02:56.84,0:02:56.93,Cap,,0,0,0,,Remove {\c&H003B74E8}it{\c&H00100D0B} again, and it's ninety-eight percent
+Dialogue: 0,0:02:56.93,0:02:57.65,Cap,,0,0,0,,Remove it {\c&H003B74E8}again,{\c&H00100D0B} and it's ninety-eight percent
+Dialogue: 0,0:02:57.65,0:02:57.77,Cap,,0,0,0,,Remove it again, {\c&H003B74E8}and{\c&H00100D0B} it's ninety-eight percent
+Dialogue: 0,0:02:57.77,0:02:57.97,Cap,,0,0,0,,Remove it again, and {\c&H003B74E8}it's{\c&H00100D0B} ninety-eight percent
+Dialogue: 0,0:02:57.97,0:02:58.48,Cap,,0,0,0,,Remove it again, and it's {\c&H003B74E8}ninety-eight{\c&H00100D0B} percent
+Dialogue: 0,0:02:58.48,0:02:58.93,Cap,,0,0,0,,Remove it again, and it's ninety-eight {\c&H003B74E8}percent{\c&H00100D0B}
+Dialogue: 0,0:02:58.95,0:02:59.33,Cap,,0,0,0,,{\c&H003B74E8}likely{\c&H00100D0B} to come back 'no fault found'.
+Dialogue: 0,0:02:59.33,0:02:59.43,Cap,,0,0,0,,likely {\c&H003B74E8}to{\c&H00100D0B} come back 'no fault found'.
+Dialogue: 0,0:02:59.43,0:02:59.63,Cap,,0,0,0,,likely to {\c&H003B74E8}come{\c&H00100D0B} back 'no fault found'.
+Dialogue: 0,0:02:59.63,0:03:00.18,Cap,,0,0,0,,likely to come {\c&H003B74E8}back{\c&H00100D0B} 'no fault found'.
+Dialogue: 0,0:03:00.18,0:03:00.42,Cap,,0,0,0,,likely to come back {\c&H003B74E8}'no{\c&H00100D0B} fault found'.
+Dialogue: 0,0:03:00.42,0:03:00.70,Cap,,0,0,0,,likely to come back 'no {\c&H003B74E8}fault{\c&H00100D0B} found'.
+Dialogue: 0,0:03:00.70,0:03:01.53,Cap,,0,0,0,,likely to come back 'no fault {\c&H003B74E8}found'.{\c&H00100D0B}
+Dialogue: 0,0:03:02.90,0:03:03.08,Cap,,0,0,0,,{\c&H003B74E8}So{\c&H00100D0B} it recommends the test that resolves the
+Dialogue: 0,0:03:03.08,0:03:03.18,Cap,,0,0,0,,So {\c&H003B74E8}it{\c&H00100D0B} recommends the test that resolves the
+Dialogue: 0,0:03:03.18,0:03:03.70,Cap,,0,0,0,,So it {\c&H003B74E8}recommends{\c&H00100D0B} the test that resolves the
+Dialogue: 0,0:03:03.70,0:03:03.81,Cap,,0,0,0,,So it recommends {\c&H003B74E8}the{\c&H00100D0B} test that resolves the
+Dialogue: 0,0:03:03.81,0:03:04.44,Cap,,0,0,0,,So it recommends the {\c&H003B74E8}test{\c&H00100D0B} that resolves the
+Dialogue: 0,0:03:04.44,0:03:04.60,Cap,,0,0,0,,So it recommends the test {\c&H003B74E8}that{\c&H00100D0B} resolves the
+Dialogue: 0,0:03:04.60,0:03:05.15,Cap,,0,0,0,,So it recommends the test that {\c&H003B74E8}resolves{\c&H00100D0B} the
+Dialogue: 0,0:03:05.15,0:03:05.23,Cap,,0,0,0,,So it recommends the test that resolves {\c&H003B74E8}the{\c&H00100D0B}
+Dialogue: 0,0:03:05.25,0:03:05.58,Cap,,0,0,0,,{\c&H003B74E8}most{\c&H00100D0B} uncertainty per man-hour.
+Dialogue: 0,0:03:05.58,0:03:06.28,Cap,,0,0,0,,most {\c&H003B74E8}uncertainty{\c&H00100D0B} per man-hour.
+Dialogue: 0,0:03:06.28,0:03:06.45,Cap,,0,0,0,,most uncertainty {\c&H003B74E8}per{\c&H00100D0B} man-hour.
+Dialogue: 0,0:03:06.45,0:03:07.40,Cap,,0,0,0,,most uncertainty per {\c&H003B74E8}man-hour.{\c&H00100D0B}
+Dialogue: 0,0:03:07.89,0:03:08.19,Cap,,0,0,0,,{\c&H003B74E8}Every{\c&H00100D0B} recommendation comes from a rule you
+Dialogue: 0,0:03:08.19,0:03:09.04,Cap,,0,0,0,,Every {\c&H003B74E8}recommendation{\c&H00100D0B} comes from a rule you
+Dialogue: 0,0:03:09.04,0:03:09.37,Cap,,0,0,0,,Every recommendation {\c&H003B74E8}comes{\c&H00100D0B} from a rule you
+Dialogue: 0,0:03:09.37,0:03:09.50,Cap,,0,0,0,,Every recommendation comes {\c&H003B74E8}from{\c&H00100D0B} a rule you
+Dialogue: 0,0:03:09.50,0:03:09.61,Cap,,0,0,0,,Every recommendation comes from {\c&H003B74E8}a{\c&H00100D0B} rule you
+Dialogue: 0,0:03:09.61,0:03:09.94,Cap,,0,0,0,,Every recommendation comes from a {\c&H003B74E8}rule{\c&H00100D0B} you
+Dialogue: 0,0:03:09.94,0:03:10.07,Cap,,0,0,0,,Every recommendation comes from a rule {\c&H003B74E8}you{\c&H00100D0B}
+Dialogue: 0,0:03:10.09,0:03:10.27,Cap,,0,0,0,,{\c&H003B74E8}can{\c&H00100D0B} read.
+Dialogue: 0,0:03:10.27,0:03:11.12,Cap,,0,0,0,,can {\c&H003B74E8}read.{\c&H00100D0B}
+Dialogue: 0,0:03:11.14,0:03:11.54,Cap,,0,0,0,,{\c&H003B74E8}Hard{\c&H00100D0B} limits live in code;
+Dialogue: 0,0:03:11.54,0:03:11.99,Cap,,0,0,0,,Hard {\c&H003B74E8}limits{\c&H00100D0B} live in code;
+Dialogue: 0,0:03:11.99,0:03:12.23,Cap,,0,0,0,,Hard limits {\c&H003B74E8}live{\c&H00100D0B} in code;
+Dialogue: 0,0:03:12.23,0:03:12.38,Cap,,0,0,0,,Hard limits live {\c&H003B74E8}in{\c&H00100D0B} code;
+Dialogue: 0,0:03:12.38,0:03:13.17,Cap,,0,0,0,,Hard limits live in {\c&H003B74E8}code;{\c&H00100D0B}
+Dialogue: 0,0:03:13.19,0:03:13.68,Cap,,0,0,0,,{\c&H003B74E8}anything{\c&H00100D0B} airworthiness-sensitive waits for
+Dialogue: 0,0:03:13.68,0:03:14.85,Cap,,0,0,0,,anything {\c&H003B74E8}airworthiness-sensitive{\c&H00100D0B} waits for
+Dialogue: 0,0:03:14.85,0:03:15.22,Cap,,0,0,0,,anything airworthiness-sensitive {\c&H003B74E8}waits{\c&H00100D0B} for
+Dialogue: 0,0:03:15.22,0:03:15.32,Cap,,0,0,0,,anything airworthiness-sensitive waits {\c&H003B74E8}for{\c&H00100D0B}
+Dialogue: 0,0:03:15.34,0:03:15.42,Cap,,0,0,0,,{\c&H003B74E8}a{\c&H00100D0B} human signature.
+Dialogue: 0,0:03:15.42,0:03:15.78,Cap,,0,0,0,,a {\c&H003B74E8}human{\c&H00100D0B} signature.
+Dialogue: 0,0:03:15.78,0:03:16.74,Cap,,0,0,0,,a human {\c&H003B74E8}signature.{\c&H00100D0B}
+Dialogue: 0,0:03:17.21,0:03:17.55,Cap,,0,0,0,,{\c&H003B74E8}Before{\c&H00100D0B} it reaches the board,
+Dialogue: 0,0:03:17.55,0:03:17.63,Cap,,0,0,0,,Before {\c&H003B74E8}it{\c&H00100D0B} reaches the board,
+Dialogue: 0,0:03:17.63,0:03:17.98,Cap,,0,0,0,,Before it {\c&H003B74E8}reaches{\c&H00100D0B} the board,
+Dialogue: 0,0:03:17.98,0:03:18.08,Cap,,0,0,0,,Before it reaches {\c&H003B74E8}the{\c&H00100D0B} board,
+Dialogue: 0,0:03:18.08,0:03:18.76,Cap,,0,0,0,,Before it reaches the {\c&H003B74E8}board,{\c&H00100D0B}
+Dialogue: 0,0:03:18.78,0:03:19.08,Cap,,0,0,0,,{\c&H003B74E8}each{\c&H00100D0B} order is tested on paired simulations
+Dialogue: 0,0:03:19.08,0:03:19.43,Cap,,0,0,0,,each {\c&H003B74E8}order{\c&H00100D0B} is tested on paired simulations
+Dialogue: 0,0:03:19.43,0:03:19.60,Cap,,0,0,0,,each order {\c&H003B74E8}is{\c&H00100D0B} tested on paired simulations
+Dialogue: 0,0:03:19.60,0:03:20.06,Cap,,0,0,0,,each order is {\c&H003B74E8}tested{\c&H00100D0B} on paired simulations
+Dialogue: 0,0:03:20.06,0:03:20.27,Cap,,0,0,0,,each order is tested {\c&H003B74E8}on{\c&H00100D0B} paired simulations
+Dialogue: 0,0:03:20.27,0:03:20.66,Cap,,0,0,0,,each order is tested on {\c&H003B74E8}paired{\c&H00100D0B} simulations
+Dialogue: 0,0:03:20.66,0:03:21.38,Cap,,0,0,0,,each order is tested on paired {\c&H003B74E8}simulations{\c&H00100D0B}
+Dialogue: 0,0:03:21.40,0:03:21.47,Cap,,0,0,0,,{\c&H003B74E8}of{\c&H00100D0B} the same futures
+Dialogue: 0,0:03:21.47,0:03:21.57,Cap,,0,0,0,,of {\c&H003B74E8}the{\c&H00100D0B} same futures
+Dialogue: 0,0:03:21.57,0:03:21.88,Cap,,0,0,0,,of the {\c&H003B74E8}same{\c&H00100D0B} futures
+Dialogue: 0,0:03:21.88,0:03:22.77,Cap,,0,0,0,,of the same {\c&H003B74E8}futures{\c&H00100D0B}
+Dialogue: 0,0:03:22.79,0:03:22.86,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:03:22.88,0:03:23.07,Cap,,0,0,0,,{\c&H003B74E8}our{\c&H00100D0B} plan against the status quo.
+Dialogue: 0,0:03:23.07,0:03:23.46,Cap,,0,0,0,,our {\c&H003B74E8}plan{\c&H00100D0B} against the status quo.
+Dialogue: 0,0:03:23.46,0:03:23.82,Cap,,0,0,0,,our plan {\c&H003B74E8}against{\c&H00100D0B} the status quo.
+Dialogue: 0,0:03:23.82,0:03:23.91,Cap,,0,0,0,,our plan against {\c&H003B74E8}the{\c&H00100D0B} status quo.
+Dialogue: 0,0:03:23.91,0:03:24.33,Cap,,0,0,0,,our plan against the {\c&H003B74E8}status{\c&H00100D0B} quo.
+Dialogue: 0,0:03:24.33,0:03:25.16,Cap,,0,0,0,,our plan against the status {\c&H003B74E8}quo.{\c&H00100D0B}
+Dialogue: 0,0:03:26.44,0:03:26.57,Cap,,0,0,0,,{\c&H003B74E8}For{\c&H00100D0B} parts, a warning only helps if it beats
+Dialogue: 0,0:03:26.57,0:03:27.02,Cap,,0,0,0,,For {\c&H003B74E8}parts,{\c&H00100D0B} a warning only helps if it beats
+Dialogue: 0,0:03:27.02,0:03:27.13,Cap,,0,0,0,,For parts, {\c&H003B74E8}a{\c&H00100D0B} warning only helps if it beats
+Dialogue: 0,0:03:27.13,0:03:27.52,Cap,,0,0,0,,For parts, a {\c&H003B74E8}warning{\c&H00100D0B} only helps if it beats
+Dialogue: 0,0:03:27.52,0:03:27.82,Cap,,0,0,0,,For parts, a warning {\c&H003B74E8}only{\c&H00100D0B} helps if it beats
+Dialogue: 0,0:03:27.82,0:03:28.14,Cap,,0,0,0,,For parts, a warning only {\c&H003B74E8}helps{\c&H00100D0B} if it beats
+Dialogue: 0,0:03:28.14,0:03:28.25,Cap,,0,0,0,,For parts, a warning only helps {\c&H003B74E8}if{\c&H00100D0B} it beats
+Dialogue: 0,0:03:28.25,0:03:28.34,Cap,,0,0,0,,For parts, a warning only helps if {\c&H003B74E8}it{\c&H00100D0B} beats
+Dialogue: 0,0:03:28.34,0:03:28.60,Cap,,0,0,0,,For parts, a warning only helps if it {\c&H003B74E8}beats{\c&H00100D0B}
+Dialogue: 0,0:03:28.62,0:03:28.72,Cap,,0,0,0,,{\c&H003B74E8}the{\c&H00100D0B} lead time —
+Dialogue: 0,0:03:28.72,0:03:28.97,Cap,,0,0,0,,the {\c&H003B74E8}lead{\c&H00100D0B} time —
+Dialogue: 0,0:03:28.97,0:03:29.75,Cap,,0,0,0,,the lead {\c&H003B74E8}time{\c&H00100D0B} —
+Dialogue: 0,0:03:29.75,0:03:29.82,Cap,,0,0,0,,the lead time {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:03:29.84,0:03:29.95,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} the fork gate drops orders,
+Dialogue: 0,0:03:29.95,0:03:30.05,Cap,,0,0,0,,and {\c&H003B74E8}the{\c&H00100D0B} fork gate drops orders,
+Dialogue: 0,0:03:30.05,0:03:30.34,Cap,,0,0,0,,and the {\c&H003B74E8}fork{\c&H00100D0B} gate drops orders,
+Dialogue: 0,0:03:30.34,0:03:30.57,Cap,,0,0,0,,and the fork {\c&H003B74E8}gate{\c&H00100D0B} drops orders,
+Dialogue: 0,0:03:30.57,0:03:30.92,Cap,,0,0,0,,and the fork gate {\c&H003B74E8}drops{\c&H00100D0B} orders,
+Dialogue: 0,0:03:30.92,0:03:31.60,Cap,,0,0,0,,and the fork gate drops {\c&H003B74E8}orders,{\c&H00100D0B}
+Dialogue: 0,0:03:31.62,0:03:31.84,Cap,,0,0,0,,{\c&H003B74E8}like{\c&H00100D0B} early tyres, that change nothing.
+Dialogue: 0,0:03:31.84,0:03:32.17,Cap,,0,0,0,,like {\c&H003B74E8}early{\c&H00100D0B} tyres, that change nothing.
+Dialogue: 0,0:03:32.17,0:03:32.97,Cap,,0,0,0,,like early {\c&H003B74E8}tyres,{\c&H00100D0B} that change nothing.
+Dialogue: 0,0:03:32.97,0:03:33.20,Cap,,0,0,0,,like early tyres, {\c&H003B74E8}that{\c&H00100D0B} change nothing.
+Dialogue: 0,0:03:33.20,0:03:33.59,Cap,,0,0,0,,like early tyres, that {\c&H003B74E8}change{\c&H00100D0B} nothing.
+Dialogue: 0,0:03:33.59,0:03:34.47,Cap,,0,0,0,,like early tyres, that change {\c&H003B74E8}nothing.{\c&H00100D0B}
+Dialogue: 0,0:03:35.55,0:03:35.73,Cap,,0,0,0,,{\c&H003B74E8}At{\c&H00100D0B} 07:45 the board freezes.
+Dialogue: 0,0:03:35.73,0:03:36.73,Cap,,0,0,0,,At {\c&H003B74E8}07:45{\c&H00100D0B} the board freezes.
+Dialogue: 0,0:03:36.73,0:03:36.82,Cap,,0,0,0,,At 07:45 {\c&H003B74E8}the{\c&H00100D0B} board freezes.
+Dialogue: 0,0:03:36.82,0:03:37.10,Cap,,0,0,0,,At 07:45 the {\c&H003B74E8}board{\c&H00100D0B} freezes.
+Dialogue: 0,0:03:37.10,0:03:38.13,Cap,,0,0,0,,At 07:45 the board {\c&H003B74E8}freezes.{\c&H00100D0B}
+Dialogue: 0,0:03:38.15,0:03:38.30,Cap,,0,0,0,,{\c&H003B74E8}At{\c&H00100D0B} 08:00, orders go out
+Dialogue: 0,0:03:38.30,0:03:38.80,Cap,,0,0,0,,At {\c&H003B74E8}08:00,{\c&H00100D0B} orders go out
+Dialogue: 0,0:03:38.80,0:03:39.20,Cap,,0,0,0,,At 08:00, {\c&H003B74E8}orders{\c&H00100D0B} go out
+Dialogue: 0,0:03:39.20,0:03:39.37,Cap,,0,0,0,,At 08:00, orders {\c&H003B74E8}go{\c&H00100D0B} out
+Dialogue: 0,0:03:39.37,0:03:39.68,Cap,,0,0,0,,At 08:00, orders go {\c&H003B74E8}out{\c&H00100D0B}
+Dialogue: 0,0:03:39.70,0:03:39.75,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:03:39.77,0:03:40.00,Cap,,0,0,0,,{\c&H003B74E8}each{\c&H00100D0B} one cited, signed where it must be,
+Dialogue: 0,0:03:40.00,0:03:40.23,Cap,,0,0,0,,each {\c&H003B74E8}one{\c&H00100D0B} cited, signed where it must be,
+Dialogue: 0,0:03:40.23,0:03:40.86,Cap,,0,0,0,,each one {\c&H003B74E8}cited,{\c&H00100D0B} signed where it must be,
+Dialogue: 0,0:03:40.86,0:03:41.19,Cap,,0,0,0,,each one cited, {\c&H003B74E8}signed{\c&H00100D0B} where it must be,
+Dialogue: 0,0:03:41.19,0:03:41.31,Cap,,0,0,0,,each one cited, signed {\c&H003B74E8}where{\c&H00100D0B} it must be,
+Dialogue: 0,0:03:41.31,0:03:41.40,Cap,,0,0,0,,each one cited, signed where {\c&H003B74E8}it{\c&H00100D0B} must be,
+Dialogue: 0,0:03:41.40,0:03:41.65,Cap,,0,0,0,,each one cited, signed where it {\c&H003B74E8}must{\c&H00100D0B} be,
+Dialogue: 0,0:03:41.65,0:03:42.03,Cap,,0,0,0,,each one cited, signed where it must {\c&H003B74E8}be,{\c&H00100D0B}
+Dialogue: 0,0:03:42.05,0:03:42.21,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} safe to retry.
+Dialogue: 0,0:03:42.21,0:03:42.52,Cap,,0,0,0,,and {\c&H003B74E8}safe{\c&H00100D0B} to retry.
+Dialogue: 0,0:03:42.52,0:03:42.62,Cap,,0,0,0,,and safe {\c&H003B74E8}to{\c&H00100D0B} retry.
+Dialogue: 0,0:03:42.62,0:03:43.62,Cap,,0,0,0,,and safe to {\c&H003B74E8}retry.{\c&H00100D0B}
+Dialogue: 0,0:03:44.12,0:03:44.42,Cap,,0,0,0,,{\c&H003B74E8}Ask{\c&H00100D0B} why any order was issued,
+Dialogue: 0,0:03:44.42,0:03:44.66,Cap,,0,0,0,,Ask {\c&H003B74E8}why{\c&H00100D0B} any order was issued,
+Dialogue: 0,0:03:44.66,0:03:44.92,Cap,,0,0,0,,Ask why {\c&H003B74E8}any{\c&H00100D0B} order was issued,
+Dialogue: 0,0:03:44.92,0:03:45.23,Cap,,0,0,0,,Ask why any {\c&H003B74E8}order{\c&H00100D0B} was issued,
+Dialogue: 0,0:03:45.23,0:03:45.39,Cap,,0,0,0,,Ask why any order {\c&H003B74E8}was{\c&H00100D0B} issued,
+Dialogue: 0,0:03:45.39,0:03:46.20,Cap,,0,0,0,,Ask why any order was {\c&H003B74E8}issued,{\c&H00100D0B}
+Dialogue: 0,0:03:46.22,0:03:46.33,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} the chain answers
+Dialogue: 0,0:03:46.33,0:03:46.43,Cap,,0,0,0,,and {\c&H003B74E8}the{\c&H00100D0B} chain answers
+Dialogue: 0,0:03:46.43,0:03:46.78,Cap,,0,0,0,,and the {\c&H003B74E8}chain{\c&H00100D0B} answers
+Dialogue: 0,0:03:46.78,0:03:47.45,Cap,,0,0,0,,and the chain {\c&H003B74E8}answers{\c&H00100D0B}
+Dialogue: 0,0:03:47.47,0:03:47.52,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:03:47.54,0:03:47.75,Cap,,0,0,0,,{\c&H003B74E8}from{\c&H00100D0B} data release to signature.
+Dialogue: 0,0:03:47.75,0:03:48.09,Cap,,0,0,0,,from {\c&H003B74E8}data{\c&H00100D0B} release to signature.
+Dialogue: 0,0:03:48.09,0:03:48.52,Cap,,0,0,0,,from data {\c&H003B74E8}release{\c&H00100D0B} to signature.
+Dialogue: 0,0:03:48.52,0:03:48.64,Cap,,0,0,0,,from data release {\c&H003B74E8}to{\c&H00100D0B} signature.
+Dialogue: 0,0:03:48.64,0:03:49.59,Cap,,0,0,0,,from data release to {\c&H003B74E8}signature.{\c&H00100D0B}
+Dialogue: 0,0:03:50.10,0:03:50.65,Cap,,0,0,0,,{\c&H003B74E8}Outcomes{\c&H00100D0B} become labels,
+Dialogue: 0,0:03:50.65,0:03:51.02,Cap,,0,0,0,,Outcomes {\c&H003B74E8}become{\c&H00100D0B} labels,
+Dialogue: 0,0:03:51.02,0:03:51.85,Cap,,0,0,0,,Outcomes become {\c&H003B74E8}labels,{\c&H00100D0B}
+Dialogue: 0,0:03:51.87,0:03:52.00,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} models and rules are promoted only through
+Dialogue: 0,0:03:52.00,0:03:52.47,Cap,,0,0,0,,and {\c&H003B74E8}models{\c&H00100D0B} and rules are promoted only through
+Dialogue: 0,0:03:52.47,0:03:52.61,Cap,,0,0,0,,and models {\c&H003B74E8}and{\c&H00100D0B} rules are promoted only through
+Dialogue: 0,0:03:52.61,0:03:53.05,Cap,,0,0,0,,and models and {\c&H003B74E8}rules{\c&H00100D0B} are promoted only through
+Dialogue: 0,0:03:53.05,0:03:53.15,Cap,,0,0,0,,and models and rules {\c&H003B74E8}are{\c&H00100D0B} promoted only through
+Dialogue: 0,0:03:53.15,0:03:53.64,Cap,,0,0,0,,and models and rules are {\c&H003B74E8}promoted{\c&H00100D0B} only through
+Dialogue: 0,0:03:53.64,0:03:53.96,Cap,,0,0,0,,and models and rules are promoted {\c&H003B74E8}only{\c&H00100D0B} through
+Dialogue: 0,0:03:53.96,0:03:54.15,Cap,,0,0,0,,and models and rules are promoted only {\c&H003B74E8}through{\c&H00100D0B}
+Dialogue: 0,0:03:54.17,0:03:55.00,Cap,,0,0,0,,{\c&H003B74E8}gates.{\c&H00100D0B}
+Dialogue: 0,0:03:55.57,0:03:55.97,Cap,,0,0,0,,{\c&H003B74E8}Today,{\c&H00100D0B} one question means five places:
+Dialogue: 0,0:03:55.97,0:03:56.19,Cap,,0,0,0,,Today, {\c&H003B74E8}one{\c&H00100D0B} question means five places:
+Dialogue: 0,0:03:56.19,0:03:56.67,Cap,,0,0,0,,Today, one {\c&H003B74E8}question{\c&H00100D0B} means five places:
+Dialogue: 0,0:03:56.67,0:03:56.94,Cap,,0,0,0,,Today, one question {\c&H003B74E8}means{\c&H00100D0B} five places:
+Dialogue: 0,0:03:56.94,0:03:57.24,Cap,,0,0,0,,Today, one question means {\c&H003B74E8}five{\c&H00100D0B} places:
+Dialogue: 0,0:03:57.24,0:03:58.30,Cap,,0,0,0,,Today, one question means five {\c&H003B74E8}places:{\c&H00100D0B}
+Dialogue: 0,0:03:58.32,0:03:58.42,Cap,,0,0,0,,{\c&H003B74E8}the{\c&H00100D0B} tech log, the BIT downloads,
+Dialogue: 0,0:03:58.42,0:03:58.67,Cap,,0,0,0,,the {\c&H003B74E8}tech{\c&H00100D0B} log, the BIT downloads,
+Dialogue: 0,0:03:58.67,0:03:59.19,Cap,,0,0,0,,the tech {\c&H003B74E8}log,{\c&H00100D0B} the BIT downloads,
+Dialogue: 0,0:03:59.19,0:03:59.29,Cap,,0,0,0,,the tech log, {\c&H003B74E8}the{\c&H00100D0B} BIT downloads,
+Dialogue: 0,0:03:59.29,0:03:59.49,Cap,,0,0,0,,the tech log, the {\c&H003B74E8}BIT{\c&H00100D0B} downloads,
+Dialogue: 0,0:03:59.49,0:04:00.27,Cap,,0,0,0,,the tech log, the BIT {\c&H003B74E8}downloads,{\c&H00100D0B}
+Dialogue: 0,0:04:00.29,0:04:00.39,Cap,,0,0,0,,{\c&H003B74E8}the{\c&H00100D0B} parts ledger, the shop reports and the
+Dialogue: 0,0:04:00.39,0:04:00.74,Cap,,0,0,0,,the {\c&H003B74E8}parts{\c&H00100D0B} ledger, the shop reports and the
+Dialogue: 0,0:04:00.74,0:04:01.27,Cap,,0,0,0,,the parts {\c&H003B74E8}ledger,{\c&H00100D0B} the shop reports and the
+Dialogue: 0,0:04:01.27,0:04:01.40,Cap,,0,0,0,,the parts ledger, {\c&H003B74E8}the{\c&H00100D0B} shop reports and the
+Dialogue: 0,0:04:01.40,0:04:01.68,Cap,,0,0,0,,the parts ledger, the {\c&H003B74E8}shop{\c&H00100D0B} reports and the
+Dialogue: 0,0:04:01.68,0:04:02.17,Cap,,0,0,0,,the parts ledger, the shop {\c&H003B74E8}reports{\c&H00100D0B} and the
+Dialogue: 0,0:04:02.17,0:04:02.28,Cap,,0,0,0,,the parts ledger, the shop reports {\c&H003B74E8}and{\c&H00100D0B} the
+Dialogue: 0,0:04:02.28,0:04:02.35,Cap,,0,0,0,,the parts ledger, the shop reports and {\c&H003B74E8}the{\c&H00100D0B}
+Dialogue: 0,0:04:02.37,0:04:03.22,Cap,,0,0,0,,{\c&H003B74E8}plan.{\c&H00100D0B}
+Dialogue: 0,0:04:04.24,0:04:04.54,Cap,,0,0,0,,{\c&H003B74E8}Here,{\c&H00100D0B} you just ask.
+Dialogue: 0,0:04:04.54,0:04:04.67,Cap,,0,0,0,,Here, {\c&H003B74E8}you{\c&H00100D0B} just ask.
+Dialogue: 0,0:04:04.67,0:04:04.89,Cap,,0,0,0,,Here, you {\c&H003B74E8}just{\c&H00100D0B} ask.
+Dialogue: 0,0:04:04.89,0:04:05.67,Cap,,0,0,0,,Here, you just {\c&H003B74E8}ask.{\c&H00100D0B}
+Dialogue: 0,0:04:05.69,0:04:05.82,Cap,,0,0,0,,{\c&H003B74E8}The{\c&H00100D0B} assistant plans, then reads only what
+Dialogue: 0,0:04:05.82,0:04:06.27,Cap,,0,0,0,,The {\c&H003B74E8}assistant{\c&H00100D0B} plans, then reads only what
+Dialogue: 0,0:04:06.27,0:04:06.92,Cap,,0,0,0,,The assistant {\c&H003B74E8}plans,{\c&H00100D0B} then reads only what
+Dialogue: 0,0:04:06.92,0:04:07.09,Cap,,0,0,0,,The assistant plans, {\c&H003B74E8}then{\c&H00100D0B} reads only what
+Dialogue: 0,0:04:07.09,0:04:07.37,Cap,,0,0,0,,The assistant plans, then {\c&H003B74E8}reads{\c&H00100D0B} only what
+Dialogue: 0,0:04:07.37,0:04:07.65,Cap,,0,0,0,,The assistant plans, then reads {\c&H003B74E8}only{\c&H00100D0B} what
+Dialogue: 0,0:04:07.65,0:04:07.76,Cap,,0,0,0,,The assistant plans, then reads only {\c&H003B74E8}what{\c&H00100D0B}
+Dialogue: 0,0:04:07.78,0:04:07.87,Cap,,0,0,0,,{\c&H003B74E8}it{\c&H00100D0B} needs —
+Dialogue: 0,0:04:07.87,0:04:08.37,Cap,,0,0,0,,it {\c&H003B74E8}needs{\c&H00100D0B} —
+Dialogue: 0,0:04:08.37,0:04:08.43,Cap,,0,0,0,,it needs {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:04:08.45,0:04:08.58,Cap,,0,0,0,,{\c&H003B74E8}as{\c&H00100D0B} of 06:00 —
+Dialogue: 0,0:04:08.58,0:04:08.70,Cap,,0,0,0,,as {\c&H003B74E8}of{\c&H00100D0B} 06:00 —
+Dialogue: 0,0:04:08.70,0:04:09.12,Cap,,0,0,0,,as of {\c&H003B74E8}06:00{\c&H00100D0B} —
+Dialogue: 0,0:04:09.12,0:04:09.60,Cap,,0,0,0,,as of 06:00 {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:04:09.62,0:04:09.85,Cap,,0,0,0,,{\c&H003B74E8}through{\c&H00100D0B} read-only tools.
+Dialogue: 0,0:04:09.85,0:04:10.34,Cap,,0,0,0,,through {\c&H003B74E8}read-only{\c&H00100D0B} tools.
+Dialogue: 0,0:04:10.34,0:04:11.27,Cap,,0,0,0,,through read-only {\c&H003B74E8}tools.{\c&H00100D0B}
+Dialogue: 0,0:04:12.37,0:04:12.67,Cap,,0,0,0,,{\c&H003B74E8}Every{\c&H00100D0B} number in its answer comes from a tool,
+Dialogue: 0,0:04:12.67,0:04:13.04,Cap,,0,0,0,,Every {\c&H003B74E8}number{\c&H00100D0B} in its answer comes from a tool,
+Dialogue: 0,0:04:13.04,0:04:13.13,Cap,,0,0,0,,Every number {\c&H003B74E8}in{\c&H00100D0B} its answer comes from a tool,
+Dialogue: 0,0:04:13.13,0:04:13.27,Cap,,0,0,0,,Every number in {\c&H003B74E8}its{\c&H00100D0B} answer comes from a tool,
+Dialogue: 0,0:04:13.27,0:04:13.70,Cap,,0,0,0,,Every number in its {\c&H003B74E8}answer{\c&H00100D0B} comes from a tool,
+Dialogue: 0,0:04:13.70,0:04:14.02,Cap,,0,0,0,,Every number in its answer {\c&H003B74E8}comes{\c&H00100D0B} from a tool,
+Dialogue: 0,0:04:14.02,0:04:14.15,Cap,,0,0,0,,Every number in its answer comes {\c&H003B74E8}from{\c&H00100D0B} a tool,
+Dialogue: 0,0:04:14.15,0:04:14.25,Cap,,0,0,0,,Every number in its answer comes from {\c&H003B74E8}a{\c&H00100D0B} tool,
+Dialogue: 0,0:04:14.25,0:04:15.01,Cap,,0,0,0,,Every number in its answer comes from a {\c&H003B74E8}tool,{\c&H00100D0B}
+Dialogue: 0,0:04:15.03,0:04:15.37,Cap,,0,0,0,,{\c&H003B74E8}never{\c&H00100D0B} from the model, and every claim cites
+Dialogue: 0,0:04:15.37,0:04:15.50,Cap,,0,0,0,,never {\c&H003B74E8}from{\c&H00100D0B} the model, and every claim cites
+Dialogue: 0,0:04:15.50,0:04:15.59,Cap,,0,0,0,,never from {\c&H003B74E8}the{\c&H00100D0B} model, and every claim cites
+Dialogue: 0,0:04:15.59,0:04:16.29,Cap,,0,0,0,,never from the {\c&H003B74E8}model,{\c&H00100D0B} and every claim cites
+Dialogue: 0,0:04:16.29,0:04:16.45,Cap,,0,0,0,,never from the model, {\c&H003B74E8}and{\c&H00100D0B} every claim cites
+Dialogue: 0,0:04:16.45,0:04:16.78,Cap,,0,0,0,,never from the model, and {\c&H003B74E8}every{\c&H00100D0B} claim cites
+Dialogue: 0,0:04:16.78,0:04:17.20,Cap,,0,0,0,,never from the model, and every {\c&H003B74E8}claim{\c&H00100D0B} cites
+Dialogue: 0,0:04:17.20,0:04:17.46,Cap,,0,0,0,,never from the model, and every claim {\c&H003B74E8}cites{\c&H00100D0B}
+Dialogue: 0,0:04:17.48,0:04:17.62,Cap,,0,0,0,,{\c&H003B74E8}its{\c&H00100D0B} records —
+Dialogue: 0,0:04:17.62,0:04:18.40,Cap,,0,0,0,,its {\c&H003B74E8}records{\c&H00100D0B} —
+Dialogue: 0,0:04:18.40,0:04:18.47,Cap,,0,0,0,,its records {\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:04:18.49,0:04:18.78,Cap,,0,0,0,,{\c&H003B74E8}even{\c&H00100D0B} the what-if, from the same paired simulations
+Dialogue: 0,0:04:18.78,0:04:18.87,Cap,,0,0,0,,even {\c&H003B74E8}the{\c&H00100D0B} what-if, from the same paired simulations
+Dialogue: 0,0:04:18.87,0:04:19.67,Cap,,0,0,0,,even the {\c&H003B74E8}what-if,{\c&H00100D0B} from the same paired simulations
+Dialogue: 0,0:04:19.67,0:04:19.80,Cap,,0,0,0,,even the what-if, {\c&H003B74E8}from{\c&H00100D0B} the same paired simulations
+Dialogue: 0,0:04:19.80,0:04:19.93,Cap,,0,0,0,,even the what-if, from {\c&H003B74E8}the{\c&H00100D0B} same paired simulations
+Dialogue: 0,0:04:19.93,0:04:20.31,Cap,,0,0,0,,even the what-if, from the {\c&H003B74E8}same{\c&H00100D0B} paired simulations
+Dialogue: 0,0:04:20.31,0:04:20.67,Cap,,0,0,0,,even the what-if, from the same {\c&H003B74E8}paired{\c&H00100D0B} simulations
+Dialogue: 0,0:04:20.67,0:04:21.40,Cap,,0,0,0,,even the what-if, from the same paired {\c&H003B74E8}simulations{\c&H00100D0B}
+Dialogue: 0,0:04:21.42,0:04:21.52,Cap,,0,0,0,,{\c&H003B74E8}the{\c&H00100D0B} board uses.
+Dialogue: 0,0:04:21.52,0:04:21.82,Cap,,0,0,0,,the {\c&H003B74E8}board{\c&H00100D0B} uses.
+Dialogue: 0,0:04:21.82,0:04:22.72,Cap,,0,0,0,,the board {\c&H003B74E8}uses.{\c&H00100D0B}
+Dialogue: 0,0:04:23.80,0:04:23.99,Cap,,0,0,0,,{\c&H003B74E8}It{\c&H00100D0B} runs on one air-gapped box,
+Dialogue: 0,0:04:23.99,0:04:24.38,Cap,,0,0,0,,It {\c&H003B74E8}runs{\c&H00100D0B} on one air-gapped box,
+Dialogue: 0,0:04:24.38,0:04:24.59,Cap,,0,0,0,,It runs {\c&H003B74E8}on{\c&H00100D0B} one air-gapped box,
+Dialogue: 0,0:04:24.59,0:04:24.89,Cap,,0,0,0,,It runs on {\c&H003B74E8}one{\c&H00100D0B} air-gapped box,
+Dialogue: 0,0:04:24.89,0:04:25.40,Cap,,0,0,0,,It runs on one {\c&H003B74E8}air-gapped{\c&H00100D0B} box,
+Dialogue: 0,0:04:25.40,0:04:26.07,Cap,,0,0,0,,It runs on one air-gapped {\c&H003B74E8}box,{\c&H00100D0B}
+Dialogue: 0,0:04:26.09,0:04:26.45,Cap,,0,0,0,,{\c&H003B74E8}first{\c&H00100D0B} words in about a second
+Dialogue: 0,0:04:26.45,0:04:26.83,Cap,,0,0,0,,first {\c&H003B74E8}words{\c&H00100D0B} in about a second
+Dialogue: 0,0:04:26.83,0:04:26.94,Cap,,0,0,0,,first words {\c&H003B74E8}in{\c&H00100D0B} about a second
+Dialogue: 0,0:04:26.94,0:04:27.17,Cap,,0,0,0,,first words in {\c&H003B74E8}about{\c&H00100D0B} a second
+Dialogue: 0,0:04:27.17,0:04:27.24,Cap,,0,0,0,,first words in about {\c&H003B74E8}a{\c&H00100D0B} second
+Dialogue: 0,0:04:27.24,0:04:27.90,Cap,,0,0,0,,first words in about a {\c&H003B74E8}second{\c&H00100D0B}
+Dialogue: 0,0:04:27.92,0:04:27.98,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:04:28.00,0:04:28.12,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} it can only draft.
+Dialogue: 0,0:04:28.12,0:04:28.20,Cap,,0,0,0,,and {\c&H003B74E8}it{\c&H00100D0B} can only draft.
+Dialogue: 0,0:04:28.20,0:04:28.33,Cap,,0,0,0,,and it {\c&H003B74E8}can{\c&H00100D0B} only draft.
+Dialogue: 0,0:04:28.33,0:04:28.63,Cap,,0,0,0,,and it can {\c&H003B74E8}only{\c&H00100D0B} draft.
+Dialogue: 0,0:04:28.63,0:04:29.62,Cap,,0,0,0,,and it can only {\c&H003B74E8}draft.{\c&H00100D0B}
+Dialogue: 0,0:04:29.64,0:04:29.79,Cap,,0,0,0,,{\c&H003B74E8}The{\c&H00100D0B} signature stays with the officer.
+Dialogue: 0,0:04:29.79,0:04:30.34,Cap,,0,0,0,,The {\c&H003B74E8}signature{\c&H00100D0B} stays with the officer.
+Dialogue: 0,0:04:30.34,0:04:30.74,Cap,,0,0,0,,The signature {\c&H003B74E8}stays{\c&H00100D0B} with the officer.
+Dialogue: 0,0:04:30.74,0:04:30.84,Cap,,0,0,0,,The signature stays {\c&H003B74E8}with{\c&H00100D0B} the officer.
+Dialogue: 0,0:04:30.84,0:04:30.95,Cap,,0,0,0,,The signature stays with {\c&H003B74E8}the{\c&H00100D0B} officer.
+Dialogue: 0,0:04:30.95,0:04:31.88,Cap,,0,0,0,,The signature stays with the {\c&H003B74E8}officer.{\c&H00100D0B}
+Dialogue: 0,0:04:33.18,0:04:33.37,Cap,,0,0,0,,{\c&H003B74E8}On{\c&H00100D0B} thirty paired simulations,
+Dialogue: 0,0:04:33.37,0:04:33.74,Cap,,0,0,0,,On {\c&H003B74E8}thirty{\c&H00100D0B} paired simulations,
+Dialogue: 0,0:04:33.74,0:04:34.05,Cap,,0,0,0,,On thirty {\c&H003B74E8}paired{\c&H00100D0B} simulations,
+Dialogue: 0,0:04:34.05,0:04:35.23,Cap,,0,0,0,,On thirty paired {\c&H003B74E8}simulations,{\c&H00100D0B}
+Dialogue: 0,0:04:35.25,0:04:35.39,Cap,,0,0,0,,{\c&H003B74E8}the{\c&H00100D0B} TJ107 decision adds twenty-two points
+Dialogue: 0,0:04:35.39,0:04:36.83,Cap,,0,0,0,,the {\c&H003B74E8}TJ107{\c&H00100D0B} decision adds twenty-two points
+Dialogue: 0,0:04:36.83,0:04:37.60,Cap,,0,0,0,,the TJ107 {\c&H003B74E8}decision{\c&H00100D0B} adds twenty-two points
+Dialogue: 0,0:04:37.60,0:04:37.92,Cap,,0,0,0,,the TJ107 decision {\c&H003B74E8}adds{\c&H00100D0B} twenty-two points
+Dialogue: 0,0:04:37.92,0:04:38.47,Cap,,0,0,0,,the TJ107 decision adds {\c&H003B74E8}twenty-two{\c&H00100D0B} points
+Dialogue: 0,0:04:38.47,0:04:38.82,Cap,,0,0,0,,the TJ107 decision adds twenty-two {\c&H003B74E8}points{\c&H00100D0B}
+Dialogue: 0,0:04:38.84,0:04:38.95,Cap,,0,0,0,,{\c&H003B74E8}of{\c&H00100D0B} mission-capable time next month
+Dialogue: 0,0:04:38.95,0:04:39.70,Cap,,0,0,0,,of {\c&H003B74E8}mission-capable{\c&H00100D0B} time next month
+Dialogue: 0,0:04:39.70,0:04:40.05,Cap,,0,0,0,,of mission-capable {\c&H003B74E8}time{\c&H00100D0B} next month
+Dialogue: 0,0:04:40.05,0:04:40.35,Cap,,0,0,0,,of mission-capable time {\c&H003B74E8}next{\c&H00100D0B} month
+Dialogue: 0,0:04:40.35,0:04:41.07,Cap,,0,0,0,,of mission-capable time next {\c&H003B74E8}month{\c&H00100D0B}
+Dialogue: 0,0:04:41.09,0:04:41.17,Cap,,0,0,0,,{\c&H003B74E8}—{\c&H00100D0B}
+Dialogue: 0,0:04:41.19,0:04:41.37,Cap,,0,0,0,,{\c&H003B74E8}and{\c&H00100D0B} saves a hundred and sixteen man-hours.
+Dialogue: 0,0:04:41.37,0:04:41.68,Cap,,0,0,0,,and {\c&H003B74E8}saves{\c&H00100D0B} a hundred and sixteen man-hours.
+Dialogue: 0,0:04:41.68,0:04:41.79,Cap,,0,0,0,,and saves {\c&H003B74E8}a{\c&H00100D0B} hundred and sixteen man-hours.
+Dialogue: 0,0:04:41.79,0:04:42.25,Cap,,0,0,0,,and saves a {\c&H003B74E8}hundred{\c&H00100D0B} and sixteen man-hours.
+Dialogue: 0,0:04:42.25,0:04:42.39,Cap,,0,0,0,,and saves a hundred {\c&H003B74E8}and{\c&H00100D0B} sixteen man-hours.
+Dialogue: 0,0:04:42.39,0:04:42.83,Cap,,0,0,0,,and saves a hundred and {\c&H003B74E8}sixteen{\c&H00100D0B} man-hours.
+Dialogue: 0,0:04:42.83,0:04:43.90,Cap,,0,0,0,,and saves a hundred and sixteen {\c&H003B74E8}man-hours.{\c&H00100D0B}
+Dialogue: 0,0:04:45.07,0:04:45.54,Cap,,0,0,0,,{\c&H003B74E8}Phalanx{\c&H00100D0B} Twin.
+Dialogue: 0,0:04:45.54,0:04:46.10,Cap,,0,0,0,,Phalanx {\c&H003B74E8}Twin.{\c&H00100D0B}
+Dialogue: 0,0:04:46.12,0:04:46.34,Cap,,0,0,0,,{\c&H003B74E8}One{\c&H00100D0B} state.
+Dialogue: 0,0:04:46.34,0:04:46.78,Cap,,0,0,0,,One {\c&H003B74E8}state.{\c&H00100D0B}
+Dialogue: 0,0:04:46.80,0:04:47.07,Cap,,0,0,0,,{\c&H003B74E8}One{\c&H00100D0B} loop.
+Dialogue: 0,0:04:47.07,0:04:47.46,Cap,,0,0,0,,One {\c&H003B74E8}loop.{\c&H00100D0B}
+Dialogue: 0,0:04:47.48,0:04:47.74,Cap,,0,0,0,,{\c&H003B74E8}One{\c&H00100D0B} log.
+Dialogue: 0,0:04:47.74,0:04:48.52,Cap,,0,0,0,,One {\c&H003B74E8}log.{\c&H00100D0B}

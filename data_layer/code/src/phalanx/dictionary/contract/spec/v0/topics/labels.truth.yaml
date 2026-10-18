@@ -1,0 +1,88 @@
+# Restricted truth labels (architecture §5.1, §12 "labels.truth": hidden states, fault schedule, defect manifest).
+name: labels.truth
+description: >-
+  RESTRICTED. Truth for validation and scoring only: truth values behind CIR samples, hidden health states per
+  serial, the fault schedule and the data-quality defect manifest. Never part of the downstream contract view
+  (invariant I5); consumer readers refuse this topic.
+basis: "ARCH §5.1, §12"
+restricted: true
+event_time: t_true
+ingest_time: null
+partition_by: [tail_no, sortie_id]
+json_schema: false
+record_id_key:
+  - {name: label_kind, type: str, source: column}
+  - {name: subject_id, type: str, source: column}
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+  - {name: serial_no, type: str, source: column}
+  - {name: related_record_id, type: rid, source: column}
+  - {name: t_true, type: i64, source: column}
+checks:
+  - {check: order, left: t_end, op: ">=", right: t_true}
+fields:
+  - include: record_header
+  - name: label_kind
+    type: enum:LabelKind
+    nullable: false
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-16"
+    description: Kind of label.
+  - name: subject_id
+    type: string
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-16"
+    description: param_id (TRUTH_SAMPLE), hidden-state id (HIDDEN_STATE, from not_measured_states.csv), fault id (FAULT) or defect id (DEFECT).
+  - name: tail_no
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §5.3"
+    description: Tail the label belongs to.
+  - name: sortie_id
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §5.3"
+    description: Sortie the label belongs to, if any.
+  - name: serial_no
+    type: string
+    nullable: true
+    basis: "ARCH §5.3, §9.1 (hidden state per serial)"
+    description: Serial of the component or engine the label belongs to, if any.
+  - name: t_true
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §8 (t_true only in CIR and labels)"
+    description: Physics time the label refers to (start time for faults and defects). The event time of the record.
+  - name: t_end
+    type: time_ns
+    time_scale: sim_utc
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-16"
+    description: End time for faults or defects with a duration.
+  - name: value
+    type: float64
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-16"
+    description: Truth value (TRUTH_SAMPLE, HIDDEN_STATE) or fault severity, in `units`.
+  - name: units
+    type: string
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-16"
+    description: Unit of value.
+  - name: category
+    type: string
+    nullable: true
+    basis: "ASSUMPTION: A-W0.4-16"
+    description: Fault mode, defect type or observability class.
+  - name: related_record_id
+    type: record_id
+    nullable: true
+    basis: "ARCH §10 (defect manifest); ASSUMPTION: A-W0.4-16"
+    description: Contract record this label refers to (the sample behind a TRUTH_SAMPLE, the defected record of a DEFECT).
+  - name: source_module
+    type: string
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-16"
+    description: Module that produced the label (e.g. M10, M11, M13, M18).

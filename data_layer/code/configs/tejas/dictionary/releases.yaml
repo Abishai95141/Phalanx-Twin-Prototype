@@ -1,0 +1,8 @@
+# Released dictionary versions: dict_version -> blake2b-256 of the canonical compiled dictionary.
+# A content change without a version bump and a new entry here fails tests/unit/test_dictionary_compile.py.
+format: phalanx.dictionary.releases/1
+releases:
+  0.1.0: {dict_hash: e2b446cc4045587dca9841a8c25981b7415bdecb230cf340f9e1249a20d2ab61, release_date: '2026-10-14'}
+  0.1.1: {dict_hash: 1983aab934de2f6b320f965f869f0c8233d8fb54225c32bc9c79ec410772d63f, release_date: '2026-10-14'}
+  0.1.2: {dict_hash: a8b02caba09ed23ddb6e0ebebb2d657b5bb6eff79841053ff6adabece91817ce, release_date: '2026-10-15'}
+  0.1.3: {dict_hash: 9428d30f578f0318161737a6e6235f332632b2827b76eb6d853064544e7fbc8b, release_date: '2026-10-15'}

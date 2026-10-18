@@ -1,0 +1,96 @@
+{
+ "all": {
+  "possessed_tail_days": 1344.2,
+  "FMC": 792.3,
+  "NMCM_S": 180.5,
+  "PMCM": 31.2,
+  "NMCM_U": 51.6,
+  "NMCS": 262.6,
+  "NMCD": 25.9,
+  "mc": 0.613,
+  "fmc": 0.589,
+  "tnmcm": 0.173,
+  "tnmcs": 0.195,
+  "nmcd": 0.019
+ },
+ "d30": {
+  "possessed_tail_days": 240.0,
+  "PMCM": 5.1,
+  "NMCM_S": 11.4,
+  "FMC": 126.2,
+  "NMCM_U": 10.5,
+  "NMCD": 25.9,
+  "NMCS": 60.9,
+  "mc": 0.547,
+  "fmc": 0.526,
+  "tnmcm": 0.091,
+  "tnmcs": 0.254,
+  "nmcd": 0.108
+ },
+ "flown_fh_all": 497.3,
+ "sorties_all": 588,
+ "flown_fh_30": 70.9,
+ "sorties_30": 81,
+ "defect_jobs": 907,
+ "defect_actions": {
+  "AT-CND": 360,
+  "AT-RR": 358,
+  "AT-ADM": 156,
+  "AT-DEF": 17,
+  "NaN": 15,
+  "AT-TS": 1
+ },
+ "defect_manhours": 5700.3,
+ "bit_evidenced_jobs": 623,
+ "status_quo_evidence_to_close_h": {
+  "median": 18.6,
+  "p90": 147.2,
+  "n": 600
+ },
+ "evidence_to_job_open_h": {
+  "median": 0.33,
+  "p90": 0.33
+ },
+ "loop_ingest_to_order_h": {
+  "median": 18.4,
+  "max": 23.4,
+  "mean": 17.6
+ },
+ "ingest_delay_h": {
+  "median": 1.07
+ },
+ "removals": {
+  "SYN-PN-TYRE": 253,
+  "SYN-PN-HYDP": 34,
+  "SYN-PN-BCU": 16,
+  "SYN-PN-CHUTE": 15,
+  "SYN-PN-FADEC": 10,
+  "SYN-PN-JFS": 10,
+  "SYN-PN-ADC": 9,
+  "SYN-PN-BRAKE": 3,
+  "SYN-PN-DFCC": 2,
+  "SYN-PN-ENG-F404": 1
+ },
+ "shop_findings": {
+  "RTOK": 54
+ },
+ "bit_events": 921,
+ "bit_by_sev": {
+  "ADVISORY": 650,
+  "CAUTION": 240,
+  "WARNING": 31
+ },
+ "top_codes": {
+  "ENG-201": 186,
+  "HYD-101": 121,
+  "AVI-201": 106,
+  "AVI-203": 96,
+  "AVI-204": 81,
+  "HYD-001": 41,
+  "AVI-202": 33,
+  "LGB-501": 31,
+  "ENG-401": 28,
+  "AVI-301": 28
+ },
+ "xxx_serials": 23
+}

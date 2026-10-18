@@ -1,0 +1,1551 @@
+# M09 Utility systems: model parameters (format phalanx.params/1; loader phalanx.dictionary.params).
+# Sources: R = reports/Virtual fighter telemetry layer research.md; N = research_notes/Virtual fighter telemetry
+# layer research/tejas_utility_systems.md (KQ = key question, Syn = synthesis); donor PDFs are the released
+# copies under research_sources/tejas_utility/donors/ (never the restricted folder). Restricted values (R App. A1:
+# F-16 JFS timings, F-16 tyre/brake-energy limits, F/A-18 AMAD/fuel-hot limits) are NOT used anywhere here.
+# Every ASSUMPTION has a sweep and an assumption_id registered in docs/assumptions.md (W1.4 section).
+format: phalanx.params/1
+module: M09
+sets:
+  constants:
+    isa_t0:
+      value: 288.15
+      units: K
+      description: ISA sea-level temperature (cabin altitude from cabin pressure)
+      evidence: {tag: "TRANSFER: ISO 2533 ISA", source: "ISO 2533:1975 Standard Atmosphere"}
+    isa_lapse:
+      value: 0.0065
+      units: K/m
+      description: ISA tropospheric temperature lapse rate
+      evidence: {tag: "TRANSFER: ISO 2533 ISA", source: "ISO 2533:1975 Standard Atmosphere"}
+    isa_p0:
+      value: 101325
+      units: Pa
+      description: ISA sea-level pressure
+      evidence: {tag: "TRANSFER: ISO 2533 ISA", source: "ISO 2533:1975 Standard Atmosphere"}
+    g0:
+      value: 9.80665
+      units: m/s**2
+      description: Standard acceleration of gravity
+      evidence: {tag: "TRANSFER: SI standard (ISO 80000-3)", source: "CGPM 1901 standard gravity; ISO 80000-3"}
+    r_air:
+      value: 287.05287
+      units: J/kg/K
+      description: Specific gas constant of dry air
+      evidence: {tag: "TRANSFER: ISO 2533 ISA", source: "ISO 2533:1975 Standard Atmosphere (USSA-1976 identical below 32 km)"}
+    gamma_air:
+      value: 1.4
+      units: "1"
+      description: Ratio of specific heats of dry air
+      evidence: {tag: "TRANSFER: ISO 2533 ISA", source: "ISO 2533:1975 Standard Atmosphere"}
+    cp_air:
+      value: 1004.685
+      units: J/kg/K
+      description: Specific heat of dry air at constant pressure (gamma R / (gamma - 1))
+      evidence: {tag: "TRANSFER: ISO 2533 ISA", source: "derived from ISO 2533 gamma and R"}
+
+  amagb:
+    pto_ratio:
+      value: 1.0
+      units: "1"
+      description: PTO/AMAGB input speed per unit N2 (PTO rated 16,810 rpm = F404 100 % N2)
+      evidence: {tag: ASSUMPTION, source: "N KQ1 (PTO rated 16,810 rpm, DDP 8779) and engine note 100 % N2 = 16,810 rpm; ratio not public"}
+      sweep: [0.95, 1.05]
+      assumption_id: A-W1.4-1
+    pto_rated_speed:
+      value: 16810
+      units: rpm
+      description: AMAGB/PTO rated input speed (= dictionary channel_reference.amagb_rated_speed)
+      evidence: {tag: DIRECT, source: "DDP AMAGB (LCA) https://www.ddpmod.gov.in/node/8779; N KQ1"}
+    pto_torque_normal:
+      value: 118
+      units: N*m
+      description: PTO shaft normal operating torque at 16,810 rpm (calibration ceiling of the accessory load, ~208 kW)
+      evidence: {tag: DIRECT, source: "DRDO 'Power Take Off shaft of LCA Tejas' (search-index excerpt), N KQ1"}
+    pto_torque_peak:
+      value: 410
+      units: N*m
+      description: PTO shaft peak starting torque (torque limit of the JFS start drive)
+      evidence: {tag: DIRECT, source: "DRDO 'Power Take Off shaft of LCA Tejas' (search-index excerpt), N KQ1"}
+    gb_loss_rated:
+      value: 2.0
+      units: kW
+      description: AMAGB gear/bearing/churning loss at rated speed (scales with speed squared)
+      evidence: {tag: ASSUMPTION, source: "N KQ1 Inferences (gear and bearing losses in the AMAGB torque sum); not public"}
+      sweep: [0.5, 5.0]
+      assumption_id: A-W1.4-1
+    gb_heat_cap:
+      value: 12000
+      units: J/K
+      description: AMAGB oil plus housing heat capacity
+      evidence: {tag: ASSUMPTION, source: "N Syn (d) AMAGB 1-2-state lumped oil thermal model; oil quantity not public"}
+      sweep: [4000, 40000]
+      assumption_id: A-W1.4-1
+    gb_ua:
+      value: 40
+      units: W/K
+      description: AMAGB heat rejection conductance to the bay
+      evidence: {tag: ASSUMPTION, source: "N Syn (d); not public"}
+      sweep: [10, 150]
+      assumption_id: A-W1.4-1
+    gb_eff:
+      value: 0.98
+      units: "1"
+      description: Starter-pad to PTO transmission efficiency
+      evidence: {tag: ASSUMPTION, source: "N KQ1 Inferences; not public"}
+      sweep: [0.95, 0.995]
+      assumption_id: A-W1.4-1
+    hyd_pump_engine:
+      value: [0, 0]
+      units: "1"
+      description: Engine index driving each hydraulic pump (both pumps are AMAGB pads of the single engine)
+      evidence: {tag: DIRECT, source: "ADA GS page (AMAGB drives 2 hydraulic pumps, 1 generator, 1 starter); N KQ1"}
+    gen_engine:
+      value: 0
+      units: "1"
+      description: Engine index driving the main generator and the 5 kW DC backup generator
+      evidence: {tag: DIRECT, source: "ADA GS page (generator on the AMAGB); N KQ1, KQ4"}
+    jfs_engine:
+      value: 0
+      units: "1"
+      description: Engine index started by the JFS through the AMAGB starter pad
+      evidence: {tag: DIRECT, source: "ADA GS page; DDP GTSU-110 https://www.ddpmod.gov.in/node/8778"}
+    amagb_life:
+      value: 750
+      units: hour
+      description: AMAGB per-unit life (usage counter limit; consumed by M10/M18)
+      evidence: {tag: DIRECT, source: "DRDO 'AMAGB for LCA' (search-index excerpt), N KQ1"}
+    n2_100pct:
+      value: 16810
+      units: rpm
+      description: Core speed at 100 % N2 (= dictionary channel_reference.n2_100pct)
+      evidence: {tag: "TRANSFER: F404-400", source: "parameter_inventory.csv ENG.N2; R §1; dictionary constants channel_reference"}
+
+  hydraulics:
+    hyd_p_nom:
+      value: 280
+      units: bar
+      description: Nominal system pressure (compensator cut-off, gauge) of each of the two systems
+      evidence: {tag: DIRECT, source: "Kala (ADE) JOAST 67(2A) 2015 https://joast.org/index.php/joast/article/view/317; N KQ2"}
+    hyd_p_ret:
+      value: 5.5
+      units: bar
+      description: Return/reservoir LP-side pressure (gauge)
+      evidence: {tag: DIRECT-part, source: "DDP bootstrap reservoir 280/5.5 bar https://www.ddpmod.gov.in/node/9659; N KQ2"}
+    hyd_dp_band:
+      value: 14
+      units: bar
+      description: Compensator droop from zero to full stroke (about 5 % of nominal)
+      evidence: {tag: ASSUMPTION, source: "TRANSFER HAL 207 bar VD pump full-flow 197-207 bar (DDP 9658) scaled to 280 bar; MIL-H-5440H §3.6.3.4"}
+      sweep: [5, 25]
+      assumption_id: A-W1.4-2
+    hyd_tau_swash:
+      value: 0.02
+      units: s
+      description: Swash-plate (compensator) response time constant
+      evidence: {tag: ASSUMPTION, source: "R §3 coupling map: N2 x demand -> pressure, time scale 10-100 ms"}
+      sweep: [0.005, 0.05]
+      assumption_id: A-W1.4-2
+    hyd_dp_starve:
+      value: 10
+      units: bar
+      description: Pressure margin over return below which consumer flow is starved (flow collapses linearly to zero)
+      evidence: {tag: ASSUMPTION, source: "N KQ2 inference (actuator flow Q = A x_dot needs pressure); M05 owns the sqrt(dP) law"}
+      sweep: [2, 30]
+      assumption_id: A-W1.4-2
+    hyd_q_rated:
+      value: 110
+      units: L/min
+      description: Pump maximum geometric flow at rated pad speed (100 % N2)
+      evidence: {tag: ASSUMPTION, source: "R App. A2 '110 L/min' lead (search excerpt, unverified); N KQ2 Inferences: consistent with the 208 kW PTO budget"}
+      sweep: [60, 130]
+      assumption_id: A-W1.4-3
+    hyd_eta_v:
+      value: 0.95
+      units: "1"
+      description: Pump volumetric efficiency at rated pressure, speed and reference temperature (sets case-drain leakage)
+      evidence: {tag: ASSUMPTION, source: "TRANSFER civil EDP practice (Bischof et al. PHME 2022; Gomes et al. PHM 2012), N KQ10"}
+      sweep: [0.90, 0.98]
+      assumption_id: A-W1.4-4
+    hyd_eta_hm:
+      value: 0.90
+      units: "1"
+      description: Pump hydro-mechanical efficiency (shaft power = Q_geo dP / eta_hm)
+      evidence: {tag: ASSUMPTION, source: "N KQ1 Inferences (pump torque dP D / (2 pi eta_m)); not public"}
+      sweep: [0.85, 0.95]
+      assumption_id: A-W1.4-4
+    hyd_q_leak_int:
+      value: 3.0
+      units: L/min
+      description: System internal leakage at nominal pressure and reference temperature (servo-valve nulls, seals)
+      evidence: {tag: ASSUMPTION, source: "N KQ2/KQ10 (leakage conductances); not public; F-16 AIB 31 ml/min single-leak case (fault scale)"}
+      sweep: [1.0, 8.0]
+      assumption_id: A-W1.4-4
+    hyd_visc_b:
+      value: 2000
+      units: K
+      description: Andrade viscosity-temperature constant of the MIL-H-5606-class fluid (mu ~ exp(B/T))
+      evidence: {tag: ASSUMPTION, source: "R §3 (hydraulic temperature -> leakage, viscosity); no MIL-H-5606 viscosity table in the evidence base"}
+      sweep: [1500, 3500]
+      assumption_id: A-W1.4-5
+    hyd_t_ref:
+      value: 313.15
+      units: K
+      description: Reference temperature of the rated leakage and filter values (also the JFS oil viscosity reference)
+      evidence: {tag: ASSUMPTION, source: "modelling reference (40 degC); not public"}
+      sweep: [293.15, 333.15]
+      assumption_id: A-W1.4-5
+    hyd_beta:
+      value: 1.0e+9
+      units: Pa
+      description: Effective bulk modulus of fluid plus hose compliance
+      evidence: {tag: ASSUMPTION, source: "N Syn (d) (pressure node with bulk modulus); not public"}
+      sweep: [7.0e+8, 1.6e+9]
+      assumption_id: A-W1.4-6
+    hyd_v_line:
+      value: 4.0
+      units: L
+      description: Pressurised fluid volume of one system (lines, actuator high-pressure sides)
+      evidence: {tag: ASSUMPTION, source: "TRANSFER F-16 system capacities about 5-7 gal total (AIB 88-0477, N KQ2); pressurised share assumed"}
+      sweep: [2.0, 8.0]
+      assumption_id: A-W1.4-6
+    hyd_res_v:
+      value: 9.5
+      units: L
+      description: Bootstrap reservoir total volume (level 0-100 % of this)
+      evidence: {tag: DIRECT-part, source: "DDP bootstrap reservoir LH/RH 9.5 L https://www.ddpmod.gov.in/node/9659 (Tejas fitment probable)"}
+    hyd_res_fill0:
+      value: 0.6
+      units: "1"
+      description: Reservoir fill fraction at servicing (depressurised, reference temperature)
+      evidence: {tag: ASSUMPTION, source: "N Syn (b) reservoir level 0-9.5 L; servicing level not public"}
+      sweep: [0.4, 0.8]
+      assumption_id: A-W1.4-6
+    hyd_v_total:
+      value: 15
+      units: L
+      description: Total fluid volume of one system (thermal expansion and heat capacity)
+      evidence: {tag: ASSUMPTION, source: "TRANSFER F-16 system capacities 5-7 gal (19-26 L) (N KQ2), scaled to a lighter fighter"}
+      sweep: [10, 25]
+      assumption_id: A-W1.4-6
+    hyd_rho:
+      value: 850
+      units: kg/m**3
+      description: Fluid density (MIL-H-5606 class)
+      evidence: {tag: ASSUMPTION, source: "MIL-H-5606 fluid named on the HAL reservoir (DDP 9659); property value not in the evidence base"}
+      sweep: [830, 870]
+      assumption_id: A-W1.4-5
+    hyd_cp:
+      value: 1900
+      units: J/kg/K
+      description: Fluid specific heat
+      evidence: {tag: ASSUMPTION, source: "MIL-H-5606 class; not in the evidence base"}
+      sweep: [1700, 2100]
+      assumption_id: A-W1.4-5
+    hyd_alpha_v:
+      value: 8.0e-4
+      units: 1/K
+      description: Fluid volumetric thermal expansion coefficient (reservoir level vs temperature)
+      evidence: {tag: ASSUMPTION, source: "N KQ2 Inferences (reservoir level depends on temperature); value not in the evidence base"}
+      sweep: [6.0e-4, 1.0e-3]
+      assumption_id: A-W1.4-5
+    hyd_acc_v:
+      value: 1.0
+      units: L
+      description: Accumulator total (gas + fluid) volume per system
+      evidence: {tag: ASSUMPTION, source: "N KQ2 gaps (accumulator count and precharges not public); DDP 9656 brake accumulator 0.41 L as scale"}
+      sweep: [0.3, 2.0]
+      assumption_id: A-W1.4-7
+    hyd_acc_pre:
+      value: 130
+      units: bar
+      description: Accumulator N2 precharge (gauge), nominal
+      evidence: {tag: ASSUMPTION, source: "TRANSFER UCI hydraulic rig precharge levels 130/115/100/90 bar (faults note); Tejas value not public"}
+      sweep: [80, 180]
+      assumption_id: A-W1.4-7
+    hyd_acc_t_charge:
+      value: 288.15
+      units: K
+      description: Gas temperature at which the accumulator precharge is set (servicing)
+      evidence: {tag: ASSUMPTION, source: "R §3 cold-soak edge (accumulator precharge follows the gas law); servicing temperature not public"}
+      sweep: [273.15, 308.15]
+      assumption_id: A-W1.4-7
+    hyd_acc_n:
+      value: 1.4
+      units: "1"
+      description: Accumulator gas polytropic exponent (adiabatic for 10-100 ms transients)
+      evidence: {tag: ASSUMPTION, source: "gas-law modelling choice (R §3 cold-soak edge: gas law); isothermal 1.0 is the other bound"}
+      sweep: [1.0, 1.4]
+      assumption_id: A-W1.4-7
+    hyd_relief_crack:
+      value: 1.10
+      units: "1"
+      description: System relief valve cracking pressure, fraction of nominal
+      evidence: {tag: ASSUMPTION, source: "MIL-H-5440H §3.11.21 (relief valve required; Table II settings not machine-readable)"}
+      sweep: [1.05, 1.20]
+      assumption_id: A-W1.4-8
+    hyd_relief_full:
+      value: 1.20
+      units: "1"
+      description: Relief valve full-flow pressure, fraction of nominal (passes rated pump flow)
+      evidence: {tag: ASSUMPTION, source: "MIL-H-5440H §3.11.21.1 (capacity >= rated pump flow); Table II not machine-readable"}
+      sweep: [1.10, 1.35]
+      assumption_id: A-W1.4-8
+    hyd_filter_dp:
+      value: 1.0
+      units: bar
+      description: Clean pressure-filter dP at rated flow and reference temperature
+      evidence: {tag: ASSUMPTION, source: "TRANSFER case-drain filter dP 6-12 psi clean (US 12,265,000, R §9.2 utility wear); MIL-H-5440H §3.11.9"}
+      sweep: [0.3, 2.0]
+      assumption_id: A-W1.4-9
+    hyd_filter_exp:
+      value: 3.0
+      units: "1"
+      description: Exponential growth of filter dP with loading fraction (dP x exp(k L))
+      evidence: {tag: ASSUMPTION, source: "TRANSFER filter dP increases exponentially with captured contaminant (US 6,855,249; N KQ10)"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.4-9
+    hyd_c_metal:
+      value: 15000
+      units: J/K
+      description: Heat capacity of pumps, lines and actuators in thermal contact with the fluid
+      evidence: {tag: ASSUMPTION, source: "N Syn (d) 1-state thermal per system; not public"}
+      sweep: [5000, 40000]
+      assumption_id: A-W1.4-10
+    hyd_ua_amb:
+      value: 30
+      units: W/K
+      description: Fluid heat loss conductance to the bay/airframe
+      evidence: {tag: ASSUMPTION, source: "N Syn (d); not public"}
+      sweep: [10, 100]
+      assumption_id: A-W1.4-10
+    hyd_hx_ua:
+      value: 300
+      units: W/K
+      description: Fuel-cooled hydraulic heat-exchanger conductance (UA)
+      evidence: {tag: ASSUMPTION, source: "TRANSFER F-15D fuel-oil heat exchanger routing (AIB 84-0046, N KQ2); Tejas HX type and location not public"}
+      sweep: [100, 1000]
+      assumption_id: A-W1.4-10
+    hyd_q_hx:
+      value: 5.0
+      units: L/min
+      description: Fluid circulation through the heat exchanger (return and case-drain flow at low demand)
+      evidence: {tag: ASSUMPTION, source: "MIL-H-5440H (variable-delivery pumps keep case cooling flow at zero output); value not public"}
+      sweep: [2.0, 15.0]
+      assumption_id: A-W1.4-10
+    hyd_nsub:
+      value: 8
+      units: "1"
+      description: Explicit-Euler sub-steps per 240 Hz tick for the stiff pressure/swash states (numerical)
+      evidence: {tag: ASSUMPTION, source: "architecture §8 (stiff hydraulic states sub-step internally); Lantto ICAS 2006-039 step rules"}
+      sweep: [4, 16]
+      assumption_id: A-W1.4-11
+
+  fuel:
+    fuel_rho_15:
+      value: 803
+      units: kg/m**3
+      description: Fuel density at 15 degC
+      evidence: {tag: DIRECT, source: "derived: internal fuel 2,458 kg / 3,060 L (N KQ3, Wikipedia spec table, secondary)"}
+    fuel_internal:
+      value: 2458
+      units: kg
+      description: Internal fuel capacity (checks the tank table; full-internal default)
+      evidence: {tag: DIRECT, source: "N KQ3 (Wikipedia HAL Tejas spec table, secondary); R §1 Fuel row"}
+    fuel_internal_volume:
+      value: 3060
+      units: L
+      description: Internal fuel volume (sum of the internal tank capacities)
+      evidence: {tag: DIRECT, source: "N KQ3 (Wikipedia HAL Tejas spec table, secondary)"}
+    fuel_alpha:
+      value: 9.5e-4
+      units: 1/K
+      description: Fuel volumetric thermal expansion coefficient
+      evidence: {tag: ASSUMPTION, source: "Jet A-1/ATF class; not in the evidence base"}
+      sweep: [8.0e-4, 1.1e-3]
+      assumption_id: A-W1.4-12
+    fuel_cp:
+      value: 2000
+      units: J/kg/K
+      description: Fuel specific heat
+      evidence: {tag: ASSUMPTION, source: "Jet A-1/ATF class; not in the evidence base"}
+      sweep: [1800, 2200]
+      assumption_id: A-W1.4-12
+    fuel_c_struct:
+      value: 1.0e+5
+      units: J/K
+      description: Tank structure heat capacity in contact with the fuel (keeps the lumped node finite near empty)
+      evidence: {tag: ASSUMPTION, source: "N Syn (d) per-tank lumped fuel temperature; not public"}
+      sweep: [3.0e+4, 3.0e+5]
+      assumption_id: A-W1.4-12
+    fuel_ua_skin:
+      value: 150
+      units: W/K
+      description: Tank skin heat-exchange conductance to the recovery temperature
+      evidence: {tag: ASSUMPTION, source: "N KQ3 Inferences (fuel temperature vs hot-day soak, Jaisalmer 39-42 degC); not public"}
+      sweep: [50, 500]
+      assumption_id: A-W1.4-12
+    fuel_q_xfer:
+      value: 5.0
+      units: kg/s
+      description: Maximum transfer rate into the collector (transfer pumps plus ECS pressurisation)
+      evidence: {tag: ASSUMPTION, source: "N KQ3 gaps (boost/transfer pump specs not public); above max-AB burn ~4.4 kg/s (engine note)"}
+      sweep: [3.0, 8.0]
+      assumption_id: A-W1.4-13
+    fuel_tau_xfer:
+      value: 2.0
+      units: s
+      description: Collector level-control time constant of the ECFM auto-transfer
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2015-16 'Fuel auto transfer functionality' (logic not public)"}
+      sweep: [0.5, 5.0]
+      assumption_id: A-W1.4-13
+    fuel_fill_target:
+      value: 0.98
+      units: "1"
+      description: Collector (F2) fill fraction held by auto-transfer
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2015-16 auto transfer; MIL-F-17874B 5 % expansion space"}
+      sweep: [0.95, 1.0]
+      assumption_id: A-W1.4-13
+    fuel_tau_ic:
+      value: 5.0
+      units: s
+      description: F1-F2 interconnect fill-equalisation time constant (F1/F2 feed group)
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2018-19 'drop in F1/F2 tank contents' (F1/F2 reported together); plumbing not public"}
+      sweep: [1.0, 20.0]
+      assumption_id: A-W1.4-13
+    fuel_residual:
+      value: 0.005
+      units: "1"
+      description: Unusable fraction below which a source tank counts as empty for transfer sequencing
+      evidence: {tag: ASSUMPTION, source: "transfer logic not public"}
+      sweep: [0.001, 0.02]
+      assumption_id: A-W1.4-13
+    fuel_pickup_band:
+      value: 0.02
+      units: m
+      description: Fuel depth over a pick-up at which it delivers full flow (linear to zero when uncovered)
+      evidence: {tag: ASSUMPTION, source: "N KQ3 Inferences (pick-up uncovering at high pitch); geometry not public"}
+      sweep: [0.005, 0.05]
+      assumption_id: A-W1.4-14
+    fuel_f1a_pickup_mod:
+      value: 0.10
+      units: "1"
+      description: F1A pick-up station after the pick-up/vent modification (fraction of tank length from the aft wall)
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2018-19 ('optimization of fuel pick up and vent mod in F1A tank'); position not public"}
+      sweep: [0.05, 0.3]
+      assumption_id: A-W1.4-14
+    slosh_omega:
+      value: 4.0
+      units: rad/s
+      description: First sloshing-mode natural frequency of the lumped free surface
+      evidence: {tag: ASSUMPTION, source: "rectangular-tank first mode about 0.5-0.8 Hz for 1-1.3 m tanks; N KQ3 (slosh); geometry not public"}
+      proxy: true
+      sweep: [2.0, 8.0]
+      assumption_id: A-W1.4-15
+    slosh_zeta:
+      value: 0.15
+      units: "1"
+      description: Sloshing-mode damping ratio (baffled tanks)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      proxy: true
+      sweep: [0.05, 0.4]
+      assumption_id: A-W1.4-15
+    slosh_g_min:
+      value: 0.2
+      units: "1"
+      description: Minimum effective normal specific force (fraction of g) in the slope computation (near-zero-g guard)
+      evidence: {tag: ASSUMPTION, source: "modelling guard; fuel orientation undefined near zero g"}
+      sweep: [0.1, 0.5]
+      assumption_id: A-W1.4-15
+    slosh_s_max:
+      value: 3.0
+      units: "1"
+      description: Maximum free-surface slope (about 72 deg)
+      evidence: {tag: ASSUMPTION, source: "modelling guard"}
+      sweep: [1.0, 5.0]
+      assumption_id: A-W1.4-15
+
+  fuel_tanks:
+    tank_cap:
+      table: {file: tanks.csv, column: cap_l}
+      units: L
+      description: Tank capacity (F1, F1A, F2, wing L, wing R, drop tank centreline, inboard L, inboard R)
+      evidence: {tag: ASSUMPTION, source: "drop tanks 1,200/1,200/800 L DIRECT (N KQ3); internal split of 3,060 L not public (fuselage tanks hold m_ref - m_oe = 1,658 kg; feed group F1 + F2 sized so the zoom-climb anchor is reproduced)"}
+      sweep: [400, 1200]
+      assumption_id: A-W1.4-14
+    tank_length:
+      table: {file: tanks.csv, column: length_m}
+      units: m
+      description: Tank length along body x (rectangular-box geometry)
+      evidence: {tag: ASSUMPTION, source: "geometry not public (N KQ3 gaps)"}
+      sweep: [1.0, 4.0]
+      assumption_id: A-W1.4-14
+    tank_height:
+      table: {file: tanks.csv, column: height_m}
+      units: m
+      description: Tank height
+      evidence: {tag: ASSUMPTION, source: "geometry not public (N KQ3 gaps)"}
+      sweep: [0.2, 0.8]
+      assumption_id: A-W1.4-14
+    tank_x:
+      table: {file: tanks.csv, column: x_m}
+      units: m
+      description: Tank centroid x from the datum (reference CG), forward positive
+      evidence: {tag: ASSUMPTION, source: "geometry not public (N KQ3 gaps); fuselage tanks F1 forward, F2 collector near the wing root"}
+      sweep: [-1.0, 2.5]
+      assumption_id: A-W1.4-17
+    tank_y:
+      table: {file: tanks.csv, column: y_m}
+      units: m
+      description: Tank centroid y, right positive
+      evidence: {tag: ASSUMPTION, source: "geometry not public"}
+      sweep: [-2.0, 2.0]
+      assumption_id: A-W1.4-17
+    tank_z:
+      table: {file: tanks.csv, column: z_m}
+      units: m
+      description: Tank centroid z, down positive
+      evidence: {tag: ASSUMPTION, source: "geometry not public"}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.4-17
+    tank_pickup:
+      table: {file: tanks.csv, column: pickup_frac}
+      units: "1"
+      description: Transfer/feed pick-up station (fraction of length from the aft wall); F1A pre-modification forward pick-up calibrated to the zoom-climb anchor
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2017-18/2018-19 (F1A pick-up and vent modification resolved the zoom-climb low-fuel warning); positions not public"}
+      sweep: [0.05, 0.9]
+      assumption_id: A-W1.4-14
+    tank_probe:
+      table: {file: tanks.csv, column: probe_frac}
+      units: "1"
+      description: Gauging probe station (fraction of length from the aft wall); tank geometry for the M12 gauge (AD-42), not used by the M09 kernel
+      evidence: {tag: ASSUMPTION, source: "HAL capacitance probes F2-A/B, F2-F/T, fuselage top-mounted, wing-fore immersed (N KQ3); stations not public"}
+      sweep: [0.3, 0.8]
+      assumption_id: A-W1.4-14
+    tank_group:
+      table: {file: tanks.csv, column: group}
+      units: "1"
+      description: Transfer group (0 feed F1/F2; 1 centreline DT; 2 inboard DTs; 3 wings; 4 F1A), lower group transfers first
+      evidence: {tag: ASSUMPTION, source: "ECFM auto-transfer sequence not public (N KQ3 Inferences: wing and drop tanks transfer into the fuselage group)"}
+      sweep: [0, 4]
+      assumption_id: A-W1.4-13
+
+  stores:
+    store_x:
+      table: {file: stores.csv, column: x_m}
+      units: m
+      description: Store station x (inboard L, inboard R, outboard L, outboard R, centreline)
+      evidence: {tag: ASSUMPTION, source: "9 hard points DIRECT (DDP 6843); station geometry not public"}
+      sweep: [-1.5, 0.5]
+      assumption_id: A-W1.4-17
+    store_y:
+      table: {file: stores.csv, column: y_m}
+      units: m
+      description: Store station y
+      evidence: {tag: ASSUMPTION, source: "station geometry not public"}
+      sweep: [-3.0, 3.0]
+      assumption_id: A-W1.4-17
+    store_z:
+      table: {file: stores.csv, column: z_m}
+      units: m
+      description: Store station z (down positive)
+      evidence: {tag: ASSUMPTION, source: "station geometry not public"}
+      sweep: [0.4, 1.0]
+      assumption_id: A-W1.4-17
+
+  mass_properties:
+    mp_m_ref:
+      value: 9000
+      units: kg
+      description: Reference mass of the published inertia tensor (CG 34 % MAC = datum)
+      evidence: {tag: DIRECT-unnamed, source: "Jayalakshmi, Patel & Singh, DSJ 71(2) 2021 §3.5 https://www.publicationsdrdo.in/index.php/dsj/article/view/15347; airframe note Q1"}
+    mp_ixx:
+      value: 14087.9
+      units: kg*m**2
+      description: Reference roll inertia
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5"}
+    mp_iyy:
+      value: 66558.9
+      units: kg*m**2
+      description: Reference pitch inertia
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5"}
+    mp_izz:
+      value: 77875.2
+      units: kg*m**2
+      description: Reference yaw inertia
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5"}
+    mp_ixz:
+      value: 2490.5
+      units: kg*m**2
+      description: Reference product of inertia Ixz (tensor entry -Ixz)
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5 (Izx)"}
+    mp_ixy:
+      value: 162.5
+      units: kg*m**2
+      description: Reference product of inertia Ixy (tensor entry -Ixy)
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5"}
+    mp_iyz:
+      value: 32.5
+      units: kg*m**2
+      description: Reference product of inertia Iyz (tensor entry -Iyz)
+      evidence: {tag: DIRECT-unnamed, source: "DSJ 71(2) 2021 §3.5"}
+    mp_m_oe:
+      value: 7342
+      units: kg
+      description: Operating empty mass without fuel or external stores (clean take-off 9,800 kg minus internal fuel 2,458 kg)
+      evidence: {tag: ASSUMPTION, source: "ADA brochure clean take-off 9,800 kg and internal fuel 2,458 kg (DIRECT); that the clean take-off mass is OE + full internal fuel is assumed"}
+      sweep: [7100, 7500]
+      assumption_id: A-W1.4-17
+    dt_dry_mass_inboard:
+      value: 120
+      units: kg
+      description: Dry mass of a 1,200 L drop tank with pylon
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [80, 180]
+      assumption_id: A-W1.4-17
+    dt_dry_mass_centre:
+      value: 90
+      units: kg
+      description: Dry mass of the centreline drop tank with pylon
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [60, 140]
+      assumption_id: A-W1.4-17
+
+  electrical:
+    gen_cutin:
+      value: 0.58
+      units: "1"
+      description: Main generator cut-in speed, fraction of 100 % N2 (below ground idle 63-70 % N2)
+      evidence: {tag: ASSUMPTION, source: "N KQ4 Inferences (cut-in threshold); T-50 idle 63-70 % N2 (R §4, TRANSFER); Tejas value not public"}
+      sweep: [0.50, 0.63]
+      assumption_id: A-W1.4-18
+    gen_dropout:
+      value: 0.52
+      units: "1"
+      description: Main generator underspeed drop-out, fraction of 100 % N2
+      evidence: {tag: ASSUMPTION, source: "N KQ4 Inferences; F-16 AIB 90-0755 generators offline on spool-down (TRANSFER)"}
+      sweep: [0.45, 0.58]
+      assumption_id: A-W1.4-18
+    bk_cutin:
+      value: 0.40
+      units: "1"
+      description: 5 kW DC backup generator cut-in, fraction of 100 % N2 (PMG-excited, autonomous)
+      evidence: {tag: ASSUMPTION, source: "DRDO 5 kW BLDC generator 'PMG + exciter + main ... autonomous mode' (N KQ4); drive and threshold not public"}
+      sweep: [0.30, 0.50]
+      assumption_id: A-W1.4-18
+    bk_dropout:
+      value: 0.35
+      units: "1"
+      description: 5 kW DC backup generator drop-out, fraction of 100 % N2
+      evidence: {tag: ASSUMPTION, source: "as bk_cutin"}
+      sweep: [0.25, 0.45]
+      assumption_id: A-W1.4-18
+    ac_v_nom:
+      value: 115
+      units: V
+      description: AC main bus regulated voltage (rms, line-neutral)
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F Table I; HAL TRU input 115/200 V 400 Hz (DDP 9646)"}
+    ac_v_droop:
+      value: 5.0e-5
+      units: V/W
+      description: AC bus voltage droop with generator electrical load (about 2 V at 40 kVA)
+      evidence: {tag: ASSUMPTION, source: "within the 704F 108-118 V normal band; GCU regulation not public"}
+      sweep: [0.0, 1.5e-4]
+      assumption_id: A-W1.4-19
+    gen_eff:
+      value: 0.85
+      units: "1"
+      description: Main generator efficiency (shaft to electrical)
+      evidence: {tag: ASSUMPTION, source: "main generator rating and type not public (N KQ4 gaps)"}
+      sweep: [0.80, 0.92]
+      assumption_id: A-W1.4-19
+    gen_noload:
+      value: 1500
+      units: W
+      description: Main generator no-load (windage, excitation, cooling) shaft loss
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [500, 3000]
+      assumption_id: A-W1.4-19
+    tru_v_nl:
+      value: 28.5
+      units: V
+      description: TRU no-load output voltage (two 7.5 kW TRUs in parallel)
+      evidence: {tag: ASSUMPTION, source: "HAL TRU regulated 28 V DC nominal (DDP 9646, DIRECT-part); no-load value assumed within 704F 22-29 V"}
+      sweep: [28.0, 29.0]
+      assumption_id: A-W1.4-19
+    tru_r:
+      value: 0.004
+      units: ohm
+      description: Equivalent output resistance of the paralleled TRUs
+      evidence: {tag: ASSUMPTION, source: "HAL TRU 250 A, 7.5 kW each (DDP 9646); droop not public"}
+      sweep: [0.002, 0.008]
+      assumption_id: A-W1.4-19
+    tru_eff:
+      value: 0.90
+      units: "1"
+      description: TRU efficiency
+      evidence: {tag: DIRECT-part, source: "HAL TRU efficiency 90 % at 250 A https://www.ddpmod.gov.in/node/9646"}
+    bk_v_nl:
+      value: 28.5
+      units: V
+      description: 5 kW DC backup generator no-load voltage
+      evidence: {tag: ASSUMPTION, source: "DRDO 5 kW BLDC generator 'precise voltage regulation' (N KQ4); value assumed within 704F 22-29 V"}
+      sweep: [28.0, 29.0]
+      assumption_id: A-W1.4-19
+    bk_r:
+      value: 0.008
+      units: ohm
+      description: 5 kW DC backup generator equivalent output resistance
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.004, 0.016]
+      assumption_id: A-W1.4-19
+    bk_rating:
+      value: 5
+      units: kW
+      description: DC backup generator rating
+      evidence: {tag: DIRECT, source: "DRDO '5 kW brushless DC Generating system for LCA Tejas' (N KQ4)"}
+    bk_eff:
+      value: 0.85
+      units: "1"
+      description: DC backup generator efficiency
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.80, 0.92]
+      assumption_id: A-W1.4-19
+    elec_transfer_time:
+      value: 0.030
+      units: s
+      description: Essential/emergency bus interruption on a source transfer (rounded up to truth ticks)
+      evidence: {tag: ASSUMPTION, source: "MIL-STD-704F §5.1: at most 50 ms between zero and normal on a transfer (TRANSFER); actual Tejas contactor timing not public"}
+      sweep: [0.010, 0.050]
+      assumption_id: A-W1.4-20
+    batt_cap_ah:
+      value: 45
+      units: A*hour
+      description: Battery rated capacity
+      evidence: {tag: DIRECT-part, source: "HAL battery Ah display 'fully charged 45 AH' https://www.ddpmod.gov.in/node/10096; master box 45 Ah battery (DDP 9647)"}
+    batt_low_warn_ah:
+      value: 30
+      units: A*hour
+      description: Battery low-warning level (for M14 cautions)
+      evidence: {tag: DIRECT-part, source: "HAL battery Ah display 'Battery low warning output 30 AH' (DDP 10096)"}
+    batt_i_charge:
+      value: 50
+      units: A
+      description: Maximum battery charging current
+      evidence: {tag: DIRECT-part, source: "HAL battery Ah display 'Charging current 50 A' (DDP 10096)"}
+    batt_ocv_full:
+      value: 26.0
+      units: V
+      description: Battery open-circuit voltage at full charge (Ni-Cd 24 V class)
+      evidence: {tag: ASSUMPTION, source: "Ni-Cd battery (ADA AR 2015-16, naval prototype mod); OCV curve not public"}
+      sweep: [25.0, 27.5]
+      assumption_id: A-W1.4-21
+    batt_ocv_empty:
+      value: 22.0
+      units: V
+      description: Battery open-circuit voltage at zero state of charge
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [20.0, 23.0]
+      assumption_id: A-W1.4-21
+    batt_r0:
+      value: 0.030
+      units: ohm
+      description: Battery ohmic resistance at the reference temperature
+      evidence: {tag: ASSUMPTION, source: "not public; sets JFS cranking power (R §3 edge: cold or low charge reduces cranking power); calibrated with jfs_n_lo (see A-W1.4-21)"}
+      sweep: [0.010, 0.040]
+      assumption_id: A-W1.4-21
+    batt_rp:
+      value: 0.010
+      units: ohm
+      description: Battery polarisation resistance (1-RC branch) at the reference temperature
+      evidence: {tag: ASSUMPTION, source: "standard battery equivalent-circuit practice; values not public"}
+      sweep: [0.005, 0.030]
+      assumption_id: A-W1.4-21
+    batt_tau_p:
+      value: 120
+      units: s
+      description: Battery polarisation time constant (recovery between consecutive starts)
+      evidence: {tag: ASSUMPTION, source: "DRDO: three consecutive starts with a partially charged battery is the stringent case (N KQ1)"}
+      sweep: [30, 600]
+      assumption_id: A-W1.4-21
+    batt_r_tcoef:
+      value: 0.03
+      units: 1/K
+      description: Battery resistance temperature coefficient (R = R_ref exp(k (T_ref - T)))
+      evidence: {tag: ASSUMPTION, source: "R §3 cold-soak edge (battery capacity and cranking power fall in the cold); value not public"}
+      sweep: [0.01, 0.05]
+      assumption_id: A-W1.4-21
+    batt_t_ref:
+      value: 293.15
+      units: K
+      description: Battery reference temperature of r0 and rp
+      evidence: {tag: ASSUMPTION, source: "modelling reference"}
+      sweep: [288.15, 298.15]
+      assumption_id: A-W1.4-21
+    batt_r_soc:
+      value: 1.0
+      units: "1"
+      description: Fractional rise of battery resistances per unit depth of discharge (R x (1 + k (1 - SOC)))
+      evidence: {tag: ASSUMPTION, source: "DRDO: partially charged battery is the stringent JFS case (N KQ1); equivalent-circuit practice; value not public"}
+      sweep: [0.5, 4.0]
+      assumption_id: A-W1.4-21
+    batt_heat_cap:
+      value: 30000
+      units: J/K
+      description: Battery heat capacity
+      evidence: {tag: ASSUMPTION, source: "45 Ah Ni-Cd mass class; not public"}
+      sweep: [10000, 60000]
+      assumption_id: A-W1.4-21
+    batt_ua:
+      value: 5
+      units: W/K
+      description: Battery heat loss conductance to the bay (cold-soak time constant of hours)
+      evidence: {tag: ASSUMPTION, source: "IDR 2015: 18-20 h cold soak (N KQ1); value not public"}
+      sweep: [2, 15]
+      assumption_id: A-W1.4-21
+    load_ac_ground:
+      value: 4000
+      units: W
+      description: AC main-bus load on the ground (engine running)
+      evidence: {tag: ASSUMPTION, source: "N KQ4 Inferences (phase-dependent loads); load analysis not public"}
+      sweep: [2000, 8000]
+      assumption_id: A-W1.4-22
+    load_ac_air:
+      value: 12000
+      units: W
+      description: AC main-bus load airborne (radar, fans, heaters on AC)
+      evidence: {tag: ASSUMPTION, source: "N KQ4 Inferences; AFTI/F-16 40 kVA generator class (TRANSFER)"}
+      sweep: [6000, 20000]
+      assumption_id: A-W1.4-22
+    load_dcm_ground:
+      value: 2500
+      units: W
+      description: DC main-bus load on the ground
+      evidence: {tag: ASSUMPTION, source: "two 7.5 kW TRUs (DDP 9646) bound the DC load; split not public"}
+      sweep: [1000, 5000]
+      assumption_id: A-W1.4-22
+    load_dcm_air:
+      value: 5000
+      units: W
+      description: DC main-bus load airborne
+      evidence: {tag: ASSUMPTION, source: "as load_dcm_ground"}
+      sweep: [3000, 9000]
+      assumption_id: A-W1.4-22
+    load_ess:
+      value: 2500
+      units: W
+      description: DC essential-bus load (flight-critical; carried by the 5 kW backup)
+      evidence: {tag: ASSUMPTION, source: "DRDO 5 kW backup 'backs up critical loads' (N KQ4); load list not public"}
+      sweep: [1500, 4000]
+      assumption_id: A-W1.4-22
+    load_emerg:
+      value: 1000
+      units: W
+      description: DC emergency-bus load (battery-backed minimum)
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2020-21 DC emergency bus load optimisation (N KQ4); value not public"}
+      sweep: [500, 1500]
+      assumption_id: A-W1.4-22
+    load_heater:
+      value: 3000
+      units: W
+      description: Cold-weather heater load on the AC bus at full demand
+      evidence: {tag: ASSUMPTION, source: "N KQ4 Inferences (probe/windscreen heating in cold); not public"}
+      sweep: [1000, 6000]
+      assumption_id: A-W1.4-22
+    load_heater_t:
+      value: 278.15
+      units: K
+      description: Bay/recovery temperature below which heaters switch in
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [268.15, 288.15]
+      assumption_id: A-W1.4-22
+    load_heater_ramp:
+      value: 20
+      units: K
+      description: Temperature span over which heater load ramps to full
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [5, 40]
+      assumption_id: A-W1.4-22
+    load_v_ref:
+      value: 28.0
+      units: V
+      description: Reference voltage of the resistive emergency-bus load on the battery (rated power at 28 V)
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F 28 V DC nominal system (§5.3.1)"}
+    load_probe_heat:
+      value: 600
+      units: W
+      description: Air-data and TAT probe heater load on the AC bus when the heaters are on
+      evidence: {tag: ASSUMPTION, source: "probe heater currents monitored simplex by the DFCC (Kala, JOAST 67(2A), DIRECT existence); power not public"}
+      sweep: [200, 1500]
+      assumption_id: A-W1.4-22
+    av_heat_frac:
+      value: 0.6
+      units: "1"
+      description: Fraction of electrical load dissipated in the ECS-cooled avionics bay
+      evidence: {tag: ASSUMPTION, source: "N Syn (c) edge 14 (ECS cooling -> avionics temperature); not public"}
+      sweep: [0.3, 0.9]
+      assumption_id: A-W1.4-22
+
+  power_quality:
+    pq_dc_normal_lo:
+      value: 22.0
+      units: V
+      description: 28 V DC normal steady-state lower limit
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 Table IV"}
+    pq_dc_normal_hi:
+      value: 29.0
+      units: V
+      description: 28 V DC normal steady-state upper limit
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 Table IV"}
+    pq_dc_emerg_lo:
+      value: 16.0
+      units: V
+      description: 28 V DC emergency operation lower limit
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 §5.3.2.3"}
+    pq_dc_start_lo:
+      value: 12.0
+      units: V
+      description: 28 V DC electric-starting lower limit
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 §5.3.2.4"}
+    pq_ac_normal_lo:
+      value: 108.0
+      units: V
+      description: 400 Hz AC normal steady-state voltage lower limit (rms)
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 Table I"}
+    pq_ac_normal_hi:
+      value: 118.0
+      units: V
+      description: 400 Hz AC normal steady-state voltage upper limit (rms)
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 Table I"}
+    pq_ac_f_lo:
+      value: 393
+      units: Hz
+      description: 400 Hz AC normal steady-state frequency lower limit
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 Table I"}
+    pq_ac_f_hi:
+      value: 407
+      units: Hz
+      description: 400 Hz AC normal steady-state frequency upper limit
+      evidence: {tag: "TRANSFER: MIL-STD-704F", source: "MIL-STD-704F w/CHG-1 Table I"}
+
+  ecs:
+    ecs_m_set:
+      value: 0.50
+      units: kg/s
+      description: ECS flow-control set flow (bleed to the ACM)
+      evidence: {tag: ASSUMPTION, source: "HAL primary heat exchanger rated 34.5 kg/min = 0.575 kg/s (DDP 10095, DIRECT-part, probable Tejas) as the ceiling; N KQ5 Inferences 0.5-0.6 kg/s"}
+      sweep: [0.30, 0.575]
+      assumption_id: A-W1.4-23
+    ecs_cda:
+      value: 8.2e-4
+      units: m**2
+      description: Effective throat area of the flow-limiting venturi (choked flow ~ p3 / sqrt(T3))
+      evidence: {tag: ASSUMPTION, source: "ADA 'gimbal assembly with venturi' (DIRECT existence); sized so the set flow is reached near 3.2 bar, 450 K (HAL bleed range 2.8-6.4 bar)"}
+      sweep: [5.0e-4, 1.5e-3]
+      assumption_id: A-W1.4-23
+    ecs_m_aux:
+      value: 0.03
+      units: kg/s
+      description: Bleed to fuel-tank pressurisation and OBOGS
+      evidence: {tag: ASSUMPTION, source: "ADA CEF page (ECS pressurises fuel tanks) and OBOGS feed (N KQ5); flows not public"}
+      sweep: [0.01, 0.06]
+      assumption_id: A-W1.4-23
+    ecs_phx_ua:
+      value: 1300
+      units: W/K
+      description: Primary heat exchanger UA (clean)
+      evidence: {tag: ASSUMPTION, source: "calibrated to the HAL PHX rating <= 578 degC in, < 170 degC out at 0.575 kg/s (DDP 10095, DIRECT-part)"}
+      sweep: [600, 2500]
+      assumption_id: A-W1.4-23
+    ecs_foul_k:
+      value: 0.5
+      units: "1"
+      description: UA loss at fouling factor 1 (UA x (1 - k f))
+      evidence: {tag: ASSUMPTION, source: "TRANSFER fouling factor 0-1 (US 10,242,508; N KQ10); HX fouling 3-9 months (R §9.2)"}
+      sweep: [0.3, 0.8]
+      assumption_id: A-W1.4-23
+    ecs_ram_area:
+      value: 0.006
+      units: m**2
+      description: Effective ram-air inlet area of the PHX cold side
+      evidence: {tag: ASSUMPTION, source: "N KQ5 Inferences (ram cooling ~ rho V); not public"}
+      sweep: [0.003, 0.015]
+      assumption_id: A-W1.4-23
+    ecs_m_ram_ground:
+      value: 0.4
+      units: kg/s
+      description: PHX cold-side flow on the ground (ejector/fan)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.2, 0.8]
+      assumption_id: A-W1.4-23
+    ecs_phx_dp:
+      value: 0.10
+      units: "1"
+      description: Fractional pressure loss across the PHX and ducting
+      evidence: {tag: ASSUMPTION, source: "HAL PHX operating pressure 6,564 mbar (DDP 10095); loss not public"}
+      sweep: [0.05, 0.20]
+      assumption_id: A-W1.4-23
+    ecs_tau_duct:
+      value: 3.0
+      units: s
+      description: Duct/HX thermal lag of the PHX outlet temperature
+      evidence: {tag: ASSUMPTION, source: "Gripen ECS fidelity ladder uses enlarged time constants (N KQ11); not public"}
+      sweep: [1.0, 10.0]
+      assumption_id: A-W1.4-23
+    ecs_eta_t:
+      value: 0.75
+      units: "1"
+      description: ACM turbine isentropic efficiency of the single-expansion PROXY of the bootstrap cycle
+      evidence: {tag: ASSUMPTION, source: "HAL fighter ECS bootstrap cycle (Heliyon 2022, TRANSFER); reduced to one expansion (PROXY A-W1.4-24)"}
+      proxy: true
+      sweep: [0.65, 0.85]
+      assumption_id: A-W1.4-24
+    ecs_p_cab_iso:
+      value: 75.26
+      units: kPa
+      description: Isobaric cabin pressure (8,000 ft ISA) of the fighter pressure schedule
+      evidence: {tag: "TRANSFER: fighter pressure schedule", source: "Webb & Pilmanis SAFE 1997 (DTIC ADA426909) via N KQ5; ISA pressure at 8,000 ft"}
+    ecs_dp_max:
+      value: 5.0
+      units: psi
+      description: Maximum cabin differential pressure
+      evidence: {tag: "TRANSFER: fighter pressure schedule", source: "Webb & Pilmanis SAFE 1997 ('5.0 psi differential above 23,000 ft'), N KQ5"}
+    ecs_dpdt_max:
+      value: 0.2
+      units: psi/s
+      description: Maximum cabin pressure rate of change in normal operation
+      evidence: {tag: "TRANSFER: MIL-E-18927E", source: "MIL-E-18927E §3.4 (<= 0.2 psi/s), N KQ5"}
+    ecs_tau_cab_p:
+      value: 3.0
+      units: s
+      description: Cabin pressure controller tracking time constant
+      evidence: {tag: ASSUMPTION, source: "CPCS behaviour not public (N KQ5 gaps)"}
+      sweep: [1.0, 10.0]
+      assumption_id: A-W1.4-25
+    ecs_leak_frac:
+      value: 0.3
+      units: "1"
+      description: Cabin leak flow at the design differential as a fraction of the cockpit supply set flow
+      evidence: {tag: ASSUMPTION, source: "canopy-seal leakage hidden state (not_measured_states NM.ECS.CANOPY_SEAL); value not public"}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.4-25
+    ecs_f_cab:
+      value: 0.4
+      units: "1"
+      description: Fraction of ECS supply to the cockpit (remainder to avionics bay)
+      evidence: {tag: ASSUMPTION, source: "N KQ5 (cockpit and avionics cooling); split not public"}
+      sweep: [0.3, 0.6]
+      assumption_id: A-W1.4-25
+    ecs_c_cab:
+      value: 20000
+      units: J/K
+      description: Cockpit thermal capacity
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [10000, 50000]
+      assumption_id: A-W1.4-25
+    ecs_ua_cab:
+      value: 60
+      units: W/K
+      description: Cockpit heat exchange with the skin at recovery temperature
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [30, 150]
+      assumption_id: A-W1.4-25
+    ecs_q_cab:
+      value: 800
+      units: W
+      description: Cockpit internal heat (pilot, displays, solar)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [400, 1500]
+      assumption_id: A-W1.4-25
+    ecs_c_av:
+      value: 40000
+      units: J/K
+      description: Avionics-bay thermal capacity
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [20000, 100000]
+      assumption_id: A-W1.4-25
+    ecs_ua_av:
+      value: 40
+      units: W/K
+      description: Avionics-bay heat exchange with the skin
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [20, 100]
+      assumption_id: A-W1.4-25
+    ecs_t_set:
+      value: 295.15
+      units: K
+      description: Cockpit temperature set point
+      evidence: {tag: ASSUMPTION, source: "MIL-E-18927E WBGT <= 32 degC in flight (TRANSFER) bounds it; set point not public"}
+      sweep: [291.15, 299.15]
+      assumption_id: A-W1.4-25
+    ecs_ki:
+      value: 5.0e-5
+      units: 1/K/s
+      description: TCV integrating controller gain (bypass fraction rate per K of cockpit error)
+      evidence: {tag: ASSUMPTION, source: "HAL fighter ECS TCV control (Heliyon 2022, TRANSFER); gains not public"}
+      sweep: [1.0e-5, 2.0e-4]
+      assumption_id: A-W1.4-25
+    ecs_stroke:
+      value: 8.0
+      units: s
+      description: TCV full-stroke time (rate limit)
+      evidence: {tag: "TRANSFER: HAL fighter ECS", source: "Arunachalam & Varadappan, Heliyon 8(11) e11727 2022: valve drive 6-10 s full stroke (N KQ5)"}
+
+  jfs:
+    jfs_p_rated:
+      value: 110
+      units: kW
+      description: GTSU-110 rated output power (sea level, ISA)
+      evidence: {tag: DIRECT, source: "DDP GTSU-110 (LCA) https://www.ddpmod.gov.in/node/8778"}
+    jfs_rated_speed:
+      value: 60000
+      units: rpm
+      description: GTSU-110 gas-generator rated speed (EU reference for SPS.JFS.SPEED %; not public)
+      evidence: {tag: ASSUMPTION, source: "not public (N KQ1 gaps); 100 kW-class centrifugal gas generators run ~50-70 krpm (HAL cold air unit 72,000 rpm, DDP 10091, as scale)"}
+      sweep: [40000, 80000]
+      assumption_id: A-W1.4-26
+    jfs_e_rated:
+      value: 40
+      units: kJ
+      description: Gas-generator spool kinetic energy at rated speed (J w_r^2 / 2)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [15, 100]
+      assumption_id: A-W1.4-26
+    jfs_ke:
+      value: 40
+      units: V
+      description: Starter-motor back-EMF at rated JFS speed (e_m = k_e n)
+      evidence: {tag: ASSUMPTION, source: "battery cranks the JFS (N KQ4); motor data not public"}
+      sweep: [25, 60]
+      assumption_id: A-W1.4-26
+    jfs_rm:
+      value: 0.030
+      units: ohm
+      description: Starter-motor armature plus cable resistance
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.015, 0.060]
+      assumption_id: A-W1.4-26
+    jfs_c_visc:
+      value: 3333
+      units: W
+      description: Viscous (oil-film/churning) drag power at rated speed and reference oil viscosity
+      evidence: {tag: ASSUMPTION, source: "N KQ1 Inferences (cold oil viscosity lowers start success); not public"}
+      sweep: [1000, 8000]
+      assumption_id: A-W1.4-26
+    jfs_visc_exp:
+      value: 0.5
+      units: "1"
+      description: Exponent of the viscosity ratio in the viscous drag
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.3, 1.0]
+      assumption_id: A-W1.4-26
+    jfs_oil_b:
+      value: 3000
+      units: K
+      description: Andrade viscosity constant of the JFS turbine oil
+      evidence: {tag: ASSUMPTION, source: "not in the evidence base"}
+      sweep: [2000, 4000]
+      assumption_id: A-W1.4-26
+    jfs_c_aero:
+      value: 15000
+      units: W
+      description: Compressor windage drag power at rated speed without combustion (scales n^3)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [5000, 30000]
+      assumption_id: A-W1.4-26
+    jfs_n_lo:
+      value: 0.20
+      units: "1"
+      description: Light-off speed (fraction of rated)
+      evidence: {tag: ASSUMPTION, source: "not public; calibrated with batt_r0 so a cold (-30 degC) half-charged battery fails to crank at Leh while -15 degC / 85 % passes three starts (N KQ1 anchors)"}
+      sweep: [0.10, 0.25]
+      assumption_id: A-W1.4-26
+    jfs_n_sa:
+      value: 0.55
+      units: "1"
+      description: Starter-motor cut-out speed (self-sustaining)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.40, 0.70]
+      assumption_id: A-W1.4-26
+    jfs_n_on:
+      value: 0.95
+      units: "1"
+      description: On-speed (governed, engaged) threshold
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.90, 0.98]
+      assumption_id: A-W1.4-26
+    jfs_p_gg:
+      value: 45
+      units: kW
+      description: Gas-generator combustion surplus at rated speed during acceleration (sea level ISA)
+      evidence: {tag: ASSUMPTION, source: "not public; set so the M2 starts at 5.6 km (DRDO/HAL rig, N KQ1) and in about 20-30 s at sea level (T-50 timeline, R §4)"}
+      sweep: [15, 60]
+      assumption_id: A-W1.4-26
+    jfs_theta_exp:
+      value: -0.5
+      units: "1"
+      description: Inlet-temperature exponent of the gas-generator power lapse (P ~ delta theta^k)
+      evidence: {tag: ASSUMPTION, source: "corrected-power scaling; R §3 edge: altitude lowers JFS power"}
+      sweep: [-1.0, 0.0]
+      assumption_id: A-W1.4-26
+    jfs_p_ign:
+      value: 0.98
+      units: "1"
+      description: Light-off probability per attempt at sea level
+      evidence: {tag: ASSUMPTION, source: "CAG 17/2015 JFS 'low reliability' (N KQ1); not public"}
+      sweep: [0.90, 1.0]
+      assumption_id: A-W1.4-26
+    jfs_ign_alt:
+      value: 0.10
+      units: "1"
+      description: Fractional light-off probability loss per unit (1 - delta)
+      evidence: {tag: ASSUMPTION, source: "R §3 edge (altitude lowers JFS start success); not public"}
+      sweep: [0.0, 0.3]
+      assumption_id: A-W1.4-26
+    jfs_t_crank:
+      value: 15
+      units: s
+      description: Abort if the JFS is not lit within this time from the start command
+      evidence: {tag: ASSUMPTION, source: "JFS timings not public; F-16 JFS timings restricted (R App. A1) and not used"}
+      sweep: [8, 30]
+      assumption_id: A-W1.4-26
+    jfs_t_accel:
+      value: 25
+      units: s
+      description: Abort if the JFS does not reach on-speed within this time from light-off (hung start)
+      evidence: {tag: ASSUMPTION, source: "as jfs_t_crank"}
+      sweep: [10, 40]
+      assumption_id: A-W1.4-26
+    jfs_t_engine:
+      value: 45
+      units: s
+      description: Abort if the engine has not reached starter cut-out within this time of engagement
+      evidence: {tag: ASSUMPTION, source: "T-50 F404-102 start: light-off ~27 s, idle ~40 s (KSAS 2006, TRANSFER, R §4)"}
+      sweep: [30, 90]
+      assumption_id: A-W1.4-26
+    jfs_n2_cutout:
+      value: 0.55
+      units: "1"
+      description: Starter cut-out at this engine N2 fraction
+      evidence: {tag: "TRANSFER: F404-GE-102 (T-50)", source: "Jung et al. KSAS 34(2) 2006 via R §4 and the engine note (starter cut-out ~55 % N2)"}
+    jfs_m1_drag:
+      value: 1.6
+      units: "1"
+      description: GTSU-110 M1 viscous-drag factor relative to M2 (shared lubrication vs M2 self-contained system)
+      evidence: {tag: ASSUMPTION, source: "calibrated to CAG 17/2015 (M1 failed three consecutive starts at Leh) vs HAL/IDR 2015 (three starts at -15 degC, 85 % battery); ADA AR 2018-19 M2 self-contained lubrication"}
+      sweep: [1.0, 2.5]
+      assumption_id: A-W1.4-27
+    jfs_m1_sched:
+      value: 0.75
+      units: "1"
+      description: GTSU-110 M1 start-schedule factor on the combustion surplus (M2 'modified starting schedule' = 1)
+      evidence: {tag: ASSUMPTION, source: "calibrated to the same anchors; DRDO: start-up schedule varied with control patches (N KQ1)"}
+      sweep: [0.5, 1.0]
+      assumption_id: A-W1.4-27
+    jfs_oil_use_m1:
+      value: 0.10
+      units: L
+      description: JFS oil consumed per start, M1 (excessive)
+      evidence: {tag: ASSUMPTION, source: "CAG 17/2015 'excessive oil consumption by JFS beyond permitted levels' (N KQ1); value not public"}
+      sweep: [0.03, 0.30]
+      assumption_id: A-W1.4-27
+    jfs_oil_use_m2:
+      value: 0.02
+      units: L
+      description: JFS oil consumed per start, M2
+      evidence: {tag: ASSUMPTION, source: "ADA AR 2018-19 M2 oil consumption assessed over three successive starts (N KQ1); value not public"}
+      sweep: [0.005, 0.05]
+      assumption_id: A-W1.4-27
+    jfs_oil_qty0:
+      value: 1.0
+      units: L
+      description: JFS oil quantity after servicing
+      evidence: {tag: ASSUMPTION, source: "M2 self-contained oil tank (ADA AR 2019-22); capacity not public"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.4-27
+    jfs_egt_rise:
+      value: 450
+      units: K
+      description: JFS EGT rise over ambient at rated speed when lit (higher at low speed)
+      evidence: {tag: ASSUMPTION, source: "JFS EGT limits not public (N KQ1 gaps); F-16 start temperatures restricted and not used"}
+      sweep: [300, 600]
+      assumption_id: A-W1.4-26
+    jfs_tau_egt:
+      value: 2.0
+      units: s
+      description: JFS EGT thermocouple/gas-path lag
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.5, 5.0]
+      assumption_id: A-W1.4-26
+    jfs_oil_heat:
+      value: 60
+      units: K
+      description: Steady JFS oil temperature rise over the bay while running
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [20, 100]
+      assumption_id: A-W1.4-26
+    jfs_tau_oil:
+      value: 120
+      units: s
+      description: JFS oil temperature time constant
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [30, 600]
+      assumption_id: A-W1.4-26
+    jfs_gov_tau:
+      value: 0.5
+      units: s
+      description: Governor capture time constant to rated speed once engaged
+      evidence: {tag: ASSUMPTION, source: "digital electronic fuel control (DDP 8778); dynamics not public"}
+      sweep: [0.2, 2.0]
+      assumption_id: A-W1.4-26
+    jfs_w_floor:
+      value: 1.0
+      units: rad/s
+      description: PTO speed floor in the torque-limited start power P = T_peak (w + w_floor) (M07 converts with the same floor)
+      evidence: {tag: ASSUMPTION, source: "interface convention for a power port at zero shaft speed (reported to W2.1)"}
+      sweep: [0.1, 10.0]
+      assumption_id: A-W1.4-26
+
+  landing:
+    brk_m_hs:
+      value: 18
+      units: kg
+      description: Carbon heat-sink mass per main-wheel brake when new (3 rotors / 4 stators)
+      evidence: {tag: ASSUMPTION, source: "HAL carbon brake unit (DDP 9657, DIRECT-part); mass not public; calibrated so a 13.5 t RTO at 90 % wear stays below brk_t_rto_limit (N KQ6)"}
+      sweep: [10, 30]
+      assumption_id: A-W1.4-28
+    brk_torque_gain:
+      value: 6.3e-4
+      units: N*m/Pa
+      description: Brake torque per unit brake pressure (mu x piston area x mean radius x 6 friction faces)
+      evidence: {tag: ASSUMPTION, source: "carbon 3 rotors / 4 stators = 6 faces (DDP 9657, DIRECT-part); sized so ~150 bar holds a locked 9 t main wheel (mu 0.5, loaded radius 0.284 m); not public"}
+      sweep: [3.0e-4, 1.5e-3]
+      assumption_id: A-W1.4-32
+    brk_p_max:
+      value: 200
+      units: bar
+      description: Maximum metered brake pressure
+      evidence: {tag: ASSUMPTION, source: "N Syn (b) brake pressure 0-~200 bar (ASSUMPTION); HAL brake master cylinder 68 bar is another type (not Tejas)"}
+      sweep: [100, 280]
+      assumption_id: A-W1.4-32
+    brk_hyd_system:
+      value: 1
+      units: "1"
+      description: Hydraulic system index feeding the wheel brakes (0 = SYS1, 1 = SYS2)
+      evidence: {tag: ASSUMPTION, source: "N KQ2 Inferences (one system feeds slats, gear, NWS, wheel brakes and the airbrake); allocation not public"}
+      sweep: [0, 1]
+      assumption_id: A-W1.4-32
+    brk_cp:
+      value: 1400
+      units: J/kg/K
+      description: Carbon-carbon specific heat (mean over the braking temperature range)
+      evidence: {tag: ASSUMPTION, source: "not in the evidence base"}
+      sweep: [1000, 1800]
+      assumption_id: A-W1.4-28
+    brk_mass_loss:
+      value: 0.35
+      units: "1"
+      description: Fraction of heat-sink mass lost at 100 % wear
+      evidence: {tag: ASSUMPTION, source: "ADA uses '% worn' (N KQ6); mass loss not public"}
+      sweep: [0.2, 0.5]
+      assumption_id: A-W1.4-28
+    brk_tau_cool:
+      value: 1800
+      units: s
+      description: Heat-sink cooling time constant
+      evidence: {tag: ASSUMPTION, source: "TRANSFER Mortimore CEAS 2007 / Boeing AERO: cooling over tens of minutes, temperatures ratchet on short turnarounds"}
+      sweep: [600, 3600]
+      assumption_id: A-W1.4-28
+    brk_t_rto_limit:
+      value: 1273.15
+      units: K
+      description: Heat-sink temperature capability limit for the RTO test points
+      evidence: {tag: ASSUMPTION, source: "N KQ6 Inferences (fuse-plug-like limit); not public"}
+      sweep: [1073.15, 1473.15]
+      assumption_id: A-W1.4-28
+    brk_p_on:
+      value: 5000
+      units: W
+      description: Brake power above which an application starts (counted)
+      evidence: {tag: ASSUMPTION, source: "application-count wear (US 7,963,620, TRANSFER); detection threshold not public"}
+      sweep: [1000, 20000]
+      assumption_id: A-W1.4-29
+    brk_p_off:
+      value: 2000
+      units: W
+      description: Brake power below which an application ends (hysteresis)
+      evidence: {tag: ASSUMPTION, source: "as brk_p_on"}
+      sweep: [500, 10000]
+      assumption_id: A-W1.4-29
+    brk_w_app:
+      value: 1.25e-4
+      units: "1"
+      description: Wear per brake application (fraction of life); 4 applications plus energy ~ 1/1,400 per landing
+      evidence: {tag: ASSUMPTION, source: "TRANSFER carbon brakes 1,400 landings (F-15, R §9.2); wear mainly per application (Mortimore; US 7,963,620)"}
+      sweep: [5.0e-5, 4.0e-4]
+      assumption_id: A-W1.4-29
+    brk_w_energy:
+      value: 5.4e-11
+      units: 1/J
+      description: Wear per joule absorbed (energy part, about 30 % of a typical landing's wear)
+      evidence: {tag: ASSUMPTION, source: "as brk_w_app; high-energy braking and oxidation terms (Mortimore CEAS 2007)"}
+      sweep: [1.0e-11, 2.0e-10]
+      assumption_id: A-W1.4-29
+    brk_t_ox:
+      value: 773.15
+      units: K
+      description: Heat-sink temperature above which oxidation wear adds
+      evidence: {tag: ASSUMPTION, source: "Mortimore CEAS 2007 ('very high temperature causes oxidation', TRANSFER); onset not public"}
+      sweep: [673.15, 873.15]
+      assumption_id: A-W1.4-29
+    brk_k_ox:
+      value: 0.5
+      units: "1"
+      description: Oxidation multiplier per brk_ox_scale above brk_t_ox
+      evidence: {tag: ASSUMPTION, source: "as brk_t_ox"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.4-29
+    brk_ox_scale:
+      value: 100
+      units: K
+      description: Temperature scale of the oxidation multiplier
+      evidence: {tag: ASSUMPTION, source: "as brk_t_ox"}
+      sweep: [50, 200]
+      assumption_id: A-W1.4-29
+    tyre_r:
+      value: 0.284
+      units: m
+      description: Main tyre loaded radius
+      evidence: {tag: DIRECT-part, source: "HAL main wheel 26 x 8.00-14, nominal loaded radius 284 mm https://www.ddpmod.gov.in/node/9654"}
+    tyre_w_td:
+      value: 0.06
+      units: "1"
+      description: Tyre wear per touchdown at reference mass and speed (spin-up scrub), fraction of life
+      evidence: {tag: ASSUMPTION, source: "TRANSFER F-16 main tyres 4-12 landings (Chawla, NTRS 19960009454); split touchdown/braking assumed (~1/8 per landing in total)"}
+      sweep: [0.02, 0.15]
+      assumption_id: A-W1.4-30
+    tyre_m_ref:
+      value: 9000
+      units: kg
+      description: Reference landing mass of the tyre touchdown wear law
+      evidence: {tag: DIRECT-unnamed, source: "reference mass of the DSJ 71(2) mass properties (normalising constant)"}
+    tyre_v_ref:
+      value: 75
+      units: m/s
+      description: Reference touchdown speed of the tyre wear law (~270 km/h)
+      evidence: {tag: ASSUMPTION, source: "N KQ6 Inferences (9.5 t landing at 75 m/s); approach 260-285 km/h (R §4, ASSUMPTION physics)"}
+      sweep: [65, 85]
+      assumption_id: A-W1.4-30
+    tyre_w_brake:
+      value: 1.6e-8
+      units: 1/J
+      description: Tyre wear per joule of brake energy (braking slip, anti-skid cycling)
+      evidence: {tag: ASSUMPTION, source: "Chawla (TRANSFER): excessive wear from large contact pressure and slip velocity; value not public"}
+      sweep: [5.0e-9, 5.0e-8]
+      assumption_id: A-W1.4-30
+    tyre_w_skid:
+      value: 3.8e-7
+      units: 1/J
+      description: Tyre wear per joule of locked-wheel skid energy (a ~2 s skid at 60 m/s bursts the tyre)
+      evidence: {tag: ASSUMPTION, source: "2026 Tejas brake-software event: brake failure -> tyre burst (N KQ6, DIRECT chain); rate not public"}
+      sweep: [1.0e-7, 1.0e-6]
+      assumption_id: A-W1.4-30
+    tyre_mu_skid:
+      value: 0.5
+      units: "1"
+      description: Tyre-runway friction coefficient in a locked-wheel skid
+      evidence: {tag: ASSUMPTION, source: "not public; runway mu (R §3 edge: landing mass, speed, chute, runway mu)"}
+      sweep: [0.3, 0.8]
+      assumption_id: A-W1.4-30
+    skid_v_min:
+      value: 10
+      units: m/s
+      description: Rolling speed below which a stopped wheel is not counted as a skid
+      evidence: {tag: ASSUMPTION, source: "modelling threshold"}
+      sweep: [5, 20]
+      assumption_id: A-W1.4-30
+    skid_slip:
+      value: 0.2
+      units: "1"
+      description: Wheel surface speed below this fraction of the rolling speed counts as a locked wheel
+      evidence: {tag: ASSUMPTION, source: "modelling threshold"}
+      sweep: [0.1, 0.5]
+      assumption_id: A-W1.4-30
+    td_v_min:
+      value: 20
+      units: m/s
+      description: A main-gear WoW rising edge counts as a touchdown only above this speed
+      evidence: {tag: ASSUMPTION, source: "modelling threshold"}
+      sweep: [10, 40]
+      assumption_id: A-W1.4-30
+    chute_v_normal:
+      value: 285
+      units: km/h
+      description: Brake-chute normal maximum deployment speed
+      evidence: {tag: DIRECT, source: "DDP brake parachute (LCA) https://www.ddpmod.gov.in/node/8027"}
+    chute_v_emerg:
+      value: 340
+      units: km/h
+      description: Brake-chute emergency maximum deployment speed (above it the canopy fails)
+      evidence: {tag: DIRECT, source: "DDP brake parachute (LCA) https://www.ddpmod.gov.in/node/8027"}
+    chute_life_streamings:
+      value: 45
+      units: "1"
+      description: Brake-chute life in streamings (M18 life counter)
+      evidence: {tag: DIRECT, source: "DDP brake parachute: life 8 years or 45 streamings"}
+    chute_life_years:
+      value: 8
+      units: year
+      description: Brake-chute calendar life (M18)
+      evidence: {tag: DIRECT, source: "DDP brake parachute: life 8 years or 45 streamings"}
+
+  fire:
+    bay_heat_cap:
+      value: 5000
+      units: J/K
+      description: Engine-bay air plus nearby structure heat capacity
+      evidence: {tag: ASSUMPTION, source: "fire zones not public (N KQ7 gaps)"}
+      sweep: [2000, 20000]
+      assumption_id: A-W1.4-31
+    bay_ua_case:
+      value: 50
+      units: W/K
+      description: Engine-case to bay-air conductance (HPC case at bleed-port temperature)
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [20, 150]
+      assumption_id: A-W1.4-31
+    bay_vent_area:
+      value: 0.005
+      units: m**2
+      description: Effective ram ventilation area of the bay
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.002, 0.02]
+      assumption_id: A-W1.4-31
+    bay_m_vent_ground:
+      value: 0.05
+      units: kg/s
+      description: Bay ventilation flow on the ground
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [0.02, 0.2]
+      assumption_id: A-W1.4-31
+    fire_q:
+      value: 50
+      units: kW
+      description: Heat release of a fuel/oil fire in the bay
+      evidence: {tag: ASSUMPTION, source: "not public"}
+      sweep: [10, 200]
+      assumption_id: A-W1.4-31
+    fire_t_alarm:
+      value: 503.15
+      units: K
+      description: Detector-loop alarm temperature
+      evidence: {tag: ASSUMPTION, source: "Tejas detection loop not public (N KQ7); USAF historic missed/false rates (DTIC AD0663213, TRANSFER) are M14's"}
+      sweep: [423.15, 623.15]
+      assumption_id: A-W1.4-31
+    fire_p_ext:
+      value: 0.9
+      units: "1"
+      description: Probability that one extinguisher discharge puts out the fire
+      evidence: {tag: ASSUMPTION, source: "cartridge-fired extinguisher bottle (ADA GS page, DIRECT existence); effectiveness not public"}
+      sweep: [0.7, 0.99]
+      assumption_id: A-W1.4-31

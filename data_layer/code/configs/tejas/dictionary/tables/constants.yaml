@@ -1,0 +1,45 @@
+# Scalar parameter sets ("Parameters are data", architecture P4; module ParamSet, §5.5).
+# W0.3 seeds only the constants that channel semantics need (reference speeds for % spool-speed channels).
+# Model parameters live in configs/<platform>/params/ (W1.0 registry). Every constant here needs a tag and a
+# source; an ASSUMPTION (or proxy) constant also needs a sweep [lo, hi] bracketing its value and a prov rule with
+# an assumption_id (an assumptions.md row) -- the compiler rejects it otherwise (validate._constant_errors).
+# eu_reference_for: parameters whose % of rated speed channels convert to SI (rad/s) with this speed
+# (Dictionary.si_to_eu / eu_to_si).
+format: phalanx.dictionary.constants/1
+sets:
+  channel_reference:
+    n1_100pct:
+      value: 13270
+      units: rpm
+      description: Fan speed at 100 % N1 (used to convert %N1 channel values)
+      evidence: {tag: "TRANSFER: F404-400", source: "parameter_inventory.csv ENG.N1 units ('100% = 13,270 rpm on -400'); f404_in20_engine_model.md; report §1 (IN20 100 % speeds assumed equal to -400)"}
+      eu_reference_for: [ENG.N1]
+    n2_100pct:
+      value: 16810
+      units: rpm
+      description: Core speed at 100 % N2 (used to convert %N2 channel values)
+      evidence: {tag: "TRANSFER: F404-400", source: "parameter_inventory.csv ENG.N2 units ('100% = 16,810 rpm'); report §1"}
+      eu_reference_for: [ENG.N2]
+    amagb_rated_speed:
+      value: 16810
+      units: rpm
+      description: AMAGB/PTO rated input speed
+      evidence: {tag: DIRECT, source: "parameter_inventory.csv SPS.AMAGB.SPEED range ('rated 16,810'); DDP AMAGB https://www.ddpmod.gov.in/node/8779"}
+    jfs_rated_speed:
+      value: 60000
+      units: rpm
+      description: JFS (GTSU-110) gas-generator rated speed = 100 % SPS.JFS.SPEED (same value as M09 jfs.jfs_rated_speed, tested)
+      evidence: {tag: ASSUMPTION, source: "not public; configs/tejas/params/M09.yaml jfs.jfs_rated_speed (A-W1.4-26: 100 kW-class centrifugal gas generators run ~50-70 krpm)"}
+      sweep: [40000, 80000]
+      prov: R-JFS-RATED-SPEED
+      eu_reference_for: [SPS.JFS.SPEED]
+    nz_envelope_max:
+      value: 8.0
+      units: standard_gravity
+      description: Operational normal-load-factor envelope, positive limit
+      evidence: {tag: DIRECT, source: "parameter_inventory.csv FCS.VOTED.NZ range ('envelope +8/-3.5'); report Appendix A3 (g limits)"}
+    nz_envelope_min:
+      value: -3.5
+      units: standard_gravity
+      description: Operational normal-load-factor envelope, negative limit
+      evidence: {tag: DIRECT, source: "parameter_inventory.csv FCS.VOTED.NZ range ('envelope +8/-3.5'); report Appendix A3 (g limits)"}

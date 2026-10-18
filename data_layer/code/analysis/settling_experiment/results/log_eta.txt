@@ -1,0 +1,31 @@
+ETA log -- written 2026-10-14 (local time of writing: see file mtime)
+
+Status at writing: v2 refit and v2 synthesis done; Gate-0 smoke test done (SMOKE_GATE.md);
+full v2 feature extraction (6,513 files) running, ~62 min total, ~55 min remaining.
+
+Estimated remaining wall-clock (Apple-silicon laptop, 10 cores; engine comparison ~15 min, VRTG ~7 min each):
+  step (1) decisive set  -- power T1-L0/T2-L0 (eng) + T1-L0 (VRTG), FULL T1-L6 eng, T2-L6 eng, T1-L6 VRTG,
+                            baselines tail_eng/vrtg, temporal_eng/vrtg (10 comparisons)       ~2.0 h after features
+  step (2) interim verdict (results/interim_verdict.json, INTERIM_VERDICT.md)                 ~10 min
+     => interim verdict expected ~3 h from now
+  step (3) remaining ladder (L1-L5, L6' for T1/T2 eng and VRTG: 18), July subset (2),
+           f_c sensitivity (20), Gate 0 v2 full, family ablations (5), figures, REPORT.md     ~9-10 h
+     => full report expected ~12-13 h from now
+Window-level D2 permutation tests (beyond the bootstrap CIs used by the decision rules) are not
+in this estimate; see DEVIATIONS.md section F.
+Wed Oct 14 12:44:45 IST 2026
+
+Update (see date below): the first launch of the decisive set was stopped after ~25 min because the
+segment-level LR with 1,000 label permutations (15 refits per permutation on 7,850 features) alone
+would have taken ~2 h per engine comparison. Segment-level D2 permutations are now off by default
+(bootstrap CIs, which the decision rules use, are unaffected; D3 and D1 keep 1,000 permutations).
+Revised estimate: features finish in ~25 min; interim verdict ~3 h from this update; full report
+~12-14 h from this update.
+Wed Oct 14 13:27:09 IST 2026
+
+Update: features and Gate 0 v2 done. Baselines tail/temporal (eng, VRTG) done; sim_T1_L0_eng nearly done.
+Engine simulation comparisons take ~60 min locally (the batched-permutation ridge on 9,200 MiniRocket rows dominates).
+T2 decisive comparisons now run in parallel locally (not waiting for the T1 stream). Interim verdict ETA ~2.5-3 h from
+this update. Kaggle step-3 shards: pending repro verification (v3); each 4-CPU Kaggle kernel is expected to take
+~1.5-2 h per engine comparison, so 8 shards in parallel finish step 3 in ~5-7 h after launch, vs ~15 h locally.
+Wed Oct 14 14:27:37 IST 2026

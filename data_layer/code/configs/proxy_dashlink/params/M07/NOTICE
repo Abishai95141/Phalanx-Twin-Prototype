@@ -1,0 +1,31 @@
+Third-party data in this directory
+==================================
+
+The component-map and thermodynamic tables
+
+    fan_map_axi5.csv
+    hpc_map_hbtf.csv
+    hpt_map_hbtf.csv
+    lpt_map_hbtf.csv
+    nasa9_species.csv
+
+are byte-identical copies of configs/tejas/params/M07/ (same files, same provenance), used by the W2.4a
+separate_fixed proxy engine (AD-43: the same component-level method, re-scaled to the proxy design point).
+They are derived from pyCycle (OpenMDAO/pyCycle, NASA Glenn Research Center), converted to CSV by
+src/phalanx/engine/_mapgen.py (the source files were parsed as text with ast; they were never executed).
+
+    Project:   pyCycle, https://github.com/OpenMDAO/pyCycle
+    Commit:    ee7e16126a7a54b5fe35292c53b7eb4e9572620b
+    Files:     pycycle/maps/axi5.py                         -> fan_map_axi5.csv (alpha = 0 slice)
+               pycycle/maps/HPC_map.py                      -> hpc_map_hbtf.csv (alpha = 0 slice)
+               pycycle/maps/HPT_map.py                      -> hpt_map_hbtf.csv (alpha = 1 slice)
+               pycycle/maps/LPT_map.py                      -> lpt_map_hbtf.csv (alpha = 1 slice)
+               pycycle/thermo/cea/thermo_data/janaf.py      -> nasa9_species.csv (N2, O2, Ar, CO2, H2O)
+    SPDX-License-Identifier: Apache-2.0
+    Licence:   https://github.com/OpenMDAO/pyCycle/blob/ee7e16126a7a54b5fe35292c53b7eb4e9572620b/LICENSE.txt
+               https://www.apache.org/licenses/LICENSE-2.0
+
+Modifications: none (copies). The AXI5 fan map is a low-bypass map used here, scaled, for a high-bypass fan
+(PROXY A-W2.4a-8: no high-bypass fan map is in the evidence base).
+
+The full Apache-2.0 licence text is a release item (owner/coordinator).

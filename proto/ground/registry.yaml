@@ -1,0 +1,60 @@
+# Component registry of the twin (DEVELOPMENT §2.12): each 3D / planform node (proto/web/assets/twin3d.js,
+# aircraft.js ZONES) ↔ the part numbers fitted there (with the twin's slot, "SYN-PN-HYDP#1" → slot 1) ↔ the data
+# layer's catalogue position used in order parameters (TROUBLESHOOT / REMOVE_REPLACE "position") ↔ the LRU names
+# the alarm dictionary uses as reporters and suspects. Alarm codes map onto nodes through their suspect LRUs as the
+# events carry them, so codes are not listed here.
+#
+# Positions are copied from the data layer's M18 catalogue (configs/tejas/params/M18/catalogue.yaml); a test keeps
+# them equal. Everything is synthetic.
+format: phx.registry/1
+
+systems:
+  ENG: Engine & FADEC
+  HYD: Hydraulics
+  AVI: Avionics
+  ADC: Air data
+  LG: Landing gear
+  ELE: Electrical
+  FUE: Fuel
+  FCS: Flight controls
+  ECS: Environmental
+
+nodes:
+  ENGINE:    {label: F404 engine, system: ENG, zone: ENGINE, lrus: [ENGINE, NOZZLE_ACTUATOR, FMU],
+              parts: [{part_no: SYN-PN-ENG-F404, slot: 1, position: ENG}]}
+  FADEC:     {label: FADEC, system: ENG, zone: FADEC, lrus: [FADEC, FADEC_ALTERNATOR],
+              parts: [{part_no: SYN-PN-FADEC, slot: 1, position: FADEC}]}
+  JFS:       {label: JFS starter, system: ENG, zone: JFS, lrus: [JFS],
+              parts: [{part_no: SYN-PN-JFS, slot: 1, position: JFS}]}
+  HYD_PUMP:  {label: Hyd pump 1 · SYS1, system: HYD, zone: HYD_PUMP, lrus: [HYD_PUMP, HYD_FILTER],
+              parts: [{part_no: SYN-PN-HYDP, slot: 1, position: HYDP1}]}
+  HYD_PUMP2: {label: Hyd pump 2 · SYS2, system: HYD, zone: HYD_PUMP2, lrus: [],
+              parts: [{part_no: SYN-PN-HYDP, slot: 2, position: HYDP2}]}
+  AMAGB:     {label: AMAGB, system: HYD, zone: AMAGB, lrus: [AMAGB],
+              parts: [{part_no: SYN-PN-AMAGB, slot: 1, position: AMAGB}]}
+  BHEEM_EU:  {label: BHEEM EU, system: AVI, zone: BHEEM_EU, lrus: [BHEEM_EU], parts: [], reporter: true}
+  DFCC:      {label: DFCC, system: FCS, zone: DFCC, lrus: [DFCC, ASA, SERVO_ACTUATOR, SLAT_ACTUATOR],
+              parts: [{part_no: SYN-PN-DFCC, slot: 1, position: DFCC}]}
+  INGPS:     {label: INS/GPS, system: AVI, zone: INGPS, lrus: [INGPS],
+              parts: [{part_no: SYN-PN-INGPS, slot: 1, position: INGPS}]}
+  AHRS:      {label: AHRS, system: AVI, zone: AHRS, lrus: [AHRS], parts: []}
+  RADAR:     {label: Radar, system: AVI, zone: RADAR, lrus: [RADAR],
+              parts: [{part_no: SYN-PN-RADAR, slot: 1, position: RADAR}]}
+  ADC:       {label: ADC, system: ADC, zone: ADC, lrus: [ADC, PITOT_STATIC, AOA_VANE],
+              parts: [{part_no: SYN-PN-ADC, slot: 1, position: ADC}]}
+  NLG:       {label: Nose gear, system: LG, zone: NLG, lrus: [], parts: []}
+  MLG_L:     {label: Main gear L, system: LG, zone: MLG_L, lrus: [GEAR_PROXIMITY, GEAR_ACTUATOR, BRAKE_VALVE],
+              parts: [{part_no: SYN-PN-TYRE, slot: 1, position: TYR_L}, {part_no: SYN-PN-BRAKE, slot: 1, position: BRK_L}]}
+  MLG_R:     {label: Main gear R, system: LG, zone: MLG_R, lrus: [GEAR_PROXIMITY, GEAR_ACTUATOR, BRAKE_VALVE],
+              parts: [{part_no: SYN-PN-TYRE, slot: 2, position: TYR_R}, {part_no: SYN-PN-BRAKE, slot: 2, position: BRK_R}]}
+  CHUTE:     {label: Brake chute, system: LG, zone: CHUTE, lrus: [],
+              parts: [{part_no: SYN-PN-CHUTE, slot: 1, position: CHUTE}]}
+  FUEL_F1:   {label: Fuel gauging, system: FUE, zone: null, lrus: [BOOST_PUMP, ECFM_C, FUEL_PROBE],
+              parts: [{part_no: SYN-PN-FQGS, slot: 1, position: FQGS}]}
+
+# catalogue items with no 3D node: shown in the tree, never painted
+unplaced:
+  BCU:   {label: Brake control unit, system: LG, lrus: [ANTISKID, BRAKE_CONTROL],
+          parts: [{part_no: SYN-PN-BCU, slot: 1, position: BCU}]}
+  GEN:   {label: Generator, system: ELE, lrus: [GCU, GENERATOR, TRU], parts: [{part_no: SYN-PN-GEN, slot: 1, position: GEN}]}
+  OBOGS: {label: OBOGS, system: ECS, lrus: [OBOGS], parts: [{part_no: SYN-PN-OBOGS, slot: 1, position: OBOGS}]}

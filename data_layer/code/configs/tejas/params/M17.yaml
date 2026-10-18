@@ -1,0 +1,97 @@
+# M17 Ground decoder (architecture §6 M17, §8, §12; W1.7). These are the ground station's DECLARED nominal
+# values: the decoder never reads the simulator's M15/M16 parameters or truth.
+format: phalanx.params/1
+module: M17
+sets:
+  timing:
+    nominal_processing_latency:
+      value: 8
+      units: ms
+      description: >-
+        Declared acquisition-to-transmit latency of an RT LRU, used to estimate t_sample from t_bus
+        (t_sample = t_bus - D_tag - L_proc - T_update/2).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          Tejas DFCC computation delay 8 ms (Patel, Deodhare & Chetty, JOAST 58(4) 2006, via
+          research_notes tejas_airframe_aero_fcs.md Q3); report §13 (t_bus = LRU latency + poll wait)
+      sweep: [0, 25]
+      assumption_id: A-W1.7-14
+    nominal_relay_latency:
+      value: 1
+      units: ms
+      description: Declared extra latency of relayed items (ADC words relayed by the DFCC, ECMS words by the FADEC).
+      evidence:
+        tag: ASSUMPTION
+        source: buses.yaml RS-422 links (rule R-ICD-RS422); no public figure
+      sweep: [0, 12.5]
+      assumption_id: A-W1.7-14
+    nominal_monitor_latency:
+      value: 1
+      units: us
+      description: Declared bus-monitor latency between the tagged bit and the RTC capture.
+      evidence:
+        tag: ASSUMPTION
+        source: report §13 (t_record = t_bus + monitor latency); no public figure
+      sweep: [0, 10]
+      assumption_id: A-W1.7-14
+  quality:
+    rtc_rate_tolerance:
+      value: 100
+      units: ppm
+      description: >-
+        Largest RTC-rate deviation between consecutive locked time packets accepted before the interval is
+        flagged CLOCK_SUSPECT (a time jump while the source claims lock).
+      evidence:
+        tag: "TRANSFER: IRIG 106 Ch10 relative-time accuracy (DDC IRIG 106 Chapter 10 white paper, 2007)"
+        source: >-
+          'If relative time is used, it must be accurate to within +/-100 us of absolute time'
+          (data_pathway_and_formats.md Q4), i.e. 100 ppm over the 1 s between time packets
+    time_tail_tolerance:
+      value: 2
+      units: s
+      description: >-
+        Longest extrapolation after the last locked time packet before the time is CLOCK_SUSPECT (time packets
+        come every second; the tail of a recording is normally < 1 s).
+      evidence:
+        tag: ASSUMPTION
+        source: IRIG 106 §10.6.3 (time packets at >= 1 Hz)
+      sweep: [1, 10]
+      assumption_id: A-W1.7-17
+    duplicate_rate_tolerance:
+      value: 0.001
+      units: "1"
+      description: >-
+        Relative slack on the ICD update/poll period ratio when deciding how many identical consecutive polls one
+        producer update can explain (DUPLICATE_POLL inference).
+      evidence:
+        tag: ASSUMPTION
+        source: crystal offsets are tens of ppm (report §13); 1e-3 covers them with margin
+      sweep: [0.0001, 0.05]
+      assumption_id: A-W1.7-15
+    holdover_tolerance:
+      value: 300
+      units: s
+      description: >-
+        Longest time-source holdover the decoder carries on the recorder crystal rate measured before the lock
+        loss; beyond it the reconstructed time is CLOCK_SUSPECT.
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          a 1e-7 rate-estimate error (one RTC tick per second) reaches the Ch10 +/-100 us relative-time bound
+          after ~1000 s (data_pathway_and_formats.md Q4, DDC); crystal aging/temperature drift not modelled
+          (A-W0.2-1), so a margin is kept
+      sweep: [30, 3600]
+      assumption_id: A-W1.7-17
+    sentinel_min_lsb:
+      value: 10
+      units: "1"
+      description: Minimum jump (in LSB) into the bottom of scale for a value to be read as a slip sentinel.
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          the DASHlink sentinel rule 'isolated = both neighbours differ by more than max(10 LSB, 5 x robust
+          sigma of first differences)' (analysis/dashlink_texture/README.md, method parameters), used one-sided
+          (previous sample only) so decoding stays causal
+      sweep: [3, 30]
+      assumption_id: A-W1.7-16

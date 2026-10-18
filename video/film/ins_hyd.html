@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/illus_inline.js"></script>
+<style>
+@font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; }
+:root { --ink:#0B0D10; --ink-2:#31353B; --ink-3:#62676F; --ink-4:#8E939A; --line:#E6E6E2; --accent:#E8743B; --accent-ink:#B4511F; --accent-wash:#FDF1EA; --accent-line:#F6CDB6; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #fff; font-family: Manrope, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+#plate { position: absolute; inset: 0; }
+#plate svg { width: 1920px; height: 1080px; display: block; }
+.kick { position: absolute; left: 120px; top: 74px; font: 700 18px Manrope; letter-spacing: .18em; text-transform: uppercase; color: var(--accent-ink); background: rgba(255,255,255,.92); padding: 6px 10px 6px 0; }
+.test { position: absolute; left: 120px; top: 812px; width: 560px; padding: 24px 28px; border: 2px solid var(--accent); border-radius: 22px; background: #fff; box-shadow: 0 30px 70px -30px rgba(16,18,22,.25); }
+.test .k { font: 700 14px "JetBrains Mono"; letter-spacing: .12em; color: var(--accent-ink); }
+.test .t { font-size: 34px; font-weight: 650; letter-spacing: -0.025em; margin-top: 8px; }
+.test .s { font-size: 18px; color: var(--ink-3); margin-top: 6px; }
+.test .m { position: absolute; right: 28px; top: 24px; font: 700 18px "JetBrains Mono"; color: var(--ink-2); }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="2.4" data-width="1920" data-height="1080">
+  <div id="plate"></div>
+  <div class="kick" id="kick">HYD-101 · where the alarm is raised</div>
+  <div class="test" id="test"><div class="k">BEST NEXT TEST</div><div class="m">7.3 man-h</div><div class="t">Indication-path isolation</div><div class="s">pressure switch · harness · BHEEM EU channel</div></div>
+</div>
+<script>
+(function () {
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const NS = 'http://www.w3.org/2000/svg';
+  function build() {
+    $('#plate').innerHTML = window.PHX_ILL.hyd;
+    const svg = $('#plate svg');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    ['#hyd-sheet', '#hyd-titleblock', '#hyd-key'].forEach(s => { const e = $(s); if (e) e.style.display = 'none'; });
+    const mk = (tag, at, parent = svg) => { const e = document.createElementNS(NS, tag); Object.entries(at).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
+
+    // layers to dim (everything that is not the indication path, the EU, the bus or the caution)
+    const keep = new Set(['hyd-bg', 'hyd-eu', 'hyd-bus', 'hyd-caution', 'hyd-path-callouts', 'hyd-sys1', 'hyd-sys2', 'hyd-amagb', 'hyd-sys1-pump', 'hyd-sheet', 'hyd-titleblock', 'hyd-key']);
+    const dim = [...svg.children].filter(e => e.tagName !== 'defs' && e.tagName !== 'title' && e.tagName !== 'desc' && !keep.has(e.id));
+    ['#hyd-sys1', '#hyd-sys2'].forEach(s => [...$(s).children].forEach(c => { if (!/indication$/.test(c.id) && c.id !== 'hyd-sys1-pump') dim.push(c); }));
+    const pump = $('#hyd-sys1-pump'), amagb = $('#hyd-amagb');
+
+    // ruled-out tag beside EDP 1, struck label
+    const ro = mk('g', { id: 'x-ro', opacity: 0 });
+    mk('rect', { x: 340, y: 327, width: 104, height: 22, rx: 11, fill: '#fff', stroke: '#B9BDC2', 'stroke-width': 1.2 }, ro);
+    const rt = mk('text', { x: 392, y: 342, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono', 'font-size': 10.5, 'font-weight': 700, fill: '#62676F' }, ro); rt.textContent = 'RULED OUT';
+    const strike = mk('line', { x1: 240, y1: 320, x2: 274, y2: 320, stroke: '#D4492A', 'stroke-width': 1.6, 'stroke-linecap': 'round' });
+    // travelling pulses: switch → harness → EU, then EU → bus → caution legend
+    const pa = mk('path', { d: 'M640 238 L640 404', fill: 'none', stroke: 'none' }), pb = mk('path', { d: 'M734 450 L786 450 L786 424 L910 424', fill: 'none', stroke: 'none' });
+    const glow = (id) => { const g = mk('g', { id, opacity: 0 }); mk('circle', { r: 9, fill: '#E8743B', opacity: .22 }, g); mk('circle', { r: 4.2, fill: '#E8743B' }, g); return g; };
+    const ga = glow('x-ga'), gb = glow('x-gb');
+    const euRect = $('#hyd-eu rect.draw'), caution = $('#hyd-caution rect'), cautionT = $('#hyd-caution text');
+
+    const tl = gsap.timeline({ paused: true });
+    // camera: whole sheet → the indication path (viewBox tween, crisp vector zoom)
+    const cam = { x: 40, y: 22, w: 1520 };
+    const setVB = () => svg.setAttribute('viewBox', `${cam.x.toFixed(2)} ${cam.y.toFixed(2)} ${cam.w.toFixed(2)} ${(cam.w * 9 / 16).toFixed(2)}`);
+    setVB();
+    tl.fromTo(cam, { x: 40, y: 22, w: 1520 }, { x: 168, y: 172, w: 980, duration: 1.55, ease: 'expo.inOut', onUpdate: setVB }, .15);
+    tl.to(cam, { x: 176, y: 176, w: 960, duration: .75, ease: 'sine.inOut', onUpdate: setVB }, 1.7);
+    // focus: dim the rest
+    tl.fromTo(dim, { opacity: 1 }, { opacity: .22, duration: .5, ease: 'power2.inOut' }, .3);
+    tl.fromTo(amagb, { opacity: 1 }, { opacity: .6, duration: .5 }, .3);
+    // harness draws, pulse A rides it
+    $$('#hyd-sys1-indication .harness, #hyd-sys2-indication .harness').forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: .45, ease: 'power2.inOut' }, .42); });
+    const ride = (g, path, at, dur) => { const L = path.getTotalLength(), o = { u: 0 };
+      tl.fromTo(g, { opacity: 0 }, { opacity: 1, duration: .08 }, at); tl.to(g, { opacity: 0, duration: .1 }, at + dur);
+      tl.fromTo(o, { u: 0 }, { u: 1, duration: dur, ease: 'power1.inOut', onUpdate: () => { const p = path.getPointAtLength(o.u * L); g.setAttribute('transform', `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`); } }, at); };
+    ride(ga, pa, .45, .42);
+    tl.fromTo(euRect, { attr: { fill: '#FFFFFF', 'stroke-width': 1.5 } }, { attr: { fill: '#FDF1EA', 'stroke-width': 2.4 }, duration: .2 }, .86);
+    ride(gb, pb, .95, .38);
+    tl.fromTo(caution, { attr: { fill: '#FFFFFF' } }, { attr: { fill: '#E8743B' }, duration: .15 }, 1.32);
+    tl.fromTo(cautionT, { attr: { fill: '#E8743B' } }, { attr: { fill: '#FFFFFF' }, duration: .15 }, 1.32);
+    // numbered callouts pop along the path
+    $$('#hyd-path-callouts .callout').forEach((c, i) => { const b = c.getBBox(), o = `${b.x + b.width / 2}px ${b.y + b.height / 2}px`;
+      tl.fromTo(c, { opacity: 0, scale: .4, transformOrigin: o }, { opacity: 1, scale: 1, duration: .3, ease: 'back.out(2.4)' }, .5 + i * .16); });
+    // the pump is ruled out
+    tl.fromTo(pump, { opacity: 1 }, { opacity: .4, duration: .3 }, 1.0);
+    { const L = 34; strike.style.strokeDasharray = L; tl.fromTo(strike, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: .25, ease: 'power2.out' }, 1.02); }
+    tl.fromTo(ro, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: .3, ease: 'power3.out' }, 1.08);
+    // HTML layer
+    tl.fromTo('#kick', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, .2);
+    tl.fromTo('#test', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 1.15);
+    tl.to({}, { duration: .01 }, 2.39);
+    window.__timelines["main"] = tl;
+  }
+  window.__timelines = window.__timelines || {};
+  document.fonts.ready.then(build);
+})();
+</script>
+</body></html>

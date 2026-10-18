@@ -1,0 +1,134 @@
+S1 belief m=0 sq=2.1s tr=2.2s
+S1 ensemble m=0 sq=2.0s tr=2.5s
+{
+ "belief": {
+  "mc": {
+   "n": 1,
+   "mean": 0.12673611111111105,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "fmc": {
+   "n": 1,
+   "mean": 0.10312500000000002,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "nmcs": {
+   "n": 1,
+   "mean": 0.0034722222222222238,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "nmcm": {
+   "n": 1,
+   "mean": -0.13020833333333334,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "flown_fh": {
+   "n": 1,
+   "mean": 2.91138888888889,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "aog_days": {
+   "n": 1,
+   "mean": 0.10416666666666696,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "man_hours": {
+   "n": 1,
+   "mean": -170.23200000000006,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "cost": {
+   "n": 1,
+   "mean": -7.50232,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "in_flight_failures": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  }
+ },
+ "ensemble": {
+  "mc": {
+   "n": 1,
+   "mean": 0.12673611111111105,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "fmc": {
+   "n": 1,
+   "mean": 0.10312500000000002,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "nmcs": {
+   "n": 1,
+   "mean": 0.0034722222222222238,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "nmcm": {
+   "n": 1,
+   "mean": -0.13020833333333334,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "flown_fh": {
+   "n": 1,
+   "mean": 2.91138888888889,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "aog_days": {
+   "n": 1,
+   "mean": 0.10416666666666696,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "man_hours": {
+   "n": 1,
+   "mean": -170.23200000000006,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "cost": {
+   "n": 1,
+   "mean": -7.50232,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  },
+  "in_flight_failures": {
+   "n": 1,
+   "mean": 0.0,
+   "sd": 0.0,
+   "ci_low": -Infinity,
+   "ci_high": Infinity
+  }
+ }
+}

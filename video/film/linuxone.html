@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Phalanx Twin film · LinuxONE section (L1–L3)</title>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/phx-film.js"></script>
+<style>
+@font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; font-display: block; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; font-display: block; }
+:root { --ink:#0B0D10; --ink-2:#31353B; --ink-3:#62676F; --ink-4:#8E939A; --ink-5:#B9BDC2; --line:#E6E6E2; --line-2:#EFEFEC; --bg-2:#F7F7F5; --bg-3:#F1F1EE;
+  --accent:#E8743B; --accent-ink:#B4511F; --accent-wash:#FDF1EA; --accent-line:#F6CDB6; --ok:#1F8A4C; --ok-wash:#EAF6EF;
+  --ibm:#0F62FE; --ibm-wash:#EEF4FF; --ibm-line:#BCD2FE; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #fff; font-family: Manrope, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1; }
+/* same grid as act4, so the cut into S34 lands on the same lines */
+.grid { position: absolute; inset: -96px; background-image: linear-gradient(#F3F3F0 1px, transparent 1px), linear-gradient(90deg, #F3F3F0 1px, transparent 1px); background-size: 48px 48px; }
+.mono { font-family: "JetBrains Mono", monospace; }
+.scene { position: absolute; inset: 0; transform-origin: 960px 520px; }
+.kick { position: absolute; left: 120px; top: 74px; font: 700 18px Manrope; letter-spacing: .18em; text-transform: uppercase; color: var(--accent-ink); white-space: nowrap; }
+.kick.ibm { color: var(--ibm); }
+.ttl { position: absolute; left: 120px; top: 104px; font-size: 52px; font-weight: 650; letter-spacing: -0.035em; white-space: nowrap; }
+.card { position: absolute; background: #fff; border: 1.5px solid var(--line); border-radius: 22px; box-shadow: 0 30px 70px -30px rgba(16,18,22,.22); }
+
+/* A · the stack */
+.layer { position: absolute; left: 120px; width: 860px; height: 84px; background: #fff; border: 1.5px solid var(--line); border-radius: 18px;
+  display: flex; align-items: center; padding: 0 26px 0 0; box-shadow: 0 18px 40px -26px rgba(16,18,22,.22); overflow: hidden; }
+.layer .ix { width: 64px; text-align: center; font: 700 15px "JetBrains Mono"; color: var(--ink-4); letter-spacing: .04em; }
+.layer .nm { font-size: 27px; font-weight: 650; letter-spacing: -0.02em; white-space: nowrap; }
+.layer .dt { margin-left: auto; font: 500 16px "JetBrains Mono"; color: var(--ink-3); white-space: nowrap; }
+.layer .bar { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--ink-5); }
+.layer.plat { background: var(--ibm-wash); border-color: var(--ibm-line); }
+.layer.plat .bar { background: var(--ibm); } .layer.plat .nm { color: var(--ibm); } .layer.plat .ix { color: var(--ibm); }
+.layer.plat .dt { color: #2C4E8F; }
+.layer.twin { height: 108px; border-color: var(--accent-line); }
+.layer.twin .bar { background: var(--accent); }
+.chips { display: flex; gap: 10px; margin-left: auto; }
+.chip { height: 40px; padding: 0 16px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; display: flex; align-items: center; gap: 9px; font: 650 17px Manrope; color: var(--ink-2); white-space: nowrap; }
+.chip i { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-5); display: block; }
+.chip.on { border-color: var(--accent-line); background: var(--accent-wash); color: var(--accent-ink); }
+.chip.on i { background: var(--accent); }
+.stackcap { position: absolute; left: 120px; top: 866px; font: 500 16px "JetBrains Mono"; color: var(--ink-4); letter-spacing: .02em; white-space: nowrap; }
+
+/* A · terminal (white card, mono) */
+#term { left: 1060px; top: 380px; width: 740px; height: 322px; padding: 0; overflow: hidden; }
+#term .hd { height: 52px; border-bottom: 1.5px solid var(--line-2); display: flex; align-items: center; gap: 9px; padding: 0 22px; }
+#term .hd i { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--ink-5); display: block; }
+#term .hd span { margin-left: 12px; font: 600 15px "JetBrains Mono"; color: var(--ink-4); letter-spacing: .02em; }
+#term .bd { padding: 24px 30px; font: 500 22px/1.62 "JetBrains Mono"; color: var(--ink-2); white-space: pre; }
+#term .p { color: var(--accent-ink); font-weight: 700; }
+#term .o { color: var(--ink); font-weight: 650; }
+#term .v { display: inline-block; padding: 0 8px; margin-left: -8px; border-radius: 8px; color: var(--ibm); font-weight: 700; }
+#term .caret { display: inline-block; width: 12px; height: 26px; background: var(--accent); vertical-align: -4px; margin-left: 2px; }
+.termcap { position: absolute; left: 1062px; top: 724px; font: 500 16px "JetBrains Mono"; color: var(--ink-4); white-space: nowrap; }
+#lead { position: absolute; left: 0; top: 0; }
+
+/* B · proof cards */
+.stat { top: 296px; width: 402px; height: 380px; padding: 30px 32px; }
+.stat .k { font: 700 14px "JetBrains Mono"; letter-spacing: .14em; color: var(--ink-4); }
+.stat .big { margin-top: 26px; font-size: 112px; font-weight: 650; letter-spacing: -0.055em; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.stat .big small { font-size: 46px; letter-spacing: -0.03em; margin-left: 8px; color: var(--ink-2); }
+.stat .big.txt { font-size: 66px; letter-spacing: -0.045em; line-height: 1.02; margin-top: 30px; }
+.stat .s { position: absolute; left: 32px; right: 30px; bottom: 30px; font-size: 21px; line-height: 1.38; font-weight: 550; color: var(--ink-3); }
+.stat .rl { position: absolute; left: 32px; right: 32px; bottom: 132px; height: 2px; background: var(--line-2); }
+.stat .rl i { display: block; height: 100%; width: 100%; background: var(--accent); transform-origin: 0 50%; }
+.stat .ck { position: absolute; right: 26px; top: 24px; }
+.proofcap { position: absolute; left: 120px; top: 724px; font: 500 18px "JetBrains Mono"; color: var(--ink-3); white-space: nowrap; }
+.proofcap b { color: var(--ink); font-weight: 700; }
+
+/* C · built for */
+.cap { top: 300px; width: 402px; height: 262px; padding: 30px 32px; }
+.cap svg.ic { display: block; }
+.cap .nm { margin-top: 26px; font-size: 32px; font-weight: 650; letter-spacing: -0.025em; line-height: 1.12; }
+.cap .s { margin-top: 12px; font: 500 17px/1.5 "JetBrains Mono"; color: var(--ink-3); }
+.cap .tag { position: absolute; right: 24px; top: 26px; height: 30px; padding: 0 11px; border-radius: 15px; border: 1.5px dashed var(--ink-5); font: 700 12px/27px "JetBrains Mono"; letter-spacing: .1em; color: var(--ink-4); }
+.capcap { position: absolute; left: 120px; top: 590px; font: 500 17px "JetBrains Mono"; color: var(--ink-4); white-space: nowrap; }
+.tagline { position: absolute; left: 120px; top: 690px; font-size: 76px; font-weight: 650; letter-spacing: -0.045em; white-space: nowrap; line-height: 1.05; }
+.tagline span { display: inline-block; }
+.tagline b { color: var(--accent); font-weight: 650; }
+.tagsub { position: absolute; left: 124px; top: 796px; font: 600 20px "JetBrains Mono"; color: var(--ink-3); white-space: nowrap; }
+.tagsub b { color: var(--ibm); font-weight: 700; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="30.9" data-width="1920" data-height="1080">
+  <div class="grid" id="grid"></div>
+
+  <!-- A · L1: the whole system on one LinuxONE server -->
+  <div class="scene" id="sA">
+    <div class="kick ibm" id="kA">Running live on IBM LinuxONE</div>
+    <div class="ttl" id="tA">One system. One mainframe-class server.</div>
+    <div id="stack"></div>
+    <div class="stackcap" id="capA">one LinuxONE guest · 3 vCPUs · 7.8 GB RAM · nothing runs on x86</div>
+    <div class="card" id="term">
+      <div class="hd"><i></i><i></i><i></i><span>phalanx@linuxone:~</span></div>
+      <div class="bd"><div><span class="p">$ </span><span id="c1"></span></div><div id="o1"><span class="v" id="v1">s390x</span></div><div id="p2"><span class="p">$ </span><span id="c2"></span></div><div id="o2">Byte Order:     <span class="v" id="v2">Big Endian</span></div><div id="o3">Machine type:   <span class="v" id="v3">9175</span></div><div id="l4"><span class="p">$ </span><span class="caret" id="caret"></span></div></div>
+    </div>
+    <div class="termcap" id="capT">measured on the server · 17 Oct 2026</div>
+    <svg id="lead" width="1920" height="1080"><path id="leadP" d="M1060 660 C 1012 660 1016 794 982 794" fill="none" stroke="#0F62FE" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/><circle id="leadD" cx="982" cy="794" r="5" fill="#0F62FE" opacity="0"/></svg>
+  </div>
+
+  <!-- B · L2: proven on LinuxONE -->
+  <div class="scene" id="sB">
+    <div class="kick ibm" id="kB">Measured on IBM LinuxONE</div>
+    <div class="ttl" id="tB">Rebuilt on big-endian s390x. Same answers.</div>
+    <div class="card stat" id="st1" style="left:120px"><div class="k">REPRODUCIBLE</div>
+      <svg class="ck" width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="19" fill="#EAF6EF"/><path id="ck1" d="M13 22.5 l6 6 l12 -13" fill="none" stroke="#1F8A4C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="big txt">Row for<br>row</div><div class="rl"><i></i></div><div class="s">the simulated fleet matches the reference data in every topic</div></div>
+    <div class="card stat" id="st2" style="left:546px"><div class="k">ONE SIMULATED DAY</div><div class="big"><span id="n2">0.0</span><small>s</small></div><div class="rl"><i></i></div><div class="s">all 8 aircraft, stepped forward by one day</div></div>
+    <div class="card stat" id="st3" style="left:972px"><div class="k">MEDIAN API RESPONSE</div><div class="big"><span id="n3">0.0</span><small>ms</small></div><div class="rl"><i></i></div><div class="s">measured on the server</div></div>
+    <div class="card stat" id="st4" style="left:1398px"><div class="k">AUTOMATED TESTS</div><div class="big"><span id="n4">0</span></div><div class="rl"><i></i></div><div class="s">pass on LinuxONE</div></div>
+    <div class="proofcap" id="capB"><b>64</b> aircraft-years of training history were built on the same LinuxONE guest</div>
+  </div>
+
+  <!-- C · L3: what IBM Z is built for -->
+  <div class="scene" id="sC">
+    <div class="kick ibm" id="kC">Built for IBM Z</div>
+    <div class="ttl" id="tC">Ready for what a defence fleet needs.</div>
+    <div id="caps"></div>
+    <div class="capcap" id="capC">IBM Z platform capabilities · on our roadmap, not yet used by the prototype</div>
+    <div class="tagline" id="tag"><span id="g1">Real-time AI</span> <span id="g2">for</span> <span id="g3">critical</span> <span id="g4"><b>decisions.</b></span></div>
+    <div class="tagsub" id="tsub">Phalanx Twin · live on <b>IBM LinuxONE</b></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const { $, count, type } = PHXF;
+  const tl = gsap.timeline({ paused: true });
+  const END = 30.9, B = 9.5, C = 18.2;
+  // narration word times (comp seconds) from edit/vo/L1–L3.tokens.json + timing_v2.json linuxone.shots
+  const WORDS = {"L1":[["All",0.359],["of",0.522],["this",0.596],["runs",0.784],["live",1.172],["on",1.396],["IBM",1.571],["Linux",2.159],["One",2.521],["the",3.334],["simulator",3.472],["models",4.296],["rules",4.997],["daily",5.572],["loop",5.959],["and",6.209],["audit",6.346],["log",6.659],["on",7.334],["one",7.546],["mainframe-class",7.809],["server",8.559]],"L2":[["Rebuilt",9.862],["there",10.262],["it",10.8],["reproduces",10.937],["every",11.6],["record",11.937],["row",12.674],["for",12.962],["row",13.124],["and",13.937],["simulates",14.099],["a",14.599],["day",14.662],["for",14.987],["all",15.15],["eight",15.412],["aircraft",15.612],["in",16.212],["three",16.374],["and",16.575],["a",16.674],["half",16.737],["seconds",16.987]],"L3":[["IBM",18.567],["Z",19.23],["is",19.604],["built",19.767],["for",20.042],["exactly",20.167],["this",20.717],["availability",21.53],["hardware-protected",22.629],["keys",23.579],["confidential",24.342],["computing",25.042],["and",25.655],["AI",25.842],["on",26.392],["the",26.529],["chip",26.63],["real-time",27.38],["AI",28.005],["for",28.542],["critical",28.667],["decisions",29.092]]};
+  const w = (s, word, n = 1) => { let k = 0; for (const [t, at] of WORDS[s]) if (t === word && ++k === n) return at; throw new Error(s + ':' + word); };
+  const rise = (el, at, o = {}) => tl.fromTo(el, { opacity: 0, y: o.dy ?? 18 }, { opacity: 1, y: 0, duration: o.d ?? .55, ease: 'power3.out', stagger: o.st || 0 }, at);
+  const leave = (el, at, o = {}) => tl.fromTo(el, { opacity: 1, y: 0 }, { opacity: 0, y: o.dy ?? -14, duration: o.d ?? .35, ease: 'power2.in', stagger: o.st || 0, immediateRender: false }, at);
+  const pulse = (el, at) => { tl.fromTo(el, { scale: 1 }, { scale: 1.04, duration: .16, ease: 'power2.out', immediateRender: false }, at);
+                              tl.fromTo(el, { scale: 1.04 }, { scale: 1, duration: .38, ease: 'power2.inOut', immediateRender: false }, at + .16); };
+
+  // grid drift: ends exactly where act4's grid is at S34 (x = -96·37.6334/57.3, y = -48·37.6334/57.3, mod 48)
+  tl.fromTo('#grid', { x: 32.95, y: 40.48 }, { x: -15.05, y: 16.48, duration: END, ease: 'none' }, 0);
+
+  /* ============ A · L1 ============ */
+  const LAYERS = [
+    { cls: 'plat', nm: 'IBM LinuxONE', dt: 's390x · big-endian · LinuxONE Community Cloud', at: w('L1', 'IBM') - .1 },
+    { cls: '', nm: 'Ubuntu 24.04 LTS', dt: 's390x', at: w('L1', 'Linux') - .05 },
+    { cls: '', nm: 'Python · Anaconda', dt: 'numpy · scipy · pandas · scikit-learn — s390x builds', at: w('L1', 'One') - .05 },
+    { cls: '', nm: 'Fleet simulator', dt: '8 aircraft worlds · stepped daily', at: w('L1', 'simulator') - .1 },
+    { cls: 'twin', nm: 'Phalanx Twin', chips: ['models', 'rules', 'daily loop', 'audit log'], at: w('L1', 'models') - .3 },
+    { cls: '', nm: 'Web app', dt: 'nginx → FastAPI · https://148.100.99.205', at: w('L1', 'log') + .25 }];
+  let y = 836; const LH = 84, LG = 12;
+  $('#stack').innerHTML = LAYERS.map((L, i) => {
+    const h = L.cls === 'twin' ? 108 : LH; y -= h; const top = y; y -= LG;
+    const right = L.chips ? `<div class="chips">${L.chips.map((c, j) => `<div class="chip" id="chip${j}"><i></i>${c}</div>`).join('')}</div>` : `<div class="dt">${L.dt}</div>`;
+    return `<div class="layer ${L.cls}" id="ly${i}" style="top:${top}px;height:${h}px"><div class="bar"></div><div class="ix">0${i + 1}</div><div class="nm">${L.nm}</div>${right}</div>`;
+  }).join('');
+  tl.fromTo('#sA', { opacity: 0 }, { opacity: 1, duration: .3 }, 0);
+  tl.fromTo('#sA', { scale: 1 }, { scale: 1.022, duration: B, ease: 'none' }, 0);
+  rise(['#kA', '#tA'], .2, { st: .08 });
+  LAYERS.forEach((L, i) => tl.fromTo('#ly' + i, { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, L.at));
+  pulse('#ly0', w('L1', 'Linux') + .05);
+  // the four parts of the twin light on their words
+  [['models'], ['rules'], ['daily'], ['audit']].forEach(([word], j) => {
+    tl.fromTo('#chip' + j, { opacity: 0, scale: .86 }, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(1.8)' }, w('L1', word) - .12);
+    tl.set('#chip' + j, { attr: { class: 'chip on' } }, w('L1', word) - .05);
+    tl.set('#chip' + j, { attr: { class: 'chip' } }, w('L1', word) + .9);
+  });
+  tl.set('#chip0,#chip1,#chip2,#chip3', { attr: { class: 'chip on' } }, w('L1', 'server'));
+  rise('#capA', w('L1', 'mainframe-class'), { dy: 10 });
+  // terminal: proof that this is the machine
+  tl.fromTo('#term', { opacity: 0, y: 40, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: .7, ease: 'power3.out' }, 1.0);
+  ['#o1', '#p2', '#o2', '#o3', '#l4'].forEach(s => tl.set(s, { opacity: 0 }, 0));
+  type(tl, '#c1', 'uname -m', 1.75, .4);
+  tl.set('#o1', { opacity: 1 }, 2.3);
+  tl.set('#p2', { opacity: 1 }, 2.6);
+  type(tl, '#c2', "lscpu | grep -E 'Byte Order|Machine type'", 2.75, 1.5);
+  tl.set('#o2', { opacity: 1 }, 4.45); tl.set('#o3', { opacity: 1 }, 4.6); tl.set('#l4', { opacity: 1 }, 4.85);
+  tl.fromTo('#caret', { opacity: 1 }, { opacity: 0, duration: .3, repeat: 11, yoyo: true, ease: 'steps(1)' }, 4.85);
+  ['#v1', '#v2', '#v3'].forEach((s, i) => tl.fromTo(s, { backgroundColor: 'rgba(238,244,255,0)' }, { backgroundColor: 'rgba(238,244,255,1)', duration: .35, ease: 'power2.out' }, w('L1', 'one', 1) + i * .18));
+  rise('#capT', 5.0, { dy: 8 });
+  // dashed lead: this terminal is the platform layer
+  { const p = $('#leadP'), L = p.getTotalLength(); p.style.strokeDasharray = `${L} ${L}`;
+    tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: .8, ease: 'power2.inOut' }, w('L1', 'mainframe-class') - .1);
+    tl.set(p, { strokeDasharray: '5 6', strokeDashoffset: 0 }, w('L1', 'mainframe-class') + .72);
+    tl.fromTo('#leadD', { opacity: 0, scale: 0, transformOrigin: 'center' }, { opacity: 1, scale: 1, duration: .35, ease: 'back.out(3)' }, w('L1', 'mainframe-class') + .6); }
+  pulse('#ly0', w('L1', 'server') + .05);
+  // exit
+  tl.to('#sA', { opacity: 0, duration: .4, ease: 'power2.in' }, B - .28);
+
+  /* ============ B · L2 ============ */
+  tl.fromTo('#sB', { opacity: 0 }, { opacity: 1, duration: .25 }, B - .05);
+  tl.fromTo('#sB', { scale: 1 }, { scale: 1.02, duration: C + 2.6 - B, ease: 'none' }, B);
+  rise(['#kB', '#tB'], B + .05, { st: .08 });
+  const stIn = (id, at) => tl.fromTo(id, { opacity: 0, y: 70, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .7, ease: 'power3.out' }, at);
+  const rule = (id, at) => tl.fromTo(id + ' .rl i', { scaleX: 0 }, { scaleX: 1, duration: .6, ease: 'power3.out' }, at);
+  stIn('#st1', w('L2', 'reproduces') - .2);
+  { const p = $('#ck1'), L = p.getTotalLength(); p.style.strokeDasharray = `${L} ${L}`;
+    tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: .45, ease: 'power2.out' }, w('L2', 'row', 1)); }
+  rule('#st1', w('L2', 'row', 1)); pulse('#st1', w('L2', 'row', 2));
+  stIn('#st2', w('L2', 'simulates') - .15);
+  count(tl, '#n2', 0, 3.5, w('L2', 'three') - .55, 1.05, v => v.toFixed(1), 'power3.out');
+  rule('#st2', w('L2', 'seconds')); pulse('#st2', w('L2', 'seconds'));
+  stIn('#st3', w('L2', 'seconds') + .55);
+  count(tl, '#n3', 0, .6, w('L2', 'seconds') + .7, .8, v => v.toFixed(1), 'power3.out'); rule('#st3', w('L2', 'seconds') + 1.0);
+  stIn('#st4', w('L2', 'seconds') + .85);
+  count(tl, '#n4', 0, 74, w('L2', 'seconds') + 1.0, .9, v => Math.round(v).toString(), 'power3.out'); rule('#st4', w('L2', 'seconds') + 1.3);
+  rise('#capB', w('L2', 'seconds') + 1.5, { dy: 10 });
+  // exit on "exactly this"
+  tl.to('#sB', { opacity: 0, duration: .4, ease: 'power2.in' }, w('L3', 'this') - .1);
+
+  /* ============ C · L3 ============ */
+  const ICON = {
+    up: '<path d="M4 26h8l4-12 6 22 6-16 4 6h8" fill="none"/><circle cx="21" cy="21" r="18.5" fill="none" stroke-dasharray="2 4"/>',
+    key: '<circle cx="14" cy="21" r="7.5" fill="none"/><path d="M21.5 21H38M32 21v6M36.5 21v4.5" fill="none"/>',
+    shield: '<path d="M21 4l14 5v11c0 9-6.2 15.4-14 18-7.8-2.6-14-9-14-18V9z" fill="none"/><rect x="15" y="19" width="12" height="9" rx="2" fill="none"/><path d="M17.5 19v-3a3.5 3.5 0 0 1 7 0v3" fill="none"/>',
+    chip: '<rect x="11" y="11" width="20" height="20" rx="3" fill="none"/><path d="M16 6v5M21 6v5M26 6v5M16 31v5M21 31v5M26 31v5M6 16h5M6 21h5M6 26h5M31 16h5M31 21h5M31 26h5" fill="none"/><path d="M17 24.5l2.6-7h1.4l2.6 7M17.9 22h4.4" fill="none" stroke-width="1.6"/>' };
+  const CAPS = [
+    { ic: 'up', nm: 'Availability', s: 'designed for continuous\noperation', at: w('L3', 'availability') - .15 },
+    { ic: 'key', nm: 'Hardware-protected keys', s: 'CPACF on every core\nCrypto Express HSMs', at: w('L3', 'hardware-protected') - .15 },
+    { ic: 'shield', nm: 'Confidential computing', s: 'IBM Secure Execution\nfor Linux', at: w('L3', 'confidential') - .15 },
+    { ic: 'chip', nm: 'AI on the chip', s: 'Telum on-chip\nAI accelerator', at: w('L3', 'AI', 1) - .15 }];
+  $('#caps').innerHTML = CAPS.map((c, i) => `<div class="card cap" id="cp${i}" style="left:${120 + i * 426}px"><div class="tag">READY FOR</div>
+    <svg class="ic" width="44" height="44" viewBox="0 0 42 42" stroke="#0B0D10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[c.ic]}</svg>
+    <div class="nm">${c.nm}</div><div class="s">${c.s.replace('\n', '<br>')}</div></div>`).join('');
+  tl.fromTo('#sC', { opacity: 0 }, { opacity: 1, duration: .25 }, w('L3', 'this') + .2);
+  tl.fromTo('#sC', { scale: 1 }, { scale: 1.02, duration: END - w('L3', 'this'), ease: 'none' }, w('L3', 'this') + .2);
+  rise(['#kC', '#tC'], w('L3', 'this') + .25, { st: .08 });
+  CAPS.forEach((c, i) => {
+    tl.fromTo('#cp' + i, { opacity: 0, y: 60, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .65, ease: 'power3.out' }, c.at);
+    tl.fromTo('#cp' + i, { borderColor: '#E6E6E2' }, { borderColor: '#E8743B', duration: .25, ease: 'power2.out', immediateRender: false }, c.at + .2);
+    tl.fromTo('#cp' + i, { borderColor: '#E8743B' }, { borderColor: '#E6E6E2', duration: .6, ease: 'power2.inOut', immediateRender: false }, c.at + 1.1);
+  });
+  rise('#capC', w('L3', 'chip') + .2, { dy: 8 });
+  // the line itself, word by word
+  [['#g1', 'real-time'], ['#g2', 'for'], ['#g3', 'critical'], ['#g4', 'decisions']].forEach(([id, word]) =>
+    tl.fromTo(id, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, w('L3', word, word === 'for' ? 2 : 1) - .12));
+  tl.fromTo('#caps .cap', { opacity: 1 }, { opacity: .55, duration: .5, ease: 'power2.inOut', immediateRender: false }, w('L3', 'real-time') - .2);
+  rise('#tsub', w('L3', 'decisions') + .2, { dy: 10 });
+  // out to white for the cut into S34
+  tl.to('#sC', { opacity: 0, duration: .4, ease: 'power2.in' }, END - .48);
+  tl.to({}, { duration: .01 }, END - .01);
+  window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+})();
+</script>
+</body></html>

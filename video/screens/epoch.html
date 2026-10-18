@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>08:00 orders — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: 92px minmax(0, 1fr); }
+  .epoch2 { flex-direction: row; align-items: center; padding: 0 32px; gap: 32px; }
+  .epoch2 .steps { flex: 1; }
+  .ords .r2 { grid-template-columns: 76px minmax(0, 1fr) 120px 170px; min-height: 78px; }
+  .ords .ttl { font: 650 14.5px var(--mono); letter-spacing: -0.01em; }
+  .ords .st { justify-self: end; }
+  .ords .auth { justify-self: start; }
+  .gate .kv2 { margin-top: 22px; }
+  .gate .kv2 > span:nth-child(even) { color: var(--ok); }
+  .s-sub { display: none; } body.submitted .s-sub { display: inline-flex; } body.submitted .s-pre { display: none; }
+  .lel .r { display: grid; grid-template-columns: 1fr auto; padding: 11px 0; border-top: 1px solid var(--line-2); font-size: 14px; }
+  .lel .r:first-child { border-top: 0; }
+  .lel .h { font: 500 12.5px var(--mono); color: var(--wire); }
+  body:not(.submitted) .lel-card { display: none; } body.submitted .gate { display: none; }
+  .sheet .kv2 { margin: 22px 0 26px; font-size: 14.5px; }
+  .sheet .kv2 > span:nth-child(even) { font-weight: 600; }
+  .sheet .btns { display: flex; gap: 10px; }
+  .sheet .btns .btn { height: 48px; padding: 0 22px; font-size: 15px; border-radius: 12px; }
+  .key { width: 46px; height: 46px; border-radius: 14px; background: var(--accent-wash); color: var(--accent-ink); display: grid; place-items: center; }
+  body:not(.sign) .frost { display: none; }
+</style>
+</head>
+<body data-page="decisions">
+<div id="content">
+<div class="v2">
+  <div class="panel2 c12 epoch2" data-shot="epoch">
+    <span class="kick">Epoch · Mon 22 Jun</span>
+    <div class="steps">
+      <div class="st done"><i></i><span class="t">06:00</span><span>Snapshot sealed</span></div><div class="bar done"></div>
+      <div class="st done"><i></i><span class="t">07:45</span><span>Board frozen</span></div><div class="bar done"></div>
+      <div class="st s-pre now"><i></i><span class="t">07:52</span><span>Signatures</span></div><div class="st s-sub done"><i></i><span class="t">07:57</span><span>Signed</span></div><div class="bar" id="b3"></div>
+      <div class="st s-pre"><i></i><span class="t">08:00</span><span>Orders issued</span></div><div class="st s-sub now"><i></i><span class="t">08:00</span><span>Orders issued</span></div>
+    </div>
+  </div>
+
+  <div class="panel2 c8 ords" data-shot="orders">
+    <div class="row"><div><span class="kick">Orders for 08:00</span><div class="t2 s-pre">Six orders, one waiting for a signature</div><div class="t2 s-sub">Six orders issued and accepted</div></div><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="rows2" style="margin-top:16px" id="ordrows"></div>
+    <div class="note" style="margin-top:14px">Tyre requisition for TJ105 was dropped by the fork gate — no change in 30 paired simulations.</div>
+  </div>
+
+  <div class="panel2 c4 gate" data-shot="gateway">
+    <span class="kick">Gateway check</span>
+    <div class="t2">Every order passes before it is sent</div>
+    <div class="big" style="margin-top:22px">6<small>of 6 pass</small></div>
+    <div class="kv2"><span>Schema</span><span>✓</span><span>Issued at session time 08:00</span><span>✓</span><span>Authority (AGENT / HUMAN)</span><span>✓</span><span>Evidence ingested before issue</span><span>✓</span></div>
+    <div class="note push">Re-running the epoch gives the same order ids, so a retry can never issue twice.</div>
+  </div>
+  <div class="panel2 c4 lel-card" data-shot="log">
+    <span class="kick">Event log</span>
+    <div class="t2">Written to the one log</div>
+    <div class="lel" style="margin-top:16px">
+      <div class="r"><span>Board frozen</span><span class="h">b73e0c5c…</span></div>
+      <div class="r"><span>Signed · CHANGE_MONITORING_CONFIG</span><span class="h">6b4e2e71…</span></div>
+      <div class="r"><span>Orders submitted · 6</span><span class="h">99aabcd8…</span></div>
+      <div class="r"><span>Gateway ACCEPTED · 6</span><span class="h">e2d1e49d…</span></div>
+      <div class="r"><span>Status QUEUED · 6</span><span class="h">649543eb…</span></div>
+      <div class="r"><span>Chain head</span><span class="h">afd2fdab…</span></div>
+    </div>
+    <div class="lnk push">Why was each order issued? <i data-i="arrowRight"></i></div>
+  </div>
+</div>
+</div>
+<div id="overlay-src">
+<div class="frost"><div class="sheet" data-shot="sign">
+  <div class="row gap16"><span class="key"><i data-i="signature" class="ico"></i></span><div><span class="kick acc">Signature required · human-only action</span><div class="t2" style="margin-top:6px">Filter HYD-101 on TJ107</div></div></div>
+  <div class="sub2" style="margin-top:16px">The code is masked while the indication path is troubleshot. It is still evaluated, only not recorded.</div>
+  <div class="kv2"><span>Order</span><span class="mono" style="font-size:13px">CHANGE_MONITORING_CONFIG</span><span>Evidence</span><span>63 records · all before 06:00</span><span>Next 30 days, paired simulations</span><span>+21.7 pts mission capable</span><span>In-flight failures</span><span style="color:var(--ink-3)">+0.07 · not significant</span></div>
+  <div class="btns"><button class="btn primary"><i data-i="signature" class="ico-sm"></i>Sign with station key</button><button class="btn">Not now</button></div>
+</div></div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  const st = new URLSearchParams(location.search).get('state'); if (st) document.body.classList.add(st);
+  const sub = st === 'submitted';
+  const O = [
+    ['TROUBLESHOOT', 'Gear unsafe · LGB-501', 'TJ103', 'agent'], ['TROUBLESHOOT', 'Gear unsafe · LGB-501', 'TJ106', 'agent'],
+    ['TROUBLESHOOT', 'Hydraulic alarm · HYD-101', 'TJ107', 'agent'], ['CHANGE_MONITORING_CONFIG', 'Filter HYD-101', 'TJ107', 'human'],
+    ['EXPEDITE_SPARES', 'Brake chute · D-sulur-26093-0002', 'TJ108', 'agent'], ['TROUBLESHOOT', 'Starter · SPS-501', 'TJ105', 'agent']];
+  document.getElementById('ordrows').innerHTML = O.map((o, i) => {
+    const status = sub ? `<span class="pill fmc st">ACCEPTED</span>`
+      : o[3] === 'human' ? `<span class="pill nmcm st">NEEDS SIGNATURE</span>` : `<span class="pill grey st">READY</span>`;
+    const auth = o[3] === 'human' ? `<span class="auth human"><i data-i="signature" class="ico-sm"></i>${sub ? 'SIGNED' : 'HUMAN'}</span>` : `<span class="auth agent">AGENT</span>`;
+    return `<div class="r2"><span class="tailtag">${o[2]}</span><div><div class="ttl">${o[0]}</div><div class="why">${o[1]}</div></div>${auth}${status}</div>`;
+  }).join('');
+  if (sub) document.getElementById('b3').classList.add('done');
+  const ov = document.getElementById('overlay-src').innerHTML; document.getElementById('overlay-src').remove();
+  PHX.mount({ page: 'decisions', title: 'Orders · 08:00', sub: 'The frozen board becomes typed, evidence-cited orders',
+    chips: [{ i: 'clock', t: sub ? 'Session <b>08:00:00</b>' : 'Session <b>07:52</b>' }, sub ? { k: 'ok', i: 'check', t: 'Issued' } : { k: 'warn', i: 'signature', t: '1 signature needed' }],
+    overlay: ov });
+</script>
+</body></html>

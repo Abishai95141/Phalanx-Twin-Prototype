@@ -1,0 +1,65 @@
+{
+  "what": "modules whose state differs between the belief fork and the ensemble fork of the same member at the epoch (the posterior's footprint); module names only",
+  "result": {
+    "TJ107": [
+      {
+        "member": 0,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      },
+      {
+        "member": 1,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      },
+      {
+        "member": 2,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      }
+    ],
+    "TJ108": [
+      {
+        "member": 0,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      },
+      {
+        "member": 1,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      },
+      {
+        "member": 2,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      }
+    ],
+    "TJ105": [
+      {
+        "member": 0,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      },
+      {
+        "member": 1,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      },
+      {
+        "member": 2,
+        "modules_whose_state_differs": [
+          "m10"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Why — TJ107 — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: auto auto; height: auto; }
+  .tabs-row { grid-column: 1 / -1; margin-top: -6px; }
+  .ev .r2 { grid-template-columns: 150px minmax(0, 1fr) 210px 28px; min-height: 66px; }
+  .ev .d { font-size: 15px; font-weight: 650; }
+  .ev .d small { display: block; font-size: 13px; color: var(--ink-4); font-weight: 500; margin-top: 2px; }
+  .ev .ing { font: 500 13px var(--mono); color: var(--ink-3); text-align: right; }
+  .ev .ok { color: var(--ok); width: 20px; height: 20px; }
+  .rule { display: flex; flex-direction: column; gap: 0; margin-top: 22px; position: relative; }
+  .rule::before { content: ""; position: absolute; left: 15px; top: 18px; bottom: 40px; width: 1.5px; background: var(--line); }
+  .rs { display: grid; grid-template-columns: 32px 1fr; gap: 16px; padding-bottom: 26px; position: relative; }
+  .rs .dot { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 1.5px solid var(--line-strong); z-index: 1; font: 700 12px var(--mono); color: var(--ink-3); }
+  .rs.hit .dot { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .rs .h { font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+  .rs .p { font-size: 14px; color: var(--ink-3); margin-top: 4px; line-height: 1.5; }
+  .rs .in { display: inline-block; margin-top: 8px; font: 600 12.5px var(--mono); color: var(--accent-ink); background: var(--accent-wash); padding: 3px 8px; border-radius: 6px; }
+  .wn .r2 { grid-template-columns: 240px minmax(0, 1fr) 190px; min-height: 86px; }
+  .wn .alt { font: 650 14px var(--mono); }
+  .wn .verdict { justify-self: end; }
+  .tab-whynot { display: none; } body.whynot .tab-why { display: none; } body.whynot .tab-whynot { display: flex; }
+</style>
+</head>
+<body data-page="decisions">
+<div id="content">
+<div class="v2">
+  <div class="tabs-row"><div class="tabs2"><span>Recommendation</span><span id="t-why" class="on">Why</span><span id="t-whynot">Why not</span><span>What if</span><span>Workbench</span></div></div>
+
+  <!-- WHY: evidence -->
+  <div class="panel2 c7 ev tab-why" data-shot="evidence">
+    <div class="row"><span class="kick">Evidence</span><div class="grow"></div><span class="tier diag">DIAG</span></div>
+    <div class="t2">Every record was known before the 06:00 snapshot</div>
+    <div class="sub2">The six latest HYD-101 reports on TJ107 — 63 are cited in total.</div>
+    <div class="rows2" style="margin-top:16px" id="evrows"></div>
+    <div class="lnk" style="margin-top:22px">Open provenance <i data-i="arrowRight"></i></div>
+  </div>
+  <!-- WHY: rule -->
+  <div class="panel2 c5 tab-why" data-shot="rule">
+    <div class="row"><span class="kick">Rule</span><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="t2">Which rule fired, step by step</div>
+    <div class="rule">
+      <div class="rs"><span class="dot">1</span><div><div class="h">Safety gates — none tripped</div><div class="p">No warning-level code, no grounding defect, no limit due. The issue is scored, not grounded.</div></div></div>
+      <div class="rs hit"><span class="dot">2</span><div><div class="h">Policy P-DEC-01 · row r3</div><div class="p">A code that keeps returning without a confirmed fix for three or more flights is troubleshot.</div><span class="in">34 consecutive flights</span></div></div>
+      <div class="rs hit"><span class="dot">3</span><div><div class="h">Triage rule D8 · standing alarm</div><div class="p">Five or more flights with two or more no-fault outcomes goes to a human nuisance review.</div><span class="in">33 no-fault outcomes on TJ107</span></div></div>
+    </div>
+    <div class="note" style="margin-top:6px">P-DEC-01 / 1.4.0 · with 2 flights instead of 34, the same rule would only monitor.</div>
+  </div>
+
+  <!-- WHY NOT -->
+  <div class="panel2 c8 wn tab-whynot" data-shot="whynot">
+    <span class="kick">Why not</span>
+    <div class="t2">Why the other options lose</div>
+    <div class="rows2" style="margin-top:14px">
+      <div class="r2"><span class="alt">REMOVE_REPLACE pump</span><div class="why" style="font-size:14.5px;color:var(--ink-2)">98.5 % chance the shop finds nothing. Twenty-eight removals have not changed the symptom.</div><span class="pill grey verdict">Blocked by evidence</span></div>
+      <div class="r2"><span class="alt">GROUND aircraft</span><div class="why" style="font-size:14.5px;color:var(--ink-2)">No warning-level code, and the aircraft is mission capable.</div><span class="pill grey verdict">Not justified</span></div>
+      <div class="r2"><span class="alt">DEFER again</span><div class="why" style="font-size:14.5px;color:var(--ink-2)">The alarm is standing. Deferring repeats the last 34 flights.</div><span class="pill grey verdict">Repeats the loop</span></div>
+      <div class="r2"><span class="alt">Filter the code only</span><div class="why" style="font-size:14.5px;color:var(--ink-2)">Hides the alarm without checking the indication path first.</div><span class="pill grey verdict">Needs a test first</span></div>
+    </div>
+  </div>
+  <div class="panel2 c4 soft tab-whynot" data-shot="donothing">
+    <span class="kick">If you do nothing</span>
+    <div class="t2">TJ107 over the next 30 days</div>
+    <div class="big" style="margin-top:26px">63<small>% mission capable</small></div>
+    <div class="ci" style="margin-top:8px">status quo · 30 paired simulations</div>
+    <div class="sep2"></div>
+    <div class="big" style="color:var(--fmc)">85<small>% with the plan</small></div>
+    <div class="ci" style="margin-top:8px">same futures, plan applied at 08:00</div>
+    <div class="note" style="margin-top:28px">The next HYD-101 report would open job number 65 for the same alarm.</div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  const EV = [
+    ['11 Jun', '12:08 sortie', '849f5403e7e0', '11 Jun 13:25'], ['11 Jun', '20:15 sortie', '661fc9d5c15a', '11 Jun 21:20'],
+    ['15 Jun', '12:09 sortie', '3ca4c8db6267', '15 Jun 13:45'], ['15 Jun', '20:14 sortie', 'b8b089f9b054', '15 Jun 21:54'],
+    ['18 Jun', '12:12 sortie', '2b73925cc495', '18 Jun 13:31'], ['18 Jun', '20:08 sortie', 'fcf0b9496273', '18 Jun 21:08']];
+  document.getElementById('evrows').innerHTML = EV.map(e => `<div class="r2"><div class="d">${e[0]}<small>${e[1]}</small></div><span><span class="rid">${e[2]}…</span></span><span class="ing">ingested ${e[3]}</span><i data-i="check" class="ok"></i></div>`).join('');
+  if (new URLSearchParams(location.search).get('tab') === 'whynot') { document.body.classList.add('whynot'); document.getElementById('t-why').classList.remove('on'); document.getElementById('t-whynot').classList.add('on'); }
+  PHX.mount({ page: 'decisions', title: 'TJ107 · hydraulic alarm HYD-101', sub: 'Why the system recommends this — and why not the alternatives',
+    chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'warn', i: 'decisions', t: 'Board closes 07:45' }] });
+</script>
+</body></html>

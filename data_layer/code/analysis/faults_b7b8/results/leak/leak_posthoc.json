@@ -1,0 +1,201 @@
+{
+ "g0_structural": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.5,
+    "ci95": [
+     0.5,
+     0.5
+    ]
+   },
+   "lr": {
+    "auc": 0.5,
+    "ci95": [
+     0.5,
+     0.5
+    ]
+   }
+  },
+  "n_rows": {
+   "real": 166,
+   "synthetic": 166
+  },
+  "passed": true,
+  "top": []
+ },
+ "g0_structural_identical_pairs": 166,
+ "texture_abrupt": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.5976163903061225,
+    "ci95": [
+     0.5227150430484694,
+     0.6707599250637756
+    ]
+   },
+   "lr": {
+    "auc": 0.6030373086734695,
+    "ci95": [
+     0.5287199059311225,
+     0.6744708625637754
+    ]
+   }
+  },
+  "modes": [
+   "FM.AD.HEATER_FAIL",
+   "FM.AD.MOISTURE_COMMON_MODE",
+   "FM.AD.PROBE_MISALIGN",
+   "FM.AD.VANE_CAL_BIAS",
+   "FM.AV.INTERMITTENT_CONNECTOR",
+   "FM.AV.LRU_FAILURE",
+   "FM.CTRL.THROTTLE_BINDING",
+   "FM.ELEC.BACKUP_FAIL",
+   "FM.ELEC.GEN_DIODE",
+   "FM.ELEC.PARTIAL_POWER_LOSS",
+   "FM.ENG.AB_BLOWOUT",
+   "FM.ENG.AB_NO_LIGHT",
+   "FM.ENG.BEARING_FAILURE",
+   "FM.ENG.BLADE_LOSS",
+   "FM.ENG.BLEED_LEAK",
+   "FM.ENG.BLEED_MISSCHEDULE",
+   "FM.ENG.FLAMEOUT",
+   "FM.ENG.FOD_BIRD",
+   "FM.ENG.FUEL_SCHEDULE_BIAS",
+   "FM.ENG.HOT_START",
+   "FM.ENG.HPC_DAMAGE",
+   "FM.ENG.HUNG_START",
+   "FM.ENG.LINER_BURN",
+   "FM.ENG.LUBE_COOLING_LOSS",
+   "FM.ENG.MEC_MISASSEMBLY",
+   "FM.ENG.MISSING_AIR_SEAL",
+   "FM.ENG.NOZZLE_LIMIT_CYCLE",
+   "FM.ENG.OIL_LOSS",
+   "FM.ENG.OIL_STARVATION",
+   "FM.ENG.POP_STALL",
+   "FM.ENG.QUICKFILL_STALL",
+   "FM.ENG.SHUTOFF_PARTIAL",
+   "FM.ENG.VG_MISSCHEDULE",
+   "FM.FCS.ACTUATOR_JAM",
+   "FM.FCS.CHANNEL_DROPOUT",
+   "FM.FCS.POOR_LUBE",
+   "FM.FCS.SERVO_COIL",
+   "FM.FIRE.LOOP_OPEN",
+   "FM.FIRE.LOOP_SHORT",
+   "FM.FUEL.GAUGING_ARTEFACT",
+   "FM.FUEL.PROBE_CONTAMINATION",
+   "FM.HYD.ACCUM_GAS_LOSS",
+   "FM.HYD.FITTING_FATIGUE",
+   "FM.HYD.FOHE_CRACK",
+   "FM.HYD.ISA_CHECK_VALVE",
+   "FM.HYD.PUMP_FAILURE",
+   "FM.HYD.WATER_CONTAMINATION",
+   "FM.LG.BRAKE_SW_CONFIG",
+   "FM.LG.DOWNLOCK_FORCE",
+   "FM.SNS.GENERIC",
+   "FM.SNS.OIL_P_TRANSMITTER",
+   "FM.SNS.PRESSURE_HIGH",
+   "FM.SNS.PS3_VENTED",
+   "FM.SNS.T5_HARNESS_BIAS",
+   "FM.SPS.AMAGB_GEAR_CRACK",
+   "FM.SPS.JFS_COLD_START_FAIL"
+  ],
+  "n_rows": {
+   "faulty": 112,
+   "groups": 112,
+   "healthy": 112
+  },
+  "passed": false,
+  "top": [
+   [
+    "ENG.N1.A_mad_step_lsb",
+    0.435
+   ],
+   [
+    "ENG.N1.B_mad_step_lsb",
+    0.435
+   ],
+   [
+    "ENG.N2.A_at_min",
+    0.437
+   ],
+   [
+    "ENG.PS3.B_kurt_step",
+    0.563
+   ],
+   [
+    "ENG.PS3.A_kurt_step",
+    0.562
+   ]
+  ]
+ },
+ "texture_degradation": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.5588842975206613,
+    "ci95": [
+     0.4380165289256198,
+     0.680029700413223
+    ]
+   },
+   "lr": {
+    "auc": 0.5774793388429752,
+    "ci95": [
+     0.4573411673553719,
+     0.6962939049586776
+    ]
+   }
+  },
+  "modes": [
+   "FM.AD.VANE_FRICTION",
+   "FM.ECS.HX_FOULING",
+   "FM.ELEC.BATTERY_FADE",
+   "FM.ELEC.GEN_REGULATION",
+   "FM.ENG.BEARING_SPALL",
+   "FM.ENG.EROSION",
+   "FM.ENG.FOULING",
+   "FM.ENG.HPT_DETERIORATION",
+   "FM.ENG.LIFE_USAGE",
+   "FM.ENG.NOZZLE_FLAP_CRACK",
+   "FM.ENG.OIL_CONDITION",
+   "FM.ENG.RUB_IN",
+   "FM.ENG.SEAL_WEAR",
+   "FM.FCS.ACTUATOR_WEAR",
+   "FM.HYD.CONTAMINATION_TREND",
+   "FM.HYD.PUMP_WEAR",
+   "FM.LG.BRAKE_WEAR",
+   "FM.LG.LOCK_SPRING",
+   "FM.LG.STRUT_LOSS",
+   "FM.LG.TYRE_WEAR",
+   "FM.STR.FATIGUE",
+   "FM.UTIL.GENERIC_WEAR"
+  ],
+  "n_rows": {
+   "faulty": 44,
+   "groups": 44,
+   "healthy": 44
+  },
+  "passed": true,
+  "top": [
+   [
+    "ENG.PS3.V_zero_step",
+    0.594
+   ],
+   [
+    "ENG.N2.V_mad_step_lsb",
+    0.409
+   ],
+   [
+    "ENG.PS3.A_kurt_step",
+    0.589
+   ],
+   [
+    "ENG.PS3.V_kurt_step",
+    0.587
+   ],
+   [
+    "ENG.PS3.B_kurt_step",
+    0.586
+   ]
+  ]
+ }
+}

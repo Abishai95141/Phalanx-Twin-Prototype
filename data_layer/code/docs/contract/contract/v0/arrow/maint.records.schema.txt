@@ -1,0 +1,311 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+record_type: string not null
+  -- field metadata --
+  phalanx.description: 'Record type.'
+  phalanx.basis: 'ARCH §10'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'MaintRecordType'
+  phalanx.enum_symbols: '["SORTIE","TECH_LOG","DEFECT_WO","COMPONENT_LIFE","INSPECTION","SUPPLY_DEMAND","CANNIBALISATION","MODIFICATION","EXCEEDANCE_INSPECTION","SHOP_FINDING","AVAILABILITY_STATE"]'
+record_key: string not null
+  -- field metadata --
+  phalanx.description: 'Natural identity of the record across its versions (job number, demand number, or a synthetic key for logs and bins).'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-13'
+  phalanx.restricted: 'false'
+record_version: uint32 not null
+  -- field metadata --
+  phalanx.description: 'Version of the record; a new version is emitted at every status change.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-13'
+  phalanx.restricted: 'false'
+status: string
+  -- field metadata --
+  phalanx.description: 'Lifecycle state of this version; null for records without a lifecycle (e.g. availability bins).'
+  phalanx.basis: 'TRANSFER: NAMP job status; ASSUMPTION: A-W0.4-13'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'MaintStatus'
+  phalanx.enum_symbols: '["OPEN","IN_WORK","AWAITING_PARTS","AWAITING_MAINTENANCE","DEFERRED","CLOSED"]'
+tail_no: string
+  -- field metadata --
+  phalanx.description: 'Aircraft tail; null for base-level records (e.g. stock).'
+  phalanx.basis: 'ARCH §10 (linkage)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+base: string
+  -- field metadata --
+  phalanx.description: 'Base or maintenance organisation.'
+  phalanx.basis: 'ARCH §10; ASSUMPTION: A-W0.4-13'
+  phalanx.restricted: 'false'
+sortie_id: string
+  -- field metadata --
+  phalanx.description: 'Sortie the record refers to (sortie records, write-ups).'
+  phalanx.basis: 'ARCH §10 (linkage)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+job_no: string
+  -- field metadata --
+  phalanx.description: 'Job ('snag') number.'
+  phalanx.basis: 'ARCH §10 (linkage: job number)'
+  phalanx.restricted: 'false'
+linked_job_no: string
+  -- field metadata --
+  phalanx.description: 'Linked job number (cannibalisation donor/recipient, troubleshooting parent).'
+  phalanx.basis: 'ARCH §10 (cannibalisation: two linked jobs)'
+  phalanx.restricted: 'false'
+demand_no: string
+  -- field metadata --
+  phalanx.description: 'Supply demand number.'
+  phalanx.basis: 'ARCH §10 (linkage: demand number)'
+  phalanx.restricted: 'false'
+engine_serial: string
+  -- field metadata --
+  phalanx.description: 'Engine serial.'
+  phalanx.basis: 'ARCH §10 (linkage)'
+  phalanx.restricted: 'false'
+part_no: string
+  -- field metadata --
+  phalanx.description: 'Part number of the item concerned.'
+  phalanx.basis: 'ARCH §5.3 (component triplet)'
+  phalanx.restricted: 'false'
+serial_no: string
+  -- field metadata --
+  phalanx.description: 'Serial number of the item concerned (may be a defective default such as 'XXX', ARCH §10).'
+  phalanx.basis: 'ARCH §5.3 (component triplet)'
+  phalanx.restricted: 'false'
+maker: string
+  -- field metadata --
+  phalanx.description: 'Maker of the item concerned.'
+  phalanx.basis: 'ARCH §5.3 (component triplet)'
+  phalanx.restricted: 'false'
+sw_config_id: string
+  -- field metadata --
+  phalanx.description: 'Software configuration identifier (modification / software load records).'
+  phalanx.basis: 'ARCH §10 (linkage)'
+  phalanx.restricted: 'false'
+order_id: string
+  -- field metadata --
+  phalanx.description: 'Order that caused the record, if any.'
+  phalanx.basis: 'ARCH §11.1 (every executed order produces normal records)'
+  phalanx.restricted: 'false'
+evidence_record_ids: list<element: fixed_size_binary[16] not null> not null
+  child 0, element: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Telemetry or event record_ids that triggered or support the record; empty if none.'
+  phalanx.basis: 'ARCH §10 (linkage: telemetry record_id)'
+  phalanx.restricted: 'false'
+when_discovered: string
+  -- field metadata --
+  phalanx.description: 'When-discovered code (synthetic Phalanx table).'
+  phalanx.basis: 'TRANSFER: NAMP/TO 00-20 When-Discovered; ARCH AD-19 (synthetic codes)'
+  phalanx.restricted: 'false'
+system_code: string
+  -- field metadata --
+  phalanx.description: 'System / work-unit code (synthetic Phalanx table).'
+  phalanx.basis: 'TRANSFER: WUC; ARCH AD-19 (synthetic codes)'
+  phalanx.restricted: 'false'
+malfunction_code: string
+  -- field metadata --
+  phalanx.description: 'How-malfunctioned code (synthetic Phalanx table).'
+  phalanx.basis: 'TRANSFER: NAMP MAL / USAF HMC; ARCH AD-19 (synthetic codes)'
+  phalanx.restricted: 'false'
+action_taken_code: string
+  -- field metadata --
+  phalanx.description: 'Action-taken code (synthetic Phalanx table).'
+  phalanx.basis: 'TRANSFER: NAMP/USAF Action Taken; ARCH AD-19 (synthetic codes)'
+  phalanx.restricted: 'false'
+type_maint_code: string
+  -- field metadata --
+  phalanx.description: 'Type-of-maintenance code (synthetic Phalanx table).'
+  phalanx.basis: 'TRANSFER: NAMP Type Maintenance; ARCH AD-19 (synthetic codes)'
+  phalanx.restricted: 'false'
+discrepancy_text: string
+  -- field metadata --
+  phalanx.description: 'Discrepancy narrative (free text, may carry injected noise).'
+  phalanx.basis: 'ARCH §10 (free text)'
+  phalanx.restricted: 'false'
+corrective_action_text: string
+  -- field metadata --
+  phalanx.description: 'Corrective-action narrative.'
+  phalanx.basis: 'ARCH §10 (free text)'
+  phalanx.restricted: 'false'
+limitations_text: string
+  -- field metadata --
+  phalanx.description: 'Limitations or deferral conditions (technical log).'
+  phalanx.basis: 'ARCH §10 (technical log: limitations, deferred defects)'
+  phalanx.restricted: 'false'
+corrected_by: string
+  -- field metadata --
+  phalanx.description: 'Pseudonymous identifier of the technician who did the work.'
+  phalanx.basis: 'ARCH §10 (signatures)'
+  phalanx.restricted: 'false'
+inspected_by: string
+  -- field metadata --
+  phalanx.description: 'Pseudonymous identifier of the inspector.'
+  phalanx.basis: 'ARCH §10 (signatures)'
+  phalanx.restricted: 'false'
+man_hours: double
+  -- field metadata --
+  phalanx.description: 'Man-hours booked.'
+  phalanx.basis: 'TRANSFER: NAMP MAN HRS'
+  phalanx.restricted: 'false'
+  phalanx.units: 'h'
+  phalanx.minimum: '0.0'
+priority: string
+  -- field metadata --
+  phalanx.description: 'Supply demand priority.'
+  phalanx.basis: 'ARCH §10 (demand priority AOG/MCM/PHU)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'SupplyPriority'
+  phalanx.enum_symbols: '["AOG","MCM","PHU"]'
+quantity: uint32
+  -- field metadata --
+  phalanx.description: 'Quantity demanded or issued.'
+  phalanx.basis: 'TRANSFER: NAMP requisition QTY'
+  phalanx.restricted: 'false'
+install_action: string
+  -- field metadata --
+  phalanx.description: 'Install or remove (component life records).'
+  phalanx.basis: 'ARCH §10 (component life record)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'InstallAction'
+  phalanx.enum_symbols: '["INSTALL","REMOVE"]'
+item_hours: double
+  -- field metadata --
+  phalanx.description: 'Item operating hours at removal or installation.'
+  phalanx.basis: 'ARCH §10 (time at removal/installation)'
+  phalanx.restricted: 'false'
+  phalanx.units: 'h'
+  phalanx.minimum: '0.0'
+item_cycles: double
+  -- field metadata --
+  phalanx.description: 'Item cycles at removal or installation.'
+  phalanx.basis: 'ARCH §10 (cycles at removal/installation)'
+  phalanx.restricted: 'false'
+  phalanx.units: 'count'
+  phalanx.minimum: '0.0'
+donor_tail_no: string
+  -- field metadata --
+  phalanx.description: 'Donor tail of a cannibalisation.'
+  phalanx.basis: 'ARCH §10 (cannibalisation donor)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+inspection_type: string
+  -- field metadata --
+  phalanx.description: 'Inspection or servicing type (e.g. scheduled, conditional, borescope), synthetic table.'
+  phalanx.basis: 'ARCH §10 (inspection / servicing)'
+  phalanx.restricted: 'false'
+shop_finding: string
+  -- field metadata --
+  phalanx.description: 'Shop finding on a turned-in item.'
+  phalanx.basis: 'ARCH §10 (shop / depot finding)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'ShopFinding'
+  phalanx.enum_symbols: '["CONFIRMED","RTOK","BCM"]'
+compliance_status: string
+  -- field metadata --
+  phalanx.description: 'Compliance status of a modification or software load.'
+  phalanx.basis: 'ARCH §10 (modification compliance status)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'ComplianceStatus'
+  phalanx.enum_symbols: '["ISSUED","COMPLIED","NOT_APPLICABLE"]'
+availability_state: string
+  -- field metadata --
+  phalanx.description: 'Mission-capability state of the 15-minute bin starting at t_event (AVAILABILITY_STATE records).'
+  phalanx.basis: 'ARCH §10 (15-min mission-capability bins)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'AvailabilityState'
+  phalanx.enum_symbols: '["FMC","PMCM","PMCS","NMCM_S","NMCM_U","NMCS","NMCD"]'
+mission_type: string
+  -- field metadata --
+  phalanx.description: 'Mission flown (SORTIE records).'
+  phalanx.basis: 'ARCH §10 (sortie record: mission)'
+  phalanx.restricted: 'false'
+crew_id: string
+  -- field metadata --
+  phalanx.description: 'Pseudonymous crew identifier (SORTIE records).'
+  phalanx.basis: 'ARCH §10 (sortie record: crew)'
+  phalanx.restricted: 'false'
+flight_hours: double
+  -- field metadata --
+  phalanx.description: 'Flight hours (SORTIE records).'
+  phalanx.basis: 'ARCH §10 (sortie record: hours)'
+  phalanx.restricted: 'false'
+  phalanx.units: 'h'
+  phalanx.minimum: '0.0'
+landings: uint32
+  -- field metadata --
+  phalanx.description: 'Landings (SORTIE records).'
+  phalanx.basis: 'ARCH §10 (sortie record: landings)'
+  phalanx.restricted: 'false'
+engine_cycles: double
+  -- field metadata --
+  phalanx.description: 'Engine cycles (SORTIE records).'
+  phalanx.basis: 'ARCH §10 (sortie record: cycles)'
+  phalanx.restricted: 'false'
+  phalanx.units: 'count'
+  phalanx.minimum: '0.0'
+engine_starts: uint32
+  -- field metadata --
+  phalanx.description: 'Engine starts (SORTIE records).'
+  phalanx.basis: 'ARCH §10 (sortie record: starts)'
+  phalanx.restricted: 'false'
+t_event: int64 not null
+  -- field metadata --
+  phalanx.description: 'Instant this record version refers to (discovery, status change, bin start). The event time of the record.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-13'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_open: int64
+  -- field metadata --
+  phalanx.description: 'When the job or record was opened.'
+  phalanx.basis: 'TRANSFER: NAMP RECEIVED date-time'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_close: int64
+  -- field metadata --
+  phalanx.description: 'When the job or record was closed.'
+  phalanx.basis: 'TRANSFER: NAMP COMPLETED date-time'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_ingest: int64 not null
+  -- field metadata --
+  phalanx.description: 'When this record version became visible in the maintenance system (includes reconciliation lag).'
+  phalanx.basis: 'ARCH §10 (reconciliation lag), I5'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+provenance: string not null
+  -- field metadata --
+  phalanx.description: 'direct (records are produced on the ground by M18).'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-13'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Provenance'
+  phalanx.enum_symbols: '["full_path","direct"]'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'maint.records'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_event'
+phalanx.ingest_time: 't_ingest'
+phalanx.partition_by: '["tail_no"]'
+phalanx.record_id_key: '["record_type","record_key","record_version"]'
+phalanx.audience: 'full'

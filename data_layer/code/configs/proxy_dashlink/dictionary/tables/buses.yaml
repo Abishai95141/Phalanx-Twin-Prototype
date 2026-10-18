@@ -1,0 +1,10 @@
+# Phalanx proxy-mode dictionary (DASHlink Tail 687; W2.4a, AD-33/AD-43). Hand-maintained source.
+# FADEC lanes: TRANSFER of the Tejas FADEC lane definitions (the proxy runs the same M08 structure, AD-43).
+# Recorded words: MEASURED on DASHlink Tail 687 archive 1 (analysis/dashlink_texture, round-1/2 results).
+format: phalanx.dictionary.buses/1
+synthetic: true
+label: SYNTHETIC proxy - no bus modelled (R-ICD-NONE)
+mil1553: {}
+arinc429: {}
+rs422: {}
+fti_pcm: {}

@@ -1,0 +1,14 @@
+# TEMPLATE: copy to ssh_config (git-ignored) and fill in the server address, user and key path.
+# SSH config for the LinuxONE server (IBM Z, s390x, Ubuntu 24.04). Used only via `ssh -F`.
+# "phx" is the IPv4 address; "phx6" is the same server through NAT64 (64:ff9b::/96), for IPv6-only networks.
+Host phx phx6
+  User <server-user>
+  IdentityFile "<path to the server key .pem>"
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+  ServerAliveInterval 30
+  ServerAliveCountMax 6
+Host phx
+  HostName <server IPv4>
+Host phx6
+  HostName <server IPv4 as NAT64, e.g. 64:ff9b::a.b.c.d in hex>

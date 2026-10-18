@@ -1,0 +1,36 @@
+{
+ "chunk_samples": 14400,
+ "download_day": 2.0,
+ "inspections": [
+  {
+   "availability_while_open": [
+    "NMCM_U"
+   ],
+   "duration_h": 1.926111111111111,
+   "inspection_type": "COND-STRUCT",
+   "malfunction_code": "MAL-OG",
+   "nmc_throughout": true,
+   "reference_availability_same_window": [
+    "FMC"
+   ],
+   "sorties_flown_while_open": 0,
+   "status": "CLOSED",
+   "t_open_h_after_download": 0.33555555555555555
+  }
+ ],
+ "m14_exceedances_from_chunk": [
+  "ELE-702"
+ ],
+ "n_worlds": 1,
+ "reference_world_exceedance_inspections": 0,
+ "sorties_reference": 24,
+ "sorties_with_chain": 24,
+ "verdict_nmc_until_inspected": "PASS",
+ "verdict_opens": "PASS",
+ "world": {
+  "days": 30,
+  "regime": "mature",
+  "root": 50081,
+  "tail": "TJ101"
+ }
+}

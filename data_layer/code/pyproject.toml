@@ -1,0 +1,61 @@
+[project]
+name = "phalanx"
+version = "0.0.1"
+description = "Phalanx data layer: a deterministic, forkable virtual Tejas-class fleet"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+# Exact versions are pinned in uv.lock (RULES.md rule 7). Lower bounds here only.
+dependencies = [
+    "numpy>=2.1",
+    "scipy>=1.14",
+    "pyarrow>=18",
+    "pyyaml>=6",
+    "pint>=0.24",
+    "jsonschema>=4.23",
+    "numba>=0.61",
+    "jax>=0.5",
+    "scikit-learn>=1.6",
+    "pychapter10>=1.1",
+    "fastavro>=1.9",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "hypothesis>=6.120",
+    "ruff>=0.9",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+# Tests import the package from ./src of the checkout they run in (works under `python -I` and in worktrees).
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "unit: fast unit tests",
+    "property: property-based invariant tests (hypothesis)",
+    "golden: golden MQTG / reference-reproduction tests",
+    "integration: multi-module integration tests",
+    "statistical: statistical regression / battery tests (state n in the test)",
+    "fork: snapshot, replay and fork tests",
+    "determinism: bitwise determinism tests (run in make check)",
+    "slow: long-running; excluded from make check",
+    "data: needs real data outside the repo (DASHlink); skipped when absent",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+src = ["src", "tests", "tools"]
+extend-exclude = ["analysis", "research_notes", "research_sources", "reports"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY", "RUF"]
+ignore = ["E741", "RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+# conftest inspects the legacy global RNG state on purpose, to fail tests that consume it.
+"tests/conftest.py" = ["NPY002"]

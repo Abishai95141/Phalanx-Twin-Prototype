@@ -1,0 +1,107 @@
+# M03 process-disturbance bank of the DASHlink proxy (W2.4a; AD-32, AD-46). Only the disturbance set is
+# platform-specific: the atmosphere (USSA-76) and turbulence sets are the standard ones of
+# configs/tejas/params/M03.yaml (phalanx.proxy.config.load_proxy_env_config). The factor table starts as a
+# W1 placeholder structure; W2.4a-2 stage 4 replaced the engine factors by the bank identified on 687-CAL
+# (one aircraft-common and one per-unit OU factor per engine channel, ids 101-110; hydraulic rows kept).
+format: phalanx.params/1
+module: M03
+sets:
+  disturbances:
+    factor_id:
+      table: {file: disturbance_factors.csv, column: fid}
+      units: '1'
+      description: 'Factor id (names its RNG stream f<id>)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure: engine rows 101-110 = one aircraft-common and one per-unit OU factor per engine channel (W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights); hydraulic rows 8-9 W1 placeholders (A-W1.1-1)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_scope:
+      table: {file: disturbance_factors.csv, column: scope}
+      units: '1'
+      description: '0 = aircraft-common, 1 = per unit'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure: engine rows 101-110 = one aircraft-common and one per-unit OU factor per engine channel (W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights); hydraulic rows 8-9 W1 placeholders (A-W1.1-1)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_group:
+      table: {file: disturbance_factors.csv, column: group}
+      units: '1'
+      description: '0 = engine channels, 1 = hydraulic systems'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure: engine rows 101-110 = one aircraft-common and one per-unit OU factor per engine channel (W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights); hydraulic rows 8-9 W1 placeholders (A-W1.1-1)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_form:
+      table: {file: disturbance_factors.csv, column: form}
+      units: '1'
+      description: 'Shaping filter form: 1 OU, 2 OU2, 3 resonant'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure: engine rows 101-110 = one aircraft-common and one per-unit OU factor per engine channel (W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights); hydraulic rows 8-9 W1 placeholders (A-W1.1-1)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_tau:
+      table: {file: disturbance_factors.csv, column: tau_s}
+      units: s
+      description: 'Correlation time (OU forms)'
+      evidence: {tag: 'MEASURED', source: 'engine rows: W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights (fuel 2.6 s, combustor 1.6 s, inlet 0.29 s, HP shaft load 0.05 s at the lower bound of the fit); hydraulic rows: W1 placeholders (A-W1.1-1)'}
+      sweep: [0.05, 5.0]
+      assumption_id: A-W1.1-1
+    factor_omega:
+      table: {file: disturbance_factors.csv, column: omega_rad_s}
+      units: rad/s
+      description: 'Natural frequency (resonant form)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure: engine rows 101-110 = one aircraft-common and one per-unit OU factor per engine channel (W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights); hydraulic rows 8-9 W1 placeholders (A-W1.1-1)'}
+      sweep: [0.0, 100.0]
+      assumption_id: A-W1.1-1
+    factor_zeta:
+      table: {file: disturbance_factors.csv, column: zeta}
+      units: '1'
+      description: 'Damping ratio (resonant form)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure: engine rows 101-110 = one aircraft-common and one per-unit OU factor per engine channel (W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights); hydraulic rows 8-9 W1 placeholders (A-W1.1-1)'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-1
+    load_fuel_metering:
+      table: {file: disturbance_factors.csv, column: l_fuel}
+      units: '1'
+      description: 'Loading (SD contribution) on fuel metering'
+      evidence: {tag: 'MEASURED', source: 'W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights; loadings at the declared maximum are clipped there'}
+      sweep: [0.0, 0.02]
+      assumption_id: A-W1.1-1
+    load_combustor_eff:
+      table: {file: disturbance_factors.csv, column: l_comb}
+      units: '1'
+      description: 'Loading on combustor efficiency'
+      evidence: {tag: 'MEASURED', source: 'W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights; loadings at the declared maximum are clipped there'}
+      sweep: [0.0, 0.01]
+      assumption_id: A-W1.1-1
+    load_inlet_recovery:
+      table: {file: disturbance_factors.csv, column: l_inlet}
+      units: '1'
+      description: 'Loading on inlet recovery'
+      evidence: {tag: 'MEASURED', source: 'W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights; loadings at the declared maximum are clipped there'}
+      sweep: [0.0, 0.01]
+      assumption_id: A-W1.1-1
+    load_shaft_load:
+      table: {file: disturbance_factors.csv, column: l_shaft}
+      units: '1'
+      description: 'Loading on shaft load'
+      evidence: {tag: 'MEASURED', source: 'W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights; loadings at the declared maximum are clipped there'}
+      sweep: [0.0, 0.03]
+      assumption_id: A-W1.1-1
+    load_fan_face:
+      table: {file: disturbance_factors.csv, column: l_fan}
+      units: '1'
+      description: 'Loading on fan-face distortion (fan flow capacity and efficiency; LP-spool-specific path, AD-46)'
+      evidence: {tag: 'MEASURED', source: 'W2.4a-2 stage 4 (analysis/proxy_quicklook/results/stage4/st4_fit_pooled.json, setting kp2ki1; README stage 4): linear spectral synthesis of the bank fast-band cross-spectra on 687-CAL governed in-flight segments (n = 4 flights, MF1-D order[:4]), verified with the full chain on the same flights: the LP shaft-torque path (AD-46 amended, flow share 0) is identified at about zero loading (2e-5 common); the fit does not use an LP-specific input'}
+      sweep: [0.0, 0.02]
+      assumption_id: A-W1.1-1
+    load_bleed_pto:
+      table: {file: disturbance_factors.csv, column: l_bleed}
+      units: '1'
+      description: 'Loading on bleed/PTO load (env.w_bleed_pto)'
+      evidence: {tag: 'ASSUMPTION', source: 'zero: not identified in W2.4a-2 stage 4 (the bleed/PTO channel is not in the synthesis); the W1 placeholder loadings were removed with their factors'}
+      sweep: [0.0, 0.03]
+      assumption_id: A-W1.1-1
+    load_hyd:
+      table: {file: disturbance_factors.csv, column: l_hyd}
+      units: m**3/s
+      description: 'Loading on hydraulic demand (env.w_hyd)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.0001]
+      assumption_id: A-W1.1-1

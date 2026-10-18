@@ -1,0 +1,340 @@
+{
+  "type": "record",
+  "name": "sortie_manifest",
+  "namespace": "phalanx.contract.v0",
+  "doc": "One record per sortie: configuration and provenance of the data (tail, engine and LRU serials, software configuration, mission, dictionary and contract versions, code commit, library versions). Seeds and the RNG stream table are restricted fields (A-W0.4-12).",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": "string",
+      "doc": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": "string",
+      "doc": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "tail_no",
+      "type": "string",
+      "doc": "Aircraft tail number (linkage key).",
+      "phalanx.basis": "ARCH §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sortie_id",
+      "type": "string",
+      "doc": "Sortie identifier (tail + date + take-off time, M02).",
+      "phalanx.basis": "ARCH §5.3, §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "base",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Operating base of the sortie.",
+      "default": null,
+      "phalanx.basis": "ARCH §6 M02 (bases); ASSUMPTION: A-W0.4-12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "mission_type",
+      "type": "string",
+      "doc": "Mission type from the M02 mission mix.",
+      "phalanx.basis": "ARCH §12 (mission)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "crew_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Pseudonymous crew identifier (no latent pilot traits).",
+      "default": null,
+      "phalanx.basis": "ARCH §10 (sortie record: crew); ASSUMPTION: A-W0.4-12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sw_config_id",
+      "type": "string",
+      "doc": "Software-configuration identifier of the aircraft for this sortie.",
+      "phalanx.basis": "ARCH §5.3, §12 (software config)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "engine_serials",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "sortie_manifest_engine_serials_item",
+          "fields": [
+            {
+              "name": "position",
+              "type": "string",
+              "doc": "Engine position (e.g. '1').",
+              "phalanx.basis": "ARCH §12",
+              "phalanx.restricted": false
+            },
+            {
+              "name": "serial",
+              "type": "string",
+              "doc": "Engine serial number.",
+              "phalanx.basis": "ARCH §12",
+              "phalanx.restricted": false
+            }
+          ]
+        }
+      },
+      "doc": "Installed engine serials by position.",
+      "phalanx.basis": "ARCH §12 (serials)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "lru_serials",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "sortie_manifest_lru_serials_item",
+          "fields": [
+            {
+              "name": "lru",
+              "type": "string",
+              "doc": "LRU name.",
+              "phalanx.basis": "ARCH §12",
+              "phalanx.restricted": false
+            },
+            {
+              "name": "part_no",
+              "type": "string",
+              "doc": "Part number.",
+              "phalanx.basis": "ARCH §5.3 (component triplet)",
+              "phalanx.restricted": false
+            },
+            {
+              "name": "serial_no",
+              "type": "string",
+              "doc": "Serial number.",
+              "phalanx.basis": "ARCH §5.3 (component triplet)",
+              "phalanx.restricted": false
+            },
+            {
+              "name": "maker",
+              "type": [
+                "null",
+                "string"
+              ],
+              "doc": "Maker.",
+              "default": null,
+              "phalanx.basis": "ARCH §5.3 (component triplet)",
+              "phalanx.restricted": false
+            }
+          ]
+        }
+      },
+      "doc": "Installed serialised LRUs (component triplet).",
+      "phalanx.basis": "ARCH §12 (serials); ARCH §5.3 (component triplet)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_start",
+      "type": "long",
+      "doc": "Start of the sortie record (engine start or recorder start). The event time of the record.",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-12",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_takeoff",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Take-off time; null for a ground abort.",
+      "default": null,
+      "phalanx.basis": "ARCH §5.3 (sortie_id = tail + date + take-off time)",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_landing",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Landing time; null if not airborne.",
+      "default": null,
+      "phalanx.basis": "ASSUMPTION: A-W0.4-12",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_end",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "End of the sortie record (engine shutdown or recorder stop).",
+      "default": null,
+      "phalanx.basis": "ASSUMPTION: A-W0.4-12",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_ingest",
+      "type": "long",
+      "doc": "When the manifest reached the ground (download).",
+      "phalanx.basis": "ARCH §8, I5",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "contract_version",
+      "type": "string",
+      "doc": "Contract semantic version the sortie's records conform to.",
+      "phalanx.basis": "ARCH §12 (versioning)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "config_hash",
+      "type": "string",
+      "doc": "Hash of the run configuration.",
+      "phalanx.basis": "ARCH §15 (manifest)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "code_commit",
+      "type": "string",
+      "doc": "Git commit of the generating code.",
+      "phalanx.basis": "ARCH §12 (code commit)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "library_versions",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "sortie_manifest_library_versions_item",
+          "fields": [
+            {
+              "name": "name",
+              "type": "string",
+              "doc": "Library name.",
+              "phalanx.basis": "ARCH §15",
+              "phalanx.restricted": false
+            },
+            {
+              "name": "version",
+              "type": "string",
+              "doc": "Library version.",
+              "phalanx.basis": "ARCH §15",
+              "phalanx.restricted": false
+            }
+          ]
+        }
+      },
+      "doc": "Library versions, sorted by name.",
+      "phalanx.basis": "ARCH §15 (manifest: library versions)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "run_manifest_hash",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Content hash of the full run manifest (core/manifest.py) this sortie belongs to.",
+      "default": null,
+      "phalanx.basis": "ARCH §15; ASSUMPTION: A-W0.4-12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "root_seed",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "128-bit root seed, hex. RESTRICTED (with the code commit it regenerates truth).",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (seeds), §15; ASSUMPTION: A-W0.4-12 (restricted)",
+      "phalanx.restricted": true
+    },
+    {
+      "name": "rng_stream_table",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "sortie_manifest_rng_stream_table_item",
+            "fields": [
+              {
+                "name": "key_path",
+                "type": "string",
+                "doc": "Canonical text form of the core.rng key path.",
+                "phalanx.basis": "ARCH §15",
+                "phalanx.restricted": false
+              },
+              {
+                "name": "stream_ref",
+                "type": "string",
+                "doc": "Stream reference (digest of the key path).",
+                "phalanx.basis": "ARCH §15",
+                "phalanx.restricted": false
+              }
+            ]
+          }
+        }
+      ],
+      "doc": "RNG stream table of the sortie. RESTRICTED.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (seeds), §15 (stream table); ASSUMPTION: A-W0.4-12 (restricted)",
+      "phalanx.restricted": true
+    },
+    {
+      "name": "provenance",
+      "type": {
+        "type": "enum",
+        "name": "Provenance",
+        "doc": "How the record reached the contract. full_path = via bus, Ch10 recorder and ground decoder; direct = fast path or a direct ground producer (M18 records, M21 order status, manifests).",
+        "symbols": [
+          "full_path",
+          "direct"
+        ]
+      },
+      "doc": "direct (manifests are produced on the ground) or full_path (decoded from a recording).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "sortie.manifest",
+  "phalanx.restricted": false
+}

@@ -1,0 +1,112 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key = blake2b-128 of the order_id.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string
+  -- field metadata --
+  phalanx.description: 'Dictionary version the issuer observed, if known.'
+  phalanx.basis: 'ARCH §12 (dictionary on every record); ASSUMPTION: A-W0.4-14 (nullable for external issuers)'
+  phalanx.restricted: 'false'
+dict_hash: string
+  -- field metadata --
+  phalanx.description: 'Dictionary hash the issuer observed, if known.'
+  phalanx.basis: 'ARCH §12; ASSUMPTION: A-W0.4-14'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+order_id: string not null
+  -- field metadata --
+  phalanx.description: 'Globally unique order identifier chosen by the issuer.'
+  phalanx.basis: 'ARCH §11.1 (idempotent order_id)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]*$'
+issuer_id: string not null
+  -- field metadata --
+  phalanx.description: 'Issuer identity (agent or human planner).'
+  phalanx.basis: 'ARCH §11.1 (issuer)'
+  phalanx.restricted: 'false'
+issuer_kind: string not null
+  -- field metadata --
+  phalanx.description: 'AGENT or HUMAN.'
+  phalanx.basis: 'ARCH §11.1 (issuer: agent/human)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'IssuerKind'
+  phalanx.enum_symbols: '["AGENT","HUMAN"]'
+policy_version: string
+  -- field metadata --
+  phalanx.description: 'Policy or model version of an agent issuer.'
+  phalanx.basis: 'ARCH §11.1 (policy version)'
+  phalanx.restricted: 'false'
+t_issued: int64 not null
+  -- field metadata --
+  phalanx.description: 'Simulation time the order was issued. The event and availability time of the record.'
+  phalanx.basis: 'ARCH §11.1'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_effective: int64 not null
+  -- field metadata --
+  phalanx.description: 'Simulation time the order should take effect (at or after the next decision epoch; M21 enforces the epoch).'
+  phalanx.basis: 'ARCH §11.1 (t_effective >= next decision epoch)'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+target_tail_no: string
+  -- field metadata --
+  phalanx.description: 'Target tail.'
+  phalanx.basis: 'ARCH §11.1 (target)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+target_base: string
+  -- field metadata --
+  phalanx.description: 'Target base.'
+  phalanx.basis: 'ARCH §11.1 (target)'
+  phalanx.restricted: 'false'
+target_lru: string
+  -- field metadata --
+  phalanx.description: 'Target LRU.'
+  phalanx.basis: 'ARCH §11.1 (target)'
+  phalanx.restricted: 'false'
+target_serial: string
+  -- field metadata --
+  phalanx.description: 'Target serial number.'
+  phalanx.basis: 'ARCH §11.1 (target)'
+  phalanx.restricted: 'false'
+action: string not null
+  -- field metadata --
+  phalanx.description: 'Requested action.'
+  phalanx.basis: 'ARCH §11.1 (action vocabulary)'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'OrderAction'
+  phalanx.enum_symbols: '["INSPECT","TROUBLESHOOT","REMOVE_REPLACE","WASH_SERVICE","DEFER","CANNIBALISE","REQUISITION_SPARES","EXPEDITE_SPARES","TRANSFER_STOCK","GROUND","RELEASE","BRING_FORWARD_SERVICING","DEFER_SERVICING","ASSIGN_SORTIE","RESTRICT_USAGE","EMBODY_MODIFICATION","LOAD_SOFTWARE","CHANGE_MONITORING_CONFIG"]'
+parameters: string not null
+  -- field metadata --
+  phalanx.description: 'Action-specific parameters as a JSON object (canonical JSON text in Arrow; '{}' when none). Per-action schemas are M21's.'
+  phalanx.basis: 'ARCH §11.1 (parameters); ASSUMPTION: A-W0.4-14'
+  phalanx.restricted: 'false'
+  phalanx.format: 'json_object'
+priority: string not null
+  -- field metadata --
+  phalanx.description: 'Priority.'
+  phalanx.basis: 'ARCH §11.1 (priority); ASSUMPTION: A-W0.4-14'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'OrderPriority'
+  phalanx.enum_symbols: '["ROUTINE","PHU","MCM","AOG"]'
+evidence: list<element: fixed_size_binary[16] not null> not null
+  child 0, element: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'record_ids of the samples, events or records that justify the order; all must be ingested by t_issued.'
+  phalanx.basis: 'ARCH §11.1 (evidence: record_ids)'
+  phalanx.restricted: 'false'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'orders.commands'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_issued'
+phalanx.ingest_time: 't_issued'
+phalanx.partition_by: '[]'
+phalanx.record_id_key: '["order_id"]'
+phalanx.audience: 'full'

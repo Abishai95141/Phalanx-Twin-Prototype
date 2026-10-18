@@ -1,0 +1,271 @@
+5496 jobs
+0 11s
+500 604s
+1000 1053s
+Process SpawnPoolWorker-6:
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-2:
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-5:
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-3:
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-4:
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-1:
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 210, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 441, in _send_bytes
+    self._send(header)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/connection.py", line 404, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+/Users/abishaikc/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-9dj1wo4p', '/mp-ia_g9y_w', '/mp-isd0oqbe', '/mp-8nas6ctl', '/mp-3klc7_10', '/mp-f4wy5zu1'}
+  warnings.warn(
+5496 jobs
+0 1s
+500 1s
+1000 1s
+1500 116s
+2000 394s
+2500 798s
+3000 1233s
+3500 1623s
+4000 2004s
+4500 2316s
+5000 2595s
+done 2971s

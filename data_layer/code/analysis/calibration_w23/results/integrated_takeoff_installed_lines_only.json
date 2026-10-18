@@ -1,0 +1,37 @@
+{
+ "config": "installed M08 lines (A-W2.3-1), no gain schedule",
+ "sortie": "gate sortie 2 (TJ213), scenario gate, root 0xA5; 1 s means of 240 Hz; n = 1 sortie window",
+ "idle_long": {
+  "t0_s": 0,
+  "t1_s": 755,
+  "n2_pct": 66.305,
+  "n2_p2p_last_60s_pct": 2.589,
+  "pto_kw": 29.0,
+  "pto_kw_max": 34.86,
+  "bleed_kgs": 0.5146,
+  "bleed_kgs_max": 0.5376,
+  "wf_ps3_pph_psi": 14.064,
+  "stall_margin_min": 0.0288,
+  "regulators": [
+   1
+  ]
+ },
+ "at_slam": {
+  "t_s": 807,
+  "n2_pct": 63.928,
+  "pto_kw": 33.81,
+  "bleed_kgs": 0.4551,
+  "wf_ps3_pph_psi": 14.814
+ },
+ "after_irp": {
+  "n2_min_pct": 66.319,
+  "n2_end_pct": 93.738,
+  "n1_end_pct": 101.736,
+  "t_n1_100pct_s": 13,
+  "regulators": [
+   2,
+   6
+  ],
+  "t5_max_k": 1141.3
+ }
+}

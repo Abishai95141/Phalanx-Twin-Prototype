@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-tool" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-tool-title ill-tool-desc">
+  <title id="ill-tool-title">Assistant — plan and five read-only tools</title>
+  <desc id="ill-tool-desc">A central plan node calls five read-only tools and returns a cited answer and, at most, an order draft that a person signs.</desc>
+  <defs><pattern id="tool-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="tool-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="tool-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="tool-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="tool-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="tool-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="tool-spokes" class="spokes">
+    <line id="tool-call-aircraft_summary" class="draw call" x1="805" y1="320" x2="805" y2="230" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M805 230 L807.4 238 L802.6 238 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-result-aircraft_summary" class="draw result" x1="795" y1="230" x2="795" y2="320" stroke="#2563C9" stroke-width="0.9" stroke-dasharray="3 3" stroke-linecap="round"/>
+    <path d="M795 320 L792.6 312 L797.4 312 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-call-event_recurrence" class="draw call" x1="881.43" y1="382.8" x2="967.03" y2="354.99" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M967.03 354.99 L960.16 359.74 L958.68 355.18 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-result-event_recurrence" class="draw result" x1="963.94" y1="345.48" x2="878.34" y2="373.29" stroke="#2563C9" stroke-width="0.9" stroke-dasharray="3 3" stroke-linecap="round"/>
+    <path d="M878.34 373.29 L885.21 368.53 L886.69 373.1 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-call-serial_history" class="draw call" x1="845.33" y1="474.9" x2="898.23" y2="547.71" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M898.23 547.71 L891.59 542.65 L895.47 539.83 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-result-serial_history" class="draw result" x1="906.32" y1="541.83" x2="853.42" y2="469.02" stroke="#2563C9" stroke-width="0.9" stroke-dasharray="3 3" stroke-linecap="round"/>
+    <path d="M853.42 469.02 L860.06 474.08 L856.18 476.9 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-call-evidence_chain" class="draw call" x1="746.58" y1="469.02" x2="693.68" y2="541.83" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M693.68 541.83 L696.44 533.95 L700.32 536.77 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-result-evidence_chain" class="draw result" x1="701.77" y1="547.71" x2="754.67" y2="474.9" stroke="#2563C9" stroke-width="0.9" stroke-dasharray="3 3" stroke-linecap="round"/>
+    <path d="M754.67 474.9 L751.91 482.78 L748.03 479.96 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-call-what_if" class="draw call" x1="721.66" y1="373.29" x2="636.06" y2="345.48" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M636.06 345.48 L644.41 345.67 L642.93 350.23 Z" fill="#2563C9" stroke="none"/>
+    <line id="tool-result-what_if" class="draw result" x1="632.97" y1="354.99" x2="718.57" y2="382.8" stroke="#2563C9" stroke-width="0.9" stroke-dasharray="3 3" stroke-linecap="round"/>
+    <path d="M718.57 382.8 L710.22 382.61 L711.7 378.04 Z" fill="#2563C9" stroke="none"/>
+    <text x="816" y="276" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">call →</text>
+    <text x="816" y="290" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">← cited result</text>
+    <circle cx="800" cy="404" r="236" fill="none" stroke="#B9BDC2" stroke-width="0.6" stroke-dasharray="2 5"/>
+  </g>
+  <g id="tool-plan" class="subject node">
+    <circle class="draw" cx="800" cy="404" r="78" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.95"/>
+    <g transform="translate(780 368) scale(1.67)" fill="none" stroke="#E8743B" stroke-width="1.32" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M5 18.5l-1.2 2.3 3.6-1.2A8 8 0 1 0 5 18.5z"/><path d="M12 8.3v1.6M12 14.1v1.6M8.3 12h1.6M14.1 12h1.6"/></g>
+    <text x="800" y="434" font-size="20" font-weight="700" fill="#E8743B" text-anchor="middle">plan</text>
+    <text x="800" y="452" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">pick tools · cite</text>
+  </g>
+  <g id="tool-nodes" class="nodes">
+    <g id="tool-aircraft-summary" class="node tool">
+      <rect class="draw" x="748" y="116" width="104" height="104" rx="24" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <g transform="translate(775 143) scale(2.08)" fill="none" stroke="#0B0D10" stroke-width="1.06" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M12 2.6l1.25 4.3 6.95 7.9v1.7l-6.7-2.1-.35 4.1 2.3 1.75v1.35L12 20.7l-3.45.9v-1.35l2.3-1.75-.35-4.1-6.7 2.1v-1.7l6.95-7.9z"/></g>
+      <text x="870" y="160" font-size="16" font-weight="700" fill="#0B0D10">Aircraft summary</text>
+      <text x="870" y="178" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="600" fill="#2563C9">aircraft_summary()</text>
+      <text x="870" y="194" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">state of one tail as of 06:00</text>
+    </g>
+    <g id="tool-event-recurrence" class="node tool">
+      <rect class="draw" x="972.45" y="279.07" width="104" height="104" rx="24" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <g transform="translate(999.45 306.07) scale(2.08)" fill="none" stroke="#0B0D10" stroke-width="1.06" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M3.5 16.5h17"/><circle cx="7" cy="16.5" r="1.7"/><circle cx="12" cy="16.5" r="1.7"/><circle cx="17" cy="16.5" r="1.7"/><path d="M6.5 11.5a6 5 0 0 1 11 0"/><path d="M18 7.6v3.9h-3.9"/></g>
+      <text x="1094.45" y="323.07" font-size="16" font-weight="700" fill="#0B0D10">Event recurrence</text>
+      <text x="1094.45" y="341.07" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="600" fill="#2563C9">event_recurrence()</text>
+      <text x="1094.45" y="357.07" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">how often a code returns</text>
+    </g>
+    <g id="tool-serial-history" class="node tool">
+      <rect class="draw" x="886.72" y="542.93" width="104" height="104" rx="24" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <g transform="translate(913.72 569.93) scale(2.08)" fill="none" stroke="#0B0D10" stroke-width="1.06" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.6 6.6a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/><path d="M10.5 14.5l3-3M13 17l3-3"/></g>
+      <text x="1008.72" y="586.93" font-size="16" font-weight="700" fill="#0B0D10">Serial history</text>
+      <text x="1008.72" y="604.93" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="600" fill="#2563C9">serial_history()</text>
+      <text x="1008.72" y="620.93" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">one part across tails</text>
+    </g>
+    <g id="tool-evidence-chain" class="node tool">
+      <rect class="draw" x="609.28" y="542.93" width="104" height="104" rx="24" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <g transform="translate(636.28 569.93) scale(2.08)" fill="none" stroke="#0B0D10" stroke-width="1.06" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></g>
+      <text x="591.28" y="586.93" font-size="16" font-weight="700" fill="#0B0D10" text-anchor="end">Evidence chain</text>
+      <text x="591.28" y="604.93" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="600" fill="#2563C9" text-anchor="end">evidence_chain()</text>
+      <text x="591.28" y="620.93" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">records behind a claim</text>
+    </g>
+    <g id="tool-what-if" class="node tool">
+      <rect class="draw" x="523.55" y="279.07" width="104" height="104" rx="24" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <g transform="translate(550.55 306.07) scale(2.08)" fill="none" stroke="#0B0D10" stroke-width="1.06" stroke-linecap="round" stroke-linejoin="round" class="glyph"><circle cx="6.5" cy="5.5" r="2"/><circle cx="6.5" cy="18.5" r="2"/><circle cx="17.5" cy="8.5" r="2"/><path d="M6.5 7.5v9M17.5 10.5c0 4-4 4-11 6"/></g>
+      <text x="505.55" y="323.07" font-size="16" font-weight="700" fill="#0B0D10" text-anchor="end">What-if</text>
+      <text x="505.55" y="341.07" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12" font-weight="600" fill="#2563C9" text-anchor="end">what_if()</text>
+      <text x="505.55" y="357.07" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">belief-mode fork vs status quo</text>
+    </g>
+  </g>
+  <g id="tool-output" class="output">
+    <path class="draw" d="M800 486 L800 708" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M635 708 L980 708" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M635 708 L635 724" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M635 728 L632.4 720 L637.6 720 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M980 708 L980 724" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M980 728 L977.4 720 L982.6 720 Z" fill="#0B0D10" stroke="none"/>
+    <rect x="500" y="730" width="270" height="64" rx="12" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+    <g transform="translate(521 749) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/></g>
+    <text x="560" y="756" font-size="14" font-weight="700" fill="#0B0D10">Cited answer</text>
+    <text x="560" y="774" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">every claim links a record id</text>
+    <rect x="830" y="730" width="300" height="64" rx="12" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-dasharray="6 4" stroke-linejoin="round"/>
+    <g transform="translate(851 749) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round" class="glyph"><path d="M4 20l1-4.2L16.3 4.5a2 2 0 0 1 2.9 0l.3.3a2 2 0 0 1 0 2.9L8.2 19z"/><path d="M14 7l3 3"/></g>
+    <text x="890" y="756" font-size="14" font-weight="700" fill="#0B0D10">Order draft</text>
+    <text x="890" y="774" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">never issued — a person signs</text>
+  </g>
+  <text x="64" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">ASSISTANT · BOUNDED, READ-ONLY, LOCAL</text>
+  <text x="64" y="94" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">five tools over the as-of state · no tool can write or issue an order</text>
+  <g id="tool-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="tool-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">Assistant — plan and five tools</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">read-only tools · cited answers</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-13</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 13 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

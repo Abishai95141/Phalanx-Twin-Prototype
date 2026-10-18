@@ -1,0 +1,112 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "inputNode",
+      "name": "issue",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "dt",
+      "type": "decisionTableNode",
+      "name": "P-SPR-01 life-limited spares reorder",
+      "position": {
+        "x": 320,
+        "y": 120
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "left",
+            "name": "Uses left",
+            "field": "life.left"
+          },
+          {
+            "id": "ttl",
+            "name": "Days to limit",
+            "field": "life.days_to_limit"
+          },
+          {
+            "id": "lead",
+            "name": "Lead time median (d)",
+            "field": "lead.median_d"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "act",
+            "name": "Action",
+            "field": "rec.action"
+          },
+          {
+            "id": "band",
+            "name": "Band",
+            "field": "rec.band"
+          },
+          {
+            "id": "why",
+            "name": "Rationale",
+            "field": "rec.rationale_id"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "left": "",
+            "ttl": "< lead.median_d",
+            "lead": "",
+            "act": "'REQUISITION_SPARES'",
+            "band": "'P3'",
+            "why": "'LIFE_LANDINGS_REORDER'"
+          },
+          {
+            "_id": "r2",
+            "left": "<= 0",
+            "ttl": "",
+            "lead": "",
+            "act": "'REQUISITION_SPARES'",
+            "band": "'P3'",
+            "why": "'LIFE_LIMIT_REACHED_REORDER'"
+          },
+          {
+            "_id": "r3",
+            "left": "",
+            "ttl": "",
+            "lead": "",
+            "act": "'NONE'",
+            "band": "'P4'",
+            "why": "'NO_RULE'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "out",
+      "type": "outputNode",
+      "name": "rec",
+      "position": {
+        "x": 640,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceId": "in",
+      "targetId": "dt",
+      "type": "edge"
+    },
+    {
+      "id": "e2",
+      "sourceId": "dt",
+      "targetId": "out",
+      "type": "edge"
+    }
+  ]
+}

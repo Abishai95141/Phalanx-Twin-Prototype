@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Telemetry streams — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: grid; grid-template-rows: auto minmax(0,1fr); row-gap: 24px; height: 100%; }
+  .tabbar { display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .v2 { grid-template-rows: minmax(0,1fr) minmax(0,1fr); }
+  .hero { grid-row: 1 / span 2; }
+  .hd { display: flex; align-items: flex-start; gap: 24px; }
+  .hd .num { margin-left: auto; text-align: right; flex: none; }
+  .so { grid-template-columns: minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr) 132px; min-height: 92px; padding: 0 16px; }
+  .so .v { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .so .why { font-size: 13px; }
+  .so .pl { justify-self: end; }
+  .stp { font: 700 11.5px var(--mono); letter-spacing: .06em; padding: 6px 10px; border-radius: 8px; white-space: nowrap; }
+  .stp.ok { background: var(--ok-wash); color: #17693A; }
+  .stp.held { background: var(--bg-3); color: var(--ink-2); }
+  .focus .big { color: var(--accent-ink); }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; grid-template-columns: minmax(0, 1fr); }
+    .hero { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    [data-shot] .push { margin-top: 20px; }
+    .so { grid-template-columns: minmax(0,1.6fr) minmax(0,.8fr) minmax(0,1fr) auto; column-gap: 14px; }
+  }
+  @media (max-width: 699px) {
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .hd { flex-direction: column; gap: 14px; }
+    .hd .num { margin-left: 0; text-align: left; }
+    .so { grid-template-columns: minmax(0,1fr) minmax(0,1fr); row-gap: 10px; padding: 14px 12px; min-height: 0; }
+    .so > div:first-child { grid-column: 1 / -1; }
+    .so .pl { grid-column: 1 / -1; justify-self: start; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="pg">
+  <div class="tabbar" id="tabbar"></div>
+  <div class="v2">
+
+    <section class="panel2 c8 hero" data-shot="downloads">
+      <div class="hd">
+        <div>
+          <div class="kick">Recorder downloads</div>
+          <div class="t2">Six recorder downloads, all admitted</div>
+          <div class="sub2">Each arrives hours after the recorder stops; a short recording is kept but never trained on.</div>
+        </div>
+        <div class="num"><div class="mid" id="tn"></div><div class="ci" id="tci" style="margin-top:8px"></div></div>
+      </div>
+      <div class="rows2" id="so" style="margin-top:22px"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="quality">
+      <div class="kick">Reading quality</div>
+      <div class="t2">Flags are kept, never silently fixed</div>
+      <div style="margin-top:18px;display:flex;align-items:baseline;gap:10px"><span class="big" id="qn"></span><span class="t3" style="color:var(--ink-3)">of readings flagged</span></div>
+      <div class="ci" id="qci" style="margin-top:8px"></div>
+      <div class="kv2 push" id="qkv"></div>
+    </section>
+
+    <section class="panel2 c4 focus" data-shot="decoder">
+      <div class="kick acc">Decoder path</div>
+      <div class="t2">Bus to decoder, reproduced bit for bit</div>
+      <div style="margin-top:18px;display:flex;align-items:baseline;gap:10px"><span class="big" id="dn"></span><span class="t3" style="color:var(--ink-3)">files identical on re-run</span></div>
+      <div class="ci" id="dci" style="margin-top:8px"></div>
+      <div class="sub2 push" id="dsub"></div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const DF = window.PHX_DF;
+const $ = id => document.getElementById('content').querySelector('#' + id);
+const N = x => Number(x).toLocaleString('en-IN');
+const f1 = (x, d = 1) => Number(x).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
+const TABS = [['Release and gate', 'data.html'], ['Ingest and as-of', 'data-ingest.html'], ['Telemetry streams', 'data-telemetry.html'], null, ['Models', 'assurance.html']];
+const here = location.pathname.split('/').pop() || 'data.html';
+$('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1] === here ? 'on' : ''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+(function () {
+  const T = DF.telemetry.telemetry, S = DF.sorties.slice().sort((a, b) => (b.completed - a.completed) || (b.samples - a.samples));
+  const MS = { INST_NAV: 'Instrument navigation', GH: 'General handling', AIR_TEST: 'Air test', NAV_TRANSIT: 'Navigation transit', GROUND_ATTACK: 'Ground attack', ACM_INTERCEPT: 'Air combat intercept' };
+  const dur = s => { const m = Math.round(s / 60); return m >= 60 ? `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} m` : `${m} min`; };
+  $('tn').textContent = f1(T.rows / 1e6, 1) + ' M';
+  $('tci').textContent = `readings · ${T.params} parameters · ${T.lrus.length} acquiring units`;
+  $('so').innerHTML = S.map(s => `<div class="r2 so ${s.completed ? 'on' : ''}">
+      <div><div class="ttl"><span class="tailtag">${s.tail}</span> · ${MS[s.mission] || s.mission}</div><div class="why">recorded ${s.t_start} · ${dur(s.recorded_s)}</div></div>
+      <div><div class="v">${f1(s.samples / 1e6, 1)} M</div><div class="why">readings</div></div>
+      <div><div class="v">${f1(s.download_lag_h, 1)} h</div><div class="why">recorder stop → ingest</div></div>
+      <span class="pl stp ${s.completed ? 'ok' : 'held'}">${s.completed ? 'COMPLETE' : 'ENDS EARLY'}</span></div>`).join('');
+
+  const oor = T.flags.OUT_OF_RANGE - T.sentinel_and_oor, sen = T.flags.SENTINEL - T.sentinel_and_oor, notn = Object.entries(T.validity).filter(([k]) => k !== 'NORMAL').reduce((a, [, v]) => a + v, 0);
+  $('qn').innerHTML = `${f1(T.any_flag / T.rows * 100, 1)}<small>%</small>`;
+  $('qci').textContent = `${f1(T.any_flag / 1e6, 2)} M of ${f1(T.rows / 1e6, 1)} M readings · ${T.nan_inf} NaN`;
+  $('qkv').innerHTML = `<span>Out of range · kept as signal</span><span>${f1(oor / 1e6, 2)} M</span>
+    <span>Sentinel word · masked</span><span>${f1(sen / 1e6, 2)} M</span>
+    <span>Both flags</span><span>${f1(T.sentinel_and_oor / 1e3, 0)} k</span>
+    <span>Validity not normal · masked</span><span>${N(notn)}</span>`;
+
+  const FP = DF.full_path, F = DF.telemetry.telemetry_full_path;
+  $('dn').innerHTML = `${FP.determinism.files_compared}<small>/ ${FP.determinism.files_compared}</small>`;
+  $('dci').textContent = `${FP.sortie.split('-')[0]} · first ${Math.round(FP.window_s)} s · code ${FP.determinism.code_commit.slice(0, 7)}`;
+  $('dsub').textContent = `The same sortie also arrives through the data bus, a ${f1(FP.ch10_bytes / 1e6, 1)} MB Chapter 10 recording and the ground decoder: ${f1(F.rows / 1e6, 2)} M readings from ${F.params} parameters, admitted by the same gate.`;
+})();
+
+PHX.mount({
+  page: 'assurance', title: 'Data foundation', sub: 'Assurance · can we trust what the twin was built from?',
+  chips: [{ t: 'As of <b>Mon 22 Jun 06:00 IST</b>', i: 'clock' }, { k: 'ok', i: 'shield', t: 'Release v0.9 admitted' }]
+});
+</script>
+</body></html>

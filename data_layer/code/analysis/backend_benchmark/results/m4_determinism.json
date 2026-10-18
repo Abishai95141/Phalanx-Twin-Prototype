@@ -1,0 +1,360 @@
+{
+ "_digests_jax": {
+  "batch1000_first10": [
+   "a9119e846a89190a5c8841e0be17fdb2",
+   "7f94e72f18a2f9e184843d3b0b920989",
+   "e61645240bdad0851d77ba581f12bca1",
+   "56780d65123b526b0592fa8464902c3b",
+   "feac58bfeeb7c8e678ec17883eb4efeb",
+   "c67ec7ba71c574af3e599d4c83b4c865",
+   "4a0be4eb4986b92c727e51ba8754fee4",
+   "f32e96520c62f87e4dc64445bf20f9ab",
+   "3b67b5e0edece0471d4ee9a4623a88ff",
+   "37968301a8e4bcaf8ae5e030fa618ffc"
+  ],
+  "singles": [
+   "a9119e846a89190a5c8841e0be17fdb2",
+   "7f94e72f18a2f9e184843d3b0b920989",
+   "e61645240bdad0851d77ba581f12bca1",
+   "56780d65123b526b0592fa8464902c3b",
+   "feac58bfeeb7c8e678ec17883eb4efeb",
+   "c67ec7ba71c574af3e599d4c83b4c865",
+   "4a0be4eb4986b92c727e51ba8754fee4",
+   "f32e96520c62f87e4dc64445bf20f9ab",
+   "3b67b5e0edece0471d4ee9a4623a88ff",
+   "37968301a8e4bcaf8ae5e030fa618ffc"
+  ]
+ },
+ "_digests_numba": {
+  "batch1000_first10": [
+   "842a279aba070cd97c4f424a7a5ad4e1",
+   "94ad81fda0a2ad85bba1ecb12f1e9905",
+   "20c339dbee0a2e2f1613b37abd083c17",
+   "f846a46c2fbf828dceda8f05ddc061af",
+   "d309ac53e35bf272de596cff0860702b",
+   "873feb881d1cc071c73e53d908a27393",
+   "757e6b4f2e3518c809d85b372d123126",
+   "c46b989e0f4b05f0637e00d2c087aeea",
+   "bfdc72577febbee6d6bf7c3a9f975ca8",
+   "9066315821921ad34227a0f4ede4a801"
+  ],
+  "singles": [
+   "842a279aba070cd97c4f424a7a5ad4e1",
+   "94ad81fda0a2ad85bba1ecb12f1e9905",
+   "20c339dbee0a2e2f1613b37abd083c17",
+   "f846a46c2fbf828dceda8f05ddc061af",
+   "d309ac53e35bf272de596cff0860702b",
+   "873feb881d1cc071c73e53d908a27393",
+   "757e6b4f2e3518c809d85b372d123126",
+   "c46b989e0f4b05f0637e00d2c087aeea",
+   "bfdc72577febbee6d6bf7c3a9f975ca8",
+   "9066315821921ad34227a0f4ede4a801"
+  ]
+ },
+ "checks": {
+  "D1 jax repeat in-process U=1": {
+   "detail": {
+    "a": [
+     [
+      "a9119e846a89190a5c8841e0be17fdb2"
+     ],
+     "9e2680a12fdd3d8f49b5a29c21a55a31"
+    ],
+    "b": [
+     [
+      "a9119e846a89190a5c8841e0be17fdb2"
+     ],
+     "9e2680a12fdd3d8f49b5a29c21a55a31"
+    ]
+   },
+   "pass": true
+  },
+  "D1 jax repeat in-process U=10": {
+   "detail": {
+    "a": [
+     [
+      "a9119e846a89190a5c8841e0be17fdb2",
+      "7f94e72f18a2f9e184843d3b0b920989",
+      "e61645240bdad0851d77ba581f12bca1",
+      "56780d65123b526b0592fa8464902c3b",
+      "feac58bfeeb7c8e678ec17883eb4efeb",
+      "c67ec7ba71c574af3e599d4c83b4c865",
+      "4a0be4eb4986b92c727e51ba8754fee4",
+      "f32e96520c62f87e4dc64445bf20f9ab",
+      "3b67b5e0edece0471d4ee9a4623a88ff",
+      "37968301a8e4bcaf8ae5e030fa618ffc"
+     ],
+     "9dcc7b350af85bdc91a917f4cc04b4b6"
+    ],
+    "b": [
+     [
+      "a9119e846a89190a5c8841e0be17fdb2",
+      "7f94e72f18a2f9e184843d3b0b920989",
+      "e61645240bdad0851d77ba581f12bca1",
+      "56780d65123b526b0592fa8464902c3b",
+      "feac58bfeeb7c8e678ec17883eb4efeb",
+      "c67ec7ba71c574af3e599d4c83b4c865",
+      "4a0be4eb4986b92c727e51ba8754fee4",
+      "f32e96520c62f87e4dc64445bf20f9ab",
+      "3b67b5e0edece0471d4ee9a4623a88ff",
+      "37968301a8e4bcaf8ae5e030fa618ffc"
+     ],
+     "9dcc7b350af85bdc91a917f4cc04b4b6"
+    ]
+   },
+   "pass": true
+  },
+  "D1 numba repeat in-process U=1": {
+   "detail": {
+    "a": [
+     [
+      "842a279aba070cd97c4f424a7a5ad4e1"
+     ],
+     "1b609ffc02caa2279226c908e5e088e3"
+    ],
+    "b": [
+     [
+      "842a279aba070cd97c4f424a7a5ad4e1"
+     ],
+     "1b609ffc02caa2279226c908e5e088e3"
+    ]
+   },
+   "pass": true
+  },
+  "D1 numba repeat in-process U=10": {
+   "detail": {
+    "a": [
+     [
+      "842a279aba070cd97c4f424a7a5ad4e1",
+      "94ad81fda0a2ad85bba1ecb12f1e9905",
+      "20c339dbee0a2e2f1613b37abd083c17",
+      "f846a46c2fbf828dceda8f05ddc061af",
+      "d309ac53e35bf272de596cff0860702b",
+      "873feb881d1cc071c73e53d908a27393",
+      "757e6b4f2e3518c809d85b372d123126",
+      "c46b989e0f4b05f0637e00d2c087aeea",
+      "bfdc72577febbee6d6bf7c3a9f975ca8",
+      "9066315821921ad34227a0f4ede4a801"
+     ],
+     "45bfa41c72c755f966eecc9ca5fd7539"
+    ],
+    "b": [
+     [
+      "842a279aba070cd97c4f424a7a5ad4e1",
+      "94ad81fda0a2ad85bba1ecb12f1e9905",
+      "20c339dbee0a2e2f1613b37abd083c17",
+      "f846a46c2fbf828dceda8f05ddc061af",
+      "d309ac53e35bf272de596cff0860702b",
+      "873feb881d1cc071c73e53d908a27393",
+      "757e6b4f2e3518c809d85b372d123126",
+      "c46b989e0f4b05f0637e00d2c087aeea",
+      "bfdc72577febbee6d6bf7c3a9f975ca8",
+      "9066315821921ad34227a0f4ede4a801"
+     ],
+     "45bfa41c72c755f966eecc9ca5fd7539"
+    ]
+   },
+   "pass": true
+  },
+  "D2 jax two processes U=1": {
+   "detail": {
+    "a": "9e2680a12fdd3d8f49b5a29c21a55a31",
+    "b": "9e2680a12fdd3d8f49b5a29c21a55a31"
+   },
+   "pass": true
+  },
+  "D2 jax two processes U=100": {
+   "detail": {
+    "a": "8fe0a0b79b60bdcac20993c6c7f568f8",
+    "b": "8fe0a0b79b60bdcac20993c6c7f568f8"
+   },
+   "pass": true
+  },
+  "D2 numba two processes U=1": {
+   "detail": {
+    "a": "1b609ffc02caa2279226c908e5e088e3",
+    "b": "1b609ffc02caa2279226c908e5e088e3"
+   },
+   "pass": true
+  },
+  "D2 numba two processes U=100": {
+   "detail": {
+    "a": "9967dff39204e568badeb0e087698cdf",
+    "b": "9967dff39204e568badeb0e087698cdf"
+   },
+   "pass": true
+  },
+  "D3 jax single vs batched / position": {
+   "detail": {
+    "batch1000_vs_singles_units0-9_equal": 10,
+    "batch100_vs_batch1000_units0-99_equal": 100,
+    "batch100_vs_singles_units0-9_equal": 10,
+    "batch10_vs_singles_units0-9_equal": 10,
+    "offset_batch_units5-14_vs_batch1000_equal": 10
+   },
+   "pass": true
+  },
+  "D3 numba single vs batched / position": {
+   "detail": {
+    "batch1000_vs_singles_units0-9_equal": 10,
+    "batch100_vs_batch1000_units0-99_equal": 100,
+    "batch100_vs_singles_units0-9_equal": 10,
+    "batch10_vs_singles_units0-9_equal": 10,
+    "offset_batch_units5-14_vs_batch1000_equal": 10
+   },
+   "pass": true
+  },
+  "D4 jax devices 1/2/4 + intra-op threads": {
+   "detail": {
+    "sharded_ndev1_eq_vmap": true,
+    "sharded_ndev2_eq_vmap": true,
+    "sharded_ndev4_eq_vmap": true,
+    "vmap_multithread_eigen_eq_single_thread": true
+   },
+   "pass": true
+  },
+  "D4 numba threads 1/2/4 (+serial loop)": {
+   "detail": {
+    "equal_to_1thread": {
+     "1": true,
+     "2": true,
+     "4": true
+    }
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=1 k=4800": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 4800,
+    "outputs_identical": true,
+    "snapshot_bytes": 153
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=1 k=5237": {
+   "detail": {
+    "final_state_identical": false,
+    "k_snapshot": 5237,
+    "outputs_identical": false,
+    "snapshot_bytes": 153
+   },
+   "pass": false
+  },
+  "D5 jax snapshot/restore U=10 k=4800": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 4800,
+    "outputs_identical": true,
+    "snapshot_bytes": 1019
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=10 k=5237": {
+   "detail": {
+    "final_state_identical": false,
+    "k_snapshot": 5237,
+    "outputs_identical": false,
+    "snapshot_bytes": 1019
+   },
+   "pass": false
+  },
+  "D5 numba snapshot/restore U=1 k=4800": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 4800,
+    "outputs_identical": true,
+    "snapshot_bytes": 153
+   },
+   "pass": true
+  },
+  "D5 numba snapshot/restore U=1 k=5237": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 5237,
+    "outputs_identical": true,
+    "snapshot_bytes": 153
+   },
+   "pass": true
+  },
+  "D5 numba snapshot/restore U=10 k=4800": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 4800,
+    "outputs_identical": true,
+    "snapshot_bytes": 1019
+   },
+   "pass": true
+  },
+  "D5 numba snapshot/restore U=10 k=5237": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 5237,
+    "outputs_identical": true,
+    "snapshot_bytes": 1019
+   },
+   "pass": true
+  },
+  "D6 jax block length 1/240/2400": {
+   "detail": {
+    "1": {
+     "digest": "8a98d8e40947fb07821ee23d338b8bcc",
+     "state": "2e41589053d4228b85e7fb792b33d5d9"
+    },
+    "240": {
+     "digest": "8a98d8e40947fb07821ee23d338b8bcc",
+     "state": "57fce0dd4153bfc54ed23ede5282d8b3"
+    },
+    "2400": {
+     "digest": "8a98d8e40947fb07821ee23d338b8bcc",
+     "state": "57fce0dd4153bfc54ed23ede5282d8b3"
+    }
+   },
+   "pass": false
+  },
+  "D6 numba block length 1/240/2400": {
+   "detail": {
+    "1": {
+     "digest": "bdd15ad0e36643bdf19fd5881812d4f8",
+     "state": "7048aca3ebf1418cef5b009c8acc95e4"
+    },
+    "240": {
+     "digest": "bdd15ad0e36643bdf19fd5881812d4f8",
+     "state": "7048aca3ebf1418cef5b009c8acc95e4"
+    },
+    "2400": {
+     "digest": "bdd15ad0e36643bdf19fd5881812d4f8",
+     "state": "7048aca3ebf1418cef5b009c8acc95e4"
+    }
+   },
+   "pass": true
+  }
+ },
+ "jax_unroll": 4,
+ "machine": {
+  "cpu": "Apple M4",
+  "eff_cores": "6",
+  "env": {
+   "NUMBA_CACHE_DIR": null,
+   "NUMBA_NUM_THREADS": null,
+   "OMP_NUM_THREADS": null,
+   "XLA_FLAGS": null
+  },
+  "machine": "arm64",
+  "mem_gb": 16.0,
+  "ncpu": 10,
+  "perf_cores": "4",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+   "jax": "0.11.2",
+   "jaxlib": "0.11.2",
+   "llvmlite": "0.50.0",
+   "numba": "0.68.0",
+   "numpy": "2.5.4",
+   "python": "3.13.3",
+   "scipy": "1.18.1"
+  }
+ },
+ "numba_vs_jax_singles_equal": 0,
+ "steps": 14400
+}

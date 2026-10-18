@@ -1,0 +1,99 @@
+{
+  "type": "record",
+  "name": "orders_status",
+  "namespace": "phalanx.contract.v0",
+  "doc": "Order lifecycle: accepted, queued, in work, completed, rejected (with reason). One record per status change.",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": "string",
+      "doc": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": "string",
+      "doc": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "order_id",
+      "type": "string",
+      "doc": "Order this status refers to.",
+      "phalanx.basis": "ARCH §11.1",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "status_seq",
+      "type": "long",
+      "doc": "Index of this status change within the order (0, 1, 2, ...).",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-15",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "OrderStatus",
+        "doc": "Order lifecycle state.",
+        "symbols": [
+          "ACCEPTED",
+          "QUEUED",
+          "IN_WORK",
+          "COMPLETED",
+          "REJECTED"
+        ]
+      },
+      "doc": "Lifecycle state.",
+      "phalanx.basis": "ARCH §11.1",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "reason",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Reason; required when status is REJECTED.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (rejected, with reason)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_status",
+      "type": "long",
+      "doc": "Simulation time of the status change. The event and availability time of the record.",
+      "phalanx.basis": "ARCH §11.1; ASSUMPTION: A-W0.4-15",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "result_record_ids",
+      "type": {
+        "type": "array",
+        "items": "phalanx.contract.v0.RecordId"
+      },
+      "doc": "record_ids of the normal records the execution produced; empty if none.",
+      "phalanx.basis": "ARCH §11.1 (every executed order produces normal records); ASSUMPTION: A-W0.4-15",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "orders.status",
+  "phalanx.restricted": false
+}

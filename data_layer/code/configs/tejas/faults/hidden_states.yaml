@@ -1,0 +1,65 @@
+# Hidden-state catalogue (architecture §5.2, M10): the 50 states of
+# research_notes/.../not_measured_states.csv plus per-serial life consumption, with their observability class
+# (report §2 table), owner (the identity that keys them: engine serial, component serial, sensor serial, tail),
+# M10 process family (architecture §9.2) and where they live: a port slot (health.engine, health.actuator,
+# health.sensor_bias) or an M10 hidden state ("m10:<name>", phalanx.health.layout.hidden_entries; the
+# health.utility port exports a subset of them in M09's index map); every slot is a labels.truth subject.
+# tests/unit/test_health_catalogue.py checks this file against the CSV and against the M10 index maps.
+format: phalanx.hidden_states/1
+classes: [model_observable, usage_inferred, late_symptom, ground_inspection]
+states:
+  NM.ENG.FAN_HEALTH:      {class: model_observable, owner: engine_serial, process: "init U(0,1%) + Wiener fouling + gamma erosion + FOD shocks (M11)", slots: ["health.engine:fan_eta", "health.engine:fan_flow"]}
+  NM.ENG.HPC_HEALTH:      {class: model_observable, owner: engine_serial, process: "init + Wiener fouling + gamma erosion (accelerating) + rub-in share + FOD shocks", slots: ["health.engine:hpc_eta", "health.engine:hpc_flow"]}
+  NM.ENG.HPT_HEALTH:      {class: model_observable, owner: engine_serial, process: "init + gamma erosion + rub-in share + N-CMAPSS abnormal onset", slots: ["health.engine:hpt_eta", "health.engine:hpt_flow"]}
+  NM.ENG.LPT_HEALTH:      {class: model_observable, owner: engine_serial, process: "init + gamma erosion", slots: ["health.engine:lpt_eta", "health.engine:lpt_flow"]}
+  NM.ENG.TIP_CLEARANCE:   {class: model_observable, owner: engine_serial, process: "rub-in step + exponential after each build", slots: ["m10:eng{e}_tip_clearance"]}
+  NM.ENG.BLADE_CRACK:     {class: late_symptom, owner: engine_serial, process: "Weibull initiation (TAC) + Paris growth", slots: ["m10:eng{e}_blade_crack"]}
+  NM.ENG.DISK_LIFE:       {class: usage_inferred, owner: engine_serial, process: "TAC / LCF limit (Miner)", slots: ["m10:eng{e}_disk_lcf"]}
+  NM.ENG.BLADE_CREEP:     {class: usage_inferred, owner: engine_serial, process: "stress-rupture equivalent hours / creep limit", slots: ["m10:eng{e}_blade_creep"]}
+  NM.ENG.BEARING_SPALL:   {class: late_symptom, owner: engine_serial, process: "Weibull initiation (EOT) + exponential growth; debris ∝ growth", slots: ["m10:eng{e}_bearing_spall", "m10:eng{e}_oil_debris"]}
+  NM.ENG.SEAL_WEAR:       {class: late_symptom, owner: engine_serial, process: "gamma per EOT", slots: ["m10:eng{e}_seal_wear"]}
+  NM.ENG.OIL_CONDITION:   {class: ground_inspection, owner: engine_serial, process: "linear Fe slope per EOT + debris-driven rise; reset by oil change", slots: ["m10:eng{e}_oil_fe"]}
+  NM.ENG.FUEL_NOZZLE:     {class: late_symptom, owner: engine_serial, process: "gamma coking per EOT", slots: ["health.engine:comb_eta", "m10:eng{e}_fuel_nozzle"]}
+  NM.ENG.VG_ACTUATION:    {class: model_observable, owner: engine_serial, process: "zero-drift random walk per EOT (+ mis-rig faults, M11)", slots: ["m10:eng{e}_vg_offset"]}
+  NM.ENG.NOZZLE_HW:       {class: late_symptom, owner: engine_serial, process: "gamma per EOT (area growth and hardware wear)", slots: ["health.engine:nozzle_area", "m10:eng{e}_nozzle_hw"]}
+  NM.ENG.AB_SPRAYBAR:     {class: late_symptom, owner: engine_serial, process: "gamma per AB light", slots: ["m10:eng{e}_ab_spraybar"]}
+  NM.ENG.SENSOR_TRUTH:    {class: model_observable, owner: sensor_serial, process: "installation bias N(0, σ_class) + random-walk drift (AD-26, separate from deterioration)", slots: ["health.sensor_bias:ENG.*"]}
+  NM.ENG.FADEC_HW:        {class: late_symptom, owner: engine_serial, process: "gamma per flight (thermal cycle) + intermittents (M11)", slots: ["m10:eng{e}_fadec_hw"]}
+  NM.SPS.AMAGB_WEAR:      {class: usage_inferred, owner: component_serial, process: "gamma per EOT", slots: ["m10:amagb_wear"]}
+  NM.SPS.JFS_HEALTH:      {class: model_observable, owner: component_serial, process: "gamma per JFS start (cold-soak multiplier)", slots: ["m10:jfs_health", "m10:jfs_drag"]}
+  NM.SPS.BATT_SOH:        {class: model_observable, owner: component_serial, process: "gamma per calendar day", slots: ["m10:batt_fade"]}
+  NM.HYD.PUMP_EFF:        {class: model_observable, owner: component_serial, process: "incubation (per-serial) then linear growth to limit; contamination accelerates", slots: ["m10:hyd1_pump_wear", "m10:hyd2_pump_wear"]}
+  NM.HYD.COMPENSATOR:     {class: model_observable, owner: component_serial, process: "zero-drift random walk per flight hour", slots: ["m10:hyd1_compensator", "m10:hyd2_compensator"]}
+  NM.HYD.ACCUM_PRECHARGE: {class: ground_inspection, owner: component_serial, process: "gamma per calendar day (≥1 %/yr)", slots: ["m10:hyd1_precharge_loss", "m10:hyd2_precharge_loss"]}
+  NM.HYD.FILTER_LOADING:  {class: ground_inspection, owner: component_serial, process: "gamma per flight hour x contamination", slots: ["m10:hyd1_filter_loading", "m10:hyd2_filter_loading"]}
+  NM.HYD.FLUID_CONTAM:    {class: ground_inspection, owner: tail, process: "reflecting Wiener per flight hour (+ contaminated-servicing faults, M11)", slots: ["m10:hyd1_contamination", "m10:hyd2_contamination"]}
+  NM.HYD.ACTUATOR_LEAK:   {class: model_observable, owner: component_serial, process: "gamma per flight hour (Archard, x12 poor lubrication)", slots: ["health.actuator:*", "m10:hyd1_sys_leak", "m10:hyd2_sys_leak"]}
+  NM.HYD.HOSE_FITTING:    {class: late_symptom, owner: component_serial, process: "gamma per flight hour", slots: ["m10:hyd1_hose_fitting", "m10:hyd2_hose_fitting", "m10:hyd1_ext_leak", "m10:hyd2_ext_leak"]}
+  NM.FCS.ACTUATOR_FRICTION: {class: late_symptom, owner: component_serial, process: "gamma per flight hour", slots: ["m10:act_friction_*"]}
+  NM.FCS.SENSOR_BIAS:     {class: model_observable, owner: sensor_serial, process: "installation bias + drift (AD-26)", slots: ["health.sensor_bias:FCS.*"]}
+  NM.AD.TRANSDUCER_DRIFT: {class: model_observable, owner: sensor_serial, process: "installation bias + drift (AD-26); common-mode moisture offsets are M11 sensor faults", slots: ["health.sensor_bias:AD.*"]}
+  NM.AD.VANE_FRICTION:    {class: model_observable, owner: component_serial, process: "gamma per flight hour", slots: ["m10:ad_vane_friction_aoa_l", "m10:ad_vane_friction_aoa_r", "m10:ad_vane_friction_aoss"]}
+  NM.AD.HEATER_ELEMENT:   {class: model_observable, owner: component_serial, process: "gamma per flight hour", slots: ["m10:ad_heater"]}
+  NM.FUEL.PROBE_DRIFT:    {class: model_observable, owner: component_serial, process: "zero-drift random walk per flight hour (gauged-quantity bias)", slots: ["m10:fuel_probe_drift", "health.sensor_bias:FUEL.*"]}
+  NM.FUEL.PUMP_WEAR:      {class: late_symptom, owner: component_serial, process: "gamma per EOT", slots: ["m10:fuel_pump_wear"]}
+  NM.ELEC.GEN_HEALTH:     {class: model_observable, owner: component_serial, process: "gamma per EOT (+ diode faults, M11)", slots: ["m10:gen_health"]}
+  NM.ELEC.WIRING:         {class: late_symptom, owner: tail, process: "gamma per flight hour x humidity (drives M11 intermittent rates)", slots: ["m10:wiring"]}
+  NM.AV.SOLDER_FATIGUE:   {class: late_symptom, owner: component_serial, process: "Coffin-Manson Miner sum per flight thermal cycle", slots: ["m10:avionics_solder"]}
+  NM.ECS.HX_FOULING:      {class: model_observable, owner: component_serial, process: "reflecting Wiener per calendar day, drift ∝ dust", slots: ["m10:ecs_hx_fouling"]}
+  NM.ECS.ACM_WEAR:        {class: model_observable, owner: component_serial, process: "gamma per flight hour", slots: ["m10:ecs_acm_wear"]}
+  NM.ECS.CANOPY_SEAL:     {class: late_symptom, owner: component_serial, process: "gamma per flight hour", slots: ["m10:ecs_canopy_seal"]}
+  NM.LSS.OBOGS_SIEVE:     {class: late_symptom, owner: component_serial, process: "gamma per flight hour", slots: ["m10:lss_obogs_sieve"]}
+  NM.LG.BRAKE_WEAR:       {class: usage_inferred, owner: component_serial, process: "gamma per landing x brake energy", slots: ["m10:brake_wear_l", "m10:brake_wear_r"]}
+  NM.LG.BRAKE_TEMP:       {class: usage_inferred, owner: M09, process: "dynamic thermal state owned by M09 (util.brake_t); no M10 process", slots: []}
+  NM.LG.TYRE:             {class: usage_inferred, owner: component_serial, process: "gamma tread wear per landing; linear pressure loss per day since service", slots: ["m10:tyre_wear_l", "m10:tyre_wear_r", "m10:tyre_wear_n", "m10:tyre_p_loss_l", "m10:tyre_p_loss_r", "m10:tyre_p_loss_n"]}
+  NM.LG.STRUT_SERVICE:    {class: ground_inspection, owner: component_serial, process: "gamma per landing", slots: ["m10:strut_service_l", "m10:strut_service_r", "m10:strut_service_n"]}
+  NM.LG.LOCK_SPRING:      {class: late_symptom, owner: component_serial, process: "gamma per gear cycle", slots: ["m10:lock_spring_l", "m10:lock_spring_r", "m10:lock_spring_n"]}
+  NM.LG.CHUTE:            {class: usage_inferred, owner: component_serial, process: "streamings / life", slots: ["m10:chute_life"]}
+  NM.STR.FATIGUE:         {class: usage_inferred, owner: tail, process: "Miner damage per Nz level crossing", slots: ["m10:str_fatigue"]}
+  NM.STR.COMPOSITE:       {class: ground_inspection, owner: tail, process: "gamma per flight hour (+ impact shocks, M11)", slots: ["m10:str_composite"]}
+  NM.STR.CORROSION_WATER: {class: ground_inspection, owner: tail, process: "reflecting Wiener per calendar day, drift ∝ salt x humidity", slots: ["m10:str_corrosion"]}
+# Catalogue extensions (not rows of not_measured_states.csv):
+extensions:
+  NM.SENSOR_BIAS:         {class: model_observable, owner: sensor_serial, process: "installation bias + drift of physical sensors outside ENG/FCS/AD/FUEL (AD-07 applies to every sensor)", slots: ["health.sensor_bias:*"]}
+  LIFE.ENG:               {class: usage_inferred, owner: engine_serial, process: "truth life consumption: EOT, TAMP, Type I/III/IV, EFTC, SRC, PS3 cycles, TAC, AB lights, starts", slots: []}
+  LIFE.AIRFRAME:          {class: usage_inferred, owner: tail, process: "truth flight time, landings, gear cycles, chute streamings, JFS starts, flights", slots: []}

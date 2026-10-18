@@ -1,0 +1,469 @@
+{
+ "TJ101": {
+  "state": "NMCD",
+  "since": "2026-05-27 08:00:00+05:30",
+  "job": NaN,
+  "open_jobs": 6,
+  "open_job_sys": {
+   "ENG": 2,
+   "LGB": 2,
+   "NAV": 1,
+   "ADC": 1
+  },
+  "open_job_status": {
+   "OPEN": 3,
+   "IN_WORK": 2,
+   "DEFERRED": 1
+  },
+  "open_demands": [],
+  "fh30": 0.0,
+  "sorties30": 0,
+  "fh_total": 60.0,
+  "landings_total": 144,
+  "last_ingest": "2026-06-06 04:40:26+05:30"
+ },
+ "TJ102": {
+  "state": "NMCS",
+  "since": "2026-07-03 17:45:00+05:30",
+  "job": NaN,
+  "open_jobs": 8,
+  "open_job_sys": {
+   "HYD": 2,
+   "NAV": 1,
+   "LGB": 1,
+   "FCS": 1,
+   "AVI": 1,
+   "ENG": 1
+  },
+  "open_job_status": {
+   "OPEN": 3,
+   "IN_WORK": 2,
+   "DEFERRED": 2,
+   "AWAITING_PARTS": 1
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26184-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-07-03 17:56:45+05:30",
+    "age_d": 0.5,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 16.1,
+  "sorties30": 19,
+  "fh_total": 79.1,
+  "landings_total": 176,
+  "last_ingest": "2026-07-03 17:56:45+05:30"
+ },
+ "TJ103": {
+  "state": "FMC",
+  "since": "2026-07-03 20:45:00+05:30",
+  "job": NaN,
+  "open_jobs": 3,
+  "open_job_sys": {
+   "LGB": 2,
+   "NAV": 1
+  },
+  "open_job_status": {
+   "OPEN": 2,
+   "DEFERRED": 1
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26086-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-03-27 08:00:00+05:30",
+    "age_d": 98.9,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 18.0,
+  "sorties30": 22,
+  "fh_total": 64.2,
+  "landings_total": 149,
+  "last_ingest": "2026-07-03 20:45:00+05:30"
+ },
+ "TJ104": {
+  "state": "PMCM",
+  "since": "2026-07-03 21:30:00+05:30",
+  "job": NaN,
+  "open_jobs": 4,
+  "open_job_sys": {
+   "AVI": 1,
+   "LGB": 1,
+   "NAV": 1,
+   "ELE": 1
+  },
+  "open_job_status": {
+   "OPEN": 3,
+   "IN_WORK": 1
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26031-0002",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-01-31 08:00:00+05:30",
+    "age_d": 153.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26045-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-14 08:00:00+05:30",
+    "age_d": 139.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26055-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-24 08:00:00+05:30",
+    "age_d": 129.9,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 19.8,
+  "sorties30": 22,
+  "fh_total": 70.1,
+  "landings_total": 153,
+  "last_ingest": "2026-07-03 21:33:05+05:30"
+ },
+ "TJ105": {
+  "state": "NMCM_S",
+  "since": "2026-07-01 08:00:00+05:30",
+  "job": NaN,
+  "open_jobs": 4,
+  "open_job_sys": {
+   "LGB": 2,
+   "SPS": 1,
+   "ENG": 1
+  },
+  "open_job_status": {
+   "OPEN": 3,
+   "DEFERRED": 1
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26043-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-12 08:00:00+05:30",
+    "age_d": 141.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26055-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-24 08:00:00+05:30",
+    "age_d": 129.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26101-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-11 08:00:00+05:30",
+    "age_d": 83.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26174-0003",
+    "part": "SYN-PN-JFS",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-06-23 14:18:23+05:30",
+    "age_d": 10.7,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 10.3,
+  "sorties30": 12,
+  "fh_total": 80.6,
+  "landings_total": 167,
+  "last_ingest": "2026-07-01 08:00:00+05:30"
+ },
+ "TJ106": {
+  "state": "NMCS",
+  "since": "2026-06-30 08:00:00+05:30",
+  "job": NaN,
+  "open_jobs": 6,
+  "open_job_sys": {
+   "LGB": 3,
+   "ADC": 1,
+   "NAV": 1,
+   "ENG": 1
+  },
+  "open_job_status": {
+   "IN_WORK": 3,
+   "OPEN": 2,
+   "AWAITING_PARTS": 1
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26108-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-18 08:00:00+05:30",
+    "age_d": 76.9,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 16.5,
+  "sorties30": 20,
+  "fh_total": 84.2,
+  "landings_total": 184,
+  "last_ingest": "2026-06-30 14:56:35+05:30"
+ },
+ "TJ107": {
+  "state": "NMCM_U",
+  "since": "2026-07-03 21:30:00+05:30",
+  "job": NaN,
+  "open_jobs": 8,
+  "open_job_sys": {
+   "HYD": 3,
+   "LGB": 2,
+   "AVI": 1,
+   "ELE": 1
+  },
+  "open_job_status": {
+   "OPEN": 3,
+   "IN_WORK": 3,
+   "DEFERRED": 2
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26008-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-01-08 18:28:40+05:30",
+    "age_d": 176.5,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26026-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-01-26 11:16:33+05:30",
+    "age_d": 158.8,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26034-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-03 08:00:00+05:30",
+    "age_d": 150.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26043-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-12 08:00:00+05:30",
+    "age_d": 141.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26029-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-01-29 08:00:00+05:30",
+    "age_d": 155.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26042-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-11 12:14:50+05:30",
+    "age_d": 142.7,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26047-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-16 10:53:03+05:30",
+    "age_d": 137.8,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26073-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-03-14 10:11:02+05:30",
+    "age_d": 111.8,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26082-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-03-23 17:15:14+05:30",
+    "age_d": 102.5,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26090-0002",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-03-31 18:41:30+05:30",
+    "age_d": 94.5,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26099-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-09 17:49:07+05:30",
+    "age_d": 85.5,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26104-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-14 08:13:53+05:30",
+    "age_d": 80.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26111-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-21 19:11:10+05:30",
+    "age_d": 73.5,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26117-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-27 15:06:47+05:30",
+    "age_d": 67.6,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26145-0001",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-05-25 11:38:51+05:30",
+    "age_d": 39.8,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26156-0002",
+    "part": "SYN-PN-HYDP",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-06-05 19:20:45+05:30",
+    "age_d": 28.4,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 12.7,
+  "sorties30": 16,
+  "fh_total": 55.7,
+  "landings_total": 132,
+  "last_ingest": "2026-07-03 21:39:55+05:30"
+ },
+ "TJ108": {
+  "state": "NMCS",
+  "since": "2026-04-03 08:00:00+05:30",
+  "job": NaN,
+  "open_jobs": 5,
+  "open_job_sys": {
+   "LGB": 2,
+   "ENG": 1,
+   "NAV": 1,
+   "AVI": 1
+  },
+  "open_job_status": {
+   "DEFERRED": 3,
+   "OPEN": 1,
+   "AWAITING_PARTS": 1
+  },
+  "open_demands": [
+   {
+    "demand": "D-sulur-26045-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-14 08:00:00+05:30",
+    "age_d": 139.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26055-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-02-24 08:00:00+05:30",
+    "age_d": 129.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26073-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-03-14 08:00:00+05:30",
+    "age_d": 111.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26093-0002",
+    "part": "SYN-PN-CHUTE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-03 08:00:00+05:30",
+    "age_d": 91.9,
+    "status": "OPEN"
+   },
+   {
+    "demand": "D-sulur-26093-0001",
+    "part": "SYN-PN-TYRE",
+    "prio": "AOG",
+    "qty": 1.0,
+    "opened": "2026-04-03 08:00:00+05:30",
+    "age_d": 91.9,
+    "status": "OPEN"
+   }
+  ],
+  "fh30": 0.0,
+  "sorties30": 0,
+  "fh_total": 48.7,
+  "landings_total": 114,
+  "last_ingest": "2026-06-28 16:37:20+05:30"
+ }
+}

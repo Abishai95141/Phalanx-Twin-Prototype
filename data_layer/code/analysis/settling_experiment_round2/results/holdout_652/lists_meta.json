@@ -1,0 +1,19 @@
+{
+ "holdout": "652",
+ "holdout_dir": "/Users/abishaikc/phalanx/data/raw/dashlink_tail652/extracted",
+ "partner_dir": "/Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat",
+ "n": {
+  "holdout": 110,
+  "partner": 110,
+  "early": 55,
+  "late": 55
+ },
+ "median_date_split": [
+  "2003-07-09T15:35",
+  "2003-07-09T17:34"
+ ],
+ "date_range": [
+  "2003-06-25T20:41",
+  "2010-03-15T18:14"
+ ]
+}

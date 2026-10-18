@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Provenance — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 322px 404px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .chaincard { grid-row: 2 / span 2; padding: 22px 28px 20px; }
+  .q { display: flex; align-items: center; gap: 12px; height: 52px; border: 1px solid var(--line-strong); border-radius: 14px; padding: 0 8px 0 16px; background: var(--bg); box-shadow: 0 0 0 4px var(--bg-2); }
+  .q .lbl { font-size: 15px; font-weight: 650; color: var(--ink); white-space: nowrap; }
+  .q .oid { font: 500 13px var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+  .q .oid b { color: var(--ink); font-weight: 650; }
+  .q .kbd { margin-right: 4px; }
+  .q .btn { height: 36px; }
+
+  .chain { position: relative; margin-top: 16px; overflow: auto; min-height: 0; flex: 1; padding-right: 10px; scrollbar-width: thin; }
+  .ev { display: grid; grid-template-columns: 96px 30px minmax(0,1fr) 92px 206px; column-gap: 14px; align-items: center; height: 49px; position: relative; }
+  .ev + .ev { border-top: 1px solid var(--line-2); }
+  .ev .tv { font: 500 13px var(--mono); color: var(--ink-3); white-space: nowrap; }
+  .ev .tv b { color: var(--ink); font-weight: 600; }
+  .ev .rail { position: relative; height: 100%; display: grid; place-items: center; }
+  .ev .rail::before { content: ""; position: absolute; left: 14px; top: 0; bottom: 0; width: 1.5px; background: var(--line); }
+  .ev:first-child .rail::before { top: 50%; } .ev:last-child .rail::before { bottom: 50%; }
+  .ev .rail i { width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); z-index: 1; display: block; }
+  .ev.h .rail i { background: var(--ink); }
+  .ev.pend .rail i { border-style: dashed; border-color: var(--ink-4); }
+  .ev .tt { min-width: 0; }
+  .ev .tt .a { font-size: 15px; font-weight: 650; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ev .tt .b { font-size: 13px; color: var(--ink-3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ev .hx { font: 500 12.5px var(--mono); color: var(--ink-4); text-align: right; white-space: nowrap; }
+  .ev .hx b { color: var(--ink-2); font-weight: 600; }
+  .ev .hx .c { color: var(--ink-5); margin-right: 6px; }
+  .ev.on { background: var(--accent-wash); border-radius: 12px; box-shadow: inset 0 0 0 1px var(--accent-line); border-top-color: transparent; }
+  .ev.on + .ev { border-top-color: transparent; }
+  .ev.on .rail i { background: var(--accent); border-color: var(--accent); }
+  .rid2 { font: 500 12px var(--mono); color: var(--wire); }
+
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+  .rp .kv2 { margin-top: 18px; row-gap: 11px; font-size: 14px; }
+  .rp .kv2 > span:nth-child(even) { font: 600 13px var(--mono); color: var(--ink); display: inline-flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .ok2 { color: var(--ok); display: inline-flex; }
+  .mp .r2 { grid-template-columns: 104px minmax(0,1fr) auto; min-height: 46px; column-gap: 14px; }
+  .mp .r2 .ttl { font-size: 14px; }
+  .mp .r2 .why { margin-top: 1px; font-size: 13px; }
+  .std { font: 700 12px var(--mono); color: var(--ink-2); }
+  .evn { font: 600 12px var(--mono); color: var(--ink-4); white-space: nowrap; }
+
+  /* ---- tablet + phone (below 1200 px) ---- */
+  @media (max-width: 1199px) {
+    .chaincard { grid-row: auto; padding: 22px; }
+    .rp, .mp { grid-row: auto; }
+    .chain { overflow: visible; padding-right: 0; }
+    .ev { grid-template-columns: 82px 26px minmax(0,1fr) 78px 180px; column-gap: 10px; height: auto; min-height: 52px; padding: 4px 0; }
+    .ev .rail::before { left: 12.25px; }
+    .q .oid { min-width: 0; }
+    /* tablet: replay and the assurance mapping side by side; a mapping row puts its events under the text */
+    .rp, .mp { grid-column: span 3; }
+    .mp .r2 { grid-template-columns: 82px minmax(0, 1fr); row-gap: 3px; align-items: start; min-height: 0; padding-top: 11px; padding-bottom: 11px; }
+    .mp .r2 .std { padding-top: 2px; }
+    .mp .r2 .evn { grid-column: 2; white-space: normal; }
+  }
+  @media (max-width: 699px) {
+    .chaincard { padding: 18px 14px; }
+    /* query bar: label on the first line, the order id under it */
+    .q { height: auto; min-height: 52px; flex-wrap: wrap; row-gap: 4px; padding: 10px 14px; }
+    .q .lbl { flex: 1; font-size: 14.5px; }
+    .q .kbd { display: none; }
+    .q .oid { flex-basis: 100%; order: 3; font-size: 12px; padding-left: 30px; }
+    /* chain event: rail | time + badge, title, text, hash */
+    .ev { grid-template-columns: 24px minmax(0, 1fr) auto; grid-template-rows: auto auto auto; column-gap: 10px; row-gap: 3px;
+      align-items: start; min-height: 0; padding: 12px 4px 12px 0; }
+    .ev > .tv { grid-column: 2; grid-row: 1; font-size: 12.5px; }
+    .ev > .rail { grid-column: 1; grid-row: 1 / -1; height: auto; align-self: stretch; place-items: start center; padding-top: 3px; margin: -12px 0; padding-top: 15px; }
+    .ev > .tt { grid-column: 2 / -1; grid-row: 2; }
+    .ev > span:nth-child(4) { grid-column: 3; grid-row: 1; }
+    .ev > .hx { grid-column: 2 / -1; grid-row: 3; text-align: left; font-size: 12px; }
+    .ev .rail::before { left: calc(50% - .75px); }
+    .ev:first-child .rail::before { top: 20px; } .ev:last-child .rail::before { bottom: auto; height: 20px; }
+    .ev .tt .a { white-space: normal; font-size: 15px; }
+    .ev .tt .b { white-space: normal; font-size: 13.5px; overflow-wrap: anywhere; }
+    .ev.on { padding-left: 0; }
+    .rp, .mp { grid-column: 1 / -1; }
+    .rp .kv2 { font-size: 14px; }
+    .rp .kv2 > span:nth-child(even) { font-size: 12.5px; overflow-wrap: anywhere; }
+  }
+</style>
+</head>
+<body data-page="provenance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c8 chaincard" data-shot="chain">
+    <div class="q" data-shot="query" style="cursor:pointer" id="q">
+      <i data-i="search" class="ico" style="color:var(--ink-3)"></i>
+      <span class="lbl">Why was this order issued?</span>
+      <span class="oid" id="oid"></span>
+      <span class="kbd">⏎</span>
+    </div>
+    <div class="chain" id="chain"></div>
+  </section>
+
+  <section class="panel2 c4 rp" data-shot="replay">
+    <div class="kick" id="rp-kick"></div>
+    <div class="t2">Re-running the epoch gives the identical order</div>
+    <div class="sub2">Fresh process, input rows shuffled before hashing.</div>
+    <div class="kv2" id="replay"></div>
+  </section>
+
+  <section class="panel2 c4 mp" data-shot="standards">
+    <div class="kick">Assurance mapping</div>
+    <div class="t2">What this chain gives an auditor</div>
+    <div class="rows2" style="margin-top:12px" id="map"></div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const MO = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
+const tv = s => { const d = s.slice(5, 10).split('-'); return `${+d[1]} ${MO[d[0]]} <b>${s.slice(11, 16)}</b>`; };
+let ORDER = null;
+// '20260622T0800' (the order's own epoch) → 'Mon 22 Jun 08:00 IST'
+const epochLabel = e => /^\d{8}T\d{4}$/.test(e || '') ? PHX.asofLabel(`${e.slice(0, 4)}-${e.slice(4, 6)}-${e.slice(6, 8)}T${e.slice(9, 11)}:${e.slice(11, 13)}`) : `${PHX.clock().day} ${PHX.clock().issue} IST`;
+PHX_API.boot({ page: 'provenance', title: 'Provenance',
+  async load(A) {
+    await Promise.all([A.want('epoch'), A.want('board')]);
+    const all = (window.PHX_EP && PHX_EP.orders) || [], issued = all.filter(o => !o.dropped), focus = window.PHX_DEC && PHX_DEC.focus;
+    const mine = issued.filter(o => o.item === focus);
+    ORDER = A.q.get('order') || (mine.find(o => o.authority !== 'HUMAN') || mine[0] || issued[0] || {}).order_id;
+    if (!ORDER) throw A.empty({ kick: 'Provenance', title: 'No order to trace yet',
+      text: `The chain is written as the epoch runs: snapshot, findings, policy, approval, gateway verdict. Orders reach the gateway at ${PHX.clock().issue}; open this page then to see why each one was issued.`,
+      link: { label: 'Open the 08:00 orders', href: PHX_API.href('epoch.html') } });
+    await A.need('provenance', ORDER);
+  },
+  notFound: e => !/\/provenance\//.test(e.path || '') ? null : ({ kick: 'Provenance', title: 'No events for this order yet',
+    text: `<span class="mono" style="font-size:13px">${PHX.esc(ORDER)}</span> has not been written to the event log. An order joins the chain when its recommendation is proposed.`,
+    link: { label: 'Open the 08:00 orders', href: PHX_API.href('epoch.html') } }),
+  render() {
+    const R = PHX_PROV, E = R.chain, parts = R.order_id.split(':');
+    $('tabbar').innerHTML = '<div class="tabs2"><span class="on">Why this order</span></div>';
+    $('oid').innerHTML = `${esc(parts.slice(0, 6).join(':'))}:<b>${esc(parts[6])}</b>`;
+    $('chain').innerHTML = E.map(e => {
+      if (e.scheduled) return `<div class="ev pend"><span class="tv">${tv(e.t_valid)}</span><span class="rail"><i></i></span>
+    <div class="tt"><div class="a" style="color:var(--ink-3)">${esc(e.title)}</div><div class="b">Scheduled · the frozen order set submits at ${esc(PHX.clock().issue)}</div></div>
+    <span><span class="auth agent">AGENT</span></span><span class="hx"><span class="c">pending</span></span></div>`;
+      const human = e.actor.startsWith('HUMAN'), board = E.some(x => x.scheduled), on = !board && (e.type === 'ORDER_ACCEPTED' || e.type === 'GATEWAY_VERDICT'), pend = e.type === 'LABEL_PENDING';
+      const badge = human ? '<span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span>' : '<span class="auth agent">AGENT</span>';
+      const cause = e.causation_id ? '← ' + String(+e.causation_id.split(':')[1]).padStart(2, '0') : 'root';
+      return `<div class="ev ${human ? 'h' : ''} ${on ? 'on' : ''} ${pend ? 'pend' : ''}">
+    <span class="tv">${tv(e.t_valid)}</span><span class="rail"><i></i></span>
+    <div class="tt"><div class="a">${esc(e.title)}</div><div class="b">${e.text}</div></div>
+    <span>${badge}</span>
+    <span class="hx"><span class="c">${cause}</span>${esc(e.prev_hash.slice(0, 6))} → <b>${esc(e.hash.slice(0, 8))}</b></span>
+  </div>`;
+    }).join('') + (E.some(e => e.type === 'ORDER_ACCEPTED' || e.type === 'GATEWAY_VERDICT' || e.scheduled) ? '' : `<div class="note" style="margin-top:14px">The chain continues as the epoch runs: approval, gateway verdict at ${esc(PHX.clock().issue)}, then status and outcome.</div>`);
+    $('rp-kick').textContent = `Replay · epoch ${parts[3]}`;
+    replayKV(R.replay);
+    $('map').innerHTML = !(R.standards || []).length ? '<div class="note" style="margin-top:6px">Mapped to the assurance standards once the order is issued.</div>' : R.standards.map(m => `<div class="r2"><span class="std">${esc(m.std)}</span><div><div class="ttl">${esc(m.text)}</div></div><span class="evn">${esc(m.events)}</span></div>`).join('');
+    return { page: 'provenance', title: 'Provenance', sub: 'One hash-chained log answers why any order was issued',
+      chips: [{ i: 'clock', t: `Epoch <b>${esc(epochLabel(parts[3]))}</b>` }, R.verified ? { k: 'ok', i: 'hash', t: 'Chain verified' } : { i: 'hash', t: 'Chain not verified yet' }],
+      headExtra: '<button class="btn sm" id="verify"><i data-i="hash" class="ico-sm"></i>Verify chain</button><button class="btn sm" id="replay-btn"><i data-i="rewind" class="ico-sm"></i>Replay</button>',
+      after: wire };
+  } });
+function replayKV(rp) {
+  const R = PHX_PROV, parts = R.order_id.split(':'), trace = (R.chain.find(e => e.type === 'POLICY_EVALUATED') || { refs: {} }).refs.trace_hash || '';
+  const allOk = k => rp.length > 0 && rp.every(x => x[k]);
+  const ck = ok => !rp.length ? '' : ok ? '<span class="ok2"><i data-i="check" class="ico-sm"></i></span>' : '✗';
+  $('replay').innerHTML = [
+    ['Order id', parts[6], allOk('order_equal')], ['Snapshot hash', (R.snapshot || '—').slice(0, 12), allOk('snapshot_equal')],
+    ['Policy trace hash', trace ? trace.slice(0, 12) : '—', allOk('trace_equal')], ['Policy version', (R.policy_version || '').includes('jdm.') ? 'jdm.' + R.policy_version.split('jdm.')[1] : (R.policy_version || '—'), allOk('policy_equal')],
+    ['Replays', rp.length ? `${rp.filter(x => x.order_equal).length} of ${rp.length} identical` : 'not run yet · press Replay', allOk('order_equal')]
+  ].map(r => `<span>${r[0]}</span><span>${esc(r[1])} ${ck(r[2])}</span>`).join('');
+  PHX.icons($('replay'));
+}
+const parts3 = () => PHX_PROV.order_id.split(':')[3] || '';
+function wire() {
+  // order picker: every order of the epoch
+  $('q').addEventListener('click', () => {
+    const O = ((window.PHX_EP && PHX_EP.orders) || []).filter(o => !o.dropped);
+    const sh = PHX.sheet(`<span class="kick">Why was this order issued?</span><div class="t2" style="margin-top:6px">Orders of epoch ${esc(PHX.clock().epoch || parts3())}</div>
+      <div class="rows2" style="margin-top:16px">${O.map(o => `<div class="r2" style="grid-template-columns:76px minmax(0,1fr) auto;min-height:60px;cursor:pointer${o.order_id === PHX_PROV.order_id ? '' : ''}" data-href="${esc(PHX_API.href('provenance.html', { order: o.order_id }))}"><span class="tailtag">${esc(o.target_tail_no)}</span><div><div class="ttl" style="font:650 14px var(--mono)">${esc(o.action)}</div><div class="why">${esc(o.what || '')}</div></div><span class="rid">${esc(o.order_id.split(':').pop())}</span></div>`).join('')}</div>`);
+    PHX.links(sh);
+  });
+  $('verify').addEventListener('click', async () => {
+    const res = await PHX_API.verify(PHX_PROV.order_id);
+    if (!res.ok) { PHX.notice(PHX_API.explain(res)); return; }
+    const ok = res.data && (res.data.ok ?? res.data.verified);
+    PHX.notice(ok ? `Chain verified · ${esc(String((res.data.events ?? '')))} events · head ${esc(String(res.data.head || '').slice(0, 8))}` : `Chain broken at ${esc(String(res.data && res.data.first_bad || '?'))}`, ok ? 'ok' : 'warn', 'hash');
+  });
+  $('replay-btn').addEventListener('click', async () => {
+    const res = await PHX_API.replay(PHX_PROV.order_id);
+    if (!res.ok) { PHX.notice(PHX_API.explain(res)); return; }
+    if (res.data && res.data.replay) { PHX_PROV.replay = res.data.replay; replayKV(res.data.replay); }
+    PHX.notice(res.data && res.data.order_id === PHX_PROV.order_id ? 'Replay gave the identical order id' : 'Replay gave a different order id', res.data && res.data.order_id === PHX_PROV.order_id ? 'ok' : 'warn', 'rewind');
+  });
+}
+</script>
+</body></html>

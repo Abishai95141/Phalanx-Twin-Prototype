@@ -1,0 +1,56 @@
+# Kaggle commands for the main session to run (the subagent's own Kaggle CLI calls are blocked by the auto-mode
+# classifier, reason "Data Exfiltration"; see results/log_kaggle.txt). All kernels are private (is_private: true).
+# Nothing here prints or touches the token.
+
+## 1. Environment smoke kernel (no data)
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/smoke_env
+
+## 2. Sample reproducibility kernel (dataset abishaicenthil/phalanx-settling-sample; one comparison, 40 flights)
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/repro_s40
+
+## 3. Poll (every few minutes) and download when status is "complete"
+/Users/abishaikc/.local/bin/kaggle kernels status abishaicenthil/phalanx-settling-env-smoke
+/Users/abishaikc/.local/bin/kaggle kernels status abishaicenthil/phalanx-settling-repro-s40
+/Users/abishaikc/.local/bin/kaggle kernels output abishaicenthil/phalanx-settling-env-smoke -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/out/smoke_env
+/Users/abishaikc/.local/bin/kaggle kernels output abishaicenthil/phalanx-settling-repro-s40 -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/out/repro_s40
+
+## 4. After download, tell the subagent; it verifies with:
+##    python -I src/s13_kaggle_verify.py results/kaggle_verify/local/disc/sim_T1_L1_eng_s40.json \
+##           <out>/repro_s40/results/disc/sim_T1_L1_eng_s40.json
+
+## 5. Full v2 dataset for step 3 (PRIVATE; 26 complete feature dirs, 5,597 files, 5.45 GB, + code + splits.csv).
+##    Staged with hard links at research_sources/settling_synthetic/kaggle/ds_full (no raw or synthetic MAT files).
+##    Can be uploaded now (it does not depend on the verification):
+/Users/abishaikc/.local/bin/kaggle datasets create -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/ds_full -r zip
+
+## 6. Step-3 shards -- ONLY after #4 reports "agree": true. Push the first one, and wait until the subagent has
+##    spot-checked its output before pushing the rest. Comparisons per shard: research_sources/settling_synthetic/kaggle/shards.json
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/shard_e
+#   then: shard_a shard_b shard_c shard_d shard_f shard_g shard_h  (same command, change the folder)
+## Poll: kaggle kernels status abishaicenthil/phalanx-settling-shard-<x>
+## Download: kaggle kernels output abishaicenthil/phalanx-settling-shard-<x> -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/out/shard_<x>
+
+## 2b. (NEW) repro_s40 v2 -- dataset-root discovery fixed (os.walk over /kaggle/input for the dir holding settling/ and features/;
+##     env.json written before anything can fail). Same fix applied to shard_a..shard_h.
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/repro_s40
+
+## 2c. (NEW) repro_s40 v3. s08 --flight-sample crashed in build() (tail subset drawn from the 40-flight sample); fixed so
+##     sample mode only restricts the simulation comparisons and every other list is built exactly as in the full run
+##     (checked locally: all non-sim comparison lists identical to the full run). The kernel wrappers (repro + shards)
+##     now exit non-zero when pip or s08 fails. The sample dataset needs a new version for the fixed src:
+/Users/abishaikc/.local/bin/kaggle datasets version -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/ds_sample -m "s08 sample-mode fix" -r zip
+##     then (after the new version is ready):
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/repro_s40
+##     NOTE: phalanx-settling-v2 does NOT need a new version for the shards: in full mode the uploaded s08 runs the identical
+##     code path (the fix only touches --flight-sample). The staged ds_full/src now carries the newer copy for the record.
+
+## 2d. (NEW, optional but recommended) off-ceiling verification on the FULL dataset (once phalanx-settling-v2 is ready):
+##     temporal_vrtg has flight AUCs 0.5-0.8, so it is a sensitive local-vs-Kaggle check (sim_T1_L1_eng_s40 is at AUC 1.0;
+##     there the D1 statistics and out-of-fold scores are the sensitive part). Runs ~2 min.
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/verify_full
+##     download: kaggle kernels output abishaicenthil/phalanx-settling-verify-full -p /Users/abishaikc/Phalanx/research_sources/settling_synthetic/kaggle/out/verify_full
+
+## 6b. GATING DECISION (subagent): the remaining 7 shards may be pushed as soon as the FIRST comparison JSON of shard_e passes
+##     `python -I src/s14_spotcheck.py results <out>/shard_e/results/disc/<name>.json results/disc/tail_vrtg.json`
+##     (format, flight counts, AUC/CI consistency, s09-readable). The subagent watches out/shard_e and will write
+##     "6b: GO" or "6b: HOLD <reason>" on the next line of this file.

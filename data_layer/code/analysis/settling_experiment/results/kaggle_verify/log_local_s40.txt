@@ -1,0 +1,17 @@
+comparisons: ['sim_T1_L1_eng_s40']
+  sim_T1_L1_eng_s40            D2_lr_64_tex           AUC 1.000 [1.000,1.000]  t=4s
+  sim_T1_L1_eng_s40            D2_gb_64_tex           AUC 1.000 [1.000,1.000]  t=18s
+  sim_T1_L1_eng_s40            D2_lr_64_all           AUC 1.000 [1.000,1.000]  t=19s
+  sim_T1_L1_eng_s40            D2_lr_300_tex          AUC 1.000 [1.000,1.000]  t=21s
+  sim_T1_L1_eng_s40            D2_gb_300_tex          AUC 1.000 [1.000,1.000]  t=33s
+  sim_T1_L1_eng_s40            D2_lr_300_all          AUC 1.000 [1.000,1.000]  t=34s
+  sim_T1_L1_eng_s40            D2_lr_seg_tex          AUC 1.000 [1.000,1.000]  t=35s
+  sim_T1_L1_eng_s40            D2_gb_seg_tex          AUC 1.000 [1.000,1.000]  t=95s
+  sim_T1_L1_eng_s40            D2_lr_seg_all          AUC 1.000 [1.000,1.000]  t=96s
+  sim_T1_L1_eng_s40            D2_gb_seg_all          AUC 1.000 [1.000,1.000]  t=145s
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+  sim_T1_L1_eng_s40            D3_64_res              AUC 1.000 [1.000,1.000] p=0.0010  t=184s
+  sim_T1_L1_eng_s40            D3_300_res             AUC 1.000 [1.000,1.000] p=0.0010  t=219s
+  sim_T1_L1_eng_s40            D3_64_rawz             AUC 1.000 [1.000,1.000] p=0.0010  t=255s
+sim_T1_L1_eng_s40 done in 273s

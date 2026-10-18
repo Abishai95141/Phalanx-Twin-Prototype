@@ -1,0 +1,51 @@
+# Order lifecycle (architecture §11.1 "Status flows on orders.status"; M21).
+name: orders.status
+description: >-
+  Order lifecycle: accepted, queued, in work, completed, rejected (with reason). One record per status change.
+basis: "ARCH §11.1, §12"
+restricted: false
+event_time: t_status
+ingest_time: t_status
+partition_by: []
+json_schema: true
+record_id_key:
+  - {name: order_id, type: str, source: column}
+  - {name: status_seq, type: u64, source: column}
+checks:
+  - {check: required_if, field: reason, when_field: status, equals: REJECTED}
+fields:
+  - include: record_header
+  - name: order_id
+    type: string
+    nullable: false
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    basis: "ARCH §11.1"
+    description: Order this status refers to.
+  - name: status_seq
+    type: uint32
+    nullable: false
+    basis: "ASSUMPTION: A-W0.4-15"
+    description: Index of this status change within the order (0, 1, 2, ...).
+  - name: status
+    type: enum:OrderStatus
+    nullable: false
+    basis: "ARCH §11.1"
+    description: Lifecycle state.
+  - name: reason
+    type: string
+    nullable: true
+    basis: "ARCH §11.1 (rejected, with reason)"
+    description: Reason; required when status is REJECTED.
+  - name: t_status
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §11.1; ASSUMPTION: A-W0.4-15"
+    description: Simulation time of the status change. The event and availability time of the record.
+  - name: result_record_ids
+    type:
+      list: record_id
+      item_nullable: false
+    nullable: false
+    basis: "ARCH §11.1 (every executed order produces normal records); ASSUMPTION: A-W0.4-15"
+    description: record_ids of the normal records the execution produced; empty if none.

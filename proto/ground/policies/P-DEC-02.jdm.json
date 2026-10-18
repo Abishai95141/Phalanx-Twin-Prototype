@@ -1,0 +1,96 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "inputNode",
+      "name": "issue",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "dt",
+      "type": "decisionTableNode",
+      "name": "P-DEC-02 engine exceedance recurrence",
+      "position": {
+        "x": 320,
+        "y": 120
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "ex30",
+            "name": "Exceedances 30 d (same engine serial)",
+            "field": "engine.exceedances_30d"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "act",
+            "name": "Action",
+            "field": "rec.action"
+          },
+          {
+            "id": "par",
+            "name": "Type",
+            "field": "rec.params.type"
+          },
+          {
+            "id": "band",
+            "name": "Band",
+            "field": "rec.band"
+          },
+          {
+            "id": "why",
+            "name": "Rationale",
+            "field": "rec.rationale_id"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "ex30": ">= 2",
+            "act": "'INSPECT'",
+            "par": "'BORESCOPE'",
+            "band": "'P2'",
+            "why": "'ENG_EXCEED_RECUR_30D'"
+          },
+          {
+            "_id": "r2",
+            "ex30": "",
+            "act": "'NONE'",
+            "par": "",
+            "band": "'P4'",
+            "why": "'NO_RULE'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "out",
+      "type": "outputNode",
+      "name": "rec",
+      "position": {
+        "x": 640,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceId": "in",
+      "targetId": "dt",
+      "type": "edge"
+    },
+    {
+      "id": "e2",
+      "sourceId": "dt",
+      "targetId": "out",
+      "type": "edge"
+    }
+  ]
+}

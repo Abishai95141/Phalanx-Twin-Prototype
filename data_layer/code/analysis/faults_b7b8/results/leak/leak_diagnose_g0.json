@@ -1,0 +1,198 @@
+{
+ "n_pairs": 166,
+ "features": [
+  {
+   "feature": "ENG.OIL_P_f32repr",
+   "std_effect": 0.1556997888323045,
+   "pairs_differing": 2,
+   "differing_pairs_where_channel_affected": 2,
+   "top_modes": [
+    [
+     "FM.SNS.OIL_P_TRANSMITTER",
+     25.85
+    ],
+    [
+     "FM.ENG.FOULING",
+     0.0
+    ],
+    [
+     "FM.ENG.EROSION",
+     0.0
+    ],
+    [
+     "FM.ENG.RUB_IN",
+     0.0
+    ],
+    [
+     "FM.ENG.HPT_DETERIORATION",
+     0.0
+    ],
+    [
+     "FM.ENG.LIFE_USAGE",
+     0.0
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.P5_f32repr",
+   "std_effect": 0.07493215388962289,
+   "pairs_differing": 59,
+   "differing_pairs_where_channel_affected": 59,
+   "top_modes": [
+    [
+     "FM.ENG.FLAMEOUT",
+     4.64
+    ],
+    [
+     "FM.ENG.EROSION",
+     3.69
+    ],
+    [
+     "FM.ENG.HPC_DAMAGE",
+     2.1
+    ],
+    [
+     "FM.ENG.RUB_IN",
+     1.89
+    ],
+    [
+     "FM.ENG.QUICKFILL_STALL",
+     1.87
+    ],
+    [
+     "FM.ENG.BLEED_MISSCHEDULE",
+     1.77
+    ]
+   ]
+  },
+  {
+   "feature": "ELEC.DCBUS.V.MAIN_f32repr",
+   "std_effect": 0.05464042757217479,
+   "pairs_differing": 24,
+   "differing_pairs_where_channel_affected": 24,
+   "top_modes": [
+    [
+     "FM.ELEC.GEN_DIODE",
+     4.2
+    ],
+    [
+     "FM.ENG.EROSION",
+     2.85
+    ],
+    [
+     "FM.ENG.HPT_DETERIORATION",
+     1.55
+    ],
+    [
+     "FM.ENG.BLADE_LOSS",
+     1.23
+    ],
+    [
+     "FM.SNS.PS3_VENTED",
+     1.03
+    ],
+    [
+     "FM.ENG.FLAMEOUT",
+     0.83
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.CVG_f32repr",
+   "std_effect": 0.028362694211157616,
+   "pairs_differing": 63,
+   "differing_pairs_where_channel_affected": 63,
+   "top_modes": [
+    [
+     "FM.ENG.EROSION",
+     8.91
+    ],
+    [
+     "FM.ENG.HPT_DETERIORATION",
+     7.32
+    ],
+    [
+     "FM.ENG.FLAMEOUT",
+     7.24
+    ],
+    [
+     "FM.ENG.BLADE_LOSS",
+     4.29
+    ],
+    [
+     "FM.ENG.MEC_MISASSEMBLY",
+     2.86
+    ],
+    [
+     "FM.SNS.PS3_VENTED",
+     2.1
+    ]
+   ]
+  },
+  {
+   "feature": "ELEC.DCBUS.V.EMERGENCY_f32repr",
+   "std_effect": -0.010378547105272709,
+   "pairs_differing": 19,
+   "differing_pairs_where_channel_affected": 19,
+   "top_modes": [
+    [
+     "FM.ENG.FLAMEOUT",
+     1.34
+    ],
+    [
+     "FM.ENG.HPT_DETERIORATION",
+     0.87
+    ],
+    [
+     "FM.ENG.FOULING",
+     0.55
+    ],
+    [
+     "FM.SNS.PS3_VENTED",
+     0.31
+    ],
+    [
+     "FM.ENG.EROSION",
+     0.2
+    ],
+    [
+     "FM.ELEC.BACKUP_FAIL",
+     0.18
+    ]
+   ]
+  },
+  {
+   "feature": "ELEC.DCBUS.V.ESSENTIAL_f32repr",
+   "std_effect": 0.002687830502493495,
+   "pairs_differing": 16,
+   "differing_pairs_where_channel_affected": 16,
+   "top_modes": [
+    [
+     "FM.ELEC.BACKUP_FAIL",
+     0.94
+    ],
+    [
+     "FM.ENG.BLEED_LEAK",
+     0.74
+    ],
+    [
+     "FM.ENG.BLEED_MISSCHEDULE",
+     0.35
+    ],
+    [
+     "FM.ENG.FLAMEOUT",
+     0.22
+    ],
+    [
+     "FM.HYD.FITTING_FATIGUE",
+     0.22
+    ],
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     0.17
+    ]
+   ]
+  }
+ ],
+ "feature_differences_on_unaffected_channels": 0
+}

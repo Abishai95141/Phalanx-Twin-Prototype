@@ -1,0 +1,640 @@
+{
+ "affected_channels": {
+  "FM.AD.HEATER_FAIL#0": 0,
+  "FM.AD.HEATER_FAIL#1": 0,
+  "FM.AD.MOISTURE_COMMON_MODE#0": 4,
+  "FM.AD.MOISTURE_COMMON_MODE#1": 4,
+  "FM.AD.PROBE_DISTURBANCE#0": 1,
+  "FM.AD.PROBE_DISTURBANCE#1": 0,
+  "FM.AD.PROBE_MISALIGN#0": 2,
+  "FM.AD.PROBE_MISALIGN#1": 2,
+  "FM.AD.VANE_CAL_BIAS#0": 1,
+  "FM.AD.VANE_CAL_BIAS#1": 1,
+  "FM.AD.VANE_FRICTION#0": 0,
+  "FM.AD.VANE_FRICTION#1": 0,
+  "FM.AV.BUS_SPIKES#0": 0,
+  "FM.AV.BUS_SPIKES#1": 1,
+  "FM.AV.INTERMITTENT_CONNECTOR#0": 0,
+  "FM.AV.INTERMITTENT_CONNECTOR#1": 0,
+  "FM.AV.LRU_FAILURE#0": 0,
+  "FM.AV.LRU_FAILURE#1": 0,
+  "FM.CTRL.THROTTLE_BINDING#0": 27,
+  "FM.CTRL.THROTTLE_BINDING#1": 27,
+  "FM.ECS.HX_FOULING#0": 0,
+  "FM.ECS.HX_FOULING#1": 0,
+  "FM.ELEC.BACKUP_FAIL#0": 22,
+  "FM.ELEC.BACKUP_FAIL#1": 0,
+  "FM.ELEC.BATTERY_FADE#0": 0,
+  "FM.ELEC.BATTERY_FADE#1": 0,
+  "FM.ELEC.GEN_DIODE#0": 30,
+  "FM.ELEC.GEN_DIODE#1": 30,
+  "FM.ELEC.GEN_REGULATION#0": 0,
+  "FM.ELEC.GEN_REGULATION#1": 0,
+  "FM.ELEC.PARTIAL_POWER_LOSS#0": 0,
+  "FM.ELEC.PARTIAL_POWER_LOSS#1": 0,
+  "FM.ENG.AB_BLOWOUT#0": 0,
+  "FM.ENG.AB_BLOWOUT#1": 0,
+  "FM.ENG.AB_NO_LIGHT#0": 0,
+  "FM.ENG.AB_NO_LIGHT#1": 0,
+  "FM.ENG.BEARING_FAILURE#0": 27,
+  "FM.ENG.BEARING_FAILURE#1": 27,
+  "FM.ENG.BEARING_SPALL#0": 0,
+  "FM.ENG.BEARING_SPALL#1": 0,
+  "FM.ENG.BLADE_LOSS#0": 30,
+  "FM.ENG.BLADE_LOSS#1": 30,
+  "FM.ENG.BLEED_LEAK#0": 27,
+  "FM.ENG.BLEED_LEAK#1": 30,
+  "FM.ENG.BLEED_MISSCHEDULE#0": 29,
+  "FM.ENG.BLEED_MISSCHEDULE#1": 29,
+  "FM.ENG.EROSION#0": 30,
+  "FM.ENG.EROSION#1": 30,
+  "FM.ENG.FLAMEOUT#0": 30,
+  "FM.ENG.FLAMEOUT#1": 30,
+  "FM.ENG.FOD_BIRD#0": 28,
+  "FM.ENG.FOD_BIRD#1": 27,
+  "FM.ENG.FOULING#0": 30,
+  "FM.ENG.FOULING#1": 30,
+  "FM.ENG.FUEL_SCHEDULE_BIAS#0": 27,
+  "FM.ENG.FUEL_SCHEDULE_BIAS#1": 27,
+  "FM.ENG.HOT_START#0": 0,
+  "FM.ENG.HOT_START#1": 0,
+  "FM.ENG.HPC_DAMAGE#0": 27,
+  "FM.ENG.HPC_DAMAGE#1": 30,
+  "FM.ENG.HPT_DETERIORATION#0": 30,
+  "FM.ENG.HPT_DETERIORATION#1": 30,
+  "FM.ENG.HUNG_START#0": 26,
+  "FM.ENG.HUNG_START#1": 26,
+  "FM.ENG.LIFE_USAGE#0": 0,
+  "FM.ENG.LIFE_USAGE#1": 0,
+  "FM.ENG.LINER_BURN#0": 25,
+  "FM.ENG.LINER_BURN#1": 27,
+  "FM.ENG.LUBE_COOLING_LOSS#0": 2,
+  "FM.ENG.LUBE_COOLING_LOSS#1": 2,
+  "FM.ENG.MEC_MISASSEMBLY#0": 27,
+  "FM.ENG.MEC_MISASSEMBLY#1": 30,
+  "FM.ENG.MISSING_AIR_SEAL#0": 30,
+  "FM.ENG.MISSING_AIR_SEAL#1": 27,
+  "FM.ENG.NOZZLE_FLAP_CRACK#0": 0,
+  "FM.ENG.NOZZLE_FLAP_CRACK#1": 0,
+  "FM.ENG.NOZZLE_LIMIT_CYCLE#0": 0,
+  "FM.ENG.NOZZLE_LIMIT_CYCLE#1": 0,
+  "FM.ENG.OIL_CONDITION#0": 0,
+  "FM.ENG.OIL_CONDITION#1": 0,
+  "FM.ENG.OIL_LOSS#0": 0,
+  "FM.ENG.OIL_LOSS#1": 0,
+  "FM.ENG.OIL_STARVATION#0": 27,
+  "FM.ENG.OIL_STARVATION#1": 27,
+  "FM.ENG.POP_STALL#0": 27,
+  "FM.ENG.POP_STALL#1": 27,
+  "FM.ENG.QUICKFILL_STALL#0": 27,
+  "FM.ENG.QUICKFILL_STALL#1": 27,
+  "FM.ENG.RUB_IN#0": 28,
+  "FM.ENG.RUB_IN#1": 27,
+  "FM.ENG.SEAL_WEAR#0": 0,
+  "FM.ENG.SEAL_WEAR#1": 0,
+  "FM.ENG.SHUTOFF_PARTIAL#0": 27,
+  "FM.ENG.SHUTOFF_PARTIAL#1": 28,
+  "FM.ENG.VG_MISSCHEDULE#0": 0,
+  "FM.ENG.VG_MISSCHEDULE#1": 0,
+  "FM.FCS.ACTUATOR_JAM#0": 0,
+  "FM.FCS.ACTUATOR_JAM#1": 0,
+  "FM.FCS.ACTUATOR_WEAR#0": 0,
+  "FM.FCS.ACTUATOR_WEAR#1": 0,
+  "FM.FCS.CHANNEL_DROPOUT#0": 0,
+  "FM.FCS.CHANNEL_DROPOUT#1": 0,
+  "FM.FCS.POOR_LUBE#0": 0,
+  "FM.FCS.POOR_LUBE#1": 0,
+  "FM.FCS.SERVO_COIL#0": 0,
+  "FM.FCS.SERVO_COIL#1": 0,
+  "FM.FIRE.LOOP_OPEN#0": 0,
+  "FM.FIRE.LOOP_OPEN#1": 0,
+  "FM.FIRE.LOOP_SHORT#0": 0,
+  "FM.FIRE.LOOP_SHORT#1": 0,
+  "FM.FUEL.GAUGING_ARTEFACT#0": 0,
+  "FM.FUEL.GAUGING_ARTEFACT#1": 0,
+  "FM.FUEL.PROBE_CONTAMINATION#0": 0,
+  "FM.FUEL.PROBE_CONTAMINATION#1": 0,
+  "FM.HYD.ACCUM_GAS_LOSS#0": 24,
+  "FM.HYD.ACCUM_GAS_LOSS#1": 25,
+  "FM.HYD.CONTAMINATION_TREND#0": 0,
+  "FM.HYD.CONTAMINATION_TREND#1": 0,
+  "FM.HYD.FITTING_FATIGUE#0": 26,
+  "FM.HYD.FITTING_FATIGUE#1": 27,
+  "FM.HYD.FOHE_CRACK#0": 27,
+  "FM.HYD.FOHE_CRACK#1": 27,
+  "FM.HYD.ISA_CHECK_VALVE#0": 27,
+  "FM.HYD.ISA_CHECK_VALVE#1": 27,
+  "FM.HYD.PUMP_FAILURE#0": 27,
+  "FM.HYD.PUMP_FAILURE#1": 27,
+  "FM.HYD.PUMP_WEAR#0": 27,
+  "FM.HYD.PUMP_WEAR#1": 27,
+  "FM.HYD.WATER_CONTAMINATION#0": 0,
+  "FM.HYD.WATER_CONTAMINATION#1": 0,
+  "FM.LG.BRAKE_SW_CONFIG#0": 0,
+  "FM.LG.BRAKE_SW_CONFIG#1": 0,
+  "FM.LG.BRAKE_WEAR#0": 0,
+  "FM.LG.BRAKE_WEAR#1": 0,
+  "FM.LG.DOWNLOCK_FORCE#0": 0,
+  "FM.LG.DOWNLOCK_FORCE#1": 0,
+  "FM.LG.LOCK_SPRING#0": 0,
+  "FM.LG.LOCK_SPRING#1": 0,
+  "FM.LG.STRUT_LOSS#0": 0,
+  "FM.LG.STRUT_LOSS#1": 0,
+  "FM.LG.TYRE_WEAR#0": 0,
+  "FM.LG.TYRE_WEAR#1": 0,
+  "FM.SNS.GENERIC#0": 27,
+  "FM.SNS.GENERIC#1": 27,
+  "FM.SNS.INLET_STATIC_TRAPPED#0": 0,
+  "FM.SNS.INLET_STATIC_TRAPPED#1": 0,
+  "FM.SNS.NOZZLE_FEEDBACK#0": 1,
+  "FM.SNS.NOZZLE_FEEDBACK#1": 1,
+  "FM.SNS.OIL_P_TRANSMITTER#0": 1,
+  "FM.SNS.OIL_P_TRANSMITTER#1": 1,
+  "FM.SNS.PRESSURE_HIGH#0": 27,
+  "FM.SNS.PRESSURE_HIGH#1": 27,
+  "FM.SNS.PS3_VENTED#0": 28,
+  "FM.SNS.PS3_VENTED#1": 28,
+  "FM.SNS.T5_HARNESS_BIAS#0": 2,
+  "FM.SNS.T5_HARNESS_BIAS#1": 2,
+  "FM.SNS.T5_OPEN#0": 1,
+  "FM.SNS.T5_OPEN#1": 2,
+  "FM.SPS.AMAGB_GEAR_CRACK#0": 28,
+  "FM.SPS.AMAGB_GEAR_CRACK#1": 27,
+  "FM.SPS.JFS_COLD_START_FAIL#0": 0,
+  "FM.SPS.JFS_COLD_START_FAIL#1": 0,
+  "FM.STR.FATIGUE#0": 0,
+  "FM.STR.FATIGUE#1": 0,
+  "FM.UTIL.GENERIC_WEAR#0": 0,
+  "FM.UTIL.GENERIC_WEAR#1": 0
+ },
+ "g0": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.5510778051966904,
+    "ci95": [
+     0.5217919872260125,
+     0.5816342175932646
+    ],
+    "pass": false
+   },
+   "lr": {
+    "auc": 0.5262556249092757,
+    "ci95": [
+     0.5053305087821164,
+     0.5500440013064305
+    ],
+    "pass": false
+   }
+  },
+  "n_rows": {
+   "real": 166,
+   "synthetic": 166
+  },
+  "passed": false,
+  "top_univariate": [
+   [
+    "ELEC.DCBUS.V.MAIN_f32repr",
+    0.5326607635360721,
+    0.22346385542168673,
+    0.2428614457831325
+   ],
+   [
+    "ENG.FVG_f32repr",
+    0.47336333284947013,
+    0.24800702811244976,
+    0.24714859437751002
+   ],
+   [
+    "ENG.CVG_f32repr",
+    0.48051241109014364,
+    0.19984939759036144,
+    0.20138052208835347
+   ],
+   [
+    "ELEC.DCBUS.V.ESSENTIAL_f32repr",
+    0.5167477137465525,
+    0.17765060240963854,
+    0.17852409638554215
+   ],
+   [
+    "ENG.P5_f32repr",
+    0.5069857744229932,
+    0.0644578313253012,
+    0.07009538152610441
+   ],
+   [
+    "ENG.OIL_P_f32repr",
+    0.5060240963855421,
+    0.0,
+    0.009026104417670683
+   ],
+   [
+    "ELEC.DCBUS.V.EMERGENCY_f32repr",
+    0.4981673682682537,
+    0.23846385542168672,
+    0.2347590361445783
+   ],
+   [
+    "FCS.ASA.NZ.B_f32repr",
+    0.5000000000000001,
+    0.0076355421686747,
+    0.0076355421686747
+   ]
+  ]
+ },
+ "invariance_failures": {},
+ "metadata_only": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.5510778051966904,
+    "ci95": [
+     0.4913231238205835,
+     0.6162369356945856
+    ],
+    "pass": true
+   },
+   "lr": {
+    "auc": 0.5262556249092757,
+    "ci95": [
+     0.46570030120481926,
+     0.5892772898824212
+    ],
+    "pass": true
+   }
+  },
+  "n_rows": {
+   "faulty": 166,
+   "groups": 166,
+   "healthy": 166
+  },
+  "passed": true,
+  "top_univariate": [
+   [
+    "ELEC.DCBUS.V.MAIN_f32repr",
+    0.5326607635360721,
+    0.22346385542168673,
+    0.2428614457831325
+   ],
+   [
+    "ENG.FVG_f32repr",
+    0.47336333284947013,
+    0.24800702811244976,
+    0.24714859437751002
+   ],
+   [
+    "ENG.CVG_f32repr",
+    0.48051241109014364,
+    0.19984939759036144,
+    0.20138052208835347
+   ],
+   [
+    "ELEC.DCBUS.V.ESSENTIAL_f32repr",
+    0.5167477137465525,
+    0.17765060240963854,
+    0.17852409638554215
+   ],
+   [
+    "ENG.P5_f32repr",
+    0.5069857744229932,
+    0.0644578313253012,
+    0.07009538152610441
+   ],
+   [
+    "ENG.OIL_P_f32repr",
+    0.5060240963855421,
+    0.0,
+    0.009026104417670683
+   ],
+   [
+    "ELEC.DCBUS.V.EMERGENCY_f32repr",
+    0.4981673682682537,
+    0.23846385542168672,
+    0.2347590361445783
+   ],
+   [
+    "FCS.ASA.NZ.B_f32repr",
+    0.5000000000000001,
+    0.0076355421686747,
+    0.0076355421686747
+   ]
+  ]
+ },
+ "n_modes": 83,
+ "n_pairs": 166,
+ "nc1_texture": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.9762697238658777,
+    "ci95": [
+     0.9640445225180803,
+     0.9871594551282051
+    ],
+    "pass": false
+   },
+   "lr": {
+    "auc": 0.946560650887574,
+    "ci95": [
+     0.9201717619986851,
+     0.9698599810979619
+    ],
+    "pass": false
+   }
+  },
+  "n_rows": {
+   "faulty": 156,
+   "groups": 156,
+   "healthy": 156
+  },
+  "passed": false,
+  "top_univariate": [
+   [
+    "ENG.T5_log10_lsb",
+    0.891025641025641,
+    -0.23542089404490837,
+    0.0
+   ],
+   [
+    "ENG.T5_zero_step",
+    0.7491165351742277,
+    0.919858429032741,
+    0.9569031885545649
+   ],
+   [
+    "ENG.T5_kurt_step",
+    0.6852194280078896,
+    25.42600441637878,
+    53.72421547969548
+   ],
+   [
+    "ENG.PS3.B_kurt_step",
+    0.5704511834319527,
+    4.076062142469216,
+    15.00851582951007
+   ],
+   [
+    "ENG.PS3.A_kurt_step",
+    0.56909516765286,
+    4.024647050342273,
+    30.09537722290982
+   ],
+   [
+    "ENG.N1.A_mad_step_lsb",
+    0.43404832347140043,
+    3.576923076923077,
+    3.1794871794871793
+   ],
+   [
+    "ENG.N1.B_mad_step_lsb",
+    0.43521942800788954,
+    3.628205128205128,
+    3.217948717948718
+   ],
+   [
+    "ENG.N2.A_at_min",
+    0.43850673898750825,
+    0.005213675213675214,
+    0.004273504273504274
+   ]
+  ]
+ },
+ "nc2_g0": {
+  "classifiers": {
+   "gb": {
+    "auc": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ],
+    "pass": false
+   },
+   "lr": {
+    "auc": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ],
+    "pass": false
+   }
+  },
+  "n_rows": {
+   "real": 166,
+   "synthetic": 166
+  },
+  "passed": false,
+  "top_univariate": [
+   [
+    "ENG.N2.A_n",
+    0.0,
+    1200.0,
+    1140.0
+   ],
+   [
+    "ENG.N2.A_n_over_rate",
+    0.0,
+    20.0,
+    19.0
+   ],
+   [
+    "ELEC.DCBUS.V.MAIN_f32repr",
+    0.5326607635360721,
+    0.22346385542168673,
+    0.2428614457831325
+   ],
+   [
+    "ENG.FVG_f32repr",
+    0.47336333284947013,
+    0.24800702811244976,
+    0.24714859437751002
+   ],
+   [
+    "ENG.CVG_f32repr",
+    0.48051241109014364,
+    0.19984939759036144,
+    0.20138052208835347
+   ],
+   [
+    "ELEC.DCBUS.V.ESSENTIAL_f32repr",
+    0.5167477137465525,
+    0.17765060240963854,
+    0.17852409638554215
+   ],
+   [
+    "ENG.P5_f32repr",
+    0.5069857744229932,
+    0.0644578313253012,
+    0.07009538152610441
+   ],
+   [
+    "ENG.OIL_P_f32repr",
+    0.5060240963855421,
+    0.0,
+    0.009026104417670683
+   ]
+  ]
+ },
+ "nc2_invariance_caught": 166,
+ "nc2_metadata": {
+  "classifiers": {
+   "gb": {
+    "auc": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ],
+    "pass": false
+   },
+   "lr": {
+    "auc": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ],
+    "pass": false
+   }
+  },
+  "n_rows": {
+   "faulty": 166,
+   "groups": 166,
+   "healthy": 166
+  },
+  "passed": false,
+  "top_univariate": [
+   [
+    "ENG.N2.A_n",
+    0.0,
+    1200.0,
+    1140.0
+   ],
+   [
+    "ENG.N2.A_n_over_rate",
+    0.0,
+    20.0,
+    19.0
+   ],
+   [
+    "ELEC.DCBUS.V.MAIN_f32repr",
+    0.5326607635360721,
+    0.22346385542168673,
+    0.2428614457831325
+   ],
+   [
+    "ENG.FVG_f32repr",
+    0.47336333284947013,
+    0.24800702811244976,
+    0.24714859437751002
+   ],
+   [
+    "ENG.CVG_f32repr",
+    0.48051241109014364,
+    0.19984939759036144,
+    0.20138052208835347
+   ],
+   [
+    "ELEC.DCBUS.V.ESSENTIAL_f32repr",
+    0.5167477137465525,
+    0.17765060240963854,
+    0.17852409638554215
+   ],
+   [
+    "ENG.P5_f32repr",
+    0.5069857744229932,
+    0.0644578313253012,
+    0.07009538152610441
+   ],
+   [
+    "ENG.OIL_P_f32repr",
+    0.5060240963855421,
+    0.0,
+    0.009026104417670683
+   ]
+  ]
+ },
+ "nc3_invariance_caught": 166,
+ "not_injectable": [
+  "FM.ENG.LIFE_USAGE",
+  "FM.FUEL.GAUGING_ARTEFACT"
+ ],
+ "texture_excluded_modes": [
+  "FM.AD.PROBE_DISTURBANCE",
+  "FM.AV.BUS_SPIKES",
+  "FM.SNS.INLET_STATIC_TRAPPED",
+  "FM.SNS.NOZZLE_FEEDBACK",
+  "FM.SNS.T5_OPEN"
+ ],
+ "texture_only": {
+  "classifiers": {
+   "gb": {
+    "auc": 0.5834771531886915,
+    "ci95": [
+     0.5184875287639711,
+     0.646223701512163
+    ],
+    "pass": false
+   },
+   "lr": {
+    "auc": 0.5854495397764627,
+    "ci95": [
+     0.5205225797172912,
+     0.6501160831689677
+    ],
+    "pass": false
+   }
+  },
+  "n_rows": {
+   "faulty": 156,
+   "groups": 156,
+   "healthy": 156
+  },
+  "passed": false,
+  "top_univariate": [
+   [
+    "ENG.PS3.B_kurt_step",
+    0.5704511834319527,
+    4.076062142469216,
+    15.00851582951007
+   ],
+   [
+    "ENG.PS3.A_kurt_step",
+    0.56909516765286,
+    4.024647050342273,
+    30.09537722290982
+   ],
+   [
+    "ENG.N1.A_mad_step_lsb",
+    0.43404832347140043,
+    3.576923076923077,
+    3.1794871794871793
+   ],
+   [
+    "ENG.N1.B_mad_step_lsb",
+    0.43521942800788954,
+    3.628205128205128,
+    3.217948717948718
+   ],
+   [
+    "ENG.N2.A_at_min",
+    0.43850673898750825,
+    0.005213675213675214,
+    0.004273504273504274
+   ],
+   [
+    "ENG.N2.A_mad_step_lsb",
+    0.4394929322813938,
+    1.7179487179487178,
+    1.5961538461538463
+   ],
+   [
+    "ENG.N2.B_mad_step_lsb",
+    0.4417940499671269,
+    1.7179487179487178,
+    1.5961538461538463
+   ],
+   [
+    "ENG.N1.V_zero_step",
+    0.5581237672583825,
+    0.3499925151301298,
+    0.3663095314471461
+   ]
+  ]
+ }
+}

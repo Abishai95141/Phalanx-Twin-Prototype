@@ -1,0 +1,22 @@
+# M21 order authority matrix (W1.8): which issuer kinds may request each action. Orders from an issuer without
+# authority are REJECTED at the gateway (architecture §11.1: orders are validated for authority).
+# IAF delegation is public only in outline; where a source exists it is cited, otherwise the row is
+# [ASSUMPTION A-W1.8-18] and a configuration choice for the scenario owner.
+format: phalanx.authority/1
+evidence: {tag: ASSUMPTION, source: "architecture §11.1 (authority check); IAF RTI Handbook 2023 AOM branch duties"}
+assumption_id: A-W1.8-18
+default_issuers: [AGENT, HUMAN]
+actions:
+  DEFER_SERVICING:
+    issuers: [HUMAN]
+    max_extension_fraction: 0.2
+    evidence: {tag: DIRECT, source: "IAF RTI Handbook (updated 19 Apr 2023), AOM branch: 'approve extension on aircraft servicing' is an Air HQ duty; extension cap ASSUMPTION"}
+  EMBODY_MODIFICATION:
+    issuers: [HUMAN]
+    evidence: {tag: DIRECT, source: "IAF RTI Handbook, ACAS (MP): TSIs, SIs, STIs and modifications promulgated through routine order Pt-III"}
+  LOAD_SOFTWARE:
+    issuers: [HUMAN]
+    evidence: {tag: DIRECT, source: "Tejas 2026 brake-software event: joint IAF-HAL-CEMILAC committee cleared the corrected software (indian_fleet_platform_relevance.md KQ1)"}
+  CHANGE_MONITORING_CONFIG:
+    issuers: [HUMAN]
+    evidence: {tag: "TRANSFER: F-35 HRC nuisance filter list", source: "COMNAVAIRFORINST 4790.35D (nuisance codes to filter lists via engineering action request)"}

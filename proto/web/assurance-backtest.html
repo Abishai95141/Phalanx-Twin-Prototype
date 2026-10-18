@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Backtests — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 750px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+  .body2 { display: grid; gap: 32px; margin-top: 28px; flex: 1; min-height: 0; }
+  .cnd .body2 { grid-template-columns: 430px minmax(0,1fr); }
+  .chart svg text { font-family: var(--mono); font-size: 11px; fill: var(--ink-4); }
+  .chart svg .lab { font-family: var(--font); font-size: 13px; font-weight: 650; }
+  .cmp { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 30px; }
+  .cmp th { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); text-align: right; padding: 0 0 10px; border-bottom: 1px solid var(--line); }
+  .cmp th:first-child { text-align: left; }
+  .cmp td { padding: 13px 0; border-bottom: 1px solid var(--line-2); text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; }
+  .cmp td:first-child { text-align: left; color: var(--ink-3); font-weight: 500; }
+  .cmp td.acc { color: var(--accent-ink); }
+  .verdict { margin-top: auto; display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 14px; background: var(--bg-2); font-size: 14px; color: var(--ink-2); line-height: 1.45; }
+  .verdict b { color: var(--ink); }
+  .key { display: flex; gap: 22px; font-size: 13px; color: var(--ink-3); margin-top: 14px; }
+  .key i { display: inline-block; vertical-align: middle; margin-right: 8px; }
+  .lt .chart { margin-top: 22px; }
+
+  /* compact: tablet + phone */
+  @media (max-width: 1199px) {
+    .cnd .body2 { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; margin-top: 22px; }
+    .chart svg { display: block; width: 100%; height: auto; }
+    .lt .chart svg { max-width: 640px; margin: 0 auto; }
+    .verdict { margin-top: 20px; }
+    .key { flex-wrap: wrap; row-gap: 8px; }
+  }
+  /* phone */
+  @media (max-width: 699px) {
+    .cnd .body2 { grid-template-columns: minmax(0,1fr); gap: 26px; }
+    .cmp { margin-top: 22px; font-size: 14.5px; }
+    .verdict { align-items: flex-start; }
+    .lt > div[style*="align-items:flex-end"] { flex-wrap: wrap; row-gap: 6px; }
+    .key { flex-direction: column; gap: 8px; }
+    /* the charts scale to ~0.6–0.75×; raise the SVG type so labels stay ~10 px on screen */
+    .chart svg text { font-size: 14px !important; }
+    .chart svg .lab { font-size: 16px !important; }
+    #km svg { overflow: visible; }
+    #km svg text { font-size: 16px !important; }
+    #km svg text[style] { font-size: 15px !important; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c7 cnd" data-shot="cnd-backtest">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Backtest · NFF classifier 2.4.0 against 2.3.0</div>
+        <div class="t2">The learned classifier is no better than the per-code base rate</div>
+        <div class="sub2" id="cnd-sub"></div>
+      </div>
+      <span class="tier pred">PRED</span>
+    </div>
+    <div class="body2">
+      <div class="chart" id="cal"></div>
+      <div style="display:flex;flex-direction:column;min-height:0">
+        <div class="kick">Brier score difference · 2.4.0 − 2.3.0</div>
+        <div class="mid" style="margin-top:12px" id="dbrier"></div>
+        <div class="ci" style="margin-top:8px" id="dbrier-ci"></div>
+        <table class="cmp" id="cmp"></table>
+        <div class="verdict" id="verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel2 c5 lt" data-shot="leadtime">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Backtest · Supply lead time 1.2.0</div>
+        <div class="t2">Counting spares still on order, one in ten takes over 90 days</div>
+        <div class="sub2" id="lt-sub"></div>
+      </div>
+    </div>
+    <div style="margin-top:26px;display:flex;align-items:flex-end;gap:16px">
+      <div class="big" id="p90"></div>
+      <div class="ci" style="padding-bottom:6px" id="p90-ci"></div>
+    </div>
+    <div class="chart" id="km"></div>
+    <div class="key">
+      <span><i style="width:22px;height:2.5px;background:var(--ink)"></i>Kaplan–Meier, open censored</span>
+      <span><i style="width:22px;height:0;border-top:2px dashed var(--ink-4)"></i>closed only</span>
+      <span><i style="width:22px;height:0;border-top:2px dashed var(--accent)"></i>log-normal fit</span>
+    </div>
+    <div class="note" style="margin-top:14px" id="lt-note"></div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-assurance.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const A = window.PHX_ASSURE, H = A.held_out;
+const TABS = [['Models','assurance.html'],['Backtests','assurance-backtest.html'],['Drift','assurance-drift.html'],null,['Decision table','policies.html'],['Policy lifecycle','policies-lifecycle.html'],['Authority','policies-authority.html'],null,['Why this order','provenance.html']];
+const here = location.pathname.split('/').pop();
+document.getElementById('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1]===here?'on':''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+const sg = x => (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(3);
+
+// ---- CND
+document.getElementById('cnd-sub').textContent = `Held-out jobs opened 1 May – 22 Jun (n ${H.n}); both trained only on labels known before 1 May.`;
+document.getElementById('dbrier').textContent = sg(H.vs.d_brier);
+document.getElementById('dbrier-ci').textContent = `95 % interval [${sg(H.vs.d_brier_ci[0])}, ${sg(H.vs.d_brier_ci[1])}] · ${H.vs.boot.toLocaleString('en-GB')} paired bootstraps · lower is better`;
+const rows = [['AUC', H.champion.auc.toFixed(3), H.challenger.auc.toFixed(3)], ['Brier score', H.champion.brier.toFixed(3), H.challenger.brier.toFixed(3)],
+  ['Calibration (ECE)', H.champion.ece.toFixed(3), H.challenger.ece.toFixed(3)],
+  ['Brier, unseen tails', H.tail_grouped['per-code base rate'].brier.toFixed(3), H.tail_grouped['logreg · one-hot codes'].brier.toFixed(3)]];
+document.getElementById('cmp').innerHTML = `<tr><th>Held-out block</th><th>2.3.0</th><th>2.4.0</th></tr>` +
+  rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td class="acc">${r[2]}</td></tr>`).join('');
+document.getElementById('verdict').innerHTML = `<i data-i="x" class="ico" style="color:var(--warn)"></i><span>Gate G1 <b>not met</b>: no lower Brier, and ECE ${H.challenger.ece.toFixed(3)} exceeds the 0.05 limit. 2.4.0 stays a candidate; 2.3.0 keeps deciding.</span>`;
+
+(function () {
+  const W = 430, Hh = 520, l = 40, r = 22, t = 26, b = 40, lo = 0.3, hi = 1.0;
+  const X = v => l + (W - l - r) * (v - lo) / (hi - lo), Y = v => t + (Hh - t - b) * (1 - (v - lo) / (hi - lo));
+  let g = '';
+  for (let v = 0.3; v <= 1.0001; v += 0.1) {
+    g += `<line x1="${l}" x2="${W - r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-2)"/><text x="${l - 8}" y="${Y(v) + 4}" text-anchor="end">${v.toFixed(1)}</text>`;
+    g += `<text x="${X(v)}" y="${Hh - b + 18}" text-anchor="middle">${v.toFixed(1)}</text>`;
+  }
+  g += `<line x1="${X(lo)}" y1="${Y(lo)}" x2="${X(hi)}" y2="${Y(hi)}" stroke="var(--ink-5)" stroke-dasharray="4 4"/>`;
+  g += `<text x="${X(0.62)}" y="${Y(0.66) - 6}" transform="rotate(-45 ${X(0.62)} ${Y(0.66) - 6})" style="font-family:var(--font);font-size:12px;fill:var(--ink-4)">perfect calibration</text>`;
+  const pts = (bins, col, fill) => {
+    const P = bins.filter(x => x.p >= lo);
+    let s = '';
+    P.forEach(x => { const rr = 3.5 + 1.25 * Math.sqrt(x.n); s += `<circle cx="${X(x.p)}" cy="${Y(Math.max(lo, x.y))}" r="${rr}" fill="${fill}" stroke="${col}" stroke-width="1.6"/>`; });
+    return s;
+  };
+  g += pts(H.cal_challenger, 'var(--accent)', 'var(--accent-wash)');
+  g += pts(H.cal_champion, 'var(--ink)', 'rgba(255,255,255,.85)');
+  g += `<text class="lab" x="${X(0.9)}" y="${Y(0.965)}" text-anchor="end" style="fill:var(--ink)">2.3.0 base rate</text>`;
+  g += `<text class="lab" x="${X(0.31)}" y="${Y(0.62)}" style="fill:var(--accent-ink)">2.4.0 classifier</text>`;
+  g += `<text x="${X(0.9)}" y="${Y(0.965) + 18}" text-anchor="end" style="font-family:var(--font);font-size:12px">top bin holds most jobs · n 84–86</text>`;
+  g += `<text x="${l}" y="${Hh - 4}" style="font-family:var(--font);font-size:12px">predicted P(no fault) →</text>`;
+  g += `<text x="${l - 34}" y="${t - 12}" style="font-family:var(--font);font-size:12px">↑ observed share closed no-fault</text>`;
+  g += `<text x="${W - r}" y="${Hh - 4}" text-anchor="end" style="font-family:var(--font);font-size:12px">circle area = jobs</text>`;
+  document.getElementById('cal').innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" width="${W}" height="${Hh}">${g}</svg>`;
+})();
+
+// ---- lead time
+const LT = A.leadtime;
+document.getElementById('lt-sub').textContent = `Kaplan–Meier over ${LT.n} demands; the ${LT.censored} still open are censored, not dropped.`;
+document.getElementById('p90').innerHTML = `${LT.km_p90}<small>days · p90</small>`;
+document.getElementById('p90-ci').innerHTML = `closed demands alone: ${LT.closed_only.p90} d<br>median ${LT.km_median} d (closed only ${LT.closed_only.median} d)`;
+document.getElementById('lt-note').textContent = `Held out (opened after 1 May): ${Math.round(LT.held_out.p90_coverage * LT.held_out.events_test)} of ${LT.held_out.events_test} arrivals inside the fitted p90; priority and part add no ranking (C ${LT.held_out.c_index}). ${LT.orphan_excluded} AOG demands whose job closed without a fulfilment record are excluded and reported upstream.`;
+(function () {
+  const W = 520, Hh = 372, l = 34, r = 8, t = 10, b = 30, tmax = 165;
+  const lx = d => Math.log10(1 + d), X = d => l + (W - l - r) * lx(d) / lx(tmax), Y = s => t + (Hh - t - b) * (1 - s);
+  let g = '';
+  [0, .25, .5, .75, 1].forEach(s => g += `<line x1="${l}" x2="${W - r}" y1="${Y(s)}" y2="${Y(s)}" stroke="var(--line-2)"/><text x="${l - 8}" y="${Y(s) + 4}" text-anchor="end">${s}</text>`);
+  [0, 1, 2, 5, 10, 20, 50, 100, 160].forEach(d => g += `<text x="${X(d)}" y="${Hh - 10}" text-anchor="middle">${d}${d === 160 ? ' d' : ''}</text>`);
+  // closed only
+  const C = LT.closed_T, n = C.length; let p = `M${X(0)} ${Y(1)}`; C.forEach((d, i) => { p += ` H${X(d)} V${Y(1 - (i + 1) / n)}`; });
+  g += `<path d="${p}" fill="none" stroke="var(--ink-4)" stroke-width="1.6" stroke-dasharray="5 4"/>`;
+  // AFT
+  g += `<polyline fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" points="${[[0, 1], ...LT.aft_curve].filter(q => q[0] <= tmax).map(q => X(q[0]) + ',' + Y(q[1])).join(' ')}"/>`;
+  // KM step
+  let k = `M${X(0)} ${Y(1)}`; let last = 1; LT.step.forEach(([d, s]) => { if (d === 0) return; k += ` H${X(d)} V${Y(s)}`; last = s; }); k += ` H${X(tmax)}`;
+  g += `<path d="${k}" fill="none" stroke="var(--ink)" stroke-width="2.4"/>`;
+  // censor ticks
+  const sAt = d => { let s = 1; LT.step.forEach(([tt, ss]) => { if (tt <= d) s = ss; }); return s; };
+  LT.censor_times.forEach(d => g += `<line x1="${X(d)}" x2="${X(d)}" y1="${Y(sAt(d)) - 5}" y2="${Y(sAt(d)) + 5}" stroke="var(--ink)" stroke-width="1.6"/>`);
+  // p90 marker
+  g += `<line x1="${l}" x2="${W - r}" y1="${Y(0.1)}" y2="${Y(0.1)}" stroke="var(--accent)" stroke-width="1" opacity=".5"/>`;
+  g += `<circle cx="${X(LT.km_p90)}" cy="${Y(0.1)}" r="5" fill="var(--accent)" stroke="#fff" stroke-width="2"/>`;
+  g += `<text x="${l + 8}" y="${Y(0.1) - 8}" style="fill:var(--accent-ink);font-family:var(--font);font-size:12px;font-weight:650">1 in 10 still waiting at ${LT.km_p90} d</text>`;
+  g += `<text x="${W - r}" y="${t + 12}" text-anchor="end" style="font-family:var(--font);font-size:12px">share of demands still waiting · log time axis</text>`;
+  document.getElementById('km').innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" width="100%" height="${Hh}">${g}</svg>`;
+})();
+
+PHX.mount({ page: 'assurance', title: 'Assurance', sub: 'Each model is scored on data it never saw, against the simplest honest baseline',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { i: 'history', t: 'Rolling origin · held-out block' }] });
+</script>
+</body></html>

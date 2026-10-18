@@ -1,0 +1,218 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+event_id: string not null
+  -- field metadata --
+  phalanx.description: 'Identifier of the event occurrence, stable between its Ch10 recording event and its ground record.'
+  phalanx.basis: 'ARCH §12; TRANSFER: S5000F eventIdentifier'
+  phalanx.restricted: 'false'
+tail_no: string not null
+  -- field metadata --
+  phalanx.description: 'Aircraft tail number.'
+  phalanx.basis: 'ARCH §12 (linkage)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+sortie_id: string
+  -- field metadata --
+  phalanx.description: 'Sortie of the event; null for ground events outside a sortie (e.g. IBIT/MBIT on the line).'
+  phalanx.basis: 'ARCH §12 (linkage); ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+engine_serial: string
+  -- field metadata --
+  phalanx.description: 'Engine serial for engine events; null otherwise.'
+  phalanx.basis: 'ARCH §12 (linkage)'
+  phalanx.restricted: 'false'
+source_lru: string not null
+  -- field metadata --
+  phalanx.description: 'LRU or monitor that detected and reported the event.'
+  phalanx.basis: 'ARCH §12; TRANSFER: S5000F EventReporter'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9_.-]*$'
+event_code: string not null
+  -- field metadata --
+  phalanx.description: 'Synthetic fault, exceedance or caution code from the M01 code tables (labelled synthetic; not a real Tejas code).'
+  phalanx.basis: 'ARCH AD-19 (synthetic SSS-NNN codes); ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+event_group: string not null
+  -- field metadata --
+  phalanx.description: 'Event group (subsystem class, e.g. ENGINE, HYDRAULICS), from the M01 code tables.'
+  phalanx.basis: 'TRANSFER: S5000F eventGroup; ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+severity: string not null
+  -- field metadata --
+  phalanx.description: 'Alerting level.'
+  phalanx.basis: 'TRANSFER: S5000F eventSeverity, MIL-STD-411C; ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'EventSeverity'
+  phalanx.enum_symbols: '["ADVISORY","CAUTION","WARNING"]'
+description: string
+  -- field metadata --
+  phalanx.description: 'Code-table description of the event.'
+  phalanx.basis: 'TRANSFER: S5000F eventDescription'
+  phalanx.restricted: 'false'
+confirmed_status: string not null
+  -- field metadata --
+  phalanx.description: 'Confirmation state known at emission (on-board events are UNCONFIRMED).'
+  phalanx.basis: 'TRANSFER: S5000F eventConfirmedStatus; ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'ConfirmedStatus'
+  phalanx.enum_symbols: '["UNCONFIRMED","CONFIRMED","NOT_CONFIRMED"]'
+detection_mechanism: string not null
+  -- field metadata --
+  phalanx.description: 'PBIT, CBIT, MBIT, IBIT, EXCEEDANCE or PILOT.'
+  phalanx.basis: 'ARCH §12; TRANSFER: S5000F detectionMechanismType'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'DetectionMechanism'
+  phalanx.enum_symbols: '["PBIT","CBIT","MBIT","IBIT","EXCEEDANCE","PILOT"]'
+detection_far_per_fh: double
+  -- field metadata --
+  phalanx.description: 'Nominal (specified) false-alarm rate of the detection mechanism per flight hour, from M01. Never the simulator's true rate.'
+  phalanx.basis: 'ARCH §12; TRANSFER: S5000F detectionMechanismFalseAlarmRate; ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+  phalanx.units: '1/h'
+  phalanx.minimum: '0.0'
+fault_list: string
+  -- field metadata --
+  phalanx.description: 'PFL (pilot-visible) or MFL (maintenance-only); null where not applicable.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'FaultList'
+  phalanx.enum_symbols: '["PFL","MFL"]'
+latched: bool not null
+  -- field metadata --
+  phalanx.description: 'Latch state of the event at emission.'
+  phalanx.basis: 'ARCH §12 (latch state)'
+  phalanx.restricted: 'false'
+persistence_count: uint32
+  -- field metadata --
+  phalanx.description: 'Consecutive frames or iterations the condition persisted before it was declared.'
+  phalanx.basis: 'ARCH §12 (persistence count)'
+  phalanx.restricted: 'false'
+suspect_lrus: list<element: struct<lru: string not null, isolation_confidence: double not null> not null> not null
+  child 0, element: struct<lru: string not null, isolation_confidence: double not null> not null
+      child 0, lru: string not null
+      -- field metadata --
+      phalanx.description: 'Suspect LRU.'
+      phalanx.basis: 'ARCH §12'
+      phalanx.restricted: 'false'
+      phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9_.-]*$'
+      child 1, isolation_confidence: double not null
+      -- field metadata --
+      phalanx.description: 'Isolation confidence of this suspect, 0..1.'
+      phalanx.basis: 'ARCH §12'
+      phalanx.restricted: 'false'
+      phalanx.minimum: '0.0'
+      phalanx.maximum: '1.0'
+  -- field metadata --
+  phalanx.description: 'Suspect-LRU list in isolation order; empty when no isolation is made.'
+  phalanx.basis: 'ARCH §12 (suspect-LRU list with isolation confidence)'
+  phalanx.restricted: 'false'
+snapshot_t_start: int64
+  -- field metadata --
+  phalanx.description: 'Start of the event snapshot window (e.g. 5 s before); samples in the window are in param.samples.'
+  phalanx.basis: 'ARCH §12 (snapshot window pointer)'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+snapshot_t_end: int64
+  -- field metadata --
+  phalanx.description: 'End of the event snapshot window (e.g. 25-35 s after).'
+  phalanx.basis: 'ARCH §12 (snapshot window pointer)'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+ch10_event_number: uint32
+  -- field metadata --
+  phalanx.description: 'IRIG 106 Ch10 recording-event number of the on-board copy; null on the fast path.'
+  phalanx.basis: 'TRANSFER: IRIG 106 Ch10 recording event (report §13); ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+t_occurrence: int64 not null
+  -- field metadata --
+  phalanx.description: 'When the event was declared on board. The event time of the record.'
+  phalanx.basis: 'TRANSFER: S5000F eventOccurrenceDateTime; ASSUMPTION: A-W0.4-1'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_record: int64
+  -- field metadata --
+  phalanx.description: 'Recorder RTC time of the on-board copy; null on the fast path.'
+  phalanx.basis: 'ARCH §8; ASSUMPTION: A-W0.4-4'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'recorder_rtc'
+t_utc: int64
+  -- field metadata --
+  phalanx.description: 'Absolute time from the aircraft time source.'
+  phalanx.basis: 'ARCH §8; ASSUMPTION: A-W0.4-4'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_ingest: int64 not null
+  -- field metadata --
+  phalanx.description: 'Arrival at the ground.'
+  phalanx.basis: 'ARCH §8, I5'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+quality_flags: uint32 not null
+  -- field metadata --
+  phalanx.description: 'Quality flag bit set.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.flags: 'QualityFlags'
+  phalanx.flag_bits: '{"SENTINEL":0,"GATED":1,"HELD_STALE":2,"DUPLICATE_POLL":3,"SUBSTITUTED":4,"VOTED_OUT":5,"OUT_OF_RANGE":6,"CLOCK_SUSPECT":7,"TIME_SOURCE_INTERNAL":8,"DUPLICATE_DOWNLOAD":9,"DECODER_INTERPOLATED":10}'
+provenance: string not null
+  -- field metadata --
+  phalanx.description: 'full_path or direct.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Provenance'
+  phalanx.enum_symbols: '["full_path","direct"]'
+legend: string not null
+  -- field metadata --
+  phalanx.description: 'CWS legend identifier (synthetic legend table from M01).'
+  phalanx.basis: 'ARCH §6 M14 (CWS legends); ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+displayed: bool not null
+  -- field metadata --
+  phalanx.description: 'Whether the caution reached the cockpit display.'
+  phalanx.basis: 'ARCH §10 (recorded health data never shown to the pilot); ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+voice_warning: bool not null
+  -- field metadata --
+  phalanx.description: 'Whether a voice warning accompanied the caution.'
+  phalanx.basis: 'ARCH §6 M14 (4 voice warnings); ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+t_cleared: int64
+  -- field metadata --
+  phalanx.description: 'When the caution cleared; null if still active at the end of the recording.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-10'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'events.cautions'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_occurrence'
+phalanx.ingest_time: 't_ingest'
+phalanx.partition_by: '["tail_no","sortie_id"]'
+phalanx.record_id_key: '["provenance","tail_no","sortie_id","channel_id","event_code","seq","msg_index"]'
+phalanx.audience: 'consumer'

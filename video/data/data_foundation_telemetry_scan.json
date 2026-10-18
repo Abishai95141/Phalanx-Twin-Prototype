@@ -1,0 +1,157 @@
+{
+ "telemetry": {
+  "rows": 162883442,
+  "ingest_before_event": 0,
+  "reserved_flag_bits": 0,
+  "nan_inf": 0,
+  "flags": {
+   "SENTINEL": 947798,
+   "GATED": 12,
+   "HELD_STALE": 0,
+   "DUPLICATE_POLL": 0,
+   "SUBSTITUTED": 0,
+   "VOTED_OUT": 0,
+   "OUT_OF_RANGE": 5565314,
+   "CLOCK_SUSPECT": 0,
+   "TIME_SOURCE_INTERNAL": 0,
+   "DUPLICATE_DOWNLOAD": 0,
+   "DECODER_INTERPOLATED": 0
+  },
+  "sentinel_and_oor": 15042,
+  "any_flag": 6498082,
+  "validity": {
+   "NORMAL": 162883430,
+   "NO_COMPUTED_DATA": 12
+  },
+  "params": 123,
+  "lrus": [
+   "ADC",
+   "BHEEM_EU",
+   "CWS",
+   "DFCC",
+   "ECFM_C",
+   "FADEC"
+  ],
+  "params_per_lru": {
+   "DFCC": 48,
+   "FADEC": 18,
+   "BHEEM_EU": 18,
+   "ECFM_C": 16,
+   "ADC": 16,
+   "CWS": 7
+  },
+  "rid_dup_prefix": 0,
+  "dict": [
+   [
+    "0.1.3",
+    "9428d30f578f0318161737a6e6235f332632b2827b76eb6d853064544e7fbc8b"
+   ]
+  ],
+  "per_sortie": {
+   "TJ213-20260105T0300": {
+    "rows": 22020995,
+    "params": 123,
+    "oor": 335437,
+    "sentinel": 128334,
+    "recorded_s": 3029.0
+   },
+   "TJ212-20260105T0300": {
+    "rows": 44883122,
+    "params": 123,
+    "oor": 1647197,
+    "sentinel": 261964,
+    "recorded_s": 6173.7
+   },
+   "TJ109-20260105T0300": {
+    "rows": 34656372,
+    "params": 123,
+    "oor": 1212325,
+    "sentinel": 201406,
+    "recorded_s": 4767.0
+   },
+   "TJ115-20260105T0300": {
+    "rows": 28687652,
+    "params": 123,
+    "oor": 1196355,
+    "sentinel": 166459,
+    "recorded_s": 3946.0
+   },
+   "TJ204-20260105T0300": {
+    "rows": 23235103,
+    "params": 123,
+    "oor": 827584,
+    "sentinel": 134780,
+    "recorded_s": 3196.0
+   },
+   "TJ201-20260106T0300": {
+    "rows": 9400198,
+    "params": 123,
+    "oor": 346416,
+    "sentinel": 54855,
+    "recorded_s": 1293.0
+   }
+  }
+ },
+ "telemetry_full_path": {
+  "rows": 3173220,
+  "ingest_before_event": 0,
+  "reserved_flag_bits": 0,
+  "nan_inf": 0,
+  "flags": {
+   "SENTINEL": 2672,
+   "GATED": 0,
+   "HELD_STALE": 0,
+   "DUPLICATE_POLL": 369520,
+   "SUBSTITUTED": 0,
+   "VOTED_OUT": 0,
+   "OUT_OF_RANGE": 29998,
+   "CLOCK_SUSPECT": 0,
+   "TIME_SOURCE_INTERNAL": 0,
+   "DUPLICATE_DOWNLOAD": 0,
+   "DECODER_INTERPOLATED": 0
+  },
+  "sentinel_and_oor": 0,
+  "any_flag": 402190,
+  "validity": {
+   "BUS_INVALID": 892167,
+   "NORMAL": 2281053
+  },
+  "params": 225,
+  "lrus": [
+   "ADC",
+   "BHEEM_EU",
+   "CWS",
+   "DFCC",
+   "ECFM_C",
+   "ECMS",
+   "FADEC",
+   "OAC"
+  ],
+  "params_per_lru": {
+   "DFCC": 64,
+   "BHEEM_EU": 56,
+   "ECFM_C": 38,
+   "FADEC": 29,
+   "ADC": 22,
+   "OAC": 5,
+   "ECMS": 4,
+   "CWS": 7
+  },
+  "rid_dup_prefix": 0,
+  "dict": [
+   [
+    "0.1.3",
+    "9428d30f578f0318161737a6e6235f332632b2827b76eb6d853064544e7fbc8b"
+   ]
+  ],
+  "per_sortie": {
+   "TJ201-20260106T0300": {
+    "rows": 3173220,
+    "params": 225,
+    "oor": 29998,
+    "sentinel": 2672,
+    "recorded_s": 600.0
+   }
+  }
+ }
+}

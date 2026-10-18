@@ -1,0 +1,31 @@
+screen at 687200107202208.mat 14554-15034: governed 0.998
+screen at 687200105031623.mat 11905-12385: governed 0.998
+screen at 687200108150546.mat 5241-5721: governed 0.998
+screen at 687200107181544.mat 9766-10246: governed 0.998
+screen man 687200107202208.mat 18559-19199: governed 0.944
+screen man 687200105031623.mat 18276-18916: governed 0.941
+screen man 687200107181544.mat 13769-14409: governed 0.956
+[0 autothrottle] 4 segments, ('at_kp', 'at_ki', 'at_rate') from [0.3 0.2 0.1]; words [0, 1]
+    it 1: cost 13678297.1 theta [0.6041 0.3211 0.2014]
+    it 2: cost 8810542.9 theta [0.743  0.4074 0.4055]
+    it 3: cost 7465691.0 theta [0.8114 0.4019 0.8166]
+    it 4: cost 7409281.4 theta [0.8676 0.4094 0.7353]
+    it 5: cost 7349677.7 theta [0.8634 0.4113 0.7725]
+    it 6: cost 7294873.9 theta [0.889  0.4156 0.8282]
+[1 governor] 3 segments, ('gov_kp', 'gov_ki') from [2. 1.]; words [0, 1, 3]
+    it 1: cost 112574054.9 theta [1.9433 1.074 ]
+    it 2: cost 109086885.5 theta [1.7992 1.1671]
+    it 3: cost 104047756.7 theta [1.6636 1.1299]
+    it 4: cost 90834142.1 theta [1.4373 1.1288]
+    it 5: cost 89521594.1 theta [1.3402 1.1541]
+    it 6: cost 88334994.5 theta [1.3018 1.1412]
+[2 plant] 4 segments, ('i_lp', 'i_hp', 'tau_egt', 'tau_ff') from [3.093  1.3599 0.81   0.218 ]; words [0, 1, 2, 3]
+    it 1: cost 10671014.8 theta [2.9958 1.0993 1.6311 0.439 ]
+    it 2: cost 9294802.5 theta [3.5763 1.6891 3.2847 0.884 ]
+    it 3: cost 8870096.5 theta [3.5634 1.505  4.0797 1.7096]
+    it 4: cost 8846681.3 theta [3.5983 1.4975 4.1357 1.4627]
+    it 5: cost 8846660.2 theta [3.6049 1.4986 4.1405 1.4709]
+    it 6: cost 8846660.0 theta [3.6046 1.4982 4.1402 1.47  ]
+    it 1: cost 8866817.8 theta [3.5982 1.4918 4.1214 1.4675]
+    it 2: cost 8866817.6 theta [3.6003 1.4929 4.122  1.4682]
+wrote runs/proxy_quicklook/st5/ident.json

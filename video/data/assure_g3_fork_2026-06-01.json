@@ -1,0 +1,184 @@
+{
+ "epoch": "2026-06-01 08:00 IST",
+ "tail": "TJ107",
+ "snapshot_id": "a7220d94601fc779bd8c6a8641af7783df642957cd884143bbd1ca02f3821099",
+ "n_pairs": 20,
+ "mode": "belief",
+ "horizon_days": 30,
+ "hyd101_ingested_by_epoch": 52,
+ "orders": [
+  {
+   "order_id": "phx-g3:20260601T023000Z:troubleshoot",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "issuer_kind": "AGENT",
+   "t_issued": 1780281000000000000,
+   "t_issued_utc": "2026-06-01T02:30:00Z",
+   "t_issued_ist": "2026-06-01 08:00 IST",
+   "t_effective": 1780281000000000000,
+   "action": "TROUBLESHOOT",
+   "parameters": {
+    "code": "HYD-101"
+   },
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ107",
+   "target_base": null,
+   "evidence": [
+    "8c13aecf9b8b84020ef56017313d10aa",
+    "d15a23e4ba056daf32b4da19e5acc010",
+    "6d58397e67c08c4cacd98a148d623de7",
+    "7ce037e2a746826d28c126f12b5ae862",
+    "0a823ac42ae530c802383594258e0625",
+    "2e9252d11df6ef469b2225668b19abbf"
+   ],
+   "policy_version": "phalanx-solution-demo/0.1"
+  },
+  {
+   "order_id": "phx-g3:20260601T023000Z:monitoring-config",
+   "issuer_id": "HUMAN-ENGG-OFFICER",
+   "issuer_kind": "HUMAN",
+   "t_issued": 1780281000000000000,
+   "t_issued_utc": "2026-06-01T02:30:00Z",
+   "t_issued_ist": "2026-06-01 08:00 IST",
+   "t_effective": 1780281000000000000,
+   "action": "CHANGE_MONITORING_CONFIG",
+   "parameters": {
+    "filter_codes_add": [
+     "HYD-101"
+    ]
+   },
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ107",
+   "target_base": null,
+   "evidence": [
+    "8c13aecf9b8b84020ef56017313d10aa",
+    "d15a23e4ba056daf32b4da19e5acc010",
+    "6d58397e67c08c4cacd98a148d623de7",
+    "7ce037e2a746826d28c126f12b5ae862",
+    "0a823ac42ae530c802383594258e0625",
+    "2e9252d11df6ef469b2225668b19abbf"
+   ],
+   "policy_version": null
+  }
+ ],
+ "gateway": [
+  [
+   "phx-g3:20260601T023000Z:troubleshoot",
+   "ACCEPTED",
+   null
+  ],
+  [
+   "phx-g3:20260601T023000Z:monitoring-config",
+   "ACCEPTED",
+   null
+  ]
+ ],
+ "paired": {
+  "mc": {
+   "mean": 0.2640798611111111,
+   "ci_low": 0.21116913719790242,
+   "ci_high": 0.31699058502431976,
+   "n": 20
+  },
+  "fmc": {
+   "mean": 0.23906250000000004,
+   "ci_low": 0.18618065245042548,
+   "ci_high": 0.2919443475495746,
+   "n": 20
+  },
+  "nmcs": {
+   "mean": -0.17171875,
+   "ci_low": -0.23448700199526623,
+   "ci_high": -0.10895049800473379,
+   "n": 20
+  },
+  "nmcm": {
+   "mean": -0.0923611111111111,
+   "ci_low": -0.11123261959827926,
+   "ci_high": -0.07348960262394294,
+   "n": 20
+  },
+  "nmcd": {
+   "mean": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0,
+   "n": 20
+  },
+  "flying_task": {
+   "mean": 0.2614941855109335,
+   "ci_low": 0.21911492932112003,
+   "ci_high": 0.303873441700747,
+   "n": 20
+  },
+  "flown_fh": {
+   "mean": 7.141083333333333,
+   "ci_low": 6.098315750442679,
+   "ci_high": 8.183850916223985,
+   "n": 20
+  },
+  "sorties": {
+   "mean": 8.7,
+   "ci_low": 7.358091400533684,
+   "ci_high": 10.041908599466314,
+   "n": 20
+  },
+  "aog_days": {
+   "mean": -5.151562499999999,
+   "ci_low": -7.034610059857986,
+   "ci_high": -3.2685149401420124,
+   "n": 20
+  },
+  "cann_rate": {
+   "mean": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0,
+   "n": 20
+  },
+  "cann": {
+   "mean": 0.0,
+   "ci_low": 0.0,
+   "ci_high": 0.0,
+   "n": 20
+  },
+  "man_hours": {
+   "mean": -108.07485,
+   "ci_low": -132.09392975523275,
+   "ci_high": -84.05577024476725,
+   "n": 20
+  },
+  "cost": {
+   "mean": -3.0657485,
+   "ci_low": -4.2795108711598155,
+   "ci_high": -1.8519861288401849,
+   "n": 20
+  },
+  "in_flight_failures": {
+   "mean": 0.0,
+   "ci_low": -0.15184392423821927,
+   "ci_high": 0.15184392423821927,
+   "n": 20
+  }
+ },
+ "order_log_hashes": [
+  "ab4bc3130d638ef0d6b62d1000d7c2145f99ab9e9fcc3a9c993e719b9060ed4d",
+  "9afd3dd2c1d4d12d20d5fa4d47f4a97c0a178318eb44e5c3a5fce270c066e2d8",
+  "b892ea90f6f8d9bce68d32c3765e9eebaed701d1f0201d6049335c11b205556d",
+  "9055a9df3ac9ec6dd2ed7578d6e6a5c45d0e893acb93724816e232b94aa7f9df",
+  "2215d5a8cff852ebd070ce843a4a49a194eba72841e5e25a6f9d92efbad8bb5b",
+  "b2687aa09fc9b7db12358ffa4da38bdc6cc46a1d06df9cedb16f7c097bcc0515",
+  "7db8c4b9e23cc54adcf4fe993c8581f93cae829ed7eae7a130c78190e7e3b7cf",
+  "ec9320395b7eeb668f682895f3750d692fb1ee75e36281470231ed79cca670f7",
+  "b6f6865ea3ce2a6d0b43df4b37caf9a0923a53ca60def97f9f5f370829ecba9f",
+  "dae1a4c6501f17626864bd07f1ddc359d23c59a346e13c046a6ce9ef370b5e62",
+  "f3122a4b308cb22511bbf85fdb360eef9d129cc84e1177d82c3bfaf176185186",
+  "e947b8b0b633052ecbf78dd15bc447ddbe4f7a8c5d4ce0768ecfd734acb40469",
+  "d61fee77b3c36d891a6d778a2cdc469bd756623093d8e91bb02c286445a7022c",
+  "3c1982e356f71232ca337b939f1e975cd9877d279d4017d9befe0348fe250acf",
+  "8ce7400a785b56eaaf0c1083d88e494247445fe0ed355a370ce17c874be25e59",
+  "403df7ca0636ca87a213669db945292bcbc21ceec77a76a9f4414a0c075d050e",
+  "196ca9a82368ed67c77f86fbeac69d75e44d6501b2336d78484964216fac8627",
+  "cbf8fce0a2942b646435145fa9709a3df367902aa76506b2d3f0c8bbf6123459",
+  "0cedcfb4b9d6655d60fdd4ed40664c25260ed8f3a88c306a337d98269e80769d",
+  "eb160be85358abfc7097eebb3ac28c607ee7cd7cbf7d4b0fe189b2bd6db066fe"
+ ],
+ "wall_s": 119.8
+}

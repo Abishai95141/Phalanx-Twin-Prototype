@@ -1,0 +1,115 @@
+# Machine-readable cross-module EVENT protocol (W1). Authoritative for event kinds that cross module boundaries.
+# It is the M18 hub protocol (src/phalanx/maintenance/README.md, W1.8), adopted by the coordinator (AD-44). Modules
+# may use any names for events internal to themselves. Every event crossing a module boundary uses a kind listed here,
+# with at least the listed payload keys.
+# Enforced by tests/integration/test_event_protocol.py against each package's ports.py
+# `EVENTS_OUT` / `EVENTS_IN` = {kind: tuple(payload keys)}.
+# producer/consumer are module ids (M02 ... M22). `hidden: true` = truth-bearing; never reaches the consumer contract.
+# `planned: <wave>` = the producer does not emit it yet; declaration is not yet required (it is still checked if declared).
+format: phalanx.events/1
+events:
+  # --- scenario (M02) <-> maintenance (M18): fleet operations
+  ops.offer_request: {producer: M02, consumers: [M18], payload: [day, reply_to]}
+  ops.offer: {producer: M18, consumers: [M02], payload: [day, tails]}
+  ops.launch: {producer: M02, consumers: [M18], payload: [sortie_id, tail_no, reply_to]}
+  ops.launch_denied: {producer: M18, consumers: [M02], payload: [sortie_id, tail_no, reason]}
+  ops.ground_abort: {producer: M02, consumers: [M18], payload: [tail_no, sortie_id]}
+  # AD-49 start-failure route: a start failure (JFS cold start, hung / hot start) found before take-off ground-aborts
+  # the sortie (M02 -> ops.ground_abort); a report after take-off is too late and only counted
+  ops.start_failure: {producer: M11, consumers: [M02], payload: [tail_no, sortie_id, mode], hidden: true}
+  ops.sortie_done:
+    producer: M02
+    consumers: [M18, M11, M14]
+    payload: [sortie_id, tail_no, t_takeoff, t_landing, flight_hours, landings, engine_cycles, engine_starts,
+              chute_streamed, mission_type, crew_id, aborted]
+  # actual take-off (AD-48.2): the airborne window [t_takeoff, t_landing (planned)] and the plan's per-sortie drivers
+  # M11 places telemetry-mode fault onsets with (AB lights, engine starts, landings, dust exposure index)
+  ops.takeoff:
+    producer: M02
+    consumers: [M11, M14, M10]
+    payload: [sortie_id, tail_no, t_takeoff, t_landing, ab_lights, engine_starts, landings, dust_index]
+  # power-up at engine start (W2.5, from the W2.1c proposals 4 and 6; AD-48.2 lifecycle), for committed sorties only:
+  # M14 runs PBIT here, minutes before take-off (report §9: PBIT at power-up; Tejas FBW prototype about 10 min); M11
+  # draws the preflight start-failure modes here so M02 can ground-abort before take-off (AD-49, A-W2.1c-6; used
+  # instead of ops.launch, which M18 may still deny). engine_starts = starts of this power-up (normally 1);
+  # cold_soak = 1 when the aircraft cold-soaked before it (M02's soak temperature; Leh -15 degC anchor, CAG 17/2015).
+  # M05 runs its PBIT on it (M02 then sends no fcs.pbit_start). M02 emits it at the committed sortie's engine start
+  # (operations mode) or at the telemetry window start, the engine start just before it (sortie mode, AD-46) (W2.1a)
+  ops.power_up:
+    producer: M02
+    consumers: [M05, M11, M14]
+    payload: [tail_no, sortie_id, engine_starts, cold_soak]
+  ops.assign: {producer: M18, consumers: [M02], payload: [tail_no, order_id]}  # + ASSIGN_SORTIE parameters as top-level keys
+  ops.restrict: {producer: M18, consumers: [M02], payload: [tail_no]}  # + RESTRICT_USAGE parameters as top-level keys
+  # --- usage drivers for health (M02 summary in usage mode; derived from truth ports in telemetry mode)
+  # AD-48 field semantics: engine_cycles = TAC (F404 total accumulated cycles); time_at_temp_s = time at/above the
+  # IRP T5 band (TAMP); nz_counts = level-crossing counts on the M14 Nz level set (params M14), replacing the
+  # max_nz-only PROXY A-W1.5-18; ab_time_s = afterburner time; dust/salt indices from M03 base climate.
+  usage.sortie_summary:
+    producer: M02
+    consumers: [M10]
+    payload: [sortie_id, tail_no, flight_hours, engine_cycles, engine_starts, landings, time_at_temp_s, max_nz,
+              ab_time_s, dust_index, salt_index]  # nz_counts added by the W1.5 follow-up together with M10 support
+  # --- health/faults (M10/M11) -> maintenance (M18): hidden truth used only to decide outcomes
+  truth.fault: {producer: M11, consumers: [M18], payload: [fault_id, tail, pos, serial, mode, symptom, grounding], hidden: true}
+  truth.fault_clear: {producer: M11, consumers: [M18], payload: [fault_id], hidden: true}
+  truth.incident: {producer: M11, consumers: [M18], payload: [tail, kind, positions], hidden: true}
+  # --- maintenance (M18) -> health (M10) / monitoring (M14): physical consequences of maintenance
+  cfg.install: {producer: M18, consumers: [M10], payload: [tail, pos, serial, cls]}
+  cfg.remove: {producer: M18, consumers: [M10], payload: [tail, pos, serial]}
+  mx.action: {producer: M18, consumers: [M10, M14, M09], payload: [tail, action]}  # + pos / serial / mod_id / sw_config_id / job_no by action
+  mx.repaired: {producer: M18, consumers: [M10], payload: [serial, level]}
+  mx.monitoring: {producer: M18, consumers: [M14], payload: [tail]}  # + CHANGE_MONITORING_CONFIG parameters as top-level keys
+  # --- monitoring (M14) -> maintenance (M18): observed events at their ingest time (via the contract)
+  obs.event: {producer: M14, consumers: [M18], payload: [topic, row]}
+  # --- faults (M11) -> sensors (M12): sensor-fault modes (AD-42)
+  sensor_fault: {producer: M11, consumers: [M12], payload: [channel, mode, value, rate, duty, probe], hidden: true}
+  # --- orders (M21) <-> maintenance (M18)
+  order.exec: {producer: M21, consumers: [M18], payload: [order]}
+  order.progress: {producer: M18, consumers: [M21], payload: [order_id, status, reason, result_record_ids]}
+  # --- FADEC (M08) -> monitoring (M14): engine fault codes and cautions (W1.3b request; AD-46 batch)
+  fadec.fault: {producer: M08, consumers: [M14], payload: [engine, code, set, sensor, lane, description, t_frame_ns, frame]}
+  fadec.caution: {producer: M08, consumers: [M14], payload: [engine, code, set, sensor, lane, description, t_frame_ns, frame]}
+  # --- pilot (M04) / scenario (M02) / faults (M11) -> utilities (M09) (W1.4 request)
+  util.jfs_start: {producer: M04, consumers: [M09], payload: [tail]}
+  util.jfs_abort: {producer: M04, consumers: [M09], payload: [tail]}
+  util.chute_deploy: {producer: M04, consumers: [M09], payload: [tail, emergency]}
+  util.chute_jettison: {producer: M04, consumers: [M09], payload: [tail]}
+  util.fire_extinguish: {producer: M04, consumers: [M09], payload: [tail]}
+  util.store_release: {producer: M04, consumers: [M09], payload: [tail, station]}
+  util.refuel: {producer: M02, consumers: [M09], payload: [tail, tank, target_kg, t_fuel]}
+  util.fault: {producer: M11, consumers: [M09], payload: [tail, mode], hidden: true}
+  # --- monitoring (M14, CWS) -> pilot (M04): the cockpit alerts the pilot reacts to (AD-49); code = the alert's BIT code
+  pilot.fire_warning: {producer: M14, consumers: [M04], payload: [tail, code]}
+  pilot.fcs_caution: {producer: M14, consumers: [M04], payload: [tail, code]}
+  # --- pilot (M04) -> scenario (M02), W2.1a take-off fix (A-W2.1-9): the segment in force changed; the take-off roll
+  # ends at a confirmed lift-off and the landing roll starts at a confirmed touchdown; M02 sets its phase and sends
+  # ops.takeoff / ops.sortie_done from these (segment = segment count at engine cut-off, fine = POSTFLIGHT)
+  pilot.segment: {producer: M04, consumers: [M02], payload: [tail, segment, fine]}
+  # --- faults (M11) / pilot (M04) / maintenance (M18) / scenario (M02) -> FCS (M05) and airframe (M06) (W1.2 request)
+  fcs.channel_fault: {producer: M11, consumers: [M05], payload: [tail, channel, subsystem, active], hidden: true}
+  fcs.actuator_fault: {producer: M11, consumers: [M05], payload: [tail, surface, mode, active], hidden: true}  # + channel for mode=servo
+  fcs.wow_fault: {producer: M11, consumers: [M05], payload: [tail, leg, value, active], hidden: true}
+  fcs.reset: {producer: M04, consumers: [M05], payload: [tail]}
+  fcs.spin_mode: {producer: M04, consumers: [M05], payload: [tail, "on"]}  # quoted: YAML 1.1 reads bare on as true
+  fcs.pbit_start: {producer: M02, consumers: [M05], payload: [tail]}  # power-up BIT at sortie preparation
+  fcs.mbit_start: {producer: M18, consumers: [M05], payload: [tail], planned: W2.6}  # maintenance-initiated BIT
+  af.ground_elevation: {producer: M02, consumers: [M06], payload: [tail, h]}
+  # --- faults (M11) -> physics modules: physical fault injection as state perturbations (AD-48; handlers wired W2.1)
+  eng.fault_inject: {producer: M11, consumers: [M07], payload: [tail, mode, param, instance, engine, clear], hidden: true}
+  fadec.fault_inject: {producer: M11, consumers: [M08], payload: [tail, mode, param, instance, engine, clear], hidden: true}
+  # leg: the M06 gear leg (0 nose, 1 left main, 2 right main; -1 all legs), W2.1c
+  af.fault_inject: {producer: M11, consumers: [M06], payload: [tail, mode, param, instance, engine, clear, leg], hidden: true}
+  # --- scenario disruption hooks
+  m18.disruption: {producer: M02, consumers: [M18], payload: [cls, factor, t0, t1]}
+  # --- AD-49 (W2.1c): kinds that crossed module boundaries uncatalogued in W1
+  # the sortie plan to the environment (ambient, duration) and the pilot (segments, traits); + summary (usage mode)
+  scenario.sortie_plan:
+    producer: M02
+    consumers: [M03, M04]
+    payload: [sortie_id, rng_key, tail, squadron, base, field_elev_m, mission_type, pilot_id, night, t_start_utc_ns,
+              t_kernel0_ns, engine_serials, drop_tanks, fuel_kg, t_off_ns, seg_f, seg_i, t_end_off_ns, ambient,
+              pilot_traits, duration_s, chute]
+  # the day's flying task (operations mode, 00:00 UTC) to the record sink (M21 RecordSink); M22 reads it back for
+  # the flying-task KPI
+  kpi.plan: {producer: M02, consumers: [M21, M22], payload: [t_utc, date, planned_sorties, planned_fh]}

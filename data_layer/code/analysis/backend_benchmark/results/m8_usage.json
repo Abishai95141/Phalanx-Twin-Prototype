@@ -1,0 +1,83 @@
+{
+ "fleet": {
+  "high": {
+   "mission_generation_s_total": 35.97975249016599,
+   "sorties": 15000,
+   "surrogate_numba_s_total": 5.464135620131856,
+   "surrogate_numpy_s_total": 7.820518125008674,
+   "telemetry_all_sorties_jax_single_unroll4_core_h": 45.40565592457521,
+   "telemetry_all_sorties_numba_single_core_h": 2.8460040048836768
+  },
+  "low": {
+   "mission_generation_s_total": 21.587851494099596,
+   "sorties": 9000,
+   "surrogate_numba_s_total": 3.2784813720791135,
+   "surrogate_numpy_s_total": 4.692310875005204,
+   "telemetry_all_sorties_jax_single_unroll4_core_h": 27.243393554745126,
+   "telemetry_all_sorties_numba_single_core_h": 1.7076024029302062
+  },
+  "mid": {
+   "mission_generation_s_total": 28.78380199213279,
+   "sorties": 12000,
+   "surrogate_numba_s_total": 4.371308496105485,
+   "surrogate_numpy_s_total": 6.256414500006939,
+   "telemetry_all_sorties_jax_single_unroll4_core_h": 36.32452473966017,
+   "telemetry_all_sorties_numba_single_core_h": 2.2768032039069417
+  }
+ },
+ "machine": {
+  "cpu": "Apple M4",
+  "eff_cores": "6",
+  "env": {
+   "NUMBA_CACHE_DIR": "/Users/abishaikc/Phalanx/worktrees",
+   "NUMBA_NUM_THREADS": "4",
+   "OMP_NUM_THREADS": "1",
+   "XLA_FLAGS": null
+  },
+  "machine": "arm64",
+  "mem_gb": 16.0,
+  "ncpu": 10,
+  "perf_cores": "4",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+   "jax": "0.11.2",
+   "jaxlib": "0.11.2",
+   "llvmlite": "0.50.0",
+   "numba": "0.68.0",
+   "numpy": "2.5.4",
+   "python": "3.13.3",
+   "scipy": "1.18.1"
+  }
+ },
+ "mission_generation_s": 2.398650166011066,
+ "numpy_vs_numba_max_rel_diff": 3.7129361188299255e-16,
+ "reps": 3,
+ "sorties_measured": 1000,
+ "surrogate_numba_first_call_s": 4.872061499991105,
+ "surrogate_numba_s": {
+  "max": 0.375672415990266,
+  "mean": 0.35811174966511317,
+  "median": 0.3642757080087904,
+  "min": 0.3343871249962831,
+  "n": 3,
+  "sd": 0.021321693177639597,
+  "values": [
+   0.3642757080087904,
+   0.3343871249962831,
+   0.375672415990266
+  ]
+ },
+ "surrogate_numpy_s": {
+  "max": 0.5333214999991469,
+  "mean": 0.5224390140016718,
+  "median": 0.5213678750005784,
+  "min": 0.5126276670052903,
+  "n": 3,
+  "sd": 0.010388415907353489,
+  "values": [
+   0.5333214999991469,
+   0.5126276670052903,
+   0.5213678750005784
+  ]
+ }
+}

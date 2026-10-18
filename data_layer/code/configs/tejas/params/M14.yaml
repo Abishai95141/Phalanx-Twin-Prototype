@@ -1,0 +1,210 @@
+# M14 Monitoring and BIT (architecture §6 M14, §9.4; W1.5). Evidence: report §9 (R§9); research notes
+# texture_and_fault_gap_closure.md Q9 and synthesis (d) [N:TFG]; addendum_engine_F404_F414_monitoring.md [N:AE];
+# f404_in20_engine_model.md Q9 [N:F404]; tejas_airframe_aero_fcs.md [N:TA]. Code table: M14/codes.yaml.
+format: phalanx.params/1
+module: M14
+sets:
+  bit_noise:
+    test_rate:
+      value: 100
+      units: 1/hour
+      description: "Evaluation rate of each internal BIT test (RADC set-up: 100 tests per hour per signal)"
+      evidence: {tag: "TRANSFER: RADC-TR-81-220 Table 5-8", source: "N:TFG Q9 (m-of-n debounce set-up)"}
+    test_phi:
+      value: 0.5
+      units: "1"
+      description: AR(1) coefficient between successive test samples of the BIT statistic (coloured noise)
+      evidence: {tag: ASSUMPTION, source: "R§9: run BIT on the same coloured, heavy-tailed sensor model; RADC: coloured noise defeats independent m-of-n arithmetic"}
+      sweep: [0.0, 0.9]
+      assumption_id: A-W1.5-30
+    test_p_mix:
+      value: 0.05
+      units: "1"
+      description: Probability of the wide component of the unit-variance heavy-tail mixture
+      evidence: {tag: ASSUMPTION, source: "architecture §6 M13 (heavy-tail mixture form, round-2 A2/A3); BIT statistic magnitude not public"}
+      sweep: [0.0, 0.2]
+      assumption_id: A-W1.5-30
+    test_k_mix:
+      value: 3.0
+      units: "1"
+      description: Scale ratio of the wide to the narrow mixture component
+      evidence: {tag: ASSUMPTION, source: "as test_p_mix"}
+      sweep: [1.0, 6.0]
+      assumption_id: A-W1.5-30
+    unit_offset_sd:
+      value: 1.0
+      units: "1"
+      description: SD (in test σ) of the per-LRU-serial offset of each test statistic (marginal units alarm repeatedly)
+      evidence: {tag: ASSUMPTION, source: "calibrated so false alarms persist ≥3 flights in 10-18 % (RADC-TR-81-220 Cat II persistence, N:TFG Q9)"}
+      sweep: [0.5, 1.5]
+      assumption_id: A-W1.5-31
+    ehm_unit_offset_sd:
+      value: 0.2
+      units: "1"
+      description: "Per-engine offset SD (test σ) of gas-path EHM statistics: residual after the per-engine baseline correction"
+      evidence: {tag: ASSUMPTION, source: "R§9: faults as differences from a healthy per-tail baseline; F404 trending on per-engine baselines (addendum_engine_F404_F414_monitoring.md, CF-18 Kalman bands)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W1.5-31
+    flight_offset_sd:
+      value: 0.3
+      units: "1"
+      description: SD (in test σ) of the per-sortie environmental offset of each test statistic
+      evidence: {tag: ASSUMPTION, source: "as unit_offset_sd (RADC root causes: environment 8 %, power transients 12 %)"}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.5-31
+    n_clear:
+      value: 10
+      units: "1"
+      description: Consecutive passing test samples to clear a non-latched caution (heal after 10 good frames)
+      evidence: {tag: "TRANSFER: DEEC/ADIA analytical-check healing", source: "N:TFG (d) item 5: heal after 10 good frames"}
+    pbit_samples:
+      value: 12
+      units: "1"
+      description: Test samples evaluated in power-up BIT (one PBIT pass per sortie)
+      evidence: {tag: ASSUMPTION, source: "N:TFG (d) item 8 (PBIT at power-up; Tejas FBW ≈10 min prototype)"}
+      sweep: [4, 40]
+      assumption_id: A-W1.5-30
+  regime_immature:
+    imm_k:
+      value: 3.0
+      units: "1"
+      description: "Immature-regime threshold (test σ); calibrated (phalanx.monitoring.calibrate) to 0.1-1 FH between false alarms at aircraft level (33 internal tests)"
+      evidence: {tag: ASSUMPTION, source: "R§9 / architecture §6 M14: immature 0.1-1 FH between false alarms (F-35 0.09-1.03 FH, DOT&E [TRANSFER target]); checked by tests/statistical/test_monitoring_regimes.py"}
+      sweep: [2.6, 3.4]
+      assumption_id: A-W1.5-31
+    imm_m: {value: 3, units: "1", description: "Immature m of m-of-n (non-overlapping windows)", evidence: {tag: "TRANSFER: RADC-TR-81-220 Table 5-8", source: "N:TFG Q9 (3-of-4)"}}
+    imm_n: {value: 4, units: "1", description: Immature window length n, evidence: {tag: "TRANSFER: RADC-TR-81-220 Table 5-8", source: "N:TFG Q9 (3-of-4)"}}
+  regime_mature:
+    mat_k:
+      value: 5.0
+      units: "1"
+      description: Mature-regime threshold (test σ); calibrated to ≥50 FH between false alarms (aircraft level)
+      evidence: {tag: ASSUMPTION, source: "R§9 / architecture §6 M14: mature ≥50 FH between false alarms, ≤1 per 1,000 flights for gas-path EHM [TRANSFER target]"}
+      sweep: [4.5, 6.0]
+      assumption_id: A-W1.5-31
+    mat_m: {value: 4, units: "1", description: Mature m of m-of-n (non-overlapping windows), evidence: {tag: "TRANSFER: RADC-TR-81-220 Table 5-8", source: "N:TFG Q9 (4-of-5: 0.04 alarms/h)"}}
+    mat_n: {value: 5, units: "1", description: Mature window length n, evidence: {tag: "TRANSFER: RADC-TR-81-220 Table 5-8", source: "N:TFG Q9 (4-of-5)"}}
+    burst_dk:
+      value: 0.7
+      units: "1"
+      description: Threshold reduction after a software load (code burst ≈10x normal)
+      evidence: {tag: ASSUMPTION, source: "N:TFG Q9: FADEC software fault -> up to 40 HRCs per debrief, ≈10x normal (DOT&E FY2020) [TRANSFER]; Δk calibrated to x10 in the mature regime"}
+      sweep: [0.3, 1.2]
+      assumption_id: A-W1.5-38
+    burst_flights:
+      value: 10
+      units: "1"
+      description: Sorties over which a software-load burst decays (linear) back to the regime threshold
+      evidence: {tag: ASSUMPTION, source: "N:TFG Q9 (maturation decay > 50 -> ~5 messages per flight; duration not given)"}
+      sweep: [3, 30]
+      assumption_id: A-W1.5-38
+    sympathetic_scale:
+      value: 1.0
+      units: "1"
+      description: Multiplier on the per-code sympathetic-code probabilities of codes.yaml
+      evidence: {tag: ASSUMPTION, source: "N:TFG Q9: sympathetic HRCs (one failure, several work orders) (F-35 AF&C)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.5-38
+  nominal:
+    spec_far_aircraft:
+      value: 0.02
+      units: 1/hour
+      description: Specified aircraft-level false-alarm rate (50 FH between false alarms) reported as detection_far_per_fh
+      evidence: {tag: "TRANSFER: F-35 requirement (DOT&E)", source: "N:TFG Q9: mean flight hours between false alarms requirement 50 FH"}
+    spec_far_ehm:
+      value: 6.7e-4
+      units: 1/hour
+      description: Specified false-alarm rate of gas-path EHM and exceedance monitors (1 per 1,000 flights of ~1.5 h)
+      evidence: {tag: "TRANSFER: gas-path EHM practice", source: "R§9 / N:FD §9(a) 7: ≈1 per 1,000 flights for gas-path EHM"}
+  ecms:
+    snapshot_pre_s:
+      value: 5.0
+      units: s
+      description: ECMS event snapshot window before the trigger
+      evidence: {tag: "TRANSFER: F404 IECMS (Hess; Muir)", source: "N:AE: event records 5 s pre"}
+    snapshot_post_s:
+      value: 25.0
+      units: s
+      description: ECMS event snapshot window after the trigger (USN 25 s; CF 35 s, open conflict, report App. A4)
+      evidence: {tag: ASSUMPTION, source: "N:AE: +25 s post (Navy) or +35 s post (CF) - conflict kept configurable"}
+      sweep: [25.0, 35.0]
+      assumption_id: A-W1.5-39
+    takeoff_record_s:
+      value: 8.0
+      units: s
+      description: Take-off record length after the take-off trigger (6-10 s)
+      evidence: {tag: ASSUMPTION, source: "N:AE: take-off record 6-10 s [TRANSFER range]; value inside it"}
+      sweep: [6.0, 10.0]
+      assumption_id: A-W1.5-40
+    download_delay:
+      value: 1800.0
+      units: s
+      description: Delay from shut-down to the HMS/ECMS download that ingests the sortie's records (obs.event t_ingest)
+      evidence: {tag: ASSUMPTION, source: "maintenance_records_and_events.md chain 1 (landing 11:52, download 12:20: 28 min) [ASSUMPTION example]"}
+      sweep: [600.0, 7200.0]
+      assumption_id: A-W1.5-42
+    gas_path_rate_hz:
+      value: 10.0
+      units: Hz
+      description: ECMS gas-path acquisition rate (decimation of the CIR for LUI counting and snapshots)
+      evidence: {tag: "TRANSFER: CF-18 IECMS (Muir et al. Table 1)", source: "N:AE: N1, N2, T56, PS3, Wfm, PLA, A8 at 10 Hz"}
+    slow_rate_hz:
+      value: 1.0
+      units: Hz
+      description: ECMS slow-channel rate (oil pressure, vibration, Nz, valves)
+      evidence: {tag: "TRANSFER: CF-18 IECMS (Muir et al. Table 1)", source: "N:AE: 1 Hz channels"}
+    exceed_persist_samples:
+      value: 3
+      units: "1"
+      description: Minimum persistence (samples) of any exceedance ('several iterations')
+      evidence: {tag: ASSUMPTION, source: "N:AE (Hess): an exceedance should persist several computer iterations"}
+      sweep: [2, 5]
+      assumption_id: A-W1.5-33
+    exceed_hyst_frac:
+      value: 0.01
+      units: "1"
+      description: Clear hysteresis as a fraction of the limit magnitude
+      evidence: {tag: ASSUMPTION, source: "N:TFG (d) item 9 (limit + persistence); hysteresis not given"}
+      sweep: [0.0, 0.05]
+      assumption_id: A-W1.5-33
+    tac_min_per_fh:
+      value: 0.4
+      units: 1/hour
+      description: TAC cross-check lower bound per flight hour (ferry)
+      evidence: {tag: "DIRECT", source: "N:FD §9(a) 3: TAC ≈0.4 per hour on a ferry (f-16.net, informal)"}
+    tac_max_per_fh:
+      value: 15.0
+      units: 1/hour
+      description: TAC cross-check upper bound per flight hour (air combat)
+      evidence: {tag: "DIRECT", source: "N:FD §9(a) 3: 10-15 TAC per hour in air combat (f-16.net, informal)"}
+  lui:
+    n2_run_pct: {value: 45.0, units: percent, description: "N2 above which an engine run starts (light-off region)", evidence: {tag: ASSUMPTION, source: "N:F404 Q8: T-50 light-off ≈27 s, starter cut-out ≈55 % N2; F404-400 ignition permissive NH 10-45 %"}, sweep: [30.0, 55.0], assumption_id: A-W1.5-32}
+    n2_off_pct: {value: 20.0, units: percent, description: N2 below which the run ends (shutdown), evidence: {tag: ASSUMPTION, source: "N:F404 Q8 (PLA to idle at ≈20 % N2 on start)"}, sweep: [10.0, 30.0], assumption_id: A-W1.5-32}
+    n2_idle_pct: {value: 55.0, units: percent, description: Ground-idle gate for EOT (≥55 % N2), evidence: {tag: ASSUMPTION, source: "N:F404 Q9 Inferences: EOT = time with N2 ≥ ground-idle threshold (e.g. ≥55 % N2)"}, sweep: [50.0, 63.0], assumption_id: A-W1.5-32}
+    n2_low_pct: {value: 75.0, units: percent, description: Lower gate of N2 cycles (flight idle + 5 %), evidence: {tag: ASSUMPTION, source: "N:F404 Q9 Inferences: flight-idle N2 + 5 %; T-50 idle ≈63-70 % N2 [TRANSFER: -102]"}, sweep: [68.0, 80.0], assumption_id: A-W1.5-32}
+    n2_cruise_pct: {value: 88.0, units: percent, description: Cruise gate of Type IV cycles, evidence: {tag: ASSUMPTION, source: "N:FD §5 (TAC: 'cruise' is not rigorously defined, RTO-TR-028)"}, sweep: [84.0, 92.0], assumption_id: A-W1.5-32}
+    n2_irp_pct: {value: 95.0, units: percent, description: IRP band gate (≥95 % of the IRP N2), evidence: {tag: ASSUMPTION, source: "N:F404 Q9 Inferences: IRP band (≥95 % of the IRP N2 at the prevailing T1)"}, sweep: [92.0, 98.0], assumption_id: A-W1.5-32}
+    pla_irp_deg: {value: 87.0, units: deg, description: PLA IRP detent for TAMP, evidence: {tag: ASSUMPTION, source: "N:F404 Q9 Inferences: PLA ≥ IRP detent (87° equivalent)"}, sweep: [80.0, 90.0], assumption_id: A-W1.5-32}
+    ps3_max_psi: {value: 425.0, units: psi, description: Maximum allowable PS3 (full/partial PS3 cycle gates 95 %/85 %), evidence: {tag: "TRANSFER: F404-400 control (Frith 1985 Fig. 28)", source: "N:F404 Q4: PS3 override at ≥425 psia at and above IRP; PS3_max ≈425-475 psia class"}}
+    t5_ref_degc: {value: 830.0, units: degC, description: SRC reference T5 (1 equivalent hour per hour at the -400 T5 limit), evidence: {tag: "TRANSFER: F404-400 T5 limit (released)", source: "dictionary ENG.T5 steady_max 830 °C; report App. A1 (replaced item)"}}
+    t5_doubling_k: {value: 15.0, units: delta_degC, description: "SRC rate doubles every this many kelvin (Larson-Miller C ≈20 at ~1,100 K)", evidence: {tag: "TRANSFER: Larson-Miller relation", source: "N:FD §5: Larson-Miller C ≈ 20-22; d log10 t_r/dT = -P/T² gives x2 per ≈14-15 K"}}
+    t5_full_swing_k: {value: 800.0, units: delta_degC, description: EFTC full thermal cycle (cold start to IRP T5 swing), evidence: {tag: ASSUMPTION, source: "N:F404 Q9 Inferences: ΔTm_full = cold-start -> IRP swing"}, sweep: [600.0, 900.0], assumption_id: A-W1.5-32}
+    eftc_exponent: {value: 3.0, units: "1", description: EFTC weight exponent (ΔT/ΔT_full)^b, evidence: {tag: ASSUMPTION, source: "N:F404 Q9 Inferences: b ≈ 3 (Coffin-Manson type)"}, sweep: [2.0, 4.0], assumption_id: A-W1.5-32}
+    t5_deadband_k: {value: 10.0, units: delta_degC, description: T5 turning-point dead-band (≥2x T5 2σ precision 2.0 K), evidence: {tag: ASSUMPTION, source: "N:AE: dead-band ≥2x noise needed (CF-18 8x partial-count inflation); T5 2σ 2.0 K (Henry)"}, sweep: [4.0, 20.0], assumption_id: A-W1.5-32}
+    lui_dt_max_s: {value: 2.0, units: s, description: Longest interval integrated between two LUI samples, evidence: {tag: ASSUMPTION, source: "N:F404 Q9 (LUIs computed at ≥4 Hz)"}, sweep: [0.5, 5.0], assumption_id: A-W1.5-32}
+    lui_dt_gap_s: {value: 1.0, units: s, description: Sample interval above which the LUI record carries the data-gap flag, evidence: {tag: ASSUMPTION, source: "dictionary LUI.* validity: data-gap flag if source signal invalid [ASSUMPTION]; ≥4 Hz computation"}, sweep: [0.25, 2.0], assumption_id: A-W1.5-32}
+    nz_levels_g: {value: [-1.0, 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0], units: "1", description: "Nz level-crossing counter levels (8 levels)", evidence: {tag: ASSUMPTION, source: "dictionary STRUCT.NZ_COUNTERS (8 g-levels, set/reset; JOAST 55(1) 2003 [TRANSFER count]); levels not public"}, sweep: [-2.0, 8.0], assumption_id: A-W1.5-34}
+    nz_rearm_g: {value: 1.0, units: "1", description: Nz re-arm level of the level-crossing counters, evidence: {tag: ASSUMPTION, source: "fatigue-meter practice (re-arm through 1 g); not public"}, sweep: [0.5, 1.5], assumption_id: A-W1.5-34}
+  limits:
+    n1_overspeed: {value: 14199.0, units: rpm, description: "N1 overspeed exceedance (107 % of 13,270 rpm; FADEC caps N1 at 104.4 % corrected)", evidence: {tag: ASSUMPTION, source: "architecture §6 M08 (104.4 % corrected cap) [TRANSFER: F404]; exceedance margin not public (no F404 overspeed threshold released, N:F404 Q9 gaps)"}, sweep: [13801.0, 14597.0], assumption_id: A-W1.5-37}
+    n2_overspeed: {value: 17650.0, units: rpm, description: "N2 overspeed exceedance (105 % of 16,810 rpm)", evidence: {tag: ASSUMPTION, source: "N:F404 Q9 gaps (no released F404 overspeed threshold)"}, sweep: [17146.0, 18155.0], assumption_id: A-W1.5-37}
+    oil_p_low: {value: 20.0, units: psi, description: Oil-pressure-low caution threshold (10 % of the 200 psi transducer range; not from any engine manual), evidence: {tag: ASSUMPTION, source: "report App. A1: F404 oil-pressure bands are restricted and NOT used; value derived from the dictionary ENG.OIL_P range; persistence 30 s from the F-16 HYD/OIL PRESS caution [TRANSFER]"}, sweep: [5.0, 40.0], assumption_id: A-W1.5-37}
+    hyd_low: {value: 196.0, units: bar, description: Hydraulic-pressure-low warning (70 % of the 280 bar nominal), evidence: {tag: ASSUMPTION, source: "dictionary HYD.SYS1.P nominal 280 bar [DIRECT]; caution value not published (F-16 value not published, N:TFG gaps)"}, sweep: [140.0, 238.0], assumption_id: A-W1.5-37}
+    hyd_temp_high: {value: 107.0, units: degC, description: Hydraulic temperature high (225 °F; leak rate rises above 225 °F), evidence: {tag: "TRANSFER: F-15D (Kingsley AIB 84-0046)", source: "N:FD §9(b) #19: leak rate up above 225 °F"}}
+    low_fuel: {value: 800.0, units: kg, description: Low-fuel caution threshold, evidence: {tag: ASSUMPTION, source: "architecture §6 M09: false low-fuel artefact at < 1,200 kg (zoom climb) [DIRECT]; threshold below that not public"}, sweep: [400.0, 1200.0], assumption_id: A-W1.5-37}
+    obogs_o2_low: {value: 40.0, units: percent, description: OBOGS low-oxygen warning, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.LSS.OBOGS_SIEVE (product concentration monitored); threshold not public"}, sweep: [25.0, 60.0], assumption_id: A-W1.5-37}
+    aoa_voice: {value: 26.0, units: deg, description: AoA voice warning at the cleared AoA limit (26° subsonic), evidence: {tag: DIRECT, source: "N:TA: AoA limiter 26° subsonic; AoA cleared to 26° (OCC)"}}
+    low_alt: {value: 200.0, units: ft, description: Low-altitude voice warning (radar altitude), evidence: {tag: ASSUMPTION, source: "dictionary CWS.VOICE.LOW_ALT (legend exists; setting not public)"}, sweep: [100.0, 500.0], assumption_id: A-W1.5-37}
+    mach_max: {value: 1.6, units: "1", description: Cleared Mach (overspeed exceedance), evidence: {tag: DIRECT, source: "N:TA: M1.6 cleared in OCC (conflict 1.6 vs 1.8 Jane's, report App. A4: cleared value used)"}}
+    discrete_on: {value: 0.5, units: "1", description: Threshold of a discrete channel (0/1) treated as on, evidence: {tag: DIRECT, source: "dictionary discrete channels (0/1 coding)"}}
+    engine_running_n2: {value: 55.0, units: percent, description: N2 above which engine-running gated monitors are armed (ground idle), evidence: {tag: ASSUMPTION, source: "as n2_idle_pct (N:F404 Q9)"}, sweep: [50.0, 63.0], assumption_id: A-W1.5-32}

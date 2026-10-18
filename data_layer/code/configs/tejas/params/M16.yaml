@@ -1,0 +1,138 @@
+# M16 Recorder writer and download simulator (architecture §6 M16, AD-24, AD-38; W1.7).
+# Ch10 is a SURROGATE recorder format (AD-24): no public evidence says the Tejas recorders use IRIG 106.
+format: phalanx.params/1
+module: M16
+sets:
+  recorder:
+    rtc_offset_sigma:
+      value: 20
+      units: ppm
+      description: SD of the recorder crystal's fractional frequency offset (per recorder unit).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          report §13 ('a crystal's tolerance of tens of ppm'); IRIG 106 Ch10 relative time must stay within
+          +/-100 us of absolute time between time packets (DDC IRIG 106 white paper, data_pathway_and_formats.md Q4).
+          The 910 ppm DASHlink recorder-vs-source offset is not used for the RTC crystal: conflict logged as
+          A-W1.7-18 (E1-HY)
+      sweep: [1, 100]
+      assumption_id: A-W1.7-8
+    monitor_latency:
+      value: 1
+      units: us
+      description: Bus-monitor latency from the time-tagged bit to the RTC capture.
+      evidence:
+        tag: ASSUMPTION
+        source: report §13 (t_record = t_bus + monitor latency); no public figure for the Tejas CDR/HUMS DAU
+      sweep: [0, 10]
+      assumption_id: A-W1.7-13
+    time_tag_bits:
+      value: 1
+      units: "1"
+      description: Ch10 1553 time-tag bits (1 = first bit of the first word, the command word).
+      evidence:
+        tag: "TRANSFER: KC-135 public Ch10 sample (pyChapter10 tests/sample.c10)"
+        source: >-
+          every 1553 packet of the public sample has CSDW bits 31-30 = 01 (raw CSDW 0x40nnnnnn;
+          tests/integration/test_recorder_sample_c10.py; pyChapter10 1.1.19 misreads it as 0);
+          IRIG 106-15 §10.6.4.2 allows 0, 1 or 2
+    packet_span:
+      value: 100
+      units: ms
+      description: Maximum data span of one packet (the recorder commits a packet when its timer expires).
+      evidence:
+        tag: "TRANSFER: IRIG 106-15 Ch10 §10.6.1 d"
+        source: >-
+          'packet generation times shall be equal to or less than 100 milliseconds'
+          (research_sources/data_pathway/ch10_trmc_113019632.txt); KC-135 sample 1553 packets span 75-90 ms
+    # The time-based index interval moved to the dictionary's recorder setup (buses.recorder.index, rule
+    # R-REC-SETUP, A-W0.3-44) in the dictionary 0.1.2 migration (W2.2); A-W1.7-12 is replaced.
+  time_source:
+    lock_loss_rate:
+      value: 0.5
+      units: 1/hour
+      description: Rate of time-source (GPS/IRIG) lock-loss episodes per recording hour (Poisson).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          architecture §8 / report §13 ('t_utc ... includes lock-loss periods (flagged)'); no public fighter
+          figure; IRIG 106 §10.6.3.2 defines the External -> Internal reversion
+      sweep: [0, 2]
+      assumption_id: A-W1.7-9
+    outage_median:
+      value: 20
+      units: s
+      description: Median duration of a lock-loss episode (lognormal).
+      evidence:
+        tag: ASSUMPTION
+        source: no public figure (GPS reacquisition after manoeuvre masking is seconds to minutes)
+      sweep: [2, 300]
+      assumption_id: A-W1.7-9
+    outage_sigma_ln:
+      value: 1.0
+      units: "1"
+      description: Log-SD of the lock-loss duration.
+      evidence:
+        tag: ASSUMPTION
+        source: no public figure
+      sweep: [0.3, 1.5]
+      assumption_id: A-W1.7-9
+  download:
+    delay_median:
+      value: 2
+      units: hour
+      description: Median delay from the end of the sortie to the ground download (lognormal).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          report §5 / §13 (post-flight batch download, 'hours later'); data_pathway_and_formats.md Q5
+          ('download minutes to hours after landing'); no fighter figure
+      sweep: [0.25, 12]
+      assumption_id: A-W1.7-10
+    delay_sigma_ln:
+      value: 0.8
+      units: "1"
+      description: Log-SD of the download delay.
+      evidence:
+        tag: ASSUMPTION
+        source: no public figure
+      sweep: [0.3, 1.5]
+      assumption_id: A-W1.7-10
+    delay_min:
+      value: 10
+      units: minute
+      description: Earliest download after the end of the sortie (aircraft safing, media retrieval).
+      evidence:
+        tag: ASSUMPTION
+        source: data_pathway_and_formats.md Q5 ('minutes to hours after landing')
+      sweep: [0, 60]
+      assumption_id: A-W1.7-10
+    p_partial:
+      value: 0.03
+      units: "1"
+      description: Probability that the first transfer is interrupted (a file prefix is delivered, then retried).
+      evidence:
+        tag: ASSUMPTION
+        source: >-
+          report §12 ('download duplicates; retries re-deliver files'); GAO-20-316 ALIS record issues (no rate for
+          transfers)
+      sweep: [0, 0.1]
+      assumption_id: A-W1.7-10
+    p_duplicate:
+      value: 0.05
+      units: "1"
+      description: Probability that a completely delivered recording is downloaded again later.
+      evidence:
+        tag: ASSUMPTION
+        source: report §12 table ('download duplicates ... retries re-deliver files'); no public rate
+      sweep: [0, 0.2]
+      assumption_id: A-W1.7-10
+    retry_median:
+      value: 0.5
+      units: hour
+      description: Median delay of a retry / repeat download after the previous delivery (lognormal, delay_sigma_ln).
+      evidence:
+        tag: ASSUMPTION
+        source: no public figure
+      sweep: [0.05, 24]
+      assumption_id: A-W1.7-10

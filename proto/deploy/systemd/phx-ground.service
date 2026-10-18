@@ -1,0 +1,16 @@
+[Unit]
+Description=Phalanx Twin ground API and screens (127.0.0.1:8700, public through nginx :80)
+After=network.target phx-runner.service
+Wants=phx-runner.service
+
+[Service]
+User=linux1
+WorkingDirectory=/home/linux1/phalanx/Phalanx-Solution
+ExecStart=/bin/bash -c 'source proto/deploy/server.env && exec $PHX_PY -m uvicorn api:app --app-dir proto/ground --host 127.0.0.1 --port 8700'
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/home/linux1/phalanx/logs/ground.log
+StandardError=append:/home/linux1/phalanx/logs/ground.log
+
+[Install]
+WantedBy=multi-user.target

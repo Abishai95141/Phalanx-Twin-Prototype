@@ -1,0 +1,96 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "inputNode",
+      "name": "issue",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "dt",
+      "type": "decisionTableNode",
+      "name": "P-ORG-02 cannibalisation",
+      "position": {
+        "x": 320,
+        "y": 120
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "dn",
+            "name": "Donor already NMC",
+            "field": "donor.nmc"
+          },
+          {
+            "id": "awp",
+            "name": "AWP days",
+            "field": "job.awp_days"
+          },
+          {
+            "id": "mn",
+            "name": "AWP minimum",
+            "field": "policy.awp_min_days"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "act",
+            "name": "Action",
+            "field": "rec.action"
+          },
+          {
+            "id": "why",
+            "name": "Rationale",
+            "field": "rec.rationale_id"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "dn": "true",
+            "awp": ">= policy.awp_min_days",
+            "mn": "",
+            "act": "'CANNIBALISE'",
+            "why": "'DONOR_NMC_AWP_MIN'"
+          },
+          {
+            "_id": "r2",
+            "dn": "",
+            "awp": "",
+            "mn": "",
+            "act": "'EXPEDITE_SPARES'",
+            "why": "'NO_NMC_DONOR_EXPEDITE'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "out",
+      "type": "outputNode",
+      "name": "rec",
+      "position": {
+        "x": 640,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceId": "in",
+      "targetId": "dt",
+      "type": "edge"
+    },
+    {
+      "id": "e2",
+      "sourceId": "dt",
+      "targetId": "out",
+      "type": "edge"
+    }
+  ]
+}

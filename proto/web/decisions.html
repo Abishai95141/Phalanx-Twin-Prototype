@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Decisions — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: 92px minmax(0, 1fr); }
+  .epoch2 { flex-direction: row; align-items: center; padding: 0 32px; gap: 32px; }
+  .epoch2 .steps { flex: 1; }
+  .epoch2 .st span { white-space: nowrap; }
+  .board .r2 { grid-template-columns: 48px minmax(0, 1fr) 210px 92px; }
+  .board .r2 .who { display: flex; align-items: baseline; gap: 10px; }
+  .board .r2 .auth { justify-self: end; }
+  .board .rows2 { overflow: auto; min-height: 0; flex: 1; }
+  .board .rows2.dense .r2 { min-height: 58px; }
+  .board .r2 .act-pill { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; line-height: 32px; justify-self: start; }
+  .board .r2.muted .ttl { color: var(--ink-2); }
+  .fun { display: flex; flex-direction: column; gap: 18px; margin-top: 26px; }
+  .fun .f { display: grid; grid-template-columns: 1fr auto; align-items: end; row-gap: 8px; }
+  .fun .f .n { font-size: 30px; font-weight: 650; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .fun .f .l { font-size: 14px; color: var(--ink-3); }
+  .fun .f .b { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; }
+  .fun .f .b i { display: block; height: 100%; background: var(--ink-5); border-radius: 3px; }
+  .fun .f.last .n { color: var(--accent-ink); }
+  .fun .f.last .b i { background: var(--accent); }
+  .nothing { margin-top: auto; background: var(--bg-2); border-radius: 14px; padding: 18px 20px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+  .nothing b { display: block; font-size: 15px; margin-bottom: 4px; color: var(--ink); }
+  @media (max-width: 1199px) {
+    .epoch2 { flex-direction: column; align-items: flex-start; padding: 18px 22px; gap: 12px; }
+    .epoch2 .steps { width: 100%; }
+  }
+  @media (max-width: 699px) {
+    .board .r2 { grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: "p w w" ". a u"; row-gap: 8px; padding: 12px 2px; }
+    .board .r2 > .prio { grid-area: p; align-self: start; margin-top: 2px; }
+    .board .r2 > div { grid-area: w; }
+    .board .r2 > .act-pill { grid-area: a; }
+    .board .r2 > .auth { grid-area: u; }
+    .board .r2 .who { flex-wrap: wrap; gap: 4px 10px; }
+    .board .r2.on { padding-left: 8px; padding-right: 8px; }
+  }
+</style>
+</head>
+<body data-page="decisions">
+<div id="content">
+<div class="v2">
+  <!-- epoch -->
+  <div class="panel2 c12 epoch2" data-shot="epoch">
+    <span class="kick" id="ep-kick"></span>
+    <div class="steps" id="steps"></div>
+  </div>
+
+  <!-- the board -->
+  <div class="panel2 c8 board" data-shot="board" style="padding-bottom:16px">
+    <div class="row"><div><span class="kick">Today's board</span><div class="t2" id="board-t2"></div></div><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="rows2" style="margin-top:18px" id="rows"></div>
+  </div>
+
+  <!-- right rail -->
+  <div class="panel2 c4" data-shot="funnel">
+    <span class="kick">Triage</span>
+    <div class="t2" id="fun-t2"></div>
+    <div class="fun" id="fun"></div>
+    <div class="nothing"><b>If you do nothing</b>No orders go out at 08:00 and today runs as the status quo. Nothing is issued without a person.</div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+PHX_API.boot({ page: 'decisions', title: 'Decisions',
+  load: A => Promise.all([A.need('epoch'), A.need('board')]),
+  render() {
+    const C = PHX_EP.clock, B = PHX_DEC, L = B.load, n = B.board.length;
+    $('ep-kick').textContent = `Epoch · ${C.day}`;
+    $('steps').innerHTML = PHX.steps(['SNAPSHOT', 'ENGINES', 'BOARD_OPEN', 'FREEZE', 'SUBMIT']);
+    $('board-t2').textContent = n ? `${PHX.words(n)} decision${n === 1 ? '' : 's'} before ${C.freeze}` : `No decisions before ${C.freeze}`;
+    $('rows').classList.toggle('dense', n > 7);
+    $('rows').innerHTML = !n ? `<div class="nothing" style="margin-top:6px"><b>Nothing needs a decision this morning</b>Triage scored ${L.open || 'no'} open issue${L.open === 1 ? '' : 's'} from the ${esc(C.snapshot)} snapshot and none reached a band that needs a person. The station routine runs as planned.</div>` : B.board.map(r => {
+      const muted = r.order_state !== 'proposed';
+      const act = r.act_label ? `<span class="act-pill" title="${esc(r.act_label)}">${esc(r.act_label)}</span>`
+        : '<span class="act-pill" style="background:transparent;border:1px dashed var(--line-strong);color:var(--ink-3)">NO ORDER</span>';
+      const auth = r.auth_shown === 'HUMAN' ? '<span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span>'
+        : r.auth_shown ? `<span class="auth agent">${esc(r.auth_shown)}</span>` : '<span class="auth agent" style="opacity:.6">—</span>';
+      return `<div class="r2 ${r.id === B.focus ? 'on' : ''} ${muted ? 'muted' : ''}" data-issue="${esc(r.id)}" style="cursor:pointer"><span class="prio ${r.band.toLowerCase()}">${esc(r.band)}</span><div><div class="who"><span class="tailtag">${esc(r.tail_label || r.tail)}</span><span class="ttl">${esc(r.label)}</span></div><div class="why">${esc(r.why)}</div></div>${act}${auth}</div>`;
+    }).join('');
+    $('fun-t2').textContent = L.alert_rows ? `How ${L.alert_rows.toLocaleString('en-GB')} alerts became ${L.items === 1 ? 'one decision' : PHX.words(L.items, false) + ' decisions'}` : 'No alerts ingested yet';
+    const F = [[L.alert_rows, `alert rows · ${L.days} days`], [L.issues, 'issues after dedupe and episodes'], [L.open, 'open this morning'], [L.items, 'need a decision today']];
+    $('fun').innerHTML = F.map(([v, l], i) => { const w = L.alert_rows ? +(100 * v / L.alert_rows).toFixed(1) : 0, last = i === F.length - 1;
+      return `<div class="f ${last ? 'last' : ''}"><span class="n">${(v || 0).toLocaleString('en-GB')}</span><span class="l">${l}</span><span class="b"><i style="width:${w}%${last && v ? ';min-width:6px' : ''}"></i></span></div>`; }).join('');
+    return { page: 'decisions', title: 'Decisions', sub: 'What should we do today, and why?', chips: PHX.clockChips(),
+      after() { document.querySelectorAll('.r2[data-issue]').forEach(el => el.addEventListener('click', () => { location.href = PHX_API.href('decision.html', { issue: el.dataset.issue }); })); } };
+  } });
+</script>
+</body></html>

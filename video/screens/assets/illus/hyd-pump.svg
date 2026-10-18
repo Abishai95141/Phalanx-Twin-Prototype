@@ -1,0 +1,586 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-pump" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-pump-title ill-pump-desc">
+  <title id="ill-pump-title">Engine-driven hydraulic pump — cutaway</title>
+  <desc id="ill-pump-desc">Axial-piston, variable-displacement engine-driven pump in half-section with an exploded view of the rotating group, the valve-plate face and the data plate.</desc>
+  <defs><pattern id="pump-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="pump-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="pump-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="pump-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="pump-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="pump-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="pump-assembled" class="view">
+    <g id="pump-housing" class="part">
+      <path class="draw" d="M228 268 L228 124 L256 124 L256 150 L736 150 L736 164 L330 164 L330 206 L300 206 L300 232 L278 232 L278 246 L246 246 L246 266 L244 268 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M228 316 L228 460 L256 460 L256 434 L736 434 L736 420 L300 420 L300 352 L278 352 L278 338 L246 338 L246 318 L244 316 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M306 185 L330 185 L330 199 L306 199 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M566 164 L578 164 L578 150 L566 150 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M560 150 L584 150 L584 136 L560 136 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M563 136 L581 136 L581 126 L563 126 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M228 136 L256 136" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M228 448 L256 448" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-shaft" class="part" data-explode-x="-54" data-explode-y="402">
+      <path class="draw" d="M120 279 L124 275 L128 275 L131 278 L134 275 L134 275 L137 278 L140 275 L140 275 L143 278 L146 275 L146 275 L149 278 L152 275 L152 275 L155 278 L158 275 L158 275 L161 278 L164 275 L164 275 L167 278 L170 275 L170 275 L173 278 L176 275 L176 275 L179 278 L182 275 L182 275 L185 278 L188 275 L188 275 L191 278 L194 275 L194 275 L197 278 L200 275 L200 275 L203 278 L206 275 L206 275 L209 278 L212 275 L214 275 L214 272 L784 272 L790 277 L790 307 L784 312 L214 312 L214 309 L212 309 L209 306 L206 309 L206 309 L203 306 L200 309 L200 309 L197 306 L194 309 L194 309 L191 306 L188 309 L188 309 L185 306 L182 309 L182 309 L179 306 L176 309 L176 309 L173 306 L170 309 L170 309 L167 306 L164 309 L164 309 L161 306 L158 309 L158 309 L155 306 L152 309 L152 309 L149 306 L146 309 L146 309 L143 306 L140 309 L140 309 L137 306 L134 309 L134 309 L131 306 L128 309 L124 309 L120 305 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M128 278 L208 278 M128 306 L208 306" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <line class="cl" x1="104" y1="292" x2="806" y2="292" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    </g>
+    <g id="pump-seal" class="part" data-explode-x="68.6" data-explode-y="402">
+      <path d="M230 272 L244 272 L244 266 L230 266 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M233 271.5 L237 268 L241 271.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M230 312 L244 312 L244 318 L230 318 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M233 312.5 L237 316 L241 312.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-bearing" class="part" data-explode-x="87.76" data-explode-y="402">
+      <path d="M248 256 L276 256 L276 248 L248 248 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M248 272 L276 272 L276 264 L248 264 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="262" cy="260" r="6.2" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <path d="M248 328 L276 328 L276 336 L248 336 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M248 312 L276 312 L276 320 L248 320 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="262" cy="324" r="6.2" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    </g>
+    <g id="pump-control-piston" class="part" data-explode-x="67.6" data-explode-y="402">
+      <path class="draw" d="M312 186 L386 186 L392 190 L392 194 L386 198 L312 198 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M318 192 L380 192" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-swashplate" class="part subject" data-explode-x="129.2" data-explode-y="402">
+      <path class="draw" d="M402.32 256 L425.26 176 L396.42 167.73 L373.48 247.73 Z" fill="url(#pump-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M358.74 408 L381.68 328 L352.84 319.73 L329.9 399.73 Z" fill="url(#pump-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="378" cy="292" r="9" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-dasharray="3 2"/>
+      <line x1="365" y1="292" x2="391" y2="292" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="378" y1="279" x2="378" y2="305" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M300 396 L304.17 389 L308.34 403 L312.5 389 L316.67 403 L320.84 389 L325.01 403 L329.17 389 L333.34 396" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-slippers" class="part" data-explode-x="184.44" data-explode-y="402">
+      <path d="M419.63 197.11 L425.01 198.65 L423.68 206.93 L431.37 209.13 L427.35 223.13 L419.66 220.93 L416.41 228.65 L411.02 227.11 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M373.75 357.11 L379.13 358.65 L377.8 366.93 L385.49 369.13 L381.47 383.13 L373.78 380.93 L370.53 388.65 L365.14 387.11 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M415.97 255.58 L436.61 183.58 L441.42 184.96 L420.77 256.96 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M372.38 407.58 L393.03 335.58 L397.83 336.96 L377.19 408.96 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-barrel" class="part" data-explode-x="284.92" data-explode-y="402">
+      <path class="draw" d="M504 180 L720 180 L720 272 L500 272 L500 184 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M500 197 L702 197 L702 227 L500 227 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M702 206 L720 206 L720 218 L702 218 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M586 272 L589 269 L592 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M592 272 L595 269 L598 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M598 272 L601 269 L604 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M604 272 L607 269 L610 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M610 272 L613 269 L616 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M616 272 L619 269 L622 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M622 272 L625 269 L628 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M628 272 L631 269 L634 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M634 272 L637 269 L640 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M640 272 L643 269 L646 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M646 272 L649 269 L652 272" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M504 404 L720 404 L720 312 L500 312 L500 400 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M500 387 L702 387 L702 357 L500 357 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M702 378 L720 378 L720 366 L702 366 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M586 312 L589 315 L592 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M592 312 L595 315 L598 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M598 312 L601 315 L604 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M604 312 L607 315 L610 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M610 312 L613 315 L616 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M616 312 L619 315 L622 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M622 312 L625 315 L628 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M628 312 L631 315 L634 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M634 312 L637 315 L640 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M640 312 L643 315 L646 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M646 312 L649 315 L652 312" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-pistons" class="part" data-explode-x="232.04" data-explode-y="402">
+      <path class="draw" d="M441.75 198 L607.75 198 L611.75 202 L611.75 222 L607.75 226 L441.75 226 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="435.75" cy="212" r="8.5" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M438.75 212 L609.75 212" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M395.87 358 L561.87 358 L565.87 362 L565.87 382 L561.87 386 L395.87 386 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="389.87" cy="372" r="8.5" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M392.87 372 L563.87 372" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-valveplate" class="part" data-explode-x="227.32" data-explode-y="402">
+      <path d="M720 174 L736 174 L736 202 L720 202 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M720 222 L736 222 L736 270 L720 270 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M720 410 L736 410 L736 386 L720 386 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M720 360 L736 360 L736 314 L720 314 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-portblock" class="part" data-explode-x="247.24" data-explode-y="402">
+      <path class="draw" d="M736 150 L900 150 L900 434 L736 434 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M736 262 L812 262 L812 322 L736 322 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M764 271 L806 271 L806 262 L764 262 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M768 270 L768 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M774 270 L774 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M780 270 L780 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M786 270 L786 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M792 270 L792 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M798 270 L798 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M804 270 L804 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M764 313 L806 313 L806 322 L764 322 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M768 314 L768 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M774 314 L774 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M780 314 L780 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M786 314 L786 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M792 314 L792 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M798 314 L798 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M804 314 L804 321" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M736 202 L900 202 L900 222 L736 222 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M736 358 L856 358 L856 434 L816 434 L816 386 L736 386 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M826 202 L832 202 L832 150 L826 150 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M784 150 L884 150 L884 108 L784 108 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M792 134 L870 134 L870 124 L792 124 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M800 133 L810 133 L810 125 L800 125 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M826 133 L836 133 L836 125 L826 125 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M852 133 L862 133 L862 125 L852 125 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M870 129 L878 129" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M870 129 L872 126 L874 132 L876 126 L878 132 L880 126" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M829 150 L829 134" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M900 194 L918 194 L918 230 L900 230 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M918 200 L936 200 L936 224 L918 224 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M900 204 L936 204 M900 220 L936 220" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M808 434 L864 434 L864 452 L808 452 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M814 452 L858 452 L858 470 L814 470 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M818 434 L818 470 M854 434 L854 470" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-flow-in">
+      <path class="draw" d="M836 528 L836 488" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M836 488 L839 498 L833 498 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <text x="824" y="522" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F" text-anchor="end">IN · suction</text>
+    <g id="pump-flow-out">
+      <path class="draw" d="M944 212 L986 212" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M986 212 L976 215 L976 209 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <text x="944" y="196" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">OUT · 280 bar</text>
+    <text x="64" y="518" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">SECTION A–A · assembled</text>
+  </g>
+  <g id="pump-exploded" class="view exploded">
+    <line class="cl" x1="54" y1="694" x2="1123.24" y2="694" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <g id="pump-shaft-x" class="part">
+      <path class="draw" d="M66 685.94 L68.48 683.46 L70.96 683.46 L72.82 685.32 L74.68 683.46 L74.68 683.46 L76.54 685.32 L78.4 683.46 L78.4 683.46 L80.26 685.32 L82.12 683.46 L82.12 683.46 L83.98 685.32 L85.84 683.46 L85.84 683.46 L87.7 685.32 L89.56 683.46 L89.56 683.46 L91.42 685.32 L93.28 683.46 L93.28 683.46 L95.14 685.32 L97 683.46 L97 683.46 L98.86 685.32 L100.72 683.46 L100.72 683.46 L102.58 685.32 L104.44 683.46 L104.44 683.46 L106.3 685.32 L108.16 683.46 L108.16 683.46 L110.02 685.32 L111.88 683.46 L111.88 683.46 L113.74 685.32 L115.6 683.46 L115.6 683.46 L117.46 685.32 L119.32 683.46 L119.32 683.46 L121.18 685.32 L123.04 683.46 L124.28 683.46 L124.28 681.6 L196.2 681.6 M196.2 706.4 L124.28 706.4 L124.28 704.54 L123.04 704.54 L121.18 702.68 L119.32 704.54 L119.32 704.54 L117.46 702.68 L115.6 704.54 L115.6 704.54 L113.74 702.68 L111.88 704.54 L111.88 704.54 L110.02 702.68 L108.16 704.54 L108.16 704.54 L106.3 702.68 L104.44 704.54 L104.44 704.54 L102.58 702.68 L100.72 704.54 L100.72 704.54 L98.86 702.68 L97 704.54 L97 704.54 L95.14 702.68 L93.28 704.54 L93.28 704.54 L91.42 702.68 L89.56 704.54 L89.56 704.54 L87.7 702.68 L85.84 704.54 L85.84 704.54 L83.98 702.68 L82.12 704.54 L82.12 704.54 L80.26 702.68 L78.4 704.54 L78.4 704.54 L76.54 702.68 L74.68 704.54 L74.68 704.54 L72.82 702.68 L70.96 704.54 L68.48 704.54 L66 702.06" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M196.2 681.6 C204.2 689.04 188.2 698.96 196.2 706.4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M212.32 681.6 L264.4 681.6 L268.12 684.7 L268.12 703.3 L264.4 706.4 L212.32 706.4" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M212.32 681.6 C220.32 689.04 204.32 698.96 212.32 706.4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line class="cl" x1="59.8" y1="694" x2="274.32" y2="694" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    </g>
+    <g id="pump-seal-x" class="part">
+      <path d="M297.84 681.6 L306.52 681.6 L306.52 677.88 L297.84 677.88 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M299.7 681.29 L302.18 679.12 L304.66 681.29" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M297.84 706.4 L306.52 706.4 L306.52 710.12 L297.84 710.12 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M299.7 706.71 L302.18 708.88 L304.66 706.71" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M297.84 681.6 L297.84 706.4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M306.52 681.6 L306.52 706.4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-bearing-x" class="part">
+      <path d="M335 671.68 L352.36 671.68 L352.36 666.72 L335 666.72 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M335 681.6 L352.36 681.6 L352.36 676.64 L335 676.64 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="343.68" cy="674.16" r="3.84" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <path d="M335 716.32 L352.36 716.32 L352.36 721.28 L335 721.28 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M335 706.4 L352.36 706.4 L352.36 711.36 L335 711.36 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="343.68" cy="713.84" r="3.84" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    </g>
+    <g id="pump-control-piston-x" class="part">
+      <path class="draw" d="M379.6 628.28 L425.48 628.28 L429.2 630.76 L429.2 633.24 L425.48 635.72 L379.6 635.72 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M383.32 632 L421.76 632" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-swashplate-x" class="part subject">
+      <path class="draw" d="M502.52 671.68 L516.74 622.08 L498.86 616.95 L484.64 666.55 Z" fill="url(#pump-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M475.5 765.92 L489.72 716.32 L471.84 711.19 L457.62 760.79 Z" fill="url(#pump-hatcha)" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M502.52 671.68 L489.72 716.32" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M484.64 666.55 L471.84 711.19" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="487.44" cy="694" r="5.58" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-dasharray="3 2"/>
+      <line x1="479.38" y1="694" x2="495.5" y2="694" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="487.44" y1="685.94" x2="487.44" y2="702.06" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round"/>
+      <g id="pump-alpha" class="annotation">
+        <line x1="496.12" y1="694" x2="496.12" y2="601" stroke="#E8743B" stroke-width="0.6" stroke-dasharray="2 3" stroke-linecap="round"/>
+        <line x1="496.12" y1="694" x2="522.79" y2="601" stroke="#E8743B" stroke-width="0.6" stroke-dasharray="2 3" stroke-linecap="round"/>
+        <path d="M496.12 614.64 A79.36 79.36 0 0 1 517.99 617.71" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="503.12" y="608.64" font-size="14" font-weight="700" fill="#E8743B">α</text>
+      </g>
+    </g>
+    <g id="pump-slippers-x" class="part">
+      <path d="M581.41 635.17 L584.75 636.13 L583.92 641.26 L588.69 642.62 L586.2 651.3 L581.43 649.94 L579.41 654.73 L576.07 653.77 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M552.96 734.37 L556.3 735.33 L555.47 740.46 L560.24 741.82 L557.75 750.5 L552.98 749.14 L550.97 753.93 L547.63 752.97 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M579.14 671.42 L591.94 626.78 L594.92 627.64 L582.12 672.28 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M552.12 765.66 L564.92 721.02 L567.9 721.88 L555.1 766.52 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-barrel-x" class="part">
+      <path class="draw" d="M787.4 624.56 L921.32 624.56 L921.32 681.6 L784.92 681.6 L784.92 627.04 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M784.92 635.1 L910.16 635.1 L910.16 653.7 L784.92 653.7 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M910.16 640.68 L921.32 640.68 L921.32 648.12 L910.16 648.12 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M838.24 681.6 L840.1 679.74 L841.96 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M841.96 681.6 L843.82 679.74 L845.68 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M845.68 681.6 L847.54 679.74 L849.4 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M849.4 681.6 L851.26 679.74 L853.12 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M853.12 681.6 L854.98 679.74 L856.84 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M856.84 681.6 L858.7 679.74 L860.56 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M860.56 681.6 L862.42 679.74 L864.28 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M864.28 681.6 L866.14 679.74 L868 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M868 681.6 L869.86 679.74 L871.72 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M871.72 681.6 L873.58 679.74 L875.44 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M875.44 681.6 L877.3 679.74 L879.16 681.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M787.4 763.44 L921.32 763.44 L921.32 706.4 L784.92 706.4 L784.92 760.96 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M784.92 752.9 L910.16 752.9 L910.16 734.3 L784.92 734.3 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M910.16 747.32 L921.32 747.32 L921.32 739.88 L910.16 739.88 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M838.24 706.4 L840.1 708.26 L841.96 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M841.96 706.4 L843.82 708.26 L845.68 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M845.68 706.4 L847.54 708.26 L849.4 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M849.4 706.4 L851.26 708.26 L853.12 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M853.12 706.4 L854.98 708.26 L856.84 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M856.84 706.4 L858.7 708.26 L860.56 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M860.56 706.4 L862.42 708.26 L864.28 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M864.28 706.4 L866.14 708.26 L868 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M868 706.4 L869.86 708.26 L871.72 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M871.72 706.4 L873.58 708.26 L875.44 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M875.44 706.4 L877.3 708.26 L879.16 706.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M784.92 681.6 L784.92 706.4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M921.32 681.6 L921.32 706.4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-pistons-x" class="part">
+      <path class="draw" d="M653.36 635.72 L756.28 635.72 L758.76 638.2 L758.76 650.6 L756.28 653.08 L653.36 653.08 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="649.64" cy="644.4" r="8.5" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M651.5 644.4 L757.52 644.4" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M624.92 734.92 L727.84 734.92 L730.32 737.4 L730.32 749.8 L727.84 752.28 L624.92 752.28 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="621.2" cy="743.6" r="8.5" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M623.06 743.6 L729.08 743.6" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-valveplate-x" class="part">
+      <path d="M947.32 620.84 L957.24 620.84 L957.24 638.2 L947.32 638.2 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M947.32 650.6 L957.24 650.6 L957.24 680.36 L947.32 680.36 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M947.32 767.16 L957.24 767.16 L957.24 752.28 L947.32 752.28 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M947.32 736.16 L957.24 736.16 L957.24 707.64 L947.32 707.64 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M947.32 680.36 L947.32 707.64" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M957.24 680.36 L957.24 707.64" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="pump-portblock-x" class="part">
+      <path class="draw" d="M983.24 605.96 L1084.92 605.96 L1084.92 782.04 L983.24 782.04 Z" fill="url(#pump-hatch)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M983.24 675.4 L1030.36 675.4 L1030.36 712.6 L983.24 712.6 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1000.6 680.98 L1026.64 680.98 L1026.64 675.4 L1000.6 675.4 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1003.08 680.36 L1003.08 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1006.8 680.36 L1006.8 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1010.52 680.36 L1010.52 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1014.24 680.36 L1014.24 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1017.96 680.36 L1017.96 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1021.68 680.36 L1021.68 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1025.4 680.36 L1025.4 676.02" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1000.6 707.02 L1026.64 707.02 L1026.64 712.6 L1000.6 712.6 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1003.08 707.64 L1003.08 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1006.8 707.64 L1006.8 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1010.52 707.64 L1010.52 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1014.24 707.64 L1014.24 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1017.96 707.64 L1017.96 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1021.68 707.64 L1021.68 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1025.4 707.64 L1025.4 711.98" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M983.24 638.2 L1084.92 638.2 L1084.92 650.6 L983.24 650.6 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M983.24 734.92 L1057.64 734.92 L1057.64 782.04 L1032.84 782.04 L1032.84 752.28 L983.24 752.28 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1039.04 638.2 L1042.76 638.2 L1042.76 605.96 L1039.04 605.96 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M1013 605.96 L1075 605.96 L1075 579.92 L1013 579.92 Z" fill="url(#pump-hatchb)" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1017.96 596.04 L1066.32 596.04 L1066.32 589.84 L1017.96 589.84 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1022.92 595.42 L1029.12 595.42 L1029.12 590.46 L1022.92 590.46 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1039.04 595.42 L1045.24 595.42 L1045.24 590.46 L1039.04 590.46 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1055.16 595.42 L1061.36 595.42 L1061.36 590.46 L1055.16 590.46 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1066.32 592.94 L1071.28 592.94" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1066.32 592.94 L1067.56 591.08 L1068.8 594.8 L1070.04 591.08 L1071.28 594.8 L1072.52 591.08" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1040.9 605.96 L1040.9 596.04" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1084.92 633.24 L1096.08 633.24 L1096.08 655.56 L1084.92 655.56 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1096.08 636.96 L1107.24 636.96 L1107.24 651.84 L1096.08 651.84 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1084.92 639.44 L1107.24 639.44 M1084.92 649.36 L1107.24 649.36" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1027.88 782.04 L1062.6 782.04 L1062.6 793.2 L1027.88 793.2 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1031.6 793.2 L1058.88 793.2 L1058.88 804.36 L1031.6 804.36 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1034.08 782.04 L1034.08 804.36 M1056.4 782.04 L1056.4 804.36" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="64" y="806" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">EXPLODED · rotating group</text>
+  </g>
+  <g id="pump-callouts" class="callouts">
+    <g id="pump-c1" class="callout">
+      <path class="leader draw" d="M166 537.5 L166 309" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="166" cy="309" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="166" cy="548" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="166" y="548.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <g id="pump-c2" class="callout">
+      <path class="leader draw" d="M226.6 86.48 L237 269" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="237" cy="269" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="226" cy="76" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="226" y="76.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <g id="pump-c3" class="callout">
+      <path class="leader draw" d="M262 537.5 L262 332" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="262" cy="332" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="262" cy="548" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="262" y="548.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g id="pump-c4" class="callout">
+      <path class="leader draw" d="M362.78 86.13 L400.07 222" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="400.07" cy="222" r="1.9" fill="#E8743B" stroke="none"/>
+      <circle class="bubble" cx="360" cy="76" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="360" y="76.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <g id="pump-c5" class="callout">
+      <path class="leader draw" d="M304.3 85.58 L352 192" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="352" cy="192" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="300" cy="76" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="300" y="76.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+    <g id="pump-c6" class="callout">
+      <path class="leader draw" d="M379.82 537.5 L377.06 372" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="377.06" cy="372" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="380" cy="548" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="380" y="548.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">6</text>
+    </g>
+    <g id="pump-c7" class="callout">
+      <path class="leader draw" d="M475.79 84.76 L560 212" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="560" cy="212" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="470" cy="76" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="470" y="76.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+    </g>
+    <g id="pump-c8" class="callout">
+      <path class="leader draw" d="M650 537.5 L650 396" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="650" cy="396" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="650" cy="548" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="650" y="548.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">8</text>
+    </g>
+    <g id="pump-c9" class="callout">
+      <path class="leader draw" d="M729.86 537.5 L728 400" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="728" cy="400" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="730" cy="548" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="730" y="548.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">9</text>
+    </g>
+    <g id="pump-c10" class="callout">
+      <path class="leader draw" d="M898.77 537.57 L884 412" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="884" cy="412" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="900" cy="548" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="900" y="548.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">10</text>
+    </g>
+    <g id="pump-c11" class="callout">
+      <path class="leader draw" d="M850 86.5 L850 116" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="850" cy="116" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="850" cy="76" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="850" y="76.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">11</text>
+    </g>
+    <g id="pump-c12" class="callout">
+      <path class="leader draw" d="M572 86.5 L572 126" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="572" cy="126" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="572" cy="76" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="572" y="76.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">12</text>
+    </g>
+  </g>
+  <g id="pump-x-callouts" class="callouts">
+    <g id="pump-xc1" class="callout">
+      <path class="leader draw" d="M94.52 595.5 L94.52 681.46" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="94.52" cy="681.46" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="94.52" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="94.52" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <g id="pump-xc3" class="callout">
+      <path class="leader draw" d="M340.16 595.49 L343.68 664.72" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="343.68" cy="664.72" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="339.68" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="339.68" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g id="pump-xc5" class="callout">
+      <path class="leader draw" d="M404.4 595.5 L404.4 626.28" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="404.4" cy="626.28" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="404.4" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="404.4" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+    <g id="pump-xc4" class="callout">
+      <path class="leader draw" d="M470.79 591.82 L507.28 620.08" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="507.28" cy="620.08" r="1.9" fill="#E8743B" stroke="none"/>
+      <circle class="bubble" cx="463.28" cy="586" r="9.5" fill="#E8743B" stroke="none"/>
+      <text x="463.28" y="586.5" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <g id="pump-xc6" class="callout">
+      <path class="leader draw" d="M569.24 595.5 L569.24 622.56" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="569.24" cy="622.56" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="569.24" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="569.24" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">6</text>
+    </g>
+    <g id="pump-xc7" class="callout">
+      <path class="leader draw" d="M726.68 595.5 L726.68 633.72" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="726.68" cy="633.72" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="726.68" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="726.68" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+    </g>
+    <g id="pump-xc8" class="callout">
+      <path class="leader draw" d="M871.72 595.5 L871.72 622.56" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="871.72" cy="622.56" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="871.72" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="871.72" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">8</text>
+    </g>
+    <g id="pump-xc9" class="callout">
+      <path class="leader draw" d="M952.28 595.5 L952.28 618.84" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="952.28" cy="618.84" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="952.28" cy="586" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="952.28" y="586.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">9</text>
+    </g>
+    <g id="pump-xc10" class="callout">
+      <path class="leader draw" d="M1022.92 780.5 L1022.92 782.04" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1022.92" cy="782.04" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="1022.92" cy="790" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1022.92" y="790.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">10</text>
+    </g>
+    <g id="pump-xc11" class="callout">
+      <path class="leader draw" d="M1078.44 576.54 L1053.92 577.92" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1053.92" cy="577.92" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="1087.92" cy="576" r="9.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1087.92" y="576.5" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">11</text>
+    </g>
+  </g>
+  <g id="pump-partslist" class="legend">
+    <text class="kicker" x="1040" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">PARTS</text>
+    <line x1="1040" y1="88" x2="1540" y2="88" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <g class="callout">
+      <circle class="bubble" cx="1051" cy="114" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1051" y="114.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <text x="1070" y="112" font-size="13.5" font-weight="650" fill="#0B0D10">Drive spline</text>
+    <text x="1070" y="127" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">to the AMAGB pad</text>
+    <g class="callout">
+      <circle class="bubble" cx="1051" cy="154" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1051" y="154.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <text x="1070" y="152" font-size="13.5" font-weight="650" fill="#0B0D10">Shaft seal</text>
+    <g class="callout">
+      <circle class="bubble" cx="1051" cy="194" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1051" y="194.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <text x="1070" y="192" font-size="13.5" font-weight="650" fill="#0B0D10">Front bearing</text>
+    <g class="callout">
+      <circle class="bubble" cx="1051" cy="234" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="1051" y="234.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <text x="1070" y="232" font-size="13.5" font-weight="650" fill="#E8743B">Swashplate</text>
+    <text x="1070" y="247" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">sets displacement (α)</text>
+    <g class="callout">
+      <circle class="bubble" cx="1051" cy="274" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1051" y="274.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+    <text x="1070" y="272" font-size="13.5" font-weight="650" fill="#0B0D10">Control piston</text>
+    <text x="1070" y="287" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">compensator-driven</text>
+    <g class="callout">
+      <circle class="bubble" cx="1051" cy="314" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1051" y="314.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">6</text>
+    </g>
+    <text x="1070" y="312" font-size="13.5" font-weight="650" fill="#0B0D10">Slipper + retainer</text>
+    <g class="callout">
+      <circle class="bubble" cx="1303" cy="114" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1303" y="114.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+    </g>
+    <text x="1322" y="112" font-size="13.5" font-weight="650" fill="#0B0D10">Piston ×9</text>
+    <g class="callout">
+      <circle class="bubble" cx="1303" cy="154" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1303" y="154.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">8</text>
+    </g>
+    <text x="1322" y="152" font-size="13.5" font-weight="650" fill="#0B0D10">Cylinder barrel</text>
+    <text x="1322" y="167" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">splined to the shaft</text>
+    <g class="callout">
+      <circle class="bubble" cx="1303" cy="194" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1303" y="194.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">9</text>
+    </g>
+    <text x="1322" y="192" font-size="13.5" font-weight="650" fill="#0B0D10">Valve plate</text>
+    <text x="1322" y="207" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">kidney ports</text>
+    <g class="callout">
+      <circle class="bubble" cx="1303" cy="234" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1303" y="234.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">10</text>
+    </g>
+    <text x="1322" y="232" font-size="13.5" font-weight="650" fill="#0B0D10">Port block</text>
+    <g class="callout">
+      <circle class="bubble" cx="1303" cy="274" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1303" y="274.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">11</text>
+    </g>
+    <text x="1322" y="272" font-size="13.5" font-weight="650" fill="#0B0D10">Compensator</text>
+    <text x="1322" y="287" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">pressure limit</text>
+    <g class="callout">
+      <circle class="bubble" cx="1303" cy="314" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1303" y="314.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">12</text>
+    </g>
+    <text x="1322" y="312" font-size="13.5" font-weight="650" fill="#0B0D10">Case drain</text>
+    <text x="1322" y="327" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">to return</text>
+    <line x1="1040" y1="358" x2="1540" y2="358" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="1040" y="380" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">axial piston · variable displacement · engine-driven via the AMAGB</text>
+    <text x="1040" y="398" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">one per system: SYS1 and SYS2 · nominal 280 bar</text>
+  </g>
+  <g id="pump-viewb" class="detail">
+    <circle class="draw" cx="1240" cy="662" r="80" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+    <circle cx="1240" cy="662" r="20" fill="none" stroke="#0B0D10" stroke-width="1.5"/>
+    <circle cx="1304.09" cy="699" r="4" fill="none" stroke="#0B0D10" stroke-width="0.9"/>
+    <circle cx="1175.91" cy="699" r="4" fill="none" stroke="#0B0D10" stroke-width="0.9"/>
+    <circle cx="1240" cy="588" r="4" fill="none" stroke="#0B0D10" stroke-width="0.9"/>
+    <path id="pump-kidney-pressure" d="M1185.5 642.16 A58 58 0 0 1 1294.5 642.16 L1279.47 647.64 A42 42 0 0 0 1200.53 647.64 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="pump-kidney-suction" d="M1298.26 683.21 A62 62 0 0 1 1181.74 683.21 L1202.41 675.68 A40 40 0 0 0 1277.59 675.68 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <line class="cl" x1="1148" y1="662" x2="1332" y2="662" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <line class="cl" x1="1240" y1="570" x2="1240" y2="754" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <text x="1240" y="598" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#0B0D10" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">P</text>
+    <text x="1240" y="736" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#0B0D10" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">S</text>
+    <path d="M1157.31 631.9 A88 88 0 0 1 1202.81 582.24" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1204.21 581.61 L1197.87 587.05 L1195.92 582.67 Z" fill="#0B0D10" stroke="none"/>
+    <text x="1240" y="772" font-size="11" font-weight="700" fill="#0B0D10" text-anchor="middle" letter-spacing="0.1em">VIEW B · valve plate face</text>
+  </g>
+  <g id="pump-dataplate" class="dataplate">
+    <rect x="1352" y="596" width="196" height="150" rx="8" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+    <rect x="1358" y="602" width="184" height="138" rx="5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <circle cx="1366" cy="610" r="3" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    <circle cx="1534" cy="610" r="3" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    <circle cx="1366" cy="732" r="3" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    <circle cx="1534" cy="732" r="3" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    <text x="1450" y="630" font-size="11" font-weight="700" fill="#0B0D10" text-anchor="middle" letter-spacing="0.08em">ENGINE-DRIVEN PUMP</text>
+    <text x="1376" y="658" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">P/N</text>
+    <text id="pump-plate-pn" x="1414" y="658" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="600" fill="#0B0D10">SYN-PN-HYDP</text>
+    <text x="1376" y="680" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">S/N</text>
+    <text id="pump-plate-sn" x="1414" y="680" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="600" fill="#0B0D10">HYDP-000010</text>
+    <text x="1376" y="702" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SYS</text>
+    <text id="pump-plate-sys" x="1414" y="702" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="600" fill="#0B0D10">280 bar nominal</text>
+    <text x="1450" y="722" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="9.5" font-weight="500" fill="#8E939A" text-anchor="middle">serial follows the part</text>
+  </g>
+  <g id="pump-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="pump-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">Engine-driven pump — axial piston</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">section A–A · exploded rotating group</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-03</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 3 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

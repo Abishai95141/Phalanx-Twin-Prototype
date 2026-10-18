@@ -1,0 +1,13 @@
+# SSH config for the LinuxONE server (IBM Z, s390x, Ubuntu 24.04; user linux1). Used only via `ssh -F`.
+# "phx" is the IPv4 address; "phx6" is the same server through NAT64 (64:ff9b::/96), for IPv6-only networks.
+Host phx phx6
+  User linux1
+  IdentityFile "/Users/abishaikc/Downloads/Dilijens (1).pem"
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+  ServerAliveInterval 30
+  ServerAliveCountMax 6
+Host phx
+  HostName 148.100.99.205
+Host phx6
+  HostName 64:ff9b::9464:63cd

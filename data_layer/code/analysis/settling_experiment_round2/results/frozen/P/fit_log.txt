@@ -1,0 +1,18 @@
+fit on 152 687-CAL flights, variant P, K=8, stride=7, max_nfev=300
+loaded 3s
+batch 13741621 samples, 614 running segments
+warm start from /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/final/S/ma.json (variant S)
+    FFN2: FF rms 107.5 bias -7.23, N2 rms 2.052 bias -0.0068 (nfev 9, njev 9, status 2 converged, cost 5.251e+06 -> 5.213e+06, 65s)
+  M-A[P] stage FFN2 done 65s
+    N1: N1 rms 3.092 bias -0.0156 (nfev 4, njev 4, status 2 converged, cost 9.501e+06 -> 9.283e+06, 5s)
+  M-A[P] stage N1 done 71s
+    EGT: EGT rms 20.62 bias 0.0197 (nfev 45, njev 45, status 2 converged, cost 4.232e+06 -> 4.129e+06, 213s)
+  M-A[P] stage EGT done 284s
+in-sample fit: {"N1": {"rmse": 3.0918658435303596, "bias": -0.01568412189531696, "R2": 0.9859048106556251}, "N2": {"rmse": 2.0522281257679698, "bias": -0.006814156140381202, "R2": 0.9810867558246837}, "EGT": {"rmse": 20.62059224235938, "bias": 0.01942626569635226, "R2": 0.9147650321769896}, "FF": {"rmse": 107.529106606275, "bias": -7.227847678207774, "R2": 0.9624309929628834}}
+engine-off table {'N1': [1.78125, 2.03125, 1.75, 1.21875], 'N2': [0.0, 0.0, 0.0, 0.0], 'FF': [0.0, 0.0, 0.0, 0.0], 'EGT_minus_TAT': [69.75, 43.5, 45.25, 54.5]}
+  M-B phi0 N1: 1.0400 LSB, mismatch 0, unused residues [3, 8, 12, 17, 21, 26, 31]
+  M-B phi0 N2: 1.0400 LSB, mismatch 0, unused residues [3, 8, 12, 17, 21, 26, 31]
+  M-B phi0 EGT: 0.0488 LSB, mismatch 0, unused residues [1, 4, 7]
+M-B sigma {"N1_1": 0.01948, "N1_2": 0.03127, "N1_3": 0.01302, "N1_4": 0.01859, "N2_1": 0.00256, "N2_2": 0.00746, "N2_3": 0.00824, "N2_4": 0.0, "EGT_1": 0.0, "EGT_2": 0.0, "EGT_3": 0.0, "EGT_4": 0.0, "FF_1": 0.0, "FF_2": 0.0, "FF_3": 0.0, "FF_4": 0.0}
+  M-C VAR order by BIC: p=8; companion spectral radius per engine [0.9729, 0.9663, 0.9632, 0.9624]
+done 311s

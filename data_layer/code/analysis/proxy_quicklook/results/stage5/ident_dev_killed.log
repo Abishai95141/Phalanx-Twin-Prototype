@@ -1,0 +1,10 @@
+screen at 687200107210928.mat 3954-5032: governed 0.999
+screen at 687200107202208.mat 9553-10763: governed 0.999
+screen at 687200105031623.mat 3705-4792: governed 0.999
+screen man 687200107181544.mat 13436-14740: governed 0.970
+screen man 687200105031623.mat 18276-18916: governed 0.941
+[1 plant] 3 segments, ('i_lp', 'i_hp', 'tau_egt', 'tau_ff') from [3.093  1.3599 0.81   0.218 ]
+    it 1: cost 15839838.3 theta [1.6013 1.1392 1.6311 0.1083]
+    it 2: cost 15020781.1 theta [1.8501 2.2941 3.2847 0.218 ]
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:301: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/loky-53570-k6cdch0g', '/loky-53570-_ykoktxp', '/loky-53570-2cjd19ug', '/loky-53570-1z1z5zn2', '/loky-53570-ozi9fr3q', '/loky-53570-rxqru53j'}
+  warnings.warn(

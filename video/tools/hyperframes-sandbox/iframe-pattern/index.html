@@ -1,0 +1,48 @@
+<!doctype html>
+<!--
+  Alternative pattern under test: the screen page loaded in an <iframe>, with the
+  parent timeline reaching into the same-origin iframe document. Rendered with
+  `npx hyperframes render` (from iframe-pattern/). 4 s.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1220; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+      #cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+      #screen { width: 1920px; height: 1080px; border: 0; display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="iframe-test" data-start="0" data-duration="4" data-width="1920" data-height="1080">
+      <div id="cam" data-layout-allow-overflow>
+        <iframe id="screen" src="screens/fleet-overview.html"></iframe>
+      </div>
+    </div>
+    <script>
+      const frame = document.getElementById("screen");
+      function build() {
+        const d = frame.contentDocument;
+        const q = (s) => d.querySelector(s);
+        const r = q("#fo-kpi-avail").getBoundingClientRect();
+        const S = 1.9, cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const tl = gsap.timeline({ paused: true });
+        const avail = { v: 0 };
+        tl.fromTo(avail, { v: 0 }, { v: 78.4, duration: 1.2, ease: "power2.out",
+          onUpdate: () => { q("#fo-avail-num").textContent = avail.v.toFixed(1); } }, 0.2);
+        tl.fromTo(q("#fo-avail-bar"), { scaleX: 0 }, { scaleX: 0.784, duration: 1.2, ease: "power2.out" }, 0.2);
+        const typed = { n: 0 }, text = "T-04";
+        tl.fromTo(typed, { n: 0 }, { n: text.length, duration: 0.6, ease: "none",
+          onUpdate: () => { q("#fo-search-input").value = text.slice(0, Math.round(typed.n)); } }, 0.4);
+        tl.fromTo("#cam", { scale: 1, x: 0, y: 0 }, { scale: S, x: 960 - cx * S, y: 540 - cy * S, duration: 1.2, ease: "power3.inOut" }, 1.6);
+        window.__timelines["iframe-test"] = tl;
+      }
+      if (frame.contentDocument && frame.contentDocument.readyState === "complete" && frame.contentDocument.querySelector("#fo-kpi-avail")) build();
+      else frame.addEventListener("load", build, { once: true });
+    </script>
+  </body>
+</html>

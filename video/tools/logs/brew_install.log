@@ -1,0 +1,648 @@
+Warning: The following taps are not trusted:
+  supabase/tap
+
+Homebrew is currently ignoring formulae, casks and commands
+from these taps because tap trust is required.
+Prefer trusting only the specific formulae, casks or commands you need.
+Trust installed formulae from these taps with:
+  brew trust --formula supabase/tap/supabase
+Trust other specific casks and commands with:
+  brew trust --cask <user>/<tap>/<cask>
+  brew trust --command <user>/<tap>/<command>
+Whole-tap trust is broader and includes all current and future formulae,
+casks and commands from the listed taps. Trust whole taps with:
+  brew trust supabase/tap
+Untap them with:
+  brew untap supabase/tap
+For more information, see:
+  https://docs.brew.sh/Tap-Trust
+==> Downloading bottle manifests
+✔︎ Bottle Manifest espeak-ng (1.52.0)
+✔︎ Bottle Manifest ffmpeg-full (9.0.2)
+✔︎ Bottle Manifest texlive (20260301_1)
+==> Would install 3 formulae:
+texlive      20260301_1
+ffmpeg-full  9.0.2
+espeak-ng    1.52.0
+==> Would install 24 dependencies for texlive:
+brotli
+libffcall
+libsigsegv
+clisp
+aom
+libavif
+gd
+jbig2dec
+libidn
+ghostscript
+libxft
+lua
+luajit
+mpfr
+gdbm
+perl
+libde265
+libheif
+imagemagick
+libzip
+plotutils
+pstoedit
+libtommath
+tcl-tk
+==> Would upgrade 18 dependencies for texlive:
+libpng
+pcre2
+glib
+xorgproto
+cairo
+readline
+libvmaf
+dav1d
+xz
+little-cms2
+openjpeg
+harfbuzz
+fribidi
+openjdk
+x265
+libtool
+sqlite
+python@3.14
+==> Would install 42 dependencies for ffmpeg-full:
+aom
+aribb24
+brotli
+frei0r
+highway
+imath
+libdeflate
+openjph
+openexr
+jpeg-xl
+mpg123
+libunibreak
+libass
+libudfread
+libbluray
+shaderc
+vulkan-headers
+vulkan-loader
+libplacebo
+libmicrohttpd
+librist
+libsoxr
+libssh
+libvidstab
+libogg
+libvorbis
+opencore-amr
+qrencode
+rav1e
+libsamplerate
+flac
+libsndfile
+rubberband
+snappy
+speex
+srt
+theora
+whisper.cpp
+xvid
+libsodium
+zeromq
+zimg
+==> Would upgrade 21 dependencies for ffmpeg-full:
+libvmaf
+libpng
+dav1d
+libomp
+ggml
+pcre2
+glib
+xorgproto
+cairo
+harfbuzz
+xz
+little-cms2
+lame
+fribidi
+libvpx
+openjpeg
+sdl3
+sdl2-compat
+svt-av1
+llama.cpp
+x265
+==> Would install 1 dependency for espeak-ng:
+pcaudiolib
+==> Fetching downloads for: texlive, ffmpeg-full and espeak-ng
+✔︎ Bottle Manifest brotli (1.2.0)
+✔︎ Bottle Manifest pcre2 (10.49)
+✔︎ Bottle Manifest glib (2.90.1)
+✔︎ Bottle Manifest xorgproto (2026.1)
+✔︎ Bottle Manifest libffcall (2.5)
+✔︎ Bottle Manifest libpng (1.6.59)
+✔︎ Bottle Manifest cairo (1.18.6)
+✔︎ Bottle Manifest libsigsegv (2.15)
+✔︎ Bottle Manifest readline (8.3.6)
+✔︎ Bottle libpng (1.6.59)
+✔︎ Bottle brotli (1.2.0)
+✔︎ Bottle Manifest clisp (2.49.92_1)
+✔︎ Bottle Manifest libvmaf (3.2.1)
+✔︎ Bottle Manifest aom (3.15.2)
+✔︎ Bottle Manifest dav1d (1.5.4)
+✔︎ Bottle Manifest libavif (1.4.2)
+✔︎ Bottle libsigsegv (2.15)
+✔︎ Bottle Manifest xz (5.8.4)
+✔︎ Bottle Manifest gd (2.3.3_6)
+✔︎ Bottle libffcall (2.5)
+✔︎ Bottle xorgproto (2026.1)
+✔︎ Bottle Manifest jbig2dec (0.20)
+✔︎ Bottle Manifest libidn (1.44)
+✔︎ Bottle Manifest little-cms2 (2.19.1)
+✔︎ Bottle Manifest openjpeg (2.5.4_1)
+✔︎ Bottle Manifest harfbuzz (14.6.0)
+✔︎ Bottle Manifest fribidi (1.0.17)
+✔︎ Bottle pcre2 (10.49)
+✔︎ Bottle Manifest ghostscript (10.08.0)
+✔︎ Bottle Manifest libxft (2.3.9)
+✔︎ Bottle Manifest lua (5.5.1)
+✔︎ Bottle Manifest luajit (2.1.1788856981)
+✔︎ Bottle Manifest mpfr (4.2.2)
+✔︎ Bottle Manifest openjdk (27)
+✔︎ Bottle cairo (1.18.6)
+✔︎ Bottle Manifest gdbm (1.26)
+✔︎ Bottle Manifest perl (5.44.0)
+✔︎ Bottle Manifest libde265 (1.1.3)
+✔︎ Bottle readline (8.3.6)
+✔︎ Bottle Manifest x265 (4.3)
+✔︎ Bottle dav1d (1.5.4)
+✔︎ Bottle Manifest libheif (1.23.6)
+✔︎ Bottle libvmaf (3.2.1)
+✔︎ Bottle little-cms2 (2.19.1)
+✔︎ Bottle libavif (1.4.2)
+✔︎ Bottle Manifest libtool (2.6.2)
+✔︎ Bottle Manifest imagemagick (7.1.2-33)
+✔︎ Bottle Manifest libzip (1.12_1)
+✔︎ Bottle Manifest plotutils (2.6_1)
+✔︎ Bottle jbig2dec (0.20)
+✔︎ Bottle Manifest sqlite (3.54.0)
+✔︎ Bottle Manifest pstoedit (4.3)
+✔︎ Bottle Manifest python@3.14 (3.14.8_2)
+✔︎ Bottle Manifest libtommath (1.3.0)
+✔︎ Bottle gd (2.3.3_6)
+✔︎ Bottle xz (5.8.4)
+✔︎ Bottle Manifest aribb24 (1.0.4)
+✔︎ Bottle clisp (2.49.92_1)
+✔︎ Bottle Manifest tcl-tk (9.1.0)
+✔︎ Bottle libidn (1.44)
+✔︎ Bottle libxft (2.3.9)
+✔︎ Bottle Manifest frei0r (3.6.0)
+✔︎ Bottle Manifest libomp (23.1.3)
+✔︎ Bottle Manifest ggml (0.26.0)
+✔︎ Bottle Manifest highway (1.4.0)
+✔︎ Bottle fribidi (1.0.17)
+✔︎ Bottle luajit (2.1.1788856981)
+✔︎ Bottle Manifest imath (3.2.3)
+✔︎ Bottle lua (5.5.1)
+✔︎ Bottle Manifest libdeflate (1.26)
+✔︎ Bottle gdbm (1.26)
+✔︎ Bottle glib (2.90.1)
+✔︎ Bottle harfbuzz (14.6.0)
+✔︎ Bottle openjpeg (2.5.4_1)
+✔︎ Bottle aom (3.15.2)
+✔︎ Bottle mpfr (4.2.2)
+✔︎ Bottle libde265 (1.1.3)
+✔︎ Bottle libzip (1.12_1)
+✔︎ Bottle Manifest openjph (0.32.0)
+✔︎ Bottle libheif (1.23.6)
+✔︎ Bottle Manifest openexr (3.5.2)
+✔︎ Bottle Manifest mpg123 (1.33.7)
+✔︎ Bottle Manifest lame (4.0)
+✔︎ Bottle Manifest libunibreak (8.0)
+✔︎ Bottle Manifest libudfread (1.2.0)
+✔︎ Bottle pstoedit (4.3)
+✔︎ Bottle Manifest libass (0.17.5_1)
+✔︎ Bottle libtool (2.6.2)
+✔︎ Bottle espeak-ng (1.52.0)
+✔︎ Bottle libtommath (1.3.0)
+✔︎ Bottle sqlite (3.54.0)
+✔︎ Bottle Manifest libbluray (1.5.0)
+✔︎ Bottle aribb24 (1.0.4)
+✔︎ Bottle Manifest shaderc (2026.4)
+✔︎ Bottle Manifest libplacebo (7.360.1)
+✔︎ Bottle Manifest vulkan-loader (1.4.363.0)
+✔︎ Bottle plotutils (2.6_1)
+✔︎ Bottle libomp (23.1.3)
+✔︎ Bottle Manifest libmicrohttpd (1.0.10)
+✔︎ Bottle imath (3.2.3)
+✔︎ Bottle Manifest vulkan-headers (1.4.363.0)
+✔︎ Bottle Manifest libsoxr (0.1.3)
+✔︎ Bottle Manifest libssh (0.12.2_1)
+✔︎ Bottle frei0r (3.6.0)
+✔︎ Bottle Manifest librist (0.2.20)
+✔︎ Bottle libdeflate (1.26)
+✔︎ Bottle openjph (0.32.0)
+✔︎ Bottle Manifest libvidstab (1.1.2)
+✔︎ Bottle x265 (4.3)
+✔︎ Bottle Manifest libogg (1.3.6)
+✔︎ Bottle Manifest libvpx (1.17.0)
+✔︎ Bottle highway (1.4.0)
+✔︎ Bottle ggml (0.26.0)
+✔︎ Bottle Manifest libvorbis (1.3.7)
+✔︎ Bottle Manifest opencore-amr (0.1.6)
+✔︎ Bottle libunibreak (8.0)
+✔︎ Bottle libudfread (1.2.0)
+✔︎ Bottle Manifest qrencode (4.1.1_1)
+✔︎ Bottle Manifest rav1e (0.8.1)
+✔︎ Bottle Manifest libsamplerate (0.2.2)
+✔︎ Bottle libass (0.17.5_1)
+✔︎ Bottle lame (4.0)
+✔︎ Bottle Manifest flac (1.5.0)
+✔︎ Bottle Manifest jpeg-xl (0.12.0_1)
+✔︎ Bottle mpg123 (1.33.7)
+✔︎ Bottle Manifest libsndfile (1.2.2_1)
+✔︎ Bottle Manifest rubberband (4.0.0)
+✔︎ Bottle libbluray (1.5.0)
+✔︎ Bottle Manifest snappy (1.3.1)
+✔︎ Bottle perl (5.44.0)
+✔︎ Bottle Manifest sdl2-compat (2.32.74)
+✔︎ Bottle openexr (3.5.2)
+✔︎ Bottle Manifest speex (1.2.1)
+✔︎ Bottle Manifest srt (1.5.7_1)
+✔︎ Bottle vulkan-loader (1.4.363.0)
+✔︎ Bottle Manifest svt-av1 (4.2.0)
+✔︎ Bottle libplacebo (7.360.1)
+✔︎ Bottle ffmpeg-full (9.0.2)
+✔︎ Bottle libmicrohttpd (1.0.10)
+✔︎ Bottle libsoxr (0.1.3)
+✔︎ Bottle librist (0.2.20)
+✔︎ Bottle libvidstab (1.1.2)
+✔︎ Bottle libssh (0.12.2_1)
+✔︎ Bottle Manifest sdl3 (3.4.18)
+✔︎ Bottle Manifest theora (1.2.0)
+✔︎ Bottle Manifest whisper.cpp (1.9.5)
+✔︎ Bottle Manifest xvid (1.3.7)
+✔︎ Bottle Manifest libsodium (1.0.22)
+✔︎ Bottle Manifest zimg (3.0.6)
+✔︎ Bottle imagemagick (7.1.2-33)
+✔︎ Bottle Manifest zeromq (4.3.5_2)
+✔︎ Bottle libogg (1.3.6)
+✔︎ Bottle Manifest pcaudiolib (1.3)
+✔︎ Bottle libvorbis (1.3.7)
+✔︎ Bottle qrencode (4.1.1_1)
+✔︎ Bottle tcl-tk (9.1.0)
+✔︎ Bottle libvpx (1.17.0)
+✔︎ Bottle opencore-amr (0.1.6)
+✔︎ Bottle Manifest llama.cpp (0.6.0_1)
+✔︎ Bottle flac (1.5.0)
+✔︎ Bottle snappy (1.3.1)
+✔︎ Bottle libsndfile (1.2.2_1)
+✔︎ Bottle vulkan-headers (1.4.363.0)
+✔︎ Bottle speex (1.2.1)
+✔︎ Bottle rubberband (4.0.0)
+✔︎ Bottle libsamplerate (0.2.2)
+✔︎ Bottle jpeg-xl (0.12.0_1)
+✔︎ Bottle sdl2-compat (2.32.74)
+✔︎ Bottle srt (1.5.7_1)
+✔︎ Bottle zimg (3.0.6)
+✔︎ Bottle xvid (1.3.7)
+✔︎ Bottle shaderc (2026.4)
+✔︎ Bottle pcaudiolib (1.3)
+✔︎ Bottle svt-av1 (4.2.0)
+✔︎ Bottle ghostscript (10.08.0)
+✔︎ Bottle libsodium (1.0.22)
+✔︎ Bottle whisper.cpp (1.9.5)
+✔︎ Bottle sdl3 (3.4.18)
+✔︎ Bottle python@3.14 (3.14.8_2)
+✔︎ Bottle zeromq (4.3.5_2)
+✔︎ Bottle theora (1.2.0)
+✔︎ Bottle llama.cpp (0.6.0_1)
+✔︎ Bottle rav1e (0.8.1)
+✔︎ Bottle openjdk (27)
+✔︎ Bottle texlive (20260301_1)
+==> Installing dependencies for texlive: brotli, libpng, pcre2, glib, xorgproto, cairo, libffcall, libsigsegv, readline, clisp, libvmaf, aom, dav1d, libavif, xz, gd, jbig2dec, little-cms2, openjpeg, libidn, harfbuzz, fribidi, ghostscript, libxft, lua, luajit, mpfr, openjdk, gdbm, perl, libde265, x265, libheif, libtool, imagemagick, libzip, plotutils, pstoedit, python@3.14, libtommath and tcl-tk
+==> Installing texlive dependency: brotli (1.2.0)
+==> Pouring brotli--1.2.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/brotli/1.2.0: 33 files, 1.9MB
+==> Upgrading texlive dependency: libpng (1.6.58 -> 1.6.59)
+==> Pouring libpng--1.6.59.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libpng/1.6.59: 28 files, 1.4MB
+==> Upgrading texlive dependency: pcre2 (10.47_1 -> 10.49)
+==> Pouring pcre2--10.49.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/pcre2/10.49: 245 files, 7.3MB
+==> Upgrading texlive dependency: glib (2.88.3 -> 2.90.1)
+==> Pouring glib--2.90.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/glib/2.90.1: 502 files, 40.1MB
+==> Upgrading texlive dependency: xorgproto (2025.1 -> 2026.1)
+==> Pouring xorgproto--2026.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/xorgproto/2026.1: 268 files, 4.1MB
+==> Upgrading texlive dependency: cairo (1.18.4 -> 1.18.6)
+==> Pouring cairo--1.18.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/cairo/1.18.6: 58 files, 4.6MB
+==> Installing texlive dependency: libffcall (2.5)
+==> Pouring libffcall--2.5.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libffcall/2.5: 35 files, 890.4KB
+==> Installing texlive dependency: libsigsegv (2.15)
+==> Pouring libsigsegv--2.15.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libsigsegv/2.15: 12 files, 182.7KB
+==> Upgrading texlive dependency: readline (8.3.3 -> 8.3.6)
+==> Pouring readline--8.3.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/readline/8.3.6: 56 files, 2.6MB
+==> Installing texlive dependency: clisp (2.49.92_1)
+==> Pouring clisp--2.49.92_1.arm64_tahoe.bottle.2.tar.gz
+🍺  /opt/homebrew/Cellar/clisp/2.49.92_1: 57 files, 16.1MB
+==> Upgrading texlive dependency: libvmaf (3.2.0 -> 3.2.1)
+==> Pouring libvmaf--3.2.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libvmaf/3.2.1: 243 files, 8.2MB
+==> Installing texlive dependency: aom (3.15.2)
+==> Pouring aom--3.15.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/aom/3.15.2: 30 files, 11.3MB
+==> Upgrading texlive dependency: dav1d (1.5.3 -> 1.5.4)
+==> Pouring dav1d--1.5.4.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/dav1d/1.5.4: 16 files, 959.6KB
+==> Installing texlive dependency: libavif (1.4.2)
+==> Pouring libavif--1.4.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libavif/1.4.2: 22 files, 1.1MB
+==> Upgrading texlive dependency: xz (5.8.3 -> 5.8.4)
+==> Pouring xz--5.8.4.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/xz/5.8.4: 96 files, 2.7MB
+==> Installing texlive dependency: gd (2.3.3_6)
+==> Pouring gd--2.3.3_6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gd/2.3.3_6: 34 files, 1.4MB
+==> Installing texlive dependency: jbig2dec (0.20)
+==> Pouring jbig2dec--0.20.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/jbig2dec/0.20: 14 files, 397.1KB
+==> Upgrading texlive dependency: little-cms2 (2.19 -> 2.19.1)
+==> Pouring little-cms2--2.19.1.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/little-cms2/2.19.1: 23 files, 1.4MB
+==> Upgrading texlive dependency: openjpeg (2.5.4 -> 2.5.4_1)
+==> Pouring openjpeg--2.5.4_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/openjpeg/2.5.4_1: 518 files, 14.9MB
+==> Installing texlive dependency: libidn (1.44)
+==> Pouring libidn--1.44.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libidn/1.44: 74 files, 1.1MB
+==> Upgrading texlive dependency: harfbuzz (14.3.0 -> 14.6.0)
+==> Pouring harfbuzz--14.6.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/harfbuzz/14.6.0: 96 files, 14.3MB
+==> Upgrading texlive dependency: fribidi (1.0.16 -> 1.0.17)
+==> Pouring fribidi--1.0.17.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/fribidi/1.0.17: 69 files, 753.4KB
+==> Installing texlive dependency: ghostscript (10.08.0)
+==> Pouring ghostscript--10.08.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/ghostscript/10.08.0: 639 files, 112.8MB
+==> Installing texlive dependency: libxft (2.3.9)
+==> Pouring libxft--2.3.9.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libxft/2.3.9: 92 files, 353.3KB
+==> Installing texlive dependency: lua (5.5.1)
+==> Pouring lua--5.5.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/lua/5.5.1: 30 files, 886.2KB
+==> Installing texlive dependency: luajit (2.1.1788856981)
+==> Pouring luajit--2.1.1788856981.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/luajit/2.1.1788856981: 56 files, 2.2MB
+==> Installing texlive dependency: mpfr (4.2.2)
+==> Pouring mpfr--4.2.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/mpfr/4.2.2: 31 files, 3.3MB
+==> Upgrading texlive dependency: openjdk (25.0.2 -> 27)
+==> Pouring openjdk--27.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/openjdk/27: 535 files, 391.2MB
+==> Installing texlive dependency: gdbm (1.26)
+==> Pouring gdbm--1.26.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gdbm/1.26: 25 files, 1.1MB
+==> Installing texlive dependency: perl (5.44.0)
+==> Pouring perl--5.44.0.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/perl/5.44.0: 2,887 files, 73.4MB
+==> Installing texlive dependency: libde265 (1.1.3)
+==> Pouring libde265--1.1.3.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libde265/1.1.3: 18 files, 435.2KB
+==> Upgrading texlive dependency: x265 (4.2 -> 4.3)
+==> Pouring x265--4.3.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/x265/4.3: 12 files, 17.3MB
+==> Installing texlive dependency: libheif (1.23.6)
+==> Pouring libheif--1.23.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libheif/1.23.6: 53 files, 8.8MB
+==> Upgrading texlive dependency: libtool (2.5.4 -> 2.6.2)
+==> Pouring libtool--2.6.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libtool/2.6.2: 78 files, 4.2MB
+==> Installing texlive dependency: imagemagick (7.1.2-33)
+==> Pouring imagemagick--7.1.2-33.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/imagemagick/7.1.2-33: 680 files, 28.2MB
+==> Installing texlive dependency: libzip (1.12_1)
+==> Pouring libzip--1.12_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libzip/1.12_1: 162 files, 892.2KB
+==> Installing texlive dependency: plotutils (2.6_1)
+==> Pouring plotutils--2.6_1.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/plotutils/2.6_1: 74 files, 7.1MB
+==> Installing texlive dependency: pstoedit (4.3)
+==> Pouring pstoedit--4.3.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/pstoedit/4.3: 26 files, 1.5MB
+==> Upgrading texlive dependency: python@3.14 (3.14.6 -> 3.14.8_2)
+==> Pouring python@3.14--3.14.8_2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/python@3.14/3.14.8_2: 3,767 files, 74.4MB
+==> Installing texlive dependency: libtommath (1.3.0)
+==> Pouring libtommath--1.3.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libtommath/1.3.0: 12 files, 506.9KB
+==> Installing texlive dependency: tcl-tk (9.1.0)
+==> Pouring tcl-tk--9.1.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/tcl-tk/9.1.0: 3,168 files, 38.9MB
+==> Installing texlive
+==> Pouring texlive--20260301_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/texlive/20260301_1: 191,385 files, 4.6GB
+==> Installing dependencies for ffmpeg-full: aribb24, frei0r, libomp, ggml, highway, imath, libdeflate, openjph, openexr, jpeg-xl, mpg123, lame, libunibreak, libass, libudfread, libbluray, shaderc, vulkan-headers, vulkan-loader, libplacebo, libmicrohttpd, librist, libsoxr, libssh, libvidstab, libogg, libvorbis, libvpx, opencore-amr, qrencode, rav1e, libsamplerate, flac, libsndfile, rubberband, sdl3, sdl2-compat, snappy, speex, srt, svt-av1, theora, llama.cpp, whisper.cpp, xvid, libsodium, zeromq and zimg
+==> Installing ffmpeg-full dependency: aribb24 (1.0.4)
+==> Pouring aribb24--1.0.4.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/aribb24/1.0.4: 15 files, 208.1KB
+==> Installing ffmpeg-full dependency: frei0r (3.6.0)
+==> Pouring frei0r--3.6.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/frei0r/3.6.0: 171 files, 6.2MB
+==> Upgrading ffmpeg-full dependency: libomp (22.1.8 -> 23.1.3)
+==> Pouring libomp--23.1.3.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libomp/23.1.3: 11 files, 1.8MB
+==> Upgrading ffmpeg-full dependency: ggml (0.22.0 -> 0.26.0)
+==> Pouring ggml--0.26.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/ggml/0.26.0: 38 files, 8.1MB
+==> Installing ffmpeg-full dependency: highway (1.4.0)
+==> Pouring highway--1.4.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/highway/1.4.0: 87 files, 5.7MB
+==> Installing ffmpeg-full dependency: imath (3.2.3)
+==> Pouring imath--3.2.3.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/imath/3.2.3: 50 files, 977.2KB
+==> Installing ffmpeg-full dependency: libdeflate (1.26)
+==> Pouring libdeflate--1.26.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libdeflate/1.26: 17 files, 303.1KB
+==> Installing ffmpeg-full dependency: openjph (0.32.0)
+==> Pouring openjph--0.32.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/openjph/0.32.0: 25 files, 629.5KB
+==> Installing ffmpeg-full dependency: openexr (3.5.2)
+==> Pouring openexr--3.5.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/openexr/3.5.2: 214 files, 4.6MB
+==> Installing ffmpeg-full dependency: jpeg-xl (0.12.0_1)
+==> Pouring jpeg-xl--0.12.0_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/jpeg-xl/0.12.0_1: 65 files, 36.4MB
+==> Installing ffmpeg-full dependency: mpg123 (1.33.7)
+==> Pouring mpg123--1.33.7.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/mpg123/1.33.7: 34 files, 1.9MB
+==> Upgrading ffmpeg-full dependency: lame (3.100 -> 4.0)
+==> Pouring lame--4.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/lame/4.0: 29 files, 1.9MB
+==> Installing ffmpeg-full dependency: libunibreak (8.0)
+==> Pouring libunibreak--8.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libunibreak/8.0: 17 files, 344.2KB
+==> Installing ffmpeg-full dependency: libass (0.17.5_1)
+==> Pouring libass--0.17.5_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libass/0.17.5_1: 12 files, 618.4KB
+==> Installing ffmpeg-full dependency: libudfread (1.2.0)
+==> Pouring libudfread--1.2.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libudfread/1.2.0: 13 files, 137.8KB
+==> Installing ffmpeg-full dependency: libbluray (1.5.0)
+==> Pouring libbluray--1.5.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libbluray/1.5.0: 22 files, 1.2MB
+==> Installing ffmpeg-full dependency: shaderc (2026.4)
+==> Pouring shaderc--2026.4.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/shaderc/2026.4: 21 files, 32.7MB
+==> Installing ffmpeg-full dependency: vulkan-headers (1.4.363.0)
+==> Pouring vulkan-headers--1.4.363.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/vulkan-headers/1.4.363.0: 72 files, 42.4MB
+==> Installing ffmpeg-full dependency: vulkan-loader (1.4.363.0)
+==> Pouring vulkan-loader--1.4.363.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/vulkan-loader/1.4.363.0: 15 files, 1.4MB
+==> Installing ffmpeg-full dependency: libplacebo (7.360.1)
+==> Pouring libplacebo--7.360.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libplacebo/7.360.1: 42 files, 1.5MB
+==> Installing ffmpeg-full dependency: libmicrohttpd (1.0.10)
+==> Pouring libmicrohttpd--1.0.10.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libmicrohttpd/1.0.10: 29 files, 1.7MB
+==> Installing ffmpeg-full dependency: librist (0.2.20)
+==> Pouring librist--0.2.20.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/librist/0.2.20: 34 files, 1.3MB
+==> Installing ffmpeg-full dependency: libsoxr (0.1.3)
+==> Pouring libsoxr--0.1.3.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/libsoxr/0.1.3: 30 files, 262.8KB
+==> Installing ffmpeg-full dependency: libssh (0.12.2_1)
+==> Pouring libssh--0.12.2_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libssh/0.12.2_1: 25 files, 1.7MB
+==> Installing ffmpeg-full dependency: libvidstab (1.1.2)
+==> Pouring libvidstab--1.1.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libvidstab/1.1.2: 29 files, 579.3KB
+==> Installing ffmpeg-full dependency: libogg (1.3.6)
+==> Pouring libogg--1.3.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libogg/1.3.6: 103 files, 531.9KB
+==> Installing ffmpeg-full dependency: libvorbis (1.3.7)
+==> Pouring libvorbis--1.3.7.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/libvorbis/1.3.7: 158 files, 2.4MB
+==> Upgrading ffmpeg-full dependency: libvpx (1.16.0 -> 1.17.0)
+==> Pouring libvpx--1.17.0.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/libvpx/1.17.0: 22 files, 4.4MB
+==> Installing ffmpeg-full dependency: opencore-amr (0.1.6)
+==> Pouring opencore-amr--0.1.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/opencore-amr/0.1.6: 18 files, 636.4KB
+==> Installing ffmpeg-full dependency: qrencode (4.1.1_1)
+==> Pouring qrencode--4.1.1_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/qrencode/4.1.1_1: 15 files, 286.1KB
+==> Installing ffmpeg-full dependency: rav1e (0.8.1)
+==> Pouring rav1e--0.8.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/rav1e/0.8.1: 15 files, 50.8MB
+==> Installing ffmpeg-full dependency: libsamplerate (0.2.2)
+==> Pouring libsamplerate--0.2.2.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/libsamplerate/0.2.2: 33 files, 3.2MB
+==> Installing ffmpeg-full dependency: flac (1.5.0)
+==> Pouring flac--1.5.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/flac/1.5.0: 40 files, 1.9MB
+==> Installing ffmpeg-full dependency: libsndfile (1.2.2_1)
+==> Pouring libsndfile--1.2.2_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libsndfile/1.2.2_1: 55 files, 1.8MB
+==> Installing ffmpeg-full dependency: rubberband (4.0.0)
+==> Pouring rubberband--4.0.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/rubberband/4.0.0: 15 files, 2MB
+==> Upgrading ffmpeg-full dependency: sdl3 (3.4.10 -> 3.4.18)
+==> Pouring sdl3--3.4.18.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/sdl3/3.4.18: 103 files, 6.3MB
+==> Upgrading ffmpeg-full dependency: sdl2-compat (2.32.70 -> 2.32.74)
+==> Pouring sdl2-compat--2.32.74.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/sdl2-compat/2.32.74: 117 files, 3.3MB
+==> Installing ffmpeg-full dependency: snappy (1.3.1)
+==> Pouring snappy--1.3.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/snappy/1.3.1: 20 files, 172.4KB
+==> Installing ffmpeg-full dependency: speex (1.2.1)
+==> Pouring speex--1.2.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/speex/1.2.1: 26 files, 823.6KB
+==> Installing ffmpeg-full dependency: srt (1.5.7_1)
+==> Pouring srt--1.5.7_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/srt/1.5.7_1: 21 files, 4.9MB
+==> Upgrading ffmpeg-full dependency: svt-av1 (4.1.0 -> 4.2.0)
+==> Pouring svt-av1--4.2.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/svt-av1/4.2.0: 23 files, 3.3MB
+==> Installing ffmpeg-full dependency: theora (1.2.0)
+==> Pouring theora--1.2.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/theora/1.2.0: 126 files, 2.6MB
+==> Upgrading ffmpeg-full dependency: llama.cpp (0.3.0 -> 0.6.0_1)
+==> Pouring llama.cpp--0.6.0_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/llama.cpp/0.6.0_1: 70 files, 19.5MB
+==> Installing ffmpeg-full dependency: whisper.cpp (1.9.5)
+==> Pouring whisper.cpp--1.9.5.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/whisper.cpp/1.9.5: 33 files, 6.4MB
+==> Installing ffmpeg-full dependency: xvid (1.3.7)
+==> Pouring xvid--1.3.7.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/xvid/1.3.7: 12 files, 1.2MB
+==> Installing ffmpeg-full dependency: libsodium (1.0.22)
+==> Pouring libsodium--1.0.22.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libsodium/1.0.22: 88 files, 1.1MB
+==> Installing ffmpeg-full dependency: zeromq (4.3.5_2)
+==> Pouring zeromq--4.3.5_2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/zeromq/4.3.5_2: 85 files, 6.6MB
+==> Installing ffmpeg-full dependency: zimg (3.0.6)
+==> Pouring zimg--3.0.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/zimg/3.0.6: 28 files, 1.2MB
+==> Installing ffmpeg-full
+==> Pouring ffmpeg-full--9.0.2.arm64_tahoe.bottle.tar.gz
+Warning: ffmpeg-full was installed but not linked because ffmpeg is already linked.
+To link this version, run:
+  brew link ffmpeg-full
+🍺  /opt/homebrew/Cellar/ffmpeg-full/9.0.2: 291 files, 58.8MB
+==> Installing espeak-ng dependency: pcaudiolib (1.3)
+==> Pouring pcaudiolib--1.3.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/pcaudiolib/1.3: 14 files, 154.8KB
+==> Installing espeak-ng
+==> Pouring espeak-ng--1.52.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/espeak-ng/1.52.0: 538 files, 26.1MB
+==> Caveats
+==> libtool
+All commands have been installed with the prefix "g".
+If you need to use these commands with their normal names, you
+can add a "gnubin" directory to your PATH from your bashrc like:
+  PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"
+==> python@3.14
+Python is installed as
+  /opt/homebrew/bin/python3.14
+
+Unversioned and major-versioned symlinks `python`, `python3`, `python-config`, `python3-config`, `pip`, `pip3`, etc. pointing to
+`python3.14`, `python3.14-config`, `pip3.14` etc., respectively, are installed into
+  /opt/homebrew/opt/python@3.14/libexec/bin
+
+If you do not need a specific version of Python, and always want Homebrew's `python3` in your PATH:
+  brew install python3
+
+`idle3.14` requires tkinter, which is available separately:
+  brew install python-tk@3.14
+
+`dbm.gnu` is available separately:
+  brew install python-gdbm@3.14
+
+For more information about Homebrew and Python, see: https://docs.brew.sh/Homebrew-and-Python
+==> ffmpeg-full
+ffmpeg-full includes additional tools and libraries that are not included in the regular ffmpeg formula.
+
+ffmpeg-full is keg-only, which means it was not symlinked into /opt/homebrew,
+because this is an alternate version of another formula.
+
+If you need to have ffmpeg-full first in your PATH, run:
+  printf '%s\n' export\ PATH\=/opt/homebrew/opt/ffmpeg-full/bin:\$PATH >> ~/.zshrc
+
+For compilers to find ffmpeg-full you may need to set:
+  export LDFLAGS=-L/opt/homebrew/opt/ffmpeg-full/lib
+  export CPPFLAGS=-I/opt/homebrew/opt/ffmpeg-full/include
+
+For pkgconf to find ffmpeg-full you may need to set:
+  export PKG_CONFIG_PATH=/opt/homebrew/opt/ffmpeg-full/lib/pkgconfig
+HOMEBREW_NO_AUTO_UPDATE=1 brew install texlive ffmpeg-full espeak-ng  137.93s user 96.62s system 62% cpu 6:13.13 total
+EXIT 0

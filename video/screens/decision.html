@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>TJ107 recommendation — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: auto 148px 228px minmax(0, 1fr); }
+  .tabs-row { grid-column: 1 / -1; margin-top: -6px; }
+  .hero { flex-direction: row; align-items: center; gap: 40px; padding: 30px 32px; }
+  .hero h2 { font-size: 30px; font-weight: 650; letter-spacing: -0.028em; line-height: 1.2; margin-top: 10px; }
+  .hero .acts { display: flex; gap: 10px; flex: none; }
+  .hero .acts .btn { height: 46px; padding: 0 20px; font-size: 15px; border-radius: 12px; }
+  .fact .big { margin-top: 16px; }
+  .fact .sub2 { font-size: 14px; }
+  .fact .sub2 { margin-top: 12px; }
+  .ord .r2 { grid-template-columns: minmax(0, 1fr) auto; min-height: 84px; }
+  .ord .r2 .ttl { font: 650 15px var(--mono); letter-spacing: -0.01em; }
+  .ord .r2 .why { font-size: 14px; }
+  .imp .kv2 { margin-top: 18px; font-size: 14.5px; row-gap: 12px; }
+  .status-ok { display: none; }
+  body.approved .status-ok { display: inline-flex; }
+  body.approved .hero .acts { display: none; }
+</style>
+</head>
+<body data-page="decisions">
+<div id="content">
+<div class="v2">
+  <div class="tabs-row"><div class="tabs2"><span class="on">Recommendation</span><span>Why</span><span>Why not</span><span>What if</span><span>Workbench</span></div></div>
+
+  <!-- hero recommendation -->
+  <div class="panel2 c12 focus hero" data-shot="reco">
+    <div class="grow">
+      <span class="kick acc">Recommendation · P2 · for 08:00</span>
+      <h2>Stop removing the pump. Troubleshoot the indication path.</h2>
+      <div class="sub2">The hydraulic alarm on TJ107 has outlived 28 pump removals, and the shop found nothing wrong with any of them.</div>
+    </div>
+    <div class="acts" data-shot="approve">
+      <button class="btn primary"><i data-i="check" class="ico-sm"></i>Approve</button>
+      <button class="btn"><i data-i="pen" class="ico-sm"></i>Modify</button>
+      <button class="btn"><i data-i="x" class="ico-sm"></i>Reject</button>
+      <button class="btn ghost"><i data-i="snooze" class="ico-sm"></i>Snooze</button>
+    </div>
+    <span class="chip ok status-ok" style="height:44px;font-size:15px"><i data-i="check" class="ico-sm"></i>Approved · SEO · 06:41</span>
+  </div>
+
+  <!-- state / why / forecast -->
+  <div class="panel2 c4 fact" data-shot="state">
+    <div class="row"><span class="kick">State</span><div class="grow"></div><span class="tier desc">DESC</span></div>
+    <div class="big">28<small>pump removals</small></div>
+    <div class="sub2">Ten different pumps through system 1 since 2 March. The aircraft is mission capable today.</div>
+  </div>
+  <div class="panel2 c4 fact" data-shot="why">
+    <div class="row"><span class="kick">Why</span><div class="grow"></div><span class="tier diag">DIAG</span></div>
+    <div class="big">0<small>of 107 confirmed</small></div>
+    <div class="sub2">No HYD-101 job in the fleet ever confirmed a pump fault. All 33 pumps sent to the shop came back RTOK.</div>
+  </div>
+  <div class="panel2 c4 fact" data-shot="forecast">
+    <div class="row"><span class="kick">Forecast</span><div class="grow"></div><span class="tier pred">PRED</span></div>
+    <div class="big">98.5<small>% no fault found</small></div>
+    <div class="sub2">if the pump is removed again. Chance this pump is actually faulty: 0.5 %.</div>
+    <div class="ci" style="margin-top:6px">0.985 [0.93, 1.00] · 33 of 33 pumps RTOK</div>
+  </div>
+
+  <!-- orders + impact -->
+  <div class="panel2 c7 ord" data-shot="orders">
+    <span class="kick">Orders</span>
+    <div class="t2">Two orders, one needs a signature</div>
+    <div class="rows2" style="margin-top:14px">
+      <div class="r2"><div><div class="ttl">TROUBLESHOOT</div><div class="why">Indication path on system 1 — pressure switch, harness, BHEEM EU channel</div></div><span class="auth agent"><i data-i="cpu" class="ico-sm"></i>AGENT · consent</span></div>
+      <div class="r2"><div><div class="ttl">CHANGE_MONITORING_CONFIG</div><div class="why">Filter HYD-101 on TJ107 while it is investigated — drafted, not issued</div></div><span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN · sign</span></div>
+    </div>
+  </div>
+  <div class="panel2 c5 imp" data-shot="impact">
+    <div class="row"><span class="kick">Impact · next 30 days</span><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="big" style="margin-top:18px;color:var(--fmc)">+21.7<small>pts mission capable</small></div>
+    <div class="ci" style="margin-top:8px">95 % CI [16.7, 26.8] · 30 paired simulations vs doing nothing</div>
+    <div class="kv2"><span>Maintenance man-hours</span><span>−116</span><span>Days grounded for parts</span><span>−3.7</span><span>In-flight failures</span><span style="color:var(--ink-3)">+0.07 · not significant</span></div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  if (new URLSearchParams(location.search).get('state') === 'approved') document.body.classList.add('approved');
+  PHX.mount({ page: 'decisions', title: 'TJ107 · hydraulic alarm HYD-101', sub: 'Standing for 34 flights · the board item for epoch Mon 22 Jun 08:00',
+    chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'warn', i: 'decisions', t: 'Board closes 07:45' }] });
+</script>
+</body></html>

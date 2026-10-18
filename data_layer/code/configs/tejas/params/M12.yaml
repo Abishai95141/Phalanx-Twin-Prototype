@@ -1,0 +1,651 @@
+# M12 sensor physics and sensor dynamics: Tejas Mk1A / F404-GE-IN20 parameters (W1.6).
+# Structure (which channel uses which class, truth source and element) lives in M12/channel_map.yaml; every
+# number lives here with units, an evidence tag and a source (RULES.md rule 3). ASSUMPTION values carry a sweep
+# and an assumption_id registered in docs/assumptions.md (W1.6 section). Proxy (DASHlink) values are NOT used here:
+# they appear only in tests (round-2 tau_FFs 0.218 s, tau_TC,ref 0.81 s).
+format: phalanx.params/1
+module: M12
+sets:
+  constants:
+    p_sl:
+      value: 101325.0
+      units: Pa
+      description: ISA sea-level static pressure (pneumatic-lag scaling, position-error tables)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562), sea-level values; architecture M03"}
+    t_sl:
+      value: 288.15
+      units: K
+      description: ISA sea-level temperature (Sutherland viscosity ratio)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562)"}
+    rho_sl:
+      value: 1.225
+      units: kg/m**3
+      description: ISA sea-level density (equivalent airspeed, TAT heater-error index Z = M rho/rho0)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (NOAA-S/T 76-1562)"}
+    gamma:
+      value: 1.4
+      units: "1"
+      description: Ratio of specific heats of air (isentropic and Rayleigh pitot relations, TAT recovery)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976; Gracey NASA RP-1046 ch. 2 https://ntrs.nasa.gov/api/citations/19800015804/downloads/19800015804.pdf"}
+    sutherland_s:
+      value: 110.4
+      units: K
+      description: Sutherland constant of air (pneumatic lag scales as (mu/mu_SL)/delta)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 eq. 51 (Sutherland law); AGARD-AG-300 Vol.1 pp.23-25 https://archive.org/download/DTIC_ADA137367/DTIC_ADA137367.pdf"}
+    g0:
+      value: 9.80665
+      units: m/s**2
+      description: Standard gravity (vane boom-bending term is per g of load factor)
+      evidence: {tag: "TRANSFER: USSA-76", source: "U.S. Standard Atmosphere 1976 (standard acceleration of gravity)"}
+    n_sub:
+      value: 8
+      units: "1"
+      description: Trapezoidal sub-steps per 240 Hz frame for second-order elements (vanes, rate gyros, accelerometers); numerical setting, not physics
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical choice: vane f_n up to ~40 Hz gives w_n h = 0.13 at 8 sub-steps; tests/unit/test_sensors_dynamics.py checks the step response against the analytic solution"}
+      sweep: [4, 32]
+      assumption_id: A-W1.6-1
+
+  rtd_inlet:
+    tau:
+      value: 2.0
+      units: s
+      description: T1 (fan-inlet) RTD time constant at the reference airflow (tau proportional to W^-n)
+      evidence: {tag: ASSUMPTION, source: "No F404 T1 time constant is public; research_notes/.../sensor_residual_texture.md Synthesis (b) ('electronic FADEC needs short tau'); f404_in20_engine_model.md Q3 (T1 single-element RTD, hot-air de-iced)"}
+      sweep: [0.5, 5.0]
+      assumption_id: A-W1.6-3
+    w_ref:
+      value: 70.0
+      units: kg/s
+      description: Reference engine airflow for flux-scaled sensor time constants (IN20 maximum airflow)
+      evidence: {tag: DIRECT, source: "GE F404 family data sheet: IN20 153 lb/s (70 kg/s) airflow; research_notes/.../f404_in20_engine_model.md line 34"}
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: Exponent of the mass-flux law tau = tau_ref (W/W_ref)^-n
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23 (tau proportional to W^-0.5, AGARD); round-2 PREREGISTRATION A6; sensor_residual_texture.md Synthesis (b)"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref in the flux law (caps tau at engine-off / windmill flow)
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor; F404 spec band only covers 5-30 lb/s ft2 (CR-1998-208416 Fig. 3)"}
+      sweep: [0.02, 0.2]
+      assumption_id: A-W1.6-3
+    deice_bias:
+      value: 0.2
+      units: K
+      description: Hot-air de-icing heating error of the T1 RTD (reads warm)
+      evidence: {tag: ASSUMPTION, source: "sensor_residual_texture.md Synthesis (b): de-icing heater error +0.2-0.5 degC at M0.3, +0.12-0.3 degC at M0.8 (TRANSFER, AGARD-AG-160 v2; F404 T1)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W1.6-3
+
+  tc_t5:
+    tau:
+      value: 1.75
+      units: s
+      description: T5 thermocouple probe time constant at W_ref (each of the 2 x 4 probes)
+      evidence: {tag: ASSUMPTION, source: "TRANSFER F404-400 spec band at 1,500 degF: 1.25-3.9 s over 30-5 lb/s ft2, measured 1.75 s at 28 lb/s ft2 (CR-1998-208416 Fig. 3 https://ntrs.nasa.gov/citations/19980219005; f404_in20_engine_model.md line 397); mapping of 28 lb/s ft2 to the IN20 maximum airflow is the assumption"}
+      sweep: [1.25, 3.9]
+      assumption_id: A-W1.6-4
+    w_ref:
+      value: 70.0
+      units: kg/s
+      description: Reference airflow for the T5 probe flux law
+      evidence: {tag: DIRECT, source: "GE F404 family data sheet (IN20 70 kg/s)"}
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: T5 probe mass-flux exponent (tau proportional to W^-0.5)
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23; round-2 PREREGISTRATION A6; F404 band 1.25-3.9 s over 6:1 flux ratio is consistent with n = 0.4-0.5 (CR-1998-208416 Fig. 3)"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref for the T5 probe law
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor"}
+      sweep: [0.02, 0.2]
+      assumption_id: A-W1.6-4
+    pattern:
+      value: 0.0
+      units: K
+      description: Per-probe circumferential pattern offset (all probes see the same T5; profile not public)
+      evidence: {tag: ASSUMPTION, source: "inventory ENG.T5.HARNESS_A ('circumferential temperature profile'); no public IN20 profile"}
+      sweep: [-15.0, 15.0]
+      assumption_id: A-W1.6-4
+
+  tc_t25:
+    tau:
+      value: 1.0
+      units: s
+      description: T25 (HPC inlet) temperature sensor time constant at W_ref
+      evidence: {tag: ASSUMPTION, source: "-400 T2.5 was pneumatic (CR-191195 §3.3.2); IN20 electrical T25 assumed (f404_in20_engine_model.md Q3 inferences); no time constant public"}
+      sweep: [0.3, 3.0]
+      assumption_id: A-W1.6-5
+    w_ref:
+      value: 70.0
+      units: kg/s
+      description: Reference airflow for the T25 flux law
+      evidence: {tag: DIRECT, source: "GE F404 family data sheet (IN20 70 kg/s)"}
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: T25 mass-flux exponent
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "architecture AD-23"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on W/W_ref for the T25 law
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor"}
+      sweep: [0.02, 0.2]
+      assumption_id: A-W1.6-5
+
+  ps3_transducer:
+    tau:
+      value: 0.02
+      units: s
+      description: PS3 transducer plus sense-line first-order lag
+      evidence: {tag: ASSUMPTION, source: "sensor_residual_texture.md Synthesis (b): line lag tau = 128 mu L V/(pi d^4 p), PPT 17 ms minimum delay (TRANSFER); IN20 line geometry not public"}
+      sweep: [0.005, 0.1]
+      assumption_id: A-W1.6-6
+  p5_transducer:
+    tau:
+      value: 0.05
+      units: s
+      description: P5 (LPT discharge) transducer plus sense-line lag (lower pressure, longer line than PS3)
+      evidence: {tag: ASSUMPTION, source: "as ps3_transducer; lag scales as 1/p (sensor_residual_texture.md Synthesis (b))"}
+      sweep: [0.01, 0.2]
+      assumption_id: A-W1.6-6
+
+  oil_pressure:
+    tau:
+      value: 1.0
+      units: s
+      description: Oil-pressure transmitter damping time constant (warm oil)
+      evidence: {tag: "TRANSFER: MIL-PRF-25435D", source: "texture_and_fault_gap_closure.md Q4: damping tau about 1 s (MIL-PRF-25435D) to about 4 s cold (MIL-T-5796D)"}
+  oil_temperature:
+    tau:
+      value: 5.0
+      units: s
+      description: Oil-temperature RTD time constant
+      evidence: {tag: ASSUMPTION, source: "texture_and_fault_gap_closure.md Q4 inferences: Pt RTD with tau of several seconds (no fighter source)"}
+      sweep: [2.0, 15.0]
+      assumption_id: A-W1.6-7
+
+  fuel_flowmeter_main:
+    tau:
+      value: 0.218
+      units: s
+      description: Main fuel-flow meter first-order lag (AD-23 sensor-dynamics stage)
+      evidence: {tag: ASSUMPTION, source: "Transfer of the round-2 proxy fit tau_FFs = 0.218 s (CV 0.19-0.29 s; analysis/settling_experiment_round2/REPORT.md §3.2) to the IN20 meter, whose type is unresolved (turbine tau ~10 ms vs angular-momentum 80 ms rise + 300 ms update; report Appendix A4; texture_and_fault_gap_closure.md Q2)"}
+      sweep: [0.01, 0.3]
+      assumption_id: A-W1.6-8
+    update_interval:
+      value: 0.0
+      units: s
+      description: Meter output update interval (0 = continuous); angular-momentum meters update every 300 ms
+      evidence: {tag: ASSUMPTION, source: "round-2 PREREGISTRATION A6: no FF staircase in 687-CAL transients (transients_stale_summary.csv); AGARD-AG-160 Vol.3 Table 1 (300 ms update, TRANSFER)"}
+      sweep: [0.0, 0.3]
+      assumption_id: A-W1.6-8
+  fuel_flowmeter_ab:
+    tau:
+      value: 0.01
+      units: s
+      description: Afterburner fuel-flow (FTI) turbine-meter time constant
+      evidence: {tag: "TRANSFER: turbine flowmeter (AGARD-AG-160 Vol.3)", source: "texture_and_fault_gap_closure.md Q2 table: turbine meter tau about 10 ms"}
+
+  a8_lvdt:
+    area_min:
+      value: 0.141935
+      units: m**2
+      description: Nozzle throat area at 0 % stroke (A8 LVDT percent = linear in area between min and max)
+      evidence: {tag: "TRANSFER: F404-400", source: "NASA TP-3001 Table 2 (A8 220-540 in2) https://ntrs.nasa.gov/citations/19900015818; f404_in20_engine_model.md Q3 sensor table"}
+    area_max:
+      value: 0.348386
+      units: m**2
+      description: Nozzle throat area at 100 % stroke
+      evidence: {tag: "TRANSFER: F404-400", source: "NASA TP-3001 Table 2 (A8 220-540 in2)"}
+
+  fuel_inlet_rtd:
+    tau:
+      value: 5.0
+      units: s
+      description: Engine fuel-inlet temperature RTD (immersed in the engine-bound fuel line) time constant
+      evidence: {tag: ASSUMPTION, source: "no fighter source; RTD immersion probes several seconds (texture_and_fault_gap_closure.md Q4 inferences, as the oil and hydraulic temperature RTDs)"}
+      sweep: [2.0, 15.0]
+      assumption_id: A-W2.2-16
+  ecs_duct_rtd:
+    tau:
+      value: 3.0
+      units: s
+      description: ECS duct air temperature RTD/TC (bleed PHX in/out, ACM turbine outlet) time constant
+      evidence: {tag: ASSUMPTION, source: "no ECS source; duct-air probes respond in seconds: large-diameter probes have under 1 Hz bandwidth and tau falls with mass flux (sensor_residual_texture.md, thick-wire thermocouples; AGARD-AG-160 tau proportional to W^-0.5); the flux dependence is not modelled"}
+      sweep: [0.5, 10.0]
+      assumption_id: A-W2.2-16
+  ecs_compartment_rtd:
+    tau:
+      value: 20.0
+      units: s
+      description: Cockpit and avionics-bay air temperature RTD time constant (low air speed past the element)
+      evidence: {tag: ASSUMPTION, source: "no source; slow-air RTD (tau rises as the flux past the element falls, AGARD-AG-160 law)"}
+      sweep: [5.0, 60.0]
+      assumption_id: A-W2.2-16
+  ecs_pressure:
+    tau:
+      value: 0.05
+      units: s
+      description: ECS bleed-manifold and cockpit absolute pressure transducer plus sense-line lag
+      evidence: {tag: ASSUMPTION, source: "as the engine P5 transducer (sensor-line lag; sensor_residual_texture.md Synthesis (b)); no ECS source"}
+      sweep: [0.01, 0.5]
+      assumption_id: A-W2.2-16
+  uv_flame_detector:
+    tau:
+      value: 0.05
+      units: s
+      description: >-
+        UV flame detector response (tube count window and amplifier) as a first-order time constant; pick-up and
+        drop-out cross the trip level tau ln 2 (35 ms) after the flame appears or goes out
+      evidence: {tag: ASSUMPTION, source: "no public value for the F404 AB flame detector (single UV detector on the AB case, 200-270 nm, on/off: NASA CR-191195 §3.3.9, §4.9, https://ntrs.nasa.gov/citations/19940032893; research_notes f404_in20_engine_model.md); first-order response + comparator is the PROXY form"}
+      sweep: [0.01, 0.5]
+      assumption_id: A-W2.2-15
+      proxy: true
+    flame_level:
+      value: 1.5
+      units: "1"
+      description: >-
+        eng.ab_state code at or above which the afterburner flame radiates in the detector band: the established
+        flame (M07 code 2 lit), not the light-off sequence (code 1 lighting: igniters and pilot fuel)
+      evidence: {tag: ASSUMPTION, source: "M07 eng.ab_state codes (phalanx.engine.ports: 0 off, 1 lighting, 2 lit); the UV flame sensor confirms light-off (NASA TP-3001 p.3, https://ntrs.nasa.gov/citations/19900015818). Sweep 0.5 = the detector also sees the igniter UV during lighting"}
+      sweep: [0.5, 1.5]
+      assumption_id: A-W2.2-15
+      proxy: true
+    trip:
+      value: 0.5
+      units: "1"
+      description: FADEC discrete-input trip level on the normalised detector signal (mid-scale comparator)
+      evidence: {tag: ASSUMPTION, source: "no public value"}
+      sweep: [0.2, 0.8]
+      assumption_id: A-W2.2-15
+      proxy: true
+  airbrake_rvdt:
+    arm:
+      value: 0.336
+      units: m
+      description: Airbrake actuator stroke per radian of airbrake deflection (position channel in mm)
+      evidence: {tag: ASSUMPTION, source: "dictionary FCS.AIRBRAKE.POS range 0-294 mm; Tejas airbrake maximum deflection not public (about 50 deg assumed: 294 mm / 0.873 rad)"}
+      sweep: [0.2, 0.5]
+      assumption_id: A-W1.6-9
+
+  static_pressure:
+    lambda_sl:
+      value: 0.1
+      units: s
+      description: Pneumatic-line lag at sea level (scaled by (mu/mu_SL)/delta, x4.3 at 40 kft)
+      evidence: {tag: ASSUMPTION, source: "texture_and_fault_gap_closure.md Q1: lambda_SL 0.05-0.15 s inference; installations 0.12-0.35 s (TN D-7819, TM-102846, DSJ 54(2)); scaling AGARD-AG-300 pp.23-25 (TRANSFER)"}
+      sweep: [0.05, 0.35]
+      assumption_id: A-W1.6-11
+    pe_mach:
+      table: {file: position_error_side.csv, column: mach}
+      units: "1"
+      description: Mach grid of the side-probe static-source position-error table
+      evidence: {tag: ASSUMPTION, source: "texture_and_fault_gap_closure.md Q1: side vents -0.035 to -0.045 at M0.92-0.97, fluctuating band M0.97-1.0 (Gracey RP-1046 Fig. 7.19, TRANSFER); Tejas probes placed where |Cp| <= 0.1 (Krishna & Singh DSJ 52(1), DIRECT)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-12
+      proxy: true
+    pe_k:
+      table: {file: position_error_side.csv, column: k_pe}
+      units: "1"
+      description: Side-probe position error dp/q_c (indicated minus true static, per impact pressure), Mach-only
+      evidence: {tag: ASSUMPTION, source: "as pe_mach; HAL ADC SSEC implies dp/qc about -0.09 (JOAST 67(2A), TRANSFER); bounded by the Tejas design |Cp| <= 0.1 (DIRECT)"}
+      sweep: [-0.1, 0.1]
+      assumption_id: A-W1.6-12
+      proxy: true
+  total_pressure:
+    lambda_sl:
+      value: 0.1
+      units: s
+      description: Pitot-line lag at sea level (same scaling as static)
+      evidence: {tag: ASSUMPTION, source: "as static_pressure.lambda_sl"}
+      sweep: [0.05, 0.35]
+      assumption_id: A-W1.6-11
+
+  vane_aoa:
+    kf:
+      value: 0.15
+      units: Hz*s/m
+      description: Vane natural frequency per m/s of equivalent airspeed (f_n = kf V_EAS)
+      evidence: {tag: ASSUMPTION, source: "texture_and_fault_gap_closure.md Q1: f_n 0.11-0.21 Hz per m/s EAS (NASA TN D-8242 Fig. 22, TN D-6193; TRANSFER); production fuselage vane values not public"}
+      sweep: [0.11, 0.21]
+      assumption_id: A-W1.6-13
+    zeta:
+      value: 0.07
+      units: "1"
+      description: Vane damping ratio (constant; the evidence shows it falling with altitude)
+      evidence: {tag: ASSUMPTION, source: "TN D-8242: zeta 0.10 SL, 0.077 at 6.4 km, 0.043 at 18.5 km (TRANSFER); viscous production dampers unknown"}
+      sweep: [0.04, 0.10]
+      assumption_id: A-W1.6-13
+    ku:
+      value: 0.5
+      units: "1"
+      description: Local-flow (upwash) factor alpha_local = (1 + ku) alpha + b(M) + kbend (nz - 1)
+      evidence: {tag: ASSUMPTION, source: "Tejas side air-data probe local/free-stream alpha slope 1.4-1.6 (Nusrath/DSJ 60(6) Figs. 4-5, DIRECT at the SADP); applying it to the AoA vane location is the assumption; noseboom 0.06-0.10 (TM-101714, TRANSFER)"}
+      sweep: [0.06, 0.6]
+      assumption_id: A-W1.6-13
+    kbend:
+      value: 0.0
+      units: rad
+      description: Boom-bending flow-angle error per g of (nz - 1); zero for fuselage vanes (no boom)
+      evidence: {tag: ASSUMPTION, source: "AGARD-AG-300 §12.3.3.3: 0.1 deg/g for a long vane boom; TM-101714 -0.064 deg/g (TRANSFER, noseboom only)"}
+      sweep: [0.0, 0.0017]
+      assumption_id: A-W1.6-13
+    eas_min:
+      value: 10.0
+      units: m/s
+      description: Floor on equivalent airspeed in the vane frequency law (vane at rest on the ground)
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor (f_n = kf V_EAS goes to 0 at rest)"}
+      sweep: [2.0, 30.0]
+      assumption_id: A-W1.6-13
+    bias_mach:
+      table: {file: vane_bias_side.csv, column: mach}
+      units: "1"
+      description: Mach grid of the vane bias b(M) (incl. the shock-crossing step near M1.0-1.2)
+      evidence: {tag: ASSUMPTION, source: "Shape from F-104 noseboom (TM-101714 Figs. 15-18: 0.73 deg at M0.76, 0.38 deg at M0.89, about 1.4 deg for M1.0-1.2, 0.25 deg above M1.2; TRANSFER)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-13
+    bias:
+      table: {file: vane_bias_side.csv, column: bias_deg}
+      units: deg
+      description: Vane bias b(M)
+      evidence: {tag: ASSUMPTION, source: "as bias_mach"}
+      sweep: [-1.5, 1.5]
+      assumption_id: A-W1.6-13
+  vane_aoss:
+    kf:
+      value: 0.15
+      units: Hz*s/m
+      description: Sideslip vane natural frequency per m/s EAS
+      evidence: {tag: ASSUMPTION, source: "as vane_aoa.kf"}
+      sweep: [0.11, 0.21]
+      assumption_id: A-W1.6-13
+    zeta:
+      value: 0.07
+      units: "1"
+      description: Sideslip vane damping ratio
+      evidence: {tag: ASSUMPTION, source: "as vane_aoa.zeta"}
+      sweep: [0.04, 0.10]
+      assumption_id: A-W1.6-13
+    ku:
+      value: 0.11
+      units: "1"
+      description: Sidewash factor beta_local = (1 + ku) beta
+      evidence: {tag: ASSUMPTION, source: "F-104 noseboom sidewash factor 0.105-0.115 (TM-101714, TRANSFER); Tejas AOSS vane location effect not public"}
+      sweep: [0.05, 0.3]
+      assumption_id: A-W1.6-13
+    eas_min:
+      value: 10.0
+      units: m/s
+      description: Floor on V_EAS in the vane frequency law
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor"}
+      sweep: [2.0, 30.0]
+      assumption_id: A-W1.6-13
+    bias_mach:
+      table: {file: vane_bias_zero.csv, column: mach}
+      units: "1"
+      description: Mach grid of the sideslip-vane bias (zero; no evidence of a Mach-dependent beta bias)
+      evidence: {tag: ASSUMPTION, source: "no public sideslip-vane bias curve"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-13
+    bias:
+      table: {file: vane_bias_zero.csv, column: bias_deg}
+      units: deg
+      description: Sideslip-vane bias (zero)
+      evidence: {tag: ASSUMPTION, source: "no public sideslip-vane bias curve"}
+      sweep: [-0.5, 0.5]
+      assumption_id: A-W1.6-13
+
+  tat_probe:
+    tau:
+      value: 1.8
+      units: s
+      description: De-iced TAT probe time constant at the reference mass flux (tau proportional to (rho V)^-0.5)
+      evidence: {tag: ASSUMPTION, source: "texture_and_fault_gap_closure.md Q1: de-iced probe tau 1.3-2.3 s (NCAR 2022 Rosemount 102, TRANSFER); 1/sqrt(mdot) scaling (inference there)"}
+      sweep: [1.3, 2.3]
+      assumption_id: A-W1.6-14
+    flux_ref:
+      value: 122.5
+      units: kg/m**2/s
+      description: Reference local mass flux rho V for the TAT time constant (sea level, 100 m/s)
+      evidence: {tag: ASSUMPTION, source: "W1.6 reference point; NCAR tau measured in flight, flux not stated"}
+      sweep: [50.0, 300.0]
+      assumption_id: A-W1.6-14
+    n_exp:
+      value: 0.5
+      units: "1"
+      description: TAT probe mass-flux exponent
+      evidence: {tag: "TRANSFER: AGARD thermocouple practice", source: "texture_and_fault_gap_closure.md Q1 inferences (tau scaled by 1/sqrt(mdot))"}
+    w_min_frac:
+      value: 0.05
+      units: "1"
+      description: Floor on the mass-flux ratio (probe at rest)
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor"}
+      sweep: [0.02, 0.2]
+      assumption_id: A-W1.6-14
+    rec_mach:
+      table: {file: tat_recovery.csv, column: mach}
+      units: "1"
+      description: Mach grid of the TAT recovery factor
+      evidence: {tag: "TRANSFER: Rosemount 102 (NCAR 2022)", source: "texture_and_fault_gap_closure.md Q1: r about 0.977 (M0.5) to 0.994 (M1.6), NCAR memo 2022 Fig. 5 (graph-read)"}
+    recovery:
+      table: {file: tat_recovery.csv, column: recovery}
+      units: "1"
+      description: TAT recovery factor r(M); T_r = T_s (1 + (gamma-1)/2 r M^2)
+      evidence: {tag: "TRANSFER: Rosemount 102 (NCAR 2022)", source: "as rec_mach; AGARD-AG-160 v2 r 0.96-0.99 up to M0.7 with +-0.015 unit spread"}
+    dhe_z:
+      table: {file: tat_dhe.csv, column: z}
+      units: "1"
+      description: Heater-error index grid Z = M rho / rho0
+      evidence: {tag: "TRANSFER: Rosemount 102 (NCAR 2022)", source: "texture_and_fault_gap_closure.md Q1: DHE 0.2 degC floor for Z >= 0.3, 1.3 degC at Z = 0.1, 6.5 degC at Z = 0.04 (graph-read)"}
+    dhe:
+      table: {file: tat_dhe.csv, column: dhe_k}
+      units: K
+      description: De-icing heater error DHE(Z) added when the heater is on
+      evidence: {tag: "TRANSFER: Rosemount 102 (NCAR 2022)", source: "as dhe_z"}
+
+  boom_vane_alpha:
+    kf:
+      value: 0.21
+      units: Hz*s/m
+      description: FTI noseboom vane natural frequency per m/s EAS
+      evidence: {tag: "TRANSFER: NACA noseboom flight-test vane", source: "NASA TN D-8242 Fig. 22 (20 Hz at 90 m/s, 40 Hz at 190 m/s EAS) https://ntrs.nasa.gov/api/citations/19760016169/downloads/19760016169.pdf"}
+    zeta:
+      value: 0.07
+      units: "1"
+      description: FTI noseboom vane damping (0.10 SL to 0.043 at 18.5 km; mid value)
+      evidence: {tag: ASSUMPTION, source: "NASA TN D-8242 Fig. 22 (TRANSFER), constant-zeta simplification"}
+      sweep: [0.04, 0.10]
+      assumption_id: A-W1.6-20
+    ku:
+      value: 0.08
+      units: "1"
+      description: Noseboom upwash factor
+      evidence: {tag: "TRANSFER: noseboom wind tunnel / F-104", source: "TN D-8242 Fig. 8b (0.07-0.09); TM-101714 (0.062-0.10)"}
+    kbend:
+      value: 0.0017453
+      units: rad
+      description: Noseboom bending flow-angle error per g (0.1 deg/g)
+      evidence: {tag: "TRANSFER: AGARD flight-test practice", source: "AGARD-AG-300 §12.3.3.3 (0.1 deg/g representative for a long vane boom)"}
+    eas_min:
+      value: 10.0
+      units: m/s
+      description: Floor on V_EAS in the vane frequency law
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor"}
+      sweep: [2.0, 30.0]
+      assumption_id: A-W1.6-20
+    bias_mach:
+      table: {file: vane_bias_zero.csv, column: mach}
+      units: "1"
+      description: Mach grid of the boom vane bias (zero after FTI calibration)
+      evidence: {tag: ASSUMPTION, source: "FTI booms are calibrated (TM-101714 residual +-0.2 deg sub / +-0.3 deg super)"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-20
+    bias:
+      table: {file: vane_bias_zero.csv, column: bias_deg}
+      units: deg
+      description: Boom vane residual bias (zero)
+      evidence: {tag: ASSUMPTION, source: "as bias_mach"}
+      sweep: [-0.3, 0.3]
+      assumption_id: A-W1.6-20
+  boom_vane_beta:
+    kf:
+      value: 0.21
+      units: Hz*s/m
+      description: FTI noseboom sideslip vane natural frequency per m/s EAS
+      evidence: {tag: "TRANSFER: NACA noseboom flight-test vane", source: "NASA TN D-8242 Fig. 22"}
+    zeta:
+      value: 0.07
+      units: "1"
+      description: FTI noseboom sideslip vane damping
+      evidence: {tag: ASSUMPTION, source: "NASA TN D-8242 Fig. 22 (TRANSFER), constant zeta"}
+      sweep: [0.04, 0.10]
+      assumption_id: A-W1.6-20
+    ku:
+      value: 0.11
+      units: "1"
+      description: Noseboom sidewash factor
+      evidence: {tag: "TRANSFER: F-104 noseboom", source: "TM-101714 sidewash factor 0.105-0.115"}
+    eas_min:
+      value: 10.0
+      units: m/s
+      description: Floor on V_EAS in the vane frequency law
+      evidence: {tag: ASSUMPTION, source: "W1.6 numerical floor"}
+      sweep: [2.0, 30.0]
+      assumption_id: A-W1.6-20
+    bias_mach:
+      table: {file: vane_bias_zero.csv, column: mach}
+      units: "1"
+      description: Mach grid of the boom sideslip-vane bias (zero)
+      evidence: {tag: ASSUMPTION, source: "FTI boom calibration"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.6-20
+    bias:
+      table: {file: vane_bias_zero.csv, column: bias_deg}
+      units: deg
+      description: Boom sideslip-vane residual bias (zero)
+      evidence: {tag: ASSUMPTION, source: "FTI boom calibration"}
+      sweep: [-0.3, 0.3]
+      assumption_id: A-W1.6-20
+  boom_static:
+    lambda_sl:
+      value: 0.35
+      units: s
+      description: FTI noseboom static-line lag at sea level
+      evidence: {tag: "TRANSFER: VSRA noseboom", source: "NASA TM-102846: 0.35 s first-order lag with 25 ft of tubing (texture_and_fault_gap_closure.md Q1)"}
+    pe_mach:
+      table: {file: position_error_boom.csv, column: mach}
+      units: "1"
+      description: Mach grid of the noseboom position error
+      evidence: {tag: "TRANSFER: Gracey RP-1046 fuselage-nose installations", source: "Gracey RP-1046 Fig. 7.7 p.91 (graph-read): dp/qc 0.025-0.065 at M0.8, 0.04-0.16 at M1.0, collapse past the bow shock"}
+    pe_k:
+      table: {file: position_error_boom.csv, column: k_pe}
+      units: "1"
+      description: Noseboom position error dp/q_c
+      evidence: {tag: "TRANSFER: Gracey RP-1046 fuselage-nose installations", source: "as pe_mach"}
+  boom_total:
+    lambda_sl:
+      value: 0.35
+      units: s
+      description: FTI noseboom pitot-line lag at sea level
+      evidence: {tag: "TRANSFER: VSRA noseboom", source: "NASA TM-102846 (0.35 s)"}
+
+  rate_gyro:
+    wn:
+      value: 314.159
+      units: rad/s
+      description: Rate-sensor natural frequency (2 pi 50 Hz), second order
+      evidence: {tag: ASSUMPTION, source: "Kala JOAST 67(2A) 2015 (DIRECT): rate sensors +-300/+-60 deg/s, '50 Hz', 0.005 deg/s; reading '50 Hz' as bandwidth is the assumption"}
+      sweep: [188.0, 628.0]
+      assumption_id: A-W1.6-15
+    zeta:
+      value: 0.7
+      units: "1"
+      description: Rate-sensor damping ratio
+      evidence: {tag: ASSUMPTION, source: "Typical servo-sensor damping; no Tejas value public"}
+      sweep: [0.5, 0.9]
+      assumption_id: A-W1.6-15
+  accelerometer:
+    wn:
+      value: 628.319
+      units: rad/s
+      description: Accelerometer natural frequency (2 pi 100 Hz), second order
+      evidence: {tag: ASSUMPTION, source: "Kala JOAST 67(2A) 2015 (DIRECT): accelerometers +-13/+-4.5 g, '100 Hz'; reading it as bandwidth is the assumption"}
+      sweep: [314.0, 1885.0]
+      assumption_id: A-W1.6-15
+    zeta:
+      value: 0.7
+      units: "1"
+      description: Accelerometer damping ratio
+      evidence: {tag: ASSUMPTION, source: "Typical servo-accelerometer damping"}
+      sweep: [0.5, 0.9]
+      assumption_id: A-W1.6-15
+
+  hyd_pressure:
+    tau:
+      value: 0.01
+      units: s
+      description: Hydraulic pressure transducer response time
+      evidence: {tag: "TRANSFER: MIL-PRF-25435D class transducer", source: "report §2 table (hydraulic pressure +-0.25 % FS, 10 ms); texture_and_fault_gap_closure.md Q4"}
+  hyd_temperature:
+    tau:
+      value: 5.0
+      units: s
+      description: Hydraulic fluid temperature RTD time constant
+      evidence: {tag: ASSUMPTION, source: "no fighter source; RTD immersion probes several seconds (texture_and_fault_gap_closure.md Q4 inferences, oil temperature analogue)"}
+      sweep: [2.0, 15.0]
+      assumption_id: A-W1.6-19
+
+  fuel_gauge:
+    tau:
+      value: 6.0
+      units: s
+      description: Gauging-system smoothing time constant (indicated quantity response)
+      evidence: {tag: "TRANSFER: F-16 gauging system", source: "AFWAL-TR-80-2058: F-16 indicator full-scale step 5.8-6.6 s (texture_and_fault_gap_closure.md Q2)"}
+    att:
+      value: 0.0035
+      units: "1"
+      description: Attitude error per unit sine of fuel-plane tilt, fraction of tank capacity
+      evidence: {tag: ASSUMPTION, source: "NADC-78187-60: attitude error sigma 0.35 % FS within +-10 deg (TRANSFER); linear-in-sine form is the assumption"}
+      sweep: [-0.01, 0.01]
+      assumption_id: A-W1.6-17
+      proxy: true
+    unwet:
+      value: 0.6
+      units: "1"
+      description: Fill fraction below which probes unwet, per unit sine of fuel-plane tilt (reading falls as fill / f_unwet)
+      evidence: {tag: ASSUMPTION, source: "Tejas zoom-climb false low-fuel warning at >40 deg pitch, max AB, <1,200 kg (ADA, DIRECT, texture_and_fault_gap_closure.md Q2); plane follows specific force (US 5,495,745); functional form assumed (no tank geometry)"}
+      sweep: [0.2, 1.0]
+      assumption_id: A-W1.6-17
+      proxy: true
+    dead:
+      value: 0.02
+      units: "1"
+      description: Unmeasured fraction below the lowest sensing point (reads empty)
+      evidence: {tag: "TRANSFER: MIL-G-7940C", source: "MIL-G-7940C §3.6.4: unmeasured fuel <= 2 % of usable volume (Class I/II)"}
+  fuel_tanks:
+    cap_dt_cl:
+      value: 960.0
+      units: kg
+      description: Centreline drop-tank capacity (1,200 L at 0.8 kg/L)
+      evidence: {tag: ASSUMPTION, source: "inventory FUEL.TOTAL drop tanks 1,200/800/725 L (DIRECT volumes); assignment to stations and fuel density 0.8 kg/L assumed"}
+      sweep: [580.0, 960.0]
+      assumption_id: A-W1.6-18
+    cap_dt_ib:
+      value: 640.0
+      units: kg
+      description: Inboard drop-tank capacity (800 L at 0.8 kg/L)
+      evidence: {tag: ASSUMPTION, source: "as cap_dt_cl"}
+      sweep: [580.0, 960.0]
+      assumption_id: A-W1.6-18
+    cap_internal:
+      value: 491.6
+      units: kg
+      description: Capacity of each of the five internal tanks (F1, F1A, F2, wing L/R) as an equal split of 2,458 kg
+      evidence: {tag: ASSUMPTION, source: "inventory FUEL.QTY.TANK 0-2,458 kg internal (DIRECT total); per-tank split not public (M09 owns the tank network)"}
+      sweep: [200.0, 1000.0]
+      assumption_id: A-W1.6-18

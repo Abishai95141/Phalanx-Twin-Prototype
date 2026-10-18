@@ -1,0 +1,1128 @@
+# Seed overlay: structured interpretation of parameter_inventory.csv for the seeder (src/phalanx/dictionary/seeder.py).
+#
+# One entry per inventory row (all 189 rows must be present). Conventions (see the seeder module docstring):
+#   expand:      single (default) | fcs_quad_v | fcs_quad | ad_quad_v | fadec_dual_v
+#   units_list:  {ids: [...], p: rule}           one channel per named unit (tank, bus, phase, ...)
+#   components:  [{id, ...}]                     one channel per quantity named in the row
+#   actuators:   {ids: [...], lanes: [A, B]}     per-actuator sensor lanes plus a selected output V
+#   quantity / units / range / lsb / native / bits / enum / limits / signal: channel fields
+#   A bare value is taken verbatim from the inventory row (prov "inv"); the seeder checks that the number or unit
+#   appears in the row text. {v: value, p: RULE} cites a rule from tables/rules.yaml instead. `tok` gives the literal
+#   inventory token when the value is a unit conversion of it (e.g. 2 mg -> 0.002 g).
+#   lsb: bnr  -> power-of-two LSB computed from the range (rule R-LSB-BNR).
+#   tag_donor: donor for a bare 'TRANSFER' inventory tag, taken from the row's own source field (core EvidenceTag
+#   needs 'TRANSFER: <donor>'); used only when the tag text names no donor.
+format: phalanx.dictionary.seed_overlay/1
+params:
+  # ===================================================== Engine (F404-GE-IN20) =====================================
+  ENG.PLA:
+    expand: fadec_dual_v
+    quantity: angle
+    units: deg
+    range: [0, 130]
+    lsb: {v: 0.088, p: R-LSB-DASHLINK}
+    signal: analog
+  ENG.N1:
+    expand: fadec_dual_v
+    quantity: speed_percent
+    units: {v: percent, p: R-UNIT-CHOICE}
+    range: [0, 115]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK}
+    signal: frequency
+  ENG.N2:
+    expand: fadec_dual_v
+    quantity: speed_percent
+    units: {v: percent, p: R-UNIT-CHOICE}
+    range: [0, 110]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK}
+    signal: frequency
+  ENG.T1:
+    expand: fadec_dual_v
+    quantity: temperature
+    units: degC
+    range: [-54, 149]
+    # 0.1.3 (W2.1b entry gate 3): the span is kept per evidence and the saturation documented
+    note: "span -54..149 degC = the F404 T1 RTD range -65..300 degF (FOCSI, inventory row and candidate_engine_and_ehm_data.md sensor table); a colder compressor-inlet total temperature (ISA stratosphere -56.5 degC static only below about M0.24, or a cold-soaked ground) reads at the span floor (M13 saturates at the code bound); the FADEC holds T1 at the span floor or substitutes air-data T1 (W2.1b)"
+    lsb: {v: 1.0, p: R-LSB-MSDC}
+    signal: analog
+  ENG.T25:
+    quantity: temperature
+    units: degC
+    range: [-54, 280]
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: analog
+    transport: internal
+    sinks_fix: {INTERNAL: FADEC}
+  ENG.PS3:
+    expand: fadec_dual_v
+    quantity: pressure
+    pressure_ref: absolute
+    units: psi
+    range: [0, 500]
+    lsb: {v: 0.5, p: R-LSB-MSDC}
+    signal: analog
+  ENG.P5:
+    quantity: pressure
+    pressure_ref: absolute
+    units: psi
+    range: [0, 60]
+    lsb: {v: 0.06, p: R-LSB-MSDC}
+    signal: analog
+  ENG.T5:
+    quantity: temperature
+    units: degC
+    range: [371, 871]
+    lsb: {v: 0.5, p: R-LSB-DASHLINK}
+    signal: computed
+    inputs: [ENG.T5.HARNESS_A, ENG.T5.HARNESS_B]
+    expand_prov: R-T5-HARNESS
+    limits:
+      - {kind: steady_max, high: 830}
+  ENG.T5.HARNESS_A:
+    quantity: temperature
+    units: degC
+    range: [371, 871]
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: analog
+    transport: internal
+    record_override: {ECMS_HUMS: {group: EVT, p: R-INV-FIELD-ASSUMPTION}}
+    sinks_add: {INTERNAL: FADEC}
+  ENG.T5.HARNESS_B:
+    quantity: temperature
+    units: degC
+    range: [371, 871]
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: analog
+    transport: internal
+    record_override: {ECMS_HUMS: {group: EVT, p: R-INV-FIELD-ASSUMPTION}}
+    sinks_add: {INTERNAL: FADEC}
+  ENG.WFM:
+    quantity: mass_flow
+    units: lb/hr
+    range: [0, 12000]
+    lsb: {v: 8, p: R-LSB-DASHLINK}
+    signal: frequency
+  ENG.WFAB:
+    quantity: mass_flow
+    units: lb/hr
+    range: [0, 30000]
+    lsb: {v: 16, p: R-LSB-INVREC}
+    signal: frequency
+  ENG.A8:
+    expand: fadec_dual_v
+    quantity: position_percent
+    units: {v: percent, p: R-UNIT-CHOICE}
+    range: {v: [0, 100], p: R-UNIT-CHOICE, note: "0 % = minimum area 220 in2, 100 % = maximum area 540 in2 (linear); inventory range 220-540 in2"}
+    lsb: {v: 0.1, p: R-INV-FIELD-ASSUMPTION}
+    signal: analog
+  ENG.FVG:
+    quantity: angle
+    units: deg
+    range: [0, 55]
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: analog
+    bus_override: {group: AV25, p: R-ICD-FADEC}
+  ENG.CVG:
+    quantity: angle
+    units: deg
+    range: [-5, 55]
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: analog
+    bus_override: {group: AV25, p: R-ICD-FADEC}
+  ENG.AB_LIT:
+    bits: [AB_FLAME_DETECTED]
+    signal: discrete
+    range: [0, 1]
+  ENG.OIL_P:
+    quantity: pressure
+    pressure_ref: differential
+    units: psi
+    range: {v: [0, 200], p: R-INV-FIELD-ASSUMPTION}
+    lsb: {v: 2.442, p: R-LSB-DASHLINK}
+    signal: analog
+  ENG.OIL_T:
+    quantity: temperature
+    units: degC
+    range: [-54, 180]
+    lsb: {v: 1.343, p: R-LSB-DASHLINK}
+    signal: analog
+  ENG.OIL_LEVEL:
+    bits: [OIL_LEVEL_LOW]
+    signal: discrete
+    units_note: "inventory allows level % or a low-level discrete; the recommended 1-bit discrete is used"
+  ENG.LUBE_DP:
+    bits: [LUBE_FILTER_DP_HIGH]
+    signal: discrete
+  ENG.CHIP:
+    bits: [CHIP_DETECTED]
+    signal: discrete
+  ENG.VIB.OVERALL:
+    quantity: vibration_velocity
+    units: in/s
+    range: [0, 5]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK}
+    signal: computed
+    limits:
+      - {kind: steady_max, high: 1.0}
+      - {kind: transient_max, high: 2.0}
+  ENG.VIB.N1_1REV:
+    quantity: vibration_velocity
+    units: in/s
+    range: [0, 5]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK}
+    signal: computed
+    limits:
+      - {kind: steady_max, high: 1.0}
+      - {kind: transient_max, high: 2.0}
+  ENG.VIB.N2_1REV:
+    quantity: vibration_velocity
+    units: in/s
+    range: [0, 5]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK}
+    signal: computed
+    limits:
+      - {kind: steady_max, high: 1.0}
+      - {kind: transient_max, high: 2.0}
+  ENG.FUEL_INLET_T:
+    quantity: temperature
+    units: degC
+    range: [-40, 120]
+    lsb: {v: 0.5, p: R-LSB-INVREC}
+    signal: analog
+  ENG.IGN:
+    bits: [IGNITION_ON]
+    signal: computed
+  ENG.FADEC_STATUS:
+    bits: [CH_A_IN_CONTROL, CH_B_IN_CONTROL, CH_A_FAIL, CH_B_FAIL, SENSOR_SUBSTITUTION_ACTIVE]
+    signal: computed
+  ENG.FAULT_CODES:
+    code_list: {prefixes: [ENG, ECM]}
+    signal: computed
+  ENG.FLAMEOUT:
+    bits: [FLAMEOUT_DETECTED, AUTO_RELIGHT_ACTIVE]
+    signal: computed
+  ENG.LIMIT_FLAGS:
+    bits: [N1_OVERSPEED, N2_OVERSPEED, T5_OVERTEMP, OIL_PRESSURE_LOW, VIBRATION_HIGH]
+    signal: computed
+  ENG.THRUST_EST:
+    quantity: force
+    units: lbf
+    range: [0, 20000]
+    lsb: {v: 10, p: R-LSB-INVREC}
+    signal: computed
+    transport: internal
+  ENG.BLEED_STATE:
+    bits: [BLEED_OFF, BLEED_DOOR_OPEN, ANTI_ICE_VALVE_OPEN]
+    signal: discrete
+  # ===================================================== Engine usage (ECMS, ground) ===============================
+  LUI.TYPE1: &lui_count
+    quantity: life_count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 0.001, p: R-INV}
+    native: {v: 0.001, tok: thousandths}
+    signal: counter
+  LUI.TYPE3: *lui_count
+  LUI.EFTC: *lui_count
+  LUI.SRC: *lui_count
+  LUI.TAMP: &lui_time
+    quantity: life_time
+    units: {v: hour, tok: h}
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 0.001, p: R-INV}
+    native: {v: 0.001, tok: thousandths}
+    signal: counter
+  LUI.PS3_FULL: *lui_count
+  LUI.PS3_PART: *lui_count
+  LUI.EOT: *lui_time
+  USAGE.TAC:
+    quantity: life_count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: counter
+    sinks_fix: {GROUND: null}
+  # ===================================================== Flight control (DFCC) =====================================
+  FCS.RSA.P:
+    expand: fcs_quad_v
+    quantity: angular_rate
+    units: deg/s
+    range: [-300, 300]
+    lsb: {v: 0.005, p: R-LSB-INVREC}
+    native: {v: 0.005}
+    signal: analog
+  FCS.RSA.Q:
+    expand: fcs_quad
+    quantity: angular_rate
+    units: deg/s
+    range: [-60, 60]
+    lsb: {v: 0.005, p: R-LSB-INVREC}
+    native: {v: 0.005}
+    signal: analog
+  FCS.RSA.R:
+    expand: fcs_quad_v
+    quantity: angular_rate
+    units: deg/s
+    range: [-60, 60]
+    lsb: {v: 0.005, p: R-LSB-INVREC}
+    native: {v: 0.005}
+    signal: analog
+  FCS.ASA.NZ:
+    expand: fcs_quad
+    quantity: specific_force
+    units: {v: standard_gravity, tok: g}
+    range: [-13, 13]
+    lsb: {v: 0.001, p: R-LSB-INVREC}
+    native: {v: 0.002, tok: "2 mg"}
+    signal: analog
+  FCS.ASA.NY:
+    expand: fcs_quad_v
+    quantity: specific_force
+    units: {v: standard_gravity, tok: g}
+    range: [-4.5, 4.5]
+    lsb: {v: 0.001, p: R-LSB-INVREC}
+    native: {v: 0.0002, tok: "0.2 mg"}
+    signal: analog
+  FCS.VOTED.Q:
+    quantity: angular_rate
+    units: deg/s
+    range: [-60, 60]
+    lsb: {v: 0.005, p: R-LSB-INVREC}
+    native: {v: 0.005}
+    signal: computed
+    inputs: [FCS.RSA.Q.A, FCS.RSA.Q.B, FCS.RSA.Q.C, FCS.RSA.Q.D]
+  FCS.VOTED.NZ:
+    quantity: specific_force
+    units: {v: standard_gravity, tok: g}
+    range: {v: [-13, 13], p: R-RANGE-SENSOR}
+    lsb: {v: 0.001, p: R-LSB-INVREC}
+    native: {v: 0.002, tok: "2 mg"}
+    signal: computed
+    inputs: [FCS.ASA.NZ.A, FCS.ASA.NZ.B, FCS.ASA.NZ.C, FCS.ASA.NZ.D]
+    limits:
+      - {kind: operational_envelope, low: -3.5, high: 8}
+  FCS.VOTED.DE:
+    quantity: angle
+    units: deg
+    range: [-25, 25]
+    lsb: {v: 0.02, p: R-LSB-INVREC}
+    signal: computed
+  FCS.STICK.PITCH: &stick
+    expand: fcs_quad_v
+    quantity: command_percent
+    units: {v: percent, p: R-UNIT-CHOICE}
+    range: [-100, 100]
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: analog
+  FCS.STICK.ROLL: *stick
+  FCS.PEDAL: *stick
+  FCS.ELEVON.LOB.POS: &elevon_pos
+    expand: fcs_quad_v
+    quantity: angle
+    units: deg
+    range: [-25, 25]
+    lsb: {v: 0.02, p: R-LSB-INVREC}
+    signal: analog
+  FCS.ELEVON.LOB.CMD: &elevon_cmd
+    quantity: angle
+    units: deg
+    range: [-25, 25]
+    lsb: {v: 0.02, p: R-LSB-INVREC}
+    signal: computed
+  FCS.ELEVON.LIB.POS: *elevon_pos
+  FCS.ELEVON.LIB.CMD: *elevon_cmd
+  FCS.ELEVON.RIB.POS: *elevon_pos
+  FCS.ELEVON.RIB.CMD: *elevon_cmd
+  FCS.ELEVON.ROB.POS: *elevon_pos
+  FCS.ELEVON.ROB.CMD: *elevon_cmd
+  FCS.RUDDER.POS:
+    expand: fcs_quad_v
+    quantity: angle
+    units: deg
+    range: [-30, 30]
+    lsb: {v: 0.02, p: R-LSB-INVREC}
+    signal: analog
+  FCS.RUDDER.CMD:
+    quantity: angle
+    units: deg
+    range: [-30, 30]
+    lsb: {v: 0.02, p: R-LSB-INVREC}
+    signal: computed
+  FCS.SLAT.POS:
+    actuators: {ids: [IB_L, MB_L, OB_L, IB_R, MB_R, OB_R], lanes: [A, B], p: R-LANE-ACTUATOR-UNITS}
+    quantity: angle
+    units: deg
+    range: [0, 30]
+    lsb: {v: 0.05, p: R-LSB-INVREC}
+    signal: analog
+  FCS.AIRBRAKE.POS:
+    actuators: {ids: [L, R], lanes: [A, B], p: R-LANE-ACTUATOR-UNITS}
+    quantity: length
+    units: mm
+    range: [0, 294]
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: analog
+  FCS.ACT.BIT:
+    units_list:
+      ids: [ELEVON_LOB, ELEVON_LIB, ELEVON_RIB, ELEVON_ROB, RUDDER, SLAT_IB_L, SLAT_MB_L, SLAT_OB_L, SLAT_IB_R, SLAT_MB_R, SLAT_OB_R, AIRBRAKE_L, AIRBRAKE_R]
+      p: R-LANE-ACTUATOR-UNITS
+    bits: [SERVO_FAIL_A, SERVO_FAIL_B, SERVO_FAIL_C, SERVO_FAIL_D, LVDT_SUM_FAIL_A, LVDT_SUM_FAIL_B, LVDT_SUM_FAIL_C, LVDT_SUM_FAIL_D, HYD_PRESS_FAIL_A, HYD_PRESS_FAIL_B, HYD_PRESS_FAIL_C, HYD_PRESS_FAIL_D]
+    signal: computed
+  FCS.CH.STATUS:
+    units_list: {ids: [A, B, C, D], p: R-UNITS-INV}
+    bits: [CHANNEL_FAILED, CHANNEL_RESET, CHANNEL_DROPOUT, CCDL_FAIL]
+    signal: computed
+  FCS.MODE:
+    components:
+      - {id: LAW, enum: fcs_law}
+      - {id: FLAGS, bits: [AUTOPILOT_ENGAGED, ALSR_ACTIVE, AOA_LIMITER_ACTIVE, G_LIMITER_ACTIVE, REVERSION_LATCHED]}
+    signal: computed
+  FCS.AIRDATA_MISTRACK:
+    bits: [ADC_A_EXCLUDED, ADC_B_EXCLUDED, ADC_C_EXCLUDED, ADC_D_EXCLUDED, PRESSURE_MISTRACK, AOA_VANE_MISTRACK, AOSS_VANE_MISTRACK]
+    signal: computed
+  FCS.HEATER_I:
+    components:
+      - {id: NADP}
+      - {id: LADP}
+      - {id: RADP}
+      - {id: AOA_VANE_L}
+      - {id: AOA_VANE_R}
+      - {id: TAT}
+    quantity: current
+    units: A
+    range: {v: [0, 10], p: R-INV-FIELD-ASSUMPTION}
+    lsb: {v: 0.05, p: R-LSB-INVREC}
+    signal: analog
+  FCS.KALMAN_ATT:
+    components:
+      - {id: PITCH, range: [-90, 90]}
+      - {id: ROLL, range: [-180, 180]}
+    quantity: angle
+    units: deg
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: computed
+  FCS.BIT.LOG:
+    code_list: {prefixes: [FCS]}
+    signal: computed
+  # ===================================================== Air data (ADC x4) =========================================
+  AD.PS:
+    expand: ad_quad_v
+    quantity: pressure
+    pressure_ref: absolute
+    units: mbar
+    range: [35, 1300]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK, tok: "1/32"}
+    signal: analog
+  AD.PT:
+    expand: ad_quad_v
+    quantity: pressure
+    pressure_ref: absolute
+    units: mbar
+    range: [35, 2700]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK, tok: "1/32"}
+    signal: analog
+  AD.DPA:
+    expand: ad_quad_v
+    quantity: pressure
+    # 0.1.2: absolute flow-angle port pressure, not a differential pressure (rule R-AD-PORT-PRESSURE); range kept
+    pressure_ref: absolute
+    quantity_prov: R-AD-PORT-PRESSURE
+    note: "flow-angle port pressure (absolute, 35-1500 mbar transducer); the inventory name says 'differential'"
+    units: mbar
+    range: [35, 1500]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK, tok: "1/32"}
+    signal: analog
+  AD.DPB:
+    expand: ad_quad_v
+    quantity: pressure
+    # 0.1.2: absolute flow-angle port pressure, not a differential pressure (rule R-AD-PORT-PRESSURE); range kept
+    pressure_ref: absolute
+    quantity_prov: R-AD-PORT-PRESSURE
+    note: "flow-angle port pressure (absolute, 35-1500 mbar transducer); the inventory name says 'differential'"
+    units: mbar
+    range: [35, 1500]
+    lsb: {v: 0.03125, p: R-LSB-DASHLINK, tok: "1/32"}
+    signal: analog
+  AD.AOA_VANE_L: &vane
+    expand: ad_quad_v
+    quantity: angle
+    units: deg
+    range: [-45, 45]
+    lsb: {v: 0.044, p: R-LSB-DASHLINK}
+    signal: analog
+  AD.AOA_VANE_R: *vane
+  AD.AOSS_VANE: *vane
+  AD.TAT:
+    quantity: temperature
+    units: degC
+    range: {v: [-60, 150], p: R-INV-FIELD-ASSUMPTION}
+    lsb: {v: 0.25, p: R-LSB-DASHLINK}
+    signal: analog
+    acq_lru: ADC
+  AD.HP:
+    quantity: altitude
+    units: ft
+    range: [-2000, 60000]
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: computed
+  AD.HBARO:
+    quantity: altitude
+    units: ft
+    range: [-2000, 60000]
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: computed
+  AD.CAS:
+    quantity: airspeed
+    units: {v: knot, tok: kt}
+    range: [0, 800]
+    lsb: {v: 0.0625, p: R-LSB-INVREC}
+    signal: computed
+  AD.TAS:
+    quantity: airspeed
+    units: {v: knot, tok: kt}
+    range: [0, 1100]
+    lsb: {v: 0.125, p: R-LSB-INVREC}
+    signal: computed
+  AD.MACH:
+    quantity: mach
+    units: dimensionless
+    range: [0, 2.0]
+    lsb: {v: 0.0001, p: R-LSB-INVREC}
+    signal: computed
+  AD.AOA:
+    quantity: angle
+    units: deg
+    range: [-10, 45]
+    lsb: {v: 0.044, p: R-LSB-INVREC}
+    signal: computed
+  AD.BETA:
+    quantity: angle
+    units: deg
+    range: [-30, 30]
+    lsb: {v: 0.05, p: R-LSB-INVREC}
+    signal: computed
+  AD.SAT:
+    quantity: temperature
+    units: degC
+    range: [-80, 60]
+    lsb: {v: 0.25, p: R-LSB-INVREC}
+    signal: computed
+  AD.HDOT:
+    quantity: vertical_speed
+    units: ft/min
+    range: [-60000, 60000]
+    lsb: {v: 10, p: R-LSB-INVREC}
+    signal: computed
+  AD.QBAR:
+    quantity: pressure
+    pressure_ref: dynamic
+    units: {v: "pound_force/foot**2", tok: psf}
+    range: [0, 2500]
+    lsb: {v: 0.5, p: R-LSB-INVREC}
+    signal: computed
+  AD.VALID:
+    units_list: {ids: [A, B, C, D], p: R-UNITS-INV}
+    bits: [PS_VALID, PT_VALID, DPA_VALID, DPB_VALID, AOA_VANE_L_VALID, AOA_VANE_R_VALID, AOSS_VANE_VALID, TAT_VALID, HEATER_OK, BIT_PASS]
+    signal: computed
+  AD.BOOM:
+    components:
+      - {id: ALPHA, quantity: angle, units: {v: deg, tok: deg}, range: {v: [-90, 90], p: R-RANGE-NOTPUBLIC}}
+      - {id: BETA, quantity: angle, units: {v: deg, tok: deg}, range: {v: [-90, 90], p: R-RANGE-NOTPUBLIC}}
+      - {id: PS, quantity: pressure, pressure_ref: absolute, units: {v: mbar, tok: mbar}, range: {v: [35, 1300], p: R-RANGE-NOTPUBLIC, note: "ADC Ps transducer range (AD.PS) used for the boom"}}
+      - {id: PT, quantity: pressure, pressure_ref: absolute, units: {v: mbar, tok: mbar}, range: {v: [35, 2700], p: R-RANGE-NOTPUBLIC, note: "ADC Pt transducer range (AD.PT) used for the boom"}}
+    lsb: bnr
+    signal: analog
+  # ===================================================== Navigation ================================================
+  NAV.INS.LAT:
+    quantity: angle
+    units: deg
+    range: [-90, 90]
+    lsb: bnr
+    words: 2
+    signal: computed
+  NAV.INS.LON:
+    quantity: angle
+    units: deg
+    range: [-180, 180]
+    lsb: bnr
+    words: 2
+    signal: computed
+  NAV.INS.ALT:
+    quantity: altitude
+    units: ft
+    range: [-2000, 60000]
+    lsb: bnr
+    words: 2
+    signal: computed
+  NAV.INS.VN: &ins_vel
+    quantity: speed
+    units: ft/s
+    range: [-3000, 3000]
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: computed
+  NAV.INS.VE: *ins_vel
+  NAV.INS.VD:
+    quantity: speed
+    units: ft/s
+    range: [-1000, 1000]
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: computed
+  NAV.INS.HDG_TRUE:
+    quantity: angle
+    units: deg
+    range: [0, 360]
+    lsb: {v: 0.0055, p: R-LSB-DASHLINK}
+    signal: computed
+  NAV.INS.PITCH:
+    quantity: angle
+    units: deg
+    range: [-90, 90]
+    lsb: {v: 0.011, p: R-LSB-DASHLINK}
+    signal: computed
+  NAV.INS.ROLL:
+    quantity: angle
+    units: deg
+    range: [-180, 180]
+    lsb: {v: 0.011, p: R-LSB-INVREC}
+    signal: computed
+  NAV.INS.BODY_RATES:
+    components:
+      - {id: P_NB}
+      - {id: Q_NB}
+      - {id: R_NB}
+      - {id: P_WB}
+      - {id: Q_WB}
+      - {id: R_WB}
+    quantity: angular_rate
+    units: deg/s
+    range: [-400, 400]
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: computed
+  NAV.INS.ACCEL:
+    components:
+      - {id: X}
+      - {id: Y}
+      - {id: Z}
+    quantity: specific_force
+    units: {v: standard_gravity, p: R-UNIT-CHOICE, note: "inventory units column says ft/s2 but its range and LSB are stated in g"}
+    range: [-12, 12]
+    lsb: {v: 0.001, p: R-LSB-INVREC}
+    signal: computed
+  NAV.GPS.STATUS:
+    tag_donor: F/A-18C 1553 mux list and F/A-18 HARV parameter list
+    components:
+      - {id: GPS_FIX, enum: gps_fix}
+      # 0.1.1: the row's units are 'enum' and its quantisation 'bits', so the figure of merit is a coded
+      # field with a synthetic code table, not a numeric BNR word (0.1.0 cited a range rule for units/LSB)
+      - {id: FOM, enum: gps_fom}
+      - {id: INS_MODE, enum: ins_mode}
+    signal: computed
+  NAV.AHRS:
+    components:
+      - {id: PITCH, range: {v: [-90, 90], p: R-RANGE-NOTPUBLIC, note: "INS attitude range used for the standby AHRS"}}
+      - {id: ROLL, range: {v: [-180, 180], p: R-RANGE-NOTPUBLIC, note: "INS attitude range used for the standby AHRS"}}
+      - {id: HEADING, range: {v: [0, 360], p: R-RANGE-NOTPUBLIC, note: "INS heading range used for the standby AHRS"}}
+    quantity: angle
+    units: deg
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: computed
+  NAV.RADALT:
+    quantity: altitude
+    units: ft
+    range: {v: [0, 5000], p: R-INV-FIELD-ASSUMPTION}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    # 0.1.3: the LRU's tracker output, an avionics-extension RECORDED value (AD-51)
+    signal: {v: computed, p: R-AD51-COMPUTED}
+  # ===================================================== Secondary power (AMAGB, PTO, JFS) =========================
+  SPS.AMAGB.SPEED:
+    quantity: rotational_speed
+    units: rpm
+    range: [0, 17500]
+    lsb: {v: 10, p: R-LSB-INVREC}
+    signal: computed
+  SPS.AMAGB.OIL_T:
+    components:
+      - {id: TEMP, quantity: temperature, units: degC, range: [-54, 150], lsb: {v: 1, p: R-LSB-INVREC}, signal: analog}
+      - {id: HIGH, bits: [OIL_TEMP_HIGH], signal: discrete}
+  SPS.AMAGB.OIL_LOW:
+    bits: [OIL_LEVEL_LOW, CHIP_DETECTED]
+    signal: discrete
+  SPS.JFS.SPEED:
+    quantity: speed_percent
+    units: percent
+    range: [0, 110]
+    lsb: bnr
+    signal: frequency
+  SPS.JFS.EGT:
+    quantity: temperature
+    units: degC
+    range: {v: [0, 1000], p: R-INV-FIELD-ASSUMPTION}
+    lsb: bnr
+    signal: analog
+  SPS.JFS.OIL_QTY:
+    quantity: level_percent
+    units: {v: percent, p: R-UNIT-CHOICE}
+    range: {v: [0, 100], p: R-UNIT-CHOICE}
+    lsb: bnr
+    signal: analog
+  # ===================================================== Hydraulics ================================================
+  HYD.SYS1.P: &hyd_p
+    quantity: pressure
+    pressure_ref: gauge
+    units: bar
+    range: [0, 350]
+    lsb: {v: 0.5, p: R-LSB-INVREC}
+    signal: analog
+    limits:
+      - {kind: nominal, value: 280}
+  HYD.SYS1.LP: &hyd_lp
+    bits: [LOW_PRESSURE]
+    signal: discrete
+  HYD.SYS1.T: &hyd_t
+    quantity: temperature
+    units: degC
+    range: [-54, 135]
+    lsb: {v: 0.5, p: R-LSB-INVREC}
+    signal: analog
+  HYD.SYS1.LEVEL: &hyd_level
+    components:
+      - {id: LEVEL, quantity: level_percent, units: percent, range: [0, 100], lsb: {v: 0.5, p: R-LSB-INVREC}, signal: analog}
+      - {id: LOW, bits: [LEVEL_LOW], signal: discrete}
+  HYD.SYS2.P: *hyd_p
+  HYD.SYS2.LP: *hyd_lp
+  HYD.SYS2.T: *hyd_t
+  HYD.SYS2.LEVEL: *hyd_level
+  HYD.FILTER_DP:
+    bits: {v: [FILTER_1_CLOGGED, FILTER_2_CLOGGED, FILTER_3_CLOGGED, FILTER_4_CLOGGED, FILTER_5_CLOGGED, FILTER_6_CLOGGED, FILTER_7_CLOGGED, FILTER_8_CLOGGED, FILTER_9_CLOGGED], tok: "9 filters"}
+    signal: discrete
+  HYD.CH_STATUS:
+    bits: [CH_A_PRESSURE_OK, CH_B_PRESSURE_OK, CH_C_PRESSURE_OK, CH_D_PRESSURE_OK]
+    signal: discrete
+  # ===================================================== Fuel ======================================================
+  FUEL.QTY.TANK:
+    units_list:
+      ids: [F1, F1A, F2, WING_L, WING_R, DT_IB_L, DT_IB_R, DT_CL]
+      p: R-UNITS-INV
+      p_assumed: {ids: [DT_IB_L, DT_IB_R, DT_CL], p: R-UNITS-ASSUMED}
+    quantity: mass
+    units: kg
+    range: {v: [0, 2458], p: R-RANGE-NOTPUBLIC, note: "per-tank capacities not public; the internal total 2,458 kg is used as each tank's full scale (a 1,200 L drop tank is about 964 kg at 0.803 kg/L)"}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: computed
+  FUEL.TOTAL:
+    components:
+      - {id: TOTAL, quantity: mass, units: kg, range: {v: [0, 6000], p: R-RANGE-FUEL-TOTAL, note: "internal 2,458 kg (inventory range) + three drop tanks 2 x 1,200 L + 800 L at 2,458 kg / 3,060 L = 0.803 kg/L (about 2,570 kg) = about 5,030 kg, rounded up"}, lsb: {v: 1, p: R-LSB-INVREC}, signal: computed}
+      - {id: FLAGS, bits: [LOW_FUEL, BINGO], signal: computed}
+  FUEL.BOOST_P:
+    bits: [F2_PUMP_PRESSURE_LOW, F2_PUMP_RUNNING]
+    signal: discrete
+  FUEL.TEMP:
+    tag_donor: F/A-18 HARV parameter list
+    quantity: temperature
+    units: degC
+    range: {v: [-40, 120], p: R-INV-FIELD-ASSUMPTION}
+    lsb: bnr
+    signal: analog
+  FUEL.TANK_PRESS:
+    components:
+      - id: PRESS
+        quantity: pressure
+        pressure_ref: gauge
+        units: {v: bar, tok: "bar g"}
+        range: {v: [0, 0.75], p: R-RANGE-FULLSCALE, band: [0.1, 0.5]}
+        lsb: bnr
+        signal: analog
+        limits:
+          - {kind: normal_band, low: 0.1, high: 0.5, p: R-INV-FIELD-ASSUMPTION}
+      - {id: FLAGS, bits: [DROP_TANKS_PRESSURISED, OVERPRESSURE], signal: discrete}
+  FUEL.REFUEL_EVT:
+    bits: [GROUND_REFUEL, AAR, HOT_REFUEL, FUEL_DUMP]
+    signal: discrete
+  # ===================================================== Electrical power ==========================================
+  ELEC.GEN.V:
+    units_list: {ids: [PH_A, PH_B, PH_C], p: R-UNITS-ASSUMED}
+    quantity: voltage
+    units: {v: V, tok: "V rms"}
+    range: {v: [0, 177], p: R-RANGE-FULLSCALE, band: [108, 118]}
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: analog
+    limits:
+      - {kind: normal_band, low: 108, high: 118}
+  ELEC.GEN.F:
+    quantity: frequency
+    units: Hz
+    range: {v: [0, 610.5], p: R-RANGE-FULLSCALE, band: [393, 407]}
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: frequency
+    limits:
+      - {kind: normal_band, low: 393, high: 407}
+  ELEC.GEN.I:
+    quantity: current
+    units: A
+    range: {v: [0, 200], p: R-RANGE-NOTPUBLIC, note: "rating not public; AFTI/F-16 40 kVA donor gives about 116 A per phase at 115 V"}
+    lsb: {v: 0.5, p: R-LSB-INVREC}
+    signal: analog
+  ELEC.GEN.OUT:
+    bits: [GENERATOR_OFFLINE]
+    signal: computed
+  ELEC.TRU.VI:
+    units_list: {ids: [TRU1, TRU2], p: R-UNITS-INV}
+    components:
+      - {id: VOLT, quantity: voltage, units: V, range: {v: [0, 43.5], p: R-RANGE-FULLSCALE, band: [22, 29]}, lsb: {v: 0.1, p: R-LSB-INVREC}, signal: analog, limits: [{kind: normal_band, low: 22, high: 29}]}
+      - {id: CURR, quantity: current, units: A, range: [0, 250], lsb: {v: 1, p: R-LSB-INVREC}, signal: analog}
+  ELEC.BACKUP.STATUS:
+    components:
+      - {id: VOLT, quantity: voltage, units: V, range: {v: [0, 42], p: R-RANGE-FULLSCALE, band: [0, 28]}, lsb: bnr, signal: analog}
+      - {id: CURR, quantity: current, units: A, range: [0, 180], lsb: bnr, signal: analog}
+      - {id: BITE, bits: [BITE_FAIL, GENERATOR_ONLINE], signal: computed}
+  ELEC.BATT:
+    components:
+      - {id: VOLT, quantity: voltage, units: V, range: {v: [0, 43.5], p: R-RANGE-FULLSCALE, band: [22, 29], note: "MIL-STD-704F 28 V DC normal band"}, lsb: bnr, signal: analog}
+      - {id: CURR, quantity: current, units: A, range: {v: [-400, 400], p: R-RANGE-NOTPUBLIC, note: "charge positive (50 A charge rating); JFS cranking discharge not public"}, lsb: bnr, signal: analog}
+      - {id: AH, quantity: charge, units: {v: "A*hour", tok: Ah}, range: [0, 45], lsb: {v: 0.1, p: R-LSB-INVREC}, signal: computed, limits: [{kind: warning_low, low: 30}]}
+      - {id: LOW, bits: [BATT_LOW], signal: computed}
+  ELEC.DCBUS.V:
+    units_list: {ids: [MAIN, ESSENTIAL, EMERGENCY], p: R-UNITS-INV}
+    quantity: voltage
+    units: V
+    range: {v: [0, 43.5], p: R-RANGE-FULLSCALE, band: [22, 29]}
+    lsb: {v: 0.05, p: R-LSB-INVREC}
+    signal: analog
+    limits:
+      - {kind: normal_band, low: 22, high: 29}
+      - {kind: emergency_band, low: 16, high: 29}
+      - {kind: starting_band, low: 12, high: 29}
+  # ===================================================== ECS and life support ======================================
+  ECS.BLEED_P:
+    quantity: pressure
+    pressure_ref: absolute
+    units: {v: bar, tok: "bar abs"}
+    range: {v: [0, 9.6], p: R-RANGE-FULLSCALE, band: [2.8, 6.4]}
+    lsb: bnr
+    signal: analog
+    limits:
+      - {kind: normal_band, low: 2.8, high: 6.4}
+  ECS.BLEED_T:
+    components:
+      - {id: PHX_IN, range: {v: [-54, 894], p: R-RANGE-FULLSCALE, band: [-54, 578]}, limits: [{kind: steady_max, high: 578}]}
+      - {id: PHX_OUT, range: {v: [-54, 282], p: R-RANGE-FULLSCALE, band: [-54, 170]}, limits: [{kind: steady_max, high: 170}]}
+      - {id: ACM_TURBINE_IN, range: {v: [-54, 282], p: R-RANGE-NOTPUBLIC, note: "no inventory value; PHX outlet full scale used"}}
+    quantity: temperature
+    units: degC
+    lsb: bnr
+    signal: analog
+  ECS.COCKPIT_T:
+    components:
+      - {id: ACM_OUT}
+      - {id: SUPPLY}
+      - {id: COCKPIT}
+    quantity: temperature
+    units: degC
+    range: [-55, 100]
+    lsb: bnr
+    signal: analog
+  ECS.TCV:
+    quantity: angle
+    units: deg
+    range: [0, 90]
+    lsb: bnr
+    signal: analog
+  ECS.CABIN_P:
+    components:
+      - {id: PRESS, quantity: pressure, pressure_ref: absolute, units: {v: psi, tok: psia}, range: {v: [0, 16], p: R-RANGE-NOTPUBLIC, note: "cabin absolute pressure; inventory gives only dP <= 5 psi"}, lsb: bnr, signal: analog}
+      # 0.1.1: one 16-bit word as the row's quantisation says (0.1.0 asserted 2 words, giving a 2^-15 ft LSB)
+      - {id: CABIN_ALT, quantity: altitude, units: ft, range: {v: [-2000, 60000], p: R-RANGE-NOTPUBLIC, note: "pressure-altitude range of AD.HP used; 16-bit BNR LSB 2 ft, close to the resolution of the 2^-11 psi cabin-pressure word (about 1.2-1.7 ft per count at 8,000-20,000 ft cabin altitude, USSA-76)"}, lsb: bnr, signal: computed}
+  ECS.SWITCHES:
+    bits: [ECS_PRESSURE_HIGH, ECS_PRESSURE_LOW, HOT_AIR_LEAK]
+    signal: discrete
+  ECS.AVIONICS_T:
+    components:
+      - {id: TEMP, quantity: temperature, units: degC, range: {v: [-54, 150], p: R-RANGE-NOTPUBLIC}, lsb: bnr, signal: analog}
+      - {id: HOT, bits: [AVIONICS_HOT], signal: discrete}
+  LSS.OBOGS:
+    components:
+      - {id: O2, quantity: concentration, units: percent, range: {v: [0, 100], p: R-RANGE-NOTPUBLIC}, lsb: bnr, signal: analog}
+      - {id: PRESS, quantity: pressure, pressure_ref: gauge, units: kPa, range: {v: [0, 500], p: R-RANGE-NOTPUBLIC}, lsb: bnr, signal: analog}
+      - {id: FAIL, bits: [OBOGS_FAIL], signal: computed}
+  LSS.LOX_QTY:
+    quantity: volume
+    units: L
+    range: [0, 5]
+    lsb: bnr
+    signal: analog
+  # ===================================================== Landing gear, brakes, NWS, chute ==========================
+  LG.POSITION:
+    bits: [NOSE_UPLOCKED, NOSE_DOWNLOCKED, LEFT_UPLOCKED, LEFT_DOWNLOCKED, RIGHT_UPLOCKED, RIGHT_DOWNLOCKED, HANDLE_DOWN, DOORS_CLOSED]
+    signal: discrete
+  LG.WOW:
+    bits: [NOSE_WOW, LEFT_WOW, RIGHT_WOW]
+    signal: discrete
+    bus_override: {group: AV50, producer: FCS40, p: R-ICD-DFCC}
+  BRK.PEDAL:
+    components:
+      - {id: L}
+      - {id: R}
+    quantity: command_percent
+    units: percent
+    range: [0, 100]
+    lsb: bnr
+    signal: analog
+  BRK.WHEEL_SPEED:
+    components:
+      - {id: SPEED_L, quantity: rotational_speed, units: rpm, range: {v: [0, 3500], p: R-RANGE-NOTPUBLIC, note: "340 km/h emergency chute speed on a 26 in (0.66 m) main tyre is about 2,730 rpm; x1.25 margin"}, lsb: bnr, signal: frequency}
+      - {id: SPEED_R, quantity: rotational_speed, units: rpm, range: {v: [0, 3500], p: R-RANGE-NOTPUBLIC, note: "340 km/h emergency chute speed on a 26 in (0.66 m) main tyre is about 2,730 rpm; x1.25 margin"}, lsb: bnr, signal: frequency}
+      - {id: FLAGS, bits: [SKID_VALVE_L, SKID_VALVE_R, ANTISKID_FAIL], signal: discrete}
+  BRK.PRESS:
+    units_list: {ids: [L, R], p: R-UNITS-ASSUMED}
+    quantity: pressure
+    pressure_ref: gauge
+    units: bar
+    range: {v: [0, 200], p: R-INV-FIELD-ASSUMPTION}
+    lsb: bnr
+    signal: analog
+  NWS.STATE:
+    components:
+      - {id: INPUT_POT, quantity: angle, units: deg, range: {v: [-75, 75], p: R-RANGE-NOTPUBLIC}, lsb: bnr, signal: analog}
+      - {id: FEEDBACK_POT, quantity: angle, units: deg, range: {v: [-75, 75], p: R-RANGE-NOTPUBLIC}, lsb: bnr, signal: analog}
+      - {id: FLAGS, bits: [FREE_CASTOR, NWS_FAIL], signal: discrete}
+  CHUTE.STATE:
+    bits: [CHUTE_DEPLOYED, CHUTE_JETTISONED, CHUTE_UNSAFE]
+    signal: discrete
+  # ===================================================== Fire ======================================================
+  FIRE.WARN:
+    bits: [ENGINE_BAY_FIRE, ENGINE_BAY_OVERHEAT, EXTINGUISHER_FIRED, EXTINGUISHER_LOW]
+    signal: discrete
+  # ===================================================== Avionics status, warnings, recorder, metadata =============
+  AV.1553.BUS_STATUS:
+    units_list: {ids: [AV-MUX-1, AV-MUX-2, WPN-MUX], p: R-ICD-TOPOLOGY}
+    bits: [BUS_A_FAIL, BUS_B_FAIL, BUS_A_ACTIVE, BUS_B_ACTIVE, MESSAGE_ERROR_SEEN]
+    signal: computed
+  AV.RT.STATUS:
+    per_rt: mil1553_status
+    signal: computed
+  AV.LRU.BIT:
+    per_rt: mil1553_modecode
+    bits: [BIT_FAIL, PBIT_FAIL, CBIT_FAIL, IBIT_IN_PROGRESS]
+    signal: computed
+  AV.LRU.HEALTH:
+    per_rt: data
+    components:
+      - {id: LINK, fields: [{name: LOCAL_FAILURE_CODE, lsb_bit: 0, width: 8}, {name: EXTERNAL_FAILURE_CODE, lsb_bit: 8, width: 8}]}
+      - {id: PORT, fields: [{name: LOCAL_FAILURE_CODE, lsb_bit: 0, width: 8}, {name: EXTERNAL_FAILURE_CODE, lsb_bit: 8, width: 8}]}
+      - {id: MEMORY, fields: [{name: LOCAL_FAILURE_CODE, lsb_bit: 0, width: 8}, {name: EXTERNAL_FAILURE_CODE, lsb_bit: 8, width: 8}]}
+      - id: TEMP
+        quantity: temperature
+        units: degF
+        range: {v: [-67, 257], p: R-RANGE-NOTPUBLIC, note: "device temperature; -55..+125 degC military part range"}
+        lsb: {v: 0.1, p: R-INV}
+        native: {v: 0.1}
+        signal: analog
+    signal: computed
+  AV.SW_CONFIG:
+    components:
+      - {id: OAC, known_values: ["10.0.4.0", "10.5.2"]}
+      - {id: DFCC, known_values: ["7307", "7351", "9008"]}
+      - {id: RADAR, known_values: ["7_008A"]}
+      - {id: BHEEM_EU, known_values: ["1.9.08"]}
+      - {id: ECFM_C}
+      - {id: FADEC}
+      - {id: STORES}
+    text: true
+    signal: computed
+  CWS.LEGEND:
+    components:
+      - {id: A, bits: {v: slots, slots: [1, 15]}}
+      - {id: B, bits: {v: slots, slots: [16, 30]}}
+    signal: computed
+  CWS.MASTER:
+    bits: [MASTER_WARNING, MASTER_CAUTION]
+    signal: computed
+  CWS.VOICE.AOA: &voice
+    bits: [VOICE_WARNING_ACTIVE]
+    signal: computed
+  CWS.VOICE.LOW_ALT: *voice
+  CWS.VOICE.CANOPY: *voice
+  CWS.VOICE.UC: *voice
+  SYS.EVENT_MARKER:
+    bits: [PILOT_EVENT_MARK]
+    signal: discrete
+  SYS.TIME:
+    components:
+      - {id: UTC, quantity: time, units: s, range: {v: [0, 86400], p: R-RANGE-NOTPUBLIC, note: "UTC time of day"}, lsb: {v: 0.001, p: R-LSB-INVREC, tok: "1 ms"}, words: 2, signal: digital}
+      - {id: RTC, quantity: time, units: s, range: {v: [0, null], p: R-RANGE-NOTPUBLIC, note: "free-running recorder counter"}, lsb: {v: 1.0e-7, p: R-TIME-RTC}, signal: digital, transport: recorder_time}
+  SYS.IDS:
+    components:
+      - {id: TAIL_NO}
+      - {id: ENGINE_SERIAL}
+      - {id: SORTIE_ID}
+      - {id: LRU_SERIALS}
+    text: true
+    signal: computed
+  SYS.PHASE:
+    enum: flight_phase
+    signal: computed
+    sinks_fix: {GROUND: null}
+  STRUCT.NZ_COUNTERS:
+    components:
+      - {id: L1}
+      - {id: L2}
+      - {id: L3}
+      - {id: L4}
+      - {id: L5}
+      - {id: L6}
+      - {id: L7}
+      - {id: L8}
+    quantity: count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative; the 8 g-levels and set/reset levels are not public"}
+    lsb: {v: 1, p: R-INV}
+    signal: counter
+  STRUCT.STRAIN:
+    components:
+      - {id: MLG}
+      - {id: WING}
+      - {id: STORES}
+    quantity: strain
+    units: microstrain
+    range: {v: [-5000, 5000], p: R-RANGE-NOTPUBLIC}
+    lsb: bnr
+    signal: analog
+    sinks_fix: {FTI: null}
+  FTI.ALL:
+    placeholder: P-FTI-ALL
+    signal: computed
+    sinks_fix: {FTI: null}
+  DVR.VIDEO:
+    placeholder: P-DVR
+    signal: media
+  USAGE.FLIGHT_HOURS:
+    tag_donor: USN NAMP (COMNAVAIRFORINST 4790.2E)
+    quantity: life_time
+    units: {v: hour, tok: h}
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: counter
+  USAGE.GEAR_CYCLES: &usage_count
+    quantity: count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: counter
+  USAGE.LANDINGS:
+    <<: *usage_count
+    tag_donor: USN NAMP (COMNAVAIRFORINST 4790.2E)
+  USAGE.CHUTE_STREAMINGS:
+    quantity: count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: counter
+    limits:
+      - {kind: life, value: 45}
+  USAGE.BRAKE_APPLICATIONS:
+    components:
+      - {id: COUNT, quantity: count, units: count, range: {v: [0, null], p: R-INV}, lsb: {v: 1, p: R-LSB-INVREC}}
+      - {id: ENERGY, quantity: energy, units: MJ, range: {v: [0, null], p: R-INV, note: "cumulative brake energy"}}
+    signal: counter
+  USAGE.JFS_STARTS:
+    components:
+      - {id: ATTEMPTS}
+      - {id: SUCCESSES}
+      - {id: CONSECUTIVE}
+    quantity: count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: counter
+  USAGE.AMAGB_HOURS:
+    quantity: life_time
+    units: {v: hour, tok: h}
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 0.01, p: R-LSB-INVREC}
+    signal: counter
+    limits:
+      - {kind: life, value: 750}
+  USAGE.AB_LIGHTS: *usage_count
+  USAGE.ENGINE_STARTS:
+    tag_donor: F404 (f404_in20_engine_model.md)
+    components:
+      - {id: GROUND_STARTS}
+      - {id: AIR_RELIGHTS}
+    quantity: count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: counter
+  USAGE.G_EXCEEDANCE:
+    components:
+      - {id: OVER_G}
+      - {id: OVER_AOA}
+      - {id: OVERSPEED}
+    quantity: count
+    units: count
+    range: {v: [0, null], p: R-INV, note: "cumulative"}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: counter
+  FCS.FTP:
+    components:
+      - {id: TEST_POINT, quantity: count, units: {v: count, p: R-UNIT-CHOICE}, range: [0, 99], lsb: {v: 1, p: R-LSB-INVREC}, signal: computed}
+      - {id: FLAGS, bits: [EXCITATION_ACTIVE, AUTO_ABORT], signal: computed}
+  STORES.CONFIG:
+    components:
+      - {id: STATION_1, enum: store_station}
+      - {id: STATION_2, enum: store_station}
+      - {id: STATION_3, enum: store_station}
+      - {id: STATION_4, enum: store_station}
+      - {id: STATION_5, enum: store_station}
+      - {id: STATION_6, enum: store_station}
+      - {id: STATION_7, enum: store_station}
+      - {id: STATION_8, enum: store_station}
+      - {id: STATION_9, enum: store_station}
+      - {id: RELEASE, bits: [STATION_1_RELEASED, STATION_2_RELEASED, STATION_3_RELEASED, STATION_4_RELEASED, STATION_5_RELEASED, STATION_6_RELEASED, STATION_7_RELEASED, STATION_8_RELEASED, STATION_9_RELEASED]}
+    signal: computed
+  # ===================================================== Ground inspection =========================================
+  MX.TYRE_P:
+    components:
+      - {id: MAIN, range: {v: [0, 25.35], p: R-RANGE-FULLSCALE, band: [0, 16.9]}, limits: [{kind: nominal, value: 16.9}]}
+      - {id: NOSE, range: {v: [0, 10.5], p: R-RANGE-FULLSCALE, band: [0, 7]}, limits: [{kind: nominal, value: 7}]}
+    quantity: pressure
+    pressure_ref: gauge
+    units: bar
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: inspection
+  MX.BRAKE_WEAR:
+    quantity: wear_percent
+    units: percent
+    range: [0, 100]
+    lsb: {v: 5, p: R-LSB-INVREC}
+    signal: inspection
+  MX.ACCUM_PRECHARGE:
+    quantity: pressure
+    pressure_ref: gauge
+    units: bar
+    range: {v: [0, 75], p: R-RANGE-FULLSCALE, band: [0, 50]}
+    lsb: {v: 1, p: R-LSB-INVREC}
+    signal: inspection
+    limits:
+      - {kind: nominal, value: 50}
+  MX.OIL_SERVICING:
+    components:
+      - {id: ENGINE}
+      - {id: AMAGB}
+      - {id: JFS}
+    quantity: volume
+    units: L
+    range: {v: [0, 10], p: R-RANGE-NOTPUBLIC}
+    lsb: {v: 0.05, p: R-LSB-INVREC}
+    signal: inspection
+  MX.SOAP:
+    components:
+      - {id: FE}
+    quantity: concentration
+    units: {v: ppm, p: R-UNIT-CHOICE}
+    range: {v: [0, 100], p: R-RANGE-NOTPUBLIC}
+    lsb: {v: 0.1, p: R-LSB-INVREC}
+    signal: inspection
+  MX.BORESCOPE:
+    enum: borescope_grade
+    signal: inspection

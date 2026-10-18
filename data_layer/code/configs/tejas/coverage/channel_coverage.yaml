@@ -1,0 +1,735 @@
+# U6 channel-coverage plan (W2.2; E1 verifier U6; A-W2.2-11). Every dictionary channel has exactly one owner class:
+#
+#   m12_sensor     an M12 sensor of the channel map (sensors.config.build_sensor_config) -> M13 -> param.samples
+#   recorded       an LRU-computed value supplied by a module's ports.RECORDED (AD-42) -> M13 external= -> param.samples
+#   topic          delivered through another contract topic or record field (usage.counters, events.*,
+#                  sortie.manifest, param.samples time fields)
+#   not_simulated  explicitly not produced: contract state `absent` (never a param.samples row); `gap` names the
+#                  owner and plan (G-*) or the scope decision (S-*); `target` is the class it will have once built;
+#                  `nm` lists the not_measured_states.csv rows that cite it as partial information (information the
+#                  downstream user does not get while it is absent)
+#
+# Produced channels (m12_sensor, recorded) carry `route` when they are not consumer-visible on a recorded bus
+# (AD-54: the param.samples channel set is identical on the fast and full paths): `internal` = no full-path
+# transport (LRU-internal lanes, the ADC-DFCC RS-422 links), the channel stays in the CIR and internal
+# diagnostics; `fti` = the FTI PCM stream, visible only when the FTI system is fitted. They carry `acq_gap` when
+# the recording path (M13 acquisition) cannot record them yet (none since W2.2 phase B); topic channels carry `gap`
+# when the topic's producer does not exist yet. Every gap below has an owner
+# (modules) and a work package (scheduled, or proposed for the coordinator to schedule) and a plan.
+#
+# Enforced by tests/integration/test_w22_channel_coverage.py against the code: M12 channel map, every ports.RECORDED
+# (the 15 gated packages and phalanx.sensors.avionics), M14 usage counters and codes, the contract spec, the M13
+# acquisition build of every produced channel, M14 monitor inputs, and the not_measured_states.csv cross-references
+# (token rule: a parenthetical qualifier is dropped; `X` and `X.*` match X and its sub-channels; `none` is ignored).
+format: phalanx.coverage/1
+platform: tejas
+classes: [m12_sensor, recorded, topic, not_simulated]
+contract_state_not_simulated: absent
+
+gaps:
+  # ---- recording path (data path) -------------------------------------------------------------------------------
+  # W2.2 phase B part 1 closed the phase-A acquisition gaps: G-ACQ-WORDS (the M13 word path: status, discrete, enum
+  # and code words held at the producer's value and read at the LRU rate, A-W2.2-12) and G-ACQ-CLOCK-INGPS / AHRS /
+  # RADALT (M13 clock sets for those LRU domains, plus SMS, CWS, OAC, RADAR and ECMS so every dictionary word has a
+  # path). No produced channel has an acquisition gap; the kind stays for future ones.
+  G-MANIFEST:
+    kind: contract
+    title: No producer of the sortie.manifest topic
+    owner: [M02, M18, M17]
+    wp: W2.2 phase B (item 6, skeleton milestone)
+    plan: >-
+      Emit sortie.manifest from the M02 sortie plan and the M18 configuration state (tail, base, mission, crew,
+      engine and LRU serials, sw_config_id) on both paths. Per-LRU software identifiers (AV.SW_CONFIG.*) fold into
+      the single sw_config_id field; a per-LRU map would be an additive contract change (coordinator decision).
+  # ---- avionics status and BIT (bus and monitoring) ----------------------------------------------------------------
+  G-AV-BUS-STATUS:
+    kind: simulation
+    title: MIL-STD-1553 bus-status and RT status words are not generated
+    owner: [M15]
+    wp: W2.2 phase B part 2 (item 5, events.* on the full path)
+    plan: >-
+      The M13 word path and M15/M17 carry these words exactly once produced (W2.2 phase B part 1). M15 generates RT
+      status words (message error, busy, subsystem flag) and bus status from the bus model:
+      message errors from M11 wiring faults and RT no-response from the LRU powered flags (the avionics module
+      publishes powered_ingps/ahrs/radalt/sms for this).
+    sources: [avio.powered_ingps, avio.powered_ahrs, avio.powered_radalt, avio.powered_sms]
+  G-AV-LRU-BIT:
+    kind: simulation
+    title: Per-LRU BIT and health words (link, memory, port) are not produced
+    owner: [M14, M11]
+    wp: W2.2 phase B part 2 (item 5, events.* on the full path)
+    plan: >-
+      M14 publishes per-LRU BIT/health words from its BIT state and the M11 LRU fault modes as RECORDED channels
+      with the synthetic dictionary code values (AV.LRU.BIT.DFCC is already RECORDED by M05 and is the template);
+      they then record through the M13 word path onto the bus (built, W2.2 phase B part 1).
+  G-AV-LRU-TEMP:
+    kind: simulation
+    title: LRU internal temperatures are not modelled
+    owner: [M12, M09]
+    wp: proposed (coordinator)
+    plan: >-
+      LRU internal temperature = avionics-bay temperature (M09 util.ecs_t, AVIONICS_BAY point) plus a first-order
+      self-heating rise driven by the LRU's powered state, per LRU in the avionics extension; recorded on the LRU
+      clock sets (built, W2.2 phase B).
+    truth: [util.ecs_t]
+  # ---- air data, flight control ----------------------------------------------------------------------------------
+  G-AD-DPA-DPB:
+    kind: simulation
+    title: Side-probe flow-angle differential pressures (AD.DPA / AD.DPB) are not simulated (PROXY A-W2.2-10)
+    owner: [M12]
+    wp: proposed (coordinator)
+    plan: >-
+      Side-probe pressure coefficients (TRANSFER: F/A-18 FADS or the Tejas SADP calibration) as M12 lanes on the
+      DFCC/ADC clock; the avionics ADC then votes AD.DPA.V / AD.DPB.V and runs their AD.VALID monitors.
+  G-PROBE-HEAT:
+    kind: simulation
+    title: Probe heater currents (FCS.HEATER_I.*) and heater faults are not modelled
+    owner: [M12, M09, M11]
+    wp: proposed (coordinator)
+    plan: >-
+      The M12 TAT probe reads the heater state from util.probe_heat since W2.2 (as the avionics ADC's correction
+      does). Remaining: FCS.HEATER_I.* = heater state x nominal heater current with a per-unit spread and the
+      heater-fault modes of M11 (a failed heater with the flag on), acquired on the DFCC clock.
+    truth: [util.probe_heat]
+  G-FCS-ATTITUDE:
+    kind: simulation
+    title: The DFCC attitude estimator (FCS.KALMAN_ATT.*) is not in the M05 replica (PROXY A-W1.2-29)
+    owner: [M05]
+    wp: proposed (coordinator); inputs now exist (W2.2 avionics NAV.INS / NAV.AHRS)
+    plan: >-
+      M05 attitude estimator blending the rate-gyro lanes with the avionics INS/AHRS outputs, published as
+      RECORDED FCS.KALMAN_ATT.PITCH / ROLL (fcs.ports.NOT_MODELLED reason).
+  # ---- engine -----------------------------------------------------------------------------------------------------
+  G-M08-VOTED:
+    kind: simulation
+    title: M08 does not produce ENG.PLA.V / ENG.A8.V
+    owner: [M08]
+    wp: W2.1b
+    plan: Validate the PLA resolver and nozzle LVDT lanes in M08 and publish the voted values (fadec.ports.RECORDED_MISSING).
+  G-ENG-VIB:
+    kind: simulation
+    title: Engine vibration (ENG.VIB.*) is not modelled
+    owner: [M07, M10, M12, M13]
+    wp: proposed (coordinator)
+    plan: >-
+      Once-per-rev amplitudes from rotor imbalance and bearing health (M10) at N1/N2, an M12 velocity pickup with
+      its band-pass, and an HF acquisition group in M13 (the dictionary's HF rate group has no LRU). Without it the
+      M14 ECM-701 vibration monitor has no input.
+    consumers: [M14:ECM-701]
+  G-ENG-THRUST-EST:
+    kind: simulation
+    title: The ECMS thrust estimate is not computed
+    owner: [M14]
+    wp: proposed (coordinator)
+    plan: ECMS synthesis of thrust from the recorded N1, PS3 and T1 (M14 ECMS model) published as RECORDED ENG.THRUST_EST.
+  G-ENG-DISCRETES:
+    kind: simulation
+    title: Engine discretes (chip detector, lube filter dP, oil level, bleed state) are not produced
+    owner: [M07, M11, M12, M08]
+    wp: proposed (coordinator)
+    plan: >-
+      Physical states first (chip accumulation from M10/M11 bearing health, lube filter loading, oil quantity, bleed
+      valve state from M09 bleed extraction), then M12 discrete sensors (chip detector, dP switch, level switch) and
+      the FADEC bleed-state word. Without ENG.CHIP the M14 ECM-001 chip monitor has no input.
+    consumers: [M14:ECM-001]
+  # ---- utilities ----------------------------------------------------------------------------------------------
+  G-ECS:
+    kind: simulation
+    title: ECS and life-support channels without a truth point have no sensors (named U6 gap)
+    owner: [M12, M09, M13]
+    wp: proposed (coordinator)
+    plan: >-
+      Done in W2.2 phase B: M12 sensors on the M09 points util.ecs_t / util.ecs_p (bleed manifold, PHX outlet, ACM
+      turbine outlet, cockpit, avionics bay; A-W2.2-16). Remaining: M09 to publish the ACM turbine inlet and supply
+      duct temperatures, the temperature-control-valve position, the avionics overheat and ECS switch states, and
+      to model OBOGS (O2, pressure, fail) and LOX quantity; M13 clock sets for the CPCS / OBOGS domains if they are
+      separate LRUs. Without them the M14 ECS-503 monitor has no input.
+    truth: [util.ecs_t, util.ecs_p]
+    consumers: [M14:ECS-503]
+  G-ELEC:
+    kind: simulation
+    title: Generator, TRU, battery and backup currents, voltages and frequency are not published
+    owner: [M09, M12, M13]
+    wp: proposed (coordinator)
+    plan: >-
+      M09 load-flow outputs (generator phase voltages, current and frequency, TRU and battery currents and voltages,
+      backup-generator status) as truth signals, M12 channel-map entries, M13 clock sets for the GCU, TRU, BDU and
+      DC_GCU domains. Without ELEC.GEN.F the M14 ELE-701 monitor has no input.
+    truth: [util.bus_v, util.gen_online, util.batt_soc]
+    consumers: [M14:ELE-701]
+  G-SPS-JFS:
+    kind: simulation
+    title: JFS and AMAGB channels have no published truth or sensors (named U6 gap)
+    owner: [M09, M12, M13]
+    wp: proposed (coordinator)
+    plan: >-
+      M09 already integrates JFS speed, EGT, oil temperature and quantity internally (state jfs_n, jfs_egt, jfs_oilt,
+      jfs_oilq): publish them (and the AMAGB oil temperature and level) as truth signals, add M12 channel-map entries
+      and the BHEEM_EU clock set in M13; SPS.JFS.OIL_QTY is a per-sortie (SORTIE-acquired) reading.
+    truth: [util.jfs_state]
+  G-HYD-LEVEL:
+    kind: simulation
+    title: Hydraulic reservoir low-level switches are not produced (the level transmitters are, since W2.2)
+    owner: [M12, M13]
+    wp: proposed (coordinator)
+    plan: >-
+      The level transmitters read util.hyd_res_level since W2.2 phase B (A-W2.2-16). Remaining: the low-level
+      switches (HYD.SYS*.LEVEL.LOW) as M12 discrete sensors on util.hyd_res_level (a falling-level comparator with
+      hysteresis), recorded through the M13 word path on the BHEEM_EU clock.
+    truth: [util.hyd_res_level]
+  G-HYD-DISCRETES:
+    kind: simulation
+    title: Hydraulic discretes (low pressure, filter dP, DFCC channel status) are not produced
+    owner: [M12, M05, M09]
+    wp: proposed (coordinator)
+    plan: >-
+      Low-pressure switches on util.hyd_p (M12 discrete sensors), filter dP from a filter-loading state in M09,
+      HYD.CH_STATUS as an M05 RECORDED word from the DFCC's hydraulic-channel logic.
+    truth: [util.hyd_p]
+  G-BRAKES:
+    kind: simulation
+    title: Brake pedals and antiskid flags have no sensors (the brake pressures do, since W2.2)
+    owner: [M12, M13]
+    wp: proposed (coordinator)
+    plan: >-
+      The brake pressure transducers read util.brake_p since W2.2 phase B (A-W2.2-16). Remaining: the pedal
+      position transducers (pilot.brake_cmd) and the antiskid wheel-speed flags as an antiskid word, M13 clock set
+      for ANTISKID if it is a separate LRU.
+    truth: [util.brake_p, pilot.brake_cmd, af.wheel_speed]
+  G-LANDING-GEAR:
+    kind: simulation
+    title: Gear position, WOW word, chute state and nose-wheel steering are not produced
+    owner: [M06, M05, M09, M12]
+    wp: proposed (coordinator)
+    plan: >-
+      af.gear_pos from M06 (also replaces the ADC gear-ramp PROXY A-W2.2-7), LG.WOW as an M05 RECORDED word from
+      af.wow, CHUTE.STATE from the M09 chute events, a nose-wheel-steering model in M06 for NWS.STATE.*.
+    truth: [af.wow, pilot.gear_cmd]
+  G-FIRE:
+    kind: simulation
+    title: Engine fire detection (FIRE.WARN) is not modelled
+    owner: [M09, M11, M12]
+    wp: proposed (coordinator)
+    plan: Fire state (M11 fault mode, M09 extinguisher event) and the fire-loop discrete in M12. Without it the M14 FIR-501 monitor has no input.
+    consumers: [M14:FIR-501]
+  G-FUEL-GAUGING:
+    kind: simulation
+    title: The ECFM-C gauged fuel total (FUEL.TOTAL.*) is not computed
+    owner: [M14, M12]
+    wp: W2.2 phase B (item 7, zoom-climb gauging end to end)
+    plan: >-
+      ECFM-C gauging computation summing the M12 tank-probe readings (attitude and acceleration artefacts from the M12
+      gauge physics, AD-42) into FUEL.TOTAL.TOTAL and its flags, as a RECORDED producer. Without it the M14 FUE-501
+      low-fuel monitor has no input.
+    consumers: [M14:FUE-501]
+  G-FUEL-SYSTEM:
+    kind: simulation
+    title: Fuel boost pressure, tank pressurisation, refuel discrete and fuel temperature are not produced
+    owner: [M09, M12]
+    wp: proposed (coordinator)
+    plan: M09 boost-pump and tank-pressurisation states and tank fuel temperature; M12 sensors and switches; refuel discrete from the util.refuel event.
+  # ---- ground processes ------------------------------------------------------------------------------------------
+  G-INSPECTION:
+    kind: contract
+    title: Ground inspection measurements (MX.*) have no numeric carrier in maint.records
+    owner: [M18]
+    wp: proposed (coordinator); contract minor bump
+    plan: >-
+      M18 inspection records carrying param_id = MX.* and a measured value (additive maint.records fields: a contract
+      minor version), from M09 brake and tyre wear, M10 oil consumption and debris, and the inspection schedule.
+  G-GROUND-PHASE:
+    kind: contract
+    title: The ground-derived flight phase (SYS.PHASE) is not produced
+    owner: [M17, M20]
+    wp: proposed (coordinator)
+    plan: Ground segmentation of the sortie into phases from sortie.manifest times and recorded air data (a derived record, not a sensor).
+  G-EVENT-MARKER:
+    kind: simulation
+    title: The pilot event marker (SYS.EVENT_MARKER) is not produced
+    owner: [M04]
+    wp: proposed (coordinator)
+    plan: A pilot event-marker action in M04 driving the OAC discrete.
+  # ---- scope decisions (not gaps) ---------------------------------------------------------------------------------
+  S-FTI:
+    kind: scope
+    title: Flight-test instrumentation (FTI strain gauges, flight-test points, the FTI DAS stream) is out of scope
+    owner: [coordinator]
+    wp: none
+    plan: Not simulated for the service fleet (FTI is fitted to test aircraft only); revisit only if a loads-monitoring use case needs strain.
+  S-MEDIA:
+    kind: scope
+    title: Cockpit video (DVR) is non-numeric media with no contract topic
+    owner: [coordinator]
+    wp: none
+    plan: Not simulated.
+
+# AD-42 truth signals catalogued for M12 that M12's channel map does not bind (E1 U6). W2.2 phase B bound
+# util.brake_p, util.hyd_res_level, util.fuel_inlet_t and util.probe_heat in the channel map.
+truth_signals:
+  af.hag: {status: bound, by: M12 avionics (radar altimeter; NAV.RADALT recorded on its RADALT clock set)}
+
+channels:
+  AD.AOA: {class: recorded, producer: M12, port: rec_ad_aoa}
+  AD.AOA_VANE_L.A: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_L.B: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_L.C: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_L.D: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_L.V: {class: recorded, producer: M12, port: rec_ad_aoa_vane_l_v}
+  AD.AOA_VANE_R.A: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_R.B: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_R.C: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_R.D: {class: m12_sensor, route: internal}
+  AD.AOA_VANE_R.V: {class: recorded, producer: M12, port: rec_ad_aoa_vane_r_v}
+  AD.AOSS_VANE.A: {class: m12_sensor, route: internal}
+  AD.AOSS_VANE.B: {class: m12_sensor, route: internal}
+  AD.AOSS_VANE.C: {class: m12_sensor, route: internal}
+  AD.AOSS_VANE.D: {class: m12_sensor, route: internal}
+  AD.AOSS_VANE.V: {class: recorded, producer: M12, port: rec_ad_aoss_vane_v}
+  AD.BETA: {class: recorded, producer: M12, port: rec_ad_beta}
+  AD.BOOM.ALPHA: {class: m12_sensor, route: fti}
+  AD.BOOM.BETA: {class: m12_sensor, route: fti}
+  AD.BOOM.PS: {class: m12_sensor, route: fti}
+  AD.BOOM.PT: {class: m12_sensor, route: fti}
+  AD.CAS: {class: recorded, producer: M12, port: rec_ad_cas}
+  AD.DPA.A: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPA.B: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPA.C: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPA.D: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPA.V: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPB.A: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPB.B: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPB.C: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPB.D: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.DPB.V: {class: not_simulated, gap: G-AD-DPA-DPB, target: m12_sensor}
+  AD.HBARO: {class: recorded, producer: M12, port: rec_ad_hbaro}
+  AD.HDOT: {class: recorded, producer: M12, port: rec_ad_hdot}
+  AD.HP: {class: recorded, producer: M12, port: rec_ad_hp}
+  AD.MACH: {class: recorded, producer: M12, port: rec_ad_mach}
+  AD.PS.A: {class: m12_sensor, route: internal}
+  AD.PS.B: {class: m12_sensor, route: internal}
+  AD.PS.C: {class: m12_sensor, route: internal}
+  AD.PS.D: {class: m12_sensor, route: internal}
+  AD.PS.V: {class: recorded, producer: M12, port: rec_ad_ps_v}
+  AD.PT.A: {class: m12_sensor, route: internal}
+  AD.PT.B: {class: m12_sensor, route: internal}
+  AD.PT.C: {class: m12_sensor, route: internal}
+  AD.PT.D: {class: m12_sensor, route: internal}
+  AD.PT.V: {class: recorded, producer: M12, port: rec_ad_pt_v}
+  AD.QBAR: {class: recorded, producer: M12, port: rec_ad_qbar}
+  AD.SAT: {class: recorded, producer: M12, port: rec_ad_sat}
+  AD.TAS: {class: recorded, producer: M12, port: rec_ad_tas}
+  AD.TAT: {class: m12_sensor}
+  AD.VALID.A: {class: recorded, producer: M12, port: rec_ad_valid_a}
+  AD.VALID.B: {class: recorded, producer: M12, port: rec_ad_valid_b}
+  AD.VALID.C: {class: recorded, producer: M12, port: rec_ad_valid_c}
+  AD.VALID.D: {class: recorded, producer: M12, port: rec_ad_valid_d}
+  AV.1553.BUS_STATUS.AV-MUX-1: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.1553.BUS_STATUS.AV-MUX-2: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.1553.BUS_STATUS.WPN-MUX: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.LRU.BIT.AHRS: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.BIT.BHEEM_EU: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.BIT.DFCC: {class: recorded, producer: M05, port: rec_av_lru_bit_dfcc}
+  AV.LRU.BIT.ECFM_C: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.BIT.FADEC: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.BIT.INGPS: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.BIT.RADAR: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.BIT.SMS: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.ELEC.WIRING, NM.AV.SOLDER_FATIGUE, NM.STR.CORROSION_WATER]}
+  AV.LRU.HEALTH.AHRS.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.AHRS.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.AHRS.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.AHRS.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.BHEEM_EU.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.BHEEM_EU.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.BHEEM_EU.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.BHEEM_EU.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.DFCC.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.DFCC.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.DFCC.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.DFCC.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.ECFM_C.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.ECFM_C.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.ECFM_C.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.ECFM_C.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.FADEC.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.FADEC.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.FADEC.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.FADEC.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.INGPS.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.INGPS.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.INGPS.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.INGPS.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.RADAR.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.RADAR.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.RADAR.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.RADAR.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.SMS.LINK: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.SMS.MEMORY: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.SMS.PORT: {class: not_simulated, gap: G-AV-LRU-BIT, target: recorded, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.LRU.HEALTH.SMS.TEMP: {class: not_simulated, gap: G-AV-LRU-TEMP, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE]}
+  AV.RT.STATUS.AHRS: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.BHEEM_EU: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.DFCC: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.ECFM_C: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.FADEC: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.INGPS: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.RADAR: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.RT.STATUS.SMS: {class: not_simulated, gap: G-AV-BUS-STATUS, target: recorded, nm: [NM.ELEC.WIRING]}
+  AV.SW_CONFIG.BHEEM_EU: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  AV.SW_CONFIG.DFCC: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  AV.SW_CONFIG.ECFM_C: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  AV.SW_CONFIG.FADEC: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  AV.SW_CONFIG.OAC: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  AV.SW_CONFIG.RADAR: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  AV.SW_CONFIG.STORES: {class: topic, topic: sortie.manifest, producer: none, field: sw_config_id, gap: G-MANIFEST}
+  BRK.PEDAL.L: {class: not_simulated, gap: G-BRAKES, target: m12_sensor}
+  BRK.PEDAL.R: {class: not_simulated, gap: G-BRAKES, target: m12_sensor}
+  BRK.PRESS.L: {class: m12_sensor}
+  BRK.PRESS.R: {class: m12_sensor}
+  BRK.WHEEL_SPEED.FLAGS: {class: not_simulated, gap: G-BRAKES, target: m12_sensor, nm: [NM.LG.BRAKE_WEAR, NM.LG.BRAKE_TEMP, NM.LG.TYRE]}
+  BRK.WHEEL_SPEED.SPEED_L: {class: m12_sensor}
+  BRK.WHEEL_SPEED.SPEED_R: {class: m12_sensor}
+  CHUTE.STATE: {class: not_simulated, gap: G-LANDING-GEAR, target: m12_sensor, nm: [NM.LG.BRAKE_TEMP, NM.LG.CHUTE]}
+  CWS.LEGEND.A: {class: recorded, producer: M14, port: cws_legend_a}
+  CWS.LEGEND.B: {class: recorded, producer: M14, port: cws_legend_b}
+  CWS.MASTER: {class: recorded, producer: M14, port: cws_master}
+  CWS.VOICE.AOA: {class: recorded, producer: M14, port: cws_voice_aoa}
+  CWS.VOICE.CANOPY: {class: recorded, producer: M14, port: cws_voice_canopy}
+  CWS.VOICE.LOW_ALT: {class: recorded, producer: M14, port: cws_voice_low_alt}
+  CWS.VOICE.UC: {class: recorded, producer: M14, port: cws_voice_uc}
+  DVR.VIDEO: {class: not_simulated, gap: S-MEDIA, target: none}
+  ECS.AVIONICS_T.HOT: {class: not_simulated, gap: G-ECS, target: m12_sensor, nm: [NM.AV.SOLDER_FATIGUE, NM.ECS.HX_FOULING, NM.STR.CORROSION_WATER]}
+  ECS.AVIONICS_T.TEMP: {class: m12_sensor}
+  ECS.BLEED_P: {class: m12_sensor}
+  ECS.BLEED_T.ACM_TURBINE_IN: {class: not_simulated, gap: G-ECS, target: m12_sensor, nm: [NM.ECS.HX_FOULING, NM.ECS.ACM_WEAR]}
+  ECS.BLEED_T.PHX_IN: {class: m12_sensor}
+  ECS.BLEED_T.PHX_OUT: {class: m12_sensor}
+  ECS.CABIN_P.CABIN_ALT: {class: recorded, producer: M09, port: cabin_alt}
+  ECS.CABIN_P.PRESS: {class: m12_sensor}
+  ECS.COCKPIT_T.ACM_OUT: {class: m12_sensor}
+  ECS.COCKPIT_T.COCKPIT: {class: m12_sensor}
+  ECS.COCKPIT_T.SUPPLY: {class: not_simulated, gap: G-ECS, target: m12_sensor, nm: [NM.ECS.HX_FOULING, NM.ECS.ACM_WEAR]}
+  ECS.SWITCHES: {class: not_simulated, gap: G-ECS, target: m12_sensor}
+  ECS.TCV: {class: not_simulated, gap: G-ECS, target: m12_sensor, nm: [NM.ECS.HX_FOULING]}
+  ELEC.BACKUP.STATUS.BITE: {class: recorded, producer: M09, port: bk_bite}
+  ELEC.BACKUP.STATUS.CURR: {class: not_simulated, gap: G-ELEC, target: m12_sensor}
+  ELEC.BACKUP.STATUS.VOLT: {class: not_simulated, gap: G-ELEC, target: m12_sensor}
+  ELEC.BATT.AH: {class: recorded, producer: M09, port: batt_ah}
+  ELEC.BATT.CURR: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.SPS.JFS_HEALTH, NM.SPS.BATT_SOH]}
+  ELEC.BATT.LOW: {class: recorded, producer: M09, port: batt_low}
+  ELEC.BATT.VOLT: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.SPS.JFS_HEALTH, NM.SPS.BATT_SOH]}
+  ELEC.DCBUS.V.EMERGENCY: {class: m12_sensor}
+  ELEC.DCBUS.V.ESSENTIAL: {class: m12_sensor}
+  ELEC.DCBUS.V.MAIN: {class: m12_sensor}
+  ELEC.GEN.F: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.ELEC.GEN_HEALTH]}
+  ELEC.GEN.I: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.ELEC.GEN_HEALTH]}
+  ELEC.GEN.OUT: {class: recorded, producer: M09, port: gen_out}
+  ELEC.GEN.V.PH_A: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.ELEC.GEN_HEALTH]}
+  ELEC.GEN.V.PH_B: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.ELEC.GEN_HEALTH]}
+  ELEC.GEN.V.PH_C: {class: not_simulated, gap: G-ELEC, target: m12_sensor, nm: [NM.ELEC.GEN_HEALTH]}
+  ELEC.TRU.VI.TRU1.CURR: {class: not_simulated, gap: G-ELEC, target: m12_sensor}
+  ELEC.TRU.VI.TRU1.VOLT: {class: not_simulated, gap: G-ELEC, target: m12_sensor}
+  ELEC.TRU.VI.TRU2.CURR: {class: not_simulated, gap: G-ELEC, target: m12_sensor}
+  ELEC.TRU.VI.TRU2.VOLT: {class: not_simulated, gap: G-ELEC, target: m12_sensor}
+  ENG.A8.A: {class: m12_sensor, route: internal}
+  ENG.A8.B: {class: m12_sensor, route: internal}
+  ENG.A8.V: {class: not_simulated, gap: G-M08-VOTED, target: recorded, nm: [NM.ENG.FAN_HEALTH, NM.ENG.NOZZLE_HW, NM.ENG.AB_SPRAYBAR]}
+  ENG.AB_LIT: {class: m12_sensor}
+  ENG.BLEED_STATE: {class: not_simulated, gap: G-ENG-DISCRETES, target: recorded}
+  ENG.CHIP: {class: not_simulated, gap: G-ENG-DISCRETES, target: m12_sensor, nm: [NM.ENG.BEARING_SPALL, NM.ENG.OIL_CONDITION]}
+  ENG.CVG: {class: m12_sensor}
+  ENG.FADEC_STATUS: {class: recorded, producer: M08, port: status_word}
+  ENG.FAULT_CODES: {class: recorded, producer: M08, port: fault_code}
+  ENG.FLAMEOUT: {class: recorded, producer: M08, port: flameout_word}
+  ENG.FUEL_INLET_T: {class: m12_sensor}
+  ENG.FVG: {class: m12_sensor}
+  ENG.IGN: {class: recorded, producer: M08, port: ign_word}
+  ENG.LIMIT_FLAGS: {class: recorded, producer: M08, port: limit_flags}
+  ENG.LUBE_DP: {class: not_simulated, gap: G-ENG-DISCRETES, target: m12_sensor}
+  ENG.N1.A: {class: m12_sensor, route: internal}
+  ENG.N1.B: {class: m12_sensor, route: internal}
+  ENG.N1.V: {class: recorded, producer: M08, port: n1_v}
+  ENG.N2.A: {class: m12_sensor, route: internal}
+  ENG.N2.B: {class: m12_sensor, route: internal}
+  ENG.N2.V: {class: recorded, producer: M08, port: n2_v}
+  ENG.OIL_LEVEL: {class: not_simulated, gap: G-ENG-DISCRETES, target: m12_sensor, nm: [NM.ENG.SEAL_WEAR]}
+  ENG.OIL_P: {class: m12_sensor}
+  ENG.OIL_T: {class: m12_sensor}
+  ENG.P5: {class: m12_sensor}
+  ENG.PLA.A: {class: m12_sensor, route: internal}
+  ENG.PLA.B: {class: m12_sensor, route: internal}
+  ENG.PLA.V: {class: not_simulated, gap: G-M08-VOTED, target: recorded}
+  ENG.PS3.A: {class: m12_sensor, route: internal}
+  ENG.PS3.B: {class: m12_sensor, route: internal}
+  ENG.PS3.V: {class: recorded, producer: M08, port: ps3_v}
+  ENG.T1.A: {class: m12_sensor, route: internal}
+  ENG.T1.B: {class: m12_sensor, route: internal}
+  ENG.T1.V: {class: recorded, producer: M08, port: t1_v}
+  ENG.T25: {class: m12_sensor, route: internal}
+  ENG.T5: {class: recorded, producer: M08, port: t5_avg}
+  ENG.T5.HARNESS_A: {class: m12_sensor, route: internal}
+  ENG.T5.HARNESS_B: {class: m12_sensor, route: internal}
+  ENG.THRUST_EST: {class: not_simulated, gap: G-ENG-THRUST-EST, target: recorded}
+  ENG.VIB.N1_1REV: {class: not_simulated, gap: G-ENG-VIB, target: m12_sensor, nm: [NM.ENG.BLADE_CRACK, NM.ENG.BEARING_SPALL]}
+  ENG.VIB.N2_1REV: {class: not_simulated, gap: G-ENG-VIB, target: m12_sensor, nm: [NM.ENG.BLADE_CRACK, NM.ENG.BEARING_SPALL]}
+  ENG.VIB.OVERALL: {class: not_simulated, gap: G-ENG-VIB, target: m12_sensor, nm: [NM.ENG.BLADE_CRACK, NM.ENG.BEARING_SPALL]}
+  ENG.WFAB: {class: m12_sensor, route: fti}
+  ENG.WFM: {class: m12_sensor}
+  FCS.ACT.BIT.AIRBRAKE_L: {class: recorded, producer: M05, port: rec_fcs_act_bit_airbrake_l}
+  FCS.ACT.BIT.AIRBRAKE_R: {class: recorded, producer: M05, port: rec_fcs_act_bit_airbrake_r}
+  FCS.ACT.BIT.ELEVON_LIB: {class: recorded, producer: M05, port: rec_fcs_act_bit_elevon_lib}
+  FCS.ACT.BIT.ELEVON_LOB: {class: recorded, producer: M05, port: rec_fcs_act_bit_elevon_lob}
+  FCS.ACT.BIT.ELEVON_RIB: {class: recorded, producer: M05, port: rec_fcs_act_bit_elevon_rib}
+  FCS.ACT.BIT.ELEVON_ROB: {class: recorded, producer: M05, port: rec_fcs_act_bit_elevon_rob}
+  FCS.ACT.BIT.RUDDER: {class: recorded, producer: M05, port: rec_fcs_act_bit_rudder}
+  FCS.ACT.BIT.SLAT_IB_L: {class: recorded, producer: M05, port: rec_fcs_act_bit_slat_ib_l}
+  FCS.ACT.BIT.SLAT_IB_R: {class: recorded, producer: M05, port: rec_fcs_act_bit_slat_ib_r}
+  FCS.ACT.BIT.SLAT_MB_L: {class: recorded, producer: M05, port: rec_fcs_act_bit_slat_mb_l}
+  FCS.ACT.BIT.SLAT_MB_R: {class: recorded, producer: M05, port: rec_fcs_act_bit_slat_mb_r}
+  FCS.ACT.BIT.SLAT_OB_L: {class: recorded, producer: M05, port: rec_fcs_act_bit_slat_ob_l}
+  FCS.ACT.BIT.SLAT_OB_R: {class: recorded, producer: M05, port: rec_fcs_act_bit_slat_ob_r}
+  FCS.AIRBRAKE.POS.L.A: {class: m12_sensor, route: internal}
+  FCS.AIRBRAKE.POS.L.B: {class: m12_sensor, route: internal}
+  FCS.AIRBRAKE.POS.L.V: {class: recorded, producer: M05, port: rec_fcs_airbrake_pos_l_v}
+  FCS.AIRBRAKE.POS.R.A: {class: m12_sensor, route: internal}
+  FCS.AIRBRAKE.POS.R.B: {class: m12_sensor, route: internal}
+  FCS.AIRBRAKE.POS.R.V: {class: recorded, producer: M05, port: rec_fcs_airbrake_pos_r_v}
+  FCS.AIRDATA_MISTRACK: {class: recorded, producer: M05, port: rec_fcs_airdata_mistrack}
+  FCS.ASA.NY.A: {class: m12_sensor, route: internal}
+  FCS.ASA.NY.B: {class: m12_sensor, route: internal}
+  FCS.ASA.NY.C: {class: m12_sensor, route: internal}
+  FCS.ASA.NY.D: {class: m12_sensor, route: internal}
+  FCS.ASA.NY.V: {class: recorded, producer: M05, port: rec_fcs_asa_ny_v}
+  FCS.ASA.NZ.A: {class: m12_sensor, route: internal}
+  FCS.ASA.NZ.B: {class: m12_sensor, route: internal}
+  FCS.ASA.NZ.C: {class: m12_sensor, route: internal}
+  FCS.ASA.NZ.D: {class: m12_sensor, route: internal}
+  FCS.BIT.LOG: {class: topic, topic: events.bit_faults, producer: M14}
+  FCS.CH.STATUS.A: {class: recorded, producer: M05, port: rec_fcs_ch_status_a}
+  FCS.CH.STATUS.B: {class: recorded, producer: M05, port: rec_fcs_ch_status_b}
+  FCS.CH.STATUS.C: {class: recorded, producer: M05, port: rec_fcs_ch_status_c}
+  FCS.CH.STATUS.D: {class: recorded, producer: M05, port: rec_fcs_ch_status_d}
+  FCS.ELEVON.LIB.CMD: {class: recorded, producer: M05, port: rec_fcs_elevon_lib_cmd}
+  FCS.ELEVON.LIB.POS.A: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LIB.POS.B: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LIB.POS.C: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LIB.POS.D: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LIB.POS.V: {class: recorded, producer: M05, port: rec_fcs_elevon_lib_pos_v}
+  FCS.ELEVON.LOB.CMD: {class: recorded, producer: M05, port: rec_fcs_elevon_lob_cmd}
+  FCS.ELEVON.LOB.POS.A: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LOB.POS.B: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LOB.POS.C: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LOB.POS.D: {class: m12_sensor, route: internal}
+  FCS.ELEVON.LOB.POS.V: {class: recorded, producer: M05, port: rec_fcs_elevon_lob_pos_v}
+  FCS.ELEVON.RIB.CMD: {class: recorded, producer: M05, port: rec_fcs_elevon_rib_cmd}
+  FCS.ELEVON.RIB.POS.A: {class: m12_sensor, route: internal}
+  FCS.ELEVON.RIB.POS.B: {class: m12_sensor, route: internal}
+  FCS.ELEVON.RIB.POS.C: {class: m12_sensor, route: internal}
+  FCS.ELEVON.RIB.POS.D: {class: m12_sensor, route: internal}
+  FCS.ELEVON.RIB.POS.V: {class: recorded, producer: M05, port: rec_fcs_elevon_rib_pos_v}
+  FCS.ELEVON.ROB.CMD: {class: recorded, producer: M05, port: rec_fcs_elevon_rob_cmd}
+  FCS.ELEVON.ROB.POS.A: {class: m12_sensor, route: internal}
+  FCS.ELEVON.ROB.POS.B: {class: m12_sensor, route: internal}
+  FCS.ELEVON.ROB.POS.C: {class: m12_sensor, route: internal}
+  FCS.ELEVON.ROB.POS.D: {class: m12_sensor, route: internal}
+  FCS.ELEVON.ROB.POS.V: {class: recorded, producer: M05, port: rec_fcs_elevon_rob_pos_v}
+  FCS.FTP.FLAGS: {class: not_simulated, gap: S-FTI, target: none}
+  FCS.FTP.TEST_POINT: {class: not_simulated, gap: S-FTI, target: none}
+  FCS.HEATER_I.AOA_VANE_L: {class: not_simulated, gap: G-PROBE-HEAT, target: m12_sensor, nm: [NM.AD.HEATER_ELEMENT]}
+  FCS.HEATER_I.AOA_VANE_R: {class: not_simulated, gap: G-PROBE-HEAT, target: m12_sensor, nm: [NM.AD.HEATER_ELEMENT]}
+  FCS.HEATER_I.LADP: {class: not_simulated, gap: G-PROBE-HEAT, target: m12_sensor, nm: [NM.AD.HEATER_ELEMENT]}
+  FCS.HEATER_I.NADP: {class: not_simulated, gap: G-PROBE-HEAT, target: m12_sensor, nm: [NM.AD.HEATER_ELEMENT]}
+  FCS.HEATER_I.RADP: {class: not_simulated, gap: G-PROBE-HEAT, target: m12_sensor, nm: [NM.AD.HEATER_ELEMENT]}
+  FCS.HEATER_I.TAT: {class: not_simulated, gap: G-PROBE-HEAT, target: m12_sensor, nm: [NM.AD.HEATER_ELEMENT]}
+  FCS.KALMAN_ATT.PITCH: {class: not_simulated, gap: G-FCS-ATTITUDE, target: recorded}
+  FCS.KALMAN_ATT.ROLL: {class: not_simulated, gap: G-FCS-ATTITUDE, target: recorded}
+  FCS.MODE.FLAGS: {class: recorded, producer: M05, port: rec_fcs_mode_flags}
+  FCS.MODE.LAW: {class: recorded, producer: M05, port: rec_fcs_mode_law}
+  FCS.PEDAL.A: {class: m12_sensor, route: internal}
+  FCS.PEDAL.B: {class: m12_sensor, route: internal}
+  FCS.PEDAL.C: {class: m12_sensor, route: internal}
+  FCS.PEDAL.D: {class: m12_sensor, route: internal}
+  FCS.PEDAL.V: {class: recorded, producer: M05, port: rec_fcs_pedal_v}
+  FCS.RSA.P.A: {class: m12_sensor, route: internal}
+  FCS.RSA.P.B: {class: m12_sensor, route: internal}
+  FCS.RSA.P.C: {class: m12_sensor, route: internal}
+  FCS.RSA.P.D: {class: m12_sensor, route: internal}
+  FCS.RSA.P.V: {class: recorded, producer: M05, port: rec_fcs_rsa_p_v}
+  FCS.RSA.Q.A: {class: m12_sensor, route: internal}
+  FCS.RSA.Q.B: {class: m12_sensor, route: internal}
+  FCS.RSA.Q.C: {class: m12_sensor, route: internal}
+  FCS.RSA.Q.D: {class: m12_sensor, route: internal}
+  FCS.RSA.R.A: {class: m12_sensor, route: internal}
+  FCS.RSA.R.B: {class: m12_sensor, route: internal}
+  FCS.RSA.R.C: {class: m12_sensor, route: internal}
+  FCS.RSA.R.D: {class: m12_sensor, route: internal}
+  FCS.RSA.R.V: {class: recorded, producer: M05, port: rec_fcs_rsa_r_v}
+  FCS.RUDDER.CMD: {class: recorded, producer: M05, port: rec_fcs_rudder_cmd}
+  FCS.RUDDER.POS.A: {class: m12_sensor, route: internal}
+  FCS.RUDDER.POS.B: {class: m12_sensor, route: internal}
+  FCS.RUDDER.POS.C: {class: m12_sensor, route: internal}
+  FCS.RUDDER.POS.D: {class: m12_sensor, route: internal}
+  FCS.RUDDER.POS.V: {class: recorded, producer: M05, port: rec_fcs_rudder_pos_v}
+  FCS.SLAT.POS.IB_L.A: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.IB_L.B: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.IB_L.V: {class: recorded, producer: M05, port: rec_fcs_slat_pos_ib_l_v}
+  FCS.SLAT.POS.IB_R.A: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.IB_R.B: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.IB_R.V: {class: recorded, producer: M05, port: rec_fcs_slat_pos_ib_r_v}
+  FCS.SLAT.POS.MB_L.A: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.MB_L.B: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.MB_L.V: {class: recorded, producer: M05, port: rec_fcs_slat_pos_mb_l_v}
+  FCS.SLAT.POS.MB_R.A: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.MB_R.B: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.MB_R.V: {class: recorded, producer: M05, port: rec_fcs_slat_pos_mb_r_v}
+  FCS.SLAT.POS.OB_L.A: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.OB_L.B: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.OB_L.V: {class: recorded, producer: M05, port: rec_fcs_slat_pos_ob_l_v}
+  FCS.SLAT.POS.OB_R.A: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.OB_R.B: {class: m12_sensor, route: internal}
+  FCS.SLAT.POS.OB_R.V: {class: recorded, producer: M05, port: rec_fcs_slat_pos_ob_r_v}
+  FCS.STICK.PITCH.A: {class: m12_sensor, route: internal}
+  FCS.STICK.PITCH.B: {class: m12_sensor, route: internal}
+  FCS.STICK.PITCH.C: {class: m12_sensor, route: internal}
+  FCS.STICK.PITCH.D: {class: m12_sensor, route: internal}
+  FCS.STICK.PITCH.V: {class: recorded, producer: M05, port: rec_fcs_stick_pitch_v}
+  FCS.STICK.ROLL.A: {class: m12_sensor, route: internal}
+  FCS.STICK.ROLL.B: {class: m12_sensor, route: internal}
+  FCS.STICK.ROLL.C: {class: m12_sensor, route: internal}
+  FCS.STICK.ROLL.D: {class: m12_sensor, route: internal}
+  FCS.STICK.ROLL.V: {class: recorded, producer: M05, port: rec_fcs_stick_roll_v}
+  FCS.VOTED.DE: {class: recorded, producer: M05, port: rec_fcs_voted_de}
+  FCS.VOTED.NZ: {class: recorded, producer: M05, port: rec_fcs_voted_nz}
+  FCS.VOTED.Q: {class: recorded, producer: M05, port: rec_fcs_voted_q}
+  FIRE.WARN: {class: not_simulated, gap: G-FIRE, target: m12_sensor, nm: [NM.ENG.NOZZLE_HW]}
+  FTI.ALL: {class: not_simulated, gap: S-FTI, target: none}
+  FUEL.BOOST_P: {class: not_simulated, gap: G-FUEL-SYSTEM, target: m12_sensor, nm: [NM.FUEL.PUMP_WEAR]}
+  FUEL.QTY.TANK.DT_CL: {class: m12_sensor}
+  FUEL.QTY.TANK.DT_IB_L: {class: m12_sensor}
+  FUEL.QTY.TANK.DT_IB_R: {class: m12_sensor}
+  FUEL.QTY.TANK.F1: {class: m12_sensor}
+  FUEL.QTY.TANK.F1A: {class: m12_sensor}
+  FUEL.QTY.TANK.F2: {class: m12_sensor}
+  FUEL.QTY.TANK.WING_L: {class: m12_sensor}
+  FUEL.QTY.TANK.WING_R: {class: m12_sensor}
+  FUEL.REFUEL_EVT: {class: not_simulated, gap: G-FUEL-SYSTEM, target: m12_sensor}
+  FUEL.TANK_PRESS.FLAGS: {class: not_simulated, gap: G-FUEL-SYSTEM, target: m12_sensor}
+  FUEL.TANK_PRESS.PRESS: {class: not_simulated, gap: G-FUEL-SYSTEM, target: m12_sensor}
+  FUEL.TEMP: {class: not_simulated, gap: G-FUEL-SYSTEM, target: m12_sensor}
+  FUEL.TOTAL.FLAGS: {class: not_simulated, gap: G-FUEL-GAUGING, target: recorded, nm: [NM.FUEL.PROBE_DRIFT, NM.STR.FATIGUE]}
+  FUEL.TOTAL.TOTAL: {class: not_simulated, gap: G-FUEL-GAUGING, target: recorded, nm: [NM.FUEL.PROBE_DRIFT, NM.STR.FATIGUE]}
+  HYD.CH_STATUS: {class: not_simulated, gap: G-HYD-DISCRETES, target: recorded}
+  HYD.FILTER_DP: {class: not_simulated, gap: G-HYD-DISCRETES, target: m12_sensor, nm: [NM.HYD.FILTER_LOADING, NM.HYD.FLUID_CONTAM]}
+  HYD.SYS1.LEVEL.LEVEL: {class: m12_sensor}
+  HYD.SYS1.LEVEL.LOW: {class: not_simulated, gap: G-HYD-LEVEL, target: m12_sensor, nm: [NM.HYD.HOSE_FITTING]}
+  HYD.SYS1.LP: {class: not_simulated, gap: G-HYD-DISCRETES, target: m12_sensor}
+  HYD.SYS1.P: {class: m12_sensor}
+  HYD.SYS1.T: {class: m12_sensor}
+  HYD.SYS2.LEVEL.LEVEL: {class: m12_sensor}
+  HYD.SYS2.LEVEL.LOW: {class: not_simulated, gap: G-HYD-LEVEL, target: m12_sensor, nm: [NM.HYD.HOSE_FITTING]}
+  HYD.SYS2.LP: {class: not_simulated, gap: G-HYD-DISCRETES, target: m12_sensor}
+  HYD.SYS2.P: {class: m12_sensor}
+  HYD.SYS2.T: {class: m12_sensor}
+  LG.POSITION: {class: not_simulated, gap: G-LANDING-GEAR, target: m12_sensor, nm: [NM.LG.LOCK_SPRING]}
+  LG.WOW: {class: not_simulated, gap: G-LANDING-GEAR, target: recorded, nm: [NM.LG.STRUT_SERVICE]}
+  LSS.LOX_QTY: {class: not_simulated, gap: G-ECS, target: m12_sensor}
+  LSS.OBOGS.FAIL: {class: not_simulated, gap: G-ECS, target: recorded, nm: [NM.LSS.OBOGS_SIEVE]}
+  LSS.OBOGS.O2: {class: not_simulated, gap: G-ECS, target: m12_sensor, nm: [NM.LSS.OBOGS_SIEVE]}
+  LSS.OBOGS.PRESS: {class: not_simulated, gap: G-ECS, target: m12_sensor, nm: [NM.LSS.OBOGS_SIEVE]}
+  LUI.EFTC: {class: topic, topic: usage.counters, producer: M14}
+  LUI.EOT: {class: topic, topic: usage.counters, producer: M14}
+  LUI.PS3_FULL: {class: topic, topic: usage.counters, producer: M14}
+  LUI.PS3_PART: {class: topic, topic: usage.counters, producer: M14}
+  LUI.SRC: {class: topic, topic: usage.counters, producer: M14}
+  LUI.TAMP: {class: topic, topic: usage.counters, producer: M14}
+  LUI.TYPE1: {class: topic, topic: usage.counters, producer: M14}
+  LUI.TYPE3: {class: topic, topic: usage.counters, producer: M14}
+  MX.ACCUM_PRECHARGE: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.HYD.ACCUM_PRECHARGE]}
+  MX.BORESCOPE: {class: not_simulated, gap: G-INSPECTION, target: topic}
+  MX.BRAKE_WEAR: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.LG.BRAKE_WEAR]}
+  MX.OIL_SERVICING.AMAGB: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.ENG.SEAL_WEAR]}
+  MX.OIL_SERVICING.ENGINE: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.ENG.SEAL_WEAR]}
+  MX.OIL_SERVICING.JFS: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.ENG.SEAL_WEAR]}
+  MX.SOAP.FE: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.ENG.BEARING_SPALL, NM.ENG.OIL_CONDITION]}
+  MX.TYRE_P.MAIN: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.LG.TYRE]}
+  MX.TYRE_P.NOSE: {class: not_simulated, gap: G-INSPECTION, target: topic, nm: [NM.LG.TYRE]}
+  NAV.AHRS.HEADING: {class: recorded, producer: M12, port: rec_nav_ahrs_heading}
+  NAV.AHRS.PITCH: {class: recorded, producer: M12, port: rec_nav_ahrs_pitch}
+  NAV.AHRS.ROLL: {class: recorded, producer: M12, port: rec_nav_ahrs_roll}
+  NAV.GPS.STATUS.FOM: {class: recorded, producer: M12, port: rec_nav_gps_status_fom}
+  NAV.GPS.STATUS.GPS_FIX: {class: recorded, producer: M12, port: rec_nav_gps_status_gps_fix}
+  NAV.GPS.STATUS.INS_MODE: {class: recorded, producer: M12, port: rec_nav_gps_status_ins_mode}
+  NAV.INS.ACCEL.X: {class: recorded, producer: M12, port: rec_nav_ins_accel_x}
+  NAV.INS.ACCEL.Y: {class: recorded, producer: M12, port: rec_nav_ins_accel_y}
+  NAV.INS.ACCEL.Z: {class: recorded, producer: M12, port: rec_nav_ins_accel_z}
+  NAV.INS.ALT: {class: recorded, producer: M12, port: rec_nav_ins_alt}
+  NAV.INS.BODY_RATES.P_NB: {class: recorded, producer: M12, port: rec_nav_ins_body_rates_p_nb}
+  NAV.INS.BODY_RATES.P_WB: {class: recorded, producer: M12, port: rec_nav_ins_body_rates_p_wb}
+  NAV.INS.BODY_RATES.Q_NB: {class: recorded, producer: M12, port: rec_nav_ins_body_rates_q_nb}
+  NAV.INS.BODY_RATES.Q_WB: {class: recorded, producer: M12, port: rec_nav_ins_body_rates_q_wb}
+  NAV.INS.BODY_RATES.R_NB: {class: recorded, producer: M12, port: rec_nav_ins_body_rates_r_nb}
+  NAV.INS.BODY_RATES.R_WB: {class: recorded, producer: M12, port: rec_nav_ins_body_rates_r_wb}
+  NAV.INS.HDG_TRUE: {class: recorded, producer: M12, port: rec_nav_ins_hdg_true}
+  NAV.INS.LAT: {class: recorded, producer: M12, port: rec_nav_ins_lat}
+  NAV.INS.LON: {class: recorded, producer: M12, port: rec_nav_ins_lon}
+  NAV.INS.PITCH: {class: recorded, producer: M12, port: rec_nav_ins_pitch}
+  NAV.INS.ROLL: {class: recorded, producer: M12, port: rec_nav_ins_roll}
+  NAV.INS.VD: {class: recorded, producer: M12, port: rec_nav_ins_vd}
+  NAV.INS.VE: {class: recorded, producer: M12, port: rec_nav_ins_ve}
+  NAV.INS.VN: {class: recorded, producer: M12, port: rec_nav_ins_vn}
+  NAV.RADALT: {class: recorded, producer: M12, port: rec_nav_radalt}
+  NWS.STATE.FEEDBACK_POT: {class: not_simulated, gap: G-LANDING-GEAR, target: m12_sensor}
+  NWS.STATE.FLAGS: {class: not_simulated, gap: G-LANDING-GEAR, target: m12_sensor}
+  NWS.STATE.INPUT_POT: {class: not_simulated, gap: G-LANDING-GEAR, target: m12_sensor}
+  SPS.AMAGB.OIL_LOW: {class: not_simulated, gap: G-SPS-JFS, target: m12_sensor, nm: [NM.SPS.AMAGB_WEAR]}
+  SPS.AMAGB.OIL_T.HIGH: {class: not_simulated, gap: G-SPS-JFS, target: m12_sensor, nm: [NM.SPS.AMAGB_WEAR]}
+  SPS.AMAGB.OIL_T.TEMP: {class: not_simulated, gap: G-SPS-JFS, target: m12_sensor, nm: [NM.SPS.AMAGB_WEAR]}
+  SPS.AMAGB.SPEED: {class: recorded, producer: M09, port: amagb_speed}
+  SPS.JFS.EGT: {class: not_simulated, gap: G-SPS-JFS, target: m12_sensor, nm: [NM.SPS.JFS_HEALTH]}
+  SPS.JFS.OIL_QTY: {class: not_simulated, gap: G-SPS-JFS, target: m12_sensor, nm: [NM.SPS.JFS_HEALTH]}
+  SPS.JFS.SPEED: {class: not_simulated, gap: G-SPS-JFS, target: m12_sensor, nm: [NM.SPS.JFS_HEALTH, NM.SPS.BATT_SOH]}
+  STORES.CONFIG.RELEASE: {class: recorded, producer: M12, port: rec_stores_config_release}
+  STORES.CONFIG.STATION_1: {class: recorded, producer: M12, port: rec_stores_config_station_1}
+  STORES.CONFIG.STATION_2: {class: recorded, producer: M12, port: rec_stores_config_station_2}
+  STORES.CONFIG.STATION_3: {class: recorded, producer: M12, port: rec_stores_config_station_3}
+  STORES.CONFIG.STATION_4: {class: recorded, producer: M12, port: rec_stores_config_station_4}
+  STORES.CONFIG.STATION_5: {class: recorded, producer: M12, port: rec_stores_config_station_5}
+  STORES.CONFIG.STATION_6: {class: recorded, producer: M12, port: rec_stores_config_station_6}
+  STORES.CONFIG.STATION_7: {class: recorded, producer: M12, port: rec_stores_config_station_7}
+  STORES.CONFIG.STATION_8: {class: recorded, producer: M12, port: rec_stores_config_station_8}
+  STORES.CONFIG.STATION_9: {class: recorded, producer: M12, port: rec_stores_config_station_9}
+  STRUCT.NZ_COUNTERS.L1: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L2: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L3: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L4: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L5: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L6: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L7: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.NZ_COUNTERS.L8: {class: topic, topic: usage.counters, producer: M14}
+  STRUCT.STRAIN.MLG: {class: not_simulated, gap: S-FTI, target: none}
+  STRUCT.STRAIN.STORES: {class: not_simulated, gap: S-FTI, target: none}
+  STRUCT.STRAIN.WING: {class: not_simulated, gap: S-FTI, target: none}
+  SYS.EVENT_MARKER: {class: not_simulated, gap: G-EVENT-MARKER, target: m12_sensor}
+  SYS.IDS.ENGINE_SERIAL: {class: topic, topic: sortie.manifest, producer: none, field: engine_serials, gap: G-MANIFEST}
+  SYS.IDS.LRU_SERIALS: {class: topic, topic: sortie.manifest, producer: none, field: lru_serials, gap: G-MANIFEST}
+  SYS.IDS.SORTIE_ID: {class: topic, topic: sortie.manifest, producer: none, field: sortie_id, gap: G-MANIFEST}
+  SYS.IDS.TAIL_NO: {class: topic, topic: sortie.manifest, producer: none, field: tail_no, gap: G-MANIFEST}
+  SYS.PHASE: {class: not_simulated, gap: G-GROUND-PHASE, target: topic}
+  SYS.TIME.RTC: {class: topic, topic: param.samples, producer: M17, field: t_record}
+  SYS.TIME.UTC: {class: topic, topic: param.samples, producer: M17, field: t_utc}
+  USAGE.AB_LIGHTS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.AMAGB_HOURS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.BRAKE_APPLICATIONS.COUNT: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.BRAKE_APPLICATIONS.ENERGY: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.CHUTE_STREAMINGS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.ENGINE_STARTS.AIR_RELIGHTS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.ENGINE_STARTS.GROUND_STARTS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.FLIGHT_HOURS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.GEAR_CYCLES: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.G_EXCEEDANCE.OVERSPEED: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.G_EXCEEDANCE.OVER_AOA: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.G_EXCEEDANCE.OVER_G: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.JFS_STARTS.ATTEMPTS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.JFS_STARTS.CONSECUTIVE: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.JFS_STARTS.SUCCESSES: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.LANDINGS: {class: topic, topic: usage.counters, producer: M14}
+  USAGE.TAC: {class: topic, topic: usage.counters, producer: M14}

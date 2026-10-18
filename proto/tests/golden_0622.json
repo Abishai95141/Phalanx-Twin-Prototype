@@ -1,0 +1,189 @@
+{
+ "source": "video/screens/assets/data.js PHX_DATA (film, as of 2026-06-22 06:00 IST)",
+ "fleet": [
+  {
+   "tail": "TJ101",
+   "state": "NMCD",
+   "since": "27 May 08:00",
+   "since_days": 25.9,
+   "open_jobs": 6,
+   "deferred": 1,
+   "awp": 0,
+   "fh30": 1.6,
+   "sorties30": 2,
+   "fh_total": 60,
+   "tyre_ldg": 6,
+   "last_sortie": "26 May 09:23",
+   "last_ingest": "06 Jun 04:40"
+  },
+  {
+   "tail": "TJ102",
+   "state": "FMC",
+   "since": "19 Jun 11:45",
+   "since_days": 2.8,
+   "open_jobs": 4,
+   "deferred": 1,
+   "awp": 0,
+   "fh30": 12.9,
+   "sorties30": 15,
+   "fh_total": 70.8,
+   "tyre_ldg": 0,
+   "last_sortie": "18 Jun 20:29",
+   "last_ingest": "19 Jun 11:45"
+  },
+  {
+   "tail": "TJ103",
+   "state": "FMC",
+   "since": "20 Jun 06:45",
+   "since_days": 2,
+   "open_jobs": 1,
+   "deferred": 0,
+   "awp": 0,
+   "fh30": 9.1,
+   "sorties30": 11,
+   "fh_total": 55.3,
+   "tyre_ldg": 1,
+   "last_sortie": "19 Jun 20:30",
+   "last_ingest": "20 Jun 06:45"
+  },
+  {
+   "tail": "TJ104",
+   "state": "FMC",
+   "since": "18 Jun 20:30",
+   "since_days": 3.4,
+   "open_jobs": 3,
+   "deferred": 2,
+   "awp": 0,
+   "fh30": 7.6,
+   "sorties30": 8,
+   "fh_total": 57.9,
+   "tyre_ldg": 5,
+   "last_sortie": "19 Jun 20:36",
+   "last_ingest": "19 Jun 21:41"
+  },
+  {
+   "tail": "TJ105",
+   "state": "FMC",
+   "since": "20 Jun 08:30",
+   "since_days": 1.9,
+   "open_jobs": 3,
+   "deferred": 1,
+   "awp": 0,
+   "fh30": 14.4,
+   "sorties30": 15,
+   "fh_total": 78.4,
+   "tyre_ldg": 7,
+   "last_sortie": "19 Jun 20:36",
+   "last_ingest": "20 Jun 08:30"
+  },
+  {
+   "tail": "TJ106",
+   "state": "FMC",
+   "since": "19 Jun 21:45",
+   "since_days": 2.3,
+   "open_jobs": 4,
+   "deferred": 1,
+   "awp": 0,
+   "fh30": 14.5,
+   "sorties30": 17,
+   "fh_total": 76.6,
+   "tyre_ldg": 5,
+   "last_sortie": "18 Jun 20:29",
+   "last_ingest": "20 Jun 06:27"
+  },
+  {
+   "tail": "TJ107",
+   "state": "FMC",
+   "since": "19 Jun 13:45",
+   "since_days": 2.7,
+   "open_jobs": 7,
+   "deferred": 3,
+   "awp": 0,
+   "fh30": 10.7,
+   "sorties30": 13,
+   "fh_total": 49.6,
+   "tyre_ldg": 3,
+   "last_sortie": "18 Jun 20:29",
+   "last_ingest": "19 Jun 22:27"
+  },
+  {
+   "tail": "TJ108",
+   "state": "NMCS",
+   "since": "03 Apr 08:00",
+   "since_days": 79.9,
+   "open_jobs": 5,
+   "deferred": 3,
+   "awp": 1,
+   "fh30": 0,
+   "sorties30": 0,
+   "fh_total": 48.7,
+   "tyre_ldg": 0,
+   "last_sortie": "02 Apr 20:30",
+   "last_ingest": "11 Jun 11:49"
+  }
+ ],
+ "kpis_d30": {
+  "mc": 0.545,
+  "fmc": 0.526,
+  "tnmcs": 0.2537
+ },
+ "kpis_all": {
+  "mc": 0.6084,
+  "fmc": 0.5894
+ },
+ "alert_rows": 1192,
+ "bit": 921,
+ "cautions": 271,
+ "maint_rows": 9202,
+ "counters": 19404,
+ "shop": {
+  "rows": 84,
+  "linked_asof": 80,
+  "linked_film": 81,
+  "note": "film linked one finding with a COMPONENT_LIFE REMOVE ingested after the snapshot; as-of discipline gives 80"
+ },
+ "tj107": {
+  "sorties": 61,
+  "hyd101_sorties": 59,
+  "fh": 49.6,
+  "landings": 116,
+  "last_ingest": "19 Jun 22:27",
+  "hyd101_consecutive": 34,
+  "pump_removals": 30,
+  "pumps": {
+   "SYN-PN-HYDP#1": [
+    "HYDP-000010",
+    true
+   ],
+   "SYN-PN-HYDP#2": [
+    "HYDP-000002",
+    false
+   ]
+  },
+  "pump_removals_note": "removal jobs from COMPONENT_LIFE REMOVE records or job text, once per job; the film counted REMOVE records only (28) \u2014 sulur-26061-0002 and sulur-26156-0002 are known only from job text (S2, triage/golden-22jun.md \u00a74)"
+ },
+ "fleet_overrides": {
+  "TJ101": {
+   "open_jobs": 3
+  },
+  "TJ102": {
+   "open_jobs": 2
+  },
+  "TJ103": {
+   "open_jobs": 0
+  },
+  "TJ104": {
+   "open_jobs": 2
+  },
+  "TJ105": {
+   "open_jobs": 1
+  },
+  "TJ107": {
+   "open_jobs": 5
+  },
+  "TJ108": {
+   "open_jobs": 4
+  }
+ },
+ "fleet_overrides_note": "the film counted the data layer's duplicate snag records ('<job>-D', left open forever) as open jobs; we drop them (S2, 17 Oct 2026)"
+}

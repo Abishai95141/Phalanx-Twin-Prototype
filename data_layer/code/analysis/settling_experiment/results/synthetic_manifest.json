@@ -1,0 +1,33 @@
+{
+ "out_dir": "/Users/abishaikc/Phalanx/research_sources/settling_synthetic",
+ "variants": [
+  "T1_L0_primary",
+  "T1_L1_primary",
+  "T1_L2_primary",
+  "T1_L3_primary",
+  "T1_L4_primary",
+  "T1_L5_primary",
+  "T1_L6_primary",
+  "T1_L6p_primary",
+  "T2_L0_primary",
+  "T2_L1_primary",
+  "T2_L2_primary",
+  "T2_L3_primary",
+  "T2_L4_primary",
+  "T2_L5_primary",
+  "T2_L6_primary",
+  "T2_L6p_primary",
+  "T1_L0_low",
+  "T1_L6_low",
+  "T2_L0_low",
+  "T2_L6_low",
+  "T1_L0_high",
+  "T1_L6_high",
+  "T2_L0_high",
+  "T2_L6_high"
+ ],
+ "n_flights": 229,
+ "files_per_flight": 24,
+ "roundtrip_checked_every": 50,
+ "seconds": 497.8648269176483
+}

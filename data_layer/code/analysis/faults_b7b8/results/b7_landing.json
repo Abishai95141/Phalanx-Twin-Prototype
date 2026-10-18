@@ -1,0 +1,52 @@
+{
+ "brake_life_landings": 1426.6314390943132,
+ "high_wear": {
+  "brake_energy_per_wheel_j": 3721331.25,
+  "brake_wear_per_landing": 0.0007009518874999999,
+  "peak_brake_t_k": 500.92065246988557,
+  "sortie_wear": {
+   "brake_energy_j": [
+    3721331.25,
+    3721331.25
+   ],
+   "brake_wear_accrued": [
+    0.0007009518874999999,
+    0.0007009518874999999
+   ],
+   "landings": [
+    1.0
+   ],
+   "tyre_wear_accrued": [
+    0.12486916111111107,
+    0.12486916111111107
+   ]
+  },
+  "tyre_wear_per_landing": 0.12486916111111107,
+  "wear": 0.9
+ },
+ "low_wear": {
+  "brake_energy_per_wheel_j": 3721331.25,
+  "brake_wear_per_landing": 0.0007009518874999999,
+  "peak_brake_t_k": 439.1840900952059,
+  "sortie_wear": {
+   "brake_energy_j": [
+    3721331.25,
+    3721331.25
+   ],
+   "brake_wear_accrued": [
+    0.0007009518874999999,
+    0.0007009518874999999
+   ],
+   "landings": [
+    1.0
+   ],
+   "tyre_wear_accrued": [
+    0.12486916111111107,
+    0.12486916111111107
+   ]
+  },
+  "tyre_wear_per_landing": 0.12486916111111107,
+  "wear": 0.1
+ },
+ "tyre_life_landings": 8.008382462905953
+}

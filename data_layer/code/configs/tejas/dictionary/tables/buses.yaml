@@ -1,0 +1,84 @@
+# SYNTHETIC Phalanx ICD topology (not the real Tejas ICD; RULES.md rule 6, architecture §19).
+# The real Tejas bus allocation, bus-controller and RT assignments and message rates are not public
+# (tejas_avionics_and_parameter_inventory.md Q1 Gaps). This topology follows that note's [ASSUMPTION] inference:
+# AV-MUX-1 (mission), AV-MUX-2 (vehicle systems), WPN-MUX (weapon), CDR and HUMS DAU as listen-only bus monitors,
+# CWS on ARINC-429 + discretes, ADC -> DFCC on RS-422 (rules R-ICD-TOPOLOGY, R-ICD-RT-MAP).
+format: phalanx.dictionary.buses/1
+synthetic: true
+label: "SYNTHETIC Phalanx ICD - not the real Tejas ICD"
+mil1553:
+  AV-MUX-1:
+    title: Avionics mission bus (synthetic)
+    bc: OAC
+    monitors: [CDR, HUMS_DAU]
+    prov: R-ICD-TOPOLOGY
+    rts:
+      INGPS: {address: 10, prov: R-ICD-RT-MAP}
+      AHRS: {address: 11, prov: R-ICD-RT-MAP}
+      RADAR: {address: 12, prov: R-ICD-RT-MAP}
+      SMS: {address: 13, prov: R-ICD-RT-MAP}
+  AV-MUX-2:
+    title: Avionics vehicle-systems bus (synthetic)
+    bc: OAC
+    monitors: [CDR, HUMS_DAU]
+    prov: R-ICD-TOPOLOGY
+    rts:
+      DFCC: {address: 1, mirrors: [2, 3, 4], prov: R-ICD-DFCC}
+      FADEC: {address: 5, prov: R-ICD-FADEC}
+      BHEEM_EU: {address: 7, prov: R-ICD-RT-MAP}
+      ECFM_C: {address: 8, prov: R-ICD-RT-MAP}
+  WPN-MUX:
+    title: Weapon bus (MIL-STD-1760C stores; pylon RTs outside the inventory)
+    bc: SMS
+    monitors: []
+    prov: R-ICD-TOPOLOGY
+    rts: {}
+arinc429:
+  RADALT-OAC:
+    title: Radar altimeter to OAC (ARINC-429, synthetic labels)
+    transmitter: RADALT
+    receivers: [OAC]
+    speed: high
+    recorded: true
+    prov: R-ICD-429
+  CWS-OAC:
+    title: CWS electronic unit to OAC (ARINC-429 output, synthetic labels)
+    transmitter: CWS
+    receivers: [OAC]
+    speed: low
+    recorded: true
+    prov: R-ICD-429
+rs422:
+  ADC-DFCC:
+    title: ADC unit n to DFCC channel n (RS-422, one link per channel)
+    transmitter: ADC
+    receivers: [DFCC]
+    recorded: false
+    prov: R-ICD-RS422
+  FTP-DFCC:
+    title: Flight Test Panel to DFCC (RS-422; test aircraft only)
+    transmitter: FTP
+    receivers: [DFCC]
+    recorded: false
+    prov: R-ICD-RS422
+fti_pcm:
+  FTI-PCM:
+    title: FTI PCM stream (synthetic minor frame; test aircraft only)
+    transmitter: FTI_DAS
+    word_bits: 12
+    minor_frame_hz: 64
+    recorded: true
+    prov: R-ICD-FTI-PCM
+# Setup of the SYNTHETIC recorder R-1 (0.1.2, rule R-REC-SETUP): recording-event types and the time-based index.
+# The TMATS generator emits R-1\EV and R-1\IDX from this section (M16 overlaid them before; W1.7 A-W1.7-12).
+recorder:
+  id: PHALANX-REC
+  prov: R-REC-SETUP
+  events:
+    - {id: REC_START, description: "Recording started (recorder event)", type: R}
+    - {id: TIME_LOCK_LOST, description: "Time source lock lost, TCG free-running (recorder event)", type: R}
+    - {id: TIME_LOCK_REGAINED, description: "Time source lock regained (recorder event)", type: R}
+  event_priority: 1
+  event_initial_capture: false
+  event_limit_count: 65535
+  index: {type: time, interval_s: 10}

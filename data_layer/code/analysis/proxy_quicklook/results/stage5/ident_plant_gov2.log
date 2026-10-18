@@ -1,0 +1,11 @@
+[2 plant] 4 segments, ('i_lp', 'i_hp', 'tau_egt', 'tau_ff') from [3.093  1.3599 0.81   0.218 ]; words [0, 1, 2, 3]
+    it 1: cost 10769400.6 theta [3.026  1.1447 1.6311 0.439 ]
+    it 2: cost 9499387.2 theta [3.7549 1.9557 3.2847 0.884 ]
+    it 3: cost 8871786.3 theta [3.7485 1.7524 4.3219 1.7802]
+    it 4: cost 8849269.1 theta [3.7548 1.7094 4.344  1.5287]
+    it 5: cost 8849234.6 theta [3.77   1.7172 4.3561 1.5385]
+    it 6: cost 8849231.7 theta [3.7665 1.7138 4.3526 1.5364]
+    it 1: cost 8870661.5 theta [3.758  1.7069 4.3326 1.5334]
+    it 2: cost 8870660.1 theta [3.7597 1.7089 4.334  1.5343]
+    it 3: cost 8870660.1 theta [3.7593 1.709  4.3339 1.5342]
+wrote runs/proxy_quicklook/st5/ident_plant_gov2.json

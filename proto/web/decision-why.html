@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Why — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: auto auto; height: auto; }
+  .tabs-row { grid-column: 1 / -1; margin-top: -6px; }
+  .ev .r2 { grid-template-columns: 150px minmax(0, 1fr) 210px 28px; min-height: 66px; }
+  .ev .d { font-size: 15px; font-weight: 650; }
+  .ev .d small { display: block; font-size: 13px; color: var(--ink-4); font-weight: 500; margin-top: 2px; }
+  .ev .ing { font: 500 13px var(--mono); color: var(--ink-3); text-align: right; }
+  .ev .ok { color: var(--ok); width: 20px; height: 20px; }
+  .rule { display: flex; flex-direction: column; gap: 0; margin-top: 22px; position: relative; }
+  .rule::before { content: ""; position: absolute; left: 15px; top: 18px; bottom: 40px; width: 1.5px; background: var(--line); }
+  .rs { display: grid; grid-template-columns: 32px 1fr; gap: 16px; padding-bottom: 26px; position: relative; }
+  .rs .dot { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 1.5px solid var(--line-strong); z-index: 1; font: 700 12px var(--mono); color: var(--ink-3); }
+  .rs.hit .dot { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .rs .h { font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+  .rs .p { font-size: 14px; color: var(--ink-3); margin-top: 4px; line-height: 1.5; }
+  .rs .in { display: inline-block; margin-top: 8px; font: 600 12.5px var(--mono); color: var(--accent-ink); background: var(--accent-wash); padding: 3px 8px; border-radius: 6px; }
+  .wn .r2 { grid-template-columns: 240px minmax(0, 1fr) 190px; min-height: 86px; }
+  .wn .alt { font: 650 14px var(--mono); }
+  .wn .verdict { justify-self: end; }
+  .tab-whynot { display: none; } body.whynot .tab-why { display: none; } body.whynot .tab-whynot { display: flex; }
+  @media (max-width: 1199px) {
+    .ev .r2 { grid-template-columns: 120px minmax(0, 1fr) 180px 24px; }
+  }
+  @media (max-width: 699px) {
+    .ev .r2 { grid-template-columns: minmax(0, 1fr) 24px; row-gap: 4px; padding-top: 12px; padding-bottom: 12px; min-height: 0; }
+    .ev .r2 > :nth-child(1) { grid-column: 1; }
+    .ev .r2 > :nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+    .ev .r2 > :nth-child(3) { grid-column: 1 / -1; grid-row: 3; justify-self: start; text-align: left; }
+    .ev .r2 > :nth-child(4) { grid-column: 2; grid-row: 1; justify-self: end; }
+    .wn .r2 { grid-template-columns: minmax(0, 1fr); row-gap: 6px; padding-top: 14px; padding-bottom: 14px; min-height: 0; }
+  }
+</style>
+</head>
+<body data-page="why">
+<div id="content">
+<div class="v2">
+  <div class="tabs-row" id="tabs"></div>
+
+  <!-- WHY: evidence -->
+  <div class="panel2 c7 ev tab-why" data-shot="evidence">
+    <div class="row"><span class="kick">Evidence</span><div class="grow"></div><span class="tier diag">DIAG</span></div>
+    <div class="t2" id="ev-t2"></div>
+    <div class="sub2" id="ev-sub"></div>
+    <div class="rows2" style="margin-top:16px" id="evrows"></div>
+    <div class="lnk" style="margin-top:22px;cursor:pointer" id="ev-prov">Open provenance <i data-i="arrowRight"></i></div>
+  </div>
+  <!-- WHY: rule -->
+  <div class="panel2 c5 tab-why" data-shot="rule">
+    <div class="row"><span class="kick">Rule</span><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="t2">Which rule fired, step by step</div>
+    <div class="rule" id="rule"></div>
+    <div class="note" style="margin-top:6px" id="rule-note"></div>
+  </div>
+
+  <!-- WHY NOT -->
+  <div class="panel2 c8 wn tab-whynot" data-shot="whynot">
+    <span class="kick">Why not</span>
+    <div class="t2">Why the other options lose</div>
+    <div class="rows2" style="margin-top:14px" id="whynot"></div>
+  </div>
+  <div class="panel2 c4 soft tab-whynot" data-shot="donothing" id="donothing"></div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const day = t => String(t || '').split(' ').slice(0, 2).join(' '), hm = t => String(t || '').split(' ')[2] || '';
+PHX_API.boot({ page: 'why', title: 'Why',
+  async load(A) {
+    const [, id] = await Promise.all([A.want('epoch'), PHX_API.boardItem(A)]);
+    await A.need('issue', id);
+  },
+  notFound: PHX_API.notOnBoard,
+  render() {
+    const I = PHX_ISSUE, C = PHX.clock(), E = I.evidence, R = E.rows;
+    $('tabs').innerHTML = PHX.issueTabs('why', I.id, I.workbench);
+    $('ev-t2').textContent = R.every(r => r.before_snapshot) ? `Every record was known before the ${C.snapshot} snapshot` : `Some records were ingested after the ${C.snapshot} snapshot`;
+    $('ev-sub').textContent = E.cited > R.length ? `The ${PHX.words(R.length, false)} latest ${I.code} reports on ${I.tail} — ${E.cited} are cited in total.`
+      : `The ${PHX.words(R.length, false)} ${I.code} report${R.length === 1 ? '' : 's'} on ${I.tail} this recommendation cites.`;
+    $('evrows').innerHTML = R.map((e, i) => `<div class="r2" data-ev="${i}" style="cursor:pointer"><div class="d">${esc(day(e.t_occ) || '—')}<small>${e.t_occ ? esc(hm(e.t_occ)) + ' sortie' : esc(e.sortie || 'record')}</small></div><span><span class="rid">${esc(e.rid.slice(0, 12))}…</span></span><span class="ing">ingested ${esc(e.t_ingest)}</span><i data-i="${e.before_snapshot ? 'check' : 'alert'}" class="ok"></i></div>`).join('');
+    $('rule').innerHTML = I.rule.steps.map((r, i) => `<div class="rs ${r.hit ? 'hit' : ''}"><span class="dot">${i + 1}</span><div><div class="h">${esc(r.h)}</div><div class="p">${esc(r.p)}</div>${r.tag ? `<span class="in">${esc(r.tag)}</span>` : ''}</div></div>`).join('');
+    $('rule-note').textContent = I.rule.note || '';
+    $('whynot').innerHTML = I.whynot.length ? I.whynot.map(w => `<div class="r2"><span class="alt">${esc(w.alt)}</span><div class="why" style="font-size:14.5px;color:var(--ink-2)">${esc(w.text)}</div><span class="pill grey verdict">${esc(w.verdict)}</span></div>`).join('')
+      : '<div class="note" style="margin-top:6px">No alternative actions were scored for this item.</div>';
+    const N = I.donothing;
+    $('donothing').innerHTML = N ? `<span class="kick">If you do nothing</span>
+    <div class="t2">${esc(N.tail)} over the next ${N.horizon_days} days</div>
+    <div class="big" style="margin-top:26px">${N.status_quo}<small>% mission capable</small></div>
+    <div class="ci" style="margin-top:8px">status quo · ${N.pairs} paired simulations</div>
+    <div class="sep2"></div>
+    <div class="big" style="color:var(--fmc)">${N.with_plan}<small>% with the plan</small></div>
+    <div class="ci" style="margin-top:8px">same futures, plan applied at ${C.issue}</div>
+    <div class="note" style="margin-top:28px">${esc(N.note || '')}</div>`
+      : '<span class="kick">If you do nothing</span><div class="t2">No do-nothing forecast yet</div><div class="note" style="margin-top:12px">It appears when this item\u2019s paired simulations finish. Items with no availability effect are not simulated.</div>';
+    if (PHX_API.q.get('tab') === 'whynot') { document.body.classList.add('whynot'); $('t-why').classList.remove('on'); $('t-whynot').classList.add('on'); }
+    return { page: 'why', title: I.title, sub: 'Why the system recommends this — and why not the alternatives', chips: PHX.clockChips(), after: wire };
+  } });
+function wire() {
+  PHX.links();
+  const I = PHX_ISSUE;
+  document.getElementById('ev-prov').addEventListener('click', () => { location.href = PHX_API.href('provenance.html', I.evidence.order_id ? { order: I.evidence.order_id } : {}); });
+  document.querySelectorAll('[data-ev]').forEach(el => el.addEventListener('click', () => {
+    const e = I.evidence.rows[+el.dataset.ev];
+    const kv = [['Record id', e.rid], ['Sortie', e.sortie], ['Occurred', e.t_occ], ['Ingested', e.t_ingest], ['Persistence', e.persistence], ['Mechanism', e.mech], ['Before the snapshot', e.before_snapshot ? 'yes' : 'no']]
+      .filter(r => r[1] !== undefined && r[1] !== '' && r[1] !== null);
+    PHX.sheet(`<span class="kick">Evidence record · ${PHX.esc(I.code)} · ${PHX.esc(I.tail)}</span><div class="t2" style="margin-top:6px">${PHX.esc(e.t_occ || e.rid.slice(0, 12))}</div>
+      <div class="kv2" style="margin:22px 0 26px;font-size:14.5px">${kv.map(r => `<span>${r[0]}</span><span class="mono" style="font-size:13px">${PHX.esc(r[1])}</span>`).join('')}</div>
+      <button class="btn" data-close>Close</button>`);
+  }));
+}
+</script>
+</body></html>

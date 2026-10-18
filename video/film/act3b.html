@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/phx-film.js"></script>
+<style>
+@font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; }
+:root { --ink:#0B0D10; --ink-2:#31353B; --ink-3:#62676F; --ink-4:#8E939A; --ink-5:#B9BDC2; --line:#E6E6E2; --line-2:#EFEFEC;
+  --accent:#E8743B; --accent-ink:#B4511F; --accent-wash:#FDF1EA; --accent-line:#F6CDB6; --wire:#2563C9; --wire-wash:#EAF1FC; --ok:#1F8A4C; --ok-wash:#EAF6EF; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #fff; font-family: Manrope, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.grid { position: absolute; inset: -96px; background-image: linear-gradient(#F3F3F0 1px, transparent 1px), linear-gradient(90deg, #F3F3F0 1px, transparent 1px); background-size: 48px 48px; }
+.cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.host { position: absolute; inset: 0; z-index: 1; }
+.ov { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 2; pointer-events: none; }
+.spot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 16px; box-shadow: 0 0 0 3200px #fff; }
+.ring { position: absolute; left: 0; top: 0; overflow: visible; }
+.cur { position: absolute; left: 0; top: 0; width: 30px; height: 30px; }
+.cur svg { display: block; filter: drop-shadow(0 3px 6px rgba(16,18,22,.25)); }
+.tag { position: absolute; height: 30px; padding: 0 12px; border-radius: 15px; background: #fff; border: 1.5px solid var(--accent-line); color: var(--accent-ink); font: 700 13px "JetBrains Mono", monospace; display: flex; align-items: center; gap: 8px; white-space: nowrap; box-shadow: 0 12px 26px -14px rgba(16,18,22,.3); }
+.idcard { position: absolute; padding: 18px 20px 16px; border-radius: 16px; background: #fff; border: 1.5px solid var(--accent-line); box-shadow: 0 0 0 5px var(--accent-wash), 0 24px 50px -26px rgba(16,18,22,.32); }
+.idcard .k { font: 700 11.5px "JetBrains Mono", monospace; letter-spacing: .12em; color: var(--accent-ink); }
+.idcard .v { margin-top: 10px; font: 500 14px "JetBrains Mono", monospace; line-height: 1.55; color: var(--ink-2); white-space: nowrap; }
+.idcard .v b { font-weight: 650; color: var(--ink); }
+.idcard .rt { margin-top: 12px; display: flex; align-items: center; gap: 10px; font: 600 14px Manrope, sans-serif; color: var(--ink-3); white-space: nowrap; }
+.idcard .rb { font: 700 12.5px "JetBrains Mono", monospace; color: var(--ink-2); background: #F1F1EE; border-radius: 8px; padding: 4px 9px; }
+.idcard .ok { color: var(--ok); font-weight: 800; }
+.flychip { position: absolute; left: 0; top: 0; height: 44px; padding: 0 16px; border-radius: 11px; background: var(--ok-wash); border: 1px solid #BFE3CD; color: var(--ok); font: 650 15px Manrope, sans-serif; display: flex; align-items: center; gap: 8px; white-space: nowrap; transform-origin: 0 0; }
+.hfly { position: absolute; left: 0; top: 0; font: 650 13px "JetBrains Mono", monospace; color: var(--ink); white-space: nowrap; line-height: 1.2; transform-origin: 0 0; }
+/* state overrides (the frozen pages keep their states in body classes, which do not survive the mount) */
+#sc-dec .hero { position: relative; }
+#sc-dec .status-ok { display: inline-flex !important; position: absolute; right: 32px; top: 50%; margin-top: -22px; }
+#sc-ep .frost, #sc-sub .frost { display: none !important; }
+#sc-ep .lel-card, #sc-sign .lel-card { display: none !important; }
+#sc-sub .gate { display: none !important; }
+#sc-sub .lel-card { display: flex !important; }
+#sc-sub .s-sub { display: inline-flex !important; }
+#sc-sub .s-pre { display: none !important; }
+#sc-ep .s-sub, #sc-sign .s-sub { display: none !important; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080">
+  <div class="grid" id="gridEnd"></div>
+
+  <!-- S28 · Plan & what-if -->
+  <div id="cP" class="cam" data-layout-allow-overflow>
+    <div class="layer"><div id="sc-plan" class="host" data-composition-id="b3plan" data-composition-src="screens/b3plan.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="ov" id="ovP"></div>
+  </div>
+
+  <!-- S29 · Spares -->
+  <div id="cS" class="cam" data-layout-allow-overflow>
+    <div class="layer"><div id="sc-spares" class="host" data-composition-id="b3spares" data-composition-src="screens/b3spares.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="ov" id="ovS"></div>
+  </div>
+
+  <!-- S30 · TJ107 decision, approved -->
+  <div id="cD" class="cam" data-layout-allow-overflow>
+    <div class="layer"><div id="sc-dec" class="host" data-composition-id="b3dec" data-composition-src="screens/b3dec.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="ov" id="ovD"></div>
+  </div>
+
+  <!-- S30 · Orders 08:00 (07:52 → sign → submitted), one camera -->
+  <div id="cE" class="cam" data-layout-allow-overflow>
+    <div class="layer" id="lSb"><div id="sc-sub" class="host" data-composition-id="b3sub" data-composition-src="screens/b3sub.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="layer" id="lEp"><div id="sc-ep" class="host" data-composition-id="b3epoch" data-composition-src="screens/b3epoch.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="layer" id="lSg"><div id="sc-sign" class="host" data-composition-id="b3sign" data-composition-src="screens/b3sign.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="ov" id="ovE"></div>
+  </div>
+
+  <!-- S31–S32 · Provenance → Assurance (shared chrome, one camera) -->
+  <div id="cA" class="cam" data-layout-allow-overflow>
+    <div class="layer" id="lPv"><div id="sc-prov" class="host" data-composition-id="b3prov" data-composition-src="screens/b3prov.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="layer" id="lAs"><div id="sc-assure" class="host" data-composition-id="b3assure" data-composition-src="screens/b3assure.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="ov" id="ovA"></div>
+  </div>
+
+  <!-- S32 · Drift -->
+  <div id="cR" class="cam" data-layout-allow-overflow>
+    <div class="layer"><div id="sc-drift" class="host" data-composition-id="b3drift" data-composition-src="screens/b3drift.html" data-start="0" data-duration="38.3333" data-width="1920" data-height="1080" data-no-timeline></div></div>
+    <div class="ov" id="ovR"></div>
+  </div>
+
+  <!-- shared-element fliers (screen space) -->
+  <div class="flychip" id="flyChip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Approved · SEO · 06:41</div>
+  <span class="hfly" id="hfly">748653aa6bcf4544</span>
+</div>
+
+<script>
+(function () {
+  const Q = (s, r = document) => r.querySelector(s), QA = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const NS = 'http://www.w3.org/2000/svg';
+  const END = 38.3333;
+  // narration starts in act seconds; word offsets come from video/edit/vo/S28–S32.tokens.json
+  const V28 = 0.28, V29 = 9.48, V30 = 18.6133, V31 = 27.1466, V32 = 33.1466;
+
+  function build() {
+    const bx = e => PHXF.box(e);
+    const U = (...bs) => { const x = Math.min(...bs.map(b => b.x)), y = Math.min(...bs.map(b => b.y)), r = Math.max(...bs.map(b => b.x + b.w)), d = Math.max(...bs.map(b => b.y + b.h)); return { x, y, w: r - x, h: d - y, cx: (x + r) / 2, cy: (y + d) / 2 }; };
+    // camera that centres (cx, cy) at scale s; clamped inside the app window (52..1868 × 52..1028, past its rounded corners) whenever the zoom
+    // allows it, so a push-in never shows the window's drop shadow as a grey band; otherwise to the stage
+    const CS = (cx, cy, s) => {
+      const ax = (c, n, a0, a1) => { let v = n / 2 - c * s; const lo = (a1 - a0) * s >= n ? n - a1 * s : n - n * s, hi = (a1 - a0) * s >= n ? -a0 * s : 0; return Math.min(hi, Math.max(lo, v)); };
+      return { scale: s, x: ax(cx, 1920, 52, 1868), y: ax(cy, 1080, 52, 1028) };
+    };
+    const scr = (st, b) => ({ x: st.x + b.x * st.scale, y: st.y + b.y * st.scale, w: b.w * st.scale, h: b.h * st.scale, cx: st.x + b.cx * st.scale, cy: st.y + b.cy * st.scale });
+    const mk = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; parent.appendChild(e); return e; };
+    const sv = (tag, a, parent) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); parent.appendChild(e); return e; };
+    const wrapText = (el) => { const tn = Array.from(el.childNodes).find(n => n.nodeType === 3 && n.textContent.trim()); const sp = document.createElement('span'); sp.textContent = tn.textContent; el.replaceChild(sp, tn); return sp; };
+    const rnd = (k, f) => { const x = Math.sin((k + 1) * 9301 + f * 49297) * 233280; return x - Math.floor(x); };
+
+    /* =========================================================================================
+       PASS 1 · DOM prep + every measurement (before any tween or camera transform exists)
+       ========================================================================================= */
+    // ---- S28 plan
+    const ovP = Q('#ovP');
+    const heroNum = wrapText(Q('#b3plan-heroV'));
+    const pT = Q('#b3plan-pairsT'); pT.innerHTML = pT.innerHTML.replace('29', '<span id="p29">29</span>'); const p29 = Q('#p29'); p29.style.display = 'inline-block';
+    const fsvg = Q('#b3plan-forest svg'), ftx = QA('text', fsvg), ft = s => ftx.find(t => t.textContent === s);
+    const bMC = bx(Q('rect[fill="var(--accent-wash)"]', fsvg));
+    const bMH = U(bx(ft('Maintenance man-hours')), bx(ftx.find(t => t.textContent.includes('116 h'))));
+    const bGR = U(bx(ft('In-flight failures')), bx(ft('Guardrail · interval includes zero')), bx(ft('+0.067')));
+    const bPairs = bx(Q('#sc-plan [data-shot="pairs"]')), bP29 = bx(pT);
+    const ciL = QA('line[stroke-width="2.4"]', fsvg), ciD = QA('circle[r="5.5"]', fsvg);
+    const chg = ftx.filter(t => t.getAttribute('text-anchor') === 'end' && t.getAttribute('font-weight') === '650');
+    const psvg = Q('#b3plan-pairs svg'), pL = QA('line[stroke-width="1.6"]', psvg), pPl = QA('circle[r="3.4"]', psvg), pTri = QA('path', psvg);
+    // ---- S29 spares
+    const ovS = Q('#ovS');
+    const ageNum = wrapText(Q('#b3spares-age'));
+    const stl = Q('#b3spares-tl svg'), stx = QA('text', stl);
+    const redL = Q('line[stroke-width="6"]', stl), dotL = Q('line[stroke-dasharray="2 5"]', stl);
+    const c7 = QA('circle[r="7"]', stl), cExp = c7[0], cSq = c7[1];
+    const tExp = stx.find(t => t.textContent.startsWith('expedited')), tSq = stx.find(t => t.textContent.startsWith('status quo')), t85 = stx.find(t => t.textContent.startsWith('85 days'));
+    const conn = QA('line', stl).find(l => l.getAttribute('y1') === '54'), brk = Q('path', stl);
+    const bVer = bx(Q('#sc-spares .verdict')), bV30 = bx(Q('#b3spares-v30').parentElement), bV400 = bx(Q('#b3spares-v400').parentElement);
+    const rowT105 = Q('#b3spares-cons .r2.on'), bT105 = bx(rowT105), pips = QA('.tm i.hot', rowT105);
+    const s3 = Q('#sc-spares .s3'), bS3 = bx(s3), gS3 = Q('.gate', s3), bG3 = bx(gS3);
+    const navS = Q('#sc-spares .nav a[href="decisions.html"]'), bNav = bx(navS);
+    // ---- S30 decision
+    const ovD = Q('#ovD');
+    const acts = Q('#sc-dec .hero .acts'), appBtn = Q('.btn.primary', acts), okChip = Q('#sc-dec .status-ok');
+    const bApp = bx(appBtn), bChip = bx(okChip), bHero = bx(Q('#sc-dec .hero')), bNavD = bx(Q('#sc-dec .nav a[href="decisions.html"]'));
+    // ---- S30 orders (07:52 · sign · submitted share one camera)
+    const ovE = Q('#ovE');
+    const oRows = QA('#b3epoch-ordrows .r2'), bR34 = U(bx(oRows[2]), bx(oRows[3]));
+    const stE = QA('#sc-ep .steps .st'), bFroz = bx(stE[1]);
+    const chE = QA('#sc-ep .page-head .chip'), bSigChip = bx(chE[1]), needPill = Q('.pill', oRows[3]);
+    const sheet = Q('#sc-sign .sheet'), frost = Q('#sc-sign .frost'), signBtn = Q('.btn.primary', sheet), bSheet = bx(sheet), bSignBtn = bx(signBtn);
+    const subPills = QA('#b3sub-ordrows .pill.st'), signed = Q('#b3sub-ordrows .auth.human'), bSigned = bx(signed);
+    const subChips = QA('#sc-sub .page-head .chip'), subSt = QA('#sc-sub .steps .st').filter(e => getComputedStyle(e).display !== 'none');
+    const lel = QA('#sc-sub .lel .r'), lelH = QA('#sc-sub .lel .r .h'), lnk = Q('#sc-sub .lnk'), bLnk = bx(lnk);
+    const bLel = bx(Q('#sc-sub .lel-card')), bLast = bx(lel[lel.length - 1]);
+    const idc = mk('div', 'idcard', ovE, `<div class="k">ORDER ID · TJ107 · TROUBLESHOOT</div><div class="v">phx:P-DEC-01:1.4.0:20260622T0800:<br>TJ107:TROUBLESHOOT:<b id="idhash">748653aa6bcf4544</b></div><div class="rt"><span class="rb" id="idrb">↻ retry</span><span id="idsame">→ same order id <span class="ok">✓</span></span></div>`);
+    const idX = bLel.x + 26, idY = bLast.y + bLast.h + 30;
+    idc.style.left = idX + 'px'; idc.style.top = idY + 'px'; idc.style.width = (bLel.w - 52) + 'px';
+    const idh = Q('#idhash'), bIdh = bx(idh), bIdc = bx(idc);
+    const fc = Q('#flyChip'), fcW = fc.offsetWidth, fcH = fc.offsetHeight;
+    // ---- S31 provenance
+    const ovA = Q('#ovA');
+    const qBar = Q('#sc-prov .q'), bQ = bx(qBar), oid = Q('#b3prov-oid'), oidB = Q('b', oid), kbd = Q('.kbd', qBar), bKbd = bx(kbd);
+    const oidPre = wrapText(oid);
+    const evs = QA('#b3prov-chain .ev'), hxs = evs.map(e => Q('.hx', e));
+    const pv = hxs.map(h => { const tn = Array.from(h.childNodes).find(n => n.nodeType === 3 && n.textContent.trim()); const s = tn.textContent, k = s.search(/\S/);
+      const sp = document.createElement('span'); sp.textContent = s.substr(k, 6);
+      h.insertBefore(document.createTextNode(s.substr(0, k)), tn); h.insertBefore(sp, tn); h.insertBefore(document.createTextNode(s.substr(k + 6)), tn); h.removeChild(tn); return sp; });
+    const hb = hxs.map(h => Q('b', h));
+    [...pv, ...hb].forEach(e => { e.style.borderRadius = '4px'; e.style.padding = '1px 2px'; });
+    const dots = evs.map(e => Q('.rail i', e));
+    const bChain = bx(Q('#sc-prov [data-shot="chain"]'));
+    const repK = QA('#b3prov-replay > span'), repOk = QA('#b3prov-replay .ok2'), bRepLast = U(bx(repK[8]), bx(repK[9]));
+    const chipVer = QA('#sc-prov .page-head .chip')[1];
+    const tabM = Q('#sc-prov .tabbar a[href="assurance.html"] span'), bTabM = bx(tabM);
+    const bOidB = bx(oidB), bHum0 = bx(Q('.auth.human', evs[0])), bHum9 = bx(Q('.auth.human', evs[9])), bOn = bx(evs[10]);
+    const lsv = sv('svg', { width: 1920, height: 1080, class: 'ring' }, ovA);
+    const links = [];
+    for (let i = 0; i < evs.length - 1; i++) {
+      const a = bx(hb[i]), p = bx(pv[i + 1]);
+      const x1 = a.cx, y1 = a.y + a.h + 1, x2 = p.cx, y2 = p.y - 1, ym = (y1 + y2) / 2;
+      links.push(sv('path', { d: `M${x1.toFixed(1)} ${y1.toFixed(1)} C ${x1.toFixed(1)} ${(ym + 8).toFixed(1)}, ${x2.toFixed(1)} ${(ym - 8).toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`, fill: 'none', stroke: '#2563C9', 'stroke-width': 1.8, 'stroke-linecap': 'round' }, lsv));
+    }
+    const hf = Q('#hfly'), hfW = hf.offsetWidth, hfH = hf.offsetHeight;
+    // ---- S32 assurance + drift
+    const rows = QA('#b3assure-rows .r2'), gates = rows.map(r => QA('.gates .gd', r)), metB = rows.map(r => Q('.metric b', r));
+    const bR01 = U(bx(rows[0]), bx(rows[1])), bHaz = bx(rows[5]);
+    const g1fail = gates[1][1], g1ins = gates[5][1];
+    const bG1f = bx(g1fail), bG1i = bx(g1ins), champ = Q('.stp', rows[0]), bChamp = bx(champ), bNoBetter = bx(Q('.metric .ci', rows[1]));
+    const gch = QA('#b3assure-chain .gate');
+    const tagI = mk('div', 'tag', ovA, 'INSUFFICIENT_EVIDENCE'); tagI.style.left = (bG1i.x + bG1i.w + 16) + 'px'; tagI.style.top = (bG1i.cy - 15) + 'px';
+    const ovR = Q('#ovR');
+    const bigP = Q('#sc-drift .cls .big'), zero = wrapText(bigP), bBig = bx(bigP), bZeroT = U(bBig, bx(Q('#sc-drift .cls .t2')));
+    const tags = QA('#b3drift-cls .tag2'), poly = Q('#b3drift-chart polyline');
+
+    /* =========================================================================================
+       PASS 2 · the timeline
+       ========================================================================================= */
+    const tl = gsap.timeline({ paused: true });
+    function camSeq(sel, init, moves) {
+      tl.set(sel, init, 0); let cur = init;
+      moves.forEach(([at, dur, to, ease]) => { tl.fromTo(sel, { ...cur }, { ...to, duration: dur, ease: ease || 'expo.inOut', immediateRender: false }, at); cur = to; });
+    }
+    function vis(sel, steps) {
+      tl.set(sel, { autoAlpha: 0 }, 0); let a = 0;
+      steps.forEach(([at, dur, to, ease]) => { tl.fromTo(sel, { autoAlpha: a }, { autoAlpha: to, duration: dur, ease: ease || 'power2.out', immediateRender: false }, at); a = to; });
+    }
+    function spotSeq(ov, steps) {
+      const sp = mk('div', 'spot', ov); let g = null, a = 0;
+      steps.forEach(([at, dur, b, pad, alpha]) => {
+        const ng = b ? { left: b.x - pad, top: b.y - pad, width: b.w + 2 * pad, height: b.h + 2 * pad } : g;
+        if (!g) { tl.set(sp, { ...ng, opacity: 0 }, 0); g = ng; }
+        tl.fromTo(sp, { ...g, opacity: a }, { ...ng, opacity: alpha, duration: dur, ease: 'power3.inOut', immediateRender: false }, at);
+        g = ng; a = alpha;
+      });
+    }
+    function ring(ov, b, at, out, o = {}) {
+      const pad = o.pad ?? 8, r = o.r ?? 12, sw = o.sw ?? 2, col = o.col || '#E8743B';
+      const W = b.w + 2 * pad, H = b.h + 2 * pad;
+      const s = sv('svg', { width: W + 2 * sw, height: H + 2 * sw, class: 'ring' }, ov);
+      s.style.left = (b.x - pad - sw) + 'px'; s.style.top = (b.y - pad - sw) + 'px'; s.style.filter = `drop-shadow(0 0 5px ${col}55)`;
+      const rc = sv('rect', { x: sw, y: sw, width: W, height: H, rx: r, fill: 'none', stroke: col, 'stroke-width': sw }, s);
+      const L = rc.getTotalLength(); rc.style.strokeDasharray = `${L} ${L}`;
+      tl.fromTo(rc, { strokeDashoffset: L, opacity: 1 }, { strokeDashoffset: 0, duration: o.dur ?? .55, ease: 'power2.inOut' }, at);
+      if (out) tl.fromTo(rc, { opacity: 1 }, { opacity: 0, duration: .35, ease: 'power2.in', immediateRender: false }, out);
+    }
+    function ripple(ov, x, y, at, col = '#E8743B', R = 28) {
+      const s = sv('svg', { width: 2, height: 2, class: 'ring' }, ov); s.style.left = x + 'px'; s.style.top = y + 'px';
+      const c = sv('circle', { cx: 0, cy: 0, r: 2, fill: 'none', stroke: col, 'stroke-width': 2.5, opacity: 0 }, s);
+      const f = sv('circle', { cx: 0, cy: 0, r: 2, fill: col, opacity: 0 }, s);
+      tl.fromTo(c, { attr: { r: 2 }, opacity: .6 }, { attr: { r: R }, opacity: 0, duration: .5, ease: 'power2.out', immediateRender: false }, at);
+      tl.fromTo(f, { attr: { r: 2 }, opacity: .22 }, { attr: { r: R * .6 }, opacity: 0, duration: .35, ease: 'power2.out', immediateRender: false }, at);
+    }
+    function pulse(t, at, k = 1.07, d = .16) { tl.fromTo(t, { scale: 1 }, { scale: k, duration: d, yoyo: true, repeat: 1, ease: 'power2.inOut', immediateRender: false }, at); }
+    const CUR = 30, TIP = [5 / 28 * CUR, 3.5 / 28 * CUR];
+    const cursor = ov => mk('div', 'cur', ov, PHXF.CURSOR.replace('width="34" height="34"', `width="${CUR}" height="${CUR}"`));
+    function curSeq(c, start, moves) {
+      let cur = { x: start[0] - TIP[0], y: start[1] - TIP[1] };
+      tl.set(c, { x: cur.x, y: cur.y, transformOrigin: `${TIP[0]}px ${TIP[1]}px` }, 0);
+      moves.forEach(([at, dur, x, y]) => { const to = { x: x - TIP[0], y: y - TIP[1] };
+        tl.fromTo(c, { x: cur.x }, { x: to.x, duration: dur, ease: 'power2.inOut', immediateRender: false }, at);
+        tl.fromTo(c, { y: cur.y }, { y: to.y, duration: dur, ease: 'power3.inOut', immediateRender: false }, at);
+        cur = to; });
+    }
+    function click(c, ov, x, y, at) { tl.fromTo(c, { scale: 1 }, { scale: .82, duration: .07, yoyo: true, repeat: 1, ease: 'power2.inOut', immediateRender: false }, at); ripple(ov, x, y, at + .03); }
+    function decode(node, fin, at, dur, seed, o = {}) {
+      const set = o.hex ? '0123456789abcdef' : '0123456789', re = o.hex ? /[0-9a-f]/ : /[0-9]/, p0 = { p: 0 };
+      tl.fromTo(p0, { p: 0 }, { p: 1, duration: dur, ease: 'none', immediateRender: false, onUpdate: () => {
+        const p = p0.p; if (p >= 1 || (o.keepEnds && p <= 0)) { node.textContent = fin; return; }
+        const f = Math.floor(p * 20), n = Math.floor(p * p * fin.length);
+        node.textContent = fin.split('').map((ch, j) => (j < n || !re.test(ch)) ? ch : set[Math.floor(rnd(seed * 31 + j, f) * set.length)]).join('');
+      } }, at);
+    }
+    function drawOn(p, at, dur, ease = 'power2.inOut') { const L = p.getTotalLength(); p.style.strokeDasharray = `${L} ${L}`; tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease }, at); }
+
+    /* ---------------- S28 · paired simulations → Plan & what-if (0–4.2 s stays white for Manim M5) ---------------- */
+    vis('#cP', [[4.2, .6, 1], [8.72, .43, 0, 'power2.in']]);
+    camSeq('#cP', CS(875, 640, 1.12), [
+      [4.2, 1.1, CS(875, 640, 1.22), 'power2.out'],
+      [5.35, 1.1, CS(870, 652, 1.9)],                                   // push into the paired-difference forest
+      [6.5, .95, CS(870, 850, 1.9)],                                    // down to man-hours + the guardrail
+      [7.5, .95, CS(bPairs.cx, bPairs.cy - 10, 1.72)],                  // travel to the 30 paired futures
+      [8.45, .7, CS(bPairs.cx, bPairs.cy - 10, 1.8), 'power2.in'],      // push-through into white
+    ]);
+    heroNum.textContent = '+0.000';
+    PHXF.count(tl, heroNum, 0, .217, 4.45, 1.05, v => '+' + v.toFixed(3), 'power3.out');
+    ciL.forEach((ln, i) => {
+      const X1 = +ln.getAttribute('x1'), X2 = +ln.getAttribute('x2'), y = +ln.getAttribute('y1');
+      const dot = ciD.find(c => Math.abs(+c.getAttribute('cy') - y) < .6), cx = dot ? +dot.getAttribute('cx') : (X1 + X2) / 2;
+      tl.fromTo(ln, { attr: { x1: cx, x2: cx } }, { attr: { x1: X1, x2: X2 }, duration: .6, ease: 'power3.out' }, 4.55 + i * .065);
+      if (dot) tl.fromTo(dot, { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: .35, ease: 'back.out(2.2)' }, 4.45 + i * .065);
+    });
+    chg.forEach((t, i) => decode(t, t.textContent, 4.22 + i * .06, .5, 40 + i));
+    ring(ovP, bMC, V28 + 5.86, 7.0, { pad: 6, r: 10 });                         // "our plan"
+    spotSeq(ovP, [[6.62, .4, bMH, 9, .55], [7.02, .32, bGR, 10, .55], [7.5, .35, null, 0, 0]]);
+    ring(ovP, bMH, 6.66, 7.05, { pad: 6, r: 10 });                              // man-hours
+    ring(ovP, bGR, 7.06, 7.6, { pad: 7, r: 12 });                               // guardrail: interval includes zero
+    pL.forEach((ln, i) => {
+      const X1 = +ln.getAttribute('x1'), X2 = +ln.getAttribute('x2'), at = 7.6 + i * .026;
+      tl.fromTo(ln, { attr: { x2: X1 } }, { attr: { x2: X2 }, duration: .42, ease: 'power2.out' }, at);
+      if (pPl[i]) tl.fromTo(pPl[i], { opacity: 0, scale: .2, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: .2, ease: 'back.out(2)' }, at + .3);
+    });
+    tl.fromTo(pTri, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .3, stagger: .1, ease: 'power3.out' }, 8.35);
+    tl.fromTo(p29, { color: '#0B0D10' }, { color: '#E8743B', duration: .25, immediateRender: false }, 8.25);   // "29 of 30" lands as the futures finish
+    pulse(p29, 8.25, 1.18, .14);
+    ring(ovP, bP29, 8.3, null, { pad: 6, r: 10 });
+
+    /* ---------------- S29 · lead time (9.2–12.8 s stays white for Manim M3) → Spares ---------------- */
+    vis('#cS', [[12.8, .55, 1], [18.0, .26, 0, 'power2.in']]);
+    camSeq('#cS', CS(812, 515, 1.48), [
+      [12.8, 1.1, CS(812, 528, 1.6), 'power2.out'],
+      [13.95, .95, CS(1060, 640, 1.2)],                                 // verdict + consumables in one frame
+      [15.0, 1.6, CS(1190, 700, 1.31), 'power1.inOut'],                 // drift toward the dropped tyre order
+      [16.75, .85, CS(960, 540, 1.0)],                                  // calm full frame
+      [17.6, .42, CS(960, 540, 1.012), 'power1.inOut'],
+      [18.02, .38, CS(bNav.cx, bNav.cy, 1.06), 'power2.in'],            // push through the clicked item
+    ]);
+    ageNum.textContent = '0';
+    PHXF.count(tl, ageNum, 0, 80, 12.9, .95, v => Math.round(v), 'power3.out');
+    tl.fromTo(redL, { attr: { x2: +redL.getAttribute('x1') } }, { attr: { x2: +redL.getAttribute('x2') }, duration: .55, ease: 'power2.out' }, 12.95);
+    tl.fromTo(dotL, { attr: { x2: +dotL.getAttribute('x1') } }, { attr: { x2: +dotL.getAttribute('x2') }, duration: .75, ease: 'power2.inOut' }, 13.25);
+    tl.fromTo([cSq, tSq], { opacity: 0 }, { opacity: 1, duration: .3 }, 13.8);
+    tl.fromTo(cExp, { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: .4, ease: 'back.out(2.5)' }, 13.72);
+    tl.fromTo([tExp, conn], { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: .32, ease: 'power3.out' }, 13.82);
+    drawOn(brk, 13.98, .35);
+    tl.fromTo(t85, { opacity: 0 }, { opacity: 1, duration: .3 }, 14.15);
+    spotSeq(ovS, [[14.12, .45, bVer, 10, .5], [V29 + 5.35, .45, bT105, 6, .5], [15.65, .5, bS3, 10, .5], [16.75, .45, null, 0, 0]]);
+    ring(ovS, bV30, 14.3, 14.98, { pad: 6 });                                  // next 30 days · no change
+    ring(ovS, bV400, 14.58, 14.98, { pad: 6 });                                // over 400 days · 85 days sooner
+    tl.fromTo(pips, { scaleY: .25, opacity: .25, transformOrigin: '50% 100%' }, { scaleY: 1, opacity: 1, duration: .24, stagger: .06, ease: 'power2.out' }, V29 + 5.4);
+    ring(ovS, bT105, V29 + 5.85, 15.78, { pad: 3, r: 16 });                     // "early tyres"
+    tl.fromTo(gS3, { opacity: 0, scale: 1.5, rotation: -6 }, { opacity: 1, scale: 1, rotation: 0, duration: .42, ease: 'back.out(2.2)' }, V29 + 6.82);  // "change nothing"
+    ripple(ovS, bG3.cx, bG3.cy, V29 + 6.95, '#E8743B', 46);
+    ring(ovS, bS3, V29 + 7.15, 16.95, { pad: 4, r: 22 });
+    const curS = cursor(ovS);
+    vis(curS, [[17.28, .22, 1]]);
+    curSeq(curS, [1240, 900], [[17.34, .62, bNav.x + 64, bNav.cy]]);
+    tl.fromTo(navS, { backgroundColor: 'rgba(241,241,238,0)' }, { backgroundColor: 'rgba(241,241,238,1)', duration: .15 }, 17.86);
+    click(curS, ovS, bNav.x + 64, bNav.cy, 17.98);
+
+    /* ---------------- S30 · approve → the board freezes → sign → orders go out ---------------- */
+    const D1 = CS(bHero.cx + 230, bHero.cy + 70, 1.32);
+    vis('#cD', [[18.08, .34, 1], [19.3, .2, 0, 'power2.in']]);
+    camSeq('#cD', CS(960, 540, 1.035), [
+      [18.02, .45, CS(960, 540, 1.0), 'power2.out'],
+      [18.47, .88, D1],                                                  // to the recommendation strip
+      [19.38, .36, CS(bHero.cx + 230, bHero.cy + 70, 1.4), 'power2.in'],
+    ]);
+    const curD = cursor(ovD);
+    vis(curD, [[18.02, .12, 1], [19.2, .18, 0]]);
+    curSeq(curD, [bNavD.x + 64, bNavD.cy], [[18.3, .56, bApp.cx, bApp.cy + 2]]);
+    click(curD, ovD, bApp.cx, bApp.cy + 2, V30 + .29);                         // "At seven forty-five"
+    tl.fromTo(appBtn, { scale: 1 }, { scale: .95, duration: .07, yoyo: true, repeat: 1, immediateRender: false }, V30 + .29);
+    tl.fromTo(acts, { opacity: 1, x: 0 }, { opacity: 0, x: 14, duration: .18, ease: 'power2.in', immediateRender: false }, V30 + .37);
+    tl.fromTo(okChip, { opacity: 0, scale: .85 }, { opacity: 1, scale: 1, duration: .38, ease: 'back.out(2)' }, V30 + .4);
+    tl.fromTo(okChip, { opacity: 1 }, { opacity: 0, duration: .05, immediateRender: false }, 19.33);
+    ring(ovD, bChip, V30 + .45, 19.3, { pad: 5, r: 14, col: '#1F8A4C' });
+
+    const e0 = CS(bR34.cx, bR34.cy, 1.3), eLog = CS(bLel.cx - 20, 805, 1.6);
+    vis('#cE', [[19.48, .32, 1], [26.34, .2, 0, 'power2.in']]);
+    vis('#lSb', [[21.5, .01, 1]]);
+    vis('#lEp', [[0, .01, 1], [20.7, .01, 0]]);
+    vis('#lSg', [[20.65, .01, 1], [21.62, .34, 0, 'power1.inOut']]);
+    camSeq('#cE', e0, [
+      [19.86, .6, CS(1120, 520, 1.1)],                                   // stepper + orders: the board freezes
+      [20.78, .9, CS(bSheet.cx, bSheet.cy + 30, 1.32)],                  // to the signature sheet
+      [21.7, .9, CS(1110, 615, 1.12)],                                   // orders go out + the log
+      [22.62, .95, CS(1110, 640, 1.19), 'power1.inOut'],
+      [23.6, .75, CS(bSigned.cx - 140, bSigned.cy, 1.62)],               // "signed where it must be"
+      [24.4, .75, CS(bLel.cx - 20, 790, 1.55)],                          // order id · safe to retry
+      [25.15, 1.1, eLog, 'power1.inOut'],
+      [26.38, .4, CS(bLel.cx - 20, 805, 1.68), 'power2.in'],
+    ]);
+    // shared element: the approved strip becomes its orders in the 08:00 table
+    const sA = scr(D1, bChip), sB = scr(e0, bR34);
+    vis(fc, [[19.33, .04, 1], [19.78, .16, 0]]);
+    tl.fromTo(fc, { x: sA.x }, { x: sB.x + 40, duration: .5, ease: 'power3.inOut' }, 19.33);
+    tl.fromTo(fc, { y: sA.y, scale: sA.w / fcW }, { y: sB.cy - fcH * .45, scale: .9, duration: .5, ease: 'power2.inOut' }, 19.33);
+    tl.fromTo([oRows[2], oRows[3]], { backgroundColor: 'rgba(253,241,234,0)' }, { backgroundColor: 'rgba(253,241,234,1)', duration: .3, immediateRender: false }, 19.72);
+    tl.fromTo([oRows[2], oRows[3]], { backgroundColor: 'rgba(253,241,234,1)' }, { backgroundColor: 'rgba(253,241,234,0)', duration: .5, immediateRender: false }, 20.5);
+    // 07:45 board frozen · 07:52 one signature needed
+    ring(ovE, bFroz, V30 + 1.56, 20.45, { pad: 7, r: 14, dur: .32 });                     // "freezes"
+    pulse(Q('i', stE[1]), V30 + 1.6, 1.5, .14);
+    pulse(Q('i', stE[2]), 20.34, 1.5, .14);
+    ring(ovE, bSigChip, 20.32, 20.62, { pad: 5, r: 14, dur: .3 });
+    pulse(needPill, 20.36, 1.08);
+    // sign with station key
+    tl.fromTo(frost, { opacity: 0 }, { opacity: 1, duration: .38, ease: 'power2.out' }, 20.66);
+    tl.fromTo(sheet, { opacity: 0, y: 46, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 20.7);
+    const curE = cursor(ovE);
+    vis(curE, [[20.92, .2, 1], [21.58, .16, 0], [25.78, .2, 1]]);
+    curSeq(curE, [bSignBtn.cx + 360, bSignBtn.cy + 170], [
+      [20.96, .45, bSignBtn.cx - 30, bSignBtn.cy + 4],
+      [21.7, .1, bLnk.x + 330, bLnk.cy + 120],                           // (hidden) park near the log link
+      [25.82, .42, bLnk.x + 70, bLnk.cy + 2],
+    ]);
+    click(curE, ovE, bSignBtn.cx - 30, bSignBtn.cy + 4, V30 + 2.82);           // "At eight"
+    tl.fromTo(signBtn, { scale: 1 }, { scale: .96, duration: .08, yoyo: true, repeat: 1, immediateRender: false }, V30 + 2.82);
+    tl.fromTo(signBtn, { backgroundColor: '#0B0D10' }, { backgroundColor: '#E8743B', duration: .12, immediateRender: false }, V30 + 2.86);
+    tl.fromTo(sheet, { opacity: 1, y: 0, scale: 1 }, { opacity: 0, y: -16, scale: .98, duration: .26, ease: 'power2.in', immediateRender: false }, 21.58);
+    // submitted: six orders go out, the signature shows, the log is written
+    tl.fromTo(subPills, { opacity: 0, rotationX: -90, transformPerspective: 500 }, { opacity: 1, rotationX: 0, duration: .34, stagger: .085, ease: 'back.out(1.6)' }, V30 + 3.34);  // "orders go out"
+    tl.fromTo(signed, { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .38, ease: 'back.out(2.4)' }, 22.0);
+    tl.fromTo(subChips, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: .35, stagger: .08, ease: 'power3.out' }, 21.92);
+    pulse(Q('i', subSt[2]), 22.05, 1.5, .14);
+    pulse(Q('i', subSt[subSt.length - 1]), 22.25, 1.6, .15);
+    tl.fromTo(lel, { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: .32, stagger: .13, ease: 'power3.out' }, 22.72);
+    lelH.forEach((h, i) => decode(h, h.textContent, 22.76 + i * .13, .42, 70 + i, { hex: true }));
+    ring(ovE, bSigned, V30 + 5.42, 24.75, { pad: 6, r: 10 });                   // "signed"
+    pulse(signed, V30 + 5.45, 1.1);
+    // order id · safe to retry
+    tl.fromTo(idc, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 24.55);
+    decode(idh, '748653aa6bcf4544', 24.62, .5, 91, { hex: true });
+    pulse(Q('#idrb'), V30 + 6.72, 1.12);                                        // "safe to retry"
+    decode(idh, '748653aa6bcf4544', V30 + 6.74, .36, 93, { hex: true, keepEnds: true });
+    tl.fromTo('#idsame', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: .3, ease: 'power3.out' }, V30 + 7.1);
+    ring(ovE, bIdc, V30 + 7.12, null, { pad: 6, r: 20, col: '#1F8A4C' });
+    tl.fromTo(lnk, { opacity: 1 }, { opacity: .55, duration: .08, yoyo: true, repeat: 1, immediateRender: false }, 26.24);
+    click(curE, ovE, bLnk.x + 70, bLnk.cy + 2, 26.24);
+
+    /* ---------------- S31 · provenance: ask why, the chain answers ---------------- */
+    const A0 = CS(bQ.cx, bQ.cy + 40, 1.85);
+    vis('#cA', [[26.5, .3, 1], [36.74, .06, 0, 'power2.in']]);
+    vis('#lPv', [[0, .01, 1], [33.4, .01, 0]]);
+    vis('#lAs', [[32.97, .36, 1, 'power1.inOut']]);
+    camSeq('#cA', A0, [
+      [27.0, 1.5, CS(bQ.cx + 24, bQ.cy + 46, 1.94), 'power1.inOut'],      // "Ask why any order was issued"
+      [28.58, .85, CS(bChain.cx, 515, 1.42)],                              // the chain answers
+      [29.45, 2.4, CS(bChain.cx, 860, 1.42), 'power1.inOut'],              // down the hash chain
+      [31.9, .85, CS(1110, 610, 1.06)],                                    // chain + replay, composed
+      [33.25, 1.0, CS(bR01.cx, bR01.cy + 6, 1.62)],                        // S32: champion vs candidate
+      [34.25, 1.4, CS(bR01.cx + 18, bR01.cy + 12, 1.68), 'power1.inOut'],
+      [35.68, .8, CS(bHaz.cx, bHaz.cy - 20, 1.62)],                        // removal hazard
+      [36.48, .48, CS(bHaz.cx + 10, bHaz.cy - 16, 1.72), 'power2.in'],
+    ]);
+    // shared element: the order id flies into the provenance query
+    const s0 = scr(eLog, bIdh), s1 = scr(A0, bOidB), k0 = s0.w / hfW, k1 = s1.w / hfW;
+    vis(hf, [[26.28, .04, 1], [26.93, .1, 0]]);
+    tl.fromTo(hf, { x: s0.x }, { x: s1.x, duration: .64, ease: 'power3.inOut' }, 26.29);
+    tl.fromTo(hf, { y: s0.cy - hfH * k0 / 2, scale: k0 }, { y: s1.cy - hfH * k1 / 2, scale: k1, duration: .64, ease: 'power2.inOut' }, 26.29);
+    tl.fromTo(idh, { opacity: 1 }, { opacity: 0, duration: .04, immediateRender: false }, 26.28);
+    tl.fromTo(oidB, { opacity: 0 }, { opacity: 1, duration: .1 }, 26.92);
+    tl.fromTo(oidPre, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .5, ease: 'power2.out' }, 26.98);
+    pulse(kbd, V31 + 1.36, 1.25, .1);                                           // "issued" ⏎
+    ripple(ovA, bKbd.cx, bKbd.cy, V31 + 1.38, '#E8743B', 22);
+    // the chain answers: rows arrive, then each prev_hash → hash link lights in sequence
+    tl.fromTo(evs, { opacity: .1, y: 8 }, { opacity: 1, y: 0, duration: .34, stagger: .045, ease: 'power3.out' }, 28.58);
+    links.forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = `${L} ${L}`; tl.set(p, { strokeDashoffset: L, opacity: 0 }, 0); });
+    const t0 = V31 + 2.3;
+    tl.fromTo(hb[0], { color: '#31353B', backgroundColor: 'rgba(234,241,252,0)' }, { color: '#2563C9', backgroundColor: 'rgba(234,241,252,1)', duration: .16 }, t0 - .12);
+    pulse(dots[0], t0 - .12, 1.6, .12);
+    ring(ovA, bHum0, t0, 31.2, { pad: 5, r: 10 });                             // the chain starts at a human release
+    links.forEach((p, i) => {
+      const t = t0 + i * .19, L = p.getTotalLength();
+      tl.fromTo(p, { strokeDashoffset: L, opacity: 1 }, { strokeDashoffset: 0, opacity: 1, duration: .22, ease: 'power2.inOut', immediateRender: false }, t);
+      tl.fromTo(p, { opacity: 1 }, { opacity: .5, duration: .4, immediateRender: false }, t + .45);
+      tl.fromTo(pv[i + 1], { color: '#8E939A', backgroundColor: 'rgba(234,241,252,0)' }, { color: '#2563C9', backgroundColor: 'rgba(234,241,252,1)', duration: .14 }, t + .2);
+      tl.fromTo(hb[i + 1], { color: '#31353B', backgroundColor: 'rgba(234,241,252,0)' }, { color: '#2563C9', backgroundColor: 'rgba(234,241,252,1)', duration: .14 }, t + .26);
+      pulse(dots[i + 1], t + .2, 1.6, .12);
+    });
+    ring(ovA, bHum9, V31 + 4.6, 32.55, { pad: 5, r: 10 });                     // "signature"
+    ring(ovA, bOn, V31 + 4.75, 32.6, { pad: 3, r: 14 });
+    pulse(chipVer, 31.88, 1.08);
+    tl.fromTo(lsv, { opacity: 1 }, { opacity: 0, duration: .3, immediateRender: false }, 32.97);
+    tl.fromTo(repOk, { scale: 0, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: .3, stagger: .08, ease: 'back.out(2.6)' }, 31.98);
+    ring(ovA, bRepLast, 32.36, 33.0, { pad: 7, r: 10, col: '#1F8A4C' });       // replay → identical
+    const curA = cursor(ovA);
+    vis(curA, [[32.28, .2, 1], [33.3, .2, 0]]);
+    curSeq(curA, [bTabM.cx + 380, bTabM.cy + 330], [[32.32, .56, bTabM.cx, bTabM.cy + 3]]);
+    click(curA, ovA, bTabM.cx, bTabM.cy + 3, 32.92);                           // the shared tab bar carries us into assurance
+
+    /* ---------------- S32 · outcomes become labels; promoted only through gates ---------------- */
+    tl.fromTo(rows, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .36, stagger: .05, ease: 'power3.out' }, 33.12);
+    rows.forEach((r, i) => tl.fromTo(gates[i].filter(g => g !== g1fail && g !== g1ins), { scale: 0, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: .26, stagger: .05, ease: 'back.out(2)' }, 33.3 + i * .06));
+    metB.forEach((m, i) => decode(m, m.textContent, 33.14 + i * .05, .6, 120 + i));
+    tl.fromTo(gch, { opacity: 0, x: 18 }, { opacity: 1, x: 0, duration: .36, stagger: .06, ease: 'power3.out' }, 33.3);
+    spotSeq(ovA, [[34.35, .45, bR01, 8, .5], [35.7, .7, bHaz, 8, .5], [36.5, .2, null, 0, 0]]);
+    tl.fromTo(g1fail, { scale: 0, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: .32, ease: 'back.out(3)' }, V32 + 1.8);   // "models"
+    tl.fromTo(g1fail, { x: 0 }, { x: 4, duration: .05, yoyo: true, repeat: 5, ease: 'sine.inOut', immediateRender: false }, V32 + 2.12);
+    ring(ovA, bG1f, V32 + 1.95, 35.8, { pad: 5, r: 9 });
+    ring(ovA, bNoBetter, V32 + 2.25, 35.8, { pad: 5, r: 8 });
+    ring(ovA, bChamp, V32 + 2.55, 35.8, { pad: 5, r: 10 });                    // the per-code base rate stays champion
+    pulse(champ, V32 + 2.6, 1.1);
+    tl.fromTo(g1ins, { scale: 0, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: .32, ease: 'back.out(3)' }, V32 + 3.05);  // "promoted"
+    ring(ovA, bG1i, V32 + 3.12, null, { pad: 5, r: 9 });
+    tl.fromTo(tagI, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: .32, ease: 'power3.out' }, V32 + 3.22);
+    // quick cut: drift · nothing pages
+    vis('#cR', [[36.72, .08, 1], [37.92, .36, 0, 'power1.in']]);
+    camSeq('#cR', CS(bBig.cx + 140, bBig.cy + 40, 1.7), [
+      [36.72, .84, CS(bBig.cx + 120, bBig.cy + 50, 1.56), 'power2.out'],
+      [37.56, .77, CS(1180, 590, 1.2), 'power2.inOut'],
+    ]);
+    decode(zero, '0', 36.72, .58, 7);                                             // settles on "gates"
+    ring(ovR, bZeroT, V32 + 4.1, null, { pad: 10, r: 14 });
+    tl.fromTo(tags, { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: .28, stagger: .07, ease: 'back.out(2)' }, 37.36);
+    drawOn(poly, 37.25, .8, 'power1.inOut');
+    // calm hand-off: dissolve onto the white blueprint field Act 4 opens on
+    tl.fromTo('#gridEnd', { opacity: 0 }, { opacity: 1, duration: .36, ease: 'power1.in' }, 37.92);
+
+    tl.to({}, { duration: .01 }, END - .01);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["main"] = tl;
+  }
+  Promise.all([document.fonts.load('600 15px Manrope'), document.fonts.load('500 13px "JetBrains Mono"'), document.fonts.load('650 13px "JetBrains Mono"'), document.fonts.ready]).then(build, build);
+})();
+</script>
+</body></html>

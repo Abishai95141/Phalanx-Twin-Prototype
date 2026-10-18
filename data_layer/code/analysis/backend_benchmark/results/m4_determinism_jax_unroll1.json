@@ -1,0 +1,194 @@
+{
+ "_digests_jax": {
+  "batch1000_first10": [
+   "793fa5542cca19688976b08f42b6f9a4",
+   "2fc084f012eddb73a65d67de69429db8",
+   "45c067eafdd9411bae19457d3342a879",
+   "ea9b49fddaa1412de289566dc03eaff6",
+   "c14437f26954ebb7bc0abaf0a5433d9a",
+   "ed660eb75d85c1dfa670fdcbcf98f667",
+   "40458cbf5bfe278264b48b6a2bf9fd78",
+   "ae9345dbbb6d7eb3be89b578f63c1785",
+   "1f00445772225a850e0770f41ff0672c",
+   "9ca747b857790d4ecc104216f0565ccf"
+  ],
+  "singles": [
+   "793fa5542cca19688976b08f42b6f9a4",
+   "2fc084f012eddb73a65d67de69429db8",
+   "45c067eafdd9411bae19457d3342a879",
+   "ea9b49fddaa1412de289566dc03eaff6",
+   "c14437f26954ebb7bc0abaf0a5433d9a",
+   "ed660eb75d85c1dfa670fdcbcf98f667",
+   "40458cbf5bfe278264b48b6a2bf9fd78",
+   "ae9345dbbb6d7eb3be89b578f63c1785",
+   "1f00445772225a850e0770f41ff0672c",
+   "9ca747b857790d4ecc104216f0565ccf"
+  ]
+ },
+ "checks": {
+  "D1 jax repeat in-process U=1": {
+   "detail": {
+    "a": [
+     [
+      "793fa5542cca19688976b08f42b6f9a4"
+     ],
+     "516b2c08c21d991e3f006df75bdab78f"
+    ],
+    "b": [
+     [
+      "793fa5542cca19688976b08f42b6f9a4"
+     ],
+     "516b2c08c21d991e3f006df75bdab78f"
+    ]
+   },
+   "pass": true
+  },
+  "D1 jax repeat in-process U=10": {
+   "detail": {
+    "a": [
+     [
+      "793fa5542cca19688976b08f42b6f9a4",
+      "2fc084f012eddb73a65d67de69429db8",
+      "45c067eafdd9411bae19457d3342a879",
+      "ea9b49fddaa1412de289566dc03eaff6",
+      "c14437f26954ebb7bc0abaf0a5433d9a",
+      "ed660eb75d85c1dfa670fdcbcf98f667",
+      "40458cbf5bfe278264b48b6a2bf9fd78",
+      "ae9345dbbb6d7eb3be89b578f63c1785",
+      "1f00445772225a850e0770f41ff0672c",
+      "9ca747b857790d4ecc104216f0565ccf"
+     ],
+     "17ab83f6c37d1f3490183f4d29183a42"
+    ],
+    "b": [
+     [
+      "793fa5542cca19688976b08f42b6f9a4",
+      "2fc084f012eddb73a65d67de69429db8",
+      "45c067eafdd9411bae19457d3342a879",
+      "ea9b49fddaa1412de289566dc03eaff6",
+      "c14437f26954ebb7bc0abaf0a5433d9a",
+      "ed660eb75d85c1dfa670fdcbcf98f667",
+      "40458cbf5bfe278264b48b6a2bf9fd78",
+      "ae9345dbbb6d7eb3be89b578f63c1785",
+      "1f00445772225a850e0770f41ff0672c",
+      "9ca747b857790d4ecc104216f0565ccf"
+     ],
+     "17ab83f6c37d1f3490183f4d29183a42"
+    ]
+   },
+   "pass": true
+  },
+  "D2 jax two processes U=1": {
+   "detail": {
+    "a": "516b2c08c21d991e3f006df75bdab78f",
+    "b": "516b2c08c21d991e3f006df75bdab78f"
+   },
+   "pass": true
+  },
+  "D2 jax two processes U=100": {
+   "detail": {
+    "a": "06ce05952e678d36753664172e4ede26",
+    "b": "06ce05952e678d36753664172e4ede26"
+   },
+   "pass": true
+  },
+  "D3 jax single vs batched / position": {
+   "detail": {
+    "batch1000_vs_singles_units0-9_equal": 10,
+    "batch100_vs_batch1000_units0-99_equal": 100,
+    "batch100_vs_singles_units0-9_equal": 10,
+    "batch10_vs_singles_units0-9_equal": 10,
+    "offset_batch_units5-14_vs_batch1000_equal": 10
+   },
+   "pass": true
+  },
+  "D4 jax devices 1/2/4 + intra-op threads": {
+   "detail": {
+    "sharded_ndev1_eq_vmap": true,
+    "sharded_ndev2_eq_vmap": true,
+    "sharded_ndev4_eq_vmap": true,
+    "vmap_multithread_eigen_eq_single_thread": true
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=1 k=4800": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 4800,
+    "outputs_identical": true,
+    "snapshot_bytes": 153
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=1 k=5237": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 5237,
+    "outputs_identical": true,
+    "snapshot_bytes": 153
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=10 k=4800": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 4800,
+    "outputs_identical": true,
+    "snapshot_bytes": 1019
+   },
+   "pass": true
+  },
+  "D5 jax snapshot/restore U=10 k=5237": {
+   "detail": {
+    "final_state_identical": true,
+    "k_snapshot": 5237,
+    "outputs_identical": true,
+    "snapshot_bytes": 1019
+   },
+   "pass": true
+  },
+  "D6 jax block length 1/240/2400": {
+   "detail": {
+    "1": {
+     "digest": "8a98d8e40947fb07821ee23d338b8bcc",
+     "state": "2e41589053d4228b85e7fb792b33d5d9"
+    },
+    "240": {
+     "digest": "b9e5724a7f545a35619d411710497455",
+     "state": "b904b1b90b5b644b01741428f8133c9e"
+    },
+    "2400": {
+     "digest": "b9e5724a7f545a35619d411710497455",
+     "state": "b904b1b90b5b644b01741428f8133c9e"
+    }
+   },
+   "pass": false
+  }
+ },
+ "jax_unroll": 1,
+ "machine": {
+  "cpu": "Apple M4",
+  "eff_cores": "6",
+  "env": {
+   "NUMBA_CACHE_DIR": null,
+   "NUMBA_NUM_THREADS": null,
+   "OMP_NUM_THREADS": null,
+   "XLA_FLAGS": null
+  },
+  "machine": "arm64",
+  "mem_gb": 16.0,
+  "ncpu": 10,
+  "perf_cores": "4",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+   "jax": "0.11.2",
+   "jaxlib": "0.11.2",
+   "llvmlite": "0.50.0",
+   "numba": "0.68.0",
+   "numpy": "2.5.4",
+   "python": "3.13.3",
+   "scipy": "1.18.1"
+  }
+ },
+ "steps": 14400
+}

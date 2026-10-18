@@ -1,0 +1,16 @@
+# Reference policy: status quo plus simple condition-based thresholds (W1.8; ConditionBasedPolicy).
+format: phalanx.policy/1
+name: condition-based
+rules:
+  bit_recurrence:
+    min_events: 2
+    window_days: 10.0
+    evidence: {tag: ASSUMPTION, source: "NAMP §10.37 (QA trends HMS BIT/CI codes; high BIT rate per FH flags substandard performers); F-35 4790.35D (recurrence ends deferral)"}
+    assumption_id: A-W1.8-22
+    sweep: [2, 5]
+  exceedance_borescope:
+    min_events: 2
+    window_days: 30.0
+    evidence: {tag: ASSUMPTION, source: "NAMP §9.2.3.3(b) (conditional inspection after overtemp); repeated-exceedance trigger is a policy choice"}
+    assumption_id: A-W1.8-22
+    sweep: [1, 4]

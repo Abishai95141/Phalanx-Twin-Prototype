@@ -1,0 +1,15 @@
+[Unit]
+Description=Phalanx Twin runner (simulated fleet, 127.0.0.1:8710)
+After=network.target
+
+[Service]
+User=linux1
+WorkingDirectory=/home/linux1/phalanx/Phalanx-Solution
+ExecStart=/bin/bash -c 'source proto/deploy/server.env && exec proto/runner/run.sh -m uvicorn service:app --app-dir proto/runner --host 127.0.0.1 --port 8710'
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/home/linux1/phalanx/logs/runner.log
+StandardError=append:/home/linux1/phalanx/logs/runner.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,213 @@
+{
+  "type": "record",
+  "name": "orders_commands",
+  "namespace": "phalanx.contract.v0",
+  "doc": "Inbound decisions (orders) from downstream agents or human planners. Orders are requests: M21 validates them for authority, airworthiness and resources and applies them at the next decision epoch in simulation time. Re-sending an order_id is a no-op (idempotent). An order whose evidence cites a record not yet ingested at t_issued is rejected (no look-ahead).",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key = blake2b-128 of the order_id.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Dictionary version the issuer observed, if known.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (dictionary on every record); ASSUMPTION: A-W0.4-14 (nullable for external issuers)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Dictionary hash the issuer observed, if known.",
+      "default": null,
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-14",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "order_id",
+      "type": "string",
+      "doc": "Globally unique order identifier chosen by the issuer.",
+      "phalanx.basis": "ARCH §11.1 (idempotent order_id)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "issuer_id",
+      "type": "string",
+      "doc": "Issuer identity (agent or human planner).",
+      "phalanx.basis": "ARCH §11.1 (issuer)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "issuer_kind",
+      "type": {
+        "type": "enum",
+        "name": "IssuerKind",
+        "doc": "Who issued an order.",
+        "symbols": [
+          "AGENT",
+          "HUMAN"
+        ]
+      },
+      "doc": "AGENT or HUMAN.",
+      "phalanx.basis": "ARCH §11.1 (issuer: agent/human)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "policy_version",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Policy or model version of an agent issuer.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (policy version)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_issued",
+      "type": "long",
+      "doc": "Simulation time the order was issued. The event and availability time of the record.",
+      "phalanx.basis": "ARCH §11.1",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_effective",
+      "type": "long",
+      "doc": "Simulation time the order should take effect (at or after the next decision epoch; M21 enforces the epoch).",
+      "phalanx.basis": "ARCH §11.1 (t_effective >= next decision epoch)",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "target_tail_no",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Target tail.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (target)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "target_base",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Target base.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (target)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "target_lru",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Target LRU.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (target)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "target_serial",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Target serial number.",
+      "default": null,
+      "phalanx.basis": "ARCH §11.1 (target)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "action",
+      "type": {
+        "type": "enum",
+        "name": "OrderAction",
+        "doc": "The order action vocabulary of architecture §11.1.",
+        "symbols": [
+          "INSPECT",
+          "TROUBLESHOOT",
+          "REMOVE_REPLACE",
+          "WASH_SERVICE",
+          "DEFER",
+          "CANNIBALISE",
+          "REQUISITION_SPARES",
+          "EXPEDITE_SPARES",
+          "TRANSFER_STOCK",
+          "GROUND",
+          "RELEASE",
+          "BRING_FORWARD_SERVICING",
+          "DEFER_SERVICING",
+          "ASSIGN_SORTIE",
+          "RESTRICT_USAGE",
+          "EMBODY_MODIFICATION",
+          "LOAD_SOFTWARE",
+          "CHANGE_MONITORING_CONFIG"
+        ]
+      },
+      "doc": "Requested action.",
+      "phalanx.basis": "ARCH §11.1 (action vocabulary)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "parameters",
+      "type": "string",
+      "doc": "Action-specific parameters as a JSON object (canonical JSON text in Arrow; '{}' when none). Per-action schemas are M21's.",
+      "phalanx.basis": "ARCH §11.1 (parameters); ASSUMPTION: A-W0.4-14",
+      "phalanx.restricted": false,
+      "phalanx.format": "json_object"
+    },
+    {
+      "name": "priority",
+      "type": {
+        "type": "enum",
+        "name": "OrderPriority",
+        "doc": "Order priority.",
+        "symbols": [
+          "ROUTINE",
+          "PHU",
+          "MCM",
+          "AOG"
+        ]
+      },
+      "doc": "Priority.",
+      "phalanx.basis": "ARCH §11.1 (priority); ASSUMPTION: A-W0.4-14",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "evidence",
+      "type": {
+        "type": "array",
+        "items": "phalanx.contract.v0.RecordId"
+      },
+      "doc": "record_ids of the samples, events or records that justify the order; all must be ingested by t_issued.",
+      "phalanx.basis": "ARCH §11.1 (evidence: record_ids)",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "orders.commands",
+  "phalanx.restricted": false
+}

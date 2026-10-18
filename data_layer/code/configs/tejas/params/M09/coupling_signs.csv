@@ -1,0 +1,36 @@
+edge_id,source,driver,driven,sign,mechanism,scope
+R3-1a,R§3 row 1 (N2 -> AMAGB pump and generator speeds),eng.n2,util.hyd_p at 0.8 q_rated demand,+,fixed pad ratio: Q_max scales with N2,M09
+R3-1b,R§3 row 1,eng.n2 (through the cut-in speed),util.gen_online,+,generator on an AMAGB pad,M09
+R3-1c,R§3 row 1,eng.n2,util.pto_power at fixed demand,+,pad speeds; gear and churning losses rise with speed,M09
+R3-2a,R§3 row 2 (N2 x demand -> pressure),fcs.hyd_flow_demand above Q_max(N2),util.hyd_p,-,compensator saturates; sag at high demand,M09
+R3-2b,R§3 row 2,fcs.hyd_flow_demand below Q_max(N2),util.hyd_p,0,compensated pump holds 280 bar within its droop band,M09
+R3-2c,R§3 row 2 / W1.4 brief example,eng.n2 at high demand,util.hyd_dp_avail,+,N2 down -> Q_max down -> dp_avail down,M09
+R3-3a,R§3 row 3 (hydraulic temperature -> leakage),fluid temperature,pump stroke needed at zero demand (leakage),+,viscosity down -> internal leakage up,M09
+R3-3b,R§3 row 3,fluid temperature,util.hyd_dp_avail at demand near Q_max,-,leakage up -> volumetric efficiency down,M09
+R3-4,R§3 row 4 (N2 spool-down -> generator online),eng.n2 spool-down,util.gen_online,+,underspeed -> generator offline -> 5 kW DC backup / battery (<= 50 ms transfer),M09
+R3-5a,R§3 row 5 (battery SOC; OAT; altitude -> JFS start),battery SOC,JFS start time,-,cranking power falls with charge,M09
+R3-5b,R§3 row 5,OAT (soak temperature),JFS start time,-,cold oil viscosity and battery resistance,M09
+R3-5c,R§3 row 5,altitude,JFS start time,+,gas-generator power lapse with density,M09
+R3-6,R§3 row 6 (N2/PLA; altitude; Mach; OAT -> bleed P and T),eng.bleed_p3 (bleed port pressure),util.bleed_extract below the set flow,+,flow-limiting venturi; bleed P/T vs N2 itself is M07's output,M09-side
+R3-7,R§3 row 7 (bleed extraction -> thrust and T5),ECS flow demand (env.w_bleed_pto),util.bleed_extract,+,flow-control set point; the thrust/T5 response is M07's (W2.1 tests it),M09-side
+R3-8a,R§3 row 8 (pitch; Nx; Nz; slosh -> indicated fuel),af.f_spec_body x (pitch and longitudinal acceleration),fuel-surface slope,+,fuel settles normal to the specific force,M09
+R3-8b,R§3 row 8,af.f_spec_body z magnitude (pull-up),fuel-surface slope,-,more normal load flattens the surface,M09
+R3-8c,R§3 row 8,pitch at max AB with low fuel,true feed-group (F1 + F2) contents,-,F1A pick-up uncovers and transfer stalls while max AB drains the feed group; the gauge and the low-fuel warning are M12's (AD-42),M09-side
+R3-9a,R§3 row 9 (fuel flow heat-sink capacity -> fuel/oil/hydraulic temperatures),eng.wf,util.hyd_t,-,fuel-cooled HX capacity rate Wf cp,M09
+R3-9b,R§3 row 9,recovery (ambient) temperature,tank fuel temperature,+,skin heat exchange,M09
+R3-9c,R§3 row 9,eng.wf,util.fuel_inlet_t,-,hydraulic HX heat carried by the engine-bound fuel flow,M09
+R3-10a,R§3 row 10 (landing mass; speed; chute; mu -> brake energy -> temperature -> wear),af.brake_energy_rate,util.brake_t,+,carbon heat sink,M09
+R3-10b,R§3 row 10,af.brake_energy_rate,util.brake_wear,+,energy and oxidation wear,M09
+R3-10c,R§3 row 10,landing mass,util.tyre_wear,+,touchdown spin-up scrub scales with mass,M09
+R3-11,R§3 row 11 (WoW -> FCS law; NWS; anti-skid; ECS; recorder; BIT modes),af.wow (airborne),util.pto_power,+,airborne electrical load set; FCS/NWS/anti-skid modes are M05/M06,M09-side
+R3-12a,R§3 row 12 (cold soak -> battery; viscosity; precharge; tyre pressure; JFS),soak temperature,accumulator precharge,+,gas law,M09
+R3-12b,R§3 row 12,soak temperature,pump stroke needed at zero demand (leakage),+,viscosity,M09
+R3-12c,R§3 row 12,soak temperature,battery resistance,-,cold raises internal resistance,M09
+R3-13a,R§3 row 13 (dust; sand; salt -> filter dP; seal wear; HX fouling),filter loading (health.utility; M10 process),util.hyd_p under flow,-,pressure-filter dP at the pump outlet,M09-side
+R3-13b,R§3 row 13,HX fouling (health.utility; M10 process),util.ecs_t PHX outlet,+,PHX UA falls,M09-side
+N4,note Syn (c) 4 (hydraulic pressure -> actuator rate limits),util.hyd_p,util.hyd_dp_avail,+,dp_avail = p - p_return (M05 applies the sqrt law),M09-side
+N9,note Syn (c) 9 (JFS torque -> N2 during start),JFS engaged,util.pto_power,-,free turbine drives the engine through the PTO,M09
+N13,note Syn (c) 13 (ECS supply -> fuel-tank pressurisation and OBOGS),bleed port above ambient,util.bleed_extract includes the auxiliary flow,+,pneumatic subscribers,M09
+N14,note Syn (c) 14 (ECS cooling -> avionics temperature),electrical load,util.ecs_t avionics bay,+,dissipated load heats the bay,M09
+N15,note Syn (c) 15 (PLA/AB -> fuel flow -> contents -> CG),eng.wf,util.mass,-,fuel depletion,M09
+N23,note Syn (c) 23 (hydraulic system loss -> wheel brakes),SYS2 pressure,util.brake_p available for the same stop,+,brake pressure capped by the supplying system,M09-side

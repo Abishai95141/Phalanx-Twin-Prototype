@@ -1,0 +1,198 @@
+{
+ "n_pairs": 156,
+ "features": [
+  {
+   "feature": "ENG.PS3.A_acf1_d2",
+   "std_effect": 0.3571663917239059,
+   "pairs_differing": 65,
+   "differing_pairs_where_channel_affected": 65,
+   "top_modes": [
+    [
+     "FM.ENG.BLADE_LOSS",
+     15.83
+    ],
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     10.81
+    ],
+    [
+     "FM.ENG.QUICKFILL_STALL",
+     10.61
+    ],
+    [
+     "FM.ENG.POP_STALL",
+     10.45
+    ],
+    [
+     "FM.ENG.FLAMEOUT",
+     3.8
+    ],
+    [
+     "FM.SNS.PS3_VENTED",
+     3.22
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.PS3.B_acf1_d2",
+   "std_effect": 0.333816956838094,
+   "pairs_differing": 65,
+   "differing_pairs_where_channel_affected": 65,
+   "top_modes": [
+    [
+     "FM.ENG.BLADE_LOSS",
+     15.67
+    ],
+    [
+     "FM.ENG.QUICKFILL_STALL",
+     11.07
+    ],
+    [
+     "FM.ENG.POP_STALL",
+     11.03
+    ],
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     10.79
+    ],
+    [
+     "FM.ENG.FLAMEOUT",
+     3.17
+    ],
+    [
+     "FM.ENG.EROSION",
+     0.34
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.PS3.B_kurt_step",
+   "std_effect": 0.3269488158128145,
+   "pairs_differing": 65,
+   "differing_pairs_where_channel_affected": 65,
+   "top_modes": [
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     15.19
+    ],
+    [
+     "FM.ENG.QUICKFILL_STALL",
+     14.28
+    ],
+    [
+     "FM.ENG.POP_STALL",
+     13.4
+    ],
+    [
+     "FM.ENG.FLAMEOUT",
+     4.59
+    ],
+    [
+     "FM.ENG.EROSION",
+     2.16
+    ],
+    [
+     "FM.ENG.BLADE_LOSS",
+     0.66
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.N1.B_kurt_step",
+   "std_effect": 0.2721521323921107,
+   "pairs_differing": 65,
+   "differing_pairs_where_channel_affected": 65,
+   "top_modes": [
+    [
+     "FM.ENG.FLAMEOUT",
+     15.72
+    ],
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     13.35
+    ],
+    [
+     "FM.ENG.MEC_MISASSEMBLY",
+     5.15
+    ],
+    [
+     "FM.ENG.HPT_DETERIORATION",
+     3.16
+    ],
+    [
+     "FM.SNS.GENERIC",
+     2.67
+    ],
+    [
+     "FM.ENG.BLADE_LOSS",
+     2.46
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.PS3.V_kurt_step",
+   "std_effect": -0.26391206564367875,
+   "pairs_differing": 63,
+   "differing_pairs_where_channel_affected": 63,
+   "top_modes": [
+    [
+     "FM.ENG.BLADE_LOSS",
+     18.04
+    ],
+    [
+     "FM.SNS.PS3_VENTED",
+     15.79
+    ],
+    [
+     "FM.ENG.POP_STALL",
+     4.13
+    ],
+    [
+     "FM.ENG.QUICKFILL_STALL",
+     4.07
+    ],
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     3.27
+    ],
+    [
+     "FM.ENG.MEC_MISASSEMBLY",
+     1.37
+    ]
+   ]
+  },
+  {
+   "feature": "ENG.N1.A_kurt_step",
+   "std_effect": 0.2627554120326381,
+   "pairs_differing": 65,
+   "differing_pairs_where_channel_affected": 65,
+   "top_modes": [
+    [
+     "FM.ENG.FLAMEOUT",
+     15.67
+    ],
+    [
+     "FM.ENG.MISSING_AIR_SEAL",
+     13.09
+    ],
+    [
+     "FM.ENG.MEC_MISASSEMBLY",
+     4.96
+    ],
+    [
+     "FM.ENG.HPT_DETERIORATION",
+     3.02
+    ],
+    [
+     "FM.SNS.GENERIC",
+     2.62
+    ],
+    [
+     "FM.ENG.QUICKFILL_STALL",
+     2.45
+    ]
+   ]
+  }
+ ],
+ "feature_differences_on_unaffected_channels": 0
+}

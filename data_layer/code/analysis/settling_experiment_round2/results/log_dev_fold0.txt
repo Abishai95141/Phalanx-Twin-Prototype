@@ -1,0 +1,125 @@
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/S/fold0 R2a prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_prior 5
+R2a/prior: wrote 51 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_prior in 7s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/S/fold0 R2a cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_cal 5
+R2a/cal: wrote 51 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_cal in 8s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/S/fold0 R2b prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_prior 5
+R2b/prior: wrote 51 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_prior in 9s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/S/fold0 R2b cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_cal 5
+R2b/cal: wrote 51 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_cal in 8s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt R1REF R1ref prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/R1ref 5 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results
+R1ref/prior: wrote 51 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/R1ref in 8s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt real_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 5
+stats real_cal: 51 flights in 23s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt S_R2a_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 5
+stats S_R2a_prior: 51 flights in 24s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt S_R2a_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 5
+stats S_R2a_cal: 51 flights in 25s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt S_R2b_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 5
+stats S_R2b_prior: 51 flights in 23s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt S_R2b_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 5
+stats S_R2b_cal: 51 flights in 24s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/R1ref /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt R1ref /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 5
+stats R1ref: 51 flights in 24s
+
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s08_dev_cv.py battery /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/stats_fold0 /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/dev_battery_fold0.json real_cal S_R2a_prior,S_R2a_cal,S_R2b_prior,S_R2b_cal,R1ref
+S_R2a_prior {'B1_fast': 0.29, 'B1_slow': 0.016, 'B1h_fast': 0.63, 'B1h_slow': 0.016, 'B2': 0.287, 'B3i': 0.553, 'B3ii': 0.837, 'B4': 1.484, 'B5i': 0.404, 'B5ii': 0.14, 'B6': 1.047}
+S_R2a_cal {'B1_fast': 0.3, 'B1_slow': 0.017, 'B1h_fast': 0.65, 'B1h_slow': 0.017, 'B2': 0.312, 'B3i': 0.521, 'B3ii': 0.81, 'B4': 1.513, 'B5i': 0.265, 'B5ii': 0.14, 'B6': 0.921}
+S_R2b_prior {'B1_fast': 0.194, 'B1_slow': 0.015, 'B1h_fast': 0.215, 'B1h_slow': 0.015, 'B2': 0.212, 'B3i': 0.45, 'B3ii': 0.708, 'B4': 0.842, 'B5i': 0.165, 'B5ii': 0.14, 'B6': 1.534}
+S_R2b_cal {'B1_fast': 0.167, 'B1_slow': 0.015, 'B1h_fast': 0.195, 'B1h_slow': 0.015, 'B2': 0.2, 'B3i': 0.448, 'B3ii': 0.692, 'B4': 0.851, 'B5i': 0.227, 'B5ii': 0.14, 'B6': 1.401}
+R1ref {'B1_fast': 0.32, 'B1_slow': 0.001, 'B1h_fast': 0.156, 'B1h_slow': 0.001, 'B2': 0.212, 'B3i': 0.346, 'B3ii': 0.108, 'B4': 1.038, 'B5i': 0.018, 'B5ii': 0.0, 'B6': 0.118}
+ref early-vs-late {'B1_fast': 0.022, 'B1_slow': 0.012, 'B1h_fast': 0.015, 'B1h_slow': 0.012, 'B2': 0.025, 'B3i': 0.065, 'B3ii': 0.186, 'B4': 0.119, 'B5i': 0.096, 'B5ii': 0.02, 'B6': 0.78}
+
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:344: RuntimeWarning: All-NaN slice encountered
+  gA, gB = np.nanmedian(A, 0), np.nanmedian(Bm, 0)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:345: RuntimeWarning: All-NaN slice encountered
+  iqr = np.nanmedian(real[..., 1], 0)                               # (7, 16)
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/sklearn/linear_model/_ridge.py:227: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 1.176425143967208e-07.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:344: RuntimeWarning: All-NaN slice encountered
+  gA, gB = np.nanmedian(A, 0), np.nanmedian(Bm, 0)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:345: RuntimeWarning: All-NaN slice encountered
+  iqr = np.nanmedian(real[..., 1], 0)                               # (7, 16)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:344: RuntimeWarning: All-NaN slice encountered
+  gA, gB = np.nanmedian(A, 0), np.nanmedian(Bm, 0)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:345: RuntimeWarning: All-NaN slice encountered
+  iqr = np.nanmedian(real[..., 1], 0)                               # (7, 16)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:344: RuntimeWarning: All-NaN slice encountered
+  gA, gB = np.nanmedian(A, 0), np.nanmedian(Bm, 0)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:345: RuntimeWarning: All-NaN slice encountered
+  iqr = np.nanmedian(real[..., 1], 0)                               # (7, 16)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:344: RuntimeWarning: All-NaN slice encountered
+  gA, gB = np.nanmedian(A, 0), np.nanmedian(Bm, 0)
+/Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/battery.py:345: RuntimeWarning: All-NaN slice encountered
+  iqr = np.nanmedian(real[..., 1], 0)                               # (7, 16)
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s06_disc_guard.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2a_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/feat_fold0 S_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/dev_disc_fold0_S_R2a_prior.json 5 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results
+features 59s
+G0 pipeline-only {'lr': (0.5, [0.5, 0.5]), 'gb': (0.5, [0.5, 0.5])} PASS | full metadata {'lr': 0.949, 'gb': 0.999}
+D2 lr {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0} 67s
+D2 gb {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0, 'gb_64_tex': 1.0, 'gb_seg_tex': 1.0} 123s
+ablation {'drop_quant': 1.0, 'only_quant': 1.0, 'drop_noise': 1.0, 'only_noise': 1.0, 'drop_spectral': 1.0, 'only_spectral': 1.0, 'drop_tails': 1.0, 'only_tails': 1.0, 'drop_missing': 1.0, 'only_missing': 1.0, 'drop_cross': 1.0, 'only_cross': 1.0} 133s
+D3 {'auc': 1.0, 'ci95': [1.0, 1.0]} 146s
+
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+
+[exit 0]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s06_disc_guard.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/syn_fold0/S_R2b_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/cv/test_fold0.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/feat_fold0 S_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/dev_disc_fold0_S_R2b_prior.json 5 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results
+features 31s
+G0 pipeline-only {'lr': (0.5, [0.5, 0.5]), 'gb': (0.5, [0.5, 0.5])} PASS | full metadata {'lr': 0.951, 'gb': 0.997}
+D2 lr {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0} 38s
+D2 gb {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0, 'gb_64_tex': 1.0, 'gb_seg_tex': 1.0} 77s
+ablation {'drop_quant': 1.0, 'only_quant': 1.0, 'drop_noise': 1.0, 'only_noise': 1.0, 'drop_spectral': 1.0, 'only_spectral': 1.0, 'drop_tails': 1.0, 'only_tails': 1.0, 'drop_missing': 1.0, 'only_missing': 1.0, 'drop_cross': 1.0, 'only_cross': 1.0} 87s
+D3 {'auc': 1.0, 'ci95': [1.0, 1.0]} 99s
+
+/Users/abishaikc/Phalanx/.venv-settling/lib/python3.14/site-packages/aeon/base/_base_collection.py:118: UserWarning: Data seen by instance of MiniRocket has one or more case/channel pairs with very little variation (std <= 1e-07). Some aeon methods may treat these series as effectively constant. If this is unintended, rescale (e.g., multiply by a constant) or normalise your data.
+  meta = self._check_X(X)
+
+[exit 0]

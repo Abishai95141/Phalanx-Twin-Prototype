@@ -1,0 +1,2 @@
+# regenerable per-world B8 outputs (2-3 MB each): code/b8.py run OUT [--usage-mode] with the roots in b8.py
+b8_worlds*.jsonl

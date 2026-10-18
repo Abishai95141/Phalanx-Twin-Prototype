@@ -1,0 +1,4 @@
+fit done
+synth done
+features done
+gate0 done

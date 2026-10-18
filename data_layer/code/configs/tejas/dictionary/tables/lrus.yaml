@@ -1,0 +1,184 @@
+# LRU table for the Tejas-class platform dictionary (M01).
+# Every LRU carries an evidence tag and a source. `frame_hz` is the LRU's internal acquisition frame used by
+# channels whose acquisition rate group is LRU-INT (architecture §8: each LRU samples on its own oscillator).
+# `frame_prov` names the rule (tables/rules.yaml) or the evidence that sets the frame rate.
+format: phalanx.dictionary.lrus/1
+lrus:
+  DFCC:
+    name: Digital Flight Control Computer (quadruplex, channels A-D, CCDL)
+    role: flight-critical computer; 1553B interface per channel; RS-422 to ADCs
+    units: 4
+    frame_hz: 80
+    frame_prov: R-RATE-FCS
+    evidence: {tag: DIRECT, source: "Kala (ADE), JOAST 67(2A) 2015 https://joast.org/index.php/joast/article/view/317 ; Santhiseela & Janarthanan, JOAST 57(4) https://joast.org/index.php/joast/article/view/782"}
+  ADC:
+    name: Air Data Computer (quadruplex, one per DFCC channel, RS-422)
+    role: air-data transducers and algorithm; outputs to DFCC over RS-422
+    units: 4
+    frame_hz: 80
+    frame_prov: R-INV-FIELD-ASSUMPTION
+    evidence: {tag: DIRECT, source: "Kala (ADE), JOAST 67(2A) 2015 https://joast.org/index.php/joast/article/view/317 ; Rajalakshmi et al., DSJ 56(1) 2006 https://www.publicationsdrdo.in/index.php/dsj/article/view/1863"}
+  FADEC:
+    name: F404-GE-IN20 FADEC (dual-channel assumed) and FADEC/ECMS 1553 gateway
+    role: engine control, engine-sensor acquisition and signal validation
+    units: 2
+    frame_hz: 60
+    frame_prov: R-RATE-FADEC
+    evidence: {tag: "DIRECT-part", source: "ADA Propulsion page https://www.ada.gov.in/images/ps.htm (IN20 has FADEC); channel count not public (parameter_inventory.csv ENG.FADEC_STATUS notes)"}
+  ECMS:
+    name: Engine Condition Monitoring System (location unknown; function hosted with the FADEC gateway in the synthetic ICD)
+    role: engine status, life usage indices, vibration monitoring
+    units: 1
+    frame_hz: 10
+    frame_prov: R-RATE-ECMS
+    evidence: {tag: DIRECT, source: "ADA Propulsion page https://www.ada.gov.in/images/ps.htm"}
+  INGPS:
+    name: INS/GPS (RLG INS + GPS; SIGMA 95N on Mk1 per secondary sources)
+    role: navigation 1553 remote terminal
+    units: 1
+    frame_hz: 100
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "DefenceTalk SIGMA 95N order (secondary), via tejas_airframe_aero_fcs.md Q5; research_notes tejas_avionics_and_parameter_inventory.md Q1"}
+  AHRS:
+    name: Standby AHRS (indigenous, flight-tested on LSP5)
+    role: standby attitude and heading
+    units: 1
+    frame_hz: 100
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "ADA Annual Report 2021-22 https://www.ada.gov.in/images/Annual_Report_2021-22.pdf"}
+  RADALT:
+    name: Radar (radio) altimeter (Mk1A "Advanced Radio Altimeter")
+    role: height above ground
+    units: 1
+    frame_hz: 25
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "DDP LCA Tejas page https://www.ddpmod.gov.in/en/resources/products/lca-tejas"}
+  RADAR:
+    name: Fire-control radar (AESA on Mk1A)
+    role: avionics 1553 remote terminal (only BIT, health and software configuration are in the inventory)
+    units: 1
+    frame_hz: 50
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "DDP LCA Tejas page https://www.ddpmod.gov.in/en/resources/products/lca-tejas ; ADA AR 2018-19 (radar software 7_008A)"}
+  OAC:
+    name: Open Architecture Computer (mission computer; 1553 bus controller assumed)
+    role: avionics hub; bus controller; maintenance log (MPDRU function)
+    units: 1
+    frame_hz: 50
+    frame_prov: R-RATE-AV
+    evidence: {tag: DIRECT, source: "tejas.gov.in OAC page (archived) http://web.archive.org/web/2015/http://www.tejas.gov.in:80/technology/open_architecture_computer_for_avionics.html"}
+  SMS:
+    name: Stores Management System (weapon bus controller; RT on the avionics bus)
+    role: stores configuration and release
+    units: 1
+    frame_hz: 50
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "drdo.gov.in/drdo/avionics (search-index summary, snippet-level); ADA avionics page https://www.ada.gov.in/images/sys.htm"}
+  BHEEM_EU:
+    name: BHEEM electronic unit (utility management; brake-by-wire; HEEM = hydraulic/electrical/engine monitoring, expansion ASSUMPTION)
+    role: utility signal acquisition and 1553 remote terminal
+    units: 1
+    frame_hz: 40
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "ADA AR 2015-16 (HEEM-EU), AR 2018-19 (BHEEM 1.9.08) https://www.ada.gov.in/images/Annual_Report_2018-19.pdf ; Raveendran & Prabhu RTO-MP-SCI-162-14"}
+  ECFM_C:
+    name: Environmental Control and Fuel Monitoring computer (ECFM-C)
+    role: fuel gauging/transfer and ECS monitoring; 1553 remote terminal
+    units: 1
+    frame_hz: 40
+    frame_prov: R-RATE-LRU
+    evidence: {tag: DIRECT, source: "ADA AR 2018-19, AR 2021-22 https://www.ada.gov.in/images/Annual_Report_2021-22.pdf"}
+  GCU:
+    name: Main AC generator control unit
+    role: generator sensing (acquired by the utility EU)
+    units: 1
+    evidence: {tag: "TRANSFER: MIL-STD-704F", source: "tejas_utility_systems.md KQ5; main generator rating not public"}
+  DC_GCU:
+    name: 5 kW brushless DC backup generator GCU (with BITE)
+    role: backup generator sensing
+    units: 1
+    evidence: {tag: DIRECT, source: "tejas_utility_systems.md KQ5 (DRDO 5 kW DC generator for LCA)"}
+  TRU:
+    name: Transformer-rectifier units (two, probable HAL 7.5 kW/250 A)
+    role: DC conversion
+    units: 2
+    evidence: {tag: "DIRECT-part", source: "tejas_utility_systems.md KQ5 (HAL product pages)"}
+  BDU:
+    name: Battery Ah display unit
+    role: battery current integration and low warning
+    units: 1
+    evidence: {tag: "DIRECT-part", source: "DDP node 10096 https://www.ddpmod.gov.in/node/10096"}
+  MASTER_BOX:
+    name: DC master box
+    role: DC bus switching and monitoring
+    units: 1
+    evidence: {tag: "DIRECT-part", source: "tejas_utility_systems.md KQ5; DDP node 9649 (ALH-class)"}
+  CPCS:
+    name: Cockpit pressure control system (CPTCV)
+    role: cabin pressure
+    units: 1
+    evidence: {tag: DIRECT, source: "CAG Report 17/2015 (CPTCV low reliability), via tejas_utility_systems.md KQ6"}
+  HALD_CB:
+    name: Hot-air leak detection control box
+    role: ECS duct leak and pressure switches
+    units: 1
+    evidence: {tag: DIRECT, source: "ADA LRU list https://www.ada.gov.in/images/LRU.pdf"}
+  OBOGS:
+    name: On-board oxygen generating system (Mk1A)
+    role: life support
+    units: 1
+    evidence: {tag: DIRECT, source: "tejas_utility_systems.md KQ6"}
+  NWS_CTRL:
+    name: Nose-wheel steering controller
+    role: nose-wheel steering
+    units: 1
+    evidence: {tag: DIRECT, source: "ADA LRU list https://www.ada.gov.in/images/LRU.pdf"}
+  ANTISKID:
+    name: Anti-skid unit (2 channels)
+    role: wheel-speed sensing and skid control
+    units: 1
+    evidence: {tag: "DIRECT-part", source: "tejas_utility_systems.md KQ7 (HAL anti-skid unit: 2 channels, 7 m/s2 decel limit)"}
+  FDCU:
+    name: Fire detection control unit
+    role: engine-bay fire/overheat detection and extinguisher
+    units: 1
+    evidence: {tag: DIRECT, source: "tejas_utility_systems.md KQ8"}
+  CWS:
+    name: Centralised Warning System (2 display units + 1 electronic unit; HAL SLRDC)
+    role: legends, master warning/caution, voice warnings
+    units: 1
+    frame_hz: 40
+    frame_prov: R-RATE-LRU
+    evidence: {tag: "DIRECT-part", source: "DDP CWS https://www.ddpmod.gov.in/en/resources/products/centralized-warning-system-cws"}
+  CDR:
+    name: Crash data recorder (bus monitor)
+    role: recording sink fed by the DFCC 1553 output and bus monitoring
+    units: 1
+    evidence: {tag: DIRECT, source: "Raveendran & Prabhu RTO-MP-SCI-162-14 (DFCC -> 1553 -> CDR, GUH, FTI); ADA AR 2015-16 budget line"}
+  HUMS_DAU:
+    name: Mk1A HUMS data acquisition unit (PCAMi-1000 class)
+    role: recording sink for utility analogs and bus-monitored words
+    units: 1
+    evidence: {tag: DIRECT, source: "ADU (PCC 124-unit HUMS DAU production order, Feb 2026) https://www.aviation-defence-universe.com/pcc-advances-indigenous-hums-capability-with-pcami-1000-production-order"}
+  FTI_DAS:
+    name: Flight-test instrumentation data acquisition system (test aircraft only)
+    role: FTI PCM, DRU and telemetry (about 1,500 parameters)
+    units: 1
+    frame_hz: 64
+    frame_prov: R-RATE-FTI
+    evidence: {tag: DIRECT, source: "ADA NFTC/facilities https://www.ada.gov.in/images/nftc.htm ; ADA FTI integration rig (about 1500 parameters)"}
+  FTP:
+    name: Flight Test Panel (test aircraft only; RS-422 to DFCC)
+    role: test-point selection and excitation
+    units: 1
+    evidence: {tag: DIRECT, source: "Kala (ADE), JOAST 67(2A) 2015 https://joast.org/index.php/joast/article/view/317"}
+  DVR:
+    name: Digital video recorder ("Video Digital Recorder" budget line)
+    role: HUD/MFD video and cockpit audio
+    units: 1
+    evidence: {tag: DIRECT, source: "ADA AR 2015-16 engineering-change lines https://www.ada.gov.in/images/Annual_Report_2015-16.pdf"}
+  GROUND:
+    name: Ground station, ground decoder and maintenance technicians (off-aircraft)
+    role: post-download computation and inspection measurements
+    units: 1
+    evidence: {tag: "TRANSFER: record linkage practice", source: "data_pathway_and_formats.md Q5; maintenance_records_and_events.md"}

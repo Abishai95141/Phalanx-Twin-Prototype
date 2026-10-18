@@ -1,0 +1,57 @@
+<!doctype html>
+<!--
+  Second standalone screen. It deliberately reuses the SAME generic selectors as
+  fleet-overview.html (body, h2, .card, .label, .value) with a DARK theme, to prove
+  that two screens mounted in one video do not leak CSS into each other. Synthetic data.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Tail health (screen)</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; width: 1920px; height: 1080px; background: #0b1220; font-family: Inter, sans-serif; color: #e2e8f0; }
+      #app { position: relative; width: 1920px; height: 1080px; padding: 56px 72px; background: #0b1220; overflow: hidden; }
+      h2 { margin: 0 0 32px; font-size: 40px; letter-spacing: -0.02em; color: #f8fafc; }
+      .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; height: 860px; }
+      .card { background: #111a2e; border: 1px solid #1f2b45; border-radius: 18px; padding: 28px 32px; }
+      .label { font-size: 16px; color: #94a3b8; margin-bottom: 12px; }
+      .value { font-size: 64px; font-weight: 700; color: #fbbf24; font-variant-numeric: tabular-nums; }
+      svg.chart { width: 100%; height: 560px; }
+      .chart .grid-line { stroke: #1f2b45; stroke-width: 1; }
+      .chart .health { fill: none; stroke: #60a5fa; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+      .chart .threshold { stroke: #ef4444; stroke-width: 2; stroke-dasharray: 10 8; }
+      .serial { font-family: "JetBrains Mono", monospace; font-size: 22px; color: #93c5fd; }
+      ul.events { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-direction: column; gap: 14px; }
+      ul.events li { font-size: 19px; padding: 14px 18px; border-radius: 12px; background: #0f172a; border: 1px solid #1f2b45; }
+    </style>
+  </head>
+  <body>
+    <div id="app" data-composition-id="tail-health" data-width="1920" data-height="1080" data-no-timeline>
+      <h2>Tail T-04 · component health</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="label">Health index, fuel pump B (serial follows the part)</div>
+          <svg class="chart" viewBox="0 0 1000 560">
+            <line class="grid-line" x1="0" y1="140" x2="1000" y2="140" />
+            <line class="grid-line" x1="0" y1="280" x2="1000" y2="280" />
+            <line class="grid-line" x1="0" y1="420" x2="1000" y2="420" />
+            <line class="threshold" id="th-threshold" x1="0" y1="400" x2="1000" y2="400" />
+            <path class="health" id="th-health" d="M0 90 C 120 95, 220 100, 320 120 S 520 170, 620 230 S 820 360, 900 430 L 1000 470" />
+          </svg>
+        </div>
+        <div class="card">
+          <div class="label">Predicted remaining useful life</div>
+          <div class="value"><span id="th-rul">41</span> h</div>
+          <div class="serial">SN-SYN-0042</div>
+          <ul class="events">
+            <li id="th-ev-1">Vibration trend above baseline</li>
+            <li id="th-ev-2">Recommend inspection before next sortie block</li>
+            <li id="th-ev-3">Order draft: HUMAN approval required</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

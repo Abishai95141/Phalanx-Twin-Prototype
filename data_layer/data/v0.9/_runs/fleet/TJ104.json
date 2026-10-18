@@ -1,0 +1,53 @@
+{
+  "availability_state_records": 128,
+  "days": 180,
+  "kind": "fleet",
+  "kpis": {
+    "aog_days": 55.572916666666664,
+    "cann": 0.0,
+    "cann_rate": 0.0,
+    "cost": 26.60703,
+    "flown_fh": 70.13222222222223,
+    "flying_task": 0.4287132435992883,
+    "fmc": 0.480787037037037,
+    "in_flight_failures": 5.0,
+    "man_hours": 2050.703,
+    "mc": 0.5041666666666667,
+    "nmcd": 0.0,
+    "nmcm": 0.1870949074074074,
+    "nmcs": 0.30873842592592593,
+    "sorties": 78.0
+  },
+  "orders_submitted": 1,
+  "policy": "scheduled/1.0.0",
+  "preview": "PREVIEW: behaviour not yet validated",
+  "root_seed": "0x9f1ee7",
+  "rows": {
+    "events.bit_faults": 127,
+    "events.cautions": 16,
+    "events.exceedances": 0,
+    "labels.truth (restricted)": 209,
+    "maint.records": 1115,
+    "orders.commands": 1,
+    "orders.status": 4,
+    "usage.counters": 2574
+  },
+  "scenario": "preview09-ops",
+  "sorties_with_counters_but_no_sortie_record": [
+    "TJ104-20260107-GR",
+    "TJ104-20260120-GR",
+    "TJ104-20260127-GR",
+    "TJ104-20260212-GR",
+    "TJ104-20260304-GR",
+    "TJ104-20260401-GR",
+    "TJ104-20260403-GR",
+    "TJ104-20260406-GR",
+    "TJ104-20260408-GR",
+    "TJ104-20260416-GR",
+    "TJ104-20260611-GR"
+  ],
+  "start": "2026-01-05",
+  "tail_index": 3,
+  "tail_no": "TJ104",
+  "wall_s": 44.9
+}

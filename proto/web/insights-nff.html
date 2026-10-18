@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Alarms that find nothing — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: grid; grid-template-rows: auto minmax(0,1fr); row-gap: 24px; height: 100%; }
+  .tabs2 span { cursor: pointer; }
+  .v2 { grid-template-rows: minmax(0,1fr) minmax(0,1fr); }
+  .hero { grid-row: 1 / span 2; }
+  .hd { display: flex; align-items: flex-start; gap: 24px; }
+  .hd .num { margin-left: auto; text-align: right; flex: none; }
+  .kick .tier { margin-left: 6px; }
+  .ax { font: 500 11px var(--mono); fill: var(--ink-4); }
+  .rg { grid-template-columns: minmax(0,1fr) auto 96px; padding: 0 14px; }
+  .lg { display: flex; align-items: center; gap: 22px; margin-top: 16px; padding-left: 40px; font-size: 13px; color: var(--ink-3); }
+  .lg span { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .lg i { width: 12px; height: 12px; border-radius: 3px; display: block; }
+  .lg b { margin-left: auto; color: var(--ink); font-weight: 650; padding-right: 40px; }
+  .rg .dots { display: flex; gap: 3px; align-items: center; }
+  .rg .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: block; }
+  .rg .dots i.mean { width: 1.5px; height: 16px; border-radius: 1px; background: var(--ink-3); margin: 0 2px; }
+  .rg .n { text-align: right; font: 650 15px var(--font); }
+  .rg .n .ci { display: block; font-size: 13px; margin-top: 2px; }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; grid-template-columns: minmax(0, 1fr); }
+    .hero { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    #par { height: auto; display: block; }
+    .lg { flex-wrap: wrap; gap: 10px 20px; padding-left: 0; }
+    .lg b { margin-left: 0; padding-right: 0; flex-basis: 100%; }
+    [data-shot="leading"] .push { margin-top: 20px; }
+    .rg { grid-template-columns: minmax(0,1fr) auto; row-gap: 10px; padding: 14px 12px; }
+    .rg > div:first-child { grid-column: 1 / -1; }
+    .rg .n { display: flex; align-items: baseline; gap: 8px; }
+    .rg .n .ci { display: inline; margin: 0; }
+  }
+  @media (max-width: 699px) {
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .hd { flex-direction: column; gap: 14px; }
+    .hd .num { margin-left: 0; text-align: left; }
+    #par { display: none; }
+    .lg { margin-top: 18px; gap: 8px 16px; }
+    /* phone Pareto: one row per code; bar length = share of alarms, segments = how its jobs were closed */
+    .pm { margin-top: 20px; display: flex; flex-direction: column; }
+    .pm-key { font-size: 13px; color: var(--ink-4); line-height: 1.45; margin-bottom: 6px; }
+    .pm-r { display: grid; grid-template-columns: minmax(0,1fr) auto; column-gap: 12px; row-gap: 6px; padding: 11px 0; border-top: 1px solid var(--line-2); }
+    .pm-key + .pm-r { border-top: 0; }
+    .pm-c { font: 700 14px var(--mono); }
+    .pm-c span { font: 500 13px var(--font); color: var(--ink-4); margin-left: 6px; }
+    .pm-n { font: 650 14px var(--mono); text-align: right; }
+    .pm-n span { font-weight: 500; color: var(--ink-4); }
+    .pm-b { display: flex; gap: 1.5px; height: 12px; }
+    .pm-b i { display: block; height: 100%; border-radius: 2px; }
+    .pm-j { font: 500 13px var(--mono); color: var(--ink-4); text-align: right; align-self: center; }
+    .pm-r.oth .pm-c { color: var(--ink-3); font-weight: 500; }
+  }
+</style>
+</head>
+<body data-page="insights">
+<div id="content">
+<div class="pg">
+  <div class="tabs2"><span onclick="location.href='insights.html'">Where availability went</span><span class="on">Alarms that find nothing</span><span onclick="location.href='insights-integrity.html'">Can the records be trusted?</span></div>
+  <div class="v2">
+
+    <section class="panel2 c8 hero" data-shot="pareto">
+      <div class="hd">
+        <div>
+          <div class="kick">BIT alarms · 168 days<span class="tier diag">DIAG</span></div>
+          <div class="t2" id="pt"></div>
+          <div class="sub2" id="ps"></div>
+        </div>
+        <div class="num"><div class="mid" id="pn"></div><div class="ci" id="pci" style="margin-top:8px"></div></div>
+      </div>
+      <svg id="par" width="100%" style="margin-top:24px"></svg>
+      <div class="lg" id="lg"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="rogue">
+      <div class="kick">Rogue units<span class="tier diag">DIAG</span></div>
+      <div class="t2">The same units keep coming back</div>
+      <div class="ci" id="rci" style="margin-top:8px"></div>
+      <div class="rows2" id="rog" style="margin-top:12px"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="leading">
+      <div class="kick">No-fault work · AFLMA leading<span class="tier desc">DESC</span></div>
+      <div style="margin-top:18px;display:flex;align-items:baseline;gap:10px"><span class="big" id="nf"></span><span class="t3" style="color:var(--ink-3)">man-hours per flight hour</span></div>
+      <div class="ci" id="nfci" style="margin-top:8px"></div>
+      <div class="kv2 push" id="kv"></div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-insights.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const I = window.PHX_INS;
+const $ = id => document.getElementById('content').querySelector('#' + id);
+const f1 = (x, d = 1) => Number(x).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
+const pc = (x, d = 1) => f1(x * 100, d);
+const N = x => Number(x).toLocaleString('en-IN');
+
+/* ---------- Pareto with outcome mix ---------- */
+(function () {
+  const P = I.pareto, rows = P.rows.slice(0, 10), rest = P.rows.slice(10);
+  const others = { code: `${rest.length} more`, n: 0, cnd: 0, rr: 0, adm: 0, ts: 0, dfr: 0, jobs: 0, other: true };
+  rest.forEach(r => ['n', 'cnd', 'rr', 'adm', 'ts', 'dfr', 'jobs'].forEach(k => others[k] += r[k]));
+  others.share = others.n / P.total; others.cum = 1;
+  const all = [...rows, others];
+  const j10 = rows.reduce((a, r) => a + r.jobs, 0);
+  $('pt').textContent = `Ten codes raise ${Math.round(P.top10_share * 100)} % of alarms, and none has found a fault`;
+  $('ps').textContent = `Share of ${N(P.total)} BIT events by code, and how each code's jobs were closed.`;
+  $('pn').textContent = '0';
+  $('pci').textContent = `confirmed faults in ${N(j10)} jobs`;
+
+  const W = 909, pl = 40, pr = 40, top = 22, ph = 280;
+  const bw = (W - pl - pr) / all.length, maxS = 0.25;
+  const ys = v => top + ph * (1 - v / maxS), yc = v => top + ph * (1 - v);
+  let g = '';
+  [0, .05, .10, .15, .20, .25].forEach(v => g += `<line x1="${pl}" x2="${W - pr}" y1="${ys(v)}" y2="${ys(v)}" stroke="var(--line-2)"/><text class="ax" x="${pl - 10}" y="${ys(v) + 4}" text-anchor="end">${Math.round(v * 100)}</text>`);
+  [0, .5, 1].forEach(v => g += `<text class="ax" x="${W - pr + 10}" y="${yc(v) + 4}">${Math.round(v * 100)}</text>`);
+  g += `<text class="ax" x="0" y="${top - 10}">% of alarms</text><text class="ax" x="${W}" y="${top - 10}" text-anchor="end">cumulative %</text>`;
+  g += `<line x1="${pl}" x2="${W - pr}" y1="${yc(P.top10_share)}" y2="${yc(P.top10_share)}" stroke="var(--ink-4)" stroke-dasharray="3 4"/>`;
+  let line = '', dots = '';
+  const sy = top + ph + 54, sh = 116;
+  all.forEach((r, i) => {
+    const x = pl + i * bw + 12, w = bw - 24, cx = x + w / 2;
+    g += `<rect x="${x}" y="${ys(r.share)}" width="${w}" height="${top + ph - ys(r.share)}" rx="4" fill="${r.other ? 'var(--line-strong)' : 'var(--ink-2)'}"/>`;
+    g += `<text x="${cx}" y="${ys(r.share) - 7}" text-anchor="middle" style="font:600 13px var(--mono);fill:var(--ink-2)">${r.n}</text>`;
+    g += `<text x="${cx}" y="${top + ph + 22}" text-anchor="middle" style="font:${r.other ? 500 : 700} 13px var(--mono);fill:${r.other ? 'var(--ink-3)' : 'var(--ink)'}">${r.code}</text>`;
+    line += `${i ? 'L' : 'M'}${cx} ${yc(r.cum)}`;
+    dots += `<circle cx="${cx}" cy="${yc(r.cum)}" r="3.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.6"/>`;
+    const tot = r.cnd + r.rr + r.adm + r.ts + r.dfr; let acc = 0;
+    [['cnd', 'var(--ink-4)'], ['rr', 'var(--accent)'], ['adm', 'var(--line-strong)'], ['ts', 'var(--ink)'], ['dfr', 'url(#ph)']].forEach(([k, c]) => {
+      if (!r[k] || !tot) return; const hh = sh * r[k] / tot;
+      g += `<rect x="${x}" y="${sy + acc}" width="${w}" height="${Math.max(0, hh - 1.5)}" rx="2" fill="${c}" ${k === 'dfr' ? 'stroke="var(--ink-5)" stroke-width=".8"' : ''}/>`; acc += hh;
+    });
+    g += `<text x="${cx}" y="${sy + sh + 20}" text-anchor="middle" style="font:500 13px var(--mono);fill:var(--ink-4)">${r.jobs}</text>`;
+  });
+  g += `<path d="${line}" fill="none" stroke="var(--ink)" stroke-width="1.6"/>` + dots;
+  g += `<text x="${pl + bw * 9.5 - 14}" y="${yc(P.top10_share) - 12}" text-anchor="end" style="font:650 13px var(--font);fill:var(--ink-2)">top 10 · ${pc(P.top10_share)} %</text>`;
+  g += `<text class="ax" x="${pl - 10}" y="${sy + 12}" text-anchor="end">jobs</text><text class="ax" x="${pl - 10}" y="${sy + sh + 20}" text-anchor="end">n</text>`;
+  const H = sy + sh + 28;
+  const el = $('par'); el.setAttribute('viewBox', `0 0 ${W} ${H}`); el.setAttribute('height', H);
+  $('lg').innerHTML = [['Could not duplicate', 'var(--ink-4)'], ['Removed, no fault found', 'var(--accent)'], ['Admin close', 'var(--line-strong)'], ['Troubleshot', 'var(--ink)'], ['Deferred', 'hatch']]
+    .map(([t, c]) => `<span><i ${c === 'hatch' ? 'class="hatch" style="box-shadow:inset 0 0 0 1px var(--ink-5)"' : `style="background:${c}"`}></i>${t}</span>`).join('') + '<b>Confirmed fault · 0</b>';
+  if (matchMedia('(max-width: 699px)').matches) {   // phone: the same data as rows instead of an 11-column chart
+    const MIX = [['cnd', 'var(--ink-4)'], ['rr', 'var(--accent)'], ['adm', 'var(--line-strong)'], ['ts', 'var(--ink)'], ['dfr', 'hatch']];
+    el.insertAdjacentHTML('afterend', `<div class="pm" id="parm"><div class="pm-key">Bar length is the code's share of alarms (top 10 · ${pc(P.top10_share)} %); colours show how its jobs were closed.</div>` +
+      all.map(r => { const tot = r.cnd + r.rr + r.adm + r.ts + r.dfr || 1;
+        return `<div class="pm-r ${r.other ? 'oth' : ''}"><div class="pm-c">${r.code}</div><div class="pm-n">${r.n} <span>· ${pc(r.share, 0)} %</span></div>
+          <div class="pm-b" style="width:${Math.max(3, r.share / maxS * 100)}%">${MIX.filter(([k]) => r[k]).map(([k, c]) => `<i ${c === 'hatch' ? 'class="hatch" style="box-shadow:inset 0 0 0 1px var(--ink-5);' : `style="background:${c};`}flex:${r[k] / tot}"></i>`).join('')}</div>
+          <div class="pm-j">${r.jobs} jobs</div></div>`; }).join('') + '</div>');
+  }
+  el.innerHTML = `<defs><pattern id="ph" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--bg)"/><line x1="0" y1="0" x2="0" y2="5" stroke="var(--ink-4)" stroke-width="1.4"/></pattern></defs>` + g;
+})();
+
+/* ---------- rogue units: worst serial per part class ---------- */
+(function () {
+  const seen = new Set(), pick = [];
+  I.rogue.forEach(r => { if (!seen.has(r.part)) { seen.add(r.part); pick.push(r); } });
+  const top = pick.slice(0, 3), mean = top[0].class_mean;
+  const NM = { 'SYN-PN-HYDP': 'hydraulic pump', 'SYN-PN-JFS': 'jet fuel starter', 'SYN-PN-BCU': 'brake control unit' };
+  const shopN = I.parts.reduce((a, p) => a + p.shop, 0), rtok = I.parts.reduce((a, p) => a + p.rtok, 0);
+  $('rci').textContent = `Worst unit per part class · │ marks the class mean, ${f1(mean, 1)} removals`;
+  $('rog').innerHTML = top.map((r, i) => {
+    let d = ''; for (let k = 0; k < r.removals; k++) { if (k === Math.round(r.class_mean)) d += '<i class="mean"></i>'; d += '<i></i>'; }
+    return `<div class="r2 rg ${i === 0 ? 'on' : ''}"><div><div class="ttl"><span class="tailtag">${r.tail}</span> · ${r.serial}</div><div class="why">${NM[r.part]}</div></div>
+      <div class="dots">${d}</div><div class="n">${r.removals} removals<span class="ci">${r.rtok} of ${r.removals} RTOK</span></div></div>`;
+  }).join('');
+})();
+
+/* ---------- leading indicators ---------- */
+(function () {
+  const E = I.leading, a = E.d168, b = E.d30;
+  $('nf').textContent = f1(a.nofault_mh_per_fh);
+  $('nfci').textContent = `168 d · ${pc(a.nofault_share_mh, 0)} % of defect labour · last 30 d ${f1(b.nofault_mh_per_fh)}`;
+  $('kv').innerHTML = `<span>BIT alarms per flight hour</span><span>${f1(a.bit_per_fh, 2)}</span>
+    <span>Same code back within 4 sorties</span><span>${pc(a.repeat_recur.rate, 0)} %</span>
+    <span>Deferred defects per aircraft, now</span><span>${f1(a.deferred.per_ac, 2)}</span>`;
+})();
+
+PHX.mount({
+  page: 'insights', title: 'Fleet insights', sub: 'Command view · where availability is lost, and which fix buys the most back',
+  chips: [{ t: 'As of <b>Mon 22 Jun 06:00 IST</b>', i: 'clock' }, { t: '<b>168 d</b> · 8 aircraft', i: 'calendar' }]
+});
+</script>
+</body></html>

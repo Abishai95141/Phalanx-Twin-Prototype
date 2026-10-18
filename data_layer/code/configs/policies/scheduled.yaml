@@ -1,0 +1,14 @@
+# Reference policy: status quo plus fixed-interval preventive actions (W1.8; ScheduledPolicy).
+format: phalanx.policy/1
+name: scheduled
+rules:
+  engine_wash:
+    every_fh: 50.0
+    evidence: {tag: ASSUMPTION, source: "JOAST 66(1) 2014 / 68(4) 2016 RCMA(Engines)/HAL: compressor wash at regular intervals in the Indian environment, 3-5 % thrust recovery; interval not public"}
+    assumption_id: A-W1.8-22
+    sweep: [25.0, 150.0]
+  borescope:
+    every_fh: 150.0
+    evidence: {tag: ASSUMPTION, source: "faults_and_degradation.md (borescope and 800-EFH nozzle checks); interval not public"}
+    assumption_id: A-W1.8-22
+    sweep: [50.0, 400.0]

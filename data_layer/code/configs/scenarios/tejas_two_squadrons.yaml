@@ -1,0 +1,22 @@
+# Illustrative Tejas fleet scenario (SYNTHETIC tail numbers and engine serials) [ASSUMPTION A-W1.1-32]:
+# one OCU-role squadron at Sulur and one operational squadron at Nal, 16 aircraft each, one calendar year with a
+# 15-day surge (Gagan Shakti 2018 was 15 days in April: PIB 24 Apr 2018).
+format: phalanx.scenario/1
+name: tejas_two_squadrons
+start: "2026-01-05"
+days: 365
+surge:
+  - ["2026-04-08", "2026-04-22"]
+squadrons:
+  - id: sqa
+    role: OCU
+    base: sulur
+    tails: [TJ101, TJ102, TJ103, TJ104, TJ105, TJ106, TJ107, TJ108, TJ109, TJ110, TJ111, TJ112, TJ113, TJ114, TJ115, TJ116]
+  - id: sqb
+    role: OPS
+    base: nal
+    tails: [TJ201, TJ202, TJ203, TJ204, TJ205, TJ206, TJ207, TJ208, TJ209, TJ210, TJ211, TJ212, TJ213, TJ214, TJ215, TJ216]
+# Optional supply disruptions sent to M18 as m18.disruption (class code from configs/tejas/params/M18/catalogue.yaml,
+# lead-time factor, first and last day): none in this illustrative scenario. Example:
+# supply_disruptions:
+#   - {cls: ENG, factor: 2.0, start: "2026-06-01", end: "2026-07-31"}

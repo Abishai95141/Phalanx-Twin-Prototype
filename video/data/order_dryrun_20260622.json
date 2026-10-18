@@ -1,0 +1,103 @@
+{
+ "epoch_utc_ns": 1782095400000000000,
+ "checks": [
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ103:TROUBLESHOOT:54d7fe500658cf7d",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": false,
+   "evidence_ok": true,
+   "evidence_n": 2,
+   "evidence_latest_ingest": "19 Jun 21:16",
+   "verdict": "ACCEPTED"
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ106:TROUBLESHOOT:98e5d97f15d4d9c7",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": false,
+   "evidence_ok": true,
+   "evidence_n": 2,
+   "evidence_latest_ingest": "18 Jun 21:08",
+   "verdict": "ACCEPTED"
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ107:TROUBLESHOOT:748653aa6bcf4544",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": false,
+   "evidence_ok": true,
+   "evidence_n": 6,
+   "evidence_latest_ingest": "18 Jun 21:08",
+   "verdict": "ACCEPTED"
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ107:CHANGE_MONITORING_CONFIG:6c744e071d8445f0",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": true,
+   "evidence_ok": true,
+   "evidence_n": 6,
+   "evidence_latest_ingest": "18 Jun 21:08",
+   "verdict": "ACCEPTED"
+  },
+  {
+   "order_id": "phx:P-ORG-02:1.2.0:20260622T0800:TJ108:EXPEDITE_SPARES:c98851c5b4a8256b",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": false,
+   "evidence_ok": true,
+   "evidence_n": 3,
+   "evidence_latest_ingest": "11 Jun 11:49",
+   "verdict": "ACCEPTED"
+  },
+  {
+   "order_id": "phx:P-SPR-01:1.0.0:20260622T0800:TJ105:REQUISITION_SPARES:b786353ebcdad872",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": false,
+   "evidence_ok": true,
+   "evidence_n": 7,
+   "evidence_latest_ingest": "19 Jun 21:21",
+   "verdict": "ACCEPTED"
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ105:TROUBLESHOOT:e9403bb76d4e79da",
+   "contract_ok": true,
+   "contract_errors": [],
+   "t_issued_ok": true,
+   "schema_ok": true,
+   "schema_errors": [],
+   "authority_ok": true,
+   "human_only": false,
+   "evidence_ok": true,
+   "evidence_n": 4,
+   "evidence_latest_ingest": "19 Jun 21:21",
+   "verdict": "ACCEPTED"
+  }
+ ]
+}

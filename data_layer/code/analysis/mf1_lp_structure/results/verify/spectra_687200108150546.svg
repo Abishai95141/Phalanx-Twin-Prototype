@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="924" viewBox="0 0 920 924" font-family="Helvetica, Arial, sans-serif">
+<rect width="920" height="924" fill="white"/>
+<text x="460.0" y="17" text-anchor="middle" font-size="14">687200108150546.mat ALL class, fast band (MF1-D verification)</text>
+<g transform="translate(0,24)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">PSD N1/N2 (engine 1)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">%^2/Hz</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="208.0" x2="448" y2="208.0" stroke="#eee"/>
+<text x="56" y="211.0" text-anchor="end" font-size="10">1e-03</text>
+<line x1="58" y1="158.5" x2="448" y2="158.5" stroke="#eee"/>
+<text x="56" y="161.5" text-anchor="end" font-size="10">0.01</text>
+<line x1="58" y1="109.0" x2="448" y2="109.0" stroke="#eee"/>
+<text x="56" y="112.0" text-anchor="end" font-size="10">0.1</text>
+<line x1="58" y1="59.5" x2="448" y2="59.5" stroke="#eee"/>
+<text x="56" y="62.5" text-anchor="end" font-size="10">1</text>
+<line x1="62" y1="256.0" x2="448" y2="256.0" stroke="#1f5fa8" stroke-dasharray="4 3"/>
+<text x="446" y="253.0" text-anchor="end" font-size="9">T_q N1</text>
+<line x1="62" y1="161.6" x2="448" y2="161.6" stroke="#c2410c" stroke-dasharray="4 3"/>
+<text x="446" y="158.6" text-anchor="end" font-size="9">T_hf N1</text>
+<line x1="62" y1="234.1" x2="448" y2="234.1" stroke="#15803d" stroke-dasharray="4 3"/>
+<text x="446" y="231.1" text-anchor="end" font-size="9">T_qi N1_1</text>
+<polyline points="62.0,26.0 112.6,43.9 150.7,61.2 181.1,78.4 206.6,74.3 228.4,95.7 247.5,104.7 264.4,113.9 279.7,127.8 293.6,139.7 306.4,149.4 318.2,151.2 329.1,160.2 339.3,163.4 348.9,168.5 357.9,168.4 366.4,158.3 374.5,167.6 382.1,162.6 389.4,171.7 396.4,164.9 403.1,163.0 409.5,151.5 415.6,162.1 421.5,151.5 427.2,159.9 432.6,171.6 437.9,163.2 443.1,163.5 448.0,163.9" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N1_1</text>
+<polyline points="62.0,45.1 112.6,59.8 150.7,74.0 181.1,90.9 206.6,93.1 228.4,105.7 247.5,116.7 264.4,127.0 279.7,144.9 293.6,156.6 306.4,176.6 318.2,168.2 329.1,182.9 339.3,189.9 348.9,191.1 357.9,187.6 366.4,186.8 374.5,191.0 382.1,182.3 389.4,188.8 396.4,184.0 403.1,181.1 409.5,176.2 415.6,183.0 421.5,179.7 427.2,186.6 432.6,188.6 437.9,186.2 443.1,182.1 448.0,196.0" fill="none" stroke="#c2410c" stroke-width="1.4"/>
+<text x="68" y="51" font-size="10" fill="#c2410c">N2_1</text></g>
+<g transform="translate(460,24)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">PSD FF (engine 1)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">(lb/h)^2/Hz</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="213.3" x2="448" y2="213.3" stroke="#eee"/>
+<text x="56" y="216.3" text-anchor="end" font-size="10">10</text>
+<line x1="58" y1="139.0" x2="448" y2="139.0" stroke="#eee"/>
+<text x="56" y="142.0" text-anchor="end" font-size="10">100</text>
+<line x1="58" y1="64.7" x2="448" y2="64.7" stroke="#eee"/>
+<text x="56" y="67.7" text-anchor="end" font-size="10">1e+03</text>
+<line x1="62" y1="256.0" x2="448" y2="256.0" stroke="#1f5fa8" stroke-dasharray="4 3"/>
+<text x="446" y="253.0" text-anchor="end" font-size="9">T_q FF</text>
+<line x1="62" y1="222.5" x2="448" y2="222.5" stroke="#c2410c" stroke-dasharray="4 3"/>
+<text x="446" y="219.5" text-anchor="end" font-size="9">T_hf FF</text>
+<polyline points="62.0,26.0 112.6,50.8 150.7,76.7 181.1,103.3 206.6,108.8 228.4,125.7 247.5,142.9 264.4,158.2 279.7,182.0 293.6,196.6 306.4,218.4 318.2,201.5 329.1,215.5 339.3,228.0 348.9,229.8 357.9,229.0 366.4,216.4 374.5,221.0 382.1,219.6 389.4,228.4 396.4,227.6 403.1,218.2 409.5,198.7 415.6,212.3 421.5,206.6 427.2,224.1 432.6,230.9 437.9,236.8 443.1,230.7 448.0,235.3" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">FF_1</text></g>
+<g transform="translate(0,324)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">PSD EGT (engine 1)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">degC^2/Hz</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="223.4" x2="448" y2="223.4" stroke="#eee"/>
+<text x="56" y="226.4" text-anchor="end" font-size="10">0.1</text>
+<line x1="58" y1="147.7" x2="448" y2="147.7" stroke="#eee"/>
+<text x="56" y="150.7" text-anchor="end" font-size="10">1</text>
+<line x1="58" y1="72.0" x2="448" y2="72.0" stroke="#eee"/>
+<text x="56" y="75.0" text-anchor="end" font-size="10">10</text>
+<line x1="62" y1="256.0" x2="448" y2="256.0" stroke="#1f5fa8" stroke-dasharray="4 3"/>
+<text x="446" y="253.0" text-anchor="end" font-size="9">T_q EGT</text>
+<line x1="62" y1="237.9" x2="448" y2="237.9" stroke="#c2410c" stroke-dasharray="4 3"/>
+<text x="446" y="234.9" text-anchor="end" font-size="9">T_hf EGT</text>
+<polyline points="62.0,26.0 112.6,55.8 150.7,84.6 181.1,116.9 206.6,133.2 228.4,151.7 247.5,179.9 264.4,197.0 279.7,215.7 293.6,229.5 306.4,244.2 318.2,241.4 329.1,246.7 339.3,250.6 348.9,247.4 357.9,246.0 366.4,240.5 374.5,241.2 382.1,237.6 389.4,234.6 396.4,235.6 403.1,234.2 409.5,229.6 415.6,230.1 421.5,233.4 427.2,238.2 432.6,241.3 437.9,243.3 443.1,244.1 448.0,248.3" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">EGT_1</text></g>
+<g transform="translate(460,324)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Coherence (engine 1)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">MSC</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="256.0" x2="448" y2="256.0" stroke="#eee"/>
+<text x="56" y="259.0" text-anchor="end" font-size="10">0</text>
+<line x1="58" y1="210.0" x2="448" y2="210.0" stroke="#eee"/>
+<text x="56" y="213.0" text-anchor="end" font-size="10">0.2</text>
+<line x1="58" y1="164.0" x2="448" y2="164.0" stroke="#eee"/>
+<text x="56" y="167.0" text-anchor="end" font-size="10">0.4</text>
+<line x1="58" y1="118.0" x2="448" y2="118.0" stroke="#eee"/>
+<text x="56" y="121.0" text-anchor="end" font-size="10">0.6</text>
+<line x1="58" y1="72.0" x2="448" y2="72.0" stroke="#eee"/>
+<text x="56" y="75.0" text-anchor="end" font-size="10">0.8</text>
+<line x1="58" y1="26.0" x2="448" y2="26.0" stroke="#eee"/>
+<text x="56" y="29.0" text-anchor="end" font-size="10">1</text>
+<polyline points="62.0,103.9 112.6,78.7 150.7,81.2 181.1,95.0 206.6,69.6 228.4,76.1 247.5,100.2 264.4,94.6 279.7,133.9 293.6,162.2 306.4,179.7 318.2,190.6 329.1,215.6 339.3,225.1 348.9,211.2 357.9,224.3 366.4,208.7 374.5,224.9 382.1,177.5 389.4,228.8 396.4,201.2 403.1,184.6 409.5,115.5 415.6,163.2 421.5,149.4 427.2,218.2 432.6,244.2 437.9,252.0 443.1,241.1 448.0,254.0" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N2->N1</text>
+<polyline points="62.0,62.1 112.6,53.6 150.7,67.5 181.1,86.6 206.6,69.3 228.4,71.5 247.5,97.6 264.4,94.7 279.7,107.9 293.6,151.3 306.4,199.4 318.2,168.3 329.1,195.5 339.3,234.8 348.9,255.7 357.9,230.0 366.4,229.3 374.5,242.0 382.1,219.8 389.4,243.6 396.4,231.5 403.1,204.0 409.5,118.1 415.6,141.6 421.5,133.4 427.2,180.5 432.6,233.8 437.9,251.6 443.1,254.2 448.0,255.1" fill="none" stroke="#c2410c" stroke-width="1.4"/>
+<text x="68" y="51" font-size="10" fill="#c2410c">FF->N1</text>
+<polyline points="62.0,91.6 112.6,69.3 150.7,61.7 181.1,66.7 206.6,49.7 228.4,57.6 247.5,60.0 264.4,63.0 279.7,99.6 293.6,134.8 306.4,199.6 318.2,184.7 329.1,224.5 339.3,243.1 348.9,245.3 357.9,203.4 366.4,160.6 374.5,171.4 382.1,155.3 389.4,184.2 396.4,157.1 403.1,159.7 409.5,114.2 415.6,142.2 421.5,118.2 427.2,156.4 432.6,171.4 437.9,142.0 443.1,179.9 448.0,183.4" fill="none" stroke="#15803d" stroke-width="1.4"/>
+<text x="68" y="63" font-size="10" fill="#15803d">FF->N2</text>
+<polyline points="62.0,137.8 112.6,110.2 150.7,116.5 181.1,170.6 206.6,122.8 228.4,126.5 247.5,151.3 264.4,170.0 279.7,204.7 293.6,243.2 306.4,245.7 318.2,251.2 329.1,251.9 339.3,251.3 348.9,250.1 357.9,248.8 366.4,247.3 374.5,247.9 382.1,245.8 389.4,250.0 396.4,230.8 403.1,219.3 409.5,205.5 415.6,211.6 421.5,195.5 427.2,232.7 432.6,230.1 437.9,255.1 443.1,250.1 448.0,255.1" fill="none" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="68" y="75" font-size="10" fill="#7c3aed">N1->EGT</text></g>
+<g transform="translate(0,624)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Phase, 0.2-1 Hz (+ lag = negative)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">deg</text>
+<line x1="153.3" y1="256" x2="153.3" y2="260" stroke="#666"/>
+<text x="153.3" y="271" text-anchor="middle" font-size="10">0.4</text>
+<line x1="256.2" y1="256" x2="256.2" y2="260" stroke="#666"/>
+<text x="256.2" y="271" text-anchor="middle" font-size="10">0.6</text>
+<line x1="359.1" y1="256" x2="359.1" y2="260" stroke="#666"/>
+<text x="359.1" y="271" text-anchor="middle" font-size="10">0.8</text>
+<line x1="58" y1="216.3" x2="448" y2="216.3" stroke="#eee"/>
+<text x="56" y="219.3" text-anchor="end" font-size="10">-200</text>
+<line x1="58" y1="162.6" x2="448" y2="162.6" stroke="#eee"/>
+<text x="56" y="165.6" text-anchor="end" font-size="10">-100</text>
+<line x1="58" y1="108.9" x2="448" y2="108.9" stroke="#eee"/>
+<text x="56" y="111.9" text-anchor="end" font-size="10">0</text>
+<line x1="58" y1="55.1" x2="448" y2="55.1" stroke="#eee"/>
+<text x="56" y="58.1" text-anchor="end" font-size="10">100</text>
+<polyline points="62.0,133.2 94.2,135.4 126.3,136.4 158.5,145.3 190.7,149.3 222.8,149.4 255.0,148.9 287.2,155.5 319.3,160.2 351.5,169.7 383.7,161.0 415.8,181.7 448.0,201.2" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">N2->N1</text>
+<polyline points="62.0,114.4 94.2,115.9 126.3,116.6 158.5,126.6 190.7,128.3 222.8,128.0 255.0,125.9 287.2,133.0 319.3,131.1 351.5,136.3 383.7,134.5 415.8,136.4 448.0,115.7" fill="none" stroke="#c2410c" stroke-width="1.4"/>
+<text x="68" y="51" font-size="10" fill="#c2410c">FF->N1</text>
+<polyline points="62.0,91.9 94.2,91.7 126.3,92.9 158.5,90.9 190.7,89.8 222.8,88.9 255.0,86.6 287.2,88.0 319.3,85.4 351.5,77.9 383.7,74.5 415.8,60.5 448.0,36.5" fill="none" stroke="#15803d" stroke-width="1.4"/>
+<text x="68" y="63" font-size="10" fill="#15803d">FF->N2</text>
+<polyline points="62.0,122.3 94.2,129.8 126.3,136.6 158.5,129.2 190.7,140.4 222.8,144.7 255.0,151.7 287.2,153.0 319.3,140.7 351.5,138.3 383.7,173.2 415.8,176.9 448.0,245.5" fill="none" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="68" y="75" font-size="10" fill="#7c3aed">N1->EGT</text>
+<polyline points="62.0,130.4 94.2,136.5 126.3,142.5 158.5,148.5 190.7,154.6 222.8,160.6 255.0,166.7 287.2,172.7 319.3,178.8 351.5,184.8 383.7,190.9 415.8,196.9 448.0,202.9" fill="none" stroke="#6b7280" stroke-width="1.4"/>
+<text x="68" y="87" font-size="10" fill="#6b7280">-360 f x 0.5 s</text></g>
+<g transform="translate(460,624)"><rect x="62" y="26" width="386" height="230" fill="none" stroke="#999"/>
+<text x="230.0" y="16" text-anchor="middle" font-size="13" font-weight="600">Gain N2->N1 (H1)</text>
+<text x="255.0" y="292" text-anchor="middle" font-size="11">Hz</text>
+<text x="14" y="141.0" text-anchor="middle" font-size="11" transform="rotate(-90 14 141.0)">%/%</text>
+<line x1="96.2" y1="256" x2="96.2" y2="260" stroke="#666"/>
+<text x="96.2" y="271" text-anchor="middle" font-size="10">0.2</text>
+<line x1="237.0" y1="256" x2="237.0" y2="260" stroke="#666"/>
+<text x="237.0" y="271" text-anchor="middle" font-size="10">0.5</text>
+<line x1="343.6" y1="256" x2="343.6" y2="260" stroke="#666"/>
+<text x="343.6" y="271" text-anchor="middle" font-size="10">1</text>
+<line x1="58" y1="192.7" x2="448" y2="192.7" stroke="#eee"/>
+<text x="56" y="195.7" text-anchor="end" font-size="10">0.5</text>
+<line x1="58" y1="105.2" x2="448" y2="105.2" stroke="#eee"/>
+<text x="56" y="108.2" text-anchor="end" font-size="10">1</text>
+<polyline points="62.0,58.5 112.6,57.9 150.7,75.0 181.1,84.3 206.6,36.5 228.4,84.8 247.5,90.1 264.4,81.5 279.7,90.4 293.6,114.4 306.4,90.3 318.2,141.4 329.1,155.8 339.3,161.5 348.9,149.6 357.9,178.5 366.4,126.4 374.5,169.3 382.1,118.4 389.4,190.7 396.4,147.1 403.1,131.8 409.5,37.4 415.6,99.5 421.5,50.5 427.2,148.5 432.6,221.3 437.9,240.7 443.1,211.4 448.0,245.5" fill="none" stroke="#1f5fa8" stroke-width="1.4"/>
+<text x="68" y="39" font-size="10" fill="#1f5fa8">|H1| N2->N1</text></g>
+</svg>

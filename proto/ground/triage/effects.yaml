@@ -1,0 +1,40 @@
+# Consequence and band tables of triage (DEVELOPMENT §2.6, architecture 07). Consequence C: 3 not mission
+# capable, 2 partly capable on planned missions, 1 partly capable on unplanned missions only, 0 no effect.
+
+consequence:
+  severity: {WARNING: 3, CAUTION: 3, ADVISORY: 1}   # dictionary severity of the alert code
+  supply: 3              # aircraft not mission capable, waiting for the part
+  life_at_limit: 2       # override: a tyre or chute at its limit stops the next mission until changed
+  suppressed: 0          # D6 inhibited by a power-supply fault
+
+# Urgency from the time-to-act margin M = time to failure − (lead time + epoch delay + work), in days:
+# U3 M < 0, U2 0–3, U1 3–14, U0 > 14. Without a time to failure, from state (see triage.urgency).
+urgency_margin_days: {U3: 0.0, U2: 3.0, U1: 14.0}
+
+# Band lookup: band[C][U]; None = monitor
+band:
+  3: {3: P2, 2: P2, 1: P3, 0: P3}
+  2: {3: P3, 2: P3, 1: P4, 0: P4}
+  1: {3: P4, 2: P4, 1: P4, 0: P4}
+  0: {3: null, 2: null, 1: null, 0: null}
+
+# Gates → P1, checked in order before any lookup
+gates:
+  G1: "WARNING recurs ≤ 10 d"
+  G2: "open grounding defect"
+  G3: "life limit passed beyond the station's own changes"
+  G4: "removal risk above the critical threshold"
+
+# Gate G4 applies to removal-risk findings (S3 hazard, subject = serial "<CLASS>-NNNNNN") on these classes.
+# ASSUMPTION: the synthetic catalogue has no criticality field; flight-critical classes chosen by function.
+safety_critical_classes: [HYDP, BCU, DFCC, ENG, FADEC, JFS]
+
+# Exceedance inspections that would open gate G2 (none in the preview)
+exceedance_inspections: [OVER_G, HARD_LANDING, OVERSPEED, OVERTEMP, EXCEEDANCE]
+
+labels:
+  SYN-PN-CHUTE: brake chute
+  SYN-PN-TYRE: tyre
+  SYN-PN-HYDP: hydraulic pump
+  SYN-PN-BCU: brake control unit
+  SYN-PN-JFS: JFS

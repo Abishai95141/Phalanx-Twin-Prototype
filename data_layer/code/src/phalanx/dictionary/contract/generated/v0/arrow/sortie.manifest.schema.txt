@@ -1,0 +1,202 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+tail_no: string not null
+  -- field metadata --
+  phalanx.description: 'Aircraft tail number (linkage key).'
+  phalanx.basis: 'ARCH §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+sortie_id: string not null
+  -- field metadata --
+  phalanx.description: 'Sortie identifier (tail + date + take-off time, M02).'
+  phalanx.basis: 'ARCH §5.3, §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._-]*$'
+base: string
+  -- field metadata --
+  phalanx.description: 'Operating base of the sortie.'
+  phalanx.basis: 'ARCH §6 M02 (bases); ASSUMPTION: A-W0.4-12'
+  phalanx.restricted: 'false'
+mission_type: string not null
+  -- field metadata --
+  phalanx.description: 'Mission type from the M02 mission mix.'
+  phalanx.basis: 'ARCH §12 (mission)'
+  phalanx.restricted: 'false'
+crew_id: string
+  -- field metadata --
+  phalanx.description: 'Pseudonymous crew identifier (no latent pilot traits).'
+  phalanx.basis: 'ARCH §10 (sortie record: crew); ASSUMPTION: A-W0.4-12'
+  phalanx.restricted: 'false'
+sw_config_id: string not null
+  -- field metadata --
+  phalanx.description: 'Software-configuration identifier of the aircraft for this sortie.'
+  phalanx.basis: 'ARCH §5.3, §12 (software config)'
+  phalanx.restricted: 'false'
+engine_serials: list<element: struct<position: string not null, serial: string not null> not null> not null
+  child 0, element: struct<position: string not null, serial: string not null> not null
+      child 0, position: string not null
+      -- field metadata --
+      phalanx.description: 'Engine position (e.g. '1').'
+      phalanx.basis: 'ARCH §12'
+      phalanx.restricted: 'false'
+      child 1, serial: string not null
+      -- field metadata --
+      phalanx.description: 'Engine serial number.'
+      phalanx.basis: 'ARCH §12'
+      phalanx.restricted: 'false'
+  -- field metadata --
+  phalanx.description: 'Installed engine serials by position.'
+  phalanx.basis: 'ARCH §12 (serials)'
+  phalanx.restricted: 'false'
+lru_serials: list<element: struct<lru: string not null, part_no: string not null, serial_no: string not null, maker: string> not null> not null
+  child 0, element: struct<lru: string not null, part_no: string not null, serial_no: string not null, maker: string> not null
+      child 0, lru: string not null
+      -- field metadata --
+      phalanx.description: 'LRU name.'
+      phalanx.basis: 'ARCH §12'
+      phalanx.restricted: 'false'
+      child 1, part_no: string not null
+      -- field metadata --
+      phalanx.description: 'Part number.'
+      phalanx.basis: 'ARCH §5.3 (component triplet)'
+      phalanx.restricted: 'false'
+      child 2, serial_no: string not null
+      -- field metadata --
+      phalanx.description: 'Serial number.'
+      phalanx.basis: 'ARCH §5.3 (component triplet)'
+      phalanx.restricted: 'false'
+      child 3, maker: string
+      -- field metadata --
+      phalanx.description: 'Maker.'
+      phalanx.basis: 'ARCH §5.3 (component triplet)'
+      phalanx.restricted: 'false'
+  -- field metadata --
+  phalanx.description: 'Installed serialised LRUs (component triplet).'
+  phalanx.basis: 'ARCH §12 (serials); ARCH §5.3 (component triplet)'
+  phalanx.restricted: 'false'
+t_start: int64 not null
+  -- field metadata --
+  phalanx.description: 'Start of the sortie record (engine start or recorder start). The event time of the record.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-12'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_takeoff: int64
+  -- field metadata --
+  phalanx.description: 'Take-off time; null for a ground abort.'
+  phalanx.basis: 'ARCH §5.3 (sortie_id = tail + date + take-off time)'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_landing: int64
+  -- field metadata --
+  phalanx.description: 'Landing time; null if not airborne.'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-12'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_end: int64
+  -- field metadata --
+  phalanx.description: 'End of the sortie record (engine shutdown or recorder stop).'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-12'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+t_ingest: int64 not null
+  -- field metadata --
+  phalanx.description: 'When the manifest reached the ground (download).'
+  phalanx.basis: 'ARCH §8, I5'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+contract_version: string not null
+  -- field metadata --
+  phalanx.description: 'Contract semantic version the sortie's records conform to.'
+  phalanx.basis: 'ARCH §12 (versioning)'
+  phalanx.restricted: 'false'
+config_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Hash of the run configuration.'
+  phalanx.basis: 'ARCH §15 (manifest)'
+  phalanx.restricted: 'false'
+code_commit: string not null
+  -- field metadata --
+  phalanx.description: 'Git commit of the generating code.'
+  phalanx.basis: 'ARCH §12 (code commit)'
+  phalanx.restricted: 'false'
+library_versions: list<element: struct<name: string not null, version: string not null> not null> not null
+  child 0, element: struct<name: string not null, version: string not null> not null
+      child 0, name: string not null
+      -- field metadata --
+      phalanx.description: 'Library name.'
+      phalanx.basis: 'ARCH §15'
+      phalanx.restricted: 'false'
+      child 1, version: string not null
+      -- field metadata --
+      phalanx.description: 'Library version.'
+      phalanx.basis: 'ARCH §15'
+      phalanx.restricted: 'false'
+  -- field metadata --
+  phalanx.description: 'Library versions, sorted by name.'
+  phalanx.basis: 'ARCH §15 (manifest: library versions)'
+  phalanx.restricted: 'false'
+run_manifest_hash: string
+  -- field metadata --
+  phalanx.description: 'Content hash of the full run manifest (core/manifest.py) this sortie belongs to.'
+  phalanx.basis: 'ARCH §15; ASSUMPTION: A-W0.4-12'
+  phalanx.restricted: 'false'
+root_seed: string
+  -- field metadata --
+  phalanx.description: '128-bit root seed, hex. RESTRICTED (with the code commit it regenerates truth).'
+  phalanx.basis: 'ARCH §12 (seeds), §15; ASSUMPTION: A-W0.4-12 (restricted)'
+  phalanx.restricted: 'true'
+  phalanx.pattern: '^[0-9a-f]{32}$'
+rng_stream_table: list<element: struct<key_path: string not null, stream_ref: string not null> not null>
+  child 0, element: struct<key_path: string not null, stream_ref: string not null> not null
+      child 0, key_path: string not null
+      -- field metadata --
+      phalanx.description: 'Canonical text form of the core.rng key path.'
+      phalanx.basis: 'ARCH §15'
+      phalanx.restricted: 'false'
+      child 1, stream_ref: string not null
+      -- field metadata --
+      phalanx.description: 'Stream reference (digest of the key path).'
+      phalanx.basis: 'ARCH §15'
+      phalanx.restricted: 'false'
+  -- field metadata --
+  phalanx.description: 'RNG stream table of the sortie. RESTRICTED.'
+  phalanx.basis: 'ARCH §12 (seeds), §15 (stream table); ASSUMPTION: A-W0.4-12 (restricted)'
+  phalanx.restricted: 'true'
+provenance: string not null
+  -- field metadata --
+  phalanx.description: 'direct (manifests are produced on the ground) or full_path (decoded from a recording).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'Provenance'
+  phalanx.enum_symbols: '["full_path","direct"]'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'sortie.manifest'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_start'
+phalanx.ingest_time: 't_ingest'
+phalanx.partition_by: '["tail_no","sortie_id"]'
+phalanx.record_id_key: '["tail_no","sortie_id"]'
+phalanx.audience: 'full'

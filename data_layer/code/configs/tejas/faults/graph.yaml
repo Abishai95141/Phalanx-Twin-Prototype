@@ -1,0 +1,144 @@
+# Typed dependency graph (AD-27; architecture §6 M11, §9.3; report §9 "Propagation follows documented cascades").
+# Nodes are physical states (never fault codes). Edge types: shaft, hydraulic, thermal, data_electrical, discrete,
+# mechanical. Each edge: transfer function + latency (s) + mechanism (physics | graph | health) + evidence.
+# Templates are the documented AIB cascades with the evidenced time window of each node from the root.
+# Windows: AIB times with the architecture's ±25 % transient-timing tolerance (§6 M07 accept), unless stated.
+format: phalanx.fault_graph/1
+nodes:
+  # --- engine
+  eng.turned_vane:          {subsystem: engine, description: "turned/reversed HPC vane (latent, not borescope-accessible)"}
+  eng.blade_crack:          {subsystem: engine, description: "HCF crack in an HPC/fan blade (M10 crack state)"}
+  eng.blade_loss:           {subsystem: engine, description: "blade liberation in the compressor"}
+  eng.fan_blade_migration:  {subsystem: engine, description: "fan blade axial migration after a missing air seal"}
+  eng.fan_blade_liberation: {subsystem: engine, description: "fan blade liberation"}
+  eng.stall:                {subsystem: engine, description: "compressor stall / stagnation", effects: [{target: engine, mode: stall, param: 1.0}, {target: monitoring, code: ENG-501, magnitude: 8.0}]}
+  eng.overtemp:             {subsystem: engine, description: "T5 above limit", effects: [{target: engine, mode: overtemp, param: 1.0}, {target: monitoring, code: ENG-701, magnitude: 8.0}]}
+  eng.t5_sensor_fail:       {subsystem: engine, description: "T5 probe/harness failure after overtemperature", effects: [{target: sensors, channel: ENG.T5.HARNESS_A, mode: open, magnitude: 0.0}, {target: monitoring, code: ENG-005, magnitude: 8.0}]}
+  eng.ab_fail:              {subsystem: engine, description: "afterburner failure / inhibited", effects: [{target: engine, mode: ab_fail, param: 1.0}, {target: monitoring, code: ENG-503, magnitude: 8.0}]}
+  eng.flameout:             {subsystem: engine, description: "flameout or sub-idle stagnation", effects: [{target: engine, mode: flameout, param: 1.0}, {target: monitoring, code: ENG-502, magnitude: 8.0}]}
+  eng.spool_down:           {subsystem: engine, description: "N2 falling below idle", effects: [{target: engine, mode: spool_down, param: 1.0}]}
+  eng.thrust_loss:          {subsystem: engine, description: "thrust loss", effects: [{target: monitoring, code: ENG-506, magnitude: 8.0}]}
+  eng.fire:                 {subsystem: engine, description: "engine fire / overheat", effects: [{target: utilities, mode: fire_onset}, {target: monitoring, code: FIR-501, magnitude: 8.0}]}
+  eng.fuel_overmetering:    {subsystem: engine, description: "fuel control over-metering (MEC/FMU)"}
+  eng.overspeed:            {subsystem: engine, description: "uncommanded acceleration / overspeed", effects: [{target: engine, mode: overspeed, param: 1.0}, {target: monitoring, code: ENG-703, magnitude: 8.0}]}
+  eng.oil_quantity_low:     {subsystem: engine, description: "engine oil quantity low (leak, consumption, servicing)"}
+  eng.oil_pressure_low:     {subsystem: engine, description: "main oil pressure low", effects: [{target: engine, mode: oil_pressure_low, param: 1.0}, {target: monitoring, code: ECM-702, magnitude: 8.0}]}
+  eng.bearing_failure:      {subsystem: engine, description: "main-shaft bearing failure", effects: [{target: engine, mode: bearing_failure, param: 1.0}, {target: monitoring, code: ECM-001, magnitude: 8.0}]}
+  eng.seizure:              {subsystem: engine, description: "rotor seizure", effects: [{target: engine, mode: seizure, param: 1.0}]}
+  eng.n2:                   {subsystem: engine, threshold: 0.0, description: "core shaft speed (normal coupling root)"}
+  # --- secondary power, electrical, avionics
+  amagb.speed:              {subsystem: secondary_power, threshold: 0.0, description: "AMAGB/PTO speed (fixed ratio to N2)"}
+  hyd.pump_flow:            {subsystem: hydraulics, threshold: 0.0, description: "engine-driven pump flow capacity Q_max(N2)"}
+  elec.gen_speed:           {subsystem: electrical, threshold: 0.0, description: "generator drive speed"}
+  elec.gen_offline:         {subsystem: electrical, description: "main generator offline (underspeed or GCU trip)", effects: [{target: utilities, mode: gen_fail}, {target: monitoring, code: ELE-401, magnitude: 8.0}]}
+  elec.emergency_power:     {subsystem: electrical, description: "5 kW DC backup / battery on line", effects: [{target: monitoring, code: ELE-404, magnitude: 8.0}]}
+  elec.partial_power_loss:  {subsystem: electrical, description: "partial electrical power disruption"}
+  avi.egi_invalid_unflagged: {subsystem: avionics, description: "navigation data invalid without a validity flag"}
+  avi.hud_pitch_ladder_lost: {subsystem: avionics, description: "HUD pitch ladder lost"}
+  avi.agcas_fail:           {subsystem: avionics, description: "ground-collision avoidance unavailable"}
+  # --- hydraulics, gear, brakes, FCS
+  hyd.actuator_internal_leak: {subsystem: hydraulics, description: "FCS actuator internal leak (mis-installed check valves)"}
+  hyd1.pressure_low:        {subsystem: hydraulics, description: "HYD1 pressure low", effects: [{target: monitoring, code: HYD-501, magnitude: 8.0}]}
+  hyd2.pressure_low:        {subsystem: hydraulics, description: "HYD2 pressure low", effects: [{target: monitoring, code: HYD-502, magnitude: 8.0}]}
+  hyd.pump_failure:         {subsystem: hydraulics, description: "engine-driven pump failure", effects: [{target: health, state: "util:hyd{h}_pump_wear", delta: 3.0}]}
+  hyd.fohe_crack:           {subsystem: hydraulics, description: "fuel-oil heat exchanger weld crack (non-isolable circuit)"}
+  hyd.utility_fluid_loss:   {subsystem: hydraulics, description: "utility hydraulic fluid loss"}
+  hyd.fluid_contaminated:   {subsystem: hydraulics, description: "water-contaminated hydraulic servicing"}
+  env.cold_soak:            {subsystem: environment, description: "cold soak at about 0 °F (condition)"}
+  lg.strut_extension_failure: {subsystem: landing_gear, gate: and, description: "strut fails to extend (frozen water)", effects: [{target: airframe, mode: strut_extension_failure, param: 1.0, legs: [1, 2]}]}
+  lg.false_wow:             {subsystem: landing_gear, description: "weight-on-wheels reads on-ground in flight", effects: [{target: fcs, event: wow_fault, legs: [1, 2], value: 1}, {target: monitoring, code: LGB-502, magnitude: 8.0}]}
+  fcs.ground_law_in_flight: {subsystem: flight_control, description: "FCS ground law active in flight (M05 selects it from the false WoW)"}
+  fcs.actuator_rate_limited: {subsystem: flight_control, description: "actuator rate limited by low supply pressure"}
+  brakes.sw_config_defect:  {subsystem: landing_gear, description: "brake-software configuration defect (Tejas)"}
+  brakes.loss:              {subsystem: landing_gear, description: "wheel-brake capability lost", effects: [{target: monitoring, code: LGB-503, magnitude: 8.0}]}
+  lg.tyre_burst:            {subsystem: landing_gear, description: "main tyre burst", effects: [{target: airframe, mode: tyre_burst, param: 1.0, leg: "*"}]}
+  lg.runway_excursion:      {subsystem: landing_gear, description: "runway excursion", effects: [{target: airframe, mode: runway_excursion, param: 1.0}]}
+edges:
+  # --- T.ENG_AB_ELEC: turned vane -> blade loss -> stall -> overtemp -> T sensor fail / AB fail -> flameout -> generators -> backup
+  - {id: G01, src: eng.turned_vane, dst: eng.blade_crack, type: mechanical, transfer: {kind: delay}, latency: {dist: loguniform, lo: 3600, hi: 720000}, mechanism: health, evidence: {tag: "TRANSFER: F-16 (Thunderbird AIB 2025)", source: "N:FD §9(b) #8 (Thunderbird AIB 2025: turned vanes -> wake -> HCF crack; latent, not borescope-accessible); latency range ASSUMPTION A-W1.5-24; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G02, src: eng.blade_crack, dst: eng.blade_loss, type: mechanical, transfer: {kind: threshold, threshold: 0.5}, latency: {dist: fixed, s: 0.0}, mechanism: health, evidence: {tag: "TRANSFER: F-16 (Thunderbird AIB 2025)", source: "N:FD §9(b) #8 (crack -> blade loss); M10 crack threshold triggers the M11 mode; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G03, src: eng.blade_loss, dst: eng.stall, type: mechanical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 1.5, hi: 2.0}, mechanism: physics, evidence: {tag: "TRANSFER: F110/F100 AIBs 88-0433, 90-0771, 87-0358", source: "N:TFG (c) #2: stall codes +2 s; N:FD §9(b) #8: 2 stall codes within 2 s"}}
+  - {id: G04, src: eng.stall, dst: eng.overtemp, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 1.5, hi: 2.5}, mechanism: physics, evidence: {tag: "TRANSFER: F110/F100 AIBs", source: "N:TFG (c) #2: overtemperature/mode/hybrid +4 s; T5 rises while N falls"}}
+  - {id: G05, src: eng.overtemp, dst: eng.t5_sensor_fail, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 5.0, hi: 7.0}, mechanism: physics, evidence: {tag: "TRANSFER: F110/F100 AIBs", source: "N:TFG (c) #2: T sensor fail +10 s"}}
+  - {id: G06, src: eng.stall, dst: eng.ab_fail, type: discrete, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 6.5, hi: 9.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-16 (Thunderbird AIB 2025)", source: "N:FD §9(b) #8: AB-fail + thrust-low codes at ~10 s (Thunderbird AIB); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G07, src: eng.overtemp, dst: eng.flameout, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 8.0, hi: 10.0}, mechanism: physics, evidence: {tag: "TRANSFER: F110/F100 AIBs", source: "N:TFG (c) #2: flameout/sub-idle +13 s"}}
+  - {id: G08, src: eng.flameout, dst: eng.spool_down, type: shaft, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 0.5}, mechanism: physics, evidence: {tag: "TRANSFER: RM12 (SHK RM 2019:02)", source: "f404_in20_engine_model.md: RM12 flameout rundown trace (NH falling)"}}
+  - {id: G09, src: eng.spool_down, dst: elec.gen_offline, type: shaft, transfer: {kind: threshold, threshold: 0.5}, latency: {dist: uniform, lo: 2.5, hi: 5.0}, mechanism: physics, evidence: {tag: "TRANSFER: F110/F100 AIBs", source: "N:TFG (c) #2: generators off, EPU +16-19 s; spool-down to generator cut-out latency ASSUMPTION A-W1.5-24"}}
+  - {id: G10, src: elec.gen_offline, dst: elec.emergency_power, type: data_electrical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 0.05}, mechanism: physics, evidence: {tag: "TRANSFER: MIL-STD-704F", source: "architecture §6 M09: generator underspeed -> 5 kW DC backup / battery with ≤50 ms transfer; the 5 kW DC backup generator is DIRECT (DRDO '5 kW brushless DC Generating system for LCA Tejas', tejas_utility_systems.md electrical); the <=50 ms transfer interrupt is MIL-STD-704F (Distribution A, TRANSFER); the source-switching logic is an ASSUMPTION (tejas_utility_systems.md electrical [ASSUMPTION] state machine). Tagged by the transferred timing; E1-HY"}}
+  # --- T.ENG_ELEC: missing air seal -> blade migration -> liberation -> spool-down -> generators -> backup
+  - {id: G11, src: eng.fan_blade_migration, dst: eng.fan_blade_liberation, type: mechanical, transfer: {kind: delay}, latency: {dist: loguniform, lo: 3600, hi: 4.0e+6}, mechanism: health, evidence: {tag: "TRANSFER: F-16 (Holloman AIB 90-0755)", source: "N:FD §9(b) #9 (Holloman AIB 90-0755: 591 h latent, migration 0.4-1.0 in); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G12, src: eng.fan_blade_liberation, dst: eng.thrust_loss, type: mechanical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 0.5}, mechanism: physics, evidence: {tag: "TRANSFER: F-16 (Holloman AIB 90-0755)", source: "N:FD §9(b) #9: thrust loss + fire/overheat/engine lights near-simultaneous; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G13, src: eng.fan_blade_liberation, dst: eng.fire, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 1.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-16 (Holloman AIB 90-0755)", source: "N:FD §9(b) #9: fire/overheat lights near-simultaneous; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G14, src: eng.fan_blade_liberation, dst: eng.spool_down, type: shaft, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 1.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-16 (Holloman AIB 90-0755)", source: "R§9 engine -> electrical: fan-blade liberation -> spool-down -> generators offline -> emergency power; the R§9 template is the Holloman AIB (N:FD §9(b) #9); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  # --- normal coupling (N2 master variable, architecture §6 M09)
+  - {id: G15, src: eng.n2, dst: amagb.speed, type: shaft, transfer: {kind: gain, gain: 1.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "DIRECT", source: "architecture §6 M09: AMAGB and PTO fixed ratios to N2; DIRECT: the AMAGB takes its drive from the engine PTO at a rated 16,810 rpm (= 100 % N2) and carries the 2 hydraulic pumps, the generator and the JFS (ADA General Systems page; DDP node 8779; tejas_utility_systems.md KQ1). Kept DIRECT (E1-HY)"}}
+  - {id: G16, src: amagb.speed, dst: hyd.pump_flow, type: shaft, transfer: {kind: gain, gain: 1.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "DIRECT", source: "architecture §6 M09: compensated-pump flow limit Q_max(N2); DIRECT: the 2 hydraulic pumps are on the AMAGB output pads (ADA General Systems page; tejas_utility_systems.md KQ1); the compensated-pump Q_max law itself is M09's TRANSFER. Kept DIRECT (E1-HY)"}}
+  - {id: G17, src: amagb.speed, dst: elec.gen_speed, type: shaft, transfer: {kind: gain, gain: 1.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "DIRECT", source: "architecture §6 M09: N2 is the master variable; DIRECT: the generator is on an AMAGB output pad (ADA General Systems page; tejas_utility_systems.md KQ1). Kept DIRECT (E1-HY)"}}
+  - {id: G18, src: hyd.pump_flow, dst: fcs.actuator_rate_limited, type: hydraulic, transfer: {kind: threshold, threshold: 0.9}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "TRANSFER: hydraulic actuator practice", source: "architecture §6 M05 (hyd_dp_avail input); rate limit under low supply flow"}}
+  # --- T.HYD: actuator internal leak -> system A low -> system B low
+  - {id: G19, src: hyd.actuator_internal_leak, dst: hyd1.pressure_low, type: hydraulic, transfer: {kind: lag, gain: 1.0, tau_s: 300.0}, latency: {dist: uniform, lo: 0.0, hi: 600.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-16 (March ARB AIB 88-0477)", source: "N:FD §9(b) #18 (March ARB AIB 88-0477): Sys A 3,100 -> 1,000-2,000 psi within one flight; τ and latency ASSUMPTION A-W1.5-24; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G20, src: hyd1.pressure_low, dst: hyd2.pressure_low, type: hydraulic, transfer: {kind: lag, gain: 1.0, tau_s: 300.0}, latency: {dist: uniform, lo: 60.0, hi: 1800.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-16 (March ARB AIB 88-0477)", source: "N:FD §9(b) #18: then Sys B low (same flight); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G21, src: hyd1.pressure_low, dst: fcs.actuator_rate_limited, type: hydraulic, transfer: {kind: gain, gain: 1.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "TRANSFER: hydraulic actuator practice", source: "architecture §6 M05 (rates limited by available ΔP)"}}
+  - {id: G22, src: hyd.pump_failure, dst: hyd1.pressure_low, type: hydraulic, transfer: {kind: lag, gain: 1.0, tau_s: 5.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "TRANSFER: compensated-pump networks", source: "architecture §6 M09 hydraulics; τ ASSUMPTION A-W1.5-24"}}
+  # --- T.UTIL_BRAKE: FOHE crack -> utility fluid loss -> brake loss -> excursion
+  - {id: G23, src: hyd.fohe_crack, dst: hyd.utility_fluid_loss, type: hydraulic, transfer: {kind: lag, gain: 1.0, tau_s: 900.0}, latency: {dist: uniform, lo: 300.0, hi: 3600.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-15D (Kingsley AIB 84-0046)", source: "N:FD §9(b) #19 (Kingsley AIB 84-0046): hours to one flight; leak rate rises above 225 °F; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G24, src: hyd.utility_fluid_loss, dst: brakes.loss, type: hydraulic, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 600.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-15D (Kingsley AIB 84-0046)", source: "R§9 utility -> braking (Kingsley AIB): utility hydraulic loss -> brake loss; the R§9 template is the Kingsley AIB (N:FD §9(b) #19); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G25, src: brakes.loss, dst: lg.runway_excursion, type: mechanical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 5.0, hi: 60.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-15D (Kingsley AIB 84-0046)", source: "R§9 utility -> braking -> runway excursion; the R§9 template is the Kingsley AIB (N:FD §9(b) #19); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  # --- T.CONTAM_LAW: contaminated servicing + cold soak -> strut extension failure -> false WoW -> FCS ground law
+  - {id: G26, src: hyd.fluid_contaminated, dst: lg.strut_extension_failure, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 2000.0, hi: 3000.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-35A (Eielson AIB 19-5535)", source: "N:FD §9(b) #21 (Eielson F-35A AIB 19-5535): water ~33 %, freezing after ~40 min cold soak at about 0 °F; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G27, src: env.cold_soak, dst: lg.strut_extension_failure, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: fixed, s: 0.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-35A (Eielson AIB 19-5535)", source: "N:FD §9(b) #21 (condition); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G28, src: lg.strut_extension_failure, dst: lg.false_wow, type: mechanical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 1.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-35A (Eielson AIB 19-5535)", source: "N:FD §9(b) #21: strut stroke loss -> false WoW; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G29, src: lg.false_wow, dst: fcs.ground_law_in_flight, type: discrete, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 0.05}, mechanism: physics, evidence: {tag: "TRANSFER: F-35A (Eielson AIB 19-5535)", source: "R§9 contamination -> control law: false WoW -> FCS ground law in flight; the R§9 template is the Eielson AIB (N:FD §9(b) #21); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  # --- T.ELEC_AVI: partial electrical loss -> EGI invalid without flag -> HUD pitch ladder lost -> AGCAS fail
+  - {id: G30, src: elec.partial_power_loss, dst: avi.egi_invalid_unflagged, type: data_electrical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 1.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-16C (Osan AIB 2023)", source: "N:FD §9(b) #27 (Osan AIB 2023): EGI invalid without flag; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G31, src: avi.egi_invalid_unflagged, dst: avi.hud_pitch_ladder_lost, type: data_electrical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 30.0, hi: 45.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-16C (Osan AIB 2023)", source: "N:FD §9(b) #27: HUD pitch ladder lost at 30-45 s; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G32, src: avi.egi_invalid_unflagged, dst: avi.agcas_fail, type: discrete, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 5.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-16C (Osan AIB 2023)", source: "N:FD §9(b) #27: AGCAS fail (partial detection); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  # --- other documented chains
+  - {id: G33, src: eng.fuel_overmetering, dst: eng.overspeed, type: shaft, transfer: {kind: lag, gain: 1.0, tau_s: 2.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-16C (MEC mis-assembly AIB 2017)", source: "N:FD §9(b) #10 (MEC mis-assembly AIB): uncommanded acceleration, overspeed, overtemp, fire; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G34, src: eng.overspeed, dst: eng.overtemp, type: thermal, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.5, hi: 3.0}, mechanism: physics, evidence: {tag: "TRANSFER: F-16C (MEC mis-assembly AIB 2017)", source: "N:FD §9(b) #10; tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G35, src: eng.overtemp, dst: eng.fire, type: thermal, transfer: {kind: threshold, threshold: 0.8}, latency: {dist: uniform, lo: 1.0, hi: 30.0}, mechanism: graph, evidence: {tag: "TRANSFER: F-16C (MEC mis-assembly AIB 2017; Misawa AIB)", source: "N:FD §9(b) #10, #12 (fire); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+  - {id: G36, src: eng.oil_quantity_low, dst: eng.oil_pressure_low, type: hydraulic, transfer: {kind: lag, gain: 1.0, tau_s: 60.0}, latency: {dist: fixed, s: 0.0}, mechanism: physics, evidence: {tag: "DIRECT", source: "N:FD §9(b) #16 (Tejas 2024: oil level/pump -> pressure down -> seizure; unconfirmed, conflict A4); DIRECT for the Tejas but unconfirmed (secondary press, IDN/IDRW 2024; report App. A4 conflict). Kept DIRECT (E1-HY)"}}
+  - {id: G37, src: eng.oil_pressure_low, dst: eng.bearing_failure, type: thermal, transfer: {kind: lag, gain: 1.0, tau_s: 120.0}, latency: {dist: uniform, lo: 60.0, hi: 1800.0}, mechanism: physics, evidence: {tag: "DIRECT", source: "N:FD §9(b) #16 (minutes); N:TFG (c) #23 oil starvation ≈5 EOT h to failure; DIRECT for the Tejas chain but unconfirmed (secondary press); the latency range also uses the F110 AIB 87-0242 transfer (N:TFG (c) #23). Kept DIRECT (E1-HY)"}}
+  - {id: G38, src: eng.bearing_failure, dst: eng.seizure, type: mechanical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 10.0, hi: 600.0}, mechanism: physics, evidence: {tag: "DIRECT", source: "N:FD §9(b) #16: seizure; DIRECT for the Tejas but unconfirmed (secondary press). Kept DIRECT (E1-HY)"}}
+  - {id: G39, src: eng.seizure, dst: eng.spool_down, type: shaft, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 2.0}, mechanism: physics, evidence: {tag: "TRANSFER: F110 (AIB 87-0242)", source: "N:TFG (c) #23: N2 indication 0 in ≈2 s"}}
+  - {id: G40, src: brakes.sw_config_defect, dst: lg.tyre_burst, type: discrete, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.0, hi: 30.0}, mechanism: graph, evidence: {tag: "DIRECT", source: "architecture §9.2 Tejas-specific: brake-software configuration defect -> tyre burst -> excursion -> fleet grounding; DIRECT: the Feb 2026 Tejas brake-software event (report §4 sortie table and §14 chain 7 'DIRECT basis'; tejas_utility_systems.md). Kept DIRECT (E1-HY)"}}
+  - {id: G41, src: lg.tyre_burst, dst: lg.runway_excursion, type: mechanical, transfer: {kind: gain, gain: 1.0}, latency: {dist: uniform, lo: 0.5, hi: 10.0}, mechanism: graph, evidence: {tag: "DIRECT", source: "architecture §9.2 Tejas-specific chain; DIRECT: same Tejas 2026 chain (report §14 chain 7). Kept DIRECT (E1-HY)"}}
+  - {id: G42, src: elec.gen_offline, dst: elec.partial_power_loss, type: data_electrical, transfer: {kind: threshold, threshold: 0.9}, latency: {dist: uniform, lo: 0.0, hi: 0.05}, mechanism: graph, evidence: {tag: "TRANSFER: F-16C (Osan AIB 2023)", source: "R§9 electrical -> avionics (load shed on loss of main generation); the R§9 electrical -> avionics template is the Osan/Eielson AIBs (report §9 'Propagation follows documented cascades'); tag TRANSFER per RULES.md rule 3 (DIRECT is Tejas/IN20/IAF only; E1 verifier §7, E1-HY)"}}
+templates:
+  T.ENG_ELEC:
+    name: "Engine -> electrical (fan-blade liberation -> spool-down -> generators offline -> emergency power)"
+    root: eng.fan_blade_liberation
+    sequence: [eng.fan_blade_liberation, eng.spool_down, elec.gen_offline, elec.emergency_power]
+    windows_s: {eng.spool_down: [0.0, 1.0], elec.gen_offline: [2.5, 6.0], elec.emergency_power: [2.5, 6.05]}
+    evidence: "R§9 cascade 1; Holloman AIB 90-0755 (N:FD §9(b) #9: near-simultaneous lights, generator drop); ≤50 ms backup transfer (arch §6 M09; MIL-STD-704F, TRANSFER; the 5 kW DC backup is DIRECT)"
+  T.ENG_AB_ELEC:
+    name: "Engine -> AB -> electrical (turned vanes -> blade loss -> stall -> AB failure -> flameout -> generators off)"
+    root: eng.blade_loss
+    sequence: [eng.blade_loss, eng.stall, eng.overtemp, eng.t5_sensor_fail, eng.flameout, elec.gen_offline, elec.emergency_power]
+    windows_s: {eng.stall: [1.5, 2.5], eng.overtemp: [3.0, 5.0], eng.ab_fail: [7.5, 12.5], eng.t5_sensor_fail: [7.5, 12.5], eng.flameout: [9.75, 16.25], elec.gen_offline: [12.0, 23.75], elec.emergency_power: [12.0, 23.75]}
+    evidence: "N:TFG (c) #2 (AIBs 88-0433, 90-0771, 87-0358): codes +2 / +4 / +10 / +13 s, EPU +16-19 s; ±25 % (arch §6 M07)"
+  T.HYD:
+    name: "Hydraulic (actuator internal leak -> system A low -> system B low, within one flight)"
+    root: hyd.actuator_internal_leak
+    sequence: [hyd.actuator_internal_leak, hyd1.pressure_low, hyd2.pressure_low]
+    windows_s: {hyd1.pressure_low: [0.0, 3600.0], hyd2.pressure_low: [60.0, 5400.0]}
+    evidence: "N:FD §9(b) #18 (March ARB AIB 88-0477): within one flight (sortie ≤ 90 min, M02)"
+  T.UTIL_BRAKE:
+    name: "Utility -> braking (heat-exchanger crack -> utility hydraulic loss -> brake loss -> runway excursion)"
+    root: hyd.fohe_crack
+    sequence: [hyd.fohe_crack, hyd.utility_fluid_loss, brakes.loss, lg.runway_excursion]
+    windows_s: {hyd.utility_fluid_loss: [300.0, 7200.0], brakes.loss: [300.0, 7800.0], lg.runway_excursion: [305.0, 7860.0]}
+    evidence: "N:FD §9(b) #19 (Kingsley AIB 84-0046): hours to one flight"
+  T.CONTAM_LAW:
+    name: "Contamination -> control law (contaminated servicing + cold soak -> strut failure -> false WoW -> FCS ground law)"
+    root: hyd.fluid_contaminated
+    sequence: [hyd.fluid_contaminated, lg.strut_extension_failure, lg.false_wow, fcs.ground_law_in_flight]
+    conditions: [env.cold_soak]
+    windows_s: {lg.strut_extension_failure: [1800.0, 3000.0], lg.false_wow: [1800.0, 3001.0], fcs.ground_law_in_flight: [1800.0, 3001.05]}
+    evidence: "N:FD §9(b) #21 (Eielson F-35A AIB 19-5535): ~40 min cold soak at about 0 °F"
+  T.ELEC_AVI:
+    name: "Electrical -> avionics (partial power loss -> EGI invalid without flag -> HUD ladder lost)"
+    root: elec.partial_power_loss
+    sequence: [elec.partial_power_loss, avi.egi_invalid_unflagged, avi.hud_pitch_ladder_lost]
+    windows_s: {avi.egi_invalid_unflagged: [0.0, 1.0], avi.hud_pitch_ladder_lost: [30.0, 46.0]}
+    evidence: "N:FD §9(b) #27 (Osan AIB 2023): HUD pitch ladder lost at 30-45 s"

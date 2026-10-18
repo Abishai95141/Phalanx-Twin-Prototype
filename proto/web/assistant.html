@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Assistant — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three.module.js", "three/addons/": "./assets/vendor/addons/" } }</script>
+<style>
+  .a-grid { display: grid; grid-template-columns: minmax(0,1fr) 600px; gap: 18px; height: 100%; }
+  .vp { position: relative; overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line);
+    background: radial-gradient(1000px 600px at 50% 40%, #fff 0%, #FAFAF8 60%, #F4F4F1 100%); }
+  .vp canvas { position: absolute; inset: 0; z-index: 1; }
+  .vp .ctx { position: absolute; left: 16px; top: 14px; z-index: 3; display: flex; gap: 8px; }
+  .vp .cap { position: absolute; left: 16px; bottom: 14px; right: 16px; z-index: 3; display: flex; gap: 10px; align-items: center; }
+  .rt { background: rgba(255,255,255,.92); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; flex: 1; }
+  .rt > div { padding: 0 12px; border-left: 1px solid var(--line-2); }
+  .rt > div:first-child { border-left: 0; padding-left: 2px; }
+  .rt .k { font: 700 10.5px var(--mono); letter-spacing: .1em; color: var(--ink-4); text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+  .rt .v { font-size: 15px; font-weight: 650; margin-top: 4px; letter-spacing: -0.01em; }
+  .rt .s { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+  .rt .arrow { color: var(--ink-5); }
+  /* drawer */
+  .drawer { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  .dh { padding: 16px 22px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+  .dh h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.02em; }
+  .thread { flex: 1; min-height: 0; overflow: hidden; padding: 14px 22px 0; display: flex; flex-direction: column; gap: 10px; }
+  .q { align-self: flex-end; max-width: 92%; background: var(--bg-2); border-radius: 16px; padding: 12px 16px; font-size: 15px; line-height: 1.45; }
+  .q .att { margin-top: 10px; display: flex; gap: 6px; }
+  .meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .meta .chip.sm b { font-weight: 650; }
+  .st-done { background: var(--ok-wash); color: #17693A; border-color: var(--ok-line); font: 700 11.5px var(--mono); letter-spacing: .08em; }
+  .why { font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+  .tools-list { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .thread > * { flex: none; }
+  .tl { display: grid; grid-template-columns: 20px minmax(0,1fr) auto; gap: 1px 10px; align-items: center; padding: 6px 14px; border-top: 1px solid var(--line-2); font-size: 13px; }
+  .tl:first-child { border-top: 0; }
+  .tl .fn { font: 600 12.5px var(--mono); }
+  .tl .fn span { color: var(--ink-4); font-weight: 500; }
+  .tl .res { font-size: 12px; color: var(--ink-3); grid-column: 2 / 3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tl .ok { font: 700 11.5px var(--mono); color: var(--ok); }
+  .tl .n { width: 20px; height: 20px; border-radius: 6px; background: var(--bg-3); display: grid; place-items: center; font: 700 11px var(--mono); color: var(--ink-3); }
+  .ans { font-size: 14px; line-height: 1.55; color: var(--ink); }
+  .ans .ref { font: 600 13px var(--mono); background: var(--accent-wash); color: var(--accent-ink); padding: 1px 6px; border-radius: 5px; }
+  .ans sup { font: 700 9.5px var(--mono); color: var(--wire); margin-left: 1px; }
+  .cites { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+  .draft { border: 1.5px dashed var(--line-strong); border-radius: 14px; padding: 10px 14px; display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: center; }
+  .draft .t { font: 650 13px var(--mono); }
+  .draft .s { font-size: 12px; color: var(--ink-3); grid-column: 1 / -1; }
+  .composer { margin: 12px 22px 16px; border: 1.5px solid #D5E1F6; border-radius: 16px; box-shadow: 0 0 0 4px #F1F5FD; padding: 14px 16px 12px; }
+  .composer .ph { font-size: 15px; color: var(--ink-4); height: 34px; }
+  .composer .bar { display: flex; align-items: center; gap: 8px; }
+  .send { width: 40px; height: 40px; border-radius: 11px; background: var(--ink); color: #fff; display: grid; place-items: center; margin-left: auto; }
+  .lbl { position: absolute; z-index: 4; transform: translate(-50%,-50%); pointer-events: none; }
+  .tag { background: var(--bg); border: 1px solid var(--accent-line); border-radius: 10px; padding: 6px 10px; box-shadow: 0 0 0 3px var(--accent-wash), var(--shadow-pop); white-space: nowrap; font-size: 13px; font-weight: 650; }
+  .tag .k { font: 700 10.5px var(--mono); letter-spacing: .08em; color: var(--accent-ink); display: block; }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .a-grid { grid-template-columns: minmax(0, 1fr); height: auto; gap: 16px; }
+    .vp { height: 460px; }
+    .vp .ctx { right: 16px; flex-wrap: wrap; }
+    .drawer { overflow: visible; }
+    .thread { overflow: visible; padding: 14px 18px 0; }
+    .dh { padding: 16px 18px 14px; }
+    .composer { margin: 14px 18px 18px; }
+    .composer .bar { flex-wrap: wrap; }
+    .tl { padding: 8px 12px; }
+    .tl .fn { overflow-wrap: anywhere; }
+    .ans { font-size: 15px; }
+  }
+  @media (max-width: 699px) {
+    .vp { height: 300px; }
+    #labels { display: none; }
+    /* the runtime strip leaves the 3D view and sits under it as a 2-column card (moved by the script below) */
+    .cap.below { position: static; margin-top: 0; }
+    .cap.below .rt { grid-template-columns: minmax(0,1fr) minmax(0,1fr); row-gap: 14px; padding: 14px; background: var(--bg); }
+    .cap.below .rt > div { padding: 0 10px; }
+    .cap.below .rt > div:nth-child(odd) { border-left: 0; padding-left: 2px; }
+    .cap.below .rt > div:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line-2); padding-top: 12px; }
+    .q { max-width: 100%; }
+    .draft { grid-template-columns: minmax(0,1fr); }
+    .draft .auth { justify-self: start; }
+    .composer .ph { height: auto; min-height: 34px; }
+    .tl { align-items: start; row-gap: 3px; }
+    .tl .n, .tl .ok { margin-top: 1px; }
+    .tl .fn span { display: block; }
+    .tl .res { white-space: normal; grid-column: 2 / -1; line-height: 1.4; }
+  }
+</style>
+</head>
+<body data-page="twin">
+<div id="content">
+<div class="a-grid">
+  <div class="vp" id="vp" data-shot="viewport">
+    <div class="ctx"><span class="chip sm"><i data-i="twin" class="ico-sm"></i><b>TJ107</b></span><span class="chip sm"><i data-i="link" class="ico-sm"></i>Evidence lens</span><span class="chip sm accent"><i data-i="target" class="ico-sm"></i>Hyd pump 1 · SYS1</span></div>
+    <div id="labels"></div>
+    <div class="cap" data-shot="runtime">
+      <div class="rt">
+        <div><div class="k"><i data-i="cube" class="ico-sm"></i>Model</div><div class="v">gpt-oss-20b</div><div class="s">MXFP4 · 12.1 GB</div></div>
+        <div><div class="k"><i data-i="command" class="ico-sm"></i>Runtime</div><div class="v">llama.cpp server</div><div class="s">16K ctx · schema decode</div></div>
+        <div><div class="k"><i data-i="server" class="ico-sm"></i>Hardware</div><div class="v">GB10 server</div><div class="s">15.3 of 128 GB</div></div>
+        <div><div class="k"><i data-i="gauge" class="ico-sm"></i>Execution</div><div class="v">1.1 s · 70 tok/s</div><div class="s">first token · decode @16K</div></div>
+        <div><div class="k"><i data-i="shield" class="ico-sm"></i>Output</div><div class="v">Cited · draft only</div><div class="s">no write path · no egress</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card drawer" data-shot="drawer">
+    <div class="dh"><i data-i="assistant" class="ico"></i><h2>Ask the twin</h2><div class="grow"></div>
+      <span class="chip sm ok"><i data-i="lock" class="ico-sm"></i>Read-only</span></div>
+    <div class="thread">
+      <div class="q" data-shot="question">Why does HYD-101 keep firing on TJ107, and what happens if we stop removing the pump?
+        </div>
+      <div class="meta"><span class="chip sm st-done">ANSWERED</span><span class="chip sm"><b>5</b> read-only tools</span><span class="chip sm"><b>11.7 s</b> end to end</span></div>
+      <div class="tools-list" data-shot="tools">
+        <div class="tl"><span class="n">1</span><span class="fn">get_aircraft_summary<span>(tail="TJ107")</span></span><span class="ok">OK</span><span class="res">FMC · 7 open jobs · SYS1 HYDP-000010 inferred · last ingest 19 Jun 22:27</span></div>
+        <div class="tl"><span class="n">2</span><span class="fn">get_event_recurrence<span>(code="HYD-101", tail="TJ107")</span></span><span class="ok">OK</span><span class="res">63 events · 59 of 61 sorties · 34 consecutive · base rate 0 of 107 confirmed</span></div>
+        <div class="tl"><span class="n">3</span><span class="fn">get_serial_history<span>(tail="TJ107", position="SYS1")</span></span><span class="ok">OK</span><span class="res">28 removals · 10 pumps · pump shop findings 33 / 33 RTOK</span></div>
+        <div class="tl"><span class="n">4</span><span class="fn">trace_evidence_chain<span>(job="sulur-26169-0006")</span></span><span class="ok">OK</span><span class="res">HYD-101 → job → R/R HYDP-000008 → shop finding pending</span></div>
+        <div class="tl"><span class="n">5</span><span class="fn">run_what_if<span>(mode="belief", orders=2, horizon="30d")</span></span><span class="ok">CACHED</span><span class="res" id="wi-res">fork gate result · 30 CRN pairs · belief mode</span></div>
+      </div>
+      <div class="ans" data-shot="answer">
+        HYD-101 has fired on <span class="ref">59 of 61</span><sup>r2</sup> TJ107 sorties and survived <span class="ref">28</span><sup>r3</sup> pump removals across <span class="ref">10</span><sup>r3</sup> pumps. Every pump the shop tested was RTOK <span class="ref">33 / 33</span><sup>r3</sup>, and none of the fleet's <span class="ref">107</span><sup>r2</sup> HYD-101 jobs was confirmed. The alarm follows the aircraft, not the pump — the indication path (pressure switch, harness, BHEEM EU channel) is the better next test.
+        <span id="wi-sentence"></span>
+        <div class="cites"><span class="rid">fcf0b949…</span><span class="rid">2b73925c…</span><span class="chip sm" style="height:24px">+ 61 cited records</span></div>
+      </div>
+      <div class="draft" data-shot="draft"><span class="t">CHANGE_MONITORING_CONFIG · filter HYD-101</span><span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span><span class="s">Draft only — not submitted. Opens on the decision board for the engineering officer's signature.</span></div>
+    </div>
+    <div class="composer"><div class="ph">Ask about any aircraft, part, code or order…</div>
+      <div class="bar"><span class="chip sm">TJ107 · as of 06:00</span><span class="chip sm">31 % of 16K context</span><span class="send"><i data-i="send" class="ico-sm"></i></span></div></div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+  PHX.mount({ page: 'twin', title: 'Aircraft twin · TJ107', sub: 'Assistant · plans, calls read-only tools, cites every record — never issues orders',
+    chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }] });
+  // phones: the runtime strip would cover the 3D view, so it moves under it (desktop and tablet keep the overlay)
+  if (matchMedia('(max-width: 699px)').matches) { const cap = document.querySelector('.vp .cap'); cap.classList.add('below'); document.getElementById('vp').after(cap); }
+</script>
+<script type="module">
+  import { createTwin } from './assets/twin3d.js';
+  const host = document.getElementById('vp');
+  const lab = document.getElementById('labels');
+  lab.innerHTML = '<div class="lbl" id="lp"><div class="tag"><span class="k">CONTEXT</span>Hyd pump 1 · SYS1</div></div>';
+  const twin = createTwin(host, { lens: 'evidence', selected: 'HYD_PUMP', az: 0.7, el: 0.42, dist: 25, onFrame(screenOf) {
+    const [x, y] = screenOf('HYD_PUMP'); const l = document.getElementById('lp'); l.style.left = (x + 120) + 'px'; l.style.top = (y - 90) + 'px'; } });
+  window.__twin = twin; const t0 = performance.now();
+  const loop = () => { twin.renderAt((performance.now() - t0) / 1000); requestAnimationFrame(loop); }; loop();
+</script>
+</body></html>

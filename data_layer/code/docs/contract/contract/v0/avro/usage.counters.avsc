@@ -1,0 +1,208 @@
+{
+  "type": "record",
+  "name": "usage_counters",
+  "namespace": "phalanx.contract.v0",
+  "doc": "Life-usage and usage counters as reported by their source (ECMS LUIs updated twice per flight, TAC, cycles, starts, landings, Nz level-crossing counts, chute streamings). One record per counter update.",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": {
+        "type": "fixed",
+        "name": "RecordId",
+        "size": 16
+      },
+      "doc": "Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_version",
+      "type": "string",
+      "doc": "Parameter-dictionary semantic version (M01) the record was produced against.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "dict_hash",
+      "type": "string",
+      "doc": "Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "param_id",
+      "type": "string",
+      "doc": "Dictionary counter parameter (e.g. LUI.TYPE3, USAGE.TAC, USAGE.LANDINGS, STRUCT.NZ_COUNTERS).",
+      "phalanx.basis": "ARCH §12; ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "tail_no",
+      "type": "string",
+      "doc": "Aircraft tail number.",
+      "phalanx.basis": "ARCH §12 (linkage)",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "sortie_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Sortie the update belongs to; null for ground-computed counters not tied to a sortie.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (linkage); ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "engine_serial",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Engine serial for engine counters (LUIs, TAC, engine starts); null otherwise.",
+      "default": null,
+      "phalanx.basis": "ARCH §12 (linkage); ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "item_serial",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Serial of a life-tracked non-engine item the counter belongs to (e.g. chute); null otherwise.",
+      "default": null,
+      "phalanx.basis": "ARCH §5.3 (component identity); ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "source_lru",
+      "type": "string",
+      "doc": "Source of the counter (ECMS, OAC, fatigue meter, ground station).",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "update_seq",
+      "type": "long",
+      "doc": "Index of this update of this counter within the sortie (or within the ground period when sortie_id is null).",
+      "phalanx.basis": "ARCH §6 M14 (LUIs updated twice per flight); ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "value_eu",
+      "type": "double",
+      "doc": "Counter reading as reported by the source (cumulative), in `units`.",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "increment_eu",
+      "type": [
+        "null",
+        "double"
+      ],
+      "doc": "Increment attributed to this update when the source reports one; null otherwise.",
+      "default": null,
+      "phalanx.basis": "ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "units",
+      "type": "string",
+      "doc": "Unit of the counter (count, h).",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "t_update",
+      "type": "long",
+      "doc": "When the source updated the counter. The event time of the record.",
+      "phalanx.basis": "ASSUMPTION: A-W0.4-11",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_record",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Recorder RTC time; null on the fast path or for ground counters.",
+      "default": null,
+      "phalanx.basis": "ARCH §8",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "recorder_rtc"
+    },
+    {
+      "name": "t_utc",
+      "type": [
+        "null",
+        "long"
+      ],
+      "doc": "Absolute time from the aircraft time source.",
+      "default": null,
+      "phalanx.basis": "ARCH §8",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "t_ingest",
+      "type": "long",
+      "doc": "Arrival at the ground.",
+      "phalanx.basis": "ARCH §8, I5",
+      "phalanx.restricted": false,
+      "phalanx.time_unit": "ns",
+      "phalanx.time_scale": "sim_utc"
+    },
+    {
+      "name": "validity",
+      "type": {
+        "type": "enum",
+        "name": "Validity",
+        "doc": "Per-sample validity. ARINC 429 SSM semantics (NORMAL, NO_COMPUTED_DATA, FUNCTIONAL_TEST, FAILURE_WARNING) plus BUS_INVALID from 1553 status or validity words.",
+        "symbols": [
+          "NORMAL",
+          "NO_COMPUTED_DATA",
+          "FUNCTIONAL_TEST",
+          "FAILURE_WARNING",
+          "BUS_INVALID"
+        ]
+      },
+      "doc": "Validity of the counter reading.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    },
+    {
+      "name": "quality_flags",
+      "type": "long",
+      "doc": "Quality flag bit set.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false,
+      "phalanx.flags": "QualityFlags"
+    },
+    {
+      "name": "provenance",
+      "type": {
+        "type": "enum",
+        "name": "Provenance",
+        "doc": "How the record reached the contract. full_path = via bus, Ch10 recorder and ground decoder; direct = fast path or a direct ground producer (M18 records, M21 order status, manifests).",
+        "symbols": [
+          "full_path",
+          "direct"
+        ]
+      },
+      "doc": "full_path or direct.",
+      "phalanx.basis": "ARCH §12",
+      "phalanx.restricted": false
+    }
+  ],
+  "phalanx.contract_version": "0.2.0",
+  "phalanx.contract_hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "phalanx.topic": "usage.counters",
+  "phalanx.restricted": false
+}

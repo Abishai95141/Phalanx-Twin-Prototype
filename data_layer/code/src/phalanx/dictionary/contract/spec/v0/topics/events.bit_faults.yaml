@@ -1,0 +1,47 @@
+# BIT fault events (architecture §12 "Event record", §9.4; M14).
+name: events.bit_faults
+description: >-
+  Built-in-test fault events (PBIT/CBIT/MBIT/IBIT) as decoded on the ground. Every event is also present in the
+  sortie's Ch10 file as a recording event (emitted twice, architecture §12).
+basis: "ARCH §12"
+restricted: false
+event_time: t_occurrence
+ingest_time: t_ingest
+partition_by: [tail_no, sortie_id]
+json_schema: false
+record_id_key:
+  - {name: provenance, type: str, source: column}
+  - {name: tail_no, type: str, source: column}
+  - {name: sortie_id, type: str, source: column}
+  - name: channel_id
+    type: str
+    source: path
+    description: "Full path: Ch10 channel ID of the event/BIT-word channel, decimal. Fast path: 'direct:<source_lru>'."
+  - {name: event_code, type: str, source: column}
+  - name: seq
+    type: u64
+    source: path
+    description: >-
+      Full path: cumulative packet counter of that channel. Fast path: occurrence index of (source_lru,
+      event_code) within the sortie, in t_occurrence order.
+  - name: msg_index
+    type: u64
+    source: path
+    description: "Full path: event index inside the packet. Fast path: 0."
+checks:
+  - {check: order, left: t_ingest, op: ">=", right: t_occurrence}
+  - {check: order, left: snapshot_t_end, op: ">=", right: snapshot_t_start}
+fields:
+  - include: record_header
+  - include: event_core
+  - name: lane
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9]+$"
+    basis: "ARCH §6 M05/M14 (per-channel BIT); ASSUMPTION: A-W0.4-10"
+    description: Lane or channel of a redundant LRU that reported the BIT fault; null if not redundant.
+  - name: raw_bit_word
+    type: int64
+    nullable: true
+    basis: "ARCH §6 M15 (status and BIT words); ASSUMPTION: A-W0.4-10"
+    description: Raw BIT or status word as recorded; null on the fast path.

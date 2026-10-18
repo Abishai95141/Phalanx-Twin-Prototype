@@ -1,0 +1,166 @@
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/S R2a prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_prior 2
+R2a/prior: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_prior in 7s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/S R2a cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_cal 2
+R2a/cal: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_cal in 7s
+
+
+[exit 0, 8s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/S R2b prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_prior 2
+R2b/prior: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_prior in 8s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/S R2b cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_cal 2
+R2b/cal: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_cal in 8s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/P R2a prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_prior 2
+R2a/prior: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_prior in 7s
+
+
+[exit 0, 8s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/P R2a cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_cal 2
+R2a/cal: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_cal in 7s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/P R2b prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_prior 2
+R2b/prior: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_prior in 8s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/dev/models_sample20/P R2b cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_cal 2
+R2b/cal: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_cal in 8s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s03_synth.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt R1REF R1ref prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/R1ref 2 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results
+R1ref/prior: wrote 20 files to /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/R1ref in 8s
+
+
+[exit 0, 9s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt real_holdout /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats real_holdout: 20 flights in 19s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_partner.txt real_partner /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats real_partner: 20 flights in 20s
+
+
+[exit 0, 21s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt S_R2a_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats S_R2a_prior: 20 flights in 19s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_cal /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt S_R2a_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats S_R2a_cal: 20 flights in 19s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt S_R2b_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats S_R2b_prior: 20 flights in 18s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_cal /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt S_R2b_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats S_R2b_cal: 20 flights in 19s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt P_R2a_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats P_R2a_prior: 20 flights in 19s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_cal /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt P_R2a_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats P_R2a_cal: 20 flights in 18s
+
+
+[exit 0, 19s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt P_R2b_prior /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats P_R2b_prior: 20 flights in 18s
+
+
+[exit 0, 19s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_cal /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt P_R2b_cal /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats P_R2b_cal: 20 flights in 18s
+
+
+[exit 0, 19s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s04_stats.py /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/R1ref /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt R1ref /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_stats 2
+stats R1ref: 20 flights in 18s
+
+
+[exit 0, 20s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s06_disc_guard.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_features S_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/disc/S_R2a_prior.json 2 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results --no-d3
+features 57s
+G0 pipeline-only {'lr': (0.5, [0.5, 0.5]), 'gb': (0.5, [0.5, 0.5])} PASS | full metadata {'lr': 0.99, 'gb': 0.5}
+D2 lr {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0} 65s
+D2 gb {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0, 'gb_64_tex': 1.0, 'gb_seg_tex': 0.5} 121s
+ablation {'drop_quant': 1.0, 'only_quant': 1.0, 'drop_noise': 1.0, 'only_noise': 1.0, 'drop_spectral': 1.0, 'only_spectral': 1.0, 'drop_tails': 1.0, 'only_tails': 1.0, 'drop_missing': 1.0, 'only_missing': 1.0, 'drop_cross': 1.0, 'only_cross': 1.0} 129s
+
+
+[exit 0, 132s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s06_disc_guard.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/S_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_features S_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/disc/S_R2b_prior.json 2 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results --no-d3
+features 28s
+G0 pipeline-only {'lr': (0.5, [0.5, 0.5]), 'gb': (0.5, [0.5, 0.5])} PASS | full metadata {'lr': 0.99, 'gb': 0.5}
+D2 lr {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0} 37s
+D2 gb {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0, 'gb_64_tex': 1.0, 'gb_seg_tex': 0.5} 78s
+ablation {'drop_quant': 1.0, 'only_quant': 1.0, 'drop_noise': 1.0, 'only_noise': 1.0, 'drop_spectral': 1.0, 'only_spectral': 1.0, 'drop_tails': 1.0, 'only_tails': 1.0, 'drop_missing': 1.0, 'only_missing': 1.0, 'drop_cross': 1.0, 'only_cross': 1.0} 86s
+
+
+[exit 0, 88s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s06_disc_guard.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_features P_R2a_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/disc/P_R2a_prior.json 2 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results --no-d3
+features 28s
+G0 pipeline-only {'lr': (0.5, [0.5, 0.5]), 'gb': (0.5, [0.5, 0.5])} PASS | full metadata {'lr': 0.952, 'gb': 0.5}
+D2 lr {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0} 36s
+D2 gb {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0, 'gb_64_tex': 1.0, 'gb_seg_tex': 0.5} 76s
+ablation {'drop_quant': 1.0, 'only_quant': 1.0, 'drop_noise': 1.0, 'only_noise': 1.0, 'drop_spectral': 1.0, 'only_spectral': 1.0, 'drop_tails': 1.0, 'only_tails': 1.0, 'drop_missing': 1.0, 'only_missing': 1.0, 'drop_cross': 1.0, 'only_cross': 1.0} 82s
+
+
+[exit 0, 84s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s06_disc_guard.py /Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/P_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/list_holdout.txt /Users/abishaikc/Phalanx/research_sources/settling_round2_synthetic/devcal_runner/devcal/_features P_R2b_prior /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/disc/P_R2b_prior.json 2 /Users/abishaikc/Phalanx/analysis/dashlink_texture/results --no-d3
+features 20s
+G0 pipeline-only {'lr': (0.5, [0.5, 0.5]), 'gb': (0.5, [0.5, 0.5])} PASS | full metadata {'lr': 0.952, 'gb': 0.5}
+D2 lr {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0} 25s
+D2 gb {'lr_64_tex': 1.0, 'lr_seg_tex': 1.0, 'gb_64_tex': 1.0, 'gb_seg_tex': 0.5} 46s
+ablation {'drop_quant': 1.0, 'only_quant': 1.0, 'drop_noise': 1.0, 'only_noise': 1.0, 'drop_spectral': 1.0, 'only_spectral': 1.0, 'drop_tails': 1.0, 'only_tails': 1.0, 'drop_missing': 1.0, 'only_missing': 1.0, 'drop_cross': 1.0, 'only_cross': 1.0} 52s
+
+
+[exit 0, 54s]
+
+$ /Users/abishaikc/Phalanx/.venv-settling/bin/python -I /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/src/s10_report.py /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal devcal
+wrote /Users/abishaikc/Phalanx/analysis/settling_experiment_round2/results/holdout_devcal/report_tables.md
+
+
+[exit 0, 1s]

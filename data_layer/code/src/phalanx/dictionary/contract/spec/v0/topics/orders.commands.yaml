@@ -1,0 +1,110 @@
+# The order record (architecture §11.1; AD-16; M21). Topic name from report §13 ("orders.commands").
+name: orders.commands
+description: >-
+  Inbound decisions (orders) from downstream agents or human planners. Orders are requests: M21 validates them
+  for authority, airworthiness and resources and applies them at the next decision epoch in simulation time.
+  Re-sending an order_id is a no-op (idempotent). An order whose evidence cites a record not yet ingested at
+  t_issued is rejected (no look-ahead).
+basis: "ARCH §11.1"
+restricted: false
+event_time: t_issued
+ingest_time: t_issued
+partition_by: []
+json_schema: true
+record_id_key:
+  - {name: order_id, type: str, source: column}
+checks:
+  - {check: order, left: t_effective, op: ">=", right: t_issued}
+fields:
+  - name: record_id
+    type: record_id
+    nullable: false
+    basis: "ARCH §12"
+    description: Idempotency key = blake2b-128 of the order_id.
+  - name: dict_version
+    type: string
+    nullable: true
+    basis: "ARCH §12 (dictionary on every record); ASSUMPTION: A-W0.4-14 (nullable for external issuers)"
+    description: Dictionary version the issuer observed, if known.
+  - name: dict_hash
+    type: string
+    nullable: true
+    pattern: "^[0-9a-f]{16,128}$"
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-14"
+    description: Dictionary hash the issuer observed, if known.
+  - name: order_id
+    type: string
+    nullable: false
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    basis: "ARCH §11.1 (idempotent order_id)"
+    description: Globally unique order identifier chosen by the issuer.
+  - name: issuer_id
+    type: string
+    nullable: false
+    basis: "ARCH §11.1 (issuer)"
+    description: Issuer identity (agent or human planner).
+  - name: issuer_kind
+    type: enum:IssuerKind
+    nullable: false
+    basis: "ARCH §11.1 (issuer: agent/human)"
+    description: AGENT or HUMAN.
+  - name: policy_version
+    type: string
+    nullable: true
+    basis: "ARCH §11.1 (policy version)"
+    description: Policy or model version of an agent issuer.
+  - name: t_issued
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §11.1"
+    description: Simulation time the order was issued. The event and availability time of the record.
+  - name: t_effective
+    type: time_ns
+    time_scale: sim_utc
+    nullable: false
+    basis: "ARCH §11.1 (t_effective >= next decision epoch)"
+    description: Simulation time the order should take effect (at or after the next decision epoch; M21 enforces the epoch).
+  - name: target_tail_no
+    type: string
+    nullable: true
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    basis: "ARCH §11.1 (target)"
+    description: Target tail.
+  - name: target_base
+    type: string
+    nullable: true
+    basis: "ARCH §11.1 (target)"
+    description: Target base.
+  - name: target_lru
+    type: string
+    nullable: true
+    basis: "ARCH §11.1 (target)"
+    description: Target LRU.
+  - name: target_serial
+    type: string
+    nullable: true
+    basis: "ARCH §11.1 (target)"
+    description: Target serial number.
+  - name: action
+    type: enum:OrderAction
+    nullable: false
+    basis: "ARCH §11.1 (action vocabulary)"
+    description: Requested action.
+  - name: parameters
+    type: json_object
+    nullable: false
+    basis: "ARCH §11.1 (parameters); ASSUMPTION: A-W0.4-14"
+    description: Action-specific parameters as a JSON object (canonical JSON text in Arrow; '{}' when none). Per-action schemas are M21's.
+  - name: priority
+    type: enum:OrderPriority
+    nullable: false
+    basis: "ARCH §11.1 (priority); ASSUMPTION: A-W0.4-14"
+    description: Priority.
+  - name: evidence
+    type:
+      list: record_id
+      item_nullable: false
+    nullable: false
+    basis: "ARCH §11.1 (evidence: record_ids)"
+    description: record_ids of the samples, events or records that justify the order; all must be ingested by t_issued.

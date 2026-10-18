@@ -1,0 +1,567 @@
+# Phalanx ground-decoder contract, spec v0 (architecture §12; AD-12, AD-13, AD-14, AD-35).
+#
+# This file and topics/*.yaml are the single source of the contract. Arrow schemas, JSON-Schema, Avro schemas
+# and the Markdown summary are GENERATED from them (src/phalanx/dictionary/contract/). Never hand-edit a
+# generated artefact. The contract hash is blake2b-256 over the canonical JSON of the expanded spec, so a
+# comment or whitespace edit does not change it, while any semantic edit does.
+#
+# Spec line v0 (major 0). This directory holds the CURRENT minor version of the line; every frozen earlier
+# version is kept verbatim in its own directory (spec/v0.1.0/: 0.1.0, frozen 2026-10-14, AD-41) and stays
+# loadable by its exact semver (load_contract("0.1.0")).
+#
+# Versions (AD-41: any change needs a semver bump, a migration note and a decision-register entry; architecture
+# §12, RULES.md rule 6):
+#   0.1.0  frozen (owner, E0, AD-41; hash 18d7627b...).
+#   0.2.0  frozen (owner, AD-56). ADDITIVE (W2.2): param.samples gains the nullable recording_id and sink fields (AD-25
+#          per-sink recordings, AD-45), appended after provenance, and the full-path record_id rule qualifies the
+#          Ch10 channel ID by a non-null recording_id (a null recording_id keeps the 0.1.0 form, so every 0.1.0
+#          record id is unchanged). Migration note:
+#          src/phalanx/dictionary/contract/MIGRATION.md; projection/upgrade helpers: phalanx.ground.migrate.
+#
+# Evidence basis strings (field `basis`):
+#   "ARCH §n"          mandated by the binding architecture (docs/architecture.md), a design decision;
+#   "TRANSFER: <src>"  taken from a public standard or donor practice (S5000F, NAMP, IRIG 106 ...);
+#   "ASSUMPTION: A-W0.4-n"  a contract choice where no source decides; registered in docs/assumptions.md (W0.4).
+
+contract: phalanx.ground_decoder_contract
+version: 0.2.0
+status: frozen
+description: >-
+  The stable boundary between the Phalanx data layer and downstream predictive-maintenance and availability
+  solutions: the ground-decoder output. It is identical on the fast path (CIR -> contract, provenance=direct),
+  on the full path (CIR -> bus -> Ch10 -> ground decoder, provenance=full_path) and for future real data.
+  Synthetic code tables referenced by these records are labelled synthetic; nothing here is the real Tejas ICD.
+
+time:
+  dtype: int64
+  unit: ns
+  basis: "ARCH §17 AD-35"
+  scales:
+    sim_utc: >-
+      Simulated UTC calendar: integer nanoseconds since 1970-01-01T00:00:00Z on the POSIX time scale (no leap
+      seconds). The kernel's truth step k of a run whose epoch is E maps exactly to E + (k*10**9)//240 (AD-35).
+      Valid range 0 .. 2**63-1.
+    recorder_rtc: >-
+      Recorder relative time counter expressed in nanoseconds (IRIG 106 Ch10 10 MHz RTC ticks x 100 ns). The
+      origin is the recorder's arbitrary free-running count, per recording; it is not comparable across
+      recordings. Valid range 0 .. 2**63-1.
+    duration: Non-negative duration in nanoseconds.
+  scale_basis: "ASSUMPTION: A-W0.4-1"
+
+record_id:
+  basis: "ARCH §12; ASSUMPTION: A-W0.4-2"
+  algorithm: blake2b
+  digest_bytes: 16
+  person: phalanx.rid.v0
+  encoding: >-
+    Input bytes = enc_str(topic) followed by each identity component in the topic's record_id_key order.
+    enc_str(s) = b'S' + uint32_le(len(utf8(s))) + utf8(s); a record_id component = b'R' + its 16 bytes; a null
+    string or record_id = b'N'; an unsigned integer component = b'U' + uint64_le(v); a signed integer component
+    = b'I' + int64_le(v). The encoding is injective, so two records share an id only on a blake2b collision.
+    String and record_id components precede integer components.
+  representation: Arrow fixed_size_binary(16); Avro fixed(16) RecordId; JSON lower-case hex, 32 characters.
+
+nan_policy: >-
+  The contract never carries NaN or infinities in a float field (validated). Missing values are null; a sentinel
+  word is carried as its decoded value with the SENTINEL quality flag. Real recorder data are lattice-valued with
+  no NaN [MEASURED: E1, analysis/dashlink_texture].
+
+restriction_policy: >-
+  A topic or field marked restricted carries truth or regeneration secrets. It is never part of the consumer view:
+  Contract.consumer_schema() drops restricted fields, and consumer readers refuse restricted topics (invariant I5).
+
+enums:
+  Validity:
+    basis: "ARCH §12"
+    description: >-
+      Per-sample validity. ARINC 429 SSM semantics (NORMAL, NO_COMPUTED_DATA, FUNCTIONAL_TEST, FAILURE_WARNING)
+      plus BUS_INVALID from 1553 status or validity words.
+    symbols:
+      - {name: NORMAL, description: Normal operation; the value is valid.}
+      - {name: NO_COMPUTED_DATA, description: "Source cannot compute a valid value (ARINC 429 NCD)."}
+      - {name: FUNCTIONAL_TEST, description: "Value produced under a functional test (ARINC 429 FT)."}
+      - {name: FAILURE_WARNING, description: "Source declares a failure (ARINC 429 FW)."}
+      - {name: BUS_INVALID, description: "1553 status or validity word marks the data invalid."}
+  Provenance:
+    basis: "ARCH §12"
+    description: >-
+      How the record reached the contract. full_path = via bus, Ch10 recorder and ground decoder; direct = fast
+      path or a direct ground producer (M18 records, M21 order status, manifests).
+    symbols:
+      - {name: full_path, description: "Bus -> Ch10 -> ground decoder (W1.7)."}
+      - {name: direct, description: "Fast path (CIR -> contract) or a direct ground producer."}
+  DetectionMechanism:
+    basis: "ARCH §12; TRANSFER: S5000F DetectionMechanism"
+    description: How an event was detected.
+    symbols:
+      - {name: PBIT, description: Power-up built-in test.}
+      - {name: CBIT, description: Continuous built-in test.}
+      - {name: MBIT, description: Maintenance built-in test (ground).}
+      - {name: IBIT, description: Initiated built-in test.}
+      - {name: EXCEEDANCE, description: Limit-plus-persistence monitor (ECMS/HUMS/OAC).}
+      - {name: PILOT, description: Pilot report.}
+  EventSeverity:
+    basis: "TRANSFER: MIL-STD-411C alerting (HAL CWS, research_notes tejas_avionics_and_parameter_inventory.md); ASSUMPTION: A-W0.4-10"
+    description: Alerting level of the event (S5000F eventSeverity).
+    symbols:
+      - {name: ADVISORY, description: Advisory; no crew action required.}
+      - {name: CAUTION, description: "Caution (amber); crew awareness and possible action."}
+      - {name: WARNING, description: "Warning (red); immediate crew action."}
+  ConfirmedStatus:
+    basis: "TRANSFER: S5000F eventConfirmedStatus; ASSUMPTION: A-W0.4-10"
+    description: >-
+      Confirmation state as known by the emitter at emission time. On-board events are emitted UNCONFIRMED;
+      confirmation or refutation is a later maintenance outcome carried in maint.records.
+    symbols:
+      - {name: UNCONFIRMED, description: Not yet confirmed or refuted.}
+      - {name: CONFIRMED, description: Confirmed as a real fault.}
+      - {name: NOT_CONFIRMED, description: "Could not be confirmed (CND/NFF)."}
+  FaultList:
+    basis: "ARCH §12 (PFL/MFL level)"
+    description: Fault-list level.
+    symbols:
+      - {name: PFL, description: "Pilot fault list (cockpit or CWS visible)."}
+      - {name: MFL, description: Maintenance fault list (maintenance only).}
+  MaintRecordType:
+    basis: "ARCH §10; TRANSFER: NAMP 4790.2E, TO 00-20, UK F700, S5000F"
+    description: The §10 record types.
+    symbols:
+      - {name: SORTIE, description: "Sortie / flight record (NAVFLIR, AFTO 781H)."}
+      - {name: TECH_LOG, description: "Aircraft status / technical log (UK F700, AFTO 781K)."}
+      - {name: DEFECT_WO, description: "Defect work order, a 'snag' (NAMP WO, AFTO 781A)."}
+      - {name: COMPONENT_LIFE, description: "Component install/remove life record."}
+      - {name: INSPECTION, description: "Inspection or servicing (look/fix phases)."}
+      - {name: SUPPLY_DEMAND, description: "Supply demand / AOG demand."}
+      - {name: CANNIBALISATION, description: "Cannibalisation (two linked jobs)."}
+      - {name: MODIFICATION, description: "Modification or software load."}
+      - {name: EXCEEDANCE_INSPECTION, description: "Exceedance-triggered conditional inspection."}
+      - {name: SHOP_FINDING, description: "Shop / depot finding."}
+      - {name: AVAILABILITY_STATE, description: "Availability state for one 15-minute bin (SCIR-style)."}
+  MaintStatus:
+    basis: "TRANSFER: NAMP job status (In Work/AWM/AWP/Complete); ASSUMPTION: A-W0.4-13"
+    description: Lifecycle state of a maintenance record version.
+    symbols:
+      - {name: OPEN, description: Raised; work not started.}
+      - {name: IN_WORK, description: Work in progress.}
+      - {name: AWAITING_PARTS, description: "Awaiting parts (AWP)."}
+      - {name: AWAITING_MAINTENANCE, description: "Awaiting maintenance (AWM)."}
+      - {name: DEFERRED, description: Deferred with limits or monitoring.}
+      - {name: CLOSED, description: Closed or completed.}
+  SupplyPriority:
+    basis: "TRANSFER: IAF AOG/MCM/PHU demand priorities (research_notes maintenance_records_and_events.md)"
+    description: Supply demand priority.
+    symbols:
+      - {name: AOG, description: Aircraft on ground.}
+      - {name: MCM, description: "IAF MCM demand priority (definition not public; research-notes gap)."}
+      - {name: PHU, description: "IAF PHU demand priority (definition not public; research-notes gap)."}
+  InstallAction:
+    basis: "ARCH §10 (component life record)"
+    description: Component life-record action.
+    symbols:
+      - {name: INSTALL, description: Item installed.}
+      - {name: REMOVE, description: Item removed.}
+  ShopFinding:
+    basis: "ARCH §10; TRANSFER: NAMP/USAF NRTS"
+    description: Shop or depot finding on a turned-in item.
+    symbols:
+      - {name: CONFIRMED, description: Failure confirmed.}
+      - {name: RTOK, description: Retest OK (no fault found).}
+      - {name: BCM, description: Beyond capability of maintenance.}
+  ComplianceStatus:
+    basis: "ARCH §10 (modification compliance status); ASSUMPTION: A-W0.4-13"
+    description: Compliance status of a modification or software-load order.
+    symbols:
+      - {name: ISSUED, description: Issued; not complied.}
+      - {name: COMPLIED, description: Complied with.}
+      - {name: NOT_APPLICABLE, description: Does not apply (QA-verified).}
+  AvailabilityState:
+    basis: "ARCH §10; TRANSFER: NAMP SCIR binning (NMCD > NMCS > NMCM-U > NMCM-S > PMCS > PMCM)"
+    description: Mission-capability state of one 15-minute bin, highest degraded priority wins.
+    symbols:
+      - {name: FMC, description: Fully mission capable.}
+      - {name: PMCM, description: "Partially mission capable, maintenance."}
+      - {name: PMCS, description: "Partially mission capable, supply."}
+      - {name: NMCM_S, description: "Not mission capable, scheduled maintenance."}
+      - {name: NMCM_U, description: "Not mission capable, unscheduled maintenance."}
+      - {name: NMCS, description: "Not mission capable, supply."}
+      - {name: NMCD, description: "Not mission capable, depot."}
+  IssuerKind:
+    basis: "ARCH §11.1 (issuer: agent/human)"
+    description: Who issued an order.
+    symbols:
+      - {name: AGENT, description: An automated decision agent.}
+      - {name: HUMAN, description: A human planner or operator.}
+  OrderAction:
+    basis: "ARCH §11.1 action vocabulary; ASSUMPTION: A-W0.4-14 (symbol names)"
+    description: The order action vocabulary of architecture §11.1.
+    symbols:
+      - {name: INSPECT, description: "Inspect (borescope, conditional, NDT); type in parameters."}
+      - {name: TROUBLESHOOT, description: Troubleshoot a fault code.}
+      - {name: REMOVE_REPLACE, description: "Remove/replace (specific S/N or any serviceable)."}
+      - {name: WASH_SERVICE, description: "Engine wash and servicing (oil, hydraulic, tyres)."}
+      - {name: DEFER, description: Defer a defect with limits and expiry.}
+      - {name: CANNIBALISE, description: Cannibalise from a donor tail.}
+      - {name: REQUISITION_SPARES, description: Requisition spares.}
+      - {name: EXPEDITE_SPARES, description: Expedite spares.}
+      - {name: TRANSFER_STOCK, description: Transfer stock between bases.}
+      - {name: GROUND, description: Ground an aircraft.}
+      - {name: RELEASE, description: Release an aircraft.}
+      - {name: BRING_FORWARD_SERVICING, description: Bring forward scheduled servicing.}
+      - {name: DEFER_SERVICING, description: Defer scheduled servicing.}
+      - {name: ASSIGN_SORTIE, description: Assign or reassign sorties and mission types.}
+      - {name: RESTRICT_USAGE, description: "Restrict usage (e.g. AB or g limit)."}
+      - {name: EMBODY_MODIFICATION, description: Embody a modification.}
+      - {name: LOAD_SOFTWARE, description: Embody a software load.}
+      - {name: CHANGE_MONITORING_CONFIG, description: "Change monitoring configuration (filter lists, thresholds)."}
+  OrderPriority:
+    basis: "ARCH §11.1 (priority); TRANSFER: AOG/MCM/PHU; ASSUMPTION: A-W0.4-14 (ROUTINE)"
+    description: Order priority.
+    symbols:
+      - {name: ROUTINE, description: Routine.}
+      - {name: PHU, description: "IAF PHU priority (definition not public). Symbol order is not a ranking."}
+      - {name: MCM, description: "IAF MCM priority (definition not public). Symbol order is not a ranking."}
+      - {name: AOG, description: Aircraft on ground.}
+  OrderStatus:
+    basis: "ARCH §11.1 (orders.status lifecycle)"
+    description: Order lifecycle state.
+    symbols:
+      - {name: ACCEPTED, description: Validated and accepted.}
+      - {name: QUEUED, description: Waiting for resources or the next epoch.}
+      - {name: IN_WORK, description: Being executed.}
+      - {name: COMPLETED, description: Execution finished.}
+      - {name: REJECTED, description: Rejected; reason required.}
+  LabelKind:
+    basis: "ARCH §12 (labels.truth: hidden states, fault schedule, defect manifest); ASSUMPTION: A-W0.4-16"
+    description: Kind of restricted truth label.
+    symbols:
+      - {name: TRUTH_SAMPLE, description: Truth value behind a CIR sample.}
+      - {name: HIDDEN_STATE, description: "Hidden health state per serial (M10)."}
+      - {name: FAULT, description: "Fault schedule entry (M11)."}
+      - {name: DEFECT, description: "Injected data-quality defect (defect manifest, M18)."}
+
+flag_sets:
+  QualityFlags:
+    basis: "ARCH §12; ASSUMPTION: A-W0.4-8 (bit positions, width, scopes)"
+    width: 32
+    description: >-
+      Quality flag bit set. Bit positions are stable for the life of the contract: a new flag takes the next
+      free bit (minor version); bits 11-31 are reserved and must be zero. Scope says which stage may set a flag:
+      acquisition (M12-M14, M08, M05; may appear in CIR), bus (M15), recorder (M16 time source and recorder),
+      ground (M17 decoder and ingest only).
+    flags:
+      - {bit: 0, name: SENTINEL, scope: acquisition, description: "Value is a sentinel word (e.g. bottom-of-scale in an analog slip window), not a measurement."}
+      - {bit: 1, name: GATED, scope: acquisition, description: "Value gated by acquisition validity logic."}
+      - {bit: 2, name: HELD_STALE, scope: acquisition, description: "Value held from an earlier sample (freeze or hold)."}
+      - {bit: 3, name: DUPLICATE_POLL, scope: bus, description: "Same producer update read twice by an asynchronous poll."}
+      - {bit: 4, name: SUBSTITUTED, scope: acquisition, description: "Value synthesised by FADEC or a signal validator (model substitution)."}
+      - {bit: 5, name: VOTED_OUT, scope: acquisition, description: "Lane voted out by redundancy management."}
+      - {bit: 6, name: OUT_OF_RANGE, scope: acquisition, description: "Value outside the declared range or saturated."}
+      - {bit: 7, name: CLOCK_SUSPECT, scope: recorder, description: "Time base suspect (clock jump or drift beyond tolerance)."}
+      - {bit: 8, name: TIME_SOURCE_INTERNAL, scope: recorder, description: "Absolute time from the internal clock (GPS/IRIG lock lost)."}
+      - {bit: 9, name: DUPLICATE_DOWNLOAD, scope: ground, description: "Record first delivered by a repeat download of the same sortie; already-seen record_ids are dropped by idempotent ingest."}
+      - {bit: 10, name: DECODER_INTERPOLATED, scope: ground, description: "Ground decoder interpolated the value or a time field."}
+
+# Reusable field groups, expanded in place by `include:` in topic files.
+field_sets:
+  record_header:
+    - name: record_id
+      type: record_id
+      nullable: false
+      basis: "ARCH §12"
+      description: Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).
+    - name: dict_version
+      type: string
+      nullable: false
+      basis: "ARCH §12"
+      description: Parameter-dictionary semantic version (M01) the record was produced against.
+    - name: dict_hash
+      type: string
+      nullable: false
+      pattern: "^[0-9a-f]{16,128}$"
+      basis: "ARCH §12"
+      description: Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.
+  tail_sortie:
+    - name: tail_no
+      type: string
+      nullable: false
+      pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+      basis: "ARCH §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)"
+      description: Aircraft tail number (linkage key).
+    - name: sortie_id
+      type: string
+      nullable: false
+      pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+      basis: "ARCH §5.3, §12 (linkage); ASSUMPTION: A-W0.4-7 (pattern)"
+      description: Sortie identifier (tail + date + take-off time, M02).
+  # Common event record (architecture §12 "Event record"; S5000F Event + DetectionMechanism).
+  event_core:
+    - name: event_id
+      type: string
+      nullable: false
+      basis: "ARCH §12; TRANSFER: S5000F eventIdentifier"
+      description: Identifier of the event occurrence, stable between its Ch10 recording event and its ground record.
+    - name: tail_no
+      type: string
+      nullable: false
+      pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+      basis: "ARCH §12 (linkage)"
+      description: Aircraft tail number.
+    - name: sortie_id
+      type: string
+      nullable: true
+      pattern: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+      basis: "ARCH §12 (linkage); ASSUMPTION: A-W0.4-10"
+      description: Sortie of the event; null for ground events outside a sortie (e.g. IBIT/MBIT on the line).
+    - name: engine_serial
+      type: string
+      nullable: true
+      basis: "ARCH §12 (linkage)"
+      description: Engine serial for engine events; null otherwise.
+    - name: source_lru
+      type: string
+      nullable: false
+      pattern: "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+      basis: "ARCH §12; TRANSFER: S5000F EventReporter"
+      description: LRU or monitor that detected and reported the event.
+    - name: event_code
+      type: string
+      nullable: false
+      basis: "ARCH AD-19 (synthetic SSS-NNN codes); ASSUMPTION: A-W0.4-10"
+      description: Synthetic fault, exceedance or caution code from the M01 code tables (labelled synthetic; not a real Tejas code).
+    - name: event_group
+      type: string
+      nullable: false
+      basis: "TRANSFER: S5000F eventGroup; ASSUMPTION: A-W0.4-10"
+      description: Event group (subsystem class, e.g. ENGINE, HYDRAULICS), from the M01 code tables.
+    - name: severity
+      type: enum:EventSeverity
+      nullable: false
+      basis: "TRANSFER: S5000F eventSeverity, MIL-STD-411C; ASSUMPTION: A-W0.4-10"
+      description: Alerting level.
+    - name: description
+      type: string
+      nullable: true
+      basis: "TRANSFER: S5000F eventDescription"
+      description: Code-table description of the event.
+    - name: confirmed_status
+      type: enum:ConfirmedStatus
+      nullable: false
+      basis: "TRANSFER: S5000F eventConfirmedStatus; ASSUMPTION: A-W0.4-10"
+      description: Confirmation state known at emission (on-board events are UNCONFIRMED).
+    - name: detection_mechanism
+      type: enum:DetectionMechanism
+      nullable: false
+      basis: "ARCH §12; TRANSFER: S5000F detectionMechanismType"
+      description: PBIT, CBIT, MBIT, IBIT, EXCEEDANCE or PILOT.
+    - name: detection_far_per_fh
+      type: float64
+      nullable: true
+      units: 1/h
+      minimum: 0.0
+      basis: "ARCH §12; TRANSFER: S5000F detectionMechanismFalseAlarmRate; ASSUMPTION: A-W0.4-10"
+      description: Nominal (specified) false-alarm rate of the detection mechanism per flight hour, from M01. Never the simulator's true rate.
+    - name: fault_list
+      type: enum:FaultList
+      nullable: true
+      basis: "ARCH §12"
+      description: PFL (pilot-visible) or MFL (maintenance-only); null where not applicable.
+    - name: latched
+      type: bool
+      nullable: false
+      basis: "ARCH §12 (latch state)"
+      description: Latch state of the event at emission.
+    - name: persistence_count
+      type: uint32
+      nullable: true
+      basis: "ARCH §12 (persistence count)"
+      description: Consecutive frames or iterations the condition persisted before it was declared.
+    - name: suspect_lrus
+      type:
+        list:
+          struct:
+            - name: lru
+              type: string
+              nullable: false
+              pattern: "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              basis: "ARCH §12"
+              description: Suspect LRU.
+            - name: isolation_confidence
+              type: float64
+              nullable: false
+              minimum: 0.0
+              maximum: 1.0
+              basis: "ARCH §12"
+              description: Isolation confidence of this suspect, 0..1.
+        item_nullable: false
+      nullable: false
+      basis: "ARCH §12 (suspect-LRU list with isolation confidence)"
+      description: Suspect-LRU list in isolation order; empty when no isolation is made.
+    - name: snapshot_t_start
+      type: time_ns
+      time_scale: sim_utc
+      nullable: true
+      basis: "ARCH §12 (snapshot window pointer)"
+      description: Start of the event snapshot window (e.g. 5 s before); samples in the window are in param.samples.
+    - name: snapshot_t_end
+      type: time_ns
+      time_scale: sim_utc
+      nullable: true
+      basis: "ARCH §12 (snapshot window pointer)"
+      description: End of the event snapshot window (e.g. 25-35 s after).
+    - name: ch10_event_number
+      type: uint32
+      nullable: true
+      basis: "TRANSFER: IRIG 106 Ch10 recording event (report §13); ASSUMPTION: A-W0.4-10"
+      description: IRIG 106 Ch10 recording-event number of the on-board copy; null on the fast path.
+    - name: t_occurrence
+      type: time_ns
+      time_scale: sim_utc
+      nullable: false
+      basis: "TRANSFER: S5000F eventOccurrenceDateTime; ASSUMPTION: A-W0.4-1"
+      description: When the event was declared on board. The event time of the record.
+    - name: t_record
+      type: time_ns
+      time_scale: recorder_rtc
+      nullable: true
+      basis: "ARCH §8; ASSUMPTION: A-W0.4-4"
+      description: Recorder RTC time of the on-board copy; null on the fast path.
+    - name: t_utc
+      type: time_ns
+      time_scale: sim_utc
+      nullable: true
+      basis: "ARCH §8; ASSUMPTION: A-W0.4-4"
+      description: Absolute time from the aircraft time source.
+    - name: t_ingest
+      type: time_ns
+      time_scale: sim_utc
+      nullable: false
+      basis: "ARCH §8, I5"
+      description: Arrival at the ground.
+    - name: quality_flags
+      type: flags:QualityFlags
+      nullable: false
+      basis: "ARCH §12"
+      description: Quality flag bit set.
+    - name: provenance
+      type: enum:Provenance
+      nullable: false
+      basis: "ARCH §12"
+      description: full_path or direct.
+
+# Topic files, in rank order. The rank is the deterministic tie-breaker between topics in replay.
+topics:
+  - topics/param.samples.yaml
+  - topics/events.bit_faults.yaml
+  - topics/events.exceedances.yaml
+  - topics/events.cautions.yaml
+  - topics/usage.counters.yaml
+  - topics/sortie.manifest.yaml
+  - topics/maint.records.yaml
+  - topics/orders.commands.yaml
+  - topics/orders.status.yaml
+  - topics/labels.truth.yaml
+
+# Choices W0.4 made where no source decides. Each is a row in docs/assumptions.md (W0.4 section) and is listed in
+# the generated summary for owner review at E0.
+assumptions:
+  - id: A-W0.4-1
+    statement: >-
+      Contract time scales: every time field except t_record is int64 ns on the simulated UTC calendar (POSIX ns
+      since 1970-01-01Z); kernel time maps by adding the run epoch (exact integer). t_record is the recorder RTC in
+      ns from the recording's own origin.
+  - id: A-W0.4-2
+    statement: >-
+      record_id = blake2b-128 (person 'phalanx.rid.v0') over a typed, length-prefixed encoding of the topic and its
+      record_id_key. The sample key adds param_id (the item) to the §12 tuple, because one bus message carries
+      several parameters. 128 bits keeps the birthday bound negligible at fleet scale (1e10 records: p ~ 1e-19).
+  - id: A-W0.4-3
+    statement: >-
+      Fast-path record_id components: channel_id = 'direct:<source_lru>:<lane or empty>', seq = CIR sample_index
+      (per-stream acquisition tick index within the sortie), msg_index = 0.
+  - id: A-W0.4-4
+    statement: >-
+      PROXY (fast path only): t_utc = t_sample (perfect time-source lock). t_bus, t_record, raw_counts, bus,
+      rt_sa_word and label_sdi are null; the fast path never sets bus, recorder or ground flags. Replaced by the
+      full path (W1.7).
+  - id: A-W0.4-5
+    statement: >-
+      Fast-path t_ingest is supplied by the caller as the sortie's download instant (from the scenario or M16
+      download schedule); it must be >= every t_sample of the batch. No download-delay model in W0.4.
+  - id: A-W0.4-6
+    statement: >-
+      CIR values (value, truth_value) are in the dictionary engineering unit of the parameter, not SI, because the
+      recorder lattice is defined in EU; M13 performs the SI->EU conversion at digitisation.
+  - id: A-W0.4-7
+    statement: >-
+      Nullability and formats derived where §12 is silent: engine_serial, lane, bus, rt_sa_word, label_sdi, t_bus,
+      t_record, t_utc and raw_counts nullable; value_eu and t_sample non-null; identifier patterns for tail_no,
+      sortie_id, source_lru (filesystem- and key-safe); rt_sa_word 'RTnn/SAnn/Wnn', label_sdi 'Looo/SDIn'.
+  - id: A-W0.4-8
+    statement: >-
+      quality_flags is a uint32 bit set with bit positions in §12 order (bit 0 SENTINEL ... bit 10
+      DECODER_INTERPOLATED); bits 11-31 reserved (zero); each flag has a producing-stage scope.
+  - id: A-W0.4-9
+    statement: >-
+      Enumerations are carried as UTF-8 strings validated against the spec tables (Arrow string, Avro enum,
+      JSON-Schema enum), not as Arrow dictionary arrays, so Parquet bytes stay deterministic across batches.
+  - id: A-W0.4-10
+    statement: >-
+      Event record: S5000F Event fields (event_id, t_occurrence, event_group, severity, description,
+      confirmed_status) + §12 (detection mechanism, PFL/MFL, latch, persistence, suspect LRUs with isolation
+      confidence, snapshot window) + IRIG Ch10 recording-event number; severity ADVISORY/CAUTION/WARNING
+      (MIL-STD-411C); detection_far_per_fh is the nominal (specified) rate from M01, never the simulator's true
+      rate; topic-specific fields for BIT, exceedances and cautions.
+  - id: A-W0.4-11
+    statement: >-
+      usage.counters: one record per counter update (LUIs update twice per flight), cumulative value as reported
+      plus optional increment; counters are dictionary params (param_id).
+  - id: A-W0.4-12
+    statement: >-
+      sortie.manifest: §12 content as typed fields; seeds and the RNG stream table are field-level restricted
+      (dropped from the consumer view) because seeds + code commit would let a consumer regenerate truth (I5).
+  - id: A-W0.4-13
+    statement: >-
+      maint.records: one topic with a record_type discriminator and typed nullable columns (NAMP / TO 00-20 /
+      F700 / S5000F); a new record version per status change; the five coded dimensions are synthetic
+      IAF-relabelled code strings (AD-19).
+  - id: A-W0.4-14
+    statement: >-
+      The order record (§11.1) lives on topic orders.commands (name from report §13); action symbols are
+      upper-snake renderings of the §11.1 vocabulary; parameters is a JSON object (canonical JSON string in
+      Arrow); priority adds ROUTINE to AOG/MCM/PHU; dict_version/dict_hash are nullable on orders.commands.
+  - id: A-W0.4-15
+    statement: >-
+      orders.status: one record per status change with a per-order status_seq; reason required when REJECTED;
+      result_record_ids links the normal records an executed order produced.
+  - id: A-W0.4-16
+    statement: >-
+      labels.truth: restricted topic with label_kind TRUTH_SAMPLE / HIDDEN_STATE / FAULT / DEFECT, a subject id,
+      the truth time and value, and an optional link to the record it labels.
+  - id: A-W0.4-17
+    statement: >-
+      Storage: Parquet (zstd level 3, fixed row-group size, format 2.6, Arrow schema stored), rows sorted by
+      (event time, record_id) before writing, Hive-style directories date=/<partition fields>=, file name from the
+      file's content digest. The only version-dependent bytes are the pinned writer's created_by string.
+  - id: A-W0.4-18
+    statement: >-
+      Replay: delivery bursts ordered by (t_ingest, tail_no, sortie_id); within a burst, topics in rank order and
+      rows in (event time, record_id) order; per-sortie watermark = max event time delivered so far; duplicate
+      record_ids keep the earliest ingest; topics without an ingest time (labels.truth) are not streamed.
+  - id: A-W0.4-19
+    statement: >-
+      Every time field is non-negative (validated); writers and readers reject a file whose embedded contract
+      hash differs from the loaded contract.
+  - id: A-W0.4-20
+    statement: >-
+      Avro mapping: int8/int16/int32/uint8/uint16 -> int; int64/uint32/flags/time -> long (time carries
+      phalanx.time_unit=ns, since Avro 1.11 has no ns logical type); record_id -> fixed(16); enums -> Avro enum;
+      nullable -> ["null", T] with default null.
+  - id: A-W0.4-22
+    statement: >-
+      Contract 0.2.0 (W2.2, additive): a sortie can have several on-board recordings, one per recorder sink
+      (AD-25). param.samples carries recording_id (unique within tail_no and sortie_id, set by the recorder;
+      key-safe pattern, no ':') and sink (the M01 sinks-table id of that recording), both null on the fast path
+      and for a single unattributed bus-monitor capture, and both null or both set. On the full path the record_id
+      channel_id component becomes '<recording_id>:<Ch10 channel ID>' when recording_id is set, because Ch10
+      channel IDs are unique only within one recording; a null recording_id keeps the bare channel ID, so every
+      0.1.0 record id is unchanged. New fields are appended after the 0.1.0 fields.

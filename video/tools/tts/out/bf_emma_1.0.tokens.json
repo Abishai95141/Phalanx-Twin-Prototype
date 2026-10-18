@@ -1,0 +1,206 @@
+[
+ {
+  "text": "Every",
+  "phonemes": "\u02c8\u025bv\u0259\u0279i",
+  "start": 0.25,
+  "end": 0.5
+ },
+ {
+  "text": "morning",
+  "phonemes": "m\u02c8\u0254\u02d0n\u026a\u014b",
+  "start": 0.5,
+  "end": 0.825
+ },
+ {
+  "text": ",",
+  "phonemes": ",",
+  "start": 0.825,
+  "end": 0.863
+ },
+ {
+  "text": "before",
+  "phonemes": "b\u026af\u02c8\u0254\u02d0",
+  "start": 0.863,
+  "end": 1.15
+ },
+ {
+  "text": "eight",
+  "phonemes": "\u02c8At",
+  "start": 1.15,
+  "end": 1.65
+ },
+ {
+  "text": ",",
+  "phonemes": ",",
+  "start": 1.65,
+  "end": 1.75
+ },
+ {
+  "text": "a",
+  "phonemes": "\u0250",
+  "start": 1.75,
+  "end": 1.85
+ },
+ {
+  "text": "squadron",
+  "phonemes": "skw\u02c8\u0252d\u0279\u1d4an",
+  "start": 1.85,
+  "end": 2.325
+ },
+ {
+  "text": "engineering",
+  "phonemes": "\u02cc\u025bn\u02a4\u026an\u02c8\u026a\u0259\u0279\u026a\u014b",
+  "start": 2.325,
+  "end": 2.925
+ },
+ {
+  "text": "officer",
+  "phonemes": "\u02c8\u0252f\u026as\u0259",
+  "start": 2.925,
+  "end": 3.35
+ },
+ {
+  "text": "decides",
+  "phonemes": "d\u026as\u02c8Idz",
+  "start": 3.35,
+  "end": 3.837
+ },
+ {
+  "text": "which",
+  "phonemes": "w\u02cc\u026a\u02a7",
+  "start": 3.837,
+  "end": 4.025
+ },
+ {
+  "text": "aircraft",
+  "phonemes": "\u02c8\u025b\u02d0k\u0279\u0251\u02d0ft",
+  "start": 4.025,
+  "end": 4.588
+ },
+ {
+  "text": "will",
+  "phonemes": "w\u026al",
+  "start": 4.588,
+  "end": 4.763
+ },
+ {
+  "text": "fly",
+  "phonemes": "fl\u02c8I",
+  "start": 4.763,
+  "end": 5.75
+ },
+ {
+  "text": ".",
+  "phonemes": ".",
+  "start": 5.75,
+  "end": 5.912
+ },
+ {
+  "text": "Phalanx",
+  "phonemes": "f\u02c8ala\u014bks",
+  "start": 5.912,
+  "end": 6.4
+ },
+ {
+  "text": "Twin",
+  "phonemes": "tw\u02c8\u026an",
+  "start": 6.4,
+  "end": 6.725
+ },
+ {
+  "text": "turns",
+  "phonemes": "t\u02c8\u025c\u02d0nz",
+  "start": 6.725,
+  "end": 7.037
+ },
+ {
+  "text": "the",
+  "phonemes": "\u00f0\u0259",
+  "start": 7.037,
+  "end": 7.125
+ },
+ {
+  "text": "fleet's",
+  "phonemes": "fl\u02c8i\u02d0ts",
+  "start": 7.125,
+  "end": 7.475
+ },
+ {
+  "text": "evidence",
+  "phonemes": "\u02c8\u025bv\u026ad\u1d4ans",
+  "start": 7.475,
+  "end": 7.963
+ },
+ {
+  "text": "into",
+  "phonemes": "\u02c8\u026antu\u02d0",
+  "start": 7.963,
+  "end": 8.162
+ },
+ {
+  "text": "a",
+  "phonemes": "\u0250",
+  "start": 8.162,
+  "end": 8.225
+ },
+ {
+  "text": "handful",
+  "phonemes": "h\u02c8andf\u028al",
+  "start": 8.225,
+  "end": 8.613
+ },
+ {
+  "text": "of",
+  "phonemes": "\u0252v",
+  "start": 8.613,
+  "end": 8.7
+ },
+ {
+  "text": "signed",
+  "phonemes": "s\u02c8Ind",
+  "start": 8.7,
+  "end": 8.988
+ },
+ {
+  "text": "decisions",
+  "phonemes": "d\u026as\u02c8\u026a\u0292\u1d4anz",
+  "start": 8.988,
+  "end": 9.9
+ },
+ {
+  "text": "\u2014",
+  "phonemes": "\u2014",
+  "start": 9.9,
+  "end": 9.975
+ },
+ {
+  "text": "and",
+  "phonemes": "and",
+  "start": 9.975,
+  "end": 10.113
+ },
+ {
+  "text": "shows",
+  "phonemes": "\u0283\u02c8Qz",
+  "start": 10.113,
+  "end": 10.45
+ },
+ {
+  "text": "exactly",
+  "phonemes": "\u026a\u0261z\u02c8aktli",
+  "start": 10.45,
+  "end": 10.95
+ },
+ {
+  "text": "why",
+  "phonemes": "w\u02ccI",
+  "start": 10.95,
+  "end": 11.725
+ },
+ {
+  "text": ".",
+  "phonemes": ".",
+  "start": 11.725,
+  "end": 11.9
+ }
+]

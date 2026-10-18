@@ -1,0 +1,20 @@
+# Layer 4 preferences (architecture 07 Part B): thresholds and weights with enforced bounds. They never override
+# the invariants or the decision tables. Each entry is {value, bounds: [min, max]} or a plain value; load() checks
+# every bounded value. ASSUMPTION marks a value we chose.
+
+budget: {value: 10, bounds: [3, 20]}                 # items needing a decision per epoch; over 2× → flood mode
+recurrence_window_days: {value: 10, bounds: [5, 30]}  # D4 / P-DEC-01 occ_10d
+recurrence_min: {value: 2, bounds: [2, 5]}            # "recurs" = this many sorties in the window (A-W1.8-22, swept 2–5)
+standing_flights: {value: 5, bounds: [3, 10]}         # D8 standing alarm: fired on this many consecutive flights
+nuisance_min_cnd: {value: 2, bounds: [1, 5]}          # D8: and at least this many prior could-not-duplicate closes
+nofault_dominated: {value: 0.6, bounds: [0.5, 0.9]}   # code no-fault rate at or above → no-fault dominated (P-DEC-01 r4)
+life_at_limit_uses: {value: 1, bounds: [0, 3]}        # a life item is "at its limit" when this many uses or fewer are left
+epoch_delay_days: {value: 1.0, bounds: [0.5, 2.0]}    # an order issued today acts at the next 08:00 epoch
+work_day_hours: {value: 8.0, bounds: [4.0, 24.0]}     # man-hours → elapsed work days
+weight_man_hour: {value: 0.005, bounds: [0.0, 0.05]}  # ASSUMPTION: NMC-day cost of one man-hour in the rank value
+critical_removal_risk: {value: 0.2, bounds: [0.05, 0.5]}   # G4 gate on a safety-critical item (S3 hazard model)
+awp_min_days: {value: 7, bounds: [1, 30]}             # P-ORG-02 policy.awp_min_days
+cannibalisation_enabled: false                        # moving parts between aircraft needs the data layer's W2.6 release
+confidence_n: {high: 50, med: 20}                     # outcome sample size behind P(true) → high / med / low
+fork_pairs: {value: 10, bounds: [5, 30]}              # paired simulations per candidate (live)
+horizon_days: {value: 30, bounds: [7, 90]}            # forecast and fork horizon

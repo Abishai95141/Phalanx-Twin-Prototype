@@ -1,0 +1,64 @@
+record_id: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'Idempotency key; blake2b-128 of the topic's record_id_key components (see record_id rules).'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.format: 'record_id'
+dict_version: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary semantic version (M01) the record was produced against.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+dict_hash: string not null
+  -- field metadata --
+  phalanx.description: 'Parameter-dictionary content hash, lower-case hex (M01). Appears on every record.'
+  phalanx.basis: 'ARCH §12'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[0-9a-f]{16,128}$'
+order_id: string not null
+  -- field metadata --
+  phalanx.description: 'Order this status refers to.'
+  phalanx.basis: 'ARCH §11.1'
+  phalanx.restricted: 'false'
+  phalanx.pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]*$'
+status_seq: uint32 not null
+  -- field metadata --
+  phalanx.description: 'Index of this status change within the order (0, 1, 2, ...).'
+  phalanx.basis: 'ASSUMPTION: A-W0.4-15'
+  phalanx.restricted: 'false'
+status: string not null
+  -- field metadata --
+  phalanx.description: 'Lifecycle state.'
+  phalanx.basis: 'ARCH §11.1'
+  phalanx.restricted: 'false'
+  phalanx.enum: 'OrderStatus'
+  phalanx.enum_symbols: '["ACCEPTED","QUEUED","IN_WORK","COMPLETED","REJECTED"]'
+reason: string
+  -- field metadata --
+  phalanx.description: 'Reason; required when status is REJECTED.'
+  phalanx.basis: 'ARCH §11.1 (rejected, with reason)'
+  phalanx.restricted: 'false'
+t_status: int64 not null
+  -- field metadata --
+  phalanx.description: 'Simulation time of the status change. The event and availability time of the record.'
+  phalanx.basis: 'ARCH §11.1; ASSUMPTION: A-W0.4-15'
+  phalanx.restricted: 'false'
+  phalanx.time_unit: 'ns'
+  phalanx.time_scale: 'sim_utc'
+result_record_ids: list<element: fixed_size_binary[16] not null> not null
+  child 0, element: fixed_size_binary[16] not null
+  -- field metadata --
+  phalanx.description: 'record_ids of the normal records the execution produced; empty if none.'
+  phalanx.basis: 'ARCH §11.1 (every executed order produces normal records); ASSUMPTION: A-W0.4-15'
+  phalanx.restricted: 'false'
+-- schema metadata --
+phalanx.contract: 'phalanx.ground_decoder_contract'
+phalanx.contract_version: '0.2.0'
+phalanx.contract_hash: 'a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566'
+phalanx.topic: 'orders.status'
+phalanx.topic_restricted: 'false'
+phalanx.event_time: 't_status'
+phalanx.ingest_time: 't_status'
+phalanx.partition_by: '[]'
+phalanx.record_id_key: '["order_id","status_seq"]'
+phalanx.audience: 'consumer'

@@ -1,0 +1,141 @@
+# Machine-readable W1 port catalogue: the single source for inter-module truth-layer signals.
+# Mirrors docs/build_briefs/W1_interfaces.md §2 and is AUTHORITATIVE for names. A key is `<prefix>.<port>`: the producing
+# module's prefix (ports.py PREFIX) plus its core Port name, which must be lowercase snake_case (core rule ^[a-z_][a-z0-9_]*$). tests/integration/test_interface_conformance.py checks each module's
+# ports.py against this file (names, SI units by pint equivalence, dtype, shape rank and fixed dims).
+# Changes only through the coordinator (an interface change request); a change here must also update W1_interfaces.md.
+#
+# shape: list of dims; an int is fixed, a symbol is configuration-dependent:
+#   e = n_engines, h = hydraulic systems (2), k = fuel tanks, g = gear legs (3), bands = vibration bands,
+#   buses = electrical buses, points = ECS points, ch = physical sensor channels, ns = engine sensors validated
+# rate: truth (240 Hz) | dfcc (80 Hz rate group) | fadec (FADEC clock domain, 60 Hz nominal) | held (slow/held) | event
+format: phalanx.ports/1
+modules:
+  M02:
+    out:
+      scenario.epoch_utc_ns: {unit: ns, dtype: int64, shape: [], rate: held}
+      scenario.phase: {unit: "1", dtype: int64, shape: [], rate: held}
+  M03:
+    out:
+      env.t_s: {unit: K, dtype: float64, shape: [], rate: truth}
+      env.p_s: {unit: Pa, dtype: float64, shape: [], rate: truth}
+      env.rho: {unit: kg/m**3, dtype: float64, shape: [], rate: truth}
+      env.a_sound: {unit: m/s, dtype: float64, shape: [], rate: truth}
+      env.q_spec: {unit: "1", dtype: float64, shape: [], rate: truth}
+      env.wind_ned: {unit: m/s, dtype: float64, shape: [3], rate: truth}
+      env.turb_vel_body: {unit: m/s, dtype: float64, shape: [3], rate: truth}
+      env.turb_rate_body: {unit: rad/s, dtype: float64, shape: [3], rate: truth}
+      env.w_engine: {unit: "1", dtype: float64, shape: [e, 5], rate: truth, note: "[fuel_metering, combustor_eff, inlet_recovery, shaft_load, fan_face] (AD-46)"}
+      env.w_bleed_pto: {unit: "1", dtype: float64, shape: [e], rate: truth}
+      env.w_hyd: {unit: m**3/s, dtype: float64, shape: [h], rate: truth}
+  M04:
+    out:
+      pilot.stick_pitch: {unit: "1", dtype: float64, shape: [], rate: truth}
+      pilot.stick_roll: {unit: "1", dtype: float64, shape: [], rate: truth}
+      pilot.pedal: {unit: "1", dtype: float64, shape: [], rate: truth}
+      pilot.pla: {unit: rad, dtype: float64, shape: [e], rate: truth}
+      pilot.gear_cmd: {unit: "1", dtype: int64, shape: [], rate: truth}
+      pilot.airbrake_cmd: {unit: "1", dtype: int64, shape: [], rate: truth}
+      pilot.ab_select: {unit: "1", dtype: int64, shape: [e], rate: truth}
+      pilot.brake_cmd: {unit: "1", dtype: float64, shape: [2], rate: truth, note: "toe-brake command L/R, 0..1 (W1.2 request; M06 binds in W2.1)"}
+      pilot.at_engage: {unit: "1", dtype: int64, shape: [], rate: truth, proxy_only: true}
+      pilot.at_n1_cmd: {unit: "1", dtype: float64, shape: [e], rate: truth, proxy_only: true}
+  M05:
+    out:
+      fcs.surf_pos: {unit: rad, dtype: float64, shape: [13], rate: truth}
+      fcs.surf_rate: {unit: rad/s, dtype: float64, shape: [13], rate: truth}
+      fcs.hyd_flow_demand: {unit: m**3/s, dtype: float64, shape: [h], rate: truth}
+      fcs.law_state: {unit: "1", dtype: int64, shape: [], rate: dfcc}
+      fcs.channel_status: {unit: "1", dtype: int64, shape: [4], rate: dfcc}
+  M06:
+    out:
+      af.pos_geo: {unit: "1", dtype: float64, shape: [3], rate: truth, note: "lat rad, lon rad, alt m (mixed units; components documented)"}
+      af.alt: {unit: m, dtype: float64, shape: [], rate: truth, note: "geometric (ellipsoidal) altitude; M03 derives pressure altitude (AD-49)"}
+      af.vel_ned: {unit: m/s, dtype: float64, shape: [3], rate: truth}
+      af.quat: {unit: "1", dtype: float64, shape: [4], rate: truth, note: "scalar-first (w, x, y, z), body -> NED (AD-49)"}
+      af.omega_body: {unit: rad/s, dtype: float64, shape: [3], rate: truth}
+      af.f_spec_body: {unit: m/s**2, dtype: float64, shape: [3], rate: truth}
+      af.alpha: {unit: rad, dtype: float64, shape: [], rate: truth}
+      af.beta: {unit: rad, dtype: float64, shape: [], rate: truth}
+      af.tas: {unit: m/s, dtype: float64, shape: [], rate: truth}
+      af.mach: {unit: "1", dtype: float64, shape: [], rate: truth}
+      af.qbar: {unit: Pa, dtype: float64, shape: [], rate: truth}
+      af.nz: {unit: "1", dtype: float64, shape: [], rate: truth}
+      af.wow: {unit: "1", dtype: int64, shape: [g], rate: truth}
+      af.wheel_speed: {unit: rad/s, dtype: float64, shape: [2], rate: truth}
+      af.brake_energy_rate: {unit: W, dtype: float64, shape: [2], rate: truth}
+      af.hag: {unit: m, dtype: float64, shape: [], rate: truth, note: "height above ground (radar altitude truth; W1.6 request)"}
+  M07:
+    out:
+      eng.n1: {unit: rad/s, dtype: float64, shape: [e], rate: truth}
+      eng.n2: {unit: rad/s, dtype: float64, shape: [e], rate: truth}
+      eng.t2: {unit: K, dtype: float64, shape: [e], rate: truth}
+      eng.t25: {unit: K, dtype: float64, shape: [e], rate: truth}
+      eng.t3: {unit: K, dtype: float64, shape: [e], rate: truth}
+      eng.t5: {unit: K, dtype: float64, shape: [e], rate: truth}
+      eng.p2: {unit: Pa, dtype: float64, shape: [e], rate: truth}
+      eng.ps3: {unit: Pa, dtype: float64, shape: [e], rate: truth}
+      eng.p5: {unit: Pa, dtype: float64, shape: [e], rate: truth}
+      eng.wf: {unit: kg/s, dtype: float64, shape: [e], rate: truth}
+      eng.wf_ab: {unit: kg/s, dtype: float64, shape: [e], rate: truth}
+      eng.a8: {unit: m**2, dtype: float64, shape: [e], rate: truth}
+      eng.vg_igv: {unit: rad, dtype: float64, shape: [e], rate: truth}
+      eng.vg_vsv: {unit: rad, dtype: float64, shape: [e], rate: truth}
+      eng.w2: {unit: kg/s, dtype: float64, shape: [e], rate: truth}
+      eng.thrust: {unit: N, dtype: float64, shape: [e], rate: truth}
+      eng.oil_t: {unit: K, dtype: float64, shape: [e], rate: truth}
+      eng.oil_p: {unit: Pa, dtype: float64, shape: [e], rate: truth}
+      eng.vib_src: {unit: m/s**2, dtype: float64, shape: [e, bands], rate: truth}
+      eng.stall_margin: {unit: "1", dtype: float64, shape: [e], rate: truth}
+      eng.ab_state: {unit: "1", dtype: int64, shape: [e], rate: truth}
+      eng.flame_state: {unit: "1", dtype: int64, shape: [e], rate: truth}
+      eng.bleed_p3: {unit: Pa, dtype: float64, shape: [e], rate: truth}
+      eng.bleed_t3: {unit: K, dtype: float64, shape: [e], rate: truth}
+  M08:
+    out:
+      fadec.wf_cmd: {unit: kg/s, dtype: float64, shape: [e], rate: fadec}
+      fadec.wf_ab_cmd: {unit: kg/s, dtype: float64, shape: [e], rate: fadec}
+      fadec.a8_cmd: {unit: m**2, dtype: float64, shape: [e], rate: fadec}
+      fadec.vg_cmd: {unit: rad, dtype: float64, shape: [e, 2], rate: fadec}
+      fadec.ignition: {unit: "1", dtype: int64, shape: [e], rate: fadec}
+      fadec.ab_enable: {unit: "1", dtype: int64, shape: [e], rate: fadec}
+      fadec.active_limiter: {unit: "1", dtype: int64, shape: [e], rate: fadec}
+      fadec.validation_state: {unit: "1", dtype: int64, shape: [e, ns], rate: fadec}
+  M09:
+    out:
+      util.hyd_p: {unit: Pa, dtype: float64, shape: [h], rate: truth}
+      util.hyd_dp_avail: {unit: Pa, dtype: float64, shape: [h], rate: truth}
+      util.hyd_t: {unit: K, dtype: float64, shape: [h], rate: truth}
+      util.bleed_extract: {unit: kg/s, dtype: float64, shape: [e], rate: truth}
+      util.pto_power: {unit: W, dtype: float64, shape: [e], rate: truth}
+      util.fuel_mass: {unit: kg, dtype: float64, shape: [k], rate: truth}
+      util.mass: {unit: kg, dtype: float64, shape: [], rate: truth}
+      util.cg: {unit: m, dtype: float64, shape: [3], rate: truth}
+      util.inertia: {unit: kg*m**2, dtype: float64, shape: [3, 3], rate: truth}
+      util.bus_v: {unit: V, dtype: float64, shape: [buses], rate: truth, note: "buses = 4, index map published by M09 (utilities.layout.BUSES): DC main, DC essential, DC emergency (28 V; dictionary ELEC.DCBUS.V.{MAIN,ESSENTIAL,EMERGENCY}), AC main (V rms, 115 V 400 Hz). Consumers size and index by M09's map (E1-MF U1; master-box bus list, tejas_utility_systems.md, DDP node 9647)"}
+      util.gen_online: {unit: "1", dtype: int64, shape: [], rate: truth}
+      util.batt_soc: {unit: "1", dtype: float64, shape: [], rate: truth}
+      util.ecs_t: {unit: K, dtype: float64, shape: [points], rate: truth}
+      util.ecs_p: {unit: Pa, dtype: float64, shape: [points], rate: truth}
+      util.brake_t: {unit: K, dtype: float64, shape: [2], rate: truth}
+      util.brake_wear: {unit: "1", dtype: float64, shape: [2], rate: truth}
+      util.tyre_wear: {unit: "1", dtype: float64, shape: [2], rate: truth}
+      util.jfs_state: {unit: "1", dtype: int64, shape: [], rate: truth}
+      util.fuel_inlet_t: {unit: K, dtype: float64, shape: [e], rate: truth, note: "engine fuel inlet temperature (fuel heat-sink model; W1.6 request)"}
+      util.brake_p: {unit: Pa, dtype: float64, shape: [2], rate: truth, note: "brake pressure L/R (W1.6 request)"}
+      util.hyd_res_level: {unit: "1", dtype: float64, shape: [h], rate: truth, note: "reservoir level fraction (W1.6 request)"}
+      util.probe_heat: {unit: "1", dtype: int64, shape: [], rate: truth, note: "air-data/TAT probe heater on (W1.6 request)"}
+      util.chute_state: {unit: "1", dtype: int64, shape: [], rate: truth, note: "brake chute 0 stowed, 1 streamed, 2 jettisoned, 3 failed (deployed above the emergency limit); M06 applies the drag while 1 (AD-47, W2.1c)"}
+  M10:
+    out:
+      health.engine: {unit: "1", dtype: float64, shape: [e, 10], rate: held}
+      health.utility: {unit: "1", dtype: float64, shape: [nu], rate: held}
+      health.sensor_bias: {unit: "1", dtype: float64, shape: [ch], rate: held, note: "per-channel SI bias; unit varies by channel (documented index map)"}
+      health.actuator: {unit: "1", dtype: float64, shape: [13], rate: held}
+# Tracked exceptions of the hardened conformance gate (E1-MF; MF2/U7). Each entry is a known binding problem the
+# gate reports: the rule it breaks, the consumer modules and configurations it applies to, the owning work package
+# and the source. tests/integration/test_interface_conformance.py fails on any problem NOT listed here and on any
+# entry here that no longer occurs (a stale entry must be removed, like a strict xfail). Configurations: e1/e2/e4 =
+# the Tejas module set at n_engines 1/2/4; proxy = the DASHlink proxy chain (n_engines 4).
+# Rules: unbound, producer, lane_producer, lane_channel, unit, dtype, shape, clock, catalogue, duplicate.
+# (empty since W2.2 phase B: the last one, the ENG.AB_LIT lane producer, is closed by the M12 UV flame detector)
+exceptions: []

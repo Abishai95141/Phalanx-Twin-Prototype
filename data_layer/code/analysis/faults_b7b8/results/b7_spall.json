@@ -1,0 +1,189 @@
+{
+ "spall": {
+  "critical_mm": 8.0,
+  "debris_mg_per_mm": {
+   "max": 20.000000000000032,
+   "min": 19.999999999999975
+  },
+  "debris_verdict": "PASS",
+  "eot_h_initiation_to_critical": 28.0,
+  "growth_mm_per_h_in_0.8_3.4mm": {
+   "max": 0.3181234889331619,
+   "min": 0.08669876484519057,
+   "n_sorties": 14
+  },
+  "growth_verdict": "PASS",
+  "l0_mm": 0.5,
+  "n_engines": 1,
+  "rows": [
+   {
+    "eot_h": 1.0,
+    "len_after_mm": 0.5525854590378239,
+    "len_before_mm": 0.5,
+    "spall_debris_mg": 1.0517091807564776
+   },
+   {
+    "eot_h": 2.0,
+    "len_after_mm": 0.610701379080085,
+    "len_before_mm": 0.5525854590378239,
+    "spall_debris_mg": 1.162318400845224
+   },
+   {
+    "eot_h": 3.0,
+    "len_after_mm": 0.6749294037880018,
+    "len_before_mm": 0.610701379080085,
+    "spall_debris_mg": 1.2845604941583346
+   },
+   {
+    "eot_h": 4.0,
+    "len_after_mm": 0.7459123488206355,
+    "len_before_mm": 0.6749294037880018,
+    "spall_debris_mg": 1.419658900652673
+   },
+   {
+    "eot_h": 5.0,
+    "len_after_mm": 0.8243606353500645,
+    "len_before_mm": 0.7459123488206355,
+    "spall_debris_mg": 1.5689657305885818
+   },
+   {
+    "eot_h": 6.0,
+    "len_after_mm": 0.9110594001952551,
+    "len_before_mm": 0.8243606353500645,
+    "spall_debris_mg": 1.7339752969038096
+   },
+   {
+    "eot_h": 7.0,
+    "len_after_mm": 1.006876353735239,
+    "len_before_mm": 0.9110594001952551,
+    "spall_debris_mg": 1.9163390707996764
+   },
+   {
+    "eot_h": 8.0,
+    "len_after_mm": 1.1127704642462346,
+    "len_before_mm": 1.006876353735239,
+    "spall_debris_mg": 2.117882210219916
+   },
+   {
+    "eot_h": 9.0,
+    "len_after_mm": 1.2298015555784758,
+    "len_before_mm": 1.1127704642462346,
+    "spall_debris_mg": 2.340621826644822
+   },
+   {
+    "eot_h": 10.0,
+    "len_after_mm": 1.3591409142295237,
+    "len_before_mm": 1.2298015555784758,
+    "spall_debris_mg": 2.5867871730209586
+   },
+   {
+    "eot_h": 11.0,
+    "len_after_mm": 1.5020830119732178,
+    "len_before_mm": 1.3591409142295237,
+    "spall_debris_mg": 2.8588419548738813
+   },
+   {
+    "eot_h": 12.0,
+    "len_after_mm": 1.6600584613682752,
+    "len_before_mm": 1.5020830119732178,
+    "spall_debris_mg": 3.1595089879011478
+   },
+   {
+    "eot_h": 13.0,
+    "len_after_mm": 1.834648333809624,
+    "len_before_mm": 1.6600584613682752,
+    "spall_debris_mg": 3.491797448826978
+   },
+   {
+    "eot_h": 14.0,
+    "len_after_mm": 2.0275999834223395,
+    "len_before_mm": 1.834648333809624,
+    "spall_debris_mg": 3.859032992254309
+   },
+   {
+    "eot_h": 15.0,
+    "len_after_mm": 2.240844535169035,
+    "len_before_mm": 2.0275999834223395,
+    "spall_debris_mg": 4.264891034933904
+   },
+   {
+    "eot_h": 16.0,
+    "len_after_mm": 2.4765162121975606,
+    "len_before_mm": 2.240844535169035,
+    "spall_debris_mg": 4.7134335405705166
+   },
+   {
+    "eot_h": 17.0,
+    "len_after_mm": 2.7369736958636035,
+    "len_before_mm": 2.4765162121975606,
+    "spall_debris_mg": 5.20914967332086
+   },
+   {
+    "eot_h": 18.0,
+    "len_after_mm": 3.0248237322064773,
+    "len_before_mm": 2.7369736958636035,
+    "spall_debris_mg": 5.757000726857477
+   },
+   {
+    "eot_h": 19.0,
+    "len_after_mm": 3.342947221139639,
+    "len_before_mm": 3.0248237322064773,
+    "spall_debris_mg": 6.3624697786632405
+   },
+   {
+    "eot_h": 20.0,
+    "len_after_mm": 3.6945280494653305,
+    "len_before_mm": 3.342947221139639,
+    "spall_debris_mg": 7.031616566513828
+   },
+   {
+    "eot_h": 21.0,
+    "len_after_mm": 4.083084956283831,
+    "len_before_mm": 3.6945280494653305,
+    "spall_debris_mg": 7.7711381363700225
+   },
+   {
+    "eot_h": 22.0,
+    "len_after_mm": 4.512506749717068,
+    "len_before_mm": 4.083084956283831,
+    "spall_debris_mg": 8.588435868664735
+   },
+   {
+    "eot_h": 23.0,
+    "len_after_mm": 4.98709122740737,
+    "len_before_mm": 4.512506749717068,
+    "spall_debris_mg": 9.491689553806031
+   },
+   {
+    "eot_h": 24.0,
+    "len_after_mm": 5.511588190320811,
+    "len_before_mm": 4.98709122740737,
+    "spall_debris_mg": 10.489939258268832
+   },
+   {
+    "eot_h": 25.0,
+    "len_after_mm": 6.091246980351749,
+    "len_before_mm": 5.511588190320811,
+    "spall_debris_mg": 11.593175800618754
+   },
+   {
+    "eot_h": 26.0,
+    "len_after_mm": 6.73186901750086,
+    "len_before_mm": 6.091246980351749,
+    "spall_debris_mg": 12.812440742982202
+   },
+   {
+    "eot_h": 27.0,
+    "len_after_mm": 7.4398658624364336,
+    "len_before_mm": 6.73186901750086,
+    "spall_debris_mg": 14.15993689871147
+   },
+   {
+    "eot_h": 28.0,
+    "len_after_mm": 8.222323385548544,
+    "len_before_mm": 7.4398658624364336,
+    "spall_debris_mg": 15.649150462242206
+   }
+  ]
+ }
+}

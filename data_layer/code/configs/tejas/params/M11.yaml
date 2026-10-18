@@ -1,0 +1,86 @@
+# M11 Fault injection and propagation (architecture §6 M11, §9.2-9.4; W1.5). Onset rates, per-event
+# probabilities, Markov intermittents, latent maintenance-induced defects and fault magnitudes referenced by
+# configs/tejas/faults/catalogue.yaml. Evidence: report §9 (R§9); research notes [N:FD] faults_and_degradation.md,
+# [N:TFG] texture_and_fault_gap_closure.md, indian_fleet_platform_relevance.md [N:IFP].
+format: phalanx.params/1
+module: M11
+sets:
+  shocks:
+    bird_strike_rate:
+      value: 4.76e-4
+      units: 1/hour
+      description: IAF bird-strike incidents per flight hour (357 incidents 2010-13 over ≈2.5 lakh FH/yr x 3 yr)
+      evidence: {tag: DIRECT, source: "N:IFP: CAG 34/2014 p. 92 (357 bird-strike incidents 2010-13); iaf_usage_and_validation_gap_closure.md (≈2.4-2.6 lakh FH/yr) -> inference"}
+    engine_ingestion_fraction:
+      value: 0.25
+      units: "1"
+      description: Fraction of bird strikes ingested by the engine (single-engine fighter)
+      evidence: {tag: ASSUMPTION, source: "not public for IAF; R§9 shocks (Poisson with severity)"}
+      sweep: [0.05, 0.5]
+      assumption_id: A-W1.5-21
+    fod_severity_sigma:
+      value: 0.6
+      units: "1"
+      description: Log-normal sigma of FOD/bird severity (median 1)
+      evidence: {tag: ASSUMPTION, source: "R§9: Poisson with severity distribution; distribution not public"}
+      sweep: [0.3, 1.2]
+      assumption_id: A-W1.5-21
+    fod_eta_step:
+      value: -0.01
+      units: "1"
+      description: Fan efficiency step per unit FOD severity
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #6 (abrupt Γ/η shift; magnitude not given)"}
+      sweep: [-0.03, -0.003]
+      assumption_id: A-W1.5-21
+    fod_flow_step:
+      value: -0.01
+      units: "1"
+      description: Fan flow-capacity step per unit FOD severity
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #6"}
+      sweep: [-0.03, -0.003]
+      assumption_id: A-W1.5-21
+    fod_hpc_step:
+      value: -0.005
+      units: "1"
+      description: HPC efficiency step per unit FOD severity (downstream damage)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #6 (comp and turb damage)"}
+      sweep: [-0.02, 0.0]
+      assumption_id: A-W1.5-21
+    pop_stall_rate: {value: 1.0e-4, units: 1/hour, description: Pop-stall rate per flight hour (inlet distortion at high AoA/yaw), evidence: {tag: ASSUMPTION, source: "N:TFG (c) #1 (only at AoA > 70° with high yaw rate); no rate"}, sweep: [0.0, 1.0e-3], assumption_id: A-W1.5-20}
+    flameout_rate: {value: 2.0e-5, units: 1/hour, description: Flameout rate per flight hour (all causes), evidence: {tag: ASSUMPTION, source: "N:TFG (c) #16 (signature only); IAF accident rate 0.22-0.28 per 10,000 FH bounds catastrophic outcomes (iaf_usage_and_validation_gap_closure.md)"}, sweep: [2.0e-6, 2.0e-4], assumption_id: A-W1.5-20}
+    bleed_leak_rate: {value: 2.0e-5, units: 1/hour, description: Bleed leak onset rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #17 (signature only)"}, sweep: [2.0e-6, 2.0e-4], assumption_id: A-W1.5-20}
+    oil_loss_rate: {value: 1.0e-5, units: 1/hour, description: Engine oil loss onset rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #16 (Tejas 2024 event, cause conflict App. A4)"}, sweep: [1.0e-6, 1.0e-4], assumption_id: A-W1.5-20}
+    fohe_crack_rate: {value: 5.0e-6, units: 1/hour, description: Heat-exchanger weld crack rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #19 (single AIB case)"}, sweep: [5.0e-7, 5.0e-5], assumption_id: A-W1.5-20}
+    accum_leak_rate: {value: 5.0e-5, units: 1/hour, description: Accumulator gas-loss step rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #29 (rate ≥1 %/yr lower bound only)"}, sweep: [5.0e-6, 5.0e-4], assumption_id: A-W1.5-20}
+    fuel_probe_contam_rate: {value: 5.0e-5, units: 1/hour, description: Fuel-probe contamination step rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #40 (magnitude only)"}, sweep: [5.0e-6, 5.0e-4], assumption_id: A-W1.5-20}
+    partial_power_rate: {value: 1.0e-5, units: 1/hour, description: Partial electrical power disruption rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #27 (single AIB case)"}, sweep: [1.0e-6, 1.0e-4], assumption_id: A-W1.5-20}
+    gen_diode_rate: {value: 2.0e-5, units: 1/hour, description: Generator rectifier diode fault rate per flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #30 (signatures only)"}, sweep: [2.0e-6, 2.0e-4], assumption_id: A-W1.5-20}
+    fcs_dropout_rate: {value: 1.0e-4, units: 1/hour, description: FCS single-channel dropout rate per flight hour, evidence: {tag: ASSUMPTION, source: "architecture §9.2 Tejas FCS channel dropout (no rate)"}, sweep: [1.0e-5, 1.0e-3], assumption_id: A-W1.5-20}
+    lru_failure_rate: {value: 3.0e-4, units: 1/hour, description: "Hard failure rate per avionics LRU per flight hour (MTBF ~3,300 h)", evidence: {tag: ASSUMPTION, source: "N:TFG Q9 (BIT/NFF statistics; LRU MTBF not public)"}, sweep: [5.0e-5, 2.0e-3], assumption_id: A-W1.5-20}
+    sensor_fault_rate: {value: 1.0e-5, units: 1/hour, description: Hard sensor-fault rate per catalogued sensor mode per flight hour, evidence: {tag: ASSUMPTION, source: "N:FD §4 (sensor faults common-mode/intermittent, often unflagged; rates not public)"}, sweep: [1.0e-6, 1.0e-4], assumption_id: A-W1.5-25}
+    ad_moisture_rate: {value: 5.0e-6, units: 1/hour, description: Common-mode air-data moisture event rate per flight hour at humidity 1, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #30 (weather-triggered; single case)"}, sweep: [5.0e-7, 5.0e-5], assumption_id: A-W1.5-25}
+    bus_spike_rate: {value: 2.3e-8, units: 1/hour, description: Corrupted-word spike episodes per flight hour (3 in 128 M unit-h), evidence: {tag: "TRANSFER: A330 (ATSB AO-2008-070)", source: "N:FD §9(b) #33"}}
+  per_event:
+    ab_no_light_p: {value: 0.002, units: "1", description: AB no-light probability per AB light request, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #6 (criteria only); F404-402 slow/no-light criteria (f404_in20_engine_model.md)"}, sweep: [2.0e-4, 0.02], assumption_id: A-W1.5-20}
+    ab_blowout_p: {value: 5.0e-4, units: "1", description: AB rumble/blowout probability per AB light, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #7 (signature only)"}, sweep: [5.0e-5, 5.0e-3], assumption_id: A-W1.5-20}
+    quickfill_stall_p: {value: 1.0e-4, units: "1", description: "Quickfill stall probability per AB light (1/994 per segment-1 light x ≈0.1 high-altitude low-speed share)", evidence: {tag: ASSUMPTION, source: "N:TFG (c) #8: 1 per 994 segment-1 lights [TRANSFER: F100]; share of qualifying lights not public"}, sweep: [1.0e-5, 1.0e-3], assumption_id: A-W1.5-20}
+    hung_start_p: {value: 0.002, units: "1", description: Hung-start probability per engine start, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #14 (signature); f404 notes Q8 (relight hung start case)"}, sweep: [2.0e-4, 0.02], assumption_id: A-W1.5-20}
+    hot_start_p: {value: 0.001, units: "1", description: Hot-start probability per engine start, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #15"}, sweep: [1.0e-4, 0.01], assumption_id: A-W1.5-20}
+    jfs_cold_fail_p: {value: 0.2, units: "1", description: JFS start-failure probability per cold-soaked start, evidence: {tag: ASSUMPTION, source: "f404_in20_engine_model.md Q8: GTSU-110 failed to prove 3 consecutive starts at Leh (2013-14) [DIRECT qualitative]"}, sweep: [0.05, 0.5], assumption_id: A-W1.5-20}
+  markov:
+    intermittent_p_on: {value: 0.01, units: "1", description: Per-sortie probability an intermittent connector fault becomes active (humidity 1), evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #34 (two-state Markov, environment-dependent)"}, sweep: [0.001, 0.05], assumption_id: A-W1.5-23}
+    intermittent_p_off: {value: 0.83, units: "1", description: Per-sortie probability an active intermittent clears (recurrence on the next flight 14-21 %), evidence: {tag: "TRANSFER: RADC-TR-81-220 field study", source: "N:TFG Q9: intermittents recur on the next flight 14-21 % of the time"}}
+    nozzle_lc_p_on: {value: 0.001, units: "1", description: Per-sortie probability of nozzle-loop limit cycling, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #9 (intermittent; marginal loop stability)"}, sweep: [1.0e-4, 0.01], assumption_id: A-W1.5-23}
+    nozzle_lc_p_off: {value: 0.5, units: "1", description: Per-sortie probability nozzle limit cycling stops, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #9"}, sweep: [0.2, 0.9], assumption_id: A-W1.5-23}
+    binding_p_on: {value: 0.0005, units: "1", description: Per-sortie probability of intermittent control binding, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #26 (single AIB)"}, sweep: [5.0e-5, 0.005], assumption_id: A-W1.5-23}
+  latent:
+    latent_p_engine: {value: 0.002, units: "1", description: Probability an engine maintenance action injects a latent defect of a given mode, evidence: {tag: ASSUMPTION, source: "R§9 / N:FD §5: ≥7 maintenance-induced military cases; per-action probability not public"}, sweep: [2.0e-4, 0.02], assumption_id: A-W1.5-22}
+    latent_p_airframe: {value: 0.002, units: "1", description: Probability an airframe/actuator maintenance action injects a latent defect of a given mode, evidence: {tag: ASSUMPTION, source: "N:FD §5 (AIB 88-0477 mis-installed check valves)"}, sweep: [2.0e-4, 0.02], assumption_id: A-W1.5-22}
+    latent_p_servicing: {value: 0.001, units: "1", description: Probability a servicing action injects a latent defect of a given mode, evidence: {tag: ASSUMPTION, source: "N:FD §5 (AIB 19-5535 water-contaminated servicing)"}, sweep: [1.0e-4, 0.01], assumption_id: A-W1.5-22}
+    latent_p_software: {value: 0.01, units: "1", description: Probability a software load carries a latent configuration defect of a given mode, evidence: {tag: ASSUMPTION, source: "architecture §9.2 (brake-software configuration defect, Tejas)"}, sweep: [0.001, 0.05], assumption_id: A-W1.5-22}
+    latent_latency_median: {value: 50.0, units: hour, description: Median latency (flight hours) of a maintenance-induced latent defect, evidence: {tag: ASSUMPTION, source: "N:FD §5: latencies one flight (MEC) to 591 h (air seal) to ≈6 years (fairing) [DIRECT cases]"}, sweep: [5.0, 500.0], assumption_id: A-W1.5-22}
+    latent_latency_sigma: {value: 2.0, units: "1", description: "Log-normal sigma of latent-defect latency (5-95 % ≈ 2-1,300 FH at the median)", evidence: {tag: ASSUMPTION, source: "N:FD §5 (spread of documented latencies)"}, sweep: [1.0, 3.0], assumption_id: A-W1.5-22}
+  sensor_faults:
+    sensor_intermittent_rate: {value: 0.2, units: 1/s, description: "Mean state changes per second of an intermittent sensor fault (M12 two-state Markov dropout; default when the mode gives none)", evidence: {tag: ASSUMPTION, source: "N:FD §4 (intermittent on/off rate primitive; rates not public)"}, sweep: [0.02, 2.0], assumption_id: A-W1.5-25}
+    sensor_intermittent_duty: {value: 0.1, units: "1", description: Long-run dropout fraction of an intermittent sensor fault (default), evidence: {tag: ASSUMPTION, source: "N:FD §4; N:FD §9(b) #31 (intermittent out-of-limits)"}, sweep: [0.02, 0.5], assumption_id: A-W1.5-25}
+    slow_response_factor: {value: 5.0, units: "1", description: Time-constant multiplier of a slow-response sensor fault, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #37 (lag primitive); fouled thermocouple"}, sweep: [2.0, 20.0], assumption_id: A-W1.5-25}

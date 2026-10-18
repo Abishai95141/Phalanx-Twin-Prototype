@@ -1,0 +1,38 @@
+# Rate groups (architecture §8; tejas_avionics_and_parameter_inventory.md Q7).
+# kind: periodic (rate_hz > 0), lru_frame (rate taken from the acquiring LRU's frame_hz), event (on change),
+#       sortie (per sortie), inspection (per inspection), display (cockpit display, not recorded), media (video).
+# stage: acquisition | bus | record (a group may serve more than one stage).
+# band_hz is the evidenced band; rate_hz is the nominal value used by the build (swept inside band_hz when the
+# rule is an ASSUMPTION).
+format: phalanx.dictionary.rate_groups/1
+groups:
+  FCS80: {kind: periodic, rate_hz: 80, stages: [acquisition], domain: DFCC, prov: R-RATE-FCS}
+  FCS40: {kind: periodic, rate_hz: 40, stages: [producer], domain: DFCC, prov: R-RATE-FCS}
+  FCS20: {kind: periodic, rate_hz: 20, stages: [producer], domain: DFCC, prov: R-RATE-FCS}
+  FCS10: {kind: periodic, rate_hz: 10, stages: [producer], domain: DFCC, prov: R-RATE-FCS}
+  FADEC-INT: {kind: periodic, rate_hz: 60, band_hz: [50, 67], stages: [acquisition], domain: FADEC, prov: R-RATE-FADEC}
+  LRU-INT: {kind: lru_frame, stages: [acquisition], domain: owning LRU, prov: R-RATE-LRU}
+  LRU-INT-SLOW: {kind: periodic, rate_hz: 10, band_hz: [1, 10], stages: [acquisition], domain: owning LRU, prov: R-RATE-LRU}
+  LRU-INT-INS: {kind: periodic, rate_hz: 100, band_hz: [100, 2000], stages: [acquisition], domain: INGPS, prov: R-RATE-LRU}
+  LRU-INT-MODEL: {kind: periodic, rate_hz: 200, band_hz: [200, 500], stages: [acquisition], domain: owning LRU, prov: R-RATE-LRU}
+  HF: {kind: periodic, rate_hz: 10000, band_hz: [2500, 10000], stages: [acquisition], domain: vibration front end, prov: R-RATE-HF}
+  FTI: {kind: periodic, rate_hz: 64, band_hz: [64, 800], stages: [acquisition, bus, record], domain: FTI_DAS, prov: R-RATE-FTI}
+  ECMS10: {kind: periodic, rate_hz: 10, stages: [acquisition, record], domain: ECMS, prov: R-RATE-ECMS}
+  ECMS1: {kind: periodic, rate_hz: 1, stages: [record], domain: ECMS, prov: R-RATE-ECMS}
+  ECMS-TO: {kind: event, window_s: [6, 10], stages: [record], domain: ECMS, prov: R-RATE-ECMS}
+  AV50: {kind: periodic, rate_hz: 50, stages: [bus], domain: bus controller, prov: R-RATE-AV}
+  AV25: {kind: periodic, rate_hz: 25, stages: [bus], domain: bus controller, prov: R-RATE-AV}
+  AV12.5: {kind: periodic, rate_hz: 12.5, stages: [bus], domain: bus controller, prov: R-RATE-AV}
+  AV6.25: {kind: periodic, rate_hz: 6.25, stages: [bus], domain: bus controller, prov: R-RATE-AV}
+  SLOW1: {kind: periodic, rate_hz: 1, stages: [bus], domain: bus controller, prov: R-RATE-SLOW}
+  CDR16: {kind: periodic, rate_hz: 16, stages: [record], domain: CDR, prov: R-RATE-CDR}
+  CDR8: {kind: periodic, rate_hz: 8, stages: [record], domain: CDR, prov: R-RATE-CDR}
+  CDR4: {kind: periodic, rate_hz: 4, stages: [record], domain: CDR, prov: R-RATE-CDR}
+  CDR1: {kind: periodic, rate_hz: 1, stages: [record], domain: CDR, prov: R-RATE-CDR}
+  HUMS: {kind: periodic, rate_hz: 1, band_hz: [1, 10], stages: [record], domain: HUMS_DAU, prov: R-RATE-HUMS}
+  LOG: {kind: event, stages: [record], domain: OAC maintenance log, prov: R-REC-DEFAULT}
+  DISPLAY: {kind: display, stages: [record], domain: cockpit, prov: R-REC-DEFAULT}
+  EVT: {kind: event, stages: [acquisition, bus, record], domain: owning LRU, prov: R-RATE-EVT}
+  SORTIE: {kind: sortie, stages: [acquisition, bus, record], domain: ground, prov: R-RATE-EVT}
+  INSP: {kind: inspection, stages: [acquisition, bus, record], domain: ground, prov: R-RATE-EVT}
+  VIDEO: {kind: media, stages: [acquisition, bus, record], domain: DVR, prov: P-DVR}

@@ -1,0 +1,51 @@
+# Sink table (AD-25: separate streams per sink; architecture §10 "sink fragmentation is preserved").
+# kind: display | recorder | download | test | consumer | record | ground
+# default_group is used when the inventory flags a sink but names no record rate group (rule R-REC-DEFAULT).
+format: phalanx.dictionary.sinks/1
+sinks:
+  COCKPIT:
+    name: Cockpit displays, cautions and audio (MFD, HUD, GUH, CWS)
+    kind: display
+    default_group: DISPLAY
+    evidence: {tag: DIRECT, source: "parameter_inventory.csv sink_cockpit; tejas.gov.in Systems (archived)"}
+  CDR:
+    name: Crash data recorder (continuous loop, bus monitor)
+    kind: recorder
+    default_group: CDR1
+    lru: CDR
+    evidence: {tag: DIRECT, source: "parameter_inventory.csv sink_crash_recorder; Raveendran & Prabhu RTO-MP-SCI-162-14"}
+  ECMS_HUMS:
+    name: ECMS log and Mk1A HUMS DAU
+    kind: recorder
+    default_group: HUMS
+    default_group_engine: ECMS1
+    lru: HUMS_DAU
+    evidence: {tag: DIRECT, source: "parameter_inventory.csv sink_ecms_hums; ADA Propulsion page; ADU HUMS DAU order"}
+  MPDRU:
+    name: Maintenance download (OAC maintenance log / MPDRU function)
+    kind: download
+    default_group: LOG
+    lru: OAC
+    evidence: {tag: DIRECT, source: "parameter_inventory.csv sink_mpdru_maint_download; ADA AR 2015-16 (MPDRU line)"}
+  FTI:
+    name: Flight-test instrumentation (test aircraft only)
+    kind: test
+    default_group: FTI
+    lru: FTI_DAS
+    evidence: {tag: DIRECT, source: "parameter_inventory.csv sink_fti_only; ADA NFTC/facilities"}
+  INTERNAL:
+    name: Consumed inside an LRU function (voter, signal validation, control law); never leaves the LRU
+    kind: consumer
+    evidence: {tag: DIRECT, source: "architecture §7 (s_valid = V(s_acq, lanes, model)); Kala JOAST 67(2A) median voting"}
+  MAINT_RECORD:
+    name: Ground maintenance record (e-MMS-like; maint.records topic)
+    kind: record
+    default_group: INSP
+    lru: GROUND
+    evidence: {tag: "TRANSFER: NAMP/S5000F record practice", source: "parameter_inventory.csv bus 'maintenance record (e-MMS-like)'; architecture §10"}
+  GROUND:
+    name: Computed on the ground after download (sortie products, usage counters)
+    kind: ground
+    default_group: SORTIE
+    lru: GROUND
+    evidence: {tag: "TRANSFER: record linkage practice", source: "parameter_inventory.csv USAGE.TAC 'N (computed after download)'; architecture §12 usage.counters"}

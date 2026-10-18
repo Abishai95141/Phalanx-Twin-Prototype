@@ -1,0 +1,9 @@
+node_modules/
+.venv/
+tools/**/node_modules/
+renders/*
+*.mp4
+*.mov
+*.webm
+!brand/**
+!renders/phalanx_twin_film.mp4

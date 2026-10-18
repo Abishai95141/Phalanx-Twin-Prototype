@@ -1,0 +1,526 @@
+# M10 Health state, usage damage and degradation (architecture §6 M10, §9.2; W1.5).
+# Evidence: report §9 (R§9); research_notes faults_and_degradation.md §5, §9(b-c) [N:FD];
+# texture_and_fault_gap_closure.md synthesis (c) [N:TFG]; f404_in20_engine_model.md Q9-Q10 [N:F404].
+# Usage units: time drivers in seconds (SI after loading), counts per flight/landing/cycle are dimensionless.
+format: phalanx.params/1
+module: M10
+sets:
+  gaspath:
+    fouling_drift:
+      value: 2.0e-5
+      units: 1/hour
+      description: Fouling Wiener drift (efficiency loss per engine-operating hour at dust index 1); ~1 % over ~500 EOT h
+      evidence: {tag: ASSUMPTION, source: "R§9 / N:FD §9(b) #1: ~1 % Γ and η for roughness 1.8->13 µm over 100s-1,000s h (Kurz & Brun) [TRANSFER anchor]; rate per hour not public"}
+      sweep: [5.0e-6, 1.0e-4]
+      assumption_id: A-W1.5-2
+    fouling_sigma:
+      value: 1.0e-4
+      units: 1/hour**0.5
+      description: Fouling Wiener diffusion per sqrt(EOT hour) at dust index 1 (CV ~0.2 at 500 h)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5 (Wiener-with-drift form); magnitude not public"}
+      sweep: [2.0e-5, 4.0e-4]
+      assumption_id: A-W1.5-2
+    fouling_flow_ratio:
+      value: 1.0
+      units: "1"
+      description: Flow-capacity loss per unit efficiency loss for fouling (Γ/η)
+      evidence: {tag: "TRANSFER: Kurz & Brun GT2011-45012", source: "N:FD §9(b) #1 (~1 % Γ and ~1 % η)"}
+    wash_rho:
+      value: 0.8
+      units: "1"
+      description: Fraction of recoverable fouling removed by an engine wash
+      evidence: {tag: ASSUMPTION, source: "architecture §9.2 (partial reset by wash, fraction ρ); N:F404 Q10 (no F404 wash-recovery magnitude found)"}
+      sweep: [0.5, 0.95]
+      assumption_id: A-W1.5-3
+    erosion_rate_hpc:
+      value: 7.142857e-6
+      units: "1"
+      description: HPC efficiency erosion mean rate per engine flight before the acceleration (commercial reference, before severity S); derived so that 3,000 flights at this rate plus 2,000 at hpc_accel_factor (2) times it give ProDiMES's -5 % at 5,000 flights (W2.5 B7-ENG-ERO-RATE found the W1.5 value 1e-5 gave -6.9 % with the acceleration; analysis/faults_b7b8/DEVIATIONS.md D2)
+      evidence: {tag: "TRANSFER: ProDiMES fleet", source: "N:FD §9(b) #2: HPC η ≈ -5 %, Γ ≈ -9 % at 5,000 flights, HPC accelerating after about 3,000 flights (ProDiMES TM-2010-215840 Fig. 6, read approximately)"}
+    erosion_rate_fan:
+      value: 3.571429e-6
+      units: "1"
+      description: Fan efficiency erosion mean rate per engine flight (0.5 x HPC)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #1-2 give the direction only; fan rate not public"}
+      sweep: [2.5e-6, 1.0e-5]
+      assumption_id: A-W1.5-4
+    erosion_rate_hpt:
+      value: 8.67e-6
+      units: "1"
+      description: HPT efficiency erosion mean rate per engine cycle
+      evidence: {tag: "TRANSFER: C-MAPSS (Saxena 2008)", source: "N:FD §9(b) #4: HPT η -2.6 %, Γ +1.8 % at 3,000 cycles"}
+    erosion_rate_lpt:
+      value: 2.67e-6
+      units: "1"
+      description: LPT efficiency erosion mean rate per engine cycle (0.8 % over 3,000 cycles, mid of the range)
+      evidence: {tag: "TRANSFER: C-MAPSS (Saxena 2008)", source: "N:FD §9(b) #5: LPT η -0.5 % to -1.1 % at 3,000-6,000 cycles"}
+    erosion_flow_ratio_fan:
+      value: 1.0
+      units: "1"
+      description: Fan flow-capacity loss per unit efficiency loss for erosion
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #2 (direction Γ down with η)"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.5-4
+    erosion_flow_ratio_hpc:
+      value: 1.8
+      units: "1"
+      description: HPC flow-capacity loss per unit efficiency loss (Γ/η = 9/5)
+      evidence: {tag: "TRANSFER: ProDiMES fleet", source: "N:FD §9(b) #2: η -5 %, Γ -9 % at 5,000 flights"}
+    erosion_flow_ratio_hpt:
+      value: -0.692
+      units: "1"
+      description: HPT flow change per unit efficiency loss (throat area grows, so flow increases; +1.8 / -2.6)
+      evidence: {tag: "TRANSFER: C-MAPSS (Saxena 2008)", source: "N:FD §9(b) #4: HPT η -2.6 %, Γ +1.8 % at 3,000 cycles"}
+    erosion_flow_ratio_lpt:
+      value: -0.5
+      units: "1"
+      description: LPT flow change per unit efficiency loss (Γ up, small)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #5 (ηLPT down, ΓLPT up small)"}
+      sweep: [-1.0, 0.0]
+      assumption_id: A-W1.5-4
+    erosion_cv:
+      value: 0.3
+      units: "1"
+      description: Gamma-process coefficient of variation of erosion at erosion_ref_flights
+      evidence: {tag: ASSUMPTION, source: "N:FD §5 (gamma process form); fleet spread of rates not public for fighters"}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.5-4
+    erosion_ref_flights:
+      value: 1000
+      units: "1"
+      description: Reference usage (flights) at which erosion_cv applies
+      evidence: {tag: ASSUMPTION, source: "convention for the gamma shape parameter"}
+      sweep: [500, 5000]
+      assumption_id: A-W1.5-4
+    severity_s:
+      value: 1.75
+      units: "1"
+      description: Fighter severity factor S on commercial erosion/clearance rates
+      evidence: {tag: ASSUMPTION, source: "architecture §9.2 (S = 1.5-2, swept); R§9 (~50 % F404 life cut)"}
+      sweep: [1.5, 2.0]
+      assumption_id: A-W1.5-1
+    hpc_accel_after:
+      value: 3000
+      units: "1"
+      description: Flights after which HPC erosion accelerates
+      evidence: {tag: "TRANSFER: commercial fleets (Sallee)", source: "R§9: HPC accelerates after ~3,000 cycles; N:FD §9(b) #2"}
+    hpc_accel_factor:
+      value: 2.0
+      units: "1"
+      description: HPC erosion rate multiplier after hpc_accel_after flights
+      evidence: {tag: ASSUMPTION, source: "R§9 gives the onset (~3,000 cycles) not the magnitude"}
+      sweep: [1.0, 3.0]
+      assumption_id: A-W1.5-4
+    erosion_dust_exponent:
+      value: 1.0
+      units: "1"
+      description: Erosion rate scales as dust_index**exponent (particles > 10 µm erode)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5: particle size and filtration govern fouling and erosion rates (Kurz & Brun); no Indian dust-to-erosion data"}
+      sweep: [0.5, 2.0]
+      assumption_id: A-W1.5-13
+    rubin_c0:
+      value: 0.010
+      units: "1"
+      description: Rub-in step on the first flight after a build (TSFC-equivalent loss)
+      evidence: {tag: "TRANSFER: JT9D (Sallee 1978)", source: "R§9: ≈1 % TSFC on flight 1"}
+    rubin_c1:
+      value: 0.005
+      units: "1"
+      description: Additional rub-in approached exponentially after the first flight
+      evidence: {tag: "TRANSFER: JT9D (Sallee 1978)", source: "R§9: ≈1.5 % by ~200 flights"}
+    rubin_tau:
+      value: 67.0
+      units: "1"
+      description: Rub-in time constant in flights (95 % of c1 by 200 flights)
+      evidence: {tag: "TRANSFER: JT9D (Sallee 1978)", source: "R§9 (≈1.5 % by ~200 flights) solved for τ"}
+    rubin_w_hpc:
+      value: 0.4
+      units: "1"
+      description: Share of rub-in loss on HPC efficiency (per unit TSFC-equivalent)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #3: tip clearance lowers ηT and ηc; split not public"}
+      sweep: [0.2, 0.6]
+      assumption_id: A-W1.5-5
+    rubin_w_hpt:
+      value: 0.6
+      units: "1"
+      description: Share of rub-in loss on HPT efficiency (per unit TSFC-equivalent)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #3 (+1 °C EGT and +0.1 % SFC per 0.001 in HPT clearance)"}
+      sweep: [0.4, 0.8]
+      assumption_id: A-W1.5-5
+    onset_energy_mean:
+      value: 1500
+      units: hour
+      description: Mean usage-energy threshold for abnormal HPT degradation onset (EOT-hour equivalents)
+      evidence: {tag: ASSUMPTION, source: "N-CMAPSS form (Arias Chao 2021, N:FD §5); fighter scale not public"}
+      sweep: [500, 4000]
+      assumption_id: A-W1.5-6
+    onset_energy_cv:
+      value: 0.2
+      units: "1"
+      description: CV of the per-serial Gaussian onset threshold (material variability)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5: Gaussian-distributed component threshold (N-CMAPSS); σ not given"}
+      sweep: [0.1, 0.4]
+      assumption_id: A-W1.5-6
+    onset_tamp_weight:
+      value: 3.0
+      units: "1"
+      description: Usage energy = EOT + weight x TAMP (hot time counts more)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5: E(t) = ∫P(t)dt (excitation energy); fighter power weighting not public"}
+      sweep: [1.0, 6.0]
+      assumption_id: A-W1.5-6
+    onset_a_lo: {value: 0.001, units: "1", description: Lower bound of the per-serial abnormal rate a, evidence: {tag: "TRANSFER: N-CMAPSS (Arias Chao 2021)", source: "N:FD §5: a ~ U(0.001, 0.003)"}}
+    onset_a_hi: {value: 0.003, units: "1", description: Upper bound of the per-serial abnormal rate a, evidence: {tag: "TRANSFER: N-CMAPSS (Arias Chao 2021)", source: "N:FD §5: a ~ U(0.001, 0.003)"}}
+    onset_b_lo: {value: 1.4, units: "1", description: Lower bound of the per-serial abnormal exponent b, evidence: {tag: "TRANSFER: N-CMAPSS (Arias Chao 2021)", source: "N:FD §5: b ~ U(1.4, 1.6)"}}
+    onset_b_hi: {value: 1.6, units: "1", description: Upper bound of the per-serial abnormal exponent b, evidence: {tag: "TRANSFER: N-CMAPSS (Arias Chao 2021)", source: "N:FD §5: b ~ U(1.4, 1.6)"}}
+    onset_tau:
+      value: 10.0
+      units: "1"
+      description: Fighter flights per N-CMAPSS accelerated cycle (rescaling of t in exp(a t^b))
+      evidence: {tag: ASSUMPTION, source: "R§9: 'rescaled to fighter cycles'; N-CMAPSS ages are accelerated (N:FD §5)"}
+      sweep: [3.0, 30.0]
+      assumption_id: A-W1.5-6
+    onset_amplitude:
+      value: 0.05
+      units: "1"
+      description: Component-delta amplitude A of the abnormal law A (exp(a (t/τ)^b) - 1) on HPT efficiency
+      evidence: {tag: ASSUMPTION, source: "N-CMAPSS gives the law not the fighter scale (N:FD §5)"}
+      sweep: [0.02, 0.10]
+      assumption_id: A-W1.5-6
+    init_max:
+      value: 0.01
+      units: "1"
+      description: Per-serial initial (manufacturing) health loss ~ U(0, init_max) on each delta
+      evidence: {tag: "TRANSFER: N-CMAPSS (Arias Chao 2021)", source: "N:FD §5: initial degradation U(0, 0.01) per sub-component"}
+    coking_rate:
+      value: 1.0e-6
+      units: 1/hour
+      description: Fuel-nozzle coking mean rate (combustor efficiency loss per EOT hour)
+      evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.ENG.FUEL_NOZZLE (no rate published); N:FD §9(b) #38 gap"}
+      sweep: [2.0e-7, 5.0e-6]
+      assumption_id: A-W1.5-7
+    nozzle_area_rate:
+      value: 5.0e-6
+      units: 1/hour
+      description: Nozzle effective-area growth from flap/seal wear per EOT hour
+      evidence: {tag: ASSUMPTION, source: "N:TFG (c) #9-11 (nozzle hardware: no gas-path rate published)"}
+      sweep: [1.0e-6, 2.0e-5]
+      assumption_id: A-W1.5-7
+    overhaul_residue:
+      value: 0.1
+      units: "1"
+      description: Fraction of a module's erosion left after overhaul (non-recoverable residue)
+      evidence: {tag: ASSUMPTION, source: "R§9: overhaul resets the module but leaves non-recoverable residue; JT9D shop visit recovered ≈20 % of TSFC loss (engine level)"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W1.5-16
+  mechanical:
+    bearing_weibull_shape:
+      value: 1.5
+      units: "1"
+      description: Weibull shape of main-shaft bearing spall initiation (wear-out)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5 (Weibull initiation); FEMTO rig lives vary 7x"}
+      sweep: [1.0, 3.0]
+      assumption_id: A-W1.5-8
+    bearing_weibull_scale:
+      value: 8000
+      units: hour
+      description: Weibull characteristic life of spall initiation (EOT hours)
+      evidence: {tag: ASSUMPTION, source: "R§9: Su-30 bearing onset ≈500 FH (≈900 FH after modification) is the pessimistic IAF bound [DIRECT]; F404 rate not public"}
+      sweep: [500, 20000]
+      assumption_id: A-W1.5-8
+    bearing_l0:
+      value: 0.5
+      units: mm
+      description: Spall length at initiation
+      evidence: {tag: ASSUMPTION, source: "N:TFG (c) #22 (incubation -> linear -> knee)"}
+      sweep: [0.1, 1.0]
+      assumption_id: A-W1.5-8
+    bearing_growth_rate:
+      value: 0.1
+      units: 1/hour
+      description: Exponential spall growth rate r (dL/dt = r L; 0.2 mm/h at L = 2 mm)
+      evidence: {tag: "TRANSFER: NASA TM-2011-217117", source: "R§9: growth 0.08-0.34 mm/h; N:TFG (c) #22"}
+    bearing_debris_per_length:
+      value: 20.0
+      units: mg/mm
+      description: Oil debris mass generated per mm of spall growth
+      evidence: {tag: "TRANSFER: NASA TM-2011-217117", source: "R§9: debris 2-50 mg per mm of spall"}
+    oil_fe_slope:
+      value: 4.5e-8
+      units: 1/hour
+      description: Normal oil Fe growth as a mass fraction per EOT hour (0.045 ppm/h)
+      evidence: {tag: "TRANSFER: JOAP 2013 / ARINC 1974", source: "N:TFG (c) #25: SOAP Fe slope 0.02-0.07 ppm/h normal"}
+    oil_fe_per_debris:
+      value: 5.0e-7
+      units: 1/mg
+      description: Oil Fe mass-fraction rise per mg of bearing debris (0.5 ppm/mg; abnormal 1-11 ppm/h while spalling)
+      evidence: {tag: ASSUMPTION, source: "N:TFG (c) #25 (1-11 ppm/h abnormal); mapping to debris mass not published"}
+      sweep: [1.0e-7, 2.0e-6]
+      assumption_id: A-W1.5-8
+    wear_debris_mean:
+      value: 0.4747
+      units: ug/hour
+      description: Healthy-wear ferrous filter debris rate (QFDA Fe), fleet mean of the per-engine rate; normal wear with no spall (W2.5, C25)
+      evidence: {tag: "TRANSFER: F404-400 (CF188)", source: "Bennett et al. 1996, QFDA Tbl I (26 CF188 filters): Fe mean 0.4747 ug/h, https://archive.org/details/DTIC_ADP010173 ; f404_in20_engine_model.md Q8. USN F/A-18 filters (38) give 6.11 ug/h with a different preparation method (conflict noted; the CF188 set is used, as the note reads the two as not comparable)"}
+    wear_debris_2sigma:
+      value: 1.6813
+      units: ug/hour
+      description: Two standard deviations of the per-engine healthy Fe rate across the fleet (Bennett's normal-wear limit is mean + 2 sigma); per-serial rate ~ gamma with this mean and sigma
+      evidence: {tag: "TRANSFER: F404-400 (CF188)", source: "Bennett et al. 1996, QFDA Tbl I: Fe 2 sigma 1.6813 ug/h (26 CF188 filters), https://archive.org/details/DTIC_ADP010173 ; f404_in20_engine_model.md Q8"}
+    wear_debris_cv:
+      value: 0.3
+      units: "1"
+      description: Within-engine CV of the healthy-wear debris collected over wear_debris_ref of operation (gamma-process increments per sortie)
+      evidence: {tag: ASSUMPTION, source: "Bennett 1996 gives filter-level (per-engine) rates only; within-engine scatter not published"}
+      sweep: [0.1, 1.0]
+      assumption_id: A-W2.5-1
+    wear_debris_ref:
+      value: 100
+      units: hour
+      description: Operating time at which wear_debris_cv applies (the CF 100 h SOAP/filter sampling interval)
+      evidence: {tag: ASSUMPTION, source: "CF SOAP interval 20/100 h (Schofield et al., AGARD-CP-448 paper 4; f404_in20_engine_model.md Q8)"}
+      sweep: [20, 500]
+      assumption_id: A-W2.5-1
+    crack_weibull_shape:
+      value: 3.0
+      units: "1"
+      description: Weibull shape of blade crack initiation (in TAC)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5 (Weibull initiation + Paris growth)"}
+      sweep: [1.5, 5.0]
+      assumption_id: A-W1.5-9
+    crack_weibull_scale:
+      value: 20000
+      units: "1"
+      description: Weibull characteristic initiation life of a blade crack (TAC)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #8 (latent HCF crack, no precursor); rate not public"}
+      sweep: [5000, 60000]
+      assumption_id: A-W1.5-9
+    crack_a0:
+      value: 0.1
+      units: mm
+      description: Crack length at initiation
+      evidence: {tag: ASSUMPTION, source: "N:FD §5 Paris growth form"}
+      sweep: [0.05, 0.5]
+      assumption_id: A-W1.5-9
+    paris_c:
+      value: 1.0e-11
+      units: m
+      description: Paris coefficient C (m per cycle per (MPa m^0.5)^m)
+      evidence: {tag: ASSUMPTION, source: "N:FD §5 Paris law da/dN = C ΔK^m; titanium/nickel order of magnitude"}
+      sweep: [1.0e-12, 1.0e-10]
+      assumption_id: A-W1.5-9
+    paris_m:
+      value: 3.0
+      units: "1"
+      description: Paris exponent m
+      evidence: {tag: "TRANSFER: Paris law", source: "N:FD §5: m ≈ 2-4"}
+    paris_dsigma:
+      value: 200
+      units: MPa
+      description: Stress range per counted N2 cycle at the crack site
+      evidence: {tag: ASSUMPTION, source: "N:FD §5; airfoil stress not public"}
+      sweep: [100, 400]
+      assumption_id: A-W1.5-9
+    crack_critical:
+      value: 5.0
+      units: mm
+      description: Blade crack length at which the blade liberates (M10 triggers fault mode FM.ENG.BLADE_LOSS)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #8 (HCF crack -> blade loss; critical size not public)"}
+      sweep: [1.0, 10.0]
+      assumption_id: A-W1.5-9
+    spall_critical:
+      value: 8.0
+      units: mm
+      description: Spall length at which the bearing fails (M10 triggers fault mode FM.ENG.BEARING_FAILURE)
+      evidence: {tag: ASSUMPTION, source: "N:TFG (c) #22 (incubation -> linear -> knee; chip light hours to tens of hours before the knee)"}
+      sweep: [3.0, 15.0]
+      assumption_id: A-W1.5-8
+    seal_wear_rate:
+      value: 2.5e-4
+      units: 1/hour
+      description: Oil-seal leak growth (fraction of the 0.355 L/h limit per EOT hour)
+      evidence: {tag: ASSUMPTION, source: "N:TFG (c) #26: oil consumption limit 0.355 L/h (F110); growth rate not public"}
+      sweep: [5.0e-5, 1.0e-3]
+      assumption_id: A-W1.5-11
+    vg_sigma:
+      value: 0.005
+      units: 1/hour**0.5
+      description: VG schedule-error random walk (fraction of 1 deg per sqrt EOT hour)
+      evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.ENG.VG_ACTUATION (linkage wear, feedback drift); no rate"}
+      sweep: [0.001, 0.02]
+      assumption_id: A-W1.5-11
+    ab_spraybar_rate:
+      value: 2.0e-5
+      units: "1"
+      description: AB spray-bar degradation per AB light
+      evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.ENG.AB_SPRAYBAR (not instrumented, no rate)"}
+      sweep: [5.0e-6, 1.0e-4]
+      assumption_id: A-W1.5-11
+    fadec_hw_rate:
+      value: 1.0e-4
+      units: "1"
+      description: FADEC electronics aging per flight (thermal cycle)
+      evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.ENG.FADEC_HW (BIT detects failures, not aging)"}
+      sweep: [2.0e-5, 5.0e-4]
+      assumption_id: A-W1.5-11
+    nozzle_hw_rate:
+      value: 6.25e-4
+      units: 1/hour
+      description: Nozzle hardware wear fraction per EOT hour (0.5 at ~800 h, the nozzle inspection interval)
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #12: cracks at ~700-900 h; 800-EFH nozzle inspection [DIRECT AIB]"}
+      sweep: [2.0e-4, 1.5e-3]
+      assumption_id: A-W1.5-11
+  life:
+    lcf_limit_tac:
+      value: 4300
+      units: "1"
+      description: Disk LCF life limit in TAC (life fraction = TAC / limit)
+      evidence: {tag: ASSUMPTION, source: "N:F404 Q9: LCF limits 4,300-15,200 counts (Canadian/USN magnitudes); F100-229 inspection 4,300 cycles [TRANSFER]"}
+      sweep: [3000, 15200]
+      assumption_id: A-W1.5-10
+    creep_limit_src_h:
+      value: 2000
+      units: hour
+      description: HPT blade creep life in stress-rupture equivalent hours at the T5 reference
+      evidence: {tag: ASSUMPTION, source: "addendum_engine_F404_F414_monitoring.md: EFTC limit ~1,000 h René 125, DS René 80 ~2x; IN20 single-crystal longer"}
+      sweep: [1000, 4000]
+      assumption_id: A-W1.5-10
+  components:
+    component_cv:
+      value: 0.3
+      units: "1"
+      description: Gamma-process CV of generic component wear at the usage that consumes the full life
+      evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #38 gap (no quantitative fighter source); gamma form from N:FD §5"}
+      sweep: [0.1, 0.6]
+      assumption_id: A-W1.5-11
+    amagb_wear_rate: {value: 6.67e-4, units: 1/hour, description: AMAGB wear per EOT hour (0.5 at the 750 h life), evidence: {tag: ASSUMPTION, source: "dictionary USAGE.AMAGB_HOURS life 750 h [DIRECT]; wear at life not public"}, sweep: [2.0e-4, 1.3e-3], assumption_id: A-W1.5-11}
+    jfs_health_rate: {value: 5.0e-4, units: "1", description: JFS start-margin loss per JFS start, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.SPS.JFS_HEALTH; R§9 Tejas JFS cold start events"}, sweep: [1.0e-4, 2.0e-3], assumption_id: A-W1.5-11}
+    jfs_cold_factor: {value: 3.0, units: "1", description: JFS wear multiplier for a cold-soaked start, evidence: {tag: ASSUMPTION, source: "N:F404 Q8: GTSU-110 cold-soak start failures (Leh trials) [DIRECT]; factor not public"}, sweep: [1.0, 6.0], assumption_id: A-W1.5-11}
+    jfs_drag_rate: {value: 2.0e-4, units: "1", description: "JFS spool drag excess per JFS start (bearing/seal drag growth; +20 % at 1,000 starts)", evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.SPS.JFS_HEALTH (no drag rate public); M09 jfs_drag_excess interface (W1.4)"}, sweep: [5.0e-5, 1.0e-3], assumption_id: A-W1.5-28}
+    hyd_sys_leak_rate: {value: 1.0e-4, units: 1/hour, description: "Excess servo/actuator internal leakage conductance growth per flight hour at zero contamination (x contamination factor)", evidence: {tag: ASSUMPTION, source: "N:TFG (c) #28: servo null leak 3 -> > 20 % with contamination (Pall 1996) [TRANSFER direction and multiplier]; clean rate not public"}, sweep: [2.0e-5, 5.0e-4], assumption_id: A-W1.5-28}
+    pump_leak_at_limit: {value: 0.75, units: "1", description: "Excess case-drain leakage conductance of an engine-driven pump at its wear limit (pump_wear = 1)", evidence: {tag: ASSUMPTION, source: "N:TFG (c) #27: case-drain temperature rise 35 F limit vs ~20 F mid-band (US 12,265,000) [TRANSFER]; leakage-power ratio ~1.75"}, sweep: [0.3, 2.0], assumption_id: A-W1.5-28}
+    amagb_loss_at_limit: {value: 1.0, units: "1", description: "AMAGB gear/bearing loss excess at the wear limit (amagb_wear = 1)", evidence: {tag: ASSUMPTION, source: "dictionary USAGE.AMAGB_HOURS life [DIRECT]; loss growth not public"}, sweep: [0.3, 3.0], assumption_id: A-W1.5-28}
+    xfer_loss_at_limit: {value: 0.5, units: "1", description: "Fuel transfer-pump capacity loss at the wear limit (fuel_pump_wear = 1)", evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #38 gap (pump wear rates not public)"}, sweep: [0.2, 0.9], assumption_id: A-W1.5-28}
+    batt_fade_rate: {value: 2.05e-4, units: 1/day, description: Battery capacity fade per calendar day (0.30 EOL at ~4 years), evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #29: EOL at 30 % fade (NASA 18650) [TRANSFER]; aircraft battery calendar life not public"}, sweep: [1.0e-4, 4.0e-4], assumption_id: A-W1.5-11}
+    gen_health_rate: {value: 1.25e-4, units: 1/hour, description: Generator degradation per EOT hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #30-31 (diode/IDG signatures, no rates)"}, sweep: [5.0e-5, 5.0e-4], assumption_id: A-W1.5-11}
+    wiring_rate: {value: 5.0e-5, units: 1/hour, description: Wiring/connector degradation per flight hour at humidity 1, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #34 (intermittents, NFF 30-60 %); rate not public"}, sweep: [1.0e-5, 2.0e-4], assumption_id: A-W1.5-11}
+    solder_n_ref: {value: 5000, units: "1", description: Thermal cycles to solder failure at solder_dt_ref (Coffin-Manson), evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.AV.SOLDER_FATIGUE; N:FD §5 Coffin-Manson"}, sweep: [1000, 20000], assumption_id: A-W1.5-11}
+    solder_dt_ref: {value: 40.0, units: delta_degC, description: Reference avionics thermal swing per flight, evidence: {tag: ASSUMPTION, source: "N:FD §5 Coffin-Manson; bay temperatures not public"}, sweep: [20.0, 80.0], assumption_id: A-W1.5-11}
+    solder_exponent: {value: 2.0, units: "1", description: Coffin-Manson exponent (N ∝ ΔT^-2; c ≈ -0.5), evidence: {tag: "TRANSFER: Coffin-Manson", source: "N:FD §5: Coffin-Manson c ≈ -0.5 to -0.7"}}
+    hyd_pump_onset_days: {value: 150.0, units: day, description: Pump incubation (flat case-drain ΔT) before wear growth, evidence: {tag: "TRANSFER: US 12,265,000", source: "R§9 / N:TFG (c) #27: case-drain ΔT flat ≈5 months"}}
+    hyd_pump_onset_cv: {value: 0.3, units: "1", description: CV of the per-serial pump incubation, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #27 single fleet curve only"}, sweep: [0.1, 0.6], assumption_id: A-W1.5-14}
+    hyd_pump_growth_days: {value: 198.0, units: day, description: Growth from onset to the limit (≈11.5 - 5 months), evidence: {tag: "TRANSFER: US 12,265,000", source: "R§9 / N:TFG (c) #27: limit reached at ≈11.5 months"}}
+    contam_wear_factor: {value: 4.0, units: "1", description: Pump and servo wear multiplier at full contamination (x4; x14 severe), evidence: {tag: "TRANSFER: Pall 1996", source: "R§9 / N:TFG (c) #28: contamination wear x4/x14"}}
+    hyd_compensator_sigma: {value: 2.0e-3, units: 1/hour**0.5, description: Compensator set-point random walk per sqrt flight hour, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.HYD.COMPENSATOR (partially observable); no rate"}, sweep: [5.0e-4, 1.0e-2], assumption_id: A-W1.5-11}
+    hyd_precharge_rate: {value: 0.01, units: 1/year, description: Accumulator precharge loss per year (lower bound), evidence: {tag: "TRANSFER: US 8,494,789", source: "N:TFG (c) #29: rate ≥ 1 %/yr lower bound"}}
+    hyd_filter_rate: {value: 6.67e-4, units: 1/hour, description: "Filter loading per flight hour at zero contamination (1,500 h sampling interval)", evidence: {tag: ASSUMPTION, source: "N:TFG (c) #28: sampling every 6-12 months or 1,500 h (Pall); terminal ΔP rise ≈4 weeks"}, sweep: [2.0e-4, 2.0e-3], assumption_id: A-W1.5-11}
+    hyd_contam_drift: {value: 3.33e-4, units: 1/hour, description: Hydraulic contamination drift per flight hour (fraction of the class limit), evidence: {tag: ASSUMPTION, source: "N:TFG (c) #28 (no flight-hour trend published)"}, sweep: [1.0e-4, 1.0e-3], assumption_id: A-W1.5-11}
+    hyd_contam_sigma: {value: 5.0e-3, units: 1/hour**0.5, description: Hydraulic contamination diffusion per sqrt flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #28"}, sweep: [1.0e-3, 2.0e-2], assumption_id: A-W1.5-11}
+    hyd_hose_rate: {value: 1.0e-4, units: 1/hour, description: Hose/fitting fatigue per flight hour, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #20 (coupling fatigue, minutes to failure once cracked); rate not public"}, sweep: [2.0e-5, 5.0e-4], assumption_id: A-W1.5-11}
+    act_friction_rate: {value: 2.0e-4, units: 1/hour, description: Actuator/linkage friction growth per flight hour, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.FCS.ACTUATOR_FRICTION; no rate"}, sweep: [5.0e-5, 1.0e-3], assumption_id: A-W1.5-11}
+    ad_vane_rate: {value: 2.0e-4, units: 1/hour, description: AoA/AoSS vane bearing friction growth per flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #38 (vane bearing wear: buzz, ζ up; no rate)"}, sweep: [5.0e-5, 1.0e-3], assumption_id: A-W1.5-11}
+    ad_heater_rate: {value: 3.33e-4, units: 1/hour, description: Heater element degradation per flight hour, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #39 (heater failure; no rate)"}, sweep: [1.0e-4, 1.0e-3], assumption_id: A-W1.5-11}
+    fuel_pump_rate: {value: 2.0e-4, units: 1/hour, description: Boost/transfer pump wear per EOT hour, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #38 gap"}, sweep: [5.0e-5, 1.0e-3], assumption_id: A-W1.5-11}
+    fuel_probe_sigma: {value: 1.0e-3, units: 1/hour**0.5, description: Gauged-quantity bias random walk per sqrt flight hour (0.5-2 % reached in ~100s h), evidence: {tag: ASSUMPTION, source: "N:TFG (c) #40: fuel-probe contamination +0.5-2 % quantity bias [TRANSFER magnitude]"}, sweep: [2.0e-4, 5.0e-3], assumption_id: A-W1.5-11}
+    ecs_hx_rate: {value: 1.85e-3, units: 1/day, description: HX fouling per calendar day at dust 1 (limit in ≈18 months clean; 3-9 months at dirty sites via dust index), evidence: {tag: "TRANSFER: Wright 2018", source: "R§9 / N:TFG (c) #32: 3-9 months at dirty sites vs ≈18 months clean"}}
+    ecs_hx_sigma: {value: 5.0e-3, units: 1/day**0.5, description: HX fouling diffusion per sqrt day, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #32 (range only)"}, sweep: [1.0e-3, 2.0e-2], assumption_id: A-W1.5-11}
+    ecs_acm_rate: {value: 1.67e-4, units: 1/hour, description: ACM bearing wear per flight hour, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.ECS.ACM_WEAR; no rate"}, sweep: [5.0e-5, 5.0e-4], assumption_id: A-W1.5-11}
+    ecs_canopy_rate: {value: 2.5e-4, units: 1/hour, description: Canopy-seal leak growth per flight hour, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.ECS.CANOPY_SEAL; no rate"}, sweep: [5.0e-5, 1.0e-3], assumption_id: A-W1.5-11}
+    lss_obogs_rate: {value: 2.5e-4, units: 1/hour, description: OBOGS sieve degradation per flight hour, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.LSS.OBOGS_SIEVE; no rate"}, sweep: [5.0e-5, 1.0e-3], assumption_id: A-W1.5-11}
+    brake_wear_rate: {value: 7.14e-4, units: "1", description: "Carbon brake wear per landing (life 1,400 landings)", evidence: {tag: "TRANSFER: F-15C/D carbon brakes (Collins)", source: "R§9 / N:TFG (c) #33: 1,400 LPO"}}
+    brake_energy_ref: {value: 3.96, units: MJ, description: "Brake energy per wheel of M09's reference landing (9 t, 75 m/s, 4 applications); the brake driver counts reference stops (energy / ref)", evidence: {tag: ASSUMPTION, source: "calibrated to M09 (AD-48.6): (brake_wear_rate - 4 brk_w_app) / brk_w_energy = (7.14e-4 - 5.0e-4) / 5.4e-11 J = 3.96 MJ (M09.yaml A-W1.4-29); Tejas brake energy not public; tests/unit/test_health_wear_accrual.py"}, sweep: [2.0, 8.0], assumption_id: A-W2.1c-5}
+    tyre_wear_rate: {value: 0.125, units: "1", description: Main tyre tread wear per landing (4-12 landings), evidence: {tag: "TRANSFER: F-16 tyres", source: "R§9 / N:FD §9(b) #38: tyres 4-12 landings (F-16)"}}
+    tyre_wear_rate_nose: {value: 0.0625, units: "1", description: Nose tyre tread wear per landing, evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #38 gap; half the main-tyre rate"}, sweep: [0.03, 0.125], assumption_id: A-W1.5-11}
+    tyre_leak_rate: {value: 0.02, units: 1/day, description: Tyre pressure loss per day since servicing (≤5 %/24 h acceptable), evidence: {tag: ASSUMPTION, source: "N:TFG (c) #35: ≤5 %/24 h acceptable; 90-94 % inspect (Michelin) [TRANSFER bounds]"}, sweep: [0.005, 0.05], assumption_id: A-W1.5-11}
+    strut_rate: {value: 5.0e-4, units: "1", description: Strut gas/oil loss per landing, evidence: {tag: ASSUMPTION, source: "N:TFG (c) #36 (2 % oil loss detectable; no rate)"}, sweep: [1.0e-4, 2.0e-3], assumption_id: A-W1.5-11}
+    lock_spring_rate: {value: 1.0e-4, units: "1", description: Lock-spring relaxation per gear cycle (11 % over years), evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #23: 88.9 vs 100 lbf after years (B-2) [TRANSFER magnitude]"}, sweep: [2.0e-5, 5.0e-4], assumption_id: A-W1.5-11}
+    chute_life_streamings: {value: 45, units: "1", description: Brake-chute life in streamings, evidence: {tag: DIRECT, source: "dictionary USAGE.CHUTE_STREAMINGS limit life 45 (parameter_inventory.csv)"}}
+    str_fatigue_n7g: {value: 20000, units: "1", description: Level crossings at 7 g to structural crack initiation (Basquin reference), evidence: {tag: ASSUMPTION, source: "N:FD §9(b) #35 (Miner with exceedance spectra, MIL-HDBK-1530B); Tejas fatigue life not public"}, sweep: [5000, 80000], assumption_id: A-W1.5-15}
+    str_fatigue_exponent: {value: 4.0, units: "1", description: Basquin-type exponent of damage per crossing vs (level - 1 g), evidence: {tag: ASSUMPTION, source: "N:FD §5 (Miner, rainflow); exponent not public"}, sweep: [3.0, 6.0], assumption_id: A-W1.5-15}
+    str_composite_rate: {value: 2.0e-5, units: 1/hour, description: Composite delamination growth per flight hour, evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.STR.COMPOSITE (45 % CFC; not instrumented)"}, sweep: [5.0e-6, 1.0e-4], assumption_id: A-W1.5-11}
+    str_corrosion_rate: {value: 1.37e-4, units: 1/day, description: Corrosion growth per calendar day at humidity x salt = 1 (20 years to limit), evidence: {tag: ASSUMPTION, source: "not_measured_states.csv NM.STR.CORROSION_WATER; coastal/monsoon exposure only generic (indian_fleet_platform_relevance.md)"}, sweep: [3.0e-5, 5.0e-4], assumption_id: A-W1.5-13}
+    str_corrosion_sigma: {value: 2.0e-3, units: 1/day**0.5, description: Corrosion diffusion per sqrt day, evidence: {tag: ASSUMPTION, source: "as str_corrosion_rate"}, sweep: [5.0e-4, 1.0e-2], assumption_id: A-W1.5-13}
+  actuators:
+    act_leak_rate:
+      value: 2.5e-5
+      units: 1/hour
+      description: Actuator wear per flight hour as a fraction of the end-play limit (0.001 in / 1,000 FH over 0.040 in)
+      evidence: {tag: "TRANSFER: MD-83 screw actuator (NTSB AAR-02/01)", source: "N:FD §9(b) #25: Archard 0.001 in/1,000 FH nominal, limit 0.040 in"}
+    act_poor_lube_factor:
+      value: 12.0
+      units: "1"
+      description: Wear multiplier with inadequate lubrication (0.012 vs 0.001 in/1,000 FH)
+      evidence: {tag: "TRANSFER: MD-83 screw actuator (NTSB AAR-02/01)", source: "N:FD §5: 12x rate change from a maintenance variable"}
+  sensor_bias:
+    bias_frac_span:
+      value: 0.0025
+      units: "1"
+      description: Installation-bias SD as a fraction of the channel full-scale span (default class)
+      evidence: {tag: ASSUMPTION, source: "sensor_residual_texture.md: TN D-7671 ±6 K (±0.5 %) spread between thermocouples [TRANSFER]; other classes not public"}
+      sweep: [0.0005, 0.01]
+      assumption_id: A-W1.5-12
+    bias_speed_pct:
+      value: 0.11
+      units: percent
+      description: Installation-bias SD of N1/N2 speed lanes (percent of rated speed)
+      evidence: {tag: "TRANSFER: DASHlink proxy engines (round 2 M-A)", source: "architecture AD-07 (proxy values: N2 bias SD 0.11 %; 'Tejas values come from the IN20 dispersion targets'); analysis/settling_experiment_round2/REPORT.md §5 Phase A M-A unit parameters: fleet-prior SD of the N2 sensor bias over the four engine positions of the proxy aircraft (n = 4, +0.13/-0.02/-0.14/+0.03 %). MEASURED on the proxy, applied to the IN20 as a transfer (different engine and sensors; n = 4 gives a wide SD interval). E1 verifier §7"}
+    bias_t5_k:
+      value: 3.0
+      units: delta_degC
+      description: Installation-bias SD of each T5 harness channel
+      evidence: {tag: "TRANSFER: DASHlink proxy engines (round 2 M-A)", source: "architecture AD-07 (proxy values: EGT bias SD 3.0 °C); analysis/settling_experiment_round2/REPORT.md §5 Phase A M-A unit parameters: fleet-prior SD of the EGT bias over the four engine positions of the proxy aircraft (n = 4, +2.8/+0.1/-4.2/+1.3 °C). MEASURED on the proxy, applied to the IN20 T5 harness as a transfer (same evidence row as bias_speed_pct, E1-HY)"}
+    drift_frac_span_temp:
+      value: 6.32e-5
+      units: 1/hour**0.5
+      description: Temperature-sensor bias random walk, fraction of span per sqrt operating hour (0.2 % per sqrt 1,000 h)
+      evidence: {tag: ASSUMPTION, source: "sensor_residual_texture.md: no noticeable drift to 425 h (special units); up to 1 %/10 h for poor probes (bad tail) [TRANSFER]"}
+      sweep: [0.0, 3.2e-4]
+      assumption_id: A-W1.5-12
+    drift_frac_span_other:
+      value: 3.16e-5
+      units: 1/hour**0.5
+      description: Non-temperature analog sensor bias random walk, fraction of span per sqrt operating hour (0.1 % per sqrt 1,000 h)
+      evidence: {tag: ASSUMPTION, source: "tejas_airframe_aero_fcs.md: 'sensors don't exhibit very high drift rates' (NAL, DSJ 66(6)) [DIRECT-unnamed]; magnitude not public"}
+      sweep: [0.0, 1.6e-4]
+      assumption_id: A-W1.5-12
+  summary:
+    eot_per_fh:
+      value: 1.35
+      units: "1"
+      description: Engine operating time per flight hour (usage.sortie_summary expansion; ground running included)
+      evidence: {tag: "TRANSFER: F119 design usage (JSSG-2007A Table XXXIX)", source: "research_notes flight_profiles_and_usage.md Q3: 5,400 EOT h per 4,000 FH"}
+    type3_per_fh:
+      value: 5.13
+      units: 1/hour
+      description: Type III (idle-max-idle) cycles per flight hour
+      evidence: {tag: "TRANSFER: F119 design usage (JSSG-2007A Table XXXIX)", source: "research_notes flight_profiles_and_usage.md Q3: 20,503 per 4,000 FH (~5/FH)"}
+    type4_per_fh:
+      value: 5.52
+      units: 1/hour
+      description: Type IV (cruise-max-cruise) cycles per flight hour
+      evidence: {tag: "TRANSFER: F119 design usage (JSSG-2007A Table XXXIX)", source: "research_notes flight_profiles_and_usage.md Q3: 22,074 per 4,000 FH (5.5-6/FH)"}
+    ab_lights_per_ab_s:
+      value: 108.8
+      units: 1/hour
+      description: Afterburner lights per hour of afterburner time
+      evidence: {tag: "TRANSFER: F119 design usage (JSSG-2007A Table XXXIX)", source: "research_notes flight_profiles_and_usage.md Q3: 20,239 lights in 186 h augmentor time"}
+    eftc_w_type3:
+      value: 0.2
+      units: "1"
+      description: "Equivalent full thermal cycles per Type III cycle (swing ~0.6 of full, exponent 3)"
+      evidence: {tag: ASSUMPTION, source: "A-W1.5-32 EFTC exponent 3; idle-max swing fraction not public"}
+      sweep: [0.05, 0.4]
+      assumption_id: A-W1.5-17
+    eftc_w_type4:
+      value: 0.03
+      units: "1"
+      description: "Equivalent full thermal cycles per Type IV cycle (swing ~0.3 of full, exponent 3)"
+      evidence: {tag: ASSUMPTION, source: "A-W1.5-32 EFTC exponent 3; cruise-max swing fraction not public"}
+      sweep: [0.005, 0.1]
+      assumption_id: A-W1.5-17
+    src_cold_factor:
+      value: 0.05
+      units: "1"
+      description: Creep-equivalent hours per engine hour below the time-at-temperature threshold
+      evidence: {tag: ASSUMPTION, source: "N:F404 Q9 (SRC by Larson-Miller, doubling per ~15 K); below-threshold weight not public"}
+      sweep: [0.0, 0.2]
+      assumption_id: A-W1.5-17

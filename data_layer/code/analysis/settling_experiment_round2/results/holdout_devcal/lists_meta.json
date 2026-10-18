@@ -1,0 +1,19 @@
+{
+ "holdout": "devcal",
+ "holdout_dir": "/Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat",
+ "partner_dir": "/Users/abishaikc/Phalanx/research_sources/datasets/dashlink_tail687/raw/mat",
+ "n": {
+  "holdout": 20,
+  "partner": 20,
+  "early": 10,
+  "late": 10
+ },
+ "median_date_split": [
+  "2001-07-26T07:33",
+  "2001-08-15T05:46"
+ ],
+ "date_range": [
+  "2001-04-11T11:58",
+  "2001-09-11T08:53"
+ ]
+}

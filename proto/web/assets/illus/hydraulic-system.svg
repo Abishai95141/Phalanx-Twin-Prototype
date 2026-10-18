@@ -1,0 +1,600 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-hyd" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-hyd-title ill-hyd-desc">
+  <title id="ill-hyd-title">Hydraulic systems — SYS1 / SYS2</title>
+  <desc id="ill-hyd-desc">Schematic of two independent engine-driven hydraulic systems with reservoirs, filters, accumulators, actuators and the pressure-indication path to the BHEEM EU.</desc>
+  <defs><pattern id="hyd-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="hyd-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="hyd-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="hyd-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="hyd-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="hyd-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="hyd-sys1" class="system">
+    <g id="hyd-sys1-reservoir" class="reservoir">
+      <rect class="draw" x="78" y="146" width="100" height="92" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="80" y="182" width="96" height="54" fill="#EFEFEC" stroke="none" stroke-linejoin="round"/>
+      <line x1="80" y1="182" x2="176" y2="182" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M88 174 L94 180 L100 174" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="128" y="168" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Reservoir 1</text>
+      <line x1="128" y1="136" x2="128" y2="146" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="120" y1="136" x2="136" y2="136" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <circle cx="178" cy="216" r="2.2" fill="#2563C9" stroke="none"/>
+    <line x1="178" y1="216" x2="196" y2="216" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-sys1-tag-level" class="signal-tag">
+      <rect x="196" y="207" width="49" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="220.5" y="219.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">LEVEL</text>
+    </g>
+    <path id="hyd-sys1-suction" class="draw line-suction" d="M128 238 L128 336 L278 336" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M214 336 L206 338.6 L206 333.4 Z" fill="#0B0D10" stroke="none"/>
+    <g id="hyd-sys1-pump" class="pump">
+      <circle class="draw" cx="300" cy="336" r="22" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M300 316 L293.5 327 L306.5 327 Z" fill="#0B0D10" stroke="none"/>
+      <line x1="283" y1="353" x2="315" y2="321" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M318 318 L314.61 324.51 L311.49 321.39 Z" fill="#0B0D10" stroke="none"/>
+      <text x="272" y="324" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="end">EDP 1</text>
+    </g>
+    <path class="draw line-pressure" d="M300 314 L300 236" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="line-drain" d="M314 320 L336 300 L336 186" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="junction" cx="336" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <path id="hyd-sys1-pressure" class="draw line-pressure" d="M300 236 L1540 236" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="hyd-sys1-return" class="draw line-return" d="M1540 186 L178 186" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M720 236 L711 239 L711 233 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M1420 236 L1411 239 L1411 233 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M690 186 L698 183.4 L698 188.6 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M1400 186 L1408 183.4 L1408 188.6 Z" fill="#0B0D10" stroke="none"/>
+    <text x="1538" y="229" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">P · 280 bar</text>
+    <text x="1538" y="179" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">R</text>
+    <g id="hyd-sys1-filter" class="filter">
+      <path class="draw" d="M371 236 L384 223 L397 236 L384 249 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="384" y1="226" x2="384" y2="246" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="2 2" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys1-filter-dp" class="dp-indicator">
+      <line x1="384" y1="223" x2="384" y2="215" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="377" y="205" width="14" height="10" rx="2" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="380" y1="210" x2="388" y2="210" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="372" y="213" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="600" fill="#0B0D10" text-anchor="end">ΔP</text>
+      <line x1="391" y1="210" x2="404" y2="210" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys1-tag-dp" class="signal-tag">
+      <rect x="404" y="201" width="77" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="442.5" y="213.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">FILTER_DP</text>
+    </g>
+    <g id="hyd-sys1-check" class="check-valve">
+      <rect x="432" y="227" width="24" height="18" fill="#FFFFFF" stroke="none" stroke-linejoin="round"/>
+      <path d="M442 228 L434 236 L442 244" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="446" cy="236" r="5.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+    </g>
+    <circle class="junction" cx="500" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="500" y1="236" x2="500" y2="258" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <g id="hyd-sys1-accumulator" class="accumulator">
+      <rect class="draw" x="485" y="258" width="30" height="76" rx="15" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M486 289.92 Q500 295.92 514 289.92" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M500 311.28 L495 320.28 L505 320.28 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <text x="478" y="294" font-size="11.5" font-weight="650" fill="#0B0D10" text-anchor="end">Accumulator</text>
+    <text x="478" y="308" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="end">N₂ precharge</text>
+    <g id="hyd-sys1-return-filter" class="filter">
+      <path class="draw" d="M787 186 L800 173 L813 186 L800 199 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="790" y1="186" x2="810" y2="186" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="2 2" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys1-temp" class="sensor">
+      <circle class="junction" cx="856" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+      <line x1="856" y1="186" x2="856" y2="166" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <circle cx="856" cy="157" r="9" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="856" y="160.8" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle">T</text>
+      <line x1="865" y1="157" x2="878" y2="157" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys1-tag-t" class="signal-tag">
+      <rect x="878" y="148" width="84" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="920" y="160.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">HYD.SYS1.T</text>
+    </g>
+    <text x="800" y="166" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">return filter</text>
+    <g id="hyd-sys1-indication" class="subject indication-path">
+      <circle class="junction" cx="640" cy="236" r="2.6" fill="#E8743B" stroke="none"/>
+      <line x1="640" y1="236" x2="640" y2="252" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round"/>
+      <rect id="hyd-sys1-pressure-switch" x="628" y="252" width="24" height="24" rx="3" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M632 269 L637 269 L645 261" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="645" y1="269" x2="649" y2="269" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <circle class="junction" cx="700" cy="236" r="2.6" fill="#E8743B" stroke="none"/>
+      <line x1="700" y1="236" x2="700" y2="252" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round"/>
+      <circle id="hyd-sys1-transducer" cx="700" cy="264" r="12" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5"/>
+      <text x="700" y="267.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="9.5" font-weight="700" fill="#E8743B" text-anchor="middle">PT</text>
+      <path class="draw harness" d="M640 276 L640 404" fill="none" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw harness" d="M700 276 L700 404" fill="none" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="620" y="262" font-size="11.5" font-weight="650" fill="#E8743B" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">pressure switch</text>
+    <text x="620" y="275" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">HYD.SYS1.LP</text>
+    <text x="720" y="263" font-size="11.5" font-weight="650" fill="#E8743B" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">pressure transducer</text>
+    <text x="720" y="276" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">HYD.SYS1.P</text>
+    <circle class="junction" cx="1002" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1018" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1002" y1="236" x2="1002" y2="296" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1018" y1="186" x2="1018" y2="296" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1082" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1098" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1082" y1="236" x2="1082" y2="296" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1098" y1="186" x2="1098" y2="296" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1162" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1178" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1162" y1="236" x2="1162" y2="296" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1178" y1="186" x2="1178" y2="296" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1242" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1258" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1242" y1="236" x2="1242" y2="296" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1258" y1="186" x2="1258" y2="296" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1322" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1338" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1322" y1="236" x2="1322" y2="296" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1338" y1="186" x2="1338" y2="296" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1424" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1440" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1424" y1="236" x2="1424" y2="284" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1440" y1="186" x2="1440" y2="284" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-valve-slats" class="servo-valve">
+      <rect x="1411" y="284" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1425" y1="284" x2="1425" y2="302" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1439" y1="284" x2="1439" y2="302" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M1428 298 L1436 288" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1436.5 287.5 L1435.09 291.5 L1432.91 289.75 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <g id="hyd-act-slats" class="actuator">
+      <circle class="draw" cx="1432" cy="318" r="17" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M1432 305 L1426 315 L1438 315 Z" fill="#0B0D10" stroke="none"/>
+      <line x1="1449" y1="318" x2="1462" y2="318" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="1449" y1="321" x2="1462" y2="321" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="1432" y="430" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Slats</text>
+      <text x="1432" y="444" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">PDU</text>
+    </g>
+    <circle class="junction" cx="1500" cy="236" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1516" cy="186" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1500" y1="236" x2="1500" y2="284" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1516" y1="186" x2="1516" y2="284" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-valve-gear" class="servo-valve">
+      <rect x="1487" y="284" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1501" y1="284" x2="1501" y2="302" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1515" y1="284" x2="1515" y2="302" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M1504 298 L1512 288" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1512.5 287.5 L1511.09 291.5 L1508.91 289.75 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <g id="hyd-act-gear" class="actuator">
+      <rect class="draw" x="1494" y="302" width="28" height="82" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1496" y="331.8" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1505.5 334.8 L1505.5 406 M1510.5 334.8 L1510.5 406" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1508" cy="410" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1508" y="430" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Gear</text>
+    </g>
+  </g>
+  <g id="hyd-sys2" class="system">
+    <g id="hyd-sys2-reservoir" class="reservoir">
+      <rect class="draw" x="78" y="662" width="100" height="92" rx="10" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="80" y="698" width="96" height="54" fill="#EFEFEC" stroke="none" stroke-linejoin="round"/>
+      <line x1="80" y1="698" x2="176" y2="698" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M88 690 L94 696 L100 690" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="128" y="684" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Reservoir 2</text>
+      <line x1="128" y1="652" x2="128" y2="662" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="120" y1="652" x2="136" y2="652" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <circle cx="178" cy="680" r="2.2" fill="#2563C9" stroke="none"/>
+    <line x1="178" y1="680" x2="196" y2="680" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-sys2-tag-level" class="signal-tag">
+      <rect x="196" y="671" width="49" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="220.5" y="683.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">LEVEL</text>
+    </g>
+    <path id="hyd-sys2-suction" class="draw line-suction" d="M128 662 L128 576 L278 576" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M214 576 L206 578.6 L206 573.4 Z" fill="#0B0D10" stroke="none"/>
+    <g id="hyd-sys2-pump" class="pump">
+      <circle class="draw" cx="300" cy="576" r="22" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <path d="M300 596 L293.5 585 L306.5 585 Z" fill="#0B0D10" stroke="none"/>
+      <line x1="283" y1="593" x2="315" y2="561" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M318 558 L314.61 564.51 L311.49 561.39 Z" fill="#0B0D10" stroke="none"/>
+      <text x="272" y="600" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="end">EDP 2</text>
+    </g>
+    <path class="draw line-pressure" d="M300 598 L300 656" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="line-drain" d="M314 592 L336 612 L336 706" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="junction" cx="336" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <path id="hyd-sys2-pressure" class="draw line-pressure" d="M300 656 L1540 656" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="hyd-sys2-return" class="draw line-return" d="M1540 706 L178 706" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M720 656 L711 659 L711 653 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M1420 656 L1411 659 L1411 653 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M690 706 L698 703.4 L698 708.6 Z" fill="#0B0D10" stroke="none"/>
+    <path d="M1400 706 L1408 703.4 L1408 708.6 Z" fill="#0B0D10" stroke="none"/>
+    <text x="1538" y="673" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">P · 280 bar</text>
+    <text x="1538" y="723" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">R</text>
+    <g id="hyd-sys2-filter" class="filter">
+      <path class="draw" d="M371 656 L384 643 L397 656 L384 669 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="384" y1="646" x2="384" y2="666" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="2 2" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys2-filter-dp" class="dp-indicator">
+      <line x1="384" y1="669" x2="384" y2="677" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect x="377" y="677" width="14" height="10" rx="2" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="380" y1="682" x2="388" y2="682" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="372" y="685" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="600" fill="#0B0D10" text-anchor="end">ΔP</text>
+      <line x1="391" y1="682" x2="404" y2="682" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys2-tag-dp" class="signal-tag">
+      <rect x="404" y="673" width="77" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="442.5" y="685.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">FILTER_DP</text>
+    </g>
+    <g id="hyd-sys2-check" class="check-valve">
+      <rect x="432" y="647" width="24" height="18" fill="#FFFFFF" stroke="none" stroke-linejoin="round"/>
+      <path d="M442 648 L434 656 L442 664" fill="none" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="446" cy="656" r="5.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+    </g>
+    <circle class="junction" cx="500" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="500" y1="656" x2="500" y2="634" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <g id="hyd-sys2-accumulator" class="accumulator">
+      <rect class="draw" x="485" y="558" width="30" height="76" rx="15" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M486 602.08 Q500 596.08 514 602.08" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M500 568.72 L495 577.72 L505 577.72 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <text x="478" y="594" font-size="11.5" font-weight="650" fill="#0B0D10" text-anchor="end">Accumulator</text>
+    <text x="478" y="608" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="end">N₂ precharge</text>
+    <g id="hyd-sys2-return-filter" class="filter">
+      <path class="draw" d="M787 706 L800 693 L813 706 L800 719 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="790" y1="706" x2="810" y2="706" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="2 2" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys2-temp" class="sensor">
+      <circle class="junction" cx="856" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+      <line x1="856" y1="706" x2="856" y2="726" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <circle cx="856" cy="735" r="9" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="856" y="738.8" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="700" fill="#0B0D10" text-anchor="middle">T</text>
+      <line x1="865" y1="735" x2="878" y2="735" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <g id="hyd-sys2-tag-t" class="signal-tag">
+      <rect x="878" y="726" width="84" height="18" rx="9" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="920" y="738.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">HYD.SYS2.T</text>
+    </g>
+    <text x="800" y="734" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">return filter</text>
+    <g id="hyd-sys2-indication" class="subject indication-path">
+      <circle class="junction" cx="640" cy="656" r="2.6" fill="#E8743B" stroke="none"/>
+      <line x1="640" y1="656" x2="640" y2="640" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round"/>
+      <rect id="hyd-sys2-pressure-switch" x="628" y="616" width="24" height="24" rx="3" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M632 633 L637 633 L645 625" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="645" y1="633" x2="649" y2="633" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round"/>
+      <circle class="junction" cx="700" cy="656" r="2.6" fill="#E8743B" stroke="none"/>
+      <line x1="700" y1="656" x2="700" y2="640" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round"/>
+      <circle id="hyd-sys2-transducer" cx="700" cy="628" r="12" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5"/>
+      <text x="700" y="631.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="9.5" font-weight="700" fill="#E8743B" text-anchor="middle">PT</text>
+      <path class="draw harness" d="M640 616 L640 500" fill="none" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw harness" d="M700 616 L700 500" fill="none" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="620" y="626" font-size="11.5" font-weight="650" fill="#E8743B" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">pressure switch</text>
+    <text x="620" y="639" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="end" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">HYD.SYS2.LP</text>
+    <text x="720" y="627" font-size="11.5" font-weight="650" fill="#E8743B" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">pressure transducer</text>
+    <text x="720" y="640" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">HYD.SYS2.P</text>
+    <circle class="junction" cx="1040" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1050" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1040" y1="656" x2="1040" y2="454" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1050" y1="706" x2="1050" y2="454" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1120" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1130" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1120" y1="656" x2="1120" y2="454" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1130" y1="706" x2="1130" y2="454" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1200" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1210" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1200" y1="656" x2="1200" y2="454" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1210" y1="706" x2="1210" y2="454" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1280" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1290" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1280" y1="656" x2="1280" y2="454" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1290" y1="706" x2="1290" y2="454" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1360" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1370" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1360" y1="656" x2="1360" y2="454" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1370" y1="706" x2="1370" y2="454" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <circle class="junction" cx="1424" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1440" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1424" y1="656" x2="1424" y2="618" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1440" y1="706" x2="1440" y2="618" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-valve-brakes" class="servo-valve">
+      <rect x="1411" y="600" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1425" y1="600" x2="1425" y2="618" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1439" y1="600" x2="1439" y2="618" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M1428 614 L1436 604" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1436.5 603.5 L1435.09 607.5 L1432.91 605.75 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <g id="hyd-act-brakes" class="actuator">
+      <rect class="draw" x="1418" y="500" width="28" height="82" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1420" y="529.8" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1429.5 532.8 L1429.5 604 M1434.5 532.8 L1434.5 604" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1432" cy="608" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1432" y="480" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Brakes</text>
+    </g>
+    <circle class="junction" cx="1500" cy="656" r="2.6" fill="#0B0D10" stroke="none"/>
+    <circle class="junction" cx="1516" cy="706" r="2.6" fill="#0B0D10" stroke="none"/>
+    <line x1="1500" y1="656" x2="1500" y2="618" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="1516" y1="706" x2="1516" y2="618" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-valve-nws" class="servo-valve">
+      <rect x="1487" y="600" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1501" y1="600" x2="1501" y2="618" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1515" y1="600" x2="1515" y2="618" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M1504 614 L1512 604" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1512.5 603.5 L1511.09 607.5 L1508.91 605.75 Z" fill="#0B0D10" stroke="none"/>
+    </g>
+    <g id="hyd-act-nws" class="actuator">
+      <rect class="draw" x="1494" y="500" width="28" height="82" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1496" y="529.8" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1505.5 532.8 L1505.5 604 M1510.5 532.8 L1510.5 604" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1508" cy="608" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1508" y="480" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">NWS</text>
+    </g>
+  </g>
+  <g id="hyd-fcs" class="fcs">
+    <g id="hyd-act-elevon-lob" class="actuator tandem">
+      <g id="hyd-valve-elevon-lob-1" class="servo-valve">
+        <rect x="989" y="296" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1003" y1="296" x2="1003" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1017" y1="296" x2="1017" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <path d="M1006 310 L1014 300" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1014.5 299.5 L1013.09 303.5 L1010.91 301.75 Z" fill="#0B0D10" stroke="none"/>
+      </g>
+      <line x1="1010" y1="314" x2="1010" y2="330" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect class="draw" x="996" y="330" width="28" height="132" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="996" y="393.5" width="28" height="5" fill="#0B0D10" stroke="none" stroke-linejoin="round"/>
+      <rect x="998" y="363.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="998" y="429.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1007.5 366.96 L1007.5 486 M1012.5 366.96 L1012.5 486" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1010" cy="490" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <g id="hyd-valve-elevon-lob-2" class="servo-valve">
+        <rect x="1036" y="411.96" width="18" height="42" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1036" y1="425.96" x2="1054" y2="425.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1036" y1="439.96" x2="1054" y2="439.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      </g>
+      <line x1="1024" y1="432.96" x2="1036" y2="432.96" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="1010" y="520" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Elevon</text>
+      <text x="1010" y="534" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">LOB</text>
+    </g>
+    <g id="hyd-act-elevon-lib" class="actuator tandem">
+      <g id="hyd-valve-elevon-lib-1" class="servo-valve">
+        <rect x="1069" y="296" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1083" y1="296" x2="1083" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1097" y1="296" x2="1097" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <path d="M1086 310 L1094 300" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1094.5 299.5 L1093.09 303.5 L1090.91 301.75 Z" fill="#0B0D10" stroke="none"/>
+      </g>
+      <line x1="1090" y1="314" x2="1090" y2="330" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect class="draw" x="1076" y="330" width="28" height="132" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1076" y="393.5" width="28" height="5" fill="#0B0D10" stroke="none" stroke-linejoin="round"/>
+      <rect x="1078" y="363.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="1078" y="429.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1087.5 366.96 L1087.5 486 M1092.5 366.96 L1092.5 486" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1090" cy="490" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <g id="hyd-valve-elevon-lib-2" class="servo-valve">
+        <rect x="1116" y="411.96" width="18" height="42" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1116" y1="425.96" x2="1134" y2="425.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1116" y1="439.96" x2="1134" y2="439.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      </g>
+      <line x1="1104" y1="432.96" x2="1116" y2="432.96" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="1090" y="520" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Elevon</text>
+      <text x="1090" y="534" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">LIB</text>
+    </g>
+    <g id="hyd-act-elevon-rib" class="actuator tandem">
+      <g id="hyd-valve-elevon-rib-1" class="servo-valve">
+        <rect x="1149" y="296" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1163" y1="296" x2="1163" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1177" y1="296" x2="1177" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <path d="M1166 310 L1174 300" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1174.5 299.5 L1173.09 303.5 L1170.91 301.75 Z" fill="#0B0D10" stroke="none"/>
+      </g>
+      <line x1="1170" y1="314" x2="1170" y2="330" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect class="draw" x="1156" y="330" width="28" height="132" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1156" y="393.5" width="28" height="5" fill="#0B0D10" stroke="none" stroke-linejoin="round"/>
+      <rect x="1158" y="363.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="1158" y="429.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1167.5 366.96 L1167.5 486 M1172.5 366.96 L1172.5 486" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1170" cy="490" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <g id="hyd-valve-elevon-rib-2" class="servo-valve">
+        <rect x="1196" y="411.96" width="18" height="42" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1196" y1="425.96" x2="1214" y2="425.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1196" y1="439.96" x2="1214" y2="439.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      </g>
+      <line x1="1184" y1="432.96" x2="1196" y2="432.96" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="1170" y="520" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Elevon</text>
+      <text x="1170" y="534" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">RIB</text>
+    </g>
+    <g id="hyd-act-elevon-rob" class="actuator tandem">
+      <g id="hyd-valve-elevon-rob-1" class="servo-valve">
+        <rect x="1229" y="296" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1243" y1="296" x2="1243" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1257" y1="296" x2="1257" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <path d="M1246 310 L1254 300" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1254.5 299.5 L1253.09 303.5 L1250.91 301.75 Z" fill="#0B0D10" stroke="none"/>
+      </g>
+      <line x1="1250" y1="314" x2="1250" y2="330" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect class="draw" x="1236" y="330" width="28" height="132" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1236" y="393.5" width="28" height="5" fill="#0B0D10" stroke="none" stroke-linejoin="round"/>
+      <rect x="1238" y="363.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="1238" y="429.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1247.5 366.96 L1247.5 486 M1252.5 366.96 L1252.5 486" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1250" cy="490" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <g id="hyd-valve-elevon-rob-2" class="servo-valve">
+        <rect x="1276" y="411.96" width="18" height="42" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1276" y1="425.96" x2="1294" y2="425.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1276" y1="439.96" x2="1294" y2="439.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      </g>
+      <line x1="1264" y1="432.96" x2="1276" y2="432.96" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="1250" y="520" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Elevon</text>
+      <text x="1250" y="534" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">ROB</text>
+    </g>
+    <g id="hyd-act-rudder" class="actuator tandem">
+      <g id="hyd-valve-rudder-1" class="servo-valve">
+        <rect x="1309" y="296" width="42" height="18" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1323" y1="296" x2="1323" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1337" y1="296" x2="1337" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <path d="M1326 310 L1334 300" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1334.5 299.5 L1333.09 303.5 L1330.91 301.75 Z" fill="#0B0D10" stroke="none"/>
+      </g>
+      <line x1="1330" y1="314" x2="1330" y2="330" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <rect class="draw" x="1316" y="330" width="28" height="132" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="1316" y="393.5" width="28" height="5" fill="#0B0D10" stroke="none" stroke-linejoin="round"/>
+      <rect x="1318" y="363.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect x="1318" y="429.96" width="24" height="6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <path d="M1327.5 366.96 L1327.5 486 M1332.5 366.96 L1332.5 486" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1330" cy="490" r="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <g id="hyd-valve-rudder-2" class="servo-valve">
+        <rect x="1356" y="411.96" width="18" height="42" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+        <line x1="1356" y1="425.96" x2="1374" y2="425.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+        <line x1="1356" y1="439.96" x2="1374" y2="439.96" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      </g>
+      <line x1="1344" y1="432.96" x2="1356" y2="432.96" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <text x="1330" y="520" font-size="12" font-weight="650" fill="#0B0D10" text-anchor="middle">Rudder</text>
+    </g>
+  </g>
+  <g id="hyd-drive" class="drive">
+    <g id="hyd-engine">
+      <path class="draw" d="M64 424 L180 424 L198 434 L198 466 L180 476 L64 476 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="80" y1="424" x2="80" y2="476" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="160" y1="424" x2="160" y2="476" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="120" y="454" font-size="12" font-weight="700" fill="#0B0D10" text-anchor="middle">F404</text>
+    </g>
+    <line class="cl" x1="198" y1="450" x2="244" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <g id="hyd-amagb" class="gearbox">
+      <rect class="draw" x="244" y="404" width="112" height="92" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="280" cy="442" r="20" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3"/>
+      <circle cx="320" cy="442" r="20" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3"/>
+      <line x1="276" y1="442" x2="284" y2="442" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="280" y1="438" x2="280" y2="446" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="316" y1="442" x2="324" y2="442" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="320" y1="438" x2="320" y2="446" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="300" y="486" font-size="11" font-weight="700" fill="#0B0D10" text-anchor="middle" letter-spacing="0.08em">AMAGB</text>
+    </g>
+    <line x1="296" y1="358" x2="296" y2="404" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="304" y1="358" x2="304" y2="404" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="296" y1="496" x2="296" y2="554" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="304" y1="496" x2="304" y2="554" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <g id="hyd-gen">
+      <line x1="356" y1="446" x2="374" y2="446" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="356" y1="454" x2="374" y2="454" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <circle cx="390" cy="450" r="16" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <text x="390" y="454" font-size="11" font-weight="700" fill="#0B0D10" text-anchor="middle">G</text>
+      <text x="390" y="480" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">GEN</text>
+    </g>
+  </g>
+  <g id="hyd-eu" class="subject lru">
+    <rect class="draw" x="606" y="404" width="128" height="96" rx="6" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+    <text x="670" y="444" font-size="14" font-weight="700" fill="#E8743B" text-anchor="middle">BHEEM EU</text>
+    <text x="670" y="461" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">utility management</text>
+    <text x="670" y="475" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">1553B · RT 7</text>
+    <rect x="636" y="400" width="8" height="6" fill="#FFFFFF" stroke="#E8743B" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="636" y="498" width="8" height="6" fill="#FFFFFF" stroke="#E8743B" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="696" y="400" width="8" height="6" fill="#FFFFFF" stroke="#E8743B" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="696" y="498" width="8" height="6" fill="#FFFFFF" stroke="#E8743B" stroke-width="0.9" stroke-linejoin="round"/>
+  </g>
+  <g id="hyd-bus" class="signal">
+    <line class="draw" x1="734" y1="450" x2="786" y2="450" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="786" y1="398" x2="786" y2="514" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="792" y1="398" x2="792" y2="514" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="789" y="528" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">AV-MUX-2</text>
+    <text x="789" y="541" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#2563C9" text-anchor="middle">1553B</text>
+    <line x1="792" y1="424" x2="808" y2="424" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <rect x="808" y="406" width="162" height="36" rx="5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <text x="818" y="422" font-size="11.5" font-weight="650" fill="#0B0D10">OAC → CWS</text>
+    <text x="818" y="436" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">caution legend</text>
+    <line x1="792" y1="482" x2="808" y2="482" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <rect x="808" y="464" width="162" height="36" rx="5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <text x="818" y="480" font-size="11.5" font-weight="650" fill="#0B0D10">CDR · HUMS DAU</text>
+    <text x="818" y="494" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F">recorded per sortie</text>
+    <g id="hyd-caution" class="subject">
+      <rect x="910" y="415" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="936" y="427.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="9.5" font-weight="700" fill="#E8743B" text-anchor="middle">HYD-101</text>
+    </g>
+  </g>
+  <g id="hyd-path-callouts" class="callouts">
+    <g id="hyd-c1" class="callout">
+      <circle class="bubble" cx="670" cy="266" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="670" y="266.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <g id="hyd-c2" class="callout">
+      <circle class="bubble" cx="670" cy="352" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="670" y="352.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <g id="hyd-c3" class="callout">
+      <path class="leader draw" d="M604.5 452 L606 452" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="bubble" cx="594" cy="452" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="594" y="452.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g id="hyd-c4" class="callout">
+      <circle class="bubble" cx="789" cy="380" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="789" y="380.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <g id="hyd-c5" class="callout">
+      <path class="leader draw" d="M936 402.5 L936 415" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="bubble" cx="936" cy="392" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="936" y="392.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+  </g>
+  <text x="1170" y="166" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">flight controls · tandem actuators (SYS1 + SYS2)</text>
+  <text x="78" y="118" font-size="16" font-weight="700" fill="#0B0D10">SYS 1</text>
+  <text x="130" y="118" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">280 bar nominal</text>
+  <text x="78" y="792" font-size="16" font-weight="700" fill="#0B0D10">SYS 2</text>
+  <text x="130" y="792" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">280 bar nominal</text>
+  <g id="hyd-key" class="legend">
+    <line x1="78" y1="834" x2="108" y2="834" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="116" y="838" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">pressure</text>
+    <line x1="206" y1="834" x2="236" y2="834" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="244" y="838" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">return</text>
+    <line x1="320" y1="834" x2="350" y2="834" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="4 3" stroke-linecap="round"/>
+    <text x="358" y="838" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">case drain</text>
+    <line x1="462" y1="834" x2="492" y2="834" stroke="#2563C9" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="500" y="838" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">signal → BHEEM EU</text>
+    <line x1="653" y1="834" x2="683" y2="834" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="691" y="838" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">indication path</text>
+    <circle cx="834" cy="834" r="2.6" fill="#0B0D10" stroke="none"/>
+    <text x="844" y="838" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">junction</text>
+  </g>
+  <g id="hyd-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="hyd-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">Hydraulic systems — SYS1 / SYS2</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">indication path · HYD-101 reporter BHEEM EU</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-02</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 2 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+# M13 acquisition map of the DASHlink proxy (W2.4a; structure only, every number is in ../M13.yaml).
+# Rules are matched top to bottom on the dictionary channel id (engine instances use their channel's rules).
+# Recorded words (*.REC): the DASHlink texture measured on 687-CAL (round-2 M-B, AD-05 double quantiser);
+# controller lanes: the Tejas lane texture (TRANSFER, the proxy runs the M08 structure).
+format: phalanx.acquisition.map/1
+platform: proxy_dashlink
+noise:
+  - {match: "ENG.N1.REC", set: noise_n1_rec}
+  - {match: "ENG.N2.REC", set: noise_n2_rec}
+  - {match: "ENG.T5.REC", set: noise_zero_rec}
+  - {match: "ENG.FF.REC", set: noise_zero_rec}
+  - {match: "ENG.N1.*", set: noise_n1_lane}
+  - {match: "ENG.N2.*", set: noise_n2_lane}
+  - {match: "ENG.T5.*", set: noise_zero_rec}
+  # converter-step lanes: noise in EU (dictionary 0.1.2 migration, W2.2)
+  - {match: "ENG.PS3.[AB]", set: noise_ps3_lane}
+  - {match: "ENG.T1.[AB]", set: noise_t1_lane}
+  - {match: "*", set: noise_default_lane}
+ceiling:
+  - {match: "ENG.N1.*", set: ceiling_n1}
+  - {match: "ENG.N2.*", set: ceiling_n2}
+  - {match: "ENG.T5*", set: ceiling_egt}
+  - {match: "ENG.FF.REC", set: ceiling_ff}
+  - {match: "ENG.PS3.[AB]", set: ceiling_ps3_lane}
+  - {match: "ENG.T1.[AB]", set: ceiling_t1_lane}
+  - {match: "*", set: ceiling_default}
+gate:
+  - {match: "ENG.N1.REC", set: gate_n1_rec}
+  - {match: "ENG.N2.REC", set: gate_n2_rec}
+  - {match: "ENG.FF.REC", set: gate_ff_rec}
+freeze:
+  - {match: "ENG.T5.REC", set: freeze_egt_rec}
+  - {match: "ENG.FF.REC", set: freeze_ff_rec}
+  - {match: "ENG.N1.REC", set: freeze_n1_rec}
+native_offset:
+  - {match: "ENG.N1.REC", set: offset_speed_rec}
+  - {match: "ENG.N2.REC", set: offset_speed_rec}
+  - {match: "ENG.T5.REC", set: offset_egt_rec}
+clocks:
+  FADEC: clock_fadec
+  ACMS: clock_acms

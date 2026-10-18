@@ -1,0 +1,68 @@
+{
+ "frozen_at": "2026-10-14 17:14:38 IST",
+ "fitted_on": "all 152 687-CAL flights",
+ "holdout_read_before_freeze": false,
+ "variants": {
+  "S": {
+   "ma.json": "a5641cbc5fda5d12a8fd220ee74634c8755081587696ccff0869ac9b644c4020",
+   "ma_readable.json": "cf3532e516d96bfbccbd21b18184648f8d8716ad383559a8e2d63981d7a0bc73",
+   "mb.json": "5bd6d43e5189228fb5d1f5ae0ea084638d28b8f0db5f886bce5682fe3ad53737",
+   "mc.json": "0a756eace1334fa632f72eb494e5449f48ddf43d226e29629d9cc47834be29d7",
+   "offstate.json": "959cbba337578982027c0316fad21130bbe17ad5fae674472f39634c77f2673d",
+   "fit_log.txt": "91d314d6ddacb3dbc32f54235b08250733b87aa65a24c08dac66d1c3549d1d35",
+   "flights.txt": "813cbf5b3a2f61faf046e4189ebcf5334a4dd76a21796effe391fc43e56d623b"
+  },
+  "P": {
+   "ma.json": "1389666445fc780ba0df2807d95b10558050a806ae063596e606ff36994ecf3e",
+   "ma_readable.json": "4f0e37069334c27e7cad2de4b6046487d9f22ef849f2100f06ce1f5f2d3f17c6",
+   "mb.json": "1150d61629077d20dffe554fbd0f5c6ce1f3a597dd9113afcacf294b244db834",
+   "mc.json": "0ec39d0b68590542f1a84d9b2bac5842b7afd0f90942fef0cee5a817626839ca",
+   "offstate.json": "959cbba337578982027c0316fad21130bbe17ad5fae674472f39634c77f2673d",
+   "fit_log.txt": "adcfff0c890d97e337c3b2647ce5a7b6ad5bf6827bb81d048462307ea8e858d7",
+   "flights.txt": "813cbf5b3a2f61faf046e4189ebcf5334a4dd76a21796effe391fc43e56d623b"
+  }
+ },
+ "code": {
+  "battery.py": "7c72f2c86e31f3701cb821330669c37b3bbb08b766b4f9ec3ab8bfb20059e1a7",
+  "battery_eval.py": "dae6b54952811c788d8103af9b951b501fdbd9531f632b0dc30302b997de5d53",
+  "ma_model.py": "823c15c8093a274c80a4e83fdd206a8242520e98b8f1914ba80fc7f1438df5d3",
+  "mb_model.py": "572b6d6285313187ddbac272c75940bcaa1ae8b11d4ca9e453652d5219607c1f",
+  "mc_model.py": "b07708c664e9629fd8f4369297166f454ff85a079edac39edd85c0f0f623cdb7",
+  "q01_quick_look.py": "306820a3a3080baa496a280cefb33c954e0745d7bf9e189a763a0fe9ad71c5f1",
+  "q02_at_leadlag.py": "58c8458d31b3052a40baa9682070c31d77e178b57d71acc1f780d3810491e443",
+  "r2common.py": "74f9fd4bc107822b476cc4c7d3c5b6c7d798188f719dd1049f22743ef9e6f235",
+  "run_holdout.py": "d3292e3218e4f00edcec9e3ee57fb091c748670925cbac1d44e8ef67bfca2a29",
+  "s02_fit.py": "4c492651924534be557b19dacba40c40b8a5276df0a92f479203605b1dc260b8",
+  "s03_synth.py": "ba7c3574cb3018c1046dc8c18e62595cb21af122790e953fe416d1954bf0f038",
+  "s04_stats.py": "fa8c14f10883b46c50f701931369e25a78cd4a9558595f1ba13d5fe550076822",
+  "s06_disc_guard.py": "070c9dc54e792ec3d93eae0bc884dca3e008a21b2221f4799d86dadba01824b3",
+  "s08_dev_cv.py": "ba03a7f47d6fd959568a5833c7e59e319c752476504a7d1f64c4b1dcdb4cedb8",
+  "s09_freeze.py": "cdbcaf4310b1a33db820f89a7477d80527613f00a68bcbf6b1c09c983407cd47",
+  "s10_report.py": "5e417ea92b9ede7ae74b85f063fe145f66371e9640856370b7c885e9be3beff0",
+  "s11_dev_fold.py": "dd66837d6eeeecc8dd79cf1ba7f6a40718056ec8fa2fd4039511797777891467",
+  "synth.py": "76874f79a52248b35afd6570ba065ad265fc70c22cd26d81340f8bfc54653ee3",
+  "t01_selftest.py": "fae5710dea4a14d43b3cb84e812c6338098a887c8b9448733e063c3fa65e0e9e",
+  "PREREGISTRATION.md": "43b341773b793467cd846f375615c1652809b6a45da4ce3c575bf03ff9332e15"
+ },
+ "imported_round1": {
+  "analysis/dashlink_texture/dlio.py": "26aeaddfb3beb9923f0b93b0ef411f886d94a1382aef827764de2bf06e095861",
+  "analysis/dashlink_texture/common.py": "75e99cf9edc5ceca81322cb4c40a1a1a1c81a4545565be1381d7564204930b04",
+  "analysis/dashlink_texture/transients.py": "25232b06bc7e817c86013908a2c174f3c3b28b10042e9e897c18e8b5bd258c2d",
+  "analysis/settling_experiment/src/config.py": "928b3ce02d604fa32fa78899e4c1a9a7db8cf24a272aa9856d30dc1786697cae",
+  "analysis/settling_experiment/src/pipeline.py": "94c048d7bccf15e87d27e92e0618d4d63bb90679b43d4d123bc8d71db707a24f",
+  "analysis/settling_experiment/src/features.py": "125464f47da3f2aad0c241554038c1b50c4ebe66cdfbffb562f25638ab92489c",
+  "analysis/settling_experiment/src/learn.py": "242ac51f922f6340ffbbdc8612663444c4a1603b997f400598a4b2b7be6550dc",
+  "analysis/settling_experiment/src/s07_gate0.py": "dce121d6e62f442a95277ce50e802210b76ab47e9172dcc6197a6c008f64189c",
+  "analysis/settling_experiment/src/texture_model.py": "e3f1371d1af3b1a5c5e8c371e8eccefb10eaff118486a16f1ee2bf10ecd83f0b",
+  "analysis/settling_experiment/src/fitstats.py": "309296846829d777786437cedafe5b990682c5272d218cae3634d7a01c21d79d",
+  "analysis/correlation_check/corr_check.py": "a2ee71738e704fe3c6b8fee8c2e555fe852da32a6c26a778698e58c4cfb3f662"
+ },
+ "inputs": {
+  "analysis/settling_experiment/results/splits.csv": "3818874a66e87900555204ff73e52303087dbf741d43c576173a4c6c28542575",
+  "analysis/settling_experiment/results/model_params_primary.json": "6aab8944b50afbf4a920476efd655e8d3e6a9de7555f49b3d2d9a23571614f06",
+  "analysis/settling_experiment/results/native_step_cal.json": "910d65a4512617f55878a6aec9369a26599b32bc61f56d02e946a154eeec1422",
+  "analysis/settling_experiment/results/mechanism_decisions.json": "22016158588e6fc38e1361bf7a99498d55753cf4d50f73b59c2d66fb56a89cb7",
+  "analysis/dashlink_texture/results/param_table.csv": "d64f5c9ff68491dfd1796500b48bf71073b22d54466317348932d6b078e1d2fb",
+  "analysis/dashlink_texture/results/dropouts_sentinels.csv": "9607080a636e9df23845ac975424914cf95e6620b3981d9efd27e979705ea144"
+ }
+}

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Readiness — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: 148px minmax(0, 1fr); }
+  .kp { padding: 24px 28px; }
+  .kp .big { margin-top: 14px; }
+  .kp .ci { margin-top: 8px; }
+  .kp.due { flex-direction: row; align-items: center; gap: 20px; }
+  .dots { display: flex; gap: 6px; margin-top: 12px; }
+  .dots i { width: 14px; height: 14px; border-radius: 5px; background: var(--fmc); display: block; }
+  .dots i.nmcs { background: var(--nmcs); } .dots i.nmcd { background: var(--nmcd); }
+  .fleet { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 1fr 1fr; gap: 24px; min-height: 0; }
+  .ac { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 24px 24px 20px; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+  .ac .tail { font: 700 22px var(--mono); letter-spacing: -0.03em; }
+  .ac .pill { position: absolute; right: 22px; top: 24px; }
+  .ac .pf { position: absolute; right: 28px; top: 70px; }
+  .ac .drv { margin-top: auto; padding-right: 116px; }
+  .ac .drv b { display: block; font-size: 16px; font-weight: 650; letter-spacing: -0.012em; line-height: 1.3; }
+  .ac .drv span { display: block; font-size: 13.5px; color: var(--ink-3); margin-top: 5px; line-height: 1.4; }
+  .ac .since { font-size: 13px; color: var(--ink-4); margin-top: 4px; }
+  .ac.sel { border-color: var(--accent-line); box-shadow: 0 0 0 4px var(--accent-wash); }
+  .ac.down { background: var(--bg-2); border-color: transparent; }
+  @media (max-width: 1199px) {
+    .fleet { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; gap: 16px; }
+    .ac { min-height: 220px; }
+  }
+  @media (max-width: 699px) {
+    .fleet { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .ac { min-height: 188px; padding: 18px 18px 16px; }
+    .ac .pill { right: 18px; top: 18px; }
+    .ac .pf { top: 50px; right: 18px; }
+    .ac .pf svg { width: 76px; height: auto; }
+    .ac .drv { padding-right: 104px; }
+    .kp .big { margin-top: 10px; }
+  }
+</style>
+</head>
+<body data-page="readiness">
+<div id="content">
+<div class="v2">
+  <div class="panel2 c3 kp focus" data-shot="kpi-now">
+    <span class="kick acc">Mission capable now</span>
+    <div class="big" id="k-now"></div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="panel2 c3 kp" data-shot="kpi-mc">
+    <div class="row"><span class="kick">Mission capable · 30 days</span><div class="grow"></div><span class="tier desc">DESC</span></div>
+    <div class="big" id="k-mc"></div>
+    <div class="ci" id="k-mc-ci"></div>
+  </div>
+  <div class="panel2 c3 kp" data-shot="kpi-parts">
+    <span class="kick">Waiting for parts · 30 days</span>
+    <div class="big" id="k-parts"></div>
+    <div class="ci">of possessed time · the largest single loss</div>
+  </div>
+  <div class="panel2 c3 kp" data-shot="kpi-due">
+    <div class="row"><span class="kick">Decisions due</span><div class="grow"></div><a class="lnk" id="k-board" style="text-decoration:none">Open board <i data-i="arrowRight"></i></a></div>
+    <div class="big" id="k-due"></div>
+    <div class="ci" id="k-due-ci"></div>
+  </div>
+
+  <div class="c12 fleet" id="fleet" data-shot="fleet"></div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/aircraft.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const pillCls = { FMC: 'fmc', PMCM: 'pmc', NMCM_S: 'nmcm', NMCM_U: 'nmcm', NMCS: 'nmcs', NMCD: 'nmcd' };
+const pillTxt = { FMC: 'FMC', PMCM: 'PMC', NMCM_S: 'NMCM', NMCM_U: 'NMCM', NMCS: 'NMCS', NMCD: 'NMCD' };
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+PHX_API.boot({ page: 'readiness', title: 'Readiness',
+  async load(A) { await Promise.all([A.want('epoch'), A.want('board')]); await A.need('readiness'); },
+  render() {
+    const D = PHX_DATA, K = D.kpi;
+    $('k-now').innerHTML = `${K.mc_now}<small>of ${K.of} aircraft</small>`;
+    $('k-mc').innerHTML = `${K.mc30.toFixed(1)}<small>%</small>`;
+    $('k-mc-ci').textContent = `norm ${K.norm} % · fully capable ${K.fmc30.toFixed(1)} %`;
+    $('k-parts').innerHTML = `${K.parts30.toFixed(1)}<small>%</small>`;
+    $('k-due').innerHTML = `${K.due ?? '—'}<small>before ${esc(K.freeze || '07:45')}</small>`;
+    $('k-due-ci').textContent = `from ${K.alert_rows.toLocaleString('en-GB')} alert rows this season`;
+    $('k-board').href = PHX_API.href('decisions.html');
+    $('fleet').innerHTML = D.fleet.map(f => {
+      const c = f.card || { zones: [], headline: '', detail: '' }, down = ['NMCS', 'NMCD'].includes(f.state);
+      const tint = c.tone === 'nmcd' ? 'var(--nmcd-wash)' : c.tone === 'nmcs' ? 'var(--nmcs-wash)' : '#fff';
+      const strokeC = c.tone === 'nmcd' ? 'var(--nmcd)' : c.tone === 'nmcs' ? 'var(--nmcs)' : 'var(--ink-4)';
+      const pf = PHX_AC.planform({ scale: 11, pad: 2, fill: tint, stroke: strokeC, sw: 1.1, canopy: 'var(--line)', highlight: (c.zones || []).map(z => ({ zone: z.zone, color: `var(--${z.tone})` })), detail: true });
+      return `<div class="ac ${f.tail === D.focus ? 'sel' : ''} ${down ? 'down' : ''}" data-tail="${esc(f.tail)}" style="cursor:pointer">
+        <div class="tail">${esc(f.tail)}</div>
+        <div class="since">${down ? 'down ' + f.since_days.toFixed(0) + ' days' : f.fh30.toFixed(1) + ' FH flown · 30 days'}</div>
+        <span class="pill ${pillCls[f.state] || 'grey'}"><span class="d"></span>${pillTxt[f.state] || esc(f.state)}</span>
+        <div class="pf">${pf}</div>
+        <div class="drv"><b>${esc(c.headline)}</b><span>${esc(c.detail)}</span></div>
+      </div>`;
+    }).join('');
+    $('dots').innerHTML = D.fleet.map(f => `<i class="${f.state === 'NMCS' ? 'nmcs' : f.state === 'NMCD' ? 'nmcd' : ''}"></i>`).join('');
+    return { page: 'readiness', title: 'Readiness', sub: 'What can fly today, what cannot, and why', chips: PHX.clockChips(),
+      after() { document.querySelectorAll('.ac[data-tail]').forEach(el => el.addEventListener('click', () => { location.href = PHX_API.href('twin.html', { tail: el.dataset.tail }); })); } };
+  } });
+</script>
+</body></html>

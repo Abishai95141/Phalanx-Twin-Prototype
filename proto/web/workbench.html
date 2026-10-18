@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Workbench — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: auto 412px auto; height: auto; }
+  .tabs-row { grid-column: 1 / -1; margin-top: -6px; }
+  .cause .r2 { grid-template-columns: minmax(0, 1fr) 80px; min-height: 0; padding: 12px 4px; row-gap: 9px; }
+  .cause .bar { grid-column: 1 / -1; height: 8px; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+  .cause .bar i { display: block; height: 100%; border-radius: 4px; }
+  .cause .p { text-align: right; font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .tests { flex-direction: row; gap: 0; padding: 0; }
+  .tests .tc { flex: 1; padding: 26px 28px; border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+  .tests .tc:first-child { border-left: 0; }
+  .tests .tc.best { background: var(--accent-wash); border-radius: 20px 0 0 20px; }
+  .tests .rank { font: 700 12px var(--mono); color: var(--ink-4); }
+  .tests .tc.best .rank { color: var(--accent-ink); }
+  .tests .nm { font-size: 18px; font-weight: 650; letter-spacing: -0.015em; margin-top: 10px; }
+  .tests .dt { font-size: 14px; color: var(--ink-3); margin-top: 6px; }
+  .tests .ig { display: flex; align-items: center; gap: 12px; margin-top: auto; padding-top: 34px; }
+  .cause .r2 .why { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tests .ig .b { flex: 1; height: 8px; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+  .tests .ig .b i { display: block; height: 100%; background: var(--ink); border-radius: 4px; }
+  .tests .tc.best .ig .b i { background: var(--accent); }
+  .tests .ig span { font: 600 13px var(--mono); color: var(--ink-3); white-space: nowrap; }
+  @media (max-width: 1199px) {
+    .tabs-row { margin-top: -4px; }
+    .tests { flex-direction: column; overflow: hidden; }
+    .tests .tc { border-left: 0; border-top: 1px solid var(--line); padding: 22px; }
+    .tests .tc:first-child { border-top: 0; }
+    .tests .tc.best { border-radius: 18px 18px 0 0; }
+    .tests .ig { padding-top: 18px; }
+    .cause .r2 .why { white-space: normal; }
+  }
+  @media (max-width: 699px) {
+    #strip { min-width: 560px; }
+    [data-shot="strip"] { overflow-x: auto; }
+    .tests .tc { padding: 18px; }
+  }
+</style>
+</head>
+<body data-page="workbench">
+<div id="content">
+<div class="v2">
+  <div class="tabs-row" id="tabs"></div>
+
+  <div class="panel2 c8" data-shot="strip">
+    <div class="row"><span class="kick">Sensor or component?</span><div class="grow"></div><span class="tier diag">DIAG</span></div>
+    <div class="t2" id="s-t2"></div>
+    <div class="row" style="align-items:flex-end;margin-top:14px;gap:28px">
+      <div><div class="big" id="s-big"></div><div class="ci" style="margin-top:6px" id="s-ci"></div></div>
+      <div class="grow"></div>
+      <div class="note" style="text-align:right" id="s-note"></div>
+    </div>
+    <svg id="strip" style="width:100%;margin-top:22px" height="150"></svg>
+  </div>
+
+  <div class="panel2 c4 cause" data-shot="cause">
+    <div class="row"><span class="kick">Most likely cause</span><div class="grow"></div><span class="tier pred">PRED</span></div>
+    <div class="t2">Updated by every outcome</div>
+    <div class="rows2" style="margin-top:10px" id="cause"></div>
+    <div class="ci push" id="cause-note"></div>
+  </div>
+
+  <div class="panel2 c12 tests" data-shot="tests" id="tests"></div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const plabel = p => (p < 0.0001 ? '&lt;0.0001' : p < 0.01 ? p.toFixed(4) : p.toFixed(2));
+PHX_API.boot({ page: 'workbench', title: 'Workbench',
+  async load(A) {
+    const [, id] = await Promise.all([A.want('epoch'), PHX_API.boardItem(A)]);
+    await A.need('workbench', id);
+  },
+  notFound: e => !/\/workbench\//.test(e.path || '') ? null : ({ kick: 'Workbench', title: 'No workbench for this issue', text: 'Tests are ranked only for alarms with isolation evidence. This item is decided on its recommendation alone.', link: { label: 'Back to the recommendation', href: PHX_API.href('decision.html', PHX_API.q.get('issue') ? { issue: PHX_API.q.get('issue') } : {}) } }),
+  render() {
+    const W = PHX_WB, S = W.sorties;
+    $('tabs').innerHTML = PHX.issueTabs('workbench', W.issue_id, true);
+    $('s-t2').textContent = W.strip.title;
+    $('s-big').innerHTML = `${S.filter(s => s[1]).length}<small>of ${S.length} sorties</small>`;
+    $('s-ci').textContent = W.strip.ci; $('s-note').textContent = W.strip.note;
+    const BAR = ['var(--accent)', 'var(--ink-4)', 'var(--ink-5)'];
+    $('cause').innerHTML = W.suspects.map((c, i) => { const low = c.p < 0.01;
+      return `<div class="r2"><div><div class="ttl">${esc(c.name)}</div><div class="why" title="${esc(c.text)}">${esc(c.text)}</div></div><span class="p"${low ? ' style="color:var(--ink-4)"' : ''}>${plabel(c.p)}</span><span class="bar"><i style="width:${low ? 0.4 : Math.round(c.p * 100)}%;background:${low ? 'var(--ink-5)' : BAR[Math.min(i, 1)]}"></i></span></div>`; }).join('');
+    $('cause-note').textContent = W.suspects_note || '';
+    $('tests').innerHTML = W.tests.map((t, i) => `<div class="tc ${i === 0 ? 'best' : ''}" data-test="${i}" style="cursor:pointer"><span class="rank">${i === 0 ? 'BEST NEXT TEST' : i + 1}</span><div class="nm">${esc(t.name)}</div><div class="dt">${esc(t.text)}</div>
+      <div class="ig"><span class="b"><i style="width:${Math.round(t.value * 100)}%"></i></span><span>${t.man_h} man-h · ${esc(t.robust)}</span></div></div>`).join('');
+    return { page: 'workbench', title: W.title, sub: W.sub, chips: [PHX.clockChips()[0], { i: 'book', t: esc(W.manual || '') }], after() { wire(); strip(); } };
+  } });
+function strip() {
+  const el = document.getElementById('strip'), W = el.clientWidth || 940, H = 150, S = PHX_WB.sorties, n = S.length;
+  const pad = 4, cw = (W - pad * 2) / n, y0 = 30, h = 70;
+  let g = '', prev = null, bandStart = 0;
+  const bands = [];
+  S.forEach((s, i) => { if (s[2] !== prev) { if (prev) bands.push([bandStart, i, prev]); bandStart = i; prev = s[2]; } });
+  bands.push([bandStart, n, prev]);
+  bands.forEach(([a, b, ser], k) => {
+    const x = pad + a * cw, w = (b - a) * cw;
+    g += `<rect x="${x + 1}" y="${y0}" width="${w - 2}" height="${h}" rx="6" fill="${k % 2 ? '#F1F1EE' : '#F7F7F5'}"/>`;
+    if (w > 38 && ser) g += `<text x="${x + w / 2}" y="${y0 - 10}" text-anchor="middle" font-size="11" font-family="JetBrains Mono" fill="var(--ink-4)">…${ser.slice(-3)}</text>`;
+  });
+  S.forEach((s, i) => { const cx = pad + (i + .5) * cw;
+    g += s[1] ? `<circle cx="${cx}" cy="${y0 + h / 2}" r="${Math.min(5.5, cw * .34)}" fill="var(--accent)"/>` : `<circle cx="${cx}" cy="${y0 + h / 2}" r="${Math.min(5.5, cw * .34)}" fill="none" stroke="var(--ink-4)" stroke-width="1.5"/>`; });
+  PHX.months(PHX_WB.t0, S[n - 1][0]).forEach(([m, d]) => { const idx = S.findIndex(s => s[0] >= d); if (idx < 0) return; const x = pad + idx * cw;
+    g += `<text x="${x + 2}" y="${y0 + h + 24}" font-size="11" font-family="JetBrains Mono" fill="var(--ink-4)">${m}</text>`; });
+  g += `<text x="${W - pad}" y="${y0 + h + 24}" text-anchor="end" font-size="11" font-family="JetBrains Mono" fill="var(--ink-3)">● fired  ○ quiet</text>`;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`); el.innerHTML = g;
+}
+// a test card drafts that test as a TROUBLESHOOT / INSPECT order on the board (DEVELOPMENT.md FR-06)
+function wire() {
+  PHX.links();
+  document.querySelectorAll('[data-test]').forEach(el => el.addEventListener('click', () => {
+    const W = PHX_WB, t = W.tests[+el.dataset.test];
+    const sh = PHX.sheet(`<span class="kick acc">Draft as order · ${esc(W.tail)} · ${esc(W.code)}</span><div class="t2" style="margin-top:6px">${esc(t.name)}</div>
+      <div class="sub2" style="margin-top:12px">${esc(t.text)}</div>
+      <div class="kv2" style="margin:22px 0 26px;font-size:14.5px"><span>Estimated effort</span><span>${t.man_h} man-h</span><span>Robustness</span><span>${esc(t.robust)}</span><span>Goes to</span><span>Today's board · consent before ${esc(PHX.clock().freeze)}</span></div>
+      <div class="row" style="gap:10px"><button class="btn primary" data-go><i data-i="wrench" class="ico-sm"></i>Draft order</button><button class="btn" data-close>Not now</button></div>`);
+    sh.querySelector('[data-go]').addEventListener('click', async () => {
+      const res = await PHX_API.draft(W.issue_id, t.test_id); PHX.closeSheet();
+      if (!res.ok) { PHX.notice(PHX_API.explain(res)); return; }
+      const oid = (res.data && res.data.order_id) || '', a = oid.split(':');
+      PHX.notice(`Drafted on the board · ${esc(a[5] || t.name)} · ${esc(a[4] || W.tail)} <span class="mono" style="font-size:12px">…${esc((a[6] || '').slice(0, 8))}</span>`, 'ok', 'check');
+    });
+  }));
+}
+</script>
+</body></html>

@@ -1,0 +1,233 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-dl" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-dl-title ill-dl-desc">
+  <title id="ill-dl-title">Sortie download — recorder to contract topics</title>
+  <desc id="ill-dl-desc">The aircraft lands, the removable recorder module is taken to the ground station, decoded against the frozen contract and split into five topics.</desc>
+  <defs><pattern id="dl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="dl-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="dl-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="dl-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="dl-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="dl-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="dl-aircraft" class="view">
+    <path d="M235.04 576.56 L230.2 599.88" fill="none" stroke="#0B0D10" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="230.2" cy="599.88" r="10.12" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+    <path d="M431.28 574.8 L437 595.48" fill="none" stroke="#0B0D10" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="437" cy="595.48" r="14.52" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+    <circle cx="437" cy="595.48" r="6.6" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9"/>
+    <path id="dl-aircraft-outline" class="draw" d="M74 568.2 L100.4 565.12 L144.4 553.68 L179.6 544.88 L192.8 538.72 L219.2 519.8 L258.8 516.72 L285.2 526.4 L338 529.92 L452.4 529.04 L487.6 504.4 L569 418.6 L610.8 417.28 L632.8 515.4 L654.8 528.16 L654.8 558.08 L628.4 562.48 L575.6 569.52 L470 575.68 L338 579.2 L267.6 582.72 L245.6 577.44 L179.6 573.92 L126.8 572.16 L74 568.2 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M189.28 539.6 C206.0 505.28 245.6 504.4 283.0 525.52" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M252.2 578.32 L252.2 551.92 L280.8 550.16 L329.2 566.88 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M598.48 509.68 L607.28 417.72" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M629.28 562.48 L629.28 525.52" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="52" y1="610" x2="681.2" y2="610" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="52" y="610" width="629.2" height="6" fill="url(#dl-hatch)" stroke="none" stroke-linejoin="round"/>
+    <g id="dl-bay" class="subject">
+      <rect x="294" y="529.92" width="41.8" height="15.84" rx="2" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <rect id="dl-slot" x="300" y="533.92" width="18" height="7.84" rx="2" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M294 545.76 L284 571.76 L325.8 571.76 L335.8 545.76" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="10 3 2 3 2 3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="74" y="649.6" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">TJ107 · on the line after the sortie</text>
+  </g>
+  <g id="dl-recorder" class="subject">
+    <path id="dl-rec-top" class="draw" d="M682 306 L783.47 353.38 L825.9 323.64 L724.42 276.27 Z" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="dl-rec-side" class="draw" d="M783.47 377.38 L825.9 347.64 L825.9 323.64 L783.47 353.38 Z" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="dl-rec-front" class="draw" d="M682 330 L783.47 377.38 L783.47 353.38 L682 306 Z" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M697.4 331.19 L728.21 345.57 C729.71 346.27 730.92 345.5 730.92 343.84 L730.92 337.84 C730.92 336.19 729.71 334.27 728.21 333.57 L697.4 319.19 C695.9 318.49 694.68 319.27 694.68 320.92 L694.68 326.92 C694.68 328.58 695.9 330.49 697.4 331.19 Z" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M748.14 351.88 L766.26 360.34 C767.76 361.04 768.98 360.26 768.98 358.61 L768.98 358.61 C768.98 356.95 767.76 355.04 766.26 354.34 L748.14 345.88 C746.64 345.18 745.42 345.95 745.42 347.61 L745.42 347.61 C745.42 349.27 746.64 351.18 748.14 351.88 Z" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M703.17 305.98 L728.62 288.14" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M719.48 313.59 L744.93 295.75" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M735.78 321.2 L761.24 303.36" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M752.09 328.82 L777.55 310.98" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M768.4 336.43 L793.86 318.59" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="0" y="0" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#E8743B" transform="matrix(0.91 0.42 -0.61 0.42 731.04 290.68)">REC</text>
+  </g>
+  <g id="dl-move-1" class="move">
+    <path d="M311.6 524.2 C331.6 404.20000000000005 649.2418 221.48720000000003 701.2418 275.48720000000003" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M701.24 275.49 L693.13 270.81 L696.87 267.2 Z" fill="#0B0D10" stroke="none"/>
+    <text x="277.6" y="428.2" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">after landing</text>
+  </g>
+  <g id="dl-ground-station" class="part">
+    <path id="dl-gs-top" class="draw" d="M930 390 L1098.52 468.68 L1189.42 404.96 L1020.91 326.29 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="dl-gs-side" class="draw" d="M1098.52 618.68 L1189.42 554.96 L1189.42 404.96 L1098.52 468.68 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="dl-gs-front" class="draw" d="M930 540 L1098.52 618.68 L1098.52 468.68 L930 390 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M949.93 473.31 L1047.78 518.99 C1050.78 520.39 1053.22 518.84 1053.22 515.53 L1053.22 471.53 C1053.22 468.21 1050.78 464.39 1047.78 462.99 L949.93 417.31 C946.93 415.9 944.5 417.45 944.5 420.77 L944.5 464.77 C944.5 468.08 946.93 471.9 949.93 473.31 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M955.37 433.84 L1016.98 462.61" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M955.37 447.84 L1000.67 468.99" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M955.37 461.84 L984.36 475.38" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="dl-gs-slot" d="M947.21 518.04 L1008.82 546.8 C1010.32 547.5 1011.54 546.73 1011.54 545.07 L1011.54 539.07 C1011.54 537.41 1010.32 535.5 1008.82 534.8 L947.21 506.04 C945.71 505.34 944.5 506.11 944.5 507.77 L944.5 513.77 C944.5 515.42 945.71 517.34 947.21 518.04 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1080.4 574.22 C1080.4 570.9 1077.96 567.08 1074.96 565.68 C1071.96 564.28 1069.52 565.83 1069.52 569.14 C1069.52 572.46 1071.96 576.28 1074.96 577.68 C1077.96 579.08 1080.4 577.53 1080.4 574.22 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1110.64 590.18 L1110.64 480.18" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1122.76 581.69 L1122.76 471.69" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1134.88 573.19 L1134.88 463.19" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1147 564.7 L1147 454.7" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1159.12 556.2 L1159.12 446.2" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1171.24 547.71 L1171.24 437.71" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="0" y="0" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="700" fill="#0B0D10" transform="matrix(0.91 0.42 0 1 944.5 488.77)">GROUND DECODER</text>
+  </g>
+  <g id="dl-move-2" class="move">
+    <path d="M804.6841 350.5094 C864.6841 360.5094 908.018 496.419 970.018 523.419" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M970.02 523.42 L960.73 522.21 L962.8 517.44 Z" fill="#0B0D10" stroke="none"/>
+    <text x="864.68" y="338.51" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">into the reader</text>
+  </g>
+  <path id="dl-gs-port" d="M1111.24 511.76 L1123.36 503.26 C1124.37 502.56 1125.18 500.65 1125.18 498.99 L1125.18 482.99 C1125.18 481.33 1124.37 480.56 1123.36 481.26 L1111.24 489.76 C1110.24 490.46 1109.43 492.38 1109.43 494.03 L1109.43 510.03 C1109.43 511.69 1110.24 512.46 1111.24 511.76 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g id="dl-topics" class="topics">
+    <g id="dl-topic-param-samples" class="topic">
+      <path class="draw flow" d="M1117.30386 496.51044 C1187.30386 496.51044 1156 238 1222 238" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1224 238 L1216 240.4 L1216 235.6 Z" fill="#2563C9" stroke="none"/>
+      <rect x="1226" y="214" width="312" height="48" rx="24" fill="#FFFFFF" stroke="#2563C9" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="1250" cy="238" r="16" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9"/>
+      <g transform="translate(1241 229) scale(0.75)" fill="none" stroke="#2563C9" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13c2.2 0 2.2-5 4.5-5s2.3 8 4.5 8 2.3-10 4.5-10S18.8 13 21 13"/></g>
+      <text x="1276" y="236" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="15" font-weight="600" fill="#0B0D10">param.samples</text>
+      <text x="1276" y="251" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">channel samples · validity · lanes</text>
+    </g>
+    <g id="dl-topic-events" class="topic">
+      <path class="draw flow" d="M1117.30386 496.51044 C1187.30386 496.51044 1156 330 1222 330" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1224 330 L1216 332.4 L1216 327.6 Z" fill="#2563C9" stroke="none"/>
+      <rect x="1226" y="306" width="312" height="48" rx="24" fill="#FFFFFF" stroke="#2563C9" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="1250" cy="330" r="16" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9"/>
+      <g transform="translate(1241 321) scale(0.75)" fill="none" stroke="#2563C9" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l9 15.5H3z"/><path d="M12 10v4M12 17h.01"/></g>
+      <text x="1276" y="328" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="15" font-weight="600" fill="#0B0D10">events</text>
+      <text x="1276" y="343" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">BIT faults · cautions</text>
+    </g>
+    <g id="dl-topic-usage-counters" class="topic">
+      <path class="draw flow" d="M1117.30386 496.51044 C1187.30386 496.51044 1156 422 1222 422" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1224 422 L1216 424.4 L1216 419.6 Z" fill="#2563C9" stroke="none"/>
+      <rect x="1226" y="398" width="312" height="48" rx="24" fill="#FFFFFF" stroke="#2563C9" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="1250" cy="422" r="16" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9"/>
+      <g transform="translate(1241 413) scale(0.75)" fill="none" stroke="#2563C9" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5a7.5 7.5 0 1 1 15 0"/><path d="M12 16.5l3.6-4.4"/></g>
+      <text x="1276" y="420" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="15" font-weight="600" fill="#0B0D10">usage.counters</text>
+      <text x="1276" y="435" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">landings · streamings · hours</text>
+    </g>
+    <g id="dl-topic-maint-records" class="topic">
+      <path class="draw flow" d="M1117.30386 496.51044 C1187.30386 496.51044 1156 514 1222 514" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1224 514 L1216 516.4 L1216 511.6 Z" fill="#2563C9" stroke="none"/>
+      <rect x="1226" y="490" width="312" height="48" rx="24" fill="#FFFFFF" stroke="#2563C9" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="1250" cy="514" r="16" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9"/>
+      <g transform="translate(1241 505) scale(0.75)" fill="none" stroke="#2563C9" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L4 16.7 7.3 20l5.3-5.3a4 4 0 0 0 5.1-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></g>
+      <text x="1276" y="512" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="15" font-weight="600" fill="#0B0D10">maint.records</text>
+      <text x="1276" y="527" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">jobs · removals · findings</text>
+    </g>
+    <g id="dl-topic-orders" class="topic">
+      <path class="draw flow" d="M1117.30386 496.51044 C1187.30386 496.51044 1156 606 1222 606" fill="none" stroke="#2563C9" stroke-width="1.5" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1123.3 498.51 L1131.64 499 L1130 503.51 Z" fill="#2563C9" stroke="none"/>
+      <rect x="1226" y="582" width="312" height="48" rx="24" fill="#FFFFFF" stroke="#2563C9" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="1250" cy="606" r="16" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9"/>
+      <g transform="translate(1241 597) scale(0.75)" fill="none" stroke="#2563C9" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></g>
+      <text x="1276" y="604" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="15" font-weight="600" fill="#0B0D10">orders</text>
+      <text x="1276" y="619" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">commands · status</text>
+    </g>
+    <text x="1226" y="196" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">CONTRACT TOPICS · 0.2.0</text>
+    <text x="1226" y="690" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">orders return only through orders.commands</text>
+  </g>
+  <g id="dl-callouts" class="callouts">
+    <g id="dl-c1" class="callout">
+      <path class="leader draw" d="M128.96 479.47 L144.4 552.8" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="144.4" cy="552.8" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="126.8" cy="469.2" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="126.8" y="469.7" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <g id="dl-c2" class="callout">
+      <path class="leader draw" d="M665.9 228.68 L721.3 310.19" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="721.3" cy="310.19" r="1.9" fill="#E8743B" stroke="none"/>
+      <circle class="bubble" cx="660" cy="220" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="660" y="220.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <g id="dl-c3" class="callout">
+      <path class="leader draw" d="M1001.54 260.39 L1020.72 389.89" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1020.72" cy="389.89" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="1000" cy="250" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1000" y="250.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g id="dl-c4" class="callout">
+      <path class="leader draw" d="M1206.62 158.15 L1226 182" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="1226" cy="182" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="1200" cy="150" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="1200" y="150.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+  </g>
+  <g id="dl-list" class="legend">
+    <g class="callout">
+      <circle class="bubble" cx="85" cy="732" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="85" y="732.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <text x="104" y="731" font-size="13.5" font-weight="650" fill="#0B0D10">Aircraft on the line</text>
+    <text x="104" y="746" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">sortie flown, data aboard</text>
+    <g class="callout">
+      <circle class="bubble" cx="85" cy="774" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="85" y="774.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <text x="104" y="773" font-size="13.5" font-weight="650" fill="#E8743B">Removable recorder</text>
+    <text x="104" y="788" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">MPDRU · HUMS DAU · ECMS log</text>
+    <g class="callout">
+      <circle class="bubble" cx="425" cy="732" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="425" y="732.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <text x="444" y="731" font-size="13.5" font-weight="650" fill="#0B0D10">Ground station</text>
+    <text x="444" y="746" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">decoder · contract a4396f1d</text>
+    <g class="callout">
+      <circle class="bubble" cx="425" cy="774" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="425" y="774.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <text x="444" y="773" font-size="13.5" font-weight="650" fill="#0B0D10">Contract topics</text>
+    <text x="444" y="788" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">five streams, read by name</text>
+  </g>
+  <g id="dl-timing" class="note">
+    <text x="74" y="852" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">event time ≠ ingest time: HYD-101 from sortie TJ107-20260618T1430 was ingested 18 Jun 21:08</text>
+  </g>
+  <text x="64" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">SORTIE DOWNLOAD · AIRCRAFT TO CONTRACT</text>
+  <g id="dl-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="dl-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">Sortie download — recorder to topics</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">recorder · ground decoder · 5 topics</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-09</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 9 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

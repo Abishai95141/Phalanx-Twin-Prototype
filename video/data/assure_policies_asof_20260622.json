@@ -1,0 +1,492 @@
+{
+ "engine": {
+  "package": "zen-engine",
+  "version": "2.1.3",
+  "python": "3.13.3"
+ },
+ "policies": {
+  "P-DEC-01": {
+   "title": "Recurring deferred BIT code",
+   "layer": "L3",
+   "semver": "1.4.0",
+   "sha256": "c9b849a8e719b8360902ccac135d9a42df418ebff40cf175a19af9a69fd9068f",
+   "policy_version": "P-DEC-01/1.4.0+jdm.c9b849a8e719",
+   "bytes": 3828,
+   "rows": 6
+  },
+  "P-DEC-02": {
+   "title": "Engine serial exceedances \u2192 borescope",
+   "layer": "L3",
+   "semver": "0.3.0",
+   "sha256": "a132344b5074975259684ccf77cd67bc0d88a5dc9f758e6456f0b3e8b1536480",
+   "policy_version": "P-DEC-02/0.3.0+jdm.a132344b5074",
+   "bytes": 1932,
+   "rows": 2
+  },
+  "P-ORG-01": {
+   "title": "MEL-like deferral limits",
+   "layer": "L2",
+   "semver": "2.1.0",
+   "sha256": "7b053c8fed23676722a20f55f7430769cd05a630bae2db5b1273c5279a1e6e1f",
+   "policy_version": "P-ORG-01/2.1.0+jdm.7b053c8fed23",
+   "bytes": 3403,
+   "rows": 7
+  },
+  "P-ORG-02": {
+   "title": "Cannibalise only from NMC donor",
+   "layer": "L2",
+   "semver": "1.2.0",
+   "sha256": "c15c996682fcad3619b4871feb7ec98a47ce0f60542970e4d5e3d454b8786811",
+   "policy_version": "P-ORG-02/1.2.0+jdm.c15c996682fc",
+   "bytes": 1922,
+   "rows": 2
+  },
+  "P-ORG-03": {
+   "title": "Servicing deferral = HUMAN draft",
+   "layer": "L2",
+   "semver": "1.1.0",
+   "sha256": "ae65c498a5af7152099eb94746f06950f0612d4042abbdf571f721a88e90941c",
+   "policy_version": "P-ORG-03/1.1.0+jdm.ae65c498a5af",
+   "bytes": 2119,
+   "rows": 3
+  }
+ },
+ "input": {
+  "severity": "CAUTION",
+  "job": {
+   "status": "DEFERRED"
+  },
+  "occ_10d": 4,
+  "consec_flights": 34,
+  "corroborated": false,
+  "code": {
+   "nofault_rate": 0.6636
+  }
+ },
+ "input_sources": {
+  "occ_10d": "HYD-101 BIT events on TJ107 with t_ingest in (12 Jun 06:00, 22 Jun 06:00]: 4",
+  "consec_flights": "trailing TJ107 sorties with HYD-101: 34 (of 61 sorties, fired on 59)",
+  "nofault": "fleet HYD-101 jobs: 71 CND + 0 ADM of 107"
+ },
+ "trace": {
+  "in": {
+   "input": null,
+   "output": {
+    "severity": "CAUTION",
+    "job": {
+     "status": "DEFERRED"
+    },
+    "occ_10d": 4,
+    "consec_flights": 34,
+    "corroborated": false,
+    "code": {
+     "nofault_rate": 0.6636
+    }
+   },
+   "name": "issue",
+   "id": "in",
+   "performance": "250.0ns",
+   "traceData": null,
+   "order": 0
+  },
+  "dt": {
+   "input": {
+    "severity": "CAUTION",
+    "job": {
+     "status": "DEFERRED"
+    },
+    "occ_10d": 4,
+    "consec_flights": 34,
+    "corroborated": false,
+    "code": {
+     "nofault_rate": 0.6636
+    }
+   },
+   "output": {
+    "rec": {
+     "action": "TROUBLESHOOT",
+     "band": "P2",
+     "rationale_id": "PERSIST_3_FLIGHTS"
+    }
+   },
+   "name": "P-DEC-01 recurring deferred BIT",
+   "id": "dt",
+   "performance": "5.6\u00b5s",
+   "traceData": {
+    "index": 2,
+    "reference_map": {
+     "occ_10d": 4,
+     "corroborated": false,
+     "severity": "CAUTION",
+     "consec_flights": 34,
+     "job.status": "DEFERRED",
+     "code.nofault_rate": 0.6636
+    },
+    "rule": {
+     "_id": "r3",
+     "consec_flights[cons]": ">= 3",
+     "severity[sev]": "",
+     "job.status[job]": "'DEFERRED'",
+     "occ_10d[n10]": "",
+     "code.nofault_rate[cnd]": "",
+     "corroborated[co]": ""
+    }
+   },
+   "order": 1
+  },
+  "out": {
+   "input": {
+    "rec": {
+     "action": "TROUBLESHOOT",
+     "band": "P2",
+     "rationale_id": "PERSIST_3_FLIGHTS"
+    }
+   },
+   "output": null,
+   "name": "rec",
+   "id": "out",
+   "performance": "250.0ns",
+   "traceData": null,
+   "order": 2
+  }
+ },
+ "result": {
+  "rec": {
+   "action": "TROUBLESHOOT",
+   "band": "P2",
+   "rationale_id": "PERSIST_3_FLIGHTS"
+  }
+ },
+ "engine_performance": "7.3\u00b5s",
+ "timing": {
+  "cold_ms": 4.786,
+  "warm_median_us": 168.9,
+  "warm_p95_us": 523.0,
+  "runs": 2000
+ },
+ "trace_blake2b": "7520c46f83d3f1dd20c13f5431f8f06df83d0fa55f7dac557cbb07c4a92b835f",
+ "row_checks": [
+  {
+   "row": "r1",
+   "match": false,
+   "cells": [
+    {
+     "input": "sev",
+     "expr": "'WARNING'",
+     "ok": false
+    },
+    {
+     "input": "job",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "n10",
+     "expr": ">= 2",
+     "ok": true
+    },
+    {
+     "input": "cons",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "co",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cnd",
+     "expr": "",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "row": "r2",
+   "match": false,
+   "cells": [
+    {
+     "input": "sev",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "job",
+     "expr": "'DEFERRED'",
+     "ok": true
+    },
+    {
+     "input": "n10",
+     "expr": ">= 2",
+     "ok": true
+    },
+    {
+     "input": "cons",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "co",
+     "expr": "true",
+     "ok": false
+    },
+    {
+     "input": "cnd",
+     "expr": "",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "row": "r3",
+   "match": true,
+   "cells": [
+    {
+     "input": "sev",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "job",
+     "expr": "'DEFERRED'",
+     "ok": true
+    },
+    {
+     "input": "n10",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cons",
+     "expr": ">= 3",
+     "ok": true
+    },
+    {
+     "input": "co",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cnd",
+     "expr": "",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "row": "r4",
+   "match": false,
+   "cells": [
+    {
+     "input": "sev",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "job",
+     "expr": "'DEFERRED'",
+     "ok": true
+    },
+    {
+     "input": "n10",
+     "expr": ">= 2",
+     "ok": true
+    },
+    {
+     "input": "cons",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "co",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cnd",
+     "expr": "< 0.6",
+     "ok": false
+    }
+   ]
+  },
+  {
+   "row": "r5",
+   "match": true,
+   "cells": [
+    {
+     "input": "sev",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "job",
+     "expr": "'DEFERRED'",
+     "ok": true
+    },
+    {
+     "input": "n10",
+     "expr": ">= 2",
+     "ok": true
+    },
+    {
+     "input": "cons",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "co",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cnd",
+     "expr": "",
+     "ok": true
+    }
+   ]
+  },
+  {
+   "row": "r6",
+   "match": true,
+   "cells": [
+    {
+     "input": "sev",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "job",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "n10",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cons",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "co",
+     "expr": "",
+     "ok": true
+    },
+    {
+     "input": "cnd",
+     "expr": "",
+     "ok": true
+    }
+   ]
+  }
+ ],
+ "static": {
+  "grid": {
+   "severity": [
+    "ADVISORY",
+    "CAUTION",
+    "WARNING"
+   ],
+   "job": [
+    "OPEN",
+    "DEFERRED",
+    "IN_WORK",
+    "CLOSED"
+   ],
+   "occ_10d": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    9
+   ],
+   "consec_flights": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    34
+   ],
+   "corroborated": [
+    false,
+    true
+   ],
+   "nofault": [
+    0.0,
+    0.3,
+    0.59,
+    0.6,
+    0.61,
+    0.9,
+    1.0
+   ]
+  },
+  "combinations": 6048,
+  "gaps": 0,
+  "overlaps": 912,
+  "overlap_sets": {
+   "r2+r5": 96,
+   "r3+r5": 96,
+   "r2+r3+r5": 96,
+   "r4+r5": 72,
+   "r2+r4+r5": 72,
+   "r3+r4+r5": 72,
+   "r2+r3+r4+r5": 72,
+   "r1+r5": 48,
+   "r1+r2+r5": 48,
+   "r1+r3+r5": 48,
+   "r1+r2+r3+r5": 48,
+   "r1+r4+r5": 36,
+   "r1+r2+r4+r5": 36,
+   "r1+r3+r4+r5": 36,
+   "r1+r2+r3+r4+r5": 36
+  },
+  "winners": {
+   "r1": 1344,
+   "r2": 336,
+   "r3": 420,
+   "r4": 72,
+   "r5": 96,
+   "r6": 3780
+  },
+  "unreachable": [],
+  "seconds": 1.11,
+  "note": "hit policy first: overlaps are resolved by row order; every row wins somewhere"
+ },
+ "lint": {
+  "files": 5,
+  "nodes": 15,
+  "expressions": 85,
+  "function_nodes": 0,
+  "violations": []
+ },
+ "golden": {
+  "cases": 6,
+  "passed": 6
+ },
+ "counterfactual": {
+  "change": "consec_flights 34 \u2192 2",
+  "result": {
+   "rec": {
+    "action": "MONITOR",
+    "band": "P4",
+    "rationale_id": "RECUR_NOFAULT_DOMINATED_REVIEW"
+   }
+  }
+ },
+ "counterfactual2": {
+  "change": "consec_flights 2 and nofault 0.55",
+  "result": {
+   "rec": {
+    "action": "TROUBLESHOOT",
+    "band": "P3",
+    "rationale_id": "RECUR_LOW_NOFAULT_CODE"
+   }
+  }
+ }
+}

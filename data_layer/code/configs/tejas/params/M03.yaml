@@ -1,0 +1,543 @@
+# M03 Environment and process disturbances: model parameters (format phalanx.params/1).
+# Channel semantics live in configs/tejas/dictionary/. Generated column entries reference CSV tables in M03/.
+format: phalanx.params/1
+module: M03
+sets:
+  atmosphere:
+    r_star:
+      value: 8314.32
+      units: J/(kmol*K)
+      description: 'Universal gas constant (USSA-1976 value)'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    m0:
+      value: 28.9644
+      units: kg/kmol
+      description: 'Sea-level mean molecular weight of air'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    g0:
+      value: 9.80665
+      units: m/s**2
+      description: 'Standard gravity (geopotential metre basis)'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    r0:
+      value: 6356766.0
+      units: m
+      description: 'Effective Earth radius for geopotential altitude'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    gamma:
+      value: 1.4
+      units: '1'
+      description: 'Ratio of specific heats of air'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    m_water:
+      value: 18.01528
+      units: kg/kmol
+      description: 'Molecular weight of water vapour (virtual temperature, specific humidity)'
+      evidence: {tag: 'ASSUMPTION', source: 'Standard physical constant (not in the evidence base); humidity handling per modelling_methodology.md §1'}
+      sweep: [18.0, 18.02]
+      assumption_id: A-W1.1-4
+    ussa_h_base:
+      value: [0.0, 11000.0, 20000.0, 32000.0, 47000.0, 51000.0, 71000.0, 84852.0]
+      units: m
+      description: "USSA-1976 layer base geopotential heights (m')"
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    ussa_lapse:
+      value: [-0.0065, 0.0, 0.001, 0.0028, 0.0, -0.0028, -0.002]
+      units: K/m
+      description: "USSA-1976 molecular-scale temperature gradients per layer (K/m')"
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    ussa_t0:
+      value: 288.15
+      units: K
+      description: 'USSA-1976 sea-level temperature'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    ussa_p0:
+      value: 101325.0
+      units: Pa
+      description: 'USSA-1976 sea-level pressure'
+      evidence: {tag: 'TRANSFER: USSA-76', source: 'USSA-1976, NASA-TM-X-74335 (defining constants and Table 4 layers); report §7 row 1; modelling_methodology.md §1. A standard, not a Tejas measurement: TRANSFER as M12 tags the same constants (RULES.md rule 3 reserves DIRECT for Tejas/IN20/IAF; E1 verifier §7, E1-HY)'}
+    magnus_a:
+      value: 610.94
+      units: Pa
+      description: 'Magnus saturation vapour pressure over water e_s = a exp(b t / (t + c)), t in degC'
+      evidence: {tag: 'ASSUMPTION', source: 'Standard meteorological Magnus coefficients (Alduchov and Eskridge 1996); not in the evidence base'}
+      sweep: [610.7, 611.2]
+      assumption_id: A-W1.1-4
+    magnus_b:
+      value: 17.625
+      units: '1'
+      description: 'Magnus saturation vapour pressure over water e_s = a exp(b t / (t + c)), t in degC'
+      evidence: {tag: 'ASSUMPTION', source: 'Standard meteorological Magnus coefficients (Alduchov and Eskridge 1996); not in the evidence base'}
+      sweep: [17.27, 17.67]
+      assumption_id: A-W1.1-4
+    magnus_c:
+      value: 243.04
+      units: K
+      description: 'Magnus saturation vapour pressure over water e_s = a exp(b t / (t + c)), t in degC'
+      evidence: {tag: 'ASSUMPTION', source: 'Standard meteorological Magnus coefficients (Alduchov and Eskridge 1996); not in the evidence base'}
+      sweep: [237.3, 243.5]
+      assumption_id: A-W1.1-4
+    vapour_scale_height:
+      value: 2000.0
+      units: m
+      description: 'Scale height of the exponential decay of vapour pressure above the station (capped at saturation)'
+      evidence: {tag: 'ASSUMPTION', source: 'No vertical humidity profile in the evidence base; replaced by ERA5 replay (modelling_methodology.md §1)'}
+      sweep: [1500.0, 3000.0]
+      assumption_id: A-W1.1-4
+  climatology:
+    imd_index:
+      table: {file: imd_climatology_1991_2020.csv, column: imd_index}
+      units: '1'
+      description: 'IMD station index of each row (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    month:
+      table: {file: imd_climatology_1991_2020.csv, column: month}
+      units: '1'
+      description: 'Calendar month of each row (1-12) (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    p_stn_03:
+      table: {file: imd_climatology_1991_2020.csv, column: p_stn_03}
+      units: hPa
+      description: 'Mean station-level pressure at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    p_stn_12:
+      table: {file: imd_climatology_1991_2020.csv, column: p_stn_12}
+      units: hPa
+      description: 'Mean station-level pressure at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    t_db_03:
+      table: {file: imd_climatology_1991_2020.csv, column: t_db_03}
+      units: degC
+      description: 'Mean dry-bulb temperature at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    t_db_12:
+      table: {file: imd_climatology_1991_2020.csv, column: t_db_12}
+      units: degC
+      description: 'Mean dry-bulb temperature at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    t_max:
+      table: {file: imd_climatology_1991_2020.csv, column: t_max}
+      units: degC
+      description: 'Mean daily maximum temperature (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    t_min:
+      table: {file: imd_climatology_1991_2020.csv, column: t_min}
+      units: degC
+      description: 'Mean daily minimum temperature (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    t_hi_month:
+      table: {file: imd_climatology_1991_2020.csv, column: t_hi_month}
+      units: degC
+      description: 'Mean of the highest temperature in the month (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    t_lo_month:
+      table: {file: imd_climatology_1991_2020.csv, column: t_lo_month}
+      units: degC
+      description: 'Mean of the lowest temperature in the month (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    vp_03:
+      table: {file: imd_climatology_1991_2020.csv, column: vp_03}
+      units: hPa
+      description: 'Mean vapour pressure at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    vp_12:
+      table: {file: imd_climatology_1991_2020.csv, column: vp_12}
+      units: hPa
+      description: 'Mean vapour pressure at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    wind:
+      table: {file: imd_climatology_1991_2020.csv, column: wind_kmh}
+      units: km/hour
+      description: 'Mean wind speed (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    ppt_days:
+      table: {file: imd_climatology_1991_2020.csv, column: ppt_days}
+      units: '1'
+      description: 'Mean number of days with precipitation >= 0.3 mm (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    thunder_days:
+      table: {file: imd_climatology_1991_2020.csv, column: thunder_days}
+      units: '1'
+      description: 'Mean number of days with thunder (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    fog_days:
+      table: {file: imd_climatology_1991_2020.csv, column: fog_days}
+      units: '1'
+      description: 'Mean number of days with fog (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dust_days:
+      table: {file: imd_climatology_1991_2020.csv, column: dust_days}
+      units: '1'
+      description: 'Mean number of days with dust storm (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    squall_days:
+      table: {file: imd_climatology_1991_2020.csv, column: squall_days}
+      units: '1'
+      description: 'Mean number of days with squall (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_n:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_n}
+      units: percent
+      description: 'Percentage of days with wind from N at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_n:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_n}
+      units: percent
+      description: 'Percentage of days with wind from N at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_ne:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_ne}
+      units: percent
+      description: 'Percentage of days with wind from NE at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_ne:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_ne}
+      units: percent
+      description: 'Percentage of days with wind from NE at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_e:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_e}
+      units: percent
+      description: 'Percentage of days with wind from E at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_e:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_e}
+      units: percent
+      description: 'Percentage of days with wind from E at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_se:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_se}
+      units: percent
+      description: 'Percentage of days with wind from SE at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_se:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_se}
+      units: percent
+      description: 'Percentage of days with wind from SE at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_s:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_s}
+      units: percent
+      description: 'Percentage of days with wind from S at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_s:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_s}
+      units: percent
+      description: 'Percentage of days with wind from S at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_sw:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_sw}
+      units: percent
+      description: 'Percentage of days with wind from SW at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_sw:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_sw}
+      units: percent
+      description: 'Percentage of days with wind from SW at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_w:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_w}
+      units: percent
+      description: 'Percentage of days with wind from W at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_w:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_w}
+      units: percent
+      description: 'Percentage of days with wind from W at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_nw:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_nw}
+      units: percent
+      description: 'Percentage of days with wind from NW at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_nw:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_nw}
+      units: percent
+      description: 'Percentage of days with wind from NW at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir03_calm:
+      table: {file: imd_climatology_1991_2020.csv, column: dir03_calm}
+      units: percent
+      description: 'Percentage of days with wind from CALM at 0300 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    dir12_calm:
+      table: {file: imd_climatology_1991_2020.csv, column: dir12_calm}
+      units: percent
+      description: 'Percentage of days with wind from CALM at 1200 UTC (IMD 1991-2020 normals)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    station_index:
+      table: {file: imd_stations.csv, column: station_index}
+      units: '1'
+      description: 'IMD index of each climatology station (IMD table header)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    station_lat:
+      table: {file: imd_stations.csv, column: lat_deg}
+      units: deg
+      description: 'Station latitude (IMD table header)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    station_lon:
+      table: {file: imd_stations.csv, column: lon_deg}
+      units: deg
+      description: 'Station longitude (IMD table header)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    station_height:
+      table: {file: imd_stations.csv, column: height_m}
+      units: m
+      description: 'Station height above mean sea level (IMD table header)'
+      evidence: {tag: 'DIRECT', source: 'IMD Climatological Tables of Observatories in India 1991-2020 (station pages; https://imdpune.gov.in/library/public/Climatological%20Tables%201991-2020.pdf; local research_sources/flight_profiles/IMD_Climatological_Tables_1991-2020.pdf PDF pp. 225-226 Coimbatore, 569-570 Naliya, 173-174 Bikaner, 367-368 Jaisalmer, 387-388 Jodhpur); transcribed by pdftotext + parser, checked against research_notes/.../flight_profiles_and_usage.md Q6 and iaf_usage_and_validation_gap_closure.md Q1'}
+    extreme_sd_factor:
+      value: 2.04
+      units: '1'
+      description: 'Mean monthly extreme minus mean daily extreme, in day-to-day SDs (expected max of ~30 iid normals)'
+      evidence: {tag: 'ASSUMPTION', source: 'Derived (order statistics of a Gaussian); IMD gives means and mean extremes only'}
+      sweep: [1.7, 2.4]
+      assumption_id: A-W1.1-5
+    hour_tmin_utc:
+      value: 0.5
+      units: hour
+      description: 'Time of the daily temperature minimum (UTC; ~06:00 IST)'
+      evidence: {tag: 'ASSUMPTION', source: 'Diurnal-cycle form; checked against IMD 0300/1200 UTC dry-bulb means (test)'}
+      sweep: [0.0, 1.5]
+      assumption_id: A-W1.1-6
+    hour_tmax_utc:
+      value: 9.0
+      units: hour
+      description: 'Time of the daily temperature maximum (UTC; ~14:30 IST)'
+      evidence: {tag: 'ASSUMPTION', source: 'Diurnal-cycle form; checked against IMD 0300/1200 UTC dry-bulb means (test)'}
+      sweep: [8.0, 10.0]
+      assumption_id: A-W1.1-6
+    p_day_sd:
+      value: 2.0
+      units: hPa
+      description: 'Day-to-day SD of station pressure about the 0300/1200 UTC monthly means'
+      evidence: {tag: 'ASSUMPTION', source: 'Not in the evidence base (IMD gives means only); ERA5 replay replaces it'}
+      sweep: [0.5, 4.0]
+      assumption_id: A-W1.1-7
+    lne_day_sd:
+      value: 0.15
+      units: '1'
+      description: 'Day-to-day SD of ln(vapour pressure) about the 0300/1200 UTC monthly means'
+      evidence: {tag: 'ASSUMPTION', source: 'Not in the evidence base (IMD gives means only); ERA5 replay replaces it'}
+      sweep: [0.05, 0.3]
+      assumption_id: A-W1.1-7
+    w10_to_w20:
+      value: 0.823
+      units: '1'
+      description: 'Ratio of 20 ft to 10 m wind under the MIL-F-8785C log profile with z0 = 2 ft'
+      evidence: {tag: 'TRANSFER: MIL-F-8785C log-profile shear', source: 'MIL-F-8785C / MIL-HDBK-1797 via MathWorks Dryden/von Karman/Wind Shear blocks; research_notes/.../modelling_methodology.md §1 (Turbulence, Gusts and wind shear); ln(20/2)/ln(32.81/2)'}
+    turb_class_probs:
+      value: [0.55, 0.35, 0.09, 0.01]
+      units: '1'
+      description: 'Per-sortie turbulence class probabilities (none, light, moderate, severe)'
+      evidence: {tag: 'ASSUMPTION', source: 'No Indian turbulence climatology in the evidence base (modelling_methodology.md §1 Gaps)'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-10
+    turb_class_probs_thunder:
+      value: [0.2, 0.4, 0.3, 0.1]
+      units: '1'
+      description: 'Turbulence class probabilities on a thunder day (convective)'
+      evidence: {tag: 'ASSUMPTION', source: 'No Indian turbulence climatology in the evidence base (modelling_methodology.md §1 Gaps)'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-10
+  turbulence:
+    model:
+      value: 1
+      units: '1'
+      description: 'Continuous turbulence model code: 0 = Dryden (tests), 1 = von Karman (production)'
+      evidence: {tag: 'TRANSFER: MIL-F-8785C §3.7.1', source: 'modelling_methodology.md §1: von Karman preferred, Dryden acceptable (Cole and Wickenheiser, arXiv 1905.09954)'}
+    b_span:
+      value: 8.2
+      units: m
+      description: 'Wing span (rotational gust filters)'
+      evidence: {tag: 'DIRECT', source: 'ADA Tejas brochure p. 2; tejas_airframe_aero_fcs.md line 44'}
+    l_hi_dryden:
+      value: 1750.0
+      units: ft
+      description: 'Medium/high-altitude scale length, Dryden form'
+      evidence: {tag: 'TRANSFER: MIL-F-8785C', source: 'MIL-F-8785C / MIL-HDBK-1797 via MathWorks Dryden/von Karman/Wind Shear blocks; research_notes/.../modelling_methodology.md §1 (Turbulence, Gusts and wind shear)'}
+    l_hi_von_karman:
+      value: 2500.0
+      units: ft
+      description: 'Medium/high-altitude scale length, von Karman form (the evidence base states 1750 ft without separating the forms)'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C von Karman convention (not verified in the evidence base); conflict reported, W1.1 report'}
+      sweep: [1750.0, 2500.0]
+      assumption_id: A-W1.1-9
+    sigma_hi_light:
+      value: 1.0
+      units: m/s
+      description: 'Medium/high-altitude turbulence intensity, light class'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C exceedance table not in the evidence base (modelling_methodology.md §1 gives the 1e-2/1e-3/1e-5 class definitions only)'}
+      sweep: [0.5, 1.5]
+      assumption_id: A-W1.1-10
+    sigma_hi_moderate:
+      value: 2.2
+      units: m/s
+      description: 'Medium/high-altitude turbulence intensity, moderate class'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C exceedance table not in the evidence base (modelling_methodology.md §1 gives the 1e-2/1e-3/1e-5 class definitions only)'}
+      sweep: [1.5, 3.0]
+      assumption_id: A-W1.1-10
+    sigma_hi_severe:
+      value: 4.5
+      units: m/s
+      description: 'Medium/high-altitude turbulence intensity, severe class'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C exceedance table not in the evidence base (modelling_methodology.md §1 gives the 1e-2/1e-3/1e-5 class definitions only)'}
+      sweep: [3.0, 7.0]
+      assumption_id: A-W1.1-10
+    w20_light:
+      value: 15.0
+      units: knot
+      description: 'Low-altitude turbulence reference wind W20 (sigma_w = 0.1 W20), light class'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C W20 convention via modelling_methodology.md §1; class values not in the evidence base'}
+      sweep: [10.0, 20.0]
+      assumption_id: A-W1.1-10
+    w20_moderate:
+      value: 30.0
+      units: knot
+      description: 'Low-altitude turbulence reference wind W20 (sigma_w = 0.1 W20), moderate class'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C W20 convention via modelling_methodology.md §1; class values not in the evidence base'}
+      sweep: [25.0, 35.0]
+      assumption_id: A-W1.1-10
+    w20_severe:
+      value: 45.0
+      units: knot
+      description: 'Low-altitude turbulence reference wind W20 (sigma_w = 0.1 W20), severe class'
+      evidence: {tag: 'ASSUMPTION', source: 'MIL-F-8785C W20 convention via modelling_methodology.md §1; class values not in the evidence base'}
+      sweep: [40.0, 50.0]
+      assumption_id: A-W1.1-10
+    v_min:
+      value: 15.0
+      units: m/s
+      description: 'Floor on the airspeed used by the forming filters (taxi and standstill)'
+      evidence: {tag: 'ASSUMPTION', source: 'Forming filters need V > 0; MathWorks blocks require positive airspeed'}
+      sweep: [5.0, 30.0]
+      assumption_id: A-W1.1-11
+    z0_cat_c:
+      value: 0.15
+      units: ft
+      description: 'Shear roughness length, Category C phases'
+      evidence: {tag: 'TRANSFER: MIL-F-8785C', source: 'MIL-F-8785C / MIL-HDBK-1797 via MathWorks Dryden/von Karman/Wind Shear blocks; research_notes/.../modelling_methodology.md §1 (Turbulence, Gusts and wind shear)'}
+    z0_other:
+      value: 2.0
+      units: ft
+      description: 'Shear roughness length, other phases'
+      evidence: {tag: 'TRANSFER: MIL-F-8785C', source: 'MIL-F-8785C / MIL-HDBK-1797 via MathWorks Dryden/von Karman/Wind Shear blocks; research_notes/.../modelling_methodology.md §1 (Turbulence, Gusts and wind shear)'}
+    gust_rate:
+      value: 0.0
+      units: 1/hour
+      description: 'Rate of stochastic discrete 1-cosine gust encounters (0 = only scenario-specified gusts)'
+      evidence: {tag: 'ASSUMPTION', source: 'No gust-encounter statistics in the evidence base; discrete gusts are a scenario feature'}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W1.1-12
+    gust_amp_sd:
+      value: 3.0
+      units: m/s
+      description: 'SD of the stochastic gust amplitude (Gaussian, sign symmetric)'
+      evidence: {tag: 'ASSUMPTION', source: 'No gust-encounter statistics in the evidence base'}
+      sweep: [1.0, 6.0]
+      assumption_id: A-W1.1-12
+    gust_length:
+      value: [30.0, 300.0]
+      units: m
+      description: 'Range of the stochastic gust ramp length d (uniform)'
+      evidence: {tag: 'ASSUMPTION', source: 'No gust-encounter statistics in the evidence base'}
+      sweep: [10.0, 500.0]
+      assumption_id: A-W1.1-12
+  disturbances:
+    factor_id:
+      table: {file: disturbance_factors.csv, column: fid}
+      units: '1'
+      description: 'Factor id (names its RNG stream f<id>)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_scope:
+      table: {file: disturbance_factors.csv, column: scope}
+      units: '1'
+      description: '0 = aircraft-common, 1 = per unit'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_group:
+      table: {file: disturbance_factors.csv, column: group}
+      units: '1'
+      description: '0 = engine channels, 1 = hydraulic systems'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_form:
+      table: {file: disturbance_factors.csv, column: form}
+      units: '1'
+      description: 'Shaping filter form: 1 OU, 2 OU2, 3 resonant'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 1000.0]
+      assumption_id: A-W1.1-1
+    factor_tau:
+      table: {file: disturbance_factors.csv, column: tau_s}
+      units: s
+      description: 'Correlation time (OU forms)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.05, 5.0]
+      assumption_id: A-W1.1-1
+    factor_omega:
+      table: {file: disturbance_factors.csv, column: omega_rad_s}
+      units: rad/s
+      description: 'Natural frequency (resonant form)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 100.0]
+      assumption_id: A-W1.1-1
+    factor_zeta:
+      table: {file: disturbance_factors.csv, column: zeta}
+      units: '1'
+      description: 'Damping ratio (resonant form)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 1.0]
+      assumption_id: A-W1.1-1
+    load_fuel_metering:
+      table: {file: disturbance_factors.csv, column: l_fuel}
+      units: '1'
+      description: 'Loading (SD contribution) on fuel metering'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.02]
+      assumption_id: A-W1.1-1
+    load_combustor_eff:
+      table: {file: disturbance_factors.csv, column: l_comb}
+      units: '1'
+      description: 'Loading on combustor efficiency'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.01]
+      assumption_id: A-W1.1-1
+    load_inlet_recovery:
+      table: {file: disturbance_factors.csv, column: l_inlet}
+      units: '1'
+      description: 'Loading on inlet recovery'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.01]
+      assumption_id: A-W1.1-1
+    load_shaft_load:
+      table: {file: disturbance_factors.csv, column: l_shaft}
+      units: '1'
+      description: 'Loading on shaft load'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.03]
+      assumption_id: A-W1.1-1
+    load_fan_face:
+      table: {file: disturbance_factors.csv, column: l_fan}
+      units: '1'
+      description: 'Loading on fan-face distortion (fan flow capacity and efficiency; LP-spool-specific path, AD-46)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-46 (W1.3a review: an LP-specific path is needed for fast-band N1-N2 0.47); placeholders: aircraft-common OU tau 1 s SD 0.2 %, engine-specific OU2 tau 0.2 s SD 0.4 %; identified on proxy CAL data in W2.4a'}
+      sweep: [0.0, 0.02]
+      assumption_id: A-W1.1-1
+    load_bleed_pto:
+      table: {file: disturbance_factors.csv, column: l_bleed}
+      units: '1'
+      description: 'Loading on bleed/PTO load (env.w_bleed_pto)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.03]
+      assumption_id: A-W1.1-1
+    load_hyd:
+      table: {file: disturbance_factors.csv, column: l_hyd}
+      units: m**3/s
+      description: 'Loading on hydraulic demand (env.w_hyd)'
+      evidence: {tag: 'ASSUMPTION', source: 'AD-32 structure (architecture §6 M03; round-2 REPORT §8 H-a/H-c; docs/behavioural_targets.md); W1 placeholders, identified on proxy CAL data in W2.4. Benchmark magnitudes A-W0.6-4 (fuel 0.5 %, tau 0.3 s; LP torque 1 %, tau 1 s)'}
+      sweep: [0.0, 0.0001]
+      assumption_id: A-W1.1-1

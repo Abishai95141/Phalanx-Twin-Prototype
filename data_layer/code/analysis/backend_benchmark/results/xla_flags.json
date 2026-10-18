@@ -1,0 +1,145 @@
+{
+ "machine": {
+  "cpu": "Apple M4",
+  "eff_cores": "6",
+  "env": {
+   "NUMBA_CACHE_DIR": null,
+   "NUMBA_NUM_THREADS": null,
+   "OMP_NUM_THREADS": null,
+   "XLA_FLAGS": null
+  },
+  "machine": "arm64",
+  "mem_gb": 16.0,
+  "ncpu": 10,
+  "perf_cores": "4",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+   "jax": "0.11.2",
+   "jaxlib": "0.11.2",
+   "llvmlite": "0.50.0",
+   "numba": "0.68.0",
+   "numpy": "2.5.4",
+   "python": "3.13.3",
+   "scipy": "1.18.1"
+  }
+ },
+ "rows": [
+  {
+   "flags": "",
+   "mismatches_of_100000": {
+    "div bcast (b-a)/s": {
+     "jit_vector": 28470,
+     "scan_scalar": 0
+    },
+    "div literal a/288.15": {
+     "jit_vector": 21159,
+     "scan_scalar": 21159
+    },
+    "exp(b)": {
+     "jit_vector": 13270,
+     "scan_scalar": 13270
+    },
+    "fma a*b+c": {
+     "jit_vector": 20123,
+     "scan_scalar": 20123
+    }
+   }
+  },
+  {
+   "flags": "--xla_cpu_enable_fast_math=false",
+   "mismatches_of_100000": {
+    "div bcast (b-a)/s": {
+     "jit_vector": 28470,
+     "scan_scalar": 0
+    },
+    "div literal a/288.15": {
+     "jit_vector": 21159,
+     "scan_scalar": 21159
+    },
+    "exp(b)": {
+     "jit_vector": 13270,
+     "scan_scalar": 13270
+    },
+    "fma a*b+c": {
+     "jit_vector": 20123,
+     "scan_scalar": 20123
+    }
+   }
+  },
+  {
+   "flags": "--xla_allow_excess_precision=false",
+   "mismatches_of_100000": {
+    "div bcast (b-a)/s": {
+     "jit_vector": 28470,
+     "scan_scalar": 0
+    },
+    "div literal a/288.15": {
+     "jit_vector": 21159,
+     "scan_scalar": 21159
+    },
+    "exp(b)": {
+     "jit_vector": 13270,
+     "scan_scalar": 13270
+    },
+    "fma a*b+c": {
+     "jit_vector": 20123,
+     "scan_scalar": 20123
+    }
+   }
+  },
+  {
+   "error": "F1014 19:06:21.519227 2027224 parse_flags_from_env.cc:234] Unknown flag in XLA_FLAGS: --xla_cpu_disable_platform_dependent_math=true",
+   "flags": "--xla_cpu_disable_platform_dependent_math=true"
+  },
+  {
+   "flags": "--xla_cpu_enable_platform_dependent_math=false",
+   "mismatches_of_100000": {
+    "div bcast (b-a)/s": {
+     "jit_vector": 28470,
+     "scan_scalar": 0
+    },
+    "div literal a/288.15": {
+     "jit_vector": 21159,
+     "scan_scalar": 21159
+    },
+    "exp(b)": {
+     "jit_vector": 13270,
+     "scan_scalar": 13270
+    },
+    "fma a*b+c": {
+     "jit_vector": 20123,
+     "scan_scalar": 20123
+    }
+   }
+  },
+  {
+   "flags": "--xla_cpu_fast_math_honor_division=true --xla_cpu_fast_math_honor_functions=true",
+   "mismatches_of_100000": {
+    "div bcast (b-a)/s": {
+     "jit_vector": 28470,
+     "scan_scalar": 0
+    },
+    "div literal a/288.15": {
+     "jit_vector": 21159,
+     "scan_scalar": 21159
+    },
+    "exp(b)": {
+     "jit_vector": 13270,
+     "scan_scalar": 13270
+    },
+    "fma a*b+c": {
+     "jit_vector": 20123,
+     "scan_scalar": 20123
+    }
+   }
+  },
+  {
+   "error": "F1014 19:06:32.079031 2027474 parse_flags_from_env.cc:234] Unknown flag in XLA_FLAGS: --xla_cpu_disable_slp_vectorizer=true",
+   "flags": "--xla_cpu_disable_slp_vectorizer=true"
+  },
+  {
+   "error": "F1014 19:06:34.115657 2027496 parse_flags_from_env.cc:234] Unknown flag in XLA_FLAGS: --xla_cpu_disable_platform_dependent_math=true",
+   "flags": "--xla_allow_excess_precision=false --xla_cpu_disable_platform_dependent_math=true"
+  }
+ ]
+}

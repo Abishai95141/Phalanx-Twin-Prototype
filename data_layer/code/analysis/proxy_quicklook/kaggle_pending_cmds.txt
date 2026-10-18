@@ -1,0 +1,32 @@
+# W2.4a-2 stage 6 (quick look, A4/A5) - Kaggle commands for the coordinating session to review and run.
+# The subagent never runs Kaggle commands and never touches the token. Everything below is private.
+#
+# Why Kaggle: 3 arms x 40 flights (20 Tail 652 + 20 687-TEST, the round-2 development lists
+# holdout_652_s20) = 120 full-chain flight simulations, about 4 CPU-min each locally = about 8 CPU-hours
+# (over the ~1 CPU-hour local rule).
+#
+# Staged by analysis/proxy_quicklook/code/kaggle_stage.py from commit <the commit that adds this file>:
+#   dataset folder : /Users/abishaikc/Phalanx/worktrees
+#                    (77 MB: code snapshot src/ configs/ tools/ + the analysis code it runs + uv.lock/pyproject.toml +
+#                     docs/assumptions.md + the round-2 s20 lists; ONLY the 40 listed MAT files: 20 Tail 652 from
+#                     /Users/abishaikc/phalanx/data/raw/dashlink_tail652/extracted, 20 687-TEST from archive 1;
+#                     no 687-CAL, no archive 2 - every file was copied through the path guards)
+#   kernel folder  : /Users/abishaikc/Phalanx/worktrees
+#                    (run.py: builds the pinned environment from uv.lock with uv 0.11.23 / Python 3.13.3, writes env.json
+#                     with pip freeze, runs st6_quicklook.py with python -I on 4 workers, exits non-zero on failure;
+#                     the repo copy lives in /tmp, so the outputs are only out/quicklook.json and env.json)
+# Local checks done: the staged snapshot ran in smoke mode on one flight per set (st6_quicklook.py ... 2 1);
+# the three-arm path ran in smoke mode on two arms; expected Kaggle run time about 2-3 h on 4 CPUs.
+
+## 1. Create the private dataset (first time; for a re-run use "datasets version -p ... -m <msg> -r zip")
+/Users/abishaikc/.local/bin/kaggle datasets create -p /Users/abishaikc/Phalanx/worktrees -r zip
+
+## 2. When the dataset shows as ready, push the private kernel
+/Users/abishaikc/.local/bin/kaggle kernels push -p /Users/abishaikc/Phalanx/worktrees
+
+## 3. Poll, then download the outputs when the status is "complete" (or "error": env.json says where it stopped)
+/Users/abishaikc/.local/bin/kaggle kernels status abishaicenthil/phalanx-w24a2-quicklook-run
+/Users/abishaikc/.local/bin/kaggle kernels output abishaicenthil/phalanx-w24a2-quicklook-run -p /Users/abishaikc/Phalanx/worktrees
+
+## 4. Tell the W2.4a-2 subagent; it reads out/out/quicklook.json and out/env.json, checks the per-flight
+##    world-independent statistics of the smoke flights against its local smoke run, and writes the stage-6 report.

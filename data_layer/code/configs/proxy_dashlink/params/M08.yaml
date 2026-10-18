@@ -1,0 +1,1909 @@
+# M08 configuration of the DASHlink proxy (W2.4a; AD-43 same method structure, AD-31/AD-50 governing,
+# architecture §14.3 autothrottle). Generated once from the Tejas M08.yaml with the proxy entries replaced;
+# this file is the maintained source. Entries without a proxy note are the Tejas values (TRANSFER of the M08
+# structure and its tagged placeholders). Derived tables: phalanx.proxy.schedules (regenerated in tests).
+format: phalanx.params/1
+module: M08
+sets:
+  control:
+    t_std:
+      value: 288.15
+      units: K
+      description: Standard-day temperature for corrected speeds (theta = T/T_std)
+      evidence:
+        tag: 'TRANSFER: ISA / NASA correction convention'
+        source: research_notes f404_in20_engine_model.md Q5 T7 (TM-100159 theta = TT/288.15 K)
+    p_std:
+      value: 101325.0
+      units: Pa
+      description: Standard-day pressure (delta = P/P_std); reference for the T5-limit P0 trim
+      evidence:
+        tag: 'TRANSFER: ISA / NASA correction convention'
+        source: research_notes f404_in20_engine_model.md Q5 T7 (TM-100159 delta = PT/101.325 kPa)
+    fuel_law:
+      value: 1
+      units: '1'
+      description: 'Core fuel law: 1 = ratio units (governor and limiters output Wf/PS3, multiplied by validated PS3), 0 = direct Wf (C-MAPSS40k style)'
+      evidence:
+        tag: ASSUMPTION
+        source: report §3 (accel/decel on Wf/PS3; AB in ratio units); f404 notes Q4 (MFC PS3 input, Wr/PS3 to AB control); W1.3b A2 sweep (only law 1 gives the real-data
+          FF->N2 sign)
+      sweep:
+      - 0
+      - 1
+      assumption_id: A-W1.3b-2
+    pla_cutoff:
+      value: 5.0
+      units: deg
+      description: PLA below which main fuel is shut off (below every recorded airborne lever angle)
+      evidence:
+        tag: ASSUMPTION
+        source: DASHlink PLA_1 p01 flight min -1.05 deg at shutdown, idle about 23 deg (analysis/dashlink_texture/results/param_table.csv; round-2 frozen f-map first
+          knot 22.94 deg)
+      sweep:
+      - 0.0
+      - 15.0
+      assumption_id: A-W2.4a-13
+    pla_gi:
+      value: 22.94
+      units: deg
+      description: Idle PLA (first knot of the measured PLA-to-fuel relation)
+      evidence:
+        tag: MEASURED
+        source: round-2 frozen M-A variant S FFN2.f_knots_x[0] 22.94 deg (687-CAL)
+    pla_irp:
+      value: 120.0
+      units: deg
+      description: 'No isochronous-N1 / nozzle-T5 regime in the proxy (fixed nozzles, AD-43): placed beyond the lever range'
+      evidence:
+        tag: ASSUMPTION
+        source: AD-43 (fixed nozzles); DASHlink PLA p99 88.9 deg (param_table.csv)
+      sweep:
+      - 100.0
+      - 130.0
+      assumption_id: A-W2.4a-13
+    pla_ab_min:
+      value: 140.0
+      units: deg
+      description: 'No afterburner in the proxy (AD-43): AB request beyond the lever range'
+      evidence:
+        tag: ASSUMPTION
+        source: AD-43 (non-afterburning)
+      sweep:
+      - 130.0
+      - 150.0
+      assumption_id: A-W2.4a-13
+    pla_ab_max:
+      value: 150.0
+      units: deg
+      description: End of the (unused) AB lever range
+      evidence:
+        tag: ASSUMPTION
+        source: AD-43 (non-afterburning)
+      sweep:
+      - 140.0
+      - 160.0
+      assumption_id: A-W2.4a-13
+    n2c_pla_x:
+      table:
+        file: n2c_pla.csv
+        column: pla_deg
+      units: deg
+      description: 'Breakpoints (PLA) of the core corrected-speed demand: the knots of the measured PLA-to-fuel relation, extended flat to 0 and 120 deg'
+      evidence:
+        tag: MEASURED
+        source: round-2 frozen M-A variant S FFN2.f_knots_x (687-CAL)
+    n2c_pla_y:
+      table:
+        file: n2c_pla.csv
+        column: n2c25
+      units: '1'
+      description: 'Core corrected-speed demand N2/sqrt(theta25): the measured g(f(PLA)) at M 0.5, delta = theta = 1, carried to theta25 through the proxy M07 T25/T2'
+      evidence:
+        tag: MEASURED
+        source: round-2 frozen M-A variant S f and g maps (687-CAL); derived from the proxy M07 separate_fixed model by phalanx.proxy.schedules.derive_tables (SLS
+          steady operating line; AD-50 harmonisation of the ratio-unit schedules with M07); regenerated and compared by tests/unit/test_proxy_config.py
+    n1c_cap:
+      value: 1.1
+      units: '1'
+      description: Corrected fan-speed cap (above every recorded N1c, so it does not bind in the replay)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy control limits not public; DASHlink N1c up to 104 % (round-2 h-map top knot)
+      sweep:
+      - 1.05
+      - 1.12
+      assumption_id: A-W2.4a-13
+    n1lim_t1_x:
+      table:
+        file: n1lim_t1.csv
+        column: t1_k
+      units: K
+      description: Breakpoints (T1) of the physical N1 limit (flat)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy control limits not public
+      sweep:
+      - 200.0
+      - 400.0
+      assumption_id: A-W2.4a-13
+    n1lim_t1_y:
+      table:
+        file: n1lim_t1.csv
+        column: n1_frac
+      units: '1'
+      description: Physical N1 limit 105 % (above the recorded maximum 102.8 %)
+      evidence:
+        tag: ASSUMPTION
+        source: DASHlink N1_1 global max 102.84 % (param_table.csv)
+      sweep:
+      - 1.03
+      - 1.08
+      assumption_id: A-W2.4a-13
+    n2_max:
+      value: 1.03
+      units: '1'
+      description: N2 overspeed limiter (fraction of 16,810 rpm, physical)
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (limit regulators include N2 max; C-MAPSS40k Nc max); value not public; N2 sensor span 110 %
+      sweep:
+      - 1.02
+      - 1.06
+      assumption_id: A-W1.3b-5
+    n2_reduce:
+      value: 1000.0
+      units: rpm
+      description: N2-limit reduction on a speed-sensor accommodation
+      evidence:
+        tag: 'TRANSFER: FADEC signal-validation template'
+        source: 'report §9 signal-validation table (accommodation: reduce N2 limit by ~1,000 rpm)'
+    n2c_part:
+      value: 0.72
+      units: '1'
+      description: Core corrected-speed demand cap N2/sqrt(theta25) in part-power reversion (second like failure)
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q3 (-400: NL dual-pickup mismatch -> fuel reduced to part power, CR-1998-208416); report §9 (revert on a second like failure)'
+      sweep:
+      - 0.66
+      - 0.76
+      assumption_id: A-W1.3b-13
+    gov_kff:
+      value: 1.0
+      units: '1'
+      description: Weight of the demand feed-forward in ratio units (u_gov = kff * RU_ff(demand) + PI trim); 0 = pure PI governor
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q4 (-400 MFC schedules fuel from the PLA/N2 schedule; C-MAPSS40k scheduled gain ahead of the integrator); W1.3b A2: low feedback gain
+          is needed for the small-signal sign, so large PLA steps rely on the feed-forward and the accel schedule'
+      sweep:
+      - 0.0
+      - 1.5
+      assumption_id: A-W1.3b-3
+    ru_ff_x:
+      table:
+        file: ru_ff.csv
+        column: n2c25
+      units: '1'
+      description: Breakpoints (demanded N2/sqrt(theta25)) of the feed-forward ratio units
+      evidence:
+        tag: ASSUMPTION
+        source: derived from the proxy M07 separate_fixed model by phalanx.proxy.schedules.derive_tables (SLS steady operating line; AD-50 harmonisation of the ratio-unit
+          schedules with M07); regenerated and compared by tests/unit/test_proxy_config.py
+      sweep:
+      - 0.5
+      - 1.0
+      assumption_id: A-W2.4a-14
+    ru_ff_y:
+      table:
+        file: ru_ff.csv
+        column: ru_pph_psi
+      units: lb/hour/psi
+      description: Feed-forward ratio units Wf/PS3 = the proxy engine's steady ratio units at that speed
+      evidence:
+        tag: ASSUMPTION
+        source: derived from the proxy M07 separate_fixed model by phalanx.proxy.schedules.derive_tables (SLS steady operating line; AD-50 harmonisation of the ratio-unit
+          schedules with M07); regenerated and compared by tests/unit/test_proxy_config.py
+      sweep:
+      - 5.0
+      - 25.0
+      assumption_id: A-W2.4a-14
+    gov_kl:
+      value: 20.0
+      units: '1'
+      description: Large-signal governor gain on the N2 error outside the dead zone gov_edz (drives large PLA moves onto the accel/decel Wf/PS3 schedules; small signals
+        see gov_kp only)
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q6 (CF-18 take-off: the maximum fuel schedule is engaged above ~50 deg/s throttle rate, Henry AGARD-CP-448 p.37); W1.3b A2 (a low small-signal
+          gain is needed for the real FF->N2 sign)'
+      sweep:
+      - 0.0
+      - 50.0
+      assumption_id: A-W1.3b-3
+    gov_edz:
+      value: 0.02
+      units: '1'
+      description: Dead zone of the large-signal governor path (fraction of 100 % N2)
+      evidence:
+        tag: ASSUMPTION
+        source: as gov_kl; real small-signal N2 fluctuations are well inside +-2 % (DASHlink fast-band N2 SD ~0.05 %, empirical_dashlink_texture.md)
+      sweep:
+      - 0.005
+      - 0.05
+      assumption_id: A-W1.3b-3
+    gov_kp:
+      value: 2.0
+      units: '1'
+      description: N2 governor proportional gain (fraction of scheduled ratio units per fraction of N2 error)
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q4 (C-MAPSS40k scheduled PI setpoint loop, GM > 6 dB, PM > 45 deg); gains not public; identified jointly with ps3_tau and the disturbance
+          mix in W2.4a (AD-50). Raised 1 -> 2 in the W1.3b fix-back: with Kp 1 the real W1.3a M07 limit-cycles at SLS ground idle (N2 +-2.3 %, Wf +-15 %, ~0.05 Hz:
+          the weak PI cannot hold the ratio-unit self-feedback, the dead-zone gain bounds it); Kp 2 is steady there and keeps the A2 signs on both plants; Kp >= 3-5
+          destroys them (AD-50)'
+      sweep:
+      - 0.0
+      - 8.0
+      assumption_id: A-W1.3b-3
+    gov_ki:
+      value: 1.0
+      units: 1/s
+      description: N2 governor integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as gov_kp
+      sweep:
+      - 0.1
+      - 5.0
+      assumption_id: A-W1.3b-3
+    n1_kp:
+      value: 3.0
+      units: '1'
+      description: N1 isochronous governor / limiter proportional gain
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (NL isochronous via fuel-trim torque motor; C-MAPSS40k limit regulators PI); gains not public
+      sweep:
+      - 0.0
+      - 8.0
+      assumption_id: A-W1.3b-3
+    n1_lead:
+      value: 1.0
+      units: s
+      description: Rate anticipation of the N1 isochronous governor / limiter (error on N1 + lead * dN1/dt; compensates the fan lag)
+      evidence:
+        tag: ASSUMPTION
+        source: fan small-step tau ~0.77 s (Merrington, f404 notes Q6); N2 -> N1 lag +0.5 s in real data (round-2 REPORT §3.2); limiter lead not public
+      sweep:
+      - 0.0
+      - 1.5
+      assumption_id: A-W1.3b-3
+    n1_ki:
+      value: 3.0
+      units: 1/s
+      description: N1 isochronous governor integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as n1_kp
+      sweep:
+      - 0.1
+      - 5.0
+      assumption_id: A-W1.3b-3
+    n2m_kp:
+      value: 3.0
+      units: '1'
+      description: N2-max limiter proportional gain
+      evidence:
+        tag: ASSUMPTION
+        source: C-MAPSS40k limit-regulator structure (f404 notes Q4); value not public
+      sweep:
+      - 0.0
+      - 8.0
+      assumption_id: A-W1.3b-3
+    n2m_ki:
+      value: 3.0
+      units: 1/s
+      description: N2-max limiter integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as n2m_kp
+      sweep:
+      - 0.1
+      - 10.0
+      assumption_id: A-W1.3b-3
+    t5f_kp:
+      value: 3.0
+      units: '1'
+      description: T5 fuel limiter proportional gain (per fraction of T5 error)
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 inference (T5 max in the fuel MIN select); value not public
+      sweep:
+      - 0.0
+      - 10.0
+      assumption_id: A-W1.3b-3
+    t5f_ki:
+      value: 3.0
+      units: 1/s
+      description: T5 fuel limiter integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as t5f_kp
+      sweep:
+      - 0.1
+      - 20.0
+      assumption_id: A-W1.3b-3
+    ps3x_kp:
+      value: 2.0
+      units: '1'
+      description: PS3-max limiter proportional gain
+      evidence:
+        tag: ASSUMPTION
+        source: C-MAPSS40k Ps3 max limit regulator (f404 notes Q4); value not public
+      sweep:
+      - 0.0
+      - 8.0
+      assumption_id: A-W1.3b-3
+    ps3x_ki:
+      value: 2.0
+      units: 1/s
+      description: PS3-max limiter integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as ps3x_kp
+      sweep:
+      - 0.1
+      - 10.0
+      assumption_id: A-W1.3b-3
+    ps3n_kp:
+      value: 2.0
+      units: '1'
+      description: PS3-min override proportional gain
+      evidence:
+        tag: ASSUMPTION
+        source: C-MAPSS40k Ps3 min limit regulator (f404 notes Q4); value not public
+      sweep:
+      - 0.0
+      - 8.0
+      assumption_id: A-W1.3b-3
+    ps3n_ki:
+      value: 2.0
+      units: 1/s
+      description: PS3-min override integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as ps3n_kp
+      sweep:
+      - 0.1
+      - 10.0
+      assumption_id: A-W1.3b-3
+    k_ifb:
+      value: 1.0
+      units: 1/s
+      description: 'Integrator feedback (anti-windup) gain of the limiters and the nozzle loop: dxi/dt = Ki*e - k_ifb*(u - u_selected); a limiter not in control settles
+        (Ki/k_ifb)*e above the selected output'
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (C-MAPSS40k anti-windup e - IFB*(Wf_reg - Wf_cmd), NASA TM-2010-216811); value not public
+      sweep:
+      - 0.2
+      - 5.0
+      assumption_id: A-W1.3b-3
+    anti_windup:
+      value: 1
+      units: '1'
+      description: 'Anti-windup: 1 = governor integrates only in control (holds otherwise), limiters and the nozzle loop use integrator feedback (C-MAPSS40k IFB);
+        0 = none (negative control)'
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (C-MAPSS40k MIN/MAX selection with integrator wind-up protection, NASA TM-2010-216811); governor conditional integration keeps its feed-forward
+          through limited transients (W1.3b fixture slams)
+      sweep:
+      - 0
+      - 1
+      assumption_id: A-W1.3b-3
+    ru_ref_x:
+      table:
+        file: ru_ref.csv
+        column: n2c
+      units: '1'
+      description: Breakpoints (N2/sqrt(theta1)) of the reference ratio-unit line (accel/decel and fuel scale)
+      evidence:
+        tag: ASSUMPTION
+        source: derived from the proxy M07 separate_fixed model by phalanx.proxy.schedules.derive_tables (SLS steady operating line; AD-50 harmonisation of the ratio-unit
+          schedules with M07); regenerated and compared by tests/unit/test_proxy_config.py
+      sweep:
+      - 0.5
+      - 1.0
+      assumption_id: A-W2.4a-14
+    ru_ref_y:
+      table:
+        file: ru_ref.csv
+        column: ru_pph_psi
+      units: lb/hour/psi
+      description: Reference ratio units Wf/PS3 = the proxy engine's steady line
+      evidence:
+        tag: ASSUMPTION
+        source: derived from the proxy M07 separate_fixed model by phalanx.proxy.schedules.derive_tables (SLS steady operating line; AD-50 harmonisation of the ratio-unit
+          schedules with M07); regenerated and compared by tests/unit/test_proxy_config.py
+      sweep:
+      - 5.0
+      - 25.0
+      assumption_id: A-W2.4a-14
+    ps3_tau:
+      value: 0.05
+      units: s
+      description: Time constant of the PS3 filter used to turn ratio units into fuel flow (Wf = RU x filtered PS3); 0 = no filter. The PS3 limiters use the unfiltered
+        validated PS3
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q3/Q4 (-400: PS3 is a pneumatic signal to the MFC bellows; FADEC input filtering not public); smooths lane quantisation feeding the fuel
+          command'
+      sweep:
+      - 0.0
+      - 0.2
+      assumption_id: A-W1.3b-2
+    acc_k:
+      value: 1.4
+      units: '1'
+      description: Acceleration Wf/PS3 schedule as a multiple of the reference line
+      evidence:
+        tag: ASSUMPTION
+        source: report §3; AD-34 (accel/decel identified on transients); value not public
+      sweep:
+      - 1.15
+      - 1.8
+      assumption_id: A-W1.3b-4
+    dec_k:
+      value: 0.5
+      units: '1'
+      description: Deceleration Wf/PS3 schedule as a multiple of the reference line
+      evidence:
+        tag: ASSUMPTION
+        source: report §3; AD-34 (decel schedule R_dn unidentified in round 2, REPORT §3.3); value not public
+      sweep:
+      - 0.3
+      - 0.75
+      assumption_id: A-W1.3b-4
+    wf_min:
+      value: 115.0
+      units: kg/hour
+      description: 'Absolute minimum main fuel flow while fuel is on. Context: the source value is the F100 DEEC closed-loop AIRSTART minimum-flow stop; it is used
+        here as a global clamp (all regimes), which the source does not state'
+      evidence:
+        tag: 'TRANSFER: F100 DEEC'
+        source: texture_and_fault_gap_closure.md Q6 (DEEC closed-loop airstart minimum fuel 115 kg/h, NASA CP-2298 paper 8); use as a global clamp is an ASSUMPTION
+          (A-W1.3b-5)
+    wf_max:
+      value: 4500.0
+      units: lb/hour
+      description: Fuel-flow clamp (above the recorded maximum 3,120 lb/h)
+      evidence:
+        tag: ASSUMPTION
+        source: DASHlink FF max 3,120 lb/h (mb.json glitch values / param_table.csv)
+      sweep:
+      - 3500.0
+      - 6000.0
+      assumption_id: A-W2.4a-13
+    ps3_max:
+      value: 260.0
+      units: psi
+      description: PS3 maximum limiter (above the proxy cycle's take-off PS3 of about 190 psia)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy M07 design P3 1.32 MPa (A-W2.4a-1); limit not public
+      sweep:
+      - 220.0
+      - 320.0
+      assumption_id: A-W2.4a-13
+    ps3_min:
+      value: 0.0
+      units: psi
+      description: Optional PS3 minimum (0 = off, the default). When set, a floor on the governor branch only, below IRP, under the MIN protection limiters (AD-50).
+        The former MAX-branch reading gave no throttle authority below PLA ~60 at SLS and overspeed at altitude
+      evidence:
+        tag: ASSUMPTION
+        source: 'interpretation of report §3 (''-400 below IRP: overridden when PS3 <= 80 psia'', Frith 1985 Fig. 28); what the -400 override does is not public;
+          AD-50'
+      sweep:
+      - 0.0
+      - 90.0
+      assumption_id: A-W1.3b-5
+    t5lim_t1_x:
+      table:
+        file: t5lim_t1.csv
+        column: t1_k
+      units: K
+      description: Breakpoints (T1) of the T5 limit (flat)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy limits not public
+      sweep:
+      - 200.0
+      - 400.0
+      assumption_id: A-W2.4a-13
+    t5lim_t1_y:
+      table:
+        file: t5lim_t1.csv
+        column: t5_degc
+      units: degC
+      description: T5 limit 800 degC (above the recorded maximum 732 degC)
+      evidence:
+        tag: ASSUMPTION
+        source: DASHlink EGT global max 732 degC (param_table.csv)
+      sweep:
+      - 750.0
+      - 900.0
+      assumption_id: A-W2.4a-13
+    t5_lim_p0_k:
+      value: 0.0
+      units: K/Pa
+      description: 'P0 trim of the T5 limit: T5_lim = f(T1) + k * (P_std - P0); sign and size not public'
+      evidence:
+        tag: ASSUMPTION
+        source: architecture §6 M08 (A8 holds T5 = f(T1, P0)); TM-104247 via f404 notes Q4
+      sweep:
+      - -0.0002
+      - 0.0002
+      assumption_id: A-W1.3b-5
+    t5_fuel_margin:
+      value: 20.0
+      units: K
+      description: Margin of the T5 fuel limiter above the nozzle T5 target (the nozzle acts first)
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 inference (T5 max on Wf as backup to the A8 T5 loop); value not public
+      sweep:
+      - 5.0
+      - 40.0
+      assumption_id: A-W1.3b-5
+    a8_pla_x:
+      table:
+        file: a8_pla.csv
+        column: pla_deg
+      units: deg
+      description: Breakpoints of the (fixed) nozzle command
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: AD-43 fixed nozzles; configs/proxy_dashlink/params/M07.yaml
+    a8_pla_y:
+      table:
+        file: a8_pla.csv
+        column: a8_in2
+      units: inch**2
+      description: Nozzle command = the fixed core nozzle area of the proxy design (the separate_fixed engine ignores the command)
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: proxy M07 design closure a8 (A-W2.4a-2)
+    a8_scale:
+      value: 1.0
+      units: '1'
+      description: No scaling of the fixed nozzle command
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: AD-43 fixed nozzles
+    a8_min:
+      value: 169.18017531273483
+      units: inch**2
+      description: Nozzle command floor = the fixed core nozzle area
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: proxy M07 design closure a8
+    a8_max:
+      value: 170.18017531273483
+      units: inch**2
+      description: Nozzle command ceiling (fixed nozzle; 1 in2 above the floor for a valid interval)
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: proxy M07 design closure a8
+    a8_kp:
+      value: 2.0
+      units: '1'
+      description: Nozzle T5 loop proportional gain (fraction of the A8 floor per fraction of T5 error)
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (A8 modulated to hold T5 at/above IRP; nozzle loop limit cycle 1-2 Hz is a known tuning fault, texture_and_fault_gap_closure Q6); gains
+          not public
+      sweep:
+      - 0.0
+      - 10.0
+      assumption_id: A-W1.3b-3
+    a8_ki:
+      value: 5.0
+      units: 1/s
+      description: Nozzle T5 loop integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as a8_kp
+      sweep:
+      - 0.1
+      - 20.0
+      assumption_id: A-W1.3b-3
+    a8_preopen:
+      value: 0.05
+      units: '1'
+      description: Nozzle pre-open fraction during the afterburner light-off sequence
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q4 (TP-3001: nozzle opens slightly above the IRT position before AB fuel); value not public'
+      sweep:
+      - 0.02
+      - 0.15
+      assumption_id: A-W1.3b-9
+    a8_safe:
+      value: 0.1
+      units: '1'
+      description: Open bias of the nozzle 'safe' position when T5 is not usable (T5 loop off)
+      evidence:
+        tag: ASSUMPTION
+        source: 'report §9 (accommodation: force actuators safe); value not public'
+      sweep:
+      - 0.0
+      - 0.2
+      assumption_id: A-W1.3b-13
+    t5_reset:
+      value: 30.0
+      units: K
+      description: Temporary lowering of the T5 target during AB light-off
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q4 (TP-3001: T5 schedule temporarily reset lower during light-off); value not public'
+      sweep:
+      - 10.0
+      - 60.0
+      assumption_id: A-W1.3b-9
+    ab_ru_light:
+      value: 5.5
+      units: lb/hour/psi
+      description: Afterburner light-off fuel in ratio units (pilot + minimum main AB fuel)
+      evidence:
+        tag: 'TRANSFER: F404-402'
+        source: 'f404 notes Q4 (NAWCADPAX/RTR-2001/1 p.9: 5.5 ratio units needed to start AB)'
+    ab_ru_x:
+      table:
+        file: ab_ru_pla.csv
+        column: pla_deg
+      units: deg
+      description: AB schedule breakpoints beyond the lever range (no afterburner)
+      evidence:
+        tag: ASSUMPTION
+        source: AD-43 (non-afterburning); Tejas table values kept and unused
+      sweep:
+      - 140.0
+      - 150.0
+      assumption_id: A-W2.4a-13
+    ab_ru_y:
+      table:
+        file: ab_ru_pla.csv
+        column: ru_pph_psi
+      units: lb/hour/psi
+      description: AB fuel ratio units Wfab/PS3 vs PLA
+      evidence:
+        tag: ASSUMPTION
+        source: 'max-AB anchor: IN20 closure AB fuel 2.4-2.7 kg/s at SLS (f404 notes Q1) over PS3 ~ 390 psia; -402 holds 20.5 RU in snaps (NAWCADPAX/RTR-2001/1)'
+      sweep:
+      - 10.0
+      - 50.0
+      assumption_id: A-W1.3b-4
+    ab_ru_rate:
+      value: 10.0
+      units: lb/hour/psi/s
+      description: AB ratio-unit ramp rate after light-off
+      evidence:
+        tag: ASSUMPTION
+        source: texture_and_fault_gap_closure Q6 (F100 DEEC full AB sequencing 4.2-4.4 s, TM-86745)
+      sweep:
+      - 5.0
+      - 40.0
+      assumption_id: A-W1.3b-9
+    ab_perm_n1:
+      value: 0.03
+      units: '1'
+      description: AB permission when N1 is within this fraction of its limit
+      evidence:
+        tag: 'TRANSFER: F404-402'
+        source: report §3; f404 notes Q4 (AB held off until fan speed within 3 % of its limit, NAWCADPAX/RTR-2001/1)
+    fvg_x:
+      table:
+        file: fvg_n1c.csv
+        column: n1c
+      units: '1'
+      description: 'Fan VG schedule breakpoints (no fan VG: flat)'
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: configs/proxy_dashlink/params/M07.yaml fvg_ref (flat zero, A-W2.4a-1)
+    fvg_y:
+      table:
+        file: fvg_n1c.csv
+        column: fvg_deg
+      units: deg
+      description: Fan VG schedule (flat zero, equal to M07's reference)
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: configs/proxy_dashlink/params/M07.yaml fvg_ref_angle
+    cvg_x:
+      table:
+        file: cvg_n2c.csv
+        column: n2c25
+      units: '1'
+      description: HPC stator schedule breakpoints on M08's axis (N2/sqrt(theta25) / 100 %), = M07's reference schedule
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: derived from the proxy M07 separate_fixed model by phalanx.proxy.schedules.derive_tables (SLS steady operating line; AD-50 harmonisation of the ratio-unit
+          schedules with M07); regenerated and compared by tests/unit/test_proxy_config.py
+    cvg_y:
+      table:
+        file: cvg_n2c.csv
+        column: cvg_deg
+      units: deg
+      description: HPC stator angles = M07's reference schedule (A-W1.3a-12 convention)
+      evidence:
+        tag: 'TRANSFER: proxy M07 separate_fixed'
+        source: configs/proxy_dashlink/params/M07.yaml cvg_ref_angle
+  autothrottle:
+    at_kp:
+      value: 0.8890
+      units: '1'
+      description: 'Proxy-mode autothrottle outer loop: N2/sqrt(theta25) demand per fraction of N1 error (proportional)'
+      evidence:
+        tag: MEASURED
+        source: "W2.4a-2 stage 5 (analysis/proxy_quicklook/results/stage5): staged indirect transient-weighted output-error identification on 687-CAL, n = 4 A/T windows of 120 s (st5_segments.py), shape residual (per window offset and gain removed); stage 0 (autothrottle gains on the N1 and N2 words, governor and plant held; cost -70 %); not converged in 6 iterations (at_rate still moving); outside the W1 sweep ranges, which were widened"
+      sweep:
+      - 0.0
+      - 2.0
+      assumption_id: A-W1.3b-10
+    at_ki:
+      value: 0.4156
+      units: 1/s
+      description: Autothrottle outer loop integral gain
+      evidence:
+        tag: MEASURED
+        source: as at_kp
+      sweep:
+      - 0.0
+      - 1.0
+      assumption_id: A-W1.3b-10
+    at_rate:
+      value: 0.8282
+      units: 1/s
+      description: Autothrottle N2c demand rate limit
+      evidence:
+        tag: MEASURED
+        source: as at_kp (the W1 placeholder 0.05 1/s and the MF1 base 0.1 1/s left the model N1 1-3 s behind the real response to the N1 command)
+      sweep:
+      - 0.01
+      - 2.0
+      assumption_id: A-W1.3b-10
+  validator:
+    range_lo_n1:
+      value: -0.01
+      units: '1'
+      description: N1 low range-fail threshold (fraction; below any reading, i.e. disabled - speeds read >= 0)
+      evidence:
+        tag: ASSUMPTION
+        source: 'report §9 (range check: fail outside physical range); ENG.N1 range 0-115 % (dictionary)'
+      sweep:
+      - -0.01
+      - 0.0
+      assumption_id: A-W1.3b-6
+    range_hi_n1:
+      value: 1.15
+      units: '1'
+      description: N1 high range-fail threshold (reading at or above the saturated span top)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: 'dictionary ENG.N1 range 0-115 % (f404 notes Q3: 10,683 Hz = 115 %)'
+    range_lo_n2:
+      value: -0.01
+      units: '1'
+      description: N2 low range-fail threshold (disabled, as N1)
+      evidence:
+        tag: ASSUMPTION
+        source: as range_lo_n1
+      sweep:
+      - -0.01
+      - 0.0
+      assumption_id: A-W1.3b-6
+    range_hi_n2:
+      value: 1.1
+      units: '1'
+      description: N2 high range-fail threshold (span top)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: dictionary ENG.N2 range 0-110 %
+    range_lo_t1:
+      value: -54.0
+      units: degC
+      description: T1 low range-fail threshold (span bottom)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: dictionary ENG.T1 range -54..149 degC (f404 notes Q3)
+    range_hi_t1:
+      value: 149.0
+      units: degC
+      description: T1 high range-fail threshold (span top)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: dictionary ENG.T1 range -54..149 degC
+    range_lo_t25:
+      value: -54.0
+      units: degC
+      description: T25 low range-fail threshold (span bottom)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: dictionary ENG.T25 range -54..280 degC
+    range_hi_t25:
+      value: 280.0
+      units: degC
+      description: T25 high range-fail threshold (span top)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: 'dictionary ENG.T25 range -54..280 degC (f404 notes Q3: -65 to 535 degF)'
+    range_lo_ps3:
+      value: 0.0
+      units: psi
+      description: PS3 low range-fail threshold (span bottom)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: dictionary ENG.PS3 range 0-500 psi (f404 notes Q3)
+    range_hi_ps3:
+      value: 500.0
+      units: psi
+      description: PS3 high range-fail threshold (span top)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: dictionary ENG.PS3 range 0-500 psi
+    range_lo_t5:
+      value: 0.0
+      units: K
+      description: 'T5 low range-fail threshold: disabled (start and shutdown T5 lie below the 371 degC span bottom)'
+      evidence:
+        tag: ASSUMPTION
+        source: dictionary ENG.T5 range 371-871 degC (700-1,600 degF harness span, CR-1998-208416); a low check would fail every start
+      sweep:
+      - 0.0
+      - 644.15
+      assumption_id: A-W1.3b-6
+    range_hi_t5:
+      value: 1000.0
+      units: degC
+      description: T5 range-fail high limit = top of the proxy harness range
+      evidence:
+        tag: MEASURED
+        source: 'proxy dictionary ENG.T5.HARNESS_A range 0-1000 degC (R-RANGE-EGT-PROXY: DASHlink EGT 0-732 degC)'
+    rate_n1:
+      value: 1.5
+      units: 1/s
+      description: N1 rate-check bound (fraction of 100 % per s); above the fastest physical event (blade liberation 95 -> 15 % in 0.6 s)
+      evidence:
+        tag: ASSUMPTION
+        source: 'report §9 (rate check: physical bound for 4 frames); texture_and_fault_gap_closure Q6 (F110 fan speed 95 -> 15 % in 0.6 s)'
+      sweep:
+      - 0.5
+      - 3.0
+      assumption_id: A-W1.3b-6
+    rate_n2:
+      value: 1.5
+      units: 1/s
+      description: N2 rate-check bound (fraction per s)
+      evidence:
+        tag: ASSUMPTION
+        source: as rate_n1
+      sweep:
+      - 0.5
+      - 3.0
+      assumption_id: A-W1.3b-6
+    rate_t1:
+      value: 50.0
+      units: K/s
+      description: T1 rate-check bound
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; inlet total temperature cannot change faster than ram/altitude transients allow
+      sweep:
+      - 10.0
+      - 200.0
+      assumption_id: A-W1.3b-6
+    rate_t25:
+      value: 100.0
+      units: K/s
+      description: T25 rate-check bound
+      evidence:
+        tag: ASSUMPTION
+        source: report §9
+      sweep:
+      - 20.0
+      - 400.0
+      assumption_id: A-W1.3b-6
+    rate_ps3:
+      value: 1000.0
+      units: psi/s
+      description: PS3 rate-check bound; a pop stall (85 -> 12 psia in one sample) exceeds it for one frame only, so 4-frame persistence keeps the lanes
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; texture_and_fault_gap_closure Q6 (pop stall PS3 85 -> 10-15 psia in one sample, ~75 psia within 0.3 s, TM-104328)
+      sweep:
+      - 300.0
+      - 5000.0
+      assumption_id: A-W1.3b-6
+    rate_t5:
+      value: 500.0
+      units: K/s
+      description: T5 rate-check bound (harness-averaged reading)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; thermocouple tau 1.3-3.9 s (f404 notes Q6) bounds the measured rate
+      sweep:
+      - 100.0
+      - 2000.0
+      assumption_id: A-W1.3b-6
+    xc_tol_n1:
+      value: 0.02
+      units: '1'
+      description: N1 cross-channel tolerance (fraction of 100 %)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (tolerance ~2 sigma or 15 % FS plus a rate term); -400 aircraft 2-sigma XN1 154 rpm = 1.2 % (Henry, f404 notes Q3)
+      sweep:
+      - 0.0116
+      - 0.1725
+      assumption_id: A-W1.3b-6
+    xc_tol_n2:
+      value: 0.02
+      units: '1'
+      description: N2 cross-channel tolerance (fraction of 100 %)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; -400 aircraft 2-sigma XN2 138 rpm = 0.8 % (Henry)
+      sweep:
+      - 0.0082
+      - 0.165
+      assumption_id: A-W1.3b-6
+    xc_tol_t1:
+      value: 3.0
+      units: K
+      description: T1 cross-channel tolerance
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; -400 aircraft 2-sigma T1 1.3 K (Henry)
+      sweep:
+      - 1.3
+      - 30.45
+      assumption_id: A-W1.3b-6
+    xc_tol_t25:
+      value: 5.0
+      units: K
+      description: T25 cross-channel tolerance (unused while T25 is single-lane)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9
+      sweep:
+      - 1.0
+      - 50.0
+      assumption_id: A-W1.3b-6
+    xc_tol_ps3:
+      value: 5.0
+      units: psi
+      description: PS3 cross-channel tolerance
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; -400 aircraft 2-sigma PS3 1.2 psia (Henry)
+      sweep:
+      - 1.2
+      - 75.0
+      assumption_id: A-W1.3b-6
+    xc_tol_t5:
+      value: 15.0
+      units: K
+      description: T5 harness A/B cross-channel tolerance
+      evidence:
+        tag: ASSUMPTION
+        source: report §9; -400 T5 total system error +-18 degF (CR-1998-208416, f404 notes Q3)
+      sweep:
+      - 2.0
+      - 75.0
+      assumption_id: A-W1.3b-6
+    xc_rate_k:
+      value: 0.0166667
+      units: s
+      description: Cross-channel rate term (tolerance += this * max lane rate), one nominal frame of skew allowance
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (tolerance plus a rate term)
+      sweep:
+      - 0.0
+      - 0.1
+      assumption_id: A-W1.3b-6
+    safe_n1:
+      value: 1
+      units: '1'
+      description: Safer-value direction for N1 (+1 higher is safer -> less fuel)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (large disagreement -> use the safer value)
+      sweep:
+      - -1
+      - 1
+      assumption_id: A-W1.3b-6
+    safe_n2:
+      value: 1
+      units: '1'
+      description: Safer-value direction for N2 (+1)
+      evidence:
+        tag: ASSUMPTION
+        source: as safe_n1
+      sweep:
+      - -1
+      - 1
+      assumption_id: A-W1.3b-6
+    safe_t1:
+      value: -1
+      units: '1'
+      description: Safer-value direction for T1 (-1 lower is safer -> lower physical N1 limit)
+      evidence:
+        tag: ASSUMPTION
+        source: as safe_n1
+      sweep:
+      - -1
+      - 1
+      assumption_id: A-W1.3b-6
+    safe_t25:
+      value: -1
+      units: '1'
+      description: Safer-value direction for T25 (-1 lower is safer -> lower N2 demand)
+      evidence:
+        tag: ASSUMPTION
+        source: as safe_n1
+      sweep:
+      - -1
+      - 1
+      assumption_id: A-W1.3b-6
+    safe_ps3:
+      value: -1
+      units: '1'
+      description: Safer-value direction for PS3 (-1 lower is safer -> less fuel under ratio units)
+      evidence:
+        tag: ASSUMPTION
+        source: as safe_n1
+      sweep:
+      - -1
+      - 1
+      assumption_id: A-W1.3b-6
+    safe_t5:
+      value: 1
+      units: '1'
+      description: Safer-value direction for T5 (+1 higher is safer -> nozzle opens, fuel limited)
+      evidence:
+        tag: ASSUMPTION
+        source: as safe_n1
+      sweep:
+      - -1
+      - 1
+      assumption_id: A-W1.3b-6
+    n_range:
+      value: 4
+      units: '1'
+      description: Range-check persistence (consecutive frames)
+      evidence:
+        tag: ASSUMPTION
+        source: 'report §9 (FADEC range check: 3-5 frames)'
+      sweep:
+      - 3
+      - 5
+      assumption_id: A-W1.3b-6
+    n_rate:
+      value: 4
+      units: '1'
+      description: Rate-check persistence (consecutive frames)
+      evidence:
+        tag: 'TRANSFER: J85/TF30/PW2037 practice'
+        source: report §9 signal-validation table (rate check over 4 frames)
+    n_xc:
+      value: 4
+      units: '1'
+      description: Cross-channel disagreement persistence (consecutive frames)
+      evidence:
+        tag: 'TRANSFER: FCS cross-channel practice'
+        source: report §9 (persistence 4 frames (FCS))
+    heal_frames:
+      value: 10
+      units: '1'
+      description: Good frames needed to heal an analytical or cross-channel failure
+      evidence:
+        tag: 'TRANSFER: FADEC signal-validation template'
+        source: report §9 (heal after 10 good frames)
+    lane_heal_frames:
+      value: 10
+      units: '1'
+      description: Good frames needed to heal a lane range/rate failure (the template heal rule applied to lanes)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (heal after 10 good frames, stated for the analytical check)
+      sweep:
+      - 10
+      - 1000000
+      assumption_id: A-W1.3b-6
+    an_tol_steady:
+      value: 0.25
+      units: '1'
+      description: Analytical-check relative tolerance, steady
+      evidence:
+        tag: 'TRANSFER: FADEC signal-validation template'
+        source: report §9 (25 % steady)
+    an_tol_transient:
+      value: 0.45
+      units: '1'
+      description: Analytical-check relative tolerance, transient
+      evidence:
+        tag: 'TRANSFER: FADEC signal-validation template'
+        source: report §9 (45 % transient)
+    an_persist:
+      value: 0.5
+      units: s
+      description: Analytical-check persistence before substitution
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 gives no persistence for the analytical row; 0.5 s is borrowed from its cross-channel row (persistence 0.5 s, diagnostics)
+      sweep:
+      - 0.1
+      - 2.0
+      assumption_id: A-W1.3b-6
+    hold_time:
+      value: 0.1
+      units: s
+      description: Hold of the last good value after all lanes of a sensor fail, before substitution
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (both out -> hold and revert); hold duration not public
+      sweep:
+      - 0.0
+      - 0.5
+      assumption_id: A-W1.3b-6
+    max_subst:
+      value: 3
+      units: '1'
+      description: Maximum simultaneously substituted sensors; more is a second like failure -> reversion
+      evidence:
+        tag: 'TRANSFER: F404 FADEC FICA'
+        source: report §9 (substitute <= 3 sensors on F404 FICA); f404 notes Q3 (SAE 821371)
+    trim_tau:
+      value: 20.0
+      units: s
+      description: Time constant of the on-board model's adaptive trims (PROXY on-board model)
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (analytical comparison with a model; adaptive thresholds); FICA real-time model not public
+      sweep:
+      - 5.0
+      - 100.0
+      assumption_id: A-W1.3b-7
+    trans_n2dot:
+      value: 0.02
+      units: 1/s
+      description: 'Transient flag: |dN2/dt| above this (fraction per s) selects the 45 % tolerance'
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (steady vs transient tolerance); threshold not public
+      sweep:
+      - 0.005
+      - 0.1
+      assumption_id: A-W1.3b-6
+    trans_pla_rate:
+      value: 5.0
+      units: deg/s
+      description: 'Transient flag: PLA rate above this selects the 45 % tolerance'
+      evidence:
+        tag: ASSUMPTION
+        source: as trans_n2dot
+      sweep:
+      - 1.0
+      - 20.0
+      assumption_id: A-W1.3b-6
+    vm_tol_scale:
+      value: 1.0
+      units: '1'
+      description: 'Injectable validator failure mode ''tolerance too wide'': multiplies cross-channel and analytical tolerances (1 = nominal)'
+      evidence:
+        tag: ASSUMPTION
+        source: report §9 (failure modes of the validator itself, inject deliberately); architecture §6 M08
+      sweep:
+      - 1.0
+      - 10.0
+      assumption_id: A-W1.3b-12
+    vm_persist_scale:
+      value: 1.0
+      units: '1'
+      description: 'Injectable failure mode ''persistence too long'': multiplies range, rate, cross-channel and analytical persistence (1 = nominal)'
+      evidence:
+        tag: ASSUMPTION
+        source: as vm_tol_scale
+      sweep:
+      - 1.0
+      - 20.0
+      assumption_id: A-W1.3b-12
+    vm_skew_frames:
+      value: 0
+      units: '1'
+      description: 'Injectable failure mode ''asynchronous skew'': lane B compared this many frames late (0 = nominal)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'as vm_tol_scale (AFTI: 15 false channel failures for 1 real)'
+      sweep:
+      - 0
+      - 8
+      assumption_id: A-W1.3b-12
+    vm_wrap:
+      value: 0
+      units: '1'
+      description: 'Injectable failure mode ''scaling wrap-around'': readings beyond the span wrap back into it (0 = nominal)'
+      evidence:
+        tag: ASSUMPTION
+        source: as vm_tol_scale
+      sweep:
+      - 0
+      - 1
+      assumption_id: A-W1.3b-12
+    vm_analytic:
+      value: 0
+      units: '1'
+      description: Analytical check enabled (0 = disabled, the default until an M07-derived on-board model exists - AD-50; common-mode faults then pass every check)
+      evidence:
+        tag: ASSUMPTION
+        source: AD-50 (the obm_* tables are fixture-matched; on the real M07 they raise false PS3 failures whose substitution hangs a chop); W2.1 acceptance item
+      sweep:
+      - 0
+      - 1
+      assumption_id: A-W1.3b-12
+    obm_n1_n2_x:
+      table:
+        file: obm_n1_n2.csv
+        column: n2c
+      units: '1'
+      description: 'On-board model (PROXY): N2/sqrt(theta1) breakpoints of the N1c-N2c relation'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; f404 notes Q3 (FICA real-time model substitution, SAE 821371); anchors Henry take-off N1 79.6 % / N2 84.5 % and
+          RM12 NL 64 % / NH 80 % (f404 notes Q5/Q6)'
+      sweep:
+      - 0.3
+      - 1.06
+      assumption_id: A-W1.3b-7
+    obm_n1_n2_y:
+      table:
+        file: obm_n1_n2.csv
+        column: n1c
+      units: '1'
+      description: 'On-board model (PROXY): corrected N1 vs corrected N2'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; as obm_n1_n2_x'
+      sweep:
+      - 0.15
+      - 1.08
+      assumption_id: A-W1.3b-7
+    obm_pr3_x:
+      table:
+        file: obm_pr3.csv
+        column: n2c
+      units: '1'
+      description: 'On-board model (PROXY): N2/sqrt(theta1) breakpoints of PS3/P0'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; OPR 28 at MIL (GE, DIRECT, f404 notes Q1); adaptive trim absorbs ram and recovery'
+      sweep:
+      - 0.3
+      - 1.06
+      assumption_id: A-W1.3b-7
+    obm_pr3_y:
+      table:
+        file: obm_pr3.csv
+        column: ps3_over_p0
+      units: '1'
+      description: 'On-board model (PROXY): PS3/P0 vs corrected N2'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; as obm_pr3_x'
+      sweep:
+      - 1.0
+      - 31.0
+      assumption_id: A-W1.3b-7
+    obm_t25_x:
+      table:
+        file: obm_t25.csv
+        column: n1c
+      units: '1'
+      description: 'On-board model (PROXY): corrected N1 breakpoints of T25/T1'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; f404 notes Q5 T5 (CR-191195 Fig. 33: T2.5 ~105 degF at idle, 375-380 degF at high power)'
+      sweep:
+      - 0.15
+      - 1.1
+      assumption_id: A-W1.3b-7
+    obm_t25_y:
+      table:
+        file: obm_t25.csv
+        column: t25_over_t1
+      units: '1'
+      description: 'On-board model (PROXY): T25/T1 vs corrected N1'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; as obm_t25_x'
+      sweep:
+      - 1.0
+      - 1.7
+      assumption_id: A-W1.3b-7
+    obm_t5_x:
+      table:
+        file: obm_t5.csv
+        column: n2c
+      units: '1'
+      description: 'On-board model (PROXY): N2/sqrt(theta1) breakpoints of T5/T1'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; f404 notes Q5 T5 (CR-191195 Fig. 33: T5 ~768 degF ground idle, ~1,500 degF at MIL)'
+      sweep:
+      - 0.3
+      - 1.06
+      assumption_id: A-W1.3b-7
+    obm_t5_y:
+      table:
+        file: obm_t5.csv
+        column: t5_over_t1
+      units: '1'
+      description: 'On-board model (PROXY): T5/T1 vs corrected N2'
+      evidence:
+        tag: ASSUMPTION
+        source: 'FIXTURE-MATCHED (AD-50): values were set against the W1 TEST FIXTURE plant (tests/fadec_fixture.py), so agreement with that plant is circular; replace
+          by M07-derived steady sweeps in W2.1/W2.3; as obm_t5_x'
+      sweep:
+      - 2.0
+      - 4.0
+      assumption_id: A-W1.3b-7
+  monitors:
+    ign_lo:
+      value: 0.1
+      units: '1'
+      description: Ignition permissive lower N2 bound (fraction); fuel on while starting only at or above it
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: f404 notes Q6/Q7 (ignition permissive at NH 10-45 %, CR-1998-208416 §7.2.5)
+    ign_hi:
+      value: 0.45
+      units: '1'
+      description: Ignition permissive upper N2 bound (igniters off above it in a start)
+      evidence:
+        tag: 'TRANSFER: F404-400'
+        source: as ign_lo
+    n2_run:
+      value: 0.6
+      units: '1'
+      description: Corrected N2 (N2/sqrt(theta1), fraction) above which a start is complete (RUNNING); also the hung-start and sub-idle-mode threshold
+      evidence:
+        tag: 'TRANSFER: F404-400 (NASA)'
+        source: f404 notes Q7 (NASA hung-start rule N2 < 60 %, TM-101702)
+    hs_window:
+      value: 1.0
+      units: s
+      description: 'Hung-start rule: N2 < n2_run and not rising for this long'
+      evidence:
+        tag: 'TRANSFER: F404-400 (NASA)'
+        source: f404 notes Q7 (not increasing for 1 s, TM-101702)
+    hs_timeout:
+      value: 35.0
+      units: s
+      description: 'Hung-start rule: N2 < n2_run for this long while starting'
+      evidence:
+        tag: 'TRANSFER: F404-400 (NASA)'
+        source: f404 notes Q7 (or N2 < 60 % for 35 s, TM-101702)
+    hs_pla_lo:
+      value: 14.0
+      units: deg
+      description: Hung-start 1-s rule applies only with PLA at or above this (lower edge of the start band)
+      evidence:
+        tag: 'TRANSFER: NASA F404-400 monitoring rule'
+        source: 'f404 notes Q7 (NASA hung-start rule: N2 < 60 % and not increasing for 1 s with PLA between 14 and 24 deg, TM-101702)'
+    hs_pla_hi:
+      value: 24.0
+      units: deg
+      description: Hung-start 1-s rule applies only with PLA at or below this (upper edge of the start band)
+      evidence:
+        tag: 'TRANSFER: NASA F404-400 monitoring rule'
+        source: as hs_pla_lo
+    hs_deadband:
+      value: 0.001
+      units: 1/s
+      description: '''Not rising'' means filtered dN2/dt at or below this (fraction per s); keeps quantisation from resetting the window'
+      evidence:
+        tag: ASSUMPTION
+        source: N2 lane LSB 0.03125 % (dictionary); deadband not public
+      sweep:
+      - 0.0
+      - 0.005
+      assumption_id: A-W1.3b-8
+    n2dot_tau:
+      value: 0.25
+      units: s
+      description: Time constant of the filtered N2 rate used by the hung-start, flameout and transient logic
+      evidence:
+        tag: ASSUMPTION
+        source: not public
+      sweep:
+      - 0.05
+      - 1.0
+      assumption_id: A-W1.3b-8
+    fo_t5_x:
+      table:
+        file: t5fo_pla.csv
+        column: pla_deg
+      units: deg
+      description: Flameout T5/T1 reference breakpoints (flat)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy flameout logic not public; the detector must not fire on a running proxy engine (idle T5/T1 down to about 1.8 at altitude)
+      sweep:
+      - 0.0
+      - 150.0
+      assumption_id: A-W2.4a-13
+    fo_t5_y:
+      table:
+        file: t5fo_pla.csv
+        column: t5_over_t1
+      units: '1'
+      description: Flameout reference T5/T1 = 1.2 (below every running ratio of the proxy engine)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy M07 operating line (idle T5/T1 about 2.4 at SLS, 1.8 at altitude)
+      sweep:
+      - 1.0
+      - 1.6
+      assumption_id: A-W2.4a-13
+    fo_n2dot:
+      value: -0.03
+      units: 1/s
+      description: Flameout N2-deceleration threshold (filtered dN2/dt below this, fraction per s)
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (N2 decel rate exceeds a set value); RM12 NH 80 -> 64 % in ~1 s after flameout
+      sweep:
+      - -0.1
+      - -0.01
+      assumption_id: A-W1.3b-8
+    fo_detect:
+      value: 0.05
+      units: s
+      description: Flameout condition persistence before declaring
+      evidence:
+        tag: ASSUMPTION
+        source: not public
+      sweep:
+      - 0.0
+      - 0.5
+      assumption_id: A-W1.3b-8
+    fo_confirm:
+      value: 2.0
+      units: s
+      description: Relight confirmation hold (ignition stays on until T5 recovered for this long)
+      evidence:
+        tag: ASSUMPTION
+        source: 'f404 notes Q4 (RM12: igniters latched until T5 recovers, held on longer to confirm stable burning, SHK RM 2019:02)'
+      sweep:
+      - 0.5
+      - 5.0
+      assumption_id: A-W1.3b-8
+    fo_hyst:
+      value: 0.05
+      units: '1'
+      description: Relight-confirmation hysteresis on the flameout T5 reference (fraction)
+      evidence:
+        tag: ASSUMPTION
+        source: not public
+      sweep:
+      - 0.0
+      - 0.2
+      assumption_id: A-W1.3b-8
+    fo_t5_min:
+      value: 50.0
+      units: degC
+      description: Flameout absolute T5 floor (below every running proxy T5)
+      evidence:
+        tag: ASSUMPTION
+        source: proxy M07 idle T5 at 9 km about 175 degC; Tejas 381 degC would flag running idle at altitude
+      sweep:
+      - 0.0
+      - 150.0
+      assumption_id: A-W2.4a-13
+    fo_dem_margin:
+      value: 0.05
+      units: '1'
+      description: Flameout also requires corrected N2 below the previous frame's corrected-N2 demand by this margin (a chop decelerates towards a lower demand; a
+        flameout falls through it)
+      evidence:
+        tag: ASSUMPTION
+        source: not public; f404 notes Q4 (decel-rate criterion alone; KSAS 2006). Added because the T5 reference is floored at the harness span bottom (fo_t5_min)
+          and a cold-day chop to idle otherwise reads as a flameout (fixture chop undershoot up to ~3.5 % below the idle demand)
+      sweep:
+      - 0.02
+      - 0.08
+      assumption_id: A-W1.3b-8
+    nd_sched:
+      value: 0.02
+      units: 1/s
+      description: 'Sub-idle start/relight: scheduled N2 rate (fraction per s) held by fuel after light-off (DEEC-style airstart logic)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'texture_and_fault_gap_closure Q6 (F100 DEEC airstarts: after light-off fuel is modulated to hold a scheduled N2 rate, CP-2298 paper 8); f404 notes
+          Q6 (T-50 -102 airstarts reach idle in 5.4-26 s from 24-70 % N2, i.e. ~1-4 %/s, KSAS 2006)'
+      sweep:
+      - 0.005
+      - 0.04
+      assumption_id: A-W1.3b-18
+    nd_kp:
+      value: 0.5
+      units: '1'
+      description: Sub-idle N2-rate governor proportional gain (ratio units per unit normalised rate error)
+      evidence:
+        tag: ASSUMPTION
+        source: 'not public (DEEC airstart loop gains: CP-2298 notes oscillation from slightly high gains)'
+      sweep:
+      - 0.0
+      - 2.0
+      assumption_id: A-W1.3b-18
+    nd_ki:
+      value: 0.5
+      units: 1/s
+      description: Sub-idle N2-rate governor integral gain
+      evidence:
+        tag: ASSUMPTION
+        source: as nd_kp
+      sweep:
+      - 0.1
+      - 2.0
+      assumption_id: A-W1.3b-18
+    t5_start_lim:
+      value: 760.0
+      units: degC
+      description: 'Sub-idle start/relight T5 limit: fuel is trimmed back above it (start over-temperature protection)'
+      evidence:
+        tag: 'TRANSFER: F100 DEEC'
+        source: texture_and_fault_gap_closure Q6 (DEEC airstart fuel trimmed back if FTIT exceeds about 760 degC, CP-2298 paper 8); F404 maximum start EGT is restricted/unreplaced
+          (report Appendix A1) and NOT used; FTIT vs T5 station difference makes this an ASSUMPTION
+      sweep:
+      - 600.0
+      - 830.0
+      assumption_id: A-W1.3b-18
+    n2_subidle:
+      value: 0.6
+      units: '1'
+      description: Sub-idle monitor threshold (corrected N2/sqrt(theta1) fraction, RUNNING with fuel on, PLA at or above ground idle)
+      evidence:
+        tag: ASSUMPTION
+        source: 'texture_and_fault_gap_closure Q6 (F-16 AIB quoting: ENGINE light below 60 %, indicative)'
+      sweep:
+      - 0.5
+      - 0.65
+      assumption_id: A-W1.3b-8
+    si_time:
+      value: 10.0
+      units: s
+      description: Sub-idle persistence before the code
+      evidence:
+        tag: 'TRANSFER: F110-GE-100'
+        source: 'texture_and_fault_gap_closure Q6 (F-16C 88-0433 UTTR AIB: core falls to sub-idle from +2 s, ENG 058 FLAMEOUT SUB-IDLE at +13 s, i.e. ~10 s persistence);
+          IN20 logic not public. The A3 cascade test is therefore a consistency check of this value, not an independent validation'
+      sweep:
+      - 3.0
+      - 12.0
+      assumption_id: A-W1.3b-8
+    stall_drop:
+      value: 0.4
+      units: '1'
+      description: Stall detection on a single-frame PS3 drop larger than this fraction
+      evidence:
+        tag: ASSUMPTION
+        source: texture_and_fault_gap_closure Q6 (pop stall PS3 85 -> 10-15 psia within one sample, TM-104328)
+      sweep:
+      - 0.2
+      - 0.7
+      assumption_id: A-W1.3b-8
+    stall_hold:
+      value: 3.0
+      units: s
+      description: Stall code held after detection (stall recovery window)
+      evidence:
+        tag: ASSUMPTION
+        source: texture_and_fault_gap_closure Q6 (pop-stall PS3 back to baseline in ~3 s)
+      sweep:
+      - 0.5
+      - 5.0
+      assumption_id: A-W1.3b-8
+    t5_ot:
+      value: 800.0
+      units: degC
+      description: Over-temperature exceedance monitor (= the proxy T5 limit)
+      evidence:
+        tag: ASSUMPTION
+        source: as t5lim_t1_y
+      sweep:
+      - 750.0
+      - 900.0
+      assumption_id: A-W2.4a-13
+    ot_time:
+      value: 1.0
+      units: s
+      description: Over-temperature persistence
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q9 (IECMS exceedances persist several iterations)
+      sweep:
+      - 0.1
+      - 3.0
+      assumption_id: A-W1.3b-8
+    n1_os:
+      value: 1.06
+      units: '1'
+      description: N1 overspeed exceedance threshold (fraction, physical)
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q9 (fan overspeed detection, CR-1998-208416 §7.2); value not public
+      sweep:
+      - 1.04
+      - 1.1
+      assumption_id: A-W1.3b-8
+    n2_os:
+      value: 1.06
+      units: '1'
+      description: N2 overspeed exceedance threshold (fraction, physical)
+      evidence:
+        tag: ASSUMPTION
+        source: as n1_os
+      sweep:
+      - 1.04
+      - 1.1
+      assumption_id: A-W1.3b-8
+    os_time:
+      value: 0.5
+      units: s
+      description: Overspeed persistence
+      evidence:
+        tag: ASSUMPTION
+        source: as n1_os
+      sweep:
+      - 0.1
+      - 2.0
+      assumption_id: A-W1.3b-8
+    ab_nolight:
+      value: 2.5
+      units: s
+      description: AB no-light declared if no light-off is detected this long after the AB request
+      evidence:
+        tag: 'TRANSFER: F100 DEEC'
+        source: texture_and_fault_gap_closure Q6 (no light within 2.5 s -> revert, retry; NASA TM-86745)
+    ab_max_retries:
+      value: 3
+      units: '1'
+      description: AB light-off retries before lockout
+      evidence:
+        tag: 'TRANSFER: F100 DEEC'
+        source: texture_and_fault_gap_closure Q6 (retried up to 3 times, TM-86745)
+    ab_retry:
+      value: 2.4
+      units: s
+      description: Wait after a no-light before the next attempt
+      evidence:
+        tag: ASSUMPTION
+        source: TM-86745 example retries at 6.1, 10.9 and 20.5 s (texture_and_fault_gap_closure Q6)
+      sweep:
+      - 2.3
+      - 7.1
+      assumption_id: A-W1.3b-9
+    ab_preopen:
+      value: 0.2
+      units: s
+      description: Nozzle pre-open time before AB ignition and fuel
+      evidence:
+        tag: ASSUMPTION
+        source: f404 notes Q4 (TP-3001 sequence); normal light 0.4-0.6 s after request (TM-86745)
+      sweep:
+      - 0.05
+      - 0.4
+      assumption_id: A-W1.3b-9
+    ab_blowout:
+      value: 0.1
+      units: s
+      description: Loss of the flame signal for this long while lit is a blowout
+      evidence:
+        tag: ASSUMPTION
+        source: texture_and_fault_gap_closure Q6 (DEEC blowout detection from loss of the UV light-off detector)
+      sweep:
+      - 0.03
+      - 0.5
+      assumption_id: A-W1.3b-9
+    # --- W2.1b merge: M08 kernel parameters added on wp/w2.1b-engine-fadec, NEUTRAL for the proxy (the W1.3b
+    # law; proxy.config loads the control/autothrottle/validator/monitors sets only, so they sit here)
+    ps3_lead:
+      value: 0.0
+      units: s
+      description: 'PS3-max rate anticipation (0 = none, the W1.3b PI limiter)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0.0
+      - 2.0
+      assumption_id: A-W2.1b-2
+    ps3dot_tau:
+      value: 0.25
+      units: s
+      description: 'PS3-rate filter of the PS3-max anticipation (= n2dot_tau; unused with ps3_lead 0)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0.05
+      - 2.0
+      assumption_id: A-W2.1b-2
+    n1dot_tau:
+      value: 0.25
+      units: s
+      description: 'N1-rate filter of the N1 anticipation (= n2dot_tau: the W1.3b filter)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0.05
+      - 2.0
+      assumption_id: A-W2.1b-2
+    n1_gs_t0:
+      value: 288.15
+      units: K
+      description: 'N1 gain schedule: T1 above which the gains rise (inactive with n1_gs_k 0)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 250.0
+      - 320.0
+      assumption_id: A-W2.1b-2
+    n1_gs_k:
+      value: 0.0
+      units: 1/K
+      description: 'N1 gain schedule slope (0 = unscheduled, W1.3b)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0.0
+      - 0.04
+      assumption_id: A-W2.1b-2
+    n1_gs_max:
+      value: 1.0
+      units: '1'
+      description: 'N1 gain schedule cap (1 = unscheduled)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 1.0
+      - 2.5
+      assumption_id: A-W2.1b-2
+    n1_gs_pexp:
+      value: 0.0
+      units: '1'
+      description: 'N1 gain ambient-pressure exponent (0 = unscheduled, W1.3b)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0.0
+      - 1.0
+      assumption_id: A-W2.1b-2
+    n1_gs_pmax:
+      value: 1.0
+      units: '1'
+      description: 'N1 gain ambient-pressure factor cap (1 = unscheduled)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 1.0
+      - 3.0
+      assumption_id: A-W2.1b-2
+    limiter_handoff:
+      value: 0
+      units: '1'
+      description: 'Bumpless hand-off mask past the limit (0 = the W1.3b IFB only)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0
+      - 31
+      assumption_id: A-W2.1b-2
+    fo_delta_min:
+      value: 1.0
+      units: '1'
+      description: 'Floor of P0/P_std in the flameout deceleration threshold (1 = the W1.3b SLS threshold at every altitude)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0.05
+      - 1.0
+      assumption_id: A-W2.1b-3
+    edge_hold:
+      value: 0
+      units: '1'
+      description: 'Span-floor hold mask (0 = none, W1.3b)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 0
+      - 63
+      assumption_id: A-W2.1b-6
+    fault_a8_gain:
+      value: 9.0
+      units: '1'
+      description: 'Nozzle T5-loop gain increment per unit nozzle_loop_gain_margin fault size (Tejas value; fault path only)'
+      evidence:
+        tag: ASSUMPTION
+        source: 'W2.1b merge (M08 kernel parameters added on wp/w2.1b-engine-fadec): NEUTRAL value for the proxy, which keeps the W1.3b limiter law and flameout threshold until W2.4a decides whether the proxy adopts the Tejas W2.1b retune'
+      sweep:
+      - 3.0
+      - 20.0
+      assumption_id: A-W2.1b-5
+  demand_premap:
+    f_pla_deg:
+      table: {file: demand_premap_f.csv, column: pla_deg}
+      units: deg
+      description: Knots (PLA) of the MEASURED lever-to-corrected-fuel map f_P of the fuel-control law (proxy demand pre-map, W2.4a-2)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S FFN2 (687-CAL; analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; an existing result, not a new fit) f_knots_x"}
+    f_wfc_lbh:
+      table: {file: demand_premap_f.csv, column: wfc_lbh}
+      units: lb/h
+      description: Corrected fuel at the f_P knots (monotone PCHIP, linear end extrapolation)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S FFN2 (687-CAL; analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; an existing result, not a new fit) f_knots_y"}
+    c_mach:
+      value: 249.16081046482734
+      units: lb/h
+      description: Mach term cM of the fuel-control law (corrected fuel per unit Mach, about M - 0.5)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S FFN2 (687-CAL; analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; an existing result, not a new fit) cM"}
+    c_lndelta:
+      value: -263.24344027743075
+      units: lb/h
+      description: Inlet total-pressure term cD of the fuel-control law (corrected fuel per unit ln delta)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S FFN2 (687-CAL; analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; an existing result, not a new fit) cD"}
+    c_theta:
+      value: -146.2954610066299
+      units: lb/h
+      description: Inlet total-temperature term cT of the fuel-control law (corrected fuel per unit theta - 1)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S FFN2 (687-CAL; analysis/settling_experiment_round2/results/frozen/S/ma_readable.json; an existing result, not a new fit) cT"}
+    table_mach:
+      value: 0.0
+      units: "1"
+      description: Flight condition (Mach; delta = theta = 1) at which the M08 PLA demand table is evaluated (phalanx.proxy.schedules.DEMAND_MACH, the ground reference); the pre-map adds the terms relative to it
+      evidence: {tag: ASSUMPTION, source: "W2.4a-2 (A-W2.4a-14): the table is built at the ground reference, where the lever governs the proxy engines"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W2.4a-14
+    idle_stop_pla:
+      value: 22.93928904650879
+      units: deg
+      description: Lever idle stop fed to M08 while the A/T is engaged (A/T floor option) - the first knot of the MEASURED f map (the 0.5th percentile of the CAL levers; DASHlink levers read 23-28 deg at idle)
+      evidence: {tag: MEASURED, source: "round-2 frozen M-A variant S FFN2 f_knots_x[0] (687-CAL); A-W2.4a-16 (idle lever readings)"}
+    at_floor_idle_stop:
+      value: 1
+      units: "1"
+      description: 1 = while the A/T is engaged M08 is fed the pre-mapped idle-stop lever and floors the A/T demand at its demand (M08 option at_floor_lever); 0 = the A/T demand floored at the table's lowest (ground-idle) demand
+      evidence: {tag: ASSUMPTION, source: "W2.4a-2 stage 2 finding (minimum-fuel clamp 0.7-7.5 % of CAL flights in A/T idle descents; CAL in-flight steady fuel >= 296 lb/h); coordinator decision (audit #138)"}
+      sweep: [0, 1]
+      assumption_id: A-W2.4a-14

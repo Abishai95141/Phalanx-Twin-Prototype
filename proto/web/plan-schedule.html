@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Plan schedule — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: flex; flex-direction: column; gap: 24px; height: 100%; }
+  .tabs2 span { cursor: pointer; }
+  .tabs2 .tab-meta { margin-left: auto; font-size: 13px; color: var(--ink-4); font-weight: 500; padding: 0 0 14px; cursor: default; }
+  .g { flex: 1; min-height: 0; grid-template-rows: 392px minmax(0, 1fr); height: auto; }
+  .gantt { grid-row: span 2; }
+  .head2 { display: flex; align-items: flex-start; gap: 16px; }
+  .head2 .grow { flex: 1; }
+  .lead { display: flex; align-items: flex-end; gap: 32px; margin-top: 30px; }
+  .legend2 { display: flex; gap: 22px; font-size: 13px; color: var(--ink-3); margin-left: auto; padding-bottom: 4px; }
+  .legend2 i { display: inline-block; vertical-align: -1px; margin-right: 7px; }
+  #gantt { margin-top: 40px; flex: 1; min-height: 0; }
+  .bind .r2 { grid-template-columns: 30px minmax(0, 1fr) auto; min-height: 76px; }
+  .bind .r2 > svg { color: var(--ink-3); width: 18px; height: 18px; }
+  .sweep { display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 0; margin-top: 18px; }
+  .sweep > div { display: contents; }
+  .sweep .k { font-size: 15px; color: var(--ink); padding: 11px 0; border-top: 1px solid var(--line-2); }
+  .sweep .k span { display: block; font-size: 13px; color: var(--ink-4); margin-top: 2px; }
+  .sweep .v { padding: 11px 0; border-top: 1px solid var(--line-2); display: flex; align-items: center; justify-content: flex-end; }
+  .sweep > div:first-child .k, .sweep > div:first-child .v { border-top: 0; }
+  .pend { display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--ink-3); border: 1px solid var(--line); }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; }
+    .g { flex: none; }
+    .gantt { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    .lead { flex-wrap: wrap; gap: 18px 32px; }
+    .legend2 { flex-wrap: wrap; gap: 8px 20px; }
+    #gantt { flex: none; height: 430px; margin-top: 30px; }
+    #gantt svg { display: block; overflow: visible; }
+    .sweep + .note { margin-top: 16px; }
+    .bind .r2 { grid-template-columns: 30px minmax(0,1fr); row-gap: 8px; padding-top: 14px; padding-bottom: 14px; min-height: 0; }
+    .bind .r2 > .auth { grid-column: 2; justify-self: start; }
+  }
+  @media (max-width: 699px) {
+    .tabs2 .tab-meta { display: none; }
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .head2 { flex-wrap: wrap; gap: 8px 12px; }
+    .lead { margin-top: 22px; }
+    .legend2 { margin-left: 0; }
+    #gantt { height: 420px; margin-top: 24px; }
+  }
+</style>
+</head>
+<body data-page="plan">
+<div id="content">
+<div class="pg">
+  <div class="tabs2"><span onclick="location.href='plan.html'">Plan vs status quo</span><span class="on">30-day schedule</span>
+    <span class="tab-meta">Epoch Mon 22 Jun 08:00 · horizon 22 Jun → 22 Jul</span></div>
+
+  <div class="v2 g">
+    <section class="panel2 c8 gantt" data-shot="gantt">
+      <div class="head2">
+        <div class="grow"><span class="kick">Next 30 days · as known at 06:00</span>
+          <div class="t2">Two aircraft are down all month; six stop only for servicing and tyres</div>
+          <div class="sub2">Servicing follows each aircraft's observed 16-day cycle; tyre changes follow its landing rate.</div></div>
+        <span class="tier pred">PRED</span>
+      </div>
+      <div class="lead">
+        <div><div class="big num" id="avail">6<small>of 8 available to fly</small></div>
+          <div class="ci" id="availCi"></div></div>
+        <div class="legend2">
+          <span><i style="width:10px;height:14px;border-radius:3px;background:var(--ink-4)"></i>Servicing</span>
+          <span><i style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></i>Tyre change</span>
+          <span><i style="width:18px;height:10px;border-radius:3px;background:var(--nmcs)"></i>Grounded</span>
+          <span><i class="hatch" style="width:18px;height:10px;border-radius:3px;border:1px solid var(--line)"></i>No return date</span>
+        </div>
+      </div>
+      <div id="gantt"></div>
+    </section>
+
+    <section class="panel2 c4 bind" data-shot="constraints">
+      <span class="kick">Binding constraints</span>
+      <div class="t2">Three things limit what this plan can do</div>
+      <div class="rows2" style="margin-top:12px" id="bind"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="sweeps">
+      <span class="kick">Assumptions swept</span>
+      <div class="t2">Does the answer hold? Not tested yet</div>
+      <div class="sweep" id="sweep"></div>
+      <div class="note push" id="sweepNote"></div>
+    </section>
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data-plan.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const P = window.PHX_PLAN, S = P.schedule, mono = 'JetBrains Mono';
+const avail = S.rows.filter(r => r.state === 'FMC').length;
+document.getElementById('avail').innerHTML = `${avail}<small>of 8 available to fly</small>`;
+document.getElementById('availCi').textContent = `${S.rows.reduce((a, r) => a + r.items.filter(i => i.kind === 'SRV-L1').length, 0)} servicings · ${S.rows.reduce((a, r) => a + r.items.filter(i => i.kind === 'TYRE').length, 0)} tyre changes projected · no flying programme on record`;
+
+// binding constraints
+const full = S.full_days;
+document.getElementById('bind').innerHTML = [
+  ['grid', `Hangar full on ${full.map(d => d.date).join(' and ')}`, `${full[0].tails.join(' and ')} servicing take both slots`, ''],
+  ['clock', 'No delivery date for TJ108’s chute', 'No ETA in supply records · grounded in all 30 runs', ''],
+  ['signature', 'Alarm filter needs a signature', 'Engineering officer signs before 08:00', '<span class="auth human"><i data-i="signature" class="ico-sm"></i>HUMAN</span>']
+].map(([ic, t, w, x]) => `<div class="r2"><i data-i="${ic}" class="ico"></i><div><div class="ttl">${t}</div><div class="why">${w}</div></div>${x}</div>`).join('');
+
+// assumption sweeps (not run): cost estimated from the measured S1 run time
+const per = P.S1.wall.per_branch_mean * P.S1.n * 2;   // seconds per setting (30 pairs, both arms)
+const SW = [['Supply lead-time factor', '0.1, 0.25, 0.5, 0.75 · run at 1.0', 4], ['Inspection detection (POD)', '× 0.5, 0.75, 1.3 · run at × 1.0', 3], ['BIT regime', 'mature · run at immature', 1]];
+document.getElementById('sweep').innerHTML = SW.map(([k, s, n]) => `<div><div class="k">${k}<span>${s}</span></div><div class="v"><span class="pend hatch">Pending · ≈ ${Math.round(n * per / 60)} min</span></div></div>`).join('');
+document.getElementById('sweepNote').textContent = `Estimated from the measured ${P.S1.wall.per_branch_mean.toFixed(1)} s per run, ${P.S1.n * 2} runs per setting.`;
+
+PHX.mount({ page: 'plan', title: 'Plan & what-if', sub: 'Is the plan better than doing nothing — and by how much?',
+  chips: [{ i: 'clock', t: 'As of <b>Mon 22 Jun 06:00 IST</b>' }, { k: 'ok', i: 'fork', t: '30 paired simulations · belief mode' }],
+  after() {
+    const host = document.getElementById('gantt'), W = host.clientWidth, H = host.clientHeight;
+    // phones: no state column, shorter bar captions
+    const PH = W < 500, lw = PH ? 62 : 128, top = 26, bot = 30, rh = (H - top - bot) / S.rows.length, X = d => lw + (W - lw - 4) * d / 30;
+    let s = `<defs><pattern id="hp" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="var(--bg-2)"/><line x1="0" y1="0" x2="0" y2="7" stroke="var(--line-strong)" stroke-width="1.6"/></pattern></defs>`;
+    // hangar-full days
+    const dayOf = dt => { const t = new Date(dt + ' 2026 08:00'); return (t - new Date('22 Jun 2026 08:00')) / 864e5; };
+    full.forEach(f => { const x = X(dayOf(f.date)); s += `<rect x="${x - 8}" y="${top - 2}" width="${X(1) - X(0) + 16}" height="${H - top + 2}" rx="7" fill="var(--accent-wash)"/>`;
+      s += `<text x="${x + (X(1) - X(0)) / 2}" y="${H - 9}" font-size="11.5" text-anchor="middle" fill="var(--accent-ink)" font-family="${mono}">hangar 2/2</text>`; });
+    // weeks
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+    for (let d = 0; d <= 30; d += 7) {
+      const dt = new Date(2026, 5, 22 + d), x = X(d);
+      s += `<line x1="${x}" x2="${x}" y1="${top}" y2="${H - bot}" stroke="var(--line-2)"/>`;
+      if (!PH || x + 50 < W) s += `<text x="${x + 5}" y="${top - 10}" font-size="11.5" fill="var(--ink-4)" font-family="${mono}">${d === 0 && !PH ? 'Mon ' : ''}${dt.getDate()} ${months[dt.getMonth()]}</text>`;
+    }
+    S.rows.forEach((r, i) => {
+      const y = top + i * rh, cy = y + rh / 2;
+      if (i) s += `<line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line-2)"/>`;
+      s += `<text x="0" y="${cy + 5}" font-size="15" font-weight="700" fill="var(--ink)" font-family="${mono}">${r.tail}</text>`;
+      const lab = r.state === 'NMCS' ? 'grounded' : r.state === 'NMCD' ? 'in depot' : '';
+      if (!PH) s += `<text x="66" y="${cy + 4.5}" font-size="13" fill="${r.state === 'NMCS' ? 'var(--nmcs)' : 'var(--ink-3)'}">${lab}</text>`;
+      const bh = 22;
+      if (r.state === 'NMCS') {
+        s += `<rect x="${X(0)}" y="${cy - bh / 2}" width="${X(30) - X(0)}" height="${bh}" rx="6" fill="var(--nmcs)"/>`;
+        const first = r.items.find(it => it.kind === 'SRV-L1'), tx = first ? X(first.start + first.dur) + 14 : X(0) + 12;
+        s += `<text x="${tx}" y="${cy + 4.5}" font-size="13" fill="#fff" font-weight="600">${PH ? 'Awaiting chute' : `Waiting for a brake chute since ${r.since.replace(/^0/, '')}${W < 900 ? '' : ' · no delivery date'}`}</text>`;
+      } else if (r.state === 'NMCD') {
+        s += `<rect x="${X(0)}" y="${cy - bh / 2}" width="${X(30) - X(0)}" height="${bh}" rx="6" fill="url(#hp)" stroke="var(--line)"/>`;
+        s += `<rect x="${X(0) + 8}" y="${cy - 10}" width="${PH ? X(30) - X(0) - 16 : 420}" height="20" rx="5" fill="var(--bg)"/>`;
+        s += `<text x="${X(0) + 14}" y="${cy + 4.5}" font-size="13" fill="var(--ink-2)" font-weight="600">${PH ? `Depot overhaul since ${r.since.replace(/^0/, '')}` : `Overhaul since ${r.since.replace(/^0/, '')} · ${S.roh_completed_on_record} completed overhauls on record to estimate a return`}</text>`;
+      } else {
+        s += `<line x1="${X(0)}" x2="${X(30)}" y1="${cy}" y2="${cy}" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round"/>`;
+      }
+      r.items.filter(it => it.kind === 'SRV-L1').forEach(it => {
+        s += `<rect x="${X(it.start)}" y="${cy - 13}" width="${Math.max(9, X(it.start + it.dur) - X(it.start))}" height="26" rx="4" fill="var(--ink-4)" stroke="#fff" stroke-width="2"/>`;
+      });
+      r.items.filter(it => it.kind === 'TYRE').forEach(it => {
+        s += `<circle cx="${X(it.start)}" cy="${cy}" r="6.5" fill="var(--accent)" stroke="#fff" stroke-width="2"/>`;
+      });
+    });
+    s += `<line x1="${X(0)}" x2="${X(0)}" y1="${top - 4}" y2="${H - bot}" stroke="var(--ink)" stroke-width="1.6"/>`;
+    host.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+  } });
+</script>
+</body></html>

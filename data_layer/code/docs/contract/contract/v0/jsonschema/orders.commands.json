@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:phalanx:contract:0.2.0:orders.commands:consumer",
+  "title": "orders.commands record (Phalanx contract 0.2.0)",
+  "description": "Inbound decisions (orders) from downstream agents or human planners. Orders are requests: M21 validates them for authority, airworthiness and resources and applies them at the next decision epoch in simulation time. Re-sending an order_id is a no-op (idempotent). An order whose evidence cites a record not yet ingested at t_issued is rejected (no look-ahead).",
+  "x-phalanx-contract-hash": "a4396f1d5482ce7816354ed7c9b040179d3c1467a7ca6e75b21fd71e1a904566",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_id",
+    "dict_version",
+    "dict_hash",
+    "order_id",
+    "issuer_id",
+    "issuer_kind",
+    "policy_version",
+    "t_issued",
+    "t_effective",
+    "target_tail_no",
+    "target_base",
+    "target_lru",
+    "target_serial",
+    "action",
+    "parameters",
+    "priority",
+    "evidence"
+  ],
+  "properties": {
+    "record_id": {
+      "description": "Idempotency key = blake2b-128 of the order_id.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "dict_version": {
+      "description": "Dictionary version the issuer observed, if known.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dict_hash": {
+      "description": "Dictionary hash the issuer observed, if known.",
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16,128}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "order_id": {
+      "description": "Globally unique order identifier chosen by the issuer.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "issuer_id": {
+      "description": "Issuer identity (agent or human planner).",
+      "type": "string"
+    },
+    "issuer_kind": {
+      "description": "AGENT or HUMAN.",
+      "type": "string",
+      "enum": [
+        "AGENT",
+        "HUMAN"
+      ]
+    },
+    "policy_version": {
+      "description": "Policy or model version of an agent issuer.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "t_issued": {
+      "description": "Simulation time the order was issued. The event and availability time of the record.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807,
+      "x-phalanx-time-unit": "ns",
+      "x-phalanx-time-scale": "sim_utc"
+    },
+    "t_effective": {
+      "description": "Simulation time the order should take effect (at or after the next decision epoch; M21 enforces the epoch).",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807,
+      "x-phalanx-time-unit": "ns",
+      "x-phalanx-time-scale": "sim_utc"
+    },
+    "target_tail_no": {
+      "description": "Target tail.",
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target_base": {
+      "description": "Target base.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target_lru": {
+      "description": "Target LRU.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target_serial": {
+      "description": "Target serial number.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "action": {
+      "description": "Requested action.",
+      "type": "string",
+      "enum": [
+        "INSPECT",
+        "TROUBLESHOOT",
+        "REMOVE_REPLACE",
+        "WASH_SERVICE",
+        "DEFER",
+        "CANNIBALISE",
+        "REQUISITION_SPARES",
+        "EXPEDITE_SPARES",
+        "TRANSFER_STOCK",
+        "GROUND",
+        "RELEASE",
+        "BRING_FORWARD_SERVICING",
+        "DEFER_SERVICING",
+        "ASSIGN_SORTIE",
+        "RESTRICT_USAGE",
+        "EMBODY_MODIFICATION",
+        "LOAD_SOFTWARE",
+        "CHANGE_MONITORING_CONFIG"
+      ]
+    },
+    "parameters": {
+      "description": "Action-specific parameters as a JSON object (canonical JSON text in Arrow; '{}' when none). Per-action schemas are M21's.",
+      "type": "object"
+    },
+    "priority": {
+      "description": "Priority.",
+      "type": "string",
+      "enum": [
+        "ROUTINE",
+        "PHU",
+        "MCM",
+        "AOG"
+      ]
+    },
+    "evidence": {
+      "description": "record_ids of the samples, events or records that justify the order; all must be ingested by t_issued.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{32}$"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Indian air bases used by Phalanx scenarios (M02). Field elevations: IAF station list (secondary; Wikipedia,
+# 2009 Scramble data) quoted in research_notes/Virtual fighter telemetry layer research/flight_profiles_and_usage.md
+# Q6. imd_index: the IMD 1991-2020 climatology station of the base (configs/tejas/params/M03/imd_stations.csv).
+# [ASSUMPTION A-W1.1-32] for the base-to-station pairing (nearest IMD observatory).
+# salt_level: airborne-salt exposure level of the base for the usage driver salt_index (1 = coastal, 0 = inland)
+# [ASSUMPTION A-W1.1-34]: no Indian salt-exposure data in the evidence base (faults_and_degradation.md Sec. 9(c)-(d)
+# lists "dust and salt indices for Indian bases" as needed, values not found); sweep 0-1 per base.
+format: phalanx.bases/1
+bases:
+  sulur: {imd_index: 43321, field_elev_m: 381.0}     # IMD Coimbatore (A); No. 45 / No. 18 Sqn Tejas (PIB 2023)
+  naliya: {imd_index: 42631, field_elev_m: 21.0, salt_level: 1.0}  # coastal (Kutch); IMD Naliya; No. 18 Sqn (secondary, conflicting)
+  nal: {imd_index: 42165, field_elev_m: 229.0}       # IMD Bikaner; Nal-Bikaner, first Mk1A unit (secondary)
+  jaisalmer: {imd_index: 42328, field_elev_m: 270.0} # IMD Jaisalmer
+  jodhpur: {imd_index: 42339, field_elev_m: 219.0}   # IMD Jodhpur

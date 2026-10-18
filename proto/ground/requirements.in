@@ -1,0 +1,19 @@
+# Ground side (our system). Never install or import the phalanx data layer here.
+numpy==2.5.4
+scipy==1.18.1
+pyarrow==26.0.0
+pandas
+duckdb
+statsmodels
+lifelines
+scikit-learn==1.9.1
+networkx
+zen-engine
+python-statemachine
+pyyaml
+fastapi
+uvicorn
+httpx
+pydantic
+pytest
+ruff

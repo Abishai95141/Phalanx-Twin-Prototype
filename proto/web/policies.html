@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Policies — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .a-grid { grid-template-rows: 38px 490px 236px; }
+  .tabbar { grid-column: 1 / -1; display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .head-row { display: flex; align-items: flex-start; gap: 16px; }
+  .head-row .grow { flex: 1; }
+  .rail { grid-row: 2 / span 2; }
+  .tablecard { grid-column: 4 / span 9; }
+  .tracecard { grid-column: 4 / span 9; }
+  body.tab-auth .a-grid { grid-template-rows: 38px 750px; }
+  .tab-auth-only { display: none; } body.tab-auth .tab-auth-only { display: flex; } body.tab-auth .tab-dt-only { display: none; }
+  .tablecard .seg span { cursor: pointer; }
+  .mode { display: grid; grid-template-columns: 220px minmax(0,1fr); column-gap: 28px; padding: 24px 0; border-top: 1px solid var(--line-2); align-items: start; }
+  .mode:first-child { border-top: 0; }
+  .mode .nm { font-size: 17px; font-weight: 650; letter-spacing: -0.012em; display: flex; align-items: center; gap: 10px; }
+  .mode .bh { font-size: 13.5px; color: var(--ink-3); margin-top: 6px; line-height: 1.45; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mode .act-pill { height: 30px; }
+  .inv .r2 { grid-template-columns: minmax(0,1fr) auto auto; column-gap: 28px; }
+  .num2 { text-align: right; }
+  .num2 b { display: block; font-size: 17px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .num2 span { font-size: 13px; color: var(--ink-4); }
+  .codes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .codes span { font-size: 13px; color: var(--ink-2); background: var(--bg-2); border-radius: 8px; padding: 5px 10px; }
+  .codes b { font: 700 12px var(--mono); margin-right: 6px; }
+
+
+  /* layer rail */
+  .layers { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; position: relative; }
+  .ly { border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; background: var(--bg); }
+  .ly .n { width: 34px; height: 34px; border-radius: 10px; background: var(--bg-2); display: grid; place-items: center; font: 700 13px var(--mono); color: var(--ink-2); }
+  .ly .nm { font-size: 15px; font-weight: 650; letter-spacing: -0.01em; }
+  .ly .wh { font-size: 13px; color: var(--ink-3); margin-top: 3px; line-height: 1.4; }
+  .ly.on { border-color: var(--accent-line); background: var(--accent-wash); }
+  .ly.on .n { background: var(--accent); color: #fff; }
+  .prec { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-3); margin-top: 18px; }
+
+  /* decision table editor */
+  .dtab { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 18px; font-size: 13px; table-layout: fixed; }
+  .dtab th { font-size: 12px; font-weight: 650; color: var(--ink-3); text-align: left; padding: 8px 8px; white-space: nowrap; border-bottom: 1px solid var(--line); vertical-align: bottom; line-height: 1.25; }
+  .dtab th.grp { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); border-bottom: 0; padding-bottom: 2px; }
+  .dtab th.out, .dtab td.out { background: var(--bg-2); }
+  .dtab th.out.first, .dtab td.out.first { border-left: 1px solid var(--line); }
+  .dtab td { padding: 0 8px; height: 38px; border-bottom: 1px solid var(--line-2); font: 500 13px var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dtab td.any { color: var(--ink-5); }
+  .dtab td.id { font-weight: 700; color: var(--ink); }
+  .dtab td.rat { font-size: 12px; }
+  .dtab tr.test td { background: var(--wire-wash); color: var(--wire); font-weight: 600; border-bottom: 1px solid var(--line); }
+  .dtab tr.test td.id { color: var(--wire); font-family: var(--font); font-size: 12px; letter-spacing: .02em; }
+  .dtab tr.hit td { background: var(--accent-wash); color: var(--ink); font-weight: 650; border-top: 1px solid var(--accent-line); border-bottom: 1px solid var(--accent-line); }
+  .dtab tr.hit td:first-child { border-left: 1px solid var(--accent-line); border-radius: 10px 0 0 10px; }
+  .dtab tr.hit td:last-child { border-right: 1px solid var(--accent-line); border-radius: 0 10px 10px 0; }
+  .dtab td.fail { color: var(--ink-4); text-decoration: line-through; text-decoration-color: var(--ink-4); }
+  .dtab tr.after td { color: var(--ink-4); }
+  .vtag { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-strong); font: 600 13px var(--mono); color: var(--ink-2); white-space: nowrap; }
+  .hp { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 8px; background: var(--bg-2); font: 700 11.5px var(--mono); letter-spacing: .06em; color: var(--ink-2); }
+
+  /* trace */
+  .tr-body { display: grid; grid-template-columns: 250px minmax(0,1fr) 290px; column-gap: 28px; margin-top: 16px; flex: 1; min-height: 0; }
+  .well2 { background: var(--bg-2); border-radius: 14px; padding: 14px 16px; }
+  .kvm { display: grid; grid-template-columns: auto 1fr; column-gap: 18px; row-gap: 5px; font-size: 13px; }
+  .kvm span:nth-child(odd) { color: var(--ink-3); }
+  .kvm span:nth-child(even) { font: 600 13px var(--mono); color: var(--ink); text-align: right; }
+
+  /* compact: tablet + phone */
+  @media (max-width: 1199px) {
+    .tablecard, .tracecard, .rail { grid-column: 1 / -1; grid-row: auto; }
+    .tablecard { order: 1; } .tracecard { order: 2; } .rail { order: 3; }
+    .tablecard .seg { display: flex; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+    .tablecard .seg::-webkit-scrollbar { display: none; }
+    .tablecard .seg span { flex: none; height: 36px; }
+    .tablecard > div[style*="overflow:auto"] { margin: 0 -22px; padding: 0 22px; -webkit-overflow-scrolling: touch; }
+    .dtab { min-width: 1030px; }
+    .tr-body { grid-template-columns: minmax(0,1fr) minmax(0,1fr); row-gap: 16px; column-gap: 16px; }
+    .tr-body > div:first-child { grid-column: 1 / -1; }
+    .layers { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+    .mode { grid-template-columns: 200px minmax(0,1fr); column-gap: 22px; }
+  }
+  /* phone */
+  @media (max-width: 699px) {
+    .tablecard > div[style*="overflow:auto"] { margin: 0 -18px; padding: 0 18px; }
+    .dtab { font-size: 13px; }
+    .tr-body { grid-template-columns: minmax(0,1fr); }
+    .kvm span:nth-child(even) { overflow-wrap: anywhere; }
+    .layers { grid-template-columns: minmax(0,1fr); margin-top: 20px; }
+    .prec { align-items: flex-start; line-height: 1.45; }
+    .mode { grid-template-columns: minmax(0,1fr); row-gap: 14px; padding: 20px 0; }
+    .mode .bh { font-size: 14px; }
+    .inv .r2 { column-gap: 16px; }
+  }
+</style>
+</head>
+<body data-page="policies">
+<div id="content">
+<div class="v2 a-grid">
+  <div class="tabbar" id="tabbar"></div>
+
+  <section class="panel2 c3 rail tab-dt-only" data-shot="layers">
+    <div class="kick">Policy layers</div>
+    <div class="t2">Higher layers always win</div>
+    <div class="sub2">Hard limits are tested code; planners edit only tables and bounded weights.</div>
+    <div class="layers" id="layers"></div>
+    <div class="prec"><i data-i="arrowUpRight" class="ico-sm"></i>Conflicts resolve upward; then the safer action; then a person.</div>
+  </section>
+
+  <section class="panel2 tablecard tab-dt-only" data-shot="decision-table">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick" id="dt-kick"></div>
+        <div class="t2" id="dt-t2"></div>
+        <div class="sub2">First matching row wins · version <span class="mono" style="color:var(--ink-2)" id="ver"></span></div>
+      </div>
+      <span class="tier presc">PRESC</span>
+    </div>
+    <div class="seg" id="tables" style="margin-top:14px;align-self:flex-start"></div>
+    <div style="overflow:auto;min-height:0"><table class="dtab" id="dtab"></table></div>
+  </section>
+
+  <section class="panel2 tracecard tab-dt-only" data-shot="trace">
+    <div class="head-row">
+      <div class="grow">
+        <div class="kick">Evaluation trace · <span id="zv"></span></div>
+      </div>
+    </div>
+    <div class="tr-body">
+      <div>
+        <div class="mid" id="perf"></div>
+        <div class="ci" style="margin-top:8px" id="perf-ci"></div>
+      </div>
+      <div class="well2"><div class="kvm" id="inputs"></div></div>
+      <div class="well2"><div class="kvm" id="outputs"></div></div>
+    </div>
+  </section>
+
+  <section class="panel2 c7 tab-auth-only" data-shot="approval-modes">
+    <div class="kick">Approval modes · per action</div>
+    <div class="t2">The system drafts; people decide what leaves the station</div>
+    <div class="sub2">Authority comes from the data layer's authority matrix and is never forked. Every rule starts on consent.</div>
+    <div style="margin-top:12px" id="modes"></div>
+  </section>
+
+  <section class="panel2 c5 inv tab-auth-only" data-shot="invariants">
+    <div class="kick">Hard constraints · L1</div>
+    <div class="t2">Tested in code, never in a table</div>
+    <div class="sub2">No decision table, preference or model can override these.</div>
+    <div class="rows2" style="margin-top:16px" id="invariants"></div>
+  </section>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const Q = PHX_API.q, TAB = Q.get('tab') === 'authority' ? 'authority' : 'table';
+// decision-table column ids → header labels; ids in OUT are outputs
+const LBL = { sev: 'Severity', job: 'Job status', n10: 'In 10 days', cons: 'Flights in a row', co: 'Corroborated', cnd: 'No-fault rate', ex30: 'Exceedances 30 d',
+  gr: 'Grounding', fl: 'Fault list', me: 'Mission essential', dn: 'Donor NMC', awp: 'AWP days', mn: 'Mission need', rq: 'Requested', ext: 'Extension %',
+  left: 'Landings left', ttl: 'Time to limit', lead: 'Lead time', act: 'Action', band: 'Band', why: 'Rationale', par: 'Parameters', dfr: 'Deferrable', fh: 'Max FH', mode: 'Mode', st: 'State' };
+const OUT = new Set(['act', 'band', 'why', 'par', 'dfr', 'fh', 'mode', 'st']);
+const leaves = (o, p = '') => Object.entries(o || {}).flatMap(([k, v]) => v && typeof v === 'object' && !Array.isArray(v) ? leaves(v, p + k + '.') : [[p + k, v]]);
+const show = v => typeof v === 'number' && !Number.isInteger(v) ? v.toFixed(3) : String(v);
+const strip = v => v === '' ? '—' : String(v).replace(/'/g, '');
+// does one table cell accept the input value? null = cannot tell (refers to another field)
+function cellOk(e, v) {
+  e = String(e).trim(); if (e === '') return true;
+  if (/^'[^']*'(\s*,\s*'[^']*')*$/.test(e)) return e.split(',').map(x => x.trim().replace(/'/g, '')).includes(String(v));
+  if (e === 'true' || e === 'false') return String(v) === e;
+  let m = e.match(/^(>=|<=|>|<|==|!=)\s*(-?[\d.]+)$/);
+  if (m) { const n = +m[2], x = +v; return { '>=': x >= n, '<=': x <= n, '>': x > n, '<': x < n, '==': x === n, '!=': x !== n }[m[1]]; }
+  m = e.match(/^\[\s*(-?[\d.]+)\s*\.\.\s*(-?[\d.]+)\s*\]$/); if (m) return +v >= +m[1] && +v <= +m[2];
+  if (/^-?[\d.]+$/.test(e)) return +v === +e;
+  return null;
+}
+let P = null, TBL = null;
+PHX_API.boot({ page: 'policies', title: 'Policies',
+  async load(A) {
+    const [, B] = await Promise.all([A.want('epoch'), Q.get('issue') ? null : A.want('board')]);
+    const issue = Q.get('issue') || (B || {}).focus;
+    P = await A.get('policies', issue || undefined);
+  },
+  render() {
+    if (TAB === 'authority') document.body.classList.add('tab-auth');
+    const T = [['Decision table', 'table'], ['Authority', 'authority']];
+    $('tabbar').innerHTML = '<div class="tabs2">' + T.map(([l, k]) => `<span class="${k === TAB ? 'on' : ''}" data-href="${esc(PHX_API.href('policies.html', { tab: k === 'table' ? undefined : k, issue: Q.get('issue') || undefined, policy: Q.get('policy') || undefined }))}" style="cursor:pointer">${l}</span>`).join('') + '</div>';
+    const LAYERS = [['L1', 'Hard constraints', 'Authority, evidence ingested, no release with a grounding defect · typed Python, unit-tested'],
+      ['L2', 'Organisational rules', 'Deferral limits, cannibalisation, mission-essential lists · decision tables, Engineering Officer'],
+      ['L3', 'Decision rules', 'When to inspect, troubleshoot or remove · decision tables, policy owner'],
+      ['L4', 'Preferences', 'Tie-break weights within fixed ranges · planners, never above L1–L3']];
+    const evs = P.evaluations || [], want = Q.get('policy') || (evs[0] || {}).policy || (P.tables[0] || {}).name;
+    TBL = P.tables.find(t => t.name === want) || P.tables[0];
+    const ev = evs.find(e => e.policy === TBL.name);
+    const layer = /^P-ORG/.test(TBL.name) ? 'L2' : 'L3';
+    $('layers').innerHTML = LAYERS.map(l => `<div class="ly ${l[0] === layer ? 'on' : ''}"><span class="n">${l[0]}</span><div><div class="nm">${l[1]}</div><div class="wh">${l[2]}</div></div></div>`).join('');
+    table(ev); trace(ev); authority();
+    const lint = P.lint || [];
+    return { page: 'policies', title: 'Policies', sub: TAB === 'authority' ? 'Who may issue what, and which limits no rule can cross' : 'Rules are versioned tables, evaluated the same way every time',
+      chips: [PHX.clockChips()[0], { i: 'decisions', t: `<span id="issue-chip">${P.focus ? `Issue <b>${esc(P.focus)}</b>` : 'No board issue'}</span>` }, lint.length ? { k: 'warn', i: 'alert', t: `${lint.length} lint finding${lint.length === 1 ? '' : 's'}` } : { k: 'ok', i: 'check', t: '0 lint findings' }],
+      after: wire };
+  } });
+
+function table(ev) {
+  const R = TBL.rules || [], cols = Object.keys(R[0] || {}).filter(k => k !== '_id');
+  const inL = ev ? leaves(ev.input) : [], outL = ev ? leaves(ev.output) : [];
+  const nOut = ev ? outL.length : cols.filter(c => OUT.has(c)).length;
+  const ins = cols.slice(0, cols.length - nOut), outs = cols.slice(cols.length - nOut);
+  const val = Object.fromEntries(ins.map((c, i) => [c, inL[i] ? inL[i][1] : undefined]));
+  $('tables').innerHTML = P.tables.map(t => `<span class="${t.name === TBL.name ? 'on' : ''}" data-policy="${esc(t.name)}">${esc(t.name)}</span>`).join('');
+  $('ver').textContent = TBL.version;
+  $('dt-kick').textContent = `Decision table · ${TBL.name} · ${TBL.n_rules ?? R.length} rows`;
+  const o0 = outL[0] ? outL[0][1] : null, o1 = outL[1] ? outL[1][1] : null;
+  $('dt-t2').textContent = ev ? `${P.focus} matched row ${ev.row}${o0 != null ? ` → ${show(o0)}${o1 != null && typeof o1 !== 'boolean' ? ' · ' + show(o1) : ''}` : ''}` : `Not evaluated for ${P.focus || 'today\u2019s board'}`;
+  let h = '';
+  if (cols.length === 9) h += `<colgroup>${[62, 92, 92, 86, 96, 104, 96, 120, 48, 234].map(w => `<col style="width:${w}px">`).join('')}</colgroup>`;
+  h += `<tr><th class="grp"></th><th class="grp" colspan="${ins.length}">Inputs</th><th class="grp out first" colspan="${outs.length}">Outputs</th></tr>`;
+  h += `<tr><th>Row</th>${ins.map((c, i) => `<th>${esc(LBL[c] || (inL[i] ? inL[i][0] : c))}</th>`).join('')}${outs.map((c, k) => `<th class="out ${k ? '' : 'first'}">${esc(LBL[c] || c)}</th>`).join('')}</tr>`;
+  if (ev) h += `<tr class="test"><td class="id">${esc(String(P.focus || '').split('-')[0])}</td>${ins.map(c => `<td>${esc(val[c] === undefined ? '' : show(val[c]))}</td>`).join('')}${outs.map((c, k) => `<td class="out ${k ? '' : 'first'}"></td>`).join('')}</tr>`;
+  let past = false;
+  R.forEach(r => {
+    const hit = ev && r._id === ev.row;
+    h += `<tr class="${hit ? 'hit' : past ? 'after' : ''}"><td class="id">${hit ? '✓ ' : ''}${esc(r._id)}</td>` +
+      ins.map(c => `<td class="${r[c] === '' ? 'any' : ''} ${ev && !past && !hit && cellOk(r[c], val[c]) === false ? 'fail' : ''}">${esc(strip(r[c]))}</td>`).join('') +
+      outs.map((c, k) => `<td class="out ${k ? '' : 'first'} ${c === 'why' ? 'rat' : ''}">${esc(strip(r[c]))}</td>`).join('') + '</tr>';
+    if (hit) past = true;
+  });
+  $('dtab').innerHTML = h;
+  TBL._ins = ins; TBL._val = val;
+}
+function trace(ev) {
+  $('zv').textContent = P.engine || 'zen-engine';
+  if (!ev) {
+    $('perf').innerHTML = '—'; $('perf-ci').innerHTML = `${esc(TBL.name)} did not run for this issue.<br>Pick another table, or another issue.`;
+    $('inputs').innerHTML = '<span>Inputs</span><span>—</span>'; $('outputs').innerHTML = '<span>Outputs</span><span>—</span>'; return;
+  }
+  const R = TBL.rules || [], idx = R.findIndex(r => r._id === ev.row);
+  $('perf').innerHTML = `${esc(ev.row)}<small style="font-size:17px;color:var(--ink-3);font-weight:600;margin-left:6px">of ${R.length} rows</small>`;
+  const checked = R.slice(0, Math.max(0, idx)).map(r => `${esc(r._id)} ✗`).concat(idx >= 0 ? [`${esc(ev.row)} ✓`] : []).join(' · ');
+  $('perf-ci').innerHTML = `rows checked ${checked}<br>nodes ${(ev.trace || []).map(t => esc(t.node)).reverse().join(' → ') || '—'}<br>same input, same row, every time`;
+  $('inputs').innerHTML = leaves(ev.input).map(([k, v]) => `<span>${esc(k)}</span><span>${esc(show(v))}</span>`).join('');
+  $('outputs').innerHTML = leaves(ev.output).map(([k, v]) => `<span>${esc(k.split('.').pop())}</span><span>${esc(show(v))}</span>`).join('') + `<span>Trace hash</span><span>${esc(String(ev.trace_hash || '').slice(0, 12))}</span>`;
+}
+function authority() {
+  const H = P.authority || [], hum = H.filter(a => (a.issuers || []).length === 1 && a.issuers[0] === 'HUMAN');
+  const MODES = [
+    ['HUMAN only', 'signature', 'Drafted by the system, signed and issued by a named person. Silence means nothing happens.', true, hum],
+    ['Consent', 'check', `Issued at 08:00 only if a person approves it before the 07:45 freeze. Default issuers ${(P.default_issuers || []).join(' / ')}.`, false, [], 'Every order action not listed as HUMAN only — today, all of them start here.'],
+    ['Exception', 'clock', 'Issued unless vetoed — enabled per rule only after canary evidence.', false, [], 'Enabled today for no rule.']
+  ];
+  $('modes').innerHTML = MODES.map(m => `<div class="mode">
+  <div><div class="nm"><i data-i="${m[1]}" class="ico"></i>${m[0]}</div><div class="bh">${esc(m[2])}</div></div>
+  <div>${m[4].length ? `<div class="pills">${m[4].map(a => `<span class="act-pill ${m[3] ? 'human' : ''}" title="${esc(a.source || '')}">${esc(a.action)}</span>`).join('')}</div>
+    <div class="note" style="margin-top:12px">${m[4].map(a => `<b style="font:600 12px var(--mono);color:var(--ink-3)">${esc(a.action)}</b> · ${esc(a.evidence || '')}${a.source ? ' — ' + esc(a.source) : ''}`).join('<br>')}</div>` : `<div class="note" style="padding-top:4px;font-size:13.5px;color:var(--ink-3)">${esc(m[5] || '')}</div>`}</div></div>`).join('');
+  $('invariants').innerHTML = (P.invariants || []).map(v => `<div class="r2" style="grid-template-columns:minmax(0,1fr)"><div><div class="ttl">${esc(v.name)}</div><div class="why" style="line-height:1.45">${esc(v.text)}</div></div></div>`).join('') || '<div class="note">No invariants reported.</div>';
+}
+function wire() {
+  PHX.links();
+  $('tables').addEventListener('click', e => { const sp = e.target.closest('[data-policy]'); if (!sp) return;
+    location.href = PHX_API.href('policies.html', { issue: Q.get('issue') || undefined, policy: sp.dataset.policy }); });
+  document.getElementById('issue-chip').closest('.chip').style.cursor = 'pointer';
+  document.getElementById('issue-chip').closest('.chip').addEventListener('click', () => {
+    const sh = PHX.sheet(`<span class="kick">Policies</span><div class="t2" style="margin-top:6px">Evaluate the rules for which issue?</div><div class="rows2" style="margin-top:16px;max-height:420px;overflow:auto">${(P.issues || []).map(i => `<div class="r2" style="grid-template-columns:minmax(0,1fr) auto;min-height:52px;cursor:pointer" data-href="${esc(PHX_API.href('policies.html', { issue: i, tab: TAB === 'authority' ? 'authority' : undefined }))}"><span class="ttl" style="font:650 14.5px var(--mono)">${esc(i)}</span>${i === P.focus ? '<span class="pill grey">shown</span>' : '<span></span>'}</div>`).join('') || '<div class="note">No issue on today\u2019s board.</div>'}</div>`);
+    PHX.links(sh);
+  });
+}
+</script>
+</body></html>

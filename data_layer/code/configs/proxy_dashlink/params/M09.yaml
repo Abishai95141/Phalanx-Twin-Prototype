@@ -1,0 +1,44 @@
+# M09 boundary of the DASHlink proxy (W2.4a-2): customer bleed and power off-take of the four proxy engines.
+# The airframe utility systems do not run in proxy mode; phalanx.proxy.bleed turns the recorded bleed /
+# air-conditioning / anti-ice discretes (BLV, PACK, EAI, WAI_1, TAI) into a bleed flow per engine and adds a
+# constant off-take per engine (util.bleed_extract, util.pto_power). DASHlink records the states, not the flows:
+# the flows and the off-take are identified on 687-CAL steady points (analysis/proxy_quicklook stage 1).
+format: phalanx.params/1
+module: M09
+sets:
+  boundary:
+    w_pack:
+      value: 1.312055
+      units: kg/s
+      description: Bleed drawn by one running air-conditioning pack, shared equally by the engines whose bleed valve is open (HPC-exit-equivalent)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0136); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [0.0, 1.5]
+      assumption_id: A-W2.4a-22
+    w_pack_ground:
+      value: 0.334161
+      units: kg/s
+      description: Bleed drawn by one running pack on the ground (ACMS PH 2), shared by the engines whose bleed valve is open (the record shows valve states, not the pack source or flow schedule)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0245); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [0.0, 1.5]
+      assumption_id: A-W2.4a-22
+    w_eai:
+      value: 0.239688
+      units: kg/s
+      description: Bleed drawn by the engine anti-ice of one engine from that engine (HPC-exit-equivalent)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.0102); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [0.0, 0.5]
+      assumption_id: A-W2.4a-22
+    w_wai:
+      value: 1.05719
+      units: kg/s
+      description: Bleed drawn by the wing and tail anti-ice together, shared equally by the engines whose bleed valve is open (HPC-exit-equivalent)
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL (13215 quasi-steady points, 537 bins, 12 flights; white-residual SE 0.106); analysis/proxy_quicklook/results/stage1/st_fits.json"}
+      sweep: [0.0, 2.0]
+      assumption_id: A-W2.4a-22
+    pto_power:
+      value: 0.0
+      units: W
+      description: Constant shaft power off-take per engine (generator and hydraulic pumps) on top of the M07 accessory load that scales with N2^2
+      evidence: {tag: MEASURED, source: "W2.4a-2 stage-1 steady identification on 687-CAL: identified 0.4 kW (SE 4.9 kW), no support for a constant off-take beyond the N2^2 accessory load of M07; set to 0 (analysis/proxy_quicklook/results/stage1/st_fits.json)"}
+      sweep: [0.0, 200000.0]
+      assumption_id: A-W2.4a-22

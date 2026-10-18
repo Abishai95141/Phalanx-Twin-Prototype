@@ -1,0 +1,58 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "screens",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8137",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "/Users/abishaikc/Phalanx-Solution/video/screens"
+      ],
+      "port": 8137
+    },
+    {
+      "name": "runner",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": [
+        "/Users/abishaikc/Phalanx-Solution/proto/runner/run.sh",
+        "-m",
+        "uvicorn",
+        "service:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8710"
+      ],
+      "port": 8710
+    },
+    {
+      "name": "ground",
+      "runtimeExecutable": "/Users/abishaikc/Phalanx-Solution/proto/ground/.venv/bin/python",
+      "runtimeArgs": [
+        "-m",
+        "uvicorn",
+        "api:app",
+        "--app-dir",
+        "/Users/abishaikc/Phalanx-Solution/proto/ground",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8700"
+      ],
+      "port": 8700
+    },
+    {
+      "name": "server",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": [
+        "/Users/abishaikc/Phalanx-Solution/proto/deploy/tunnel.sh"
+      ],
+      "port": 8701
+    }
+  ]
+}

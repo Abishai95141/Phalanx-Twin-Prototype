@@ -1,0 +1,120 @@
+<!doctype html>
+<!--
+  Pattern proof: standalone product-screen pages (screens/*.html, own CSS, no scripts)
+  mounted as full-document sub-compositions, with ALL motion directed from this root
+  timeline: camera push-ins (wrapper transforms), cursor + click, typing into an <input>,
+  count-up numbers, progress bars, row highlight, SVG draw-on, crossfade between screens,
+  lower-third caption. 10 s @ 1920x1080. Synthetic data only.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1220; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: Inter, sans-serif; }
+      /* Camera wrappers: untimed, full-frame, transformed only by the GSAP timeline. */
+      .cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+      .screen-host { position: absolute; inset: 0; }
+      #cursor { position: absolute; left: 0; top: 0; width: 40px; height: 40px; z-index: 50; }
+      #ripple { position: absolute; left: 0; top: 0; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; border: 3px solid #2563eb; z-index: 49; opacity: 0; }
+      #caption { position: absolute; left: 0; right: 0; bottom: 64px; display: flex; justify-content: center; z-index: 60; }
+      #caption-inner { font-size: 40px; font-weight: 700; color: #fff; background: rgba(15, 27, 45, 0.9); padding: 16px 30px; border-radius: 14px; letter-spacing: -0.01em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+
+      <div id="cam-1" class="cam" data-layout-allow-overflow>
+        <div id="scene-fleet" class="screen-host"
+             data-composition-id="fleet-overview"
+             data-composition-src="screens/fleet-overview.html"
+             data-start="0" data-duration="5.6" data-track-index="0"
+             data-width="1920" data-height="1080" data-no-timeline></div>
+      </div>
+
+      <div id="cam-2" class="cam" data-layout-allow-overflow>
+        <div id="scene-tail" class="screen-host"
+             data-composition-id="tail-health"
+             data-composition-src="screens/tail-health.html"
+             data-start="5" data-duration="5" data-track-index="1"
+             data-width="1920" data-height="1080" data-no-timeline></div>
+      </div>
+
+      <div id="ripple"></div>
+      <svg id="cursor" class="clip" data-start="0" data-duration="5" data-track-index="2" viewBox="0 0 40 40">
+        <path d="M6 3 L6 33 L14 25 L20 38 L25 36 L19 23 L31 23 Z" fill="#0f1b2d" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
+      </svg>
+
+      <div id="caption" class="clip" data-start="5.8" data-duration="3.9" data-track-index="3">
+        <div id="caption-inner">Health follows the serial, not the tail</div>
+      </div>
+    </div>
+
+    <script>
+      const $ = (s) => document.querySelector(s);
+      // Measure camera/cursor targets ONCE, before any tween applies a transform.
+      function frameRect(el) { const r = el.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height, cx: r.left + r.width / 2, cy: r.top + r.height / 2 }; }
+      function camTo(rect, scale) { return { scale, x: 960 - rect.cx * scale, y: 540 - rect.cy * scale }; }
+
+      const searchR = frameRect($("#fo-search"));
+      const row2R = frameRect($("#fo-row-2"));
+      const rulCardR = frameRect($("#th-rul").closest(".card"));
+      const input = $("#fo-search-input");
+      const healthPath = $("#th-health");
+      const healthLen = healthPath.getTotalLength();
+
+      const tl = gsap.timeline({ paused: true });
+
+      // ---------------- Scene 1: Fleet overview ----------------
+      tl.fromTo("#cam-1", { opacity: 0, scale: 1.04, x: -38, y: -22 }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.7, ease: "power3.out" }, 0);
+
+      // KPI count-up + progress bar (element-level, inside the mounted screen).
+      const avail = { v: 0 };
+      tl.fromTo(avail, { v: 0 }, { v: 78.4, duration: 1.0, ease: "power2.out",
+        onUpdate: () => { $("#fo-avail-num").textContent = avail.v.toFixed(1); } }, 0.5);
+      tl.fromTo("#fo-avail-bar", { scaleX: 0 }, { scaleX: 0.784, duration: 1.0, ease: "power2.out" }, 0.5);
+      tl.fromTo("#fo-row2-life", { scaleX: 1 }, { scaleX: 0.21, duration: 1.2, ease: "power2.inOut" }, 0.6);
+
+      // Cursor glides to the search field and clicks.
+      const clickX = searchR.x + 60, clickY = searchR.cy;
+      tl.fromTo("#cursor", { x: 1500, y: 900 }, { x: clickX, y: clickY, duration: 0.9, ease: "power2.inOut" }, 0.7);
+      tl.to("#cursor", { scale: 0.85, duration: 0.08, yoyo: true, repeat: 1, transformOrigin: "0 0" }, 1.62);
+      tl.fromTo("#ripple", { x: clickX, y: clickY, scale: 0.3, opacity: 0.9 }, { scale: 1.6, opacity: 0, duration: 0.45, ease: "power2.out" }, 1.62);
+      tl.set("#fo-search", { borderColor: "#2563eb", boxShadow: "0 0 0 4px rgba(37,99,235,0.15)" }, 1.66);
+
+      // Typing into the <input>: a proxy tween writes a substring on every seek.
+      const query = "T-04 fuel pump";
+      const typed = { n: 0 };
+      tl.fromTo(typed, { n: 0 }, { n: query.length, duration: 1.0, ease: "none",
+        onUpdate: () => { input.value = query.slice(0, Math.round(typed.n)); } }, 1.8);
+      tl.to("#cursor", { x: clickX + 420, y: clickY + 160, opacity: 0, duration: 0.6, ease: "power2.in" }, 2.2);
+
+      // Row highlight: matching row lights up, others dim.
+      tl.fromTo("#fo-row-2 td", { backgroundColor: "rgba(254,243,199,0)" }, { backgroundColor: "rgba(254,243,199,1)", duration: 0.35 }, 2.9);
+      tl.fromTo(["#fo-row-1", "#fo-row-3", "#fo-row-4"], { opacity: 1 }, { opacity: 0.35, duration: 0.35 }, 2.9);
+
+      // Camera push-in onto the highlighted row, hold (slow drift), then the crossfade takes over.
+      tl.fromTo("#cam-1", { scale: 1, x: 0, y: 0 }, { ...camTo(row2R, 1.7), duration: 1.0, ease: "power3.inOut", immediateRender: false }, 3.2);
+      tl.to("#cam-1", { scale: 1.75, x: camTo(row2R, 1.75).x, y: camTo(row2R, 1.75).y, duration: 1.4, ease: "none" }, 4.2);
+
+      // ---------------- Crossfade 5.0 -> 5.6 ----------------
+      tl.fromTo("#cam-2", { opacity: 0, scale: 1.06, x: -58, y: -32 }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.6, ease: "power2.out" }, 5.0);
+
+      // ---------------- Scene 2: Tail health ----------------
+      tl.fromTo(healthPath, { strokeDasharray: healthLen, strokeDashoffset: healthLen }, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, 5.4);
+      tl.fromTo("#th-threshold", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 5.4);
+      const rul = { v: 120 };
+      tl.fromTo(rul, { v: 120 }, { v: 41, duration: 1.4, ease: "power2.out",
+        onUpdate: () => { $("#th-rul").textContent = Math.round(rul.v); } }, 5.6);
+      tl.fromTo(["#th-ev-1", "#th-ev-2", "#th-ev-3"], { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", stagger: 0.25 }, 7.0);
+      tl.fromTo("#caption-inner", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 5.8);
+      tl.fromTo("#cam-2", { scale: 1, x: 0, y: 0 }, { ...camTo(rulCardR, 1.35), duration: 1.6, ease: "power2.inOut", immediateRender: false }, 7.9);
+      tl.to("#caption-inner", { opacity: 0, duration: 0.3 }, 9.4);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

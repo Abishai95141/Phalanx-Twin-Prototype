@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/logo.js"></script>
+<script src="assets/aircraft.js"></script>
+<script src="assets/twin3d.bundle.js"></script>
+<script src="assets/phx-film.js"></script>
+<script src="assets/act4/s1_members.js"></script>
+<script src="assets/illus_inline.js"></script>
+<style>
+@font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope-var-latin.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-var-latin.woff2") format("woff2"); font-weight: 100 800; }
+:root { --ink:#0B0D10; --ink-2:#31353B; --ink-3:#62676F; --ink-4:#8E939A; --ink-5:#B9BDC2; --line:#E6E6E2; --line-2:#EFEFEC; --bg-2:#F7F7F5; --bg-3:#F1F1EE;
+  --accent:#E8743B; --accent-ink:#B4511F; --accent-wash:#FDF1EA; --accent-line:#F6CDB6; --wire:#2563C9; --wire-wash:#EAF1FC; --ok:#1F8A4C; --ok-wash:#EAF6EF; --nmcs:#D4492A; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #fff; font-family: Manrope, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.grid { position: absolute; inset: -96px; background-image: linear-gradient(#F3F3F0 1px, transparent 1px), linear-gradient(90deg, #F3F3F0 1px, transparent 1px); background-size: 48px 48px; }
+.mono { font-family: "JetBrains Mono", monospace; }
+.scene { position: absolute; inset: 0; opacity: 0; }
+.kick { position: absolute; left: 120px; top: 74px; font: 700 18px Manrope; letter-spacing: .18em; text-transform: uppercase; color: var(--accent-ink); }
+.ttl { position: absolute; left: 120px; top: 104px; font-size: 52px; font-weight: 650; letter-spacing: -0.035em; }
+.card { position: absolute; background: #fff; border: 1.5px solid var(--line); border-radius: 22px; box-shadow: 0 30px 70px -30px rgba(16,18,22,.22); }
+/* A */
+.persp { position: absolute; inset: 0; perspective: 1600px; transform: scale(1.1); transform-origin: 960px 640px; }
+.qpill { position: absolute; left: 960px; top: 268px; transform: translate(-50%, -50%); height: 86px; padding: 0 36px; border-radius: 43px; border: 1.5px solid var(--line); background: #fff; display: flex; align-items: center; gap: 14px; font-size: 34px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; box-shadow: 0 24px 60px -26px rgba(16,18,22,.25); }
+.qpill .caret { width: 3px; height: 38px; background: var(--accent); }
+.src { width: 300px; padding: 20px 22px 16px; transform-style: preserve-3d; }
+.src .h { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; }
+.src .h i { width: 32px; height: 32px; border-radius: 10px; background: var(--bg-2); display: grid; place-items: center; }
+.src .h svg { width: 18px; height: 18px; }
+.src .rw { font: 500 13px "JetBrains Mono"; color: var(--ink-3); padding: 7px 0; border-top: 1px solid var(--line-2); white-space: nowrap; overflow: hidden; }
+.src .rw:first-of-type { margin-top: 10px; }
+.src .ft { margin-top: 10px; font-size: 28px; font-weight: 650; letter-spacing: -0.02em; }
+.src .ft small { font-size: 14px; color: var(--ink-3); font-weight: 600; margin-left: 6px; }
+.counter { position: absolute; right: 120px; top: 80px; font: 600 20px "JetBrains Mono"; color: var(--ink-3); text-align: right; }
+.counter b { color: var(--nmcs); font-weight: 700; }
+/* B */
+.composer { position: absolute; left: 960px; top: 150px; transform: translate(-50%, -50%); width: 820px; height: 100px; border: 2px solid #D5E1F6; box-shadow: 0 0 0 6px #F1F5FD, 0 26px 60px -30px rgba(16,18,22,.25); border-radius: 26px; background: #fff; display: flex; align-items: center; padding: 0 20px 0 32px; gap: 16px; }
+.composer .tx { flex: 1; font-size: 28px; font-weight: 600; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; }
+.composer .send { width: 58px; height: 58px; border-radius: 17px; background: var(--ink); display: grid; place-items: center; }
+#twinB { position: absolute; left: 430px; top: 250px; width: 1060px; height: 560px; }
+.node { position: absolute; transform: translate(-50%, -50%); background: #fff; border: 1.5px solid var(--line); border-radius: 18px; padding: 13px 18px; width: 330px; box-shadow: 0 22px 50px -26px rgba(16,18,22,.28); }
+.node .fn { font: 650 17px "JetBrains Mono"; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+.node .fn .n { width: 26px; height: 26px; border-radius: 8px; background: var(--bg-3); display: grid; place-items: center; font-size: 13px; color: var(--ink-3); flex: none; }
+.node .rs { font-size: 15.5px; color: var(--ink-2); margin-top: 7px; white-space: nowrap; font-weight: 600; }
+.node .lock { position: absolute; right: 14px; top: -13px; height: 26px; padding: 0 9px; border-radius: 13px; background: var(--ok-wash); color: var(--ok); font: 700 11.5px "JetBrains Mono"; display: flex; align-items: center; gap: 5px; border: 1px solid #BFE3CD; }
+.node.on { border-color: var(--accent-line); box-shadow: 0 0 0 5px var(--accent-wash), 0 22px 50px -26px rgba(16,18,22,.28); }
+.plan { position: absolute; left: 960px; top: 232px; transform: translate(-50%, -50%); height: 40px; padding: 0 16px; border-radius: 20px; background: var(--accent-wash); color: var(--accent-ink); font: 700 15px "JetBrains Mono"; display: flex; align-items: center; gap: 8px; border: 1px solid var(--accent-line); }
+.asof { position: absolute; left: 120px; top: 850px; height: 46px; padding: 0 18px; border-radius: 23px; border: 1.5px solid var(--line); background: #fff; font: 650 17px "JetBrains Mono"; display: flex; align-items: center; gap: 10px; }
+.late { position: absolute; right: 120px; top: 851px; height: 44px; padding: 0 16px; border-radius: 12px; border: 1.5px dashed var(--ink-5); background: #fff; font: 600 14.5px "JetBrains Mono"; color: var(--ink-4); display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.late s { text-decoration-thickness: 2px; }
+/* C */
+.ans { position: absolute; left: 120px; top: 230px; width: 1060px; font-size: 42px; line-height: 1.55; font-weight: 600; letter-spacing: -0.022em; }
+.ans .tok { opacity: 0; }
+.ph { display: inline-block; position: relative; }
+.ph .p { font: 600 25px "JetBrains Mono"; color: var(--ink-4); border: 1.5px dashed var(--ink-5); border-radius: 9px; padding: 1px 9px; vertical-align: 5px; }
+.ph .v { display: none; color: var(--accent-ink); background: var(--accent-wash); border-radius: 9px; padding: 0 10px; font-variant-numeric: tabular-nums; }
+.ph .tag { position: absolute; right: -10px; top: -8px; width: 22px; height: 22px; border-radius: 11px; background: var(--wire); color: #fff; font: 700 12px "JetBrains Mono"; display: grid; place-items: center; opacity: 0; }
+.scan { position: absolute; top: 236px; width: 6px; height: 58px; border-radius: 3px; background: var(--accent); opacity: 0; box-shadow: 0 0 0 6px var(--accent-wash); }
+.rail { position: absolute; left: 1290px; top: 232px; width: 510px; }
+.rail .hd { font: 700 14px "JetBrains Mono"; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 8px; }
+.rid { height: 56px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line-2); font-size: 17px; color: var(--ink-3); opacity: 0; }
+.rid .c { font: 600 16px "JetBrains Mono"; color: var(--wire); background: var(--wire-wash); padding: 4px 10px; border-radius: 8px; }
+.rid .ix { width: 22px; height: 22px; border-radius: 11px; background: var(--wire); color: #fff; font: 700 12px "JetBrains Mono"; display: grid; place-items: center; flex: none; }
+.rid .ok { margin-left: auto; color: var(--ok); font-weight: 800; }
+.modelchip { position: absolute; left: 120px; top: 820px; height: 64px; padding: 0 22px; border-radius: 18px; background: var(--bg-2); display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 650; opacity: 0; }
+.modelchip s { color: var(--nmcs); text-decoration-thickness: 3px; font: 700 20px "JetBrains Mono"; }
+.forkcard { position: absolute; left: 1290px; top: 640px; width: 510px; padding: 24px 28px; opacity: 0; }
+.forkcard .k { font: 700 13px "JetBrains Mono"; color: var(--ink-3); letter-spacing: .04em; }
+.forkcard .big { font-size: 66px; font-weight: 650; letter-spacing: -0.045em; color: var(--ok); margin-top: 10px; line-height: 1; }
+.forkcard .big small { font-size: 21px; color: var(--ink-3); font-weight: 600; margin-left: 8px; letter-spacing: -0.01em; }
+.forkcard .same { margin-top: 14px; display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 650; color: var(--accent-ink); }
+/* D */
+#server { position: absolute; left: 96px; top: 150px; }
+#server svg { display: block; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 93%, transparent 100%), linear-gradient(180deg, transparent 0, #000 7%, #000 90%, transparent 100%); -webkit-mask-composite: source-in; mask-composite: intersect; }
+#server .tagD { position: absolute; font: 700 15px "JetBrains Mono"; letter-spacing: .1em; color: var(--ink-3); white-space: nowrap; opacity: 0; }
+#server .gapD { position: absolute; opacity: 0; } #server .gapD b { display: block; font: 700 24px Manrope; letter-spacing: -0.01em; color: var(--accent-ink); }
+#server .gapD span { display: block; font: 500 15px "JetBrains Mono"; color: var(--ink-3); margin-top: 4px; white-space: nowrap; }
+.strip { position: absolute; left: 120px; top: 690px; width: 1680px; height: 176px; display: grid; grid-template-columns: repeat(5, 1fr); }
+.stg { position: relative; padding: 22px 26px; border: 1.5px solid var(--line); background: #fff; opacity: 0; }
+.stg:first-child { border-radius: 22px 0 0 22px; } .stg:last-child { border-radius: 0 22px 22px 0; }
+.stg + .stg { border-left: 0; }
+.stg .k { font: 700 13px "JetBrains Mono"; letter-spacing: .14em; color: var(--ink-4); }
+.stg .v { font-size: 30px; font-weight: 650; letter-spacing: -0.025em; margin-top: 12px; white-space: nowrap; }
+.stg .s { font-size: 15.5px; color: var(--ink-3); margin-top: 8px; }
+.stg .bar { height: 8px; border-radius: 4px; background: var(--line-2); margin-top: 12px; overflow: hidden; }
+.stg .bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; }
+.arrowk { position: absolute; top: 760px; width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 1.5px solid var(--line); display: grid; place-items: center; z-index: 2; opacity: 0; }
+.submit { position: absolute; left: 820px; top: 330px; height: 66px; padding: 0 26px; border-radius: 18px; background: var(--ink); color: #fff; font: 650 22px Manrope; display: flex; align-items: center; gap: 12px; opacity: 0; }
+.wall { position: absolute; left: 1250px; top: 210px; width: 14px; height: 330px; border-radius: 7px; background: var(--ink); opacity: 0; }
+.walllbl { position: absolute; left: 1290px; top: 330px; font: 700 20px "JetBrains Mono"; line-height: 1.45; opacity: 0; }
+.draft { position: absolute; left: 820px; top: 300px; width: 400px; padding: 20px 22px; border: 2px dashed var(--ink-5); border-radius: 20px; background: #fff; opacity: 0; }
+.draft .t { font: 650 17px "JetBrains Mono"; } .draft .s { font-size: 15.5px; color: var(--ink-3); margin-top: 8px; }
+.signsheet { position: absolute; left: 1150px; top: 170px; width: 650px; padding: 32px 34px; opacity: 0; }
+.signsheet .k2 { font: 700 15px Manrope; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+.signsheet .t { font-size: 30px; font-weight: 650; letter-spacing: -0.02em; margin-top: 10px; }
+.signsheet .who { font-size: 17px; color: var(--ink-3); margin-top: 6px; }
+/* E */
+.hero-n { position: absolute; left: 120px; top: 220px; font-size: 220px; font-weight: 650; letter-spacing: -0.065em; line-height: 1; color: var(--ok); font-variant-numeric: tabular-nums; }
+.hero-l { position: absolute; left: 132px; top: 462px; font-size: 30px; font-weight: 600; color: var(--ink-2); }
+.hero-ci { position: absolute; left: 132px; top: 508px; font: 500 19px "JetBrains Mono"; color: var(--ink-4); }
+.dotplot { position: absolute; left: 980px; top: 210px; }
+.sidekpi { position: absolute; left: 120px; top: 620px; display: flex; gap: 64px; }
+.sidekpi .k { font-size: 18px; color: var(--ink-3); } .sidekpi .v { font-size: 58px; font-weight: 650; letter-spacing: -0.045em; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.sidekpi .v small { font-size: 17px; color: var(--ink-4); font-weight: 600; margin-left: 6px; letter-spacing: 0; }
+.more { position: absolute; left: 980px; top: 600px; width: 820px; display: grid; gap: 14px; }
+.more .m { display: flex; align-items: center; gap: 16px; padding: 18px 22px; border: 1.5px solid var(--line); border-radius: 18px; background: #fff; font-size: 19px; color: var(--ink-2); opacity: 0; }
+.more .m b { font: 700 18px "JetBrains Mono"; color: var(--ink); }
+.more .m .v { margin-left: auto; font-weight: 650; color: var(--ink); white-space: nowrap; }
+/* F */
+.close-words { position: absolute; left: 120px; top: 250px; }
+.close-words div { font-size: 96px; font-weight: 650; letter-spacing: -0.048em; line-height: 1.08; opacity: 0; }
+.close-words div b { color: var(--accent); font-weight: 650; }
+.logo { position: absolute; left: 124px; top: 700px; width: 520px; color: var(--ink); opacity: 0; }
+.credit { position: absolute; left: 128px; top: 842px; font: 600 21px "JetBrains Mono"; color: var(--ink-3); opacity: 0; }
+.tagline { position: absolute; left: 126px; top: 792px; font: 600 28px Manrope; letter-spacing: -0.015em; color: var(--ink-2); opacity: 0; }
+.tagline b { color: var(--accent); font-weight: 650; }
+.bp { position: absolute; left: 1060px; top: 70px; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="57.3" data-width="1920" data-height="1080">
+  <div class="grid" id="grid"></div>
+
+  <!-- A · one question, five places -->
+  <div class="scene" id="sA">
+    <div class="kick" id="kA">Today</div><div class="ttl" id="tA">One question. Five places to look.</div>
+    <div class="counter" id="cntA">5 systems<br><b>0 answers</b></div>
+    <svg id="trailA" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+    <div class="persp"><div id="srcs"></div></div>
+    <div class="qpill" id="qA"><span id="qAtxt"></span><span class="caret" id="caretA"></span></div>
+    <svg id="cursorA" width="36" height="36" viewBox="0 0 28 28" style="position:absolute;left:0;top:0;opacity:0"><path d="M5 3.5l15.5 13.2-7.2.6 4.3 8.4-3.3 1.6-4.3-8.5-5 5.2z" fill="#0B0D10" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- B · ask; tools read the twin -->
+  <div class="scene" id="sB">
+    <div class="kick" id="kB">Ask the twin</div>
+    <div id="twinB"></div>
+    <svg id="graphB" width="1920" height="1080" style="position:absolute;inset:0;pointer-events:none"></svg>
+    <div class="composer" id="comp"><div class="tx"><span id="qBtxt"></span></div><div class="send" id="sendB"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></svg></div></div>
+    <div class="plan" id="plan"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>PLAN · 5 READ-ONLY TOOLS</div>
+    <div id="nodes"></div>
+    <div class="asof" id="asofB"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B0D10" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>reads as of 22 Jun 06:00</div>
+    <div class="late" id="lateB"><s>INSTALL HYDP-000010 · 19 Jun</s>not yet ingested → not used</div>
+  </div>
+
+  <!-- C · answer -->
+  <div class="scene" id="sC">
+    <div class="kick" id="kC">Answer · 5 tools · 11.7 s</div>
+    <div class="ans" id="ans"></div>
+    <div class="scan" id="scan"></div>
+    <div class="rail" id="rail"></div>
+    <svg id="cites" width="1920" height="1080" style="position:absolute;inset:0;pointer-events:none"></svg>
+    <div class="modelchip" id="model"><span class="mono">gpt-oss-20b</span><span style="color:var(--ink-3);font-weight:600">writes the words — never the numbers</span><s>0–9</s></div>
+    <div class="card forkcard" id="fork">
+      <div class="k">RUN_WHAT_IF · BELIEF MODE · 30 PAIRED SIMULATIONS</div>
+      <div class="big">+21.7<small>pts mission capable</small></div>
+      <div class="same"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Same simulations the decision board uses</div>
+    </div>
+  </div>
+
+  <!-- D · one box, drafts only -->
+  <div class="scene" id="sD">
+    <div class="kick" id="kD">One air-gapped box · drafts only</div>
+    <div id="server"></div>
+    <div class="strip" id="strip">
+      <div class="stg"><div class="k">MODEL</div><div class="v">gpt-oss-20b</div><div class="s">MXFP4 · 12.1 GB · Apache-2.0</div></div>
+      <div class="stg"><div class="k">RUNTIME</div><div class="v">llama.cpp</div><div class="s">16K context · schema decode</div></div>
+      <div class="stg"><div class="k">HARDWARE</div><div class="v"><span id="memv">0.0</span> / 128 GB</div><div class="s">one GB10 station server</div><div class="bar"><i id="memb"></i></div></div>
+      <div class="stg"><div class="k">EXECUTION</div><div class="v"><span id="ttft">0.0</span> s · <span id="tps">0</span> tok/s</div><div class="s">first token · decode at 16K</div></div>
+      <div class="stg"><div class="k">OUTPUT</div><div class="v">Cited · draft only</div><div class="s">no write path · no egress</div></div>
+    </div>
+    <div class="submit" id="submit">Submit order <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></svg></div>
+    <div class="wall" id="wall"></div>
+    <div class="walllbl" id="walllbl">NO WRITE<br>PATH</div>
+    <div class="draft" id="draft"><div class="t">CHANGE_MONITORING_CONFIG</div><div class="s">Filter HYD-101 on TJ107 · <b style="color:var(--ink)">DRAFT</b>, not submitted</div></div>
+    <div class="card signsheet" id="sign"><div class="k2">Signature required · human-only action</div><div class="t">Filter HYD-101 on TJ107</div><svg id="sig" width="580" height="120" viewBox="0 0 580 120" style="margin-top:16px;display:block"><path d="M14 92c30-6 44-58 66-58s-10 54 14 54 26-40 46-40 6 36 30 36 28-26 48-26 18 22 40 22 30-30 56-30 20 26 44 26 34-14 60-18" fill="none" stroke="#0B0D10" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="108" x2="570" y2="108" stroke="#E6E6E2" stroke-width="1.5"/></svg><div class="who">Engineering Officer · signed with station key · 07:57</div></div>
+  </div>
+
+  <!-- E · result -->
+  <div class="scene" id="sE">
+    <div class="kick" id="kE">30 paired simulations · next 30 days · vs doing nothing</div>
+    <div class="ttl" id="tE" style="font-size:46px">The TJ107 decision</div>
+    <div class="hero-n" id="heroN">+0.0</div>
+    <div class="hero-l" id="heroL">points of mission-capable time</div>
+    <div class="hero-ci" id="heroC">95 % CI [16.7, 26.8] · belief mode</div>
+    <svg class="dotplot" id="dots" width="820" height="330"></svg>
+    <div class="sidekpi" id="side"><div><div class="k">Maintenance man-hours</div><div class="v" id="mhN">0</div></div><div><div class="k">Days grounded for parts</div><div class="v" id="aogN">0.0</div></div><div><div class="k">In-flight failures</div><div class="v" style="color:var(--ink-4)">+0.07<small>not significant</small></div></div></div>
+    <div class="more"><div class="m" id="m1"><b>TJ108</b>Expedite the brake chute<span class="v">back 85 days sooner</span></div><div class="m" id="m2"><b>TJ105</b>Order tyres early<span class="v" style="color:var(--ink-4)">no change · dropped</span></div></div>
+  </div>
+
+  <!-- F · close -->
+  <div class="scene" id="sF">
+    <svg class="bp" id="bp" width="760" height="900"></svg>
+    <div class="close-words"><div id="w1">One state.</div><div id="w2">One loop.</div><div id="w3">One <b>log.</b></div></div>
+    <div class="logo" id="logo"></div>
+    <div class="tagline" id="tagline">Real-time AI for critical decisions <b>·</b> live on IBM LinuxONE</div>
+    <div class="credit" id="credit">Dilijens · IBM Z Datathon</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+  const tl = gsap.timeline({ paused: true });
+  const A = 0, B = 8.6667, C = 16.8, D = 28.2667, E = 37.6334, F = 49.4667, END = 57.3;
+  const vo = { A: A + .28, B: B + .28, C: C + .28, D: D + .28, E: E + .28, F: F + .28 };
+  const ICON = {
+    log: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/>',
+    bit: '<path d="M12 4l9 15.5H3z"/><path d="M12 10v4M12 17h.01"/>',
+    box: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/>',
+    shop: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L4 16.7 7.3 20l5.3-5.3a4 4 0 0 0 5.1-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+    cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>' };
+  const ico = n => `<svg viewBox="0 0 24 24" fill="none" stroke="#0B0D10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[n]}</svg>`;
+  const drawOn = (el, at, dur, ease = 'power2.inOut') => { const L = el.getTotalLength(); el.style.strokeDasharray = `${L} ${L}`; tl.fromTo(el, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease }, at); };
+  tl.fromTo('#grid', { x: 0, y: 0 }, { x: -96, y: -48, duration: END, ease: 'none' }, 0);
+
+  /* ================= A · one question, five places ================= */
+  const SRC = [
+    { k: 'log', n: 'Tech log', rows: ['sulur-26169-0006 · R/R pump', 'sulur-26166-0003 · CND', 'sulur-26166-0001 · CND'], ft: '64', fs: 'HYD-101 jobs', x: 280, y: 590, ry: 18, rz: -2, at: 2.94 },
+    { k: 'bit', n: 'BIT downloads', rows: ['HYD-101 · 18 Jun 20:08', 'HYD-101 · 18 Jun 12:12', 'HYD-101 · 15 Jun 20:14'], ft: '63', fs: 'events', x: 620, y: 700, ry: 9, rz: 1.5, at: 3.81 },
+    { k: 'box', n: 'Parts ledger', rows: ['REMOVE HYDP-000008 · 19 Jun', 'INSTALL HYDP-000008 · 10 Jun', 'REMOVE HYDP-000008 · 04 Jun'], ft: '28', fs: 'pump removals', x: 960, y: 740, ry: 0, rz: -1, at: 4.91 },
+    { k: 'shop', n: 'Shop reports', rows: ['HYDP-000010 · RTOK', 'HYDP-000008 · RTOK', 'HYDP-000012 · RTOK'], ft: '33 / 33', fs: 'no fault found', x: 1300, y: 700, ry: -9, rz: 1, at: 5.92 },
+    { k: 'cal', n: 'Flying plan', rows: ['TJ107 · 61 sorties logged', 'last flown · 18 Jun 20:29', 'next epoch · 22 Jun 08:00'], ft: '61', fs: 'sorties', x: 1640, y: 590, ry: -18, rz: 2, at: 6.89 }];
+  $('#srcs').innerHTML = SRC.map((s, i) => `<div class="card src" id="src${i}" style="left:${s.x - 150}px;top:${s.y - 128}px"><div class="h"><i>${ico(s.k)}</i>${s.n}</div>${s.rows.map(r => `<div class="rw">${r}</div>`).join('')}<div class="ft">${s.ft}<small>${s.fs}</small></div></div>`).join('');
+  tl.fromTo('#sA', { opacity: 0 }, { opacity: 1, duration: .3 }, A);
+  tl.fromTo(['#kA', '#tA'], { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .55, stagger: .08, ease: 'power3.out' }, A + .1);
+  tl.fromTo('#qA', { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(1.8)' }, A + .2);
+  const q = 'Why does HYD-101 keep firing on TJ107?', qo = { n: 0 };
+  tl.fromTo(qo, { n: 0 }, { n: q.length, duration: 1.2, ease: 'none', onUpdate: () => { $('#qAtxt').textContent = q.slice(0, Math.round(qo.n)); } }, A + .45);
+  tl.fromTo('#caretA', { opacity: 1 }, { opacity: 0, duration: .25, repeat: 15, yoyo: true, ease: 'steps(1)' }, A + .4);
+  tl.fromTo('#cntA', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, vo.A + 1.46);
+  SRC.forEach((s, i) => tl.fromTo('#src' + i, { opacity: 0, y: 90, rotationY: s.ry * 1.8, rotationZ: s.rz * 3, scale: .86 }, { opacity: 1, y: 0, rotationY: s.ry, rotationZ: s.rz, scale: 1, duration: .7, ease: 'power3.out' }, vo.A + s.at - .15));
+  tl.fromTo('#srcs', { y: 0 }, { y: -16, duration: 6, ease: 'none' }, vo.A + 2.5);
+  // cursor ping-pong, trail drawn progressively
+  const pts = [[960, 300], [280, 560], [620, 670], [280, 600], [960, 710], [620, 690], [1300, 670], [960, 740], [1640, 560], [1300, 700], [1640, 610]];
+  $('#trailA').innerHTML = `<path id="trailP" d="M${pts.map(p => p.join(' ')).join(' L')}" fill="none" stroke="#B9BDC2" stroke-width="2" stroke-linecap="round"/>`;
+  const trail = $('#trailP'), TL = trail.getTotalLength();
+  const cur = { t: 0 };
+  tl.fromTo(cur, { t: 0 }, { t: 1, duration: 5.4, ease: 'power1.inOut', onUpdate: () => {
+    const p = trail.getPointAtLength(cur.t * TL); gsap.set('#cursorA', { x: p.x - 4, y: p.y - 4 });
+    trail.setAttribute('stroke-dasharray', `${(cur.t * TL).toFixed(1)} ${TL + 10}`); } }, vo.A + 2.75);
+  trail.setAttribute('stroke-dasharray', `0 ${TL + 10}`);
+  tl.fromTo('#cursorA', { opacity: 0 }, { opacity: 1, duration: .2 }, vo.A + 2.65);
+  // gather everything into the question → composer (match cut)
+  SRC.forEach((s, i) => tl.to('#src' + i, { x: 960 - s.x, y: 268 - s.y, rotationY: 0, rotationZ: 0, scale: .1, opacity: 0, duration: .5, ease: 'power3.in' }, B - .5 + i * .03));
+  tl.to(['#cntA', '#cursorA', '#trailA', '#kA', '#tA'], { opacity: 0, duration: .3 }, B - .45);
+  tl.to('#qA', { y: -118, scaleX: 1.04, opacity: 0, duration: .45, ease: 'power3.inOut' }, B - .15);
+  tl.set('#sA', { opacity: 0 }, B + .35);
+
+  /* ================= B · ask; the tools read the twin ================= */
+  tl.fromTo('#sB', { opacity: 0 }, { opacity: 1, duration: .25 }, B - .1);
+  tl.fromTo('#comp', { opacity: 0, scale: .94 }, { opacity: 1, scale: 1, duration: .45, ease: 'power3.out' }, B + .05);
+  tl.fromTo('#kB', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, B + .1);
+  const qbo = { n: 0 }; tl.fromTo(qbo, { n: 0 }, { n: q.length, duration: .45, ease: 'none', onUpdate: () => { $('#qBtxt').textContent = q.slice(0, Math.round(qbo.n)); } }, B + .1);
+  tl.fromTo('#sendB', { scale: 1 }, { scale: .84, duration: .1, yoyo: true, repeat: 1, ease: 'power2.inOut' }, vo.B + .74);
+  // twin
+  const twin = PHXF.mountTwin('#twinB', { lens: 'evidence', selected: null, az: 0.72, el: 0.42, dist: 23, dpr: 2 }, [], null);
+  const TOOLS = [
+    { fn: 'get_aircraft_summary', rs: 'FMC · 7 open jobs · SYS1 pump inferred', comp: 'DFCC', pos: [300, 360] },
+    { fn: 'get_event_recurrence', rs: '63 events · 59 of 61 sorties', comp: 'BHEEM_EU', pos: [300, 640] },
+    { fn: 'get_serial_history', rs: '28 removals · 33 / 33 RTOK', comp: 'HYD_PUMP', pos: [1620, 360] },
+    { fn: 'trace_evidence_chain', rs: 'event → job → R/R → shop', comp: 'AMAGB', pos: [1620, 640] },
+    { fn: 'run_what_if', rs: '30 paired simulations · belief', comp: 'ENGINE', pos: [960, 860] }];
+  $('#nodes').innerHTML = TOOLS.map((t, i) => `<div class="node" id="nd${i}" style="left:${t.pos[0]}px;top:${t.pos[1]}px"><div class="fn"><span class="n">${i + 1}</span>${t.fn}</div><div class="rs" id="rs${i}">${t.rs}</div><span class="lock" id="lk${i}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>READ-ONLY</span></div>`).join('');
+  $('#graphB').innerHTML = TOOLS.map((t, i) => `<path id="pl${i}" fill="none" stroke="#E8743B" stroke-width="1.3" opacity=".32"/><path id="bm${i}" fill="none" stroke="#2563C9" stroke-width="2.4" stroke-dasharray="7 9" stroke-linecap="round"/><circle id="pk${i}" r="7" fill="#2563C9"/><circle id="pk${i}b" r="4.5" fill="#2563C9" opacity=".55"/>`).join('');
+  const HB = [430, 250]; // twin host offset
+  const ACTIVE = [[vo.B + 2.9, vo.B + 3.9], [vo.B + 3.5, vo.B + 4.6], [vo.B + 4.1, vo.B + 5.3], [vo.B + 4.7, vo.B + 5.8], [vo.B + 5.3, vo.B + 6.6]];
+  const bState = { beam: [0, 0, 0, 0, 0], pk: [-1, -1, -1, -1, -1], plan: [0, 0, 0, 0, 0] };
+  const sB0 = B - .1;
+  PHXF.driveTwin(tl, twin, sB0, C - sB0 + .1, (t) => {
+    const T = sB0 + t;
+    // which tool is active → highlight that component in the twin
+    let sel = null; ACTIVE.forEach(([a, b], i) => { if (T >= a && T < b) sel = TOOLS[i].comp; });
+    if (twin.state.selected !== sel) twin.select(sel);
+    TOOLS.forEach((tool, i) => {
+      const [sx, sy] = twin.screenOf(tool.comp), cx = HB[0] + sx, cy = HB[1] + sy, [nx, ny] = tool.pos;
+      const mx = (cx + nx) / 2, my = Math.min(cy, ny) - 80;
+      const d = `M${nx} ${ny} Q ${mx} ${my} ${cx} ${cy}`;
+      const bm = $('#bm' + i); bm.setAttribute('d', d); bm.style.opacity = bState.beam[i]; bm.style.strokeDashoffset = (-T * 40).toFixed(1);
+      const pl = $('#pl' + i); pl.setAttribute('d', `M960 252 L${nx} ${ny}`); pl.setAttribute('stroke-dasharray', `${(bState.plan[i] * 1400).toFixed(0)} 1400`);
+      // packets travel component → node (data read back)
+      const u = bState.pk[i];
+      ['', 'b'].forEach((k, j) => { const uu = u - j * .14; const el = $('#pk' + i + k);
+        if (uu < 0 || uu > 1) { el.setAttribute('opacity', 0); return; }
+        const qx = (1 - uu) * (1 - uu) * cx + 2 * (1 - uu) * uu * mx + uu * uu * nx, qy = (1 - uu) * (1 - uu) * cy + 2 * (1 - uu) * uu * my + uu * uu * ny;
+        el.setAttribute('cx', qx.toFixed(1)); el.setAttribute('cy', qy.toFixed(1)); el.setAttribute('opacity', j ? .55 : 1); });
+    });
+  });
+  tl.fromTo('#plan', { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: .4, ease: 'power3.out' }, vo.B + 2.0);
+  TOOLS.forEach((t, i) => {
+    const s = vo.B + 2.2 + i * .14;
+    tl.fromTo(bState.plan, { [i]: 0 }, { [i]: 1, duration: .5, ease: 'power2.out' }, s);
+    tl.fromTo('#nd' + i, { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(1.8)' }, s + .1);
+    tl.fromTo('#rs' + i, { opacity: 0 }, { opacity: 0, duration: .01 }, s + .1);
+    tl.fromTo('#lk' + i, { opacity: 0 }, { opacity: 0, duration: .01 }, s + .1);
+    tl.fromTo(bState.beam, { [i]: 0 }, { [i]: 1, duration: .3 }, ACTIVE[i][0] - .1);
+    tl.fromTo(bState.pk, { [i]: -.2 }, { [i]: 1.2, duration: .95, ease: 'power1.inOut' }, ACTIVE[i][0]);
+    tl.set('#nd' + i, { className: 'node on' }, ACTIVE[i][0]);
+    tl.set('#nd' + i, { className: 'node' }, ACTIVE[i][1]);
+    tl.fromTo('#rs' + i, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .3, ease: 'power3.out' }, ACTIVE[i][0] + .8);
+    tl.to(bState.beam, { [i]: .25, duration: .4 }, ACTIVE[i][1]);
+    tl.fromTo('#lk' + i, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .3, ease: 'back.out(2)' }, vo.B + 5.6 + i * .07);
+  });
+  tl.fromTo('#asofB', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, vo.B + 4.3);
+  tl.fromTo('#lateB', { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, vo.B + 4.55);
+  tl.to('#sB', { opacity: 0, duration: .35, ease: 'power2.in' }, C - .3);
+
+  /* ================= C · answer: numbers from tools, claims cited ================= */
+  tl.fromTo('#sC', { opacity: 0 }, { opacity: 1, duration: .25 }, C - .1);
+  tl.fromTo('#kC', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, C);
+  const ANS = ['HYD-101 has fired on ', ['59 of 61', 'r2', 'fired'], ' TJ107 sorties and survived ', ['28', 'r3', 'removals'], ' pump removals across ', ['10', 'r3', 'pumps'],
+    ' pumps. Every pump the shop tested was RTOK ', ['33 / 33', 'r3', 'rtok'], ', and none of the fleet’s ', ['107', 'r2', 'jobs'], ' HYD-101 jobs was confirmed. The alarm follows the aircraft, not the pump.'];
+  let html = '', ph = 0; const VAL = [];
+  ANS.forEach(seg => { if (typeof seg === 'string') html += seg.split(/(\s+)/).map(w => w.trim() ? `<span class="tok">${w}</span>` : w).join('');
+    else { VAL.push(seg[0]); html += `<span class="tok ph" id="ph${ph}"><span class="p">{{${seg[1]}.${seg[2]}}}</span><span class="v">${seg[0]}</span><span class="tag">${ph + 1}</span></span>`; ph++; } });
+  $('#ans').innerHTML = html;
+  $$('#ans .tok').forEach((el, i) => tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: .04 }, C + .2 + i * .024));
+  // validator: each placeholder resolves from its tool result (decode effect), scan bar passes over it
+  const rnd = (k, f) => { let x = Math.sin((k + 1) * 9301 + f * 49297) * 233280; return x - Math.floor(x); };
+  for (let k = 0; k < 5; k++) {
+    const at = vo.C + 1.3 + k * .26, el = $(`#ph${k} .v`), fin = VAL[k];
+    tl.set(`#ph${k} .p`, { display: 'inline-block' }, C);
+    tl.set(`#ph${k} .p`, { display: 'none' }, at);
+    tl.set(el, { display: 'inline-block' }, at);
+    const o = { p: 0 };
+    tl.fromTo(o, { p: 0 }, { p: 1, duration: .45, ease: 'none', onUpdate: () => {
+      if (o.p >= 1) { el.textContent = fin; return; }
+      const f = Math.floor(o.p * 14); el.textContent = fin.replace(/[0-9]/g, (d, j) => String(Math.floor(rnd(k * 7 + j, f) * 10))); } }, at);
+    tl.fromTo(`#ph${k} .tag`, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .3, ease: 'power3.out' }, at + .3);
+  }
+  tl.fromTo('#model', { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: .5, ease: 'power3.out' }, vo.C + 2.7);
+  const RIDS = [['fcf0b949…', '18 Jun 21:08'], ['2b73925c…', '18 Jun 13:31'], ['b8b089f9…', '15 Jun 21:54'], ['3ca4c8db…', '15 Jun 13:45'], ['661fc9d5…', '11 Jun 21:20'], ['849f5403…', '11 Jun 13:25']];
+  $('#rail').innerHTML = `<div class="hd">CITED RECORDS · INGESTED BEFORE 06:00</div>` + RIDS.map((r, i) => `<div class="rid" id="rid${i}">${i < 5 ? `<span class="ix">${i + 1}</span>` : '<span class="ix" style="background:var(--ink-5)">·</span>'}<span class="c">${r[0]}</span>ingested ${r[1]}<span class="ok">✓</span></div>`).join('');
+  RIDS.forEach((r, i) => tl.fromTo('#rid' + i, { opacity: 0, x: 22 }, { opacity: 1, x: 0, duration: .35, ease: 'power3.out' }, vo.C + 4.4 + i * .1));
+  // citation threads (measured after layout: set final display states first, then measure)
+  tl.add(() => {}, 0);
+  (function () {
+    $$('#ans .ph .p').forEach(e => e.style.display = 'none'); $$('#ans .ph .v').forEach((e, i) => { e.style.display = 'inline-block'; e.textContent = VAL[i]; });
+    const sr = $('#root').getBoundingClientRect(); let s = '';
+    for (let k = 0; k < 5; k++) {
+      const v = $(`#ph${k}`).getBoundingClientRect(), r = $('#rid' + k).getBoundingClientRect();
+      const x1 = 1192, y1 = v.top - sr.top + v.height / 2, x2 = r.left - sr.left - 8, y2 = r.top - sr.top + r.height / 2;
+      s += `<path id="ct${k}" d="M${x1} ${y1} C ${x1 + 50} ${y1}, ${x2 - 50} ${y2}, ${x2} ${y2}" fill="none" stroke="#2563C9" stroke-width="1.8" opacity=".75"/><circle cx="${x1}" cy="${y1}" r="4" fill="#2563C9" class="ctd" opacity="0"/>`;
+    }
+    $('#cites').innerHTML = s;
+    $$('#ans .ph .p').forEach(e => e.style.display = ''); $$('#ans .ph .v').forEach(e => e.style.display = '');
+  })();
+  for (let k = 0; k < 5; k++) drawOn($('#ct' + k), vo.C + 4.6 + k * .12, .65);
+  tl.fromTo('#cites .ctd', { opacity: 0 }, { opacity: 1, duration: .2, stagger: .12 }, vo.C + 4.6);
+  tl.fromTo('#fork', { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, vo.C + 6.4);
+  tl.to(['#rid4', '#rid5'], { opacity: .25, duration: .4 }, vo.C + 6.3);
+  tl.to('#sC', { opacity: 0, duration: .35, ease: 'power2.in' }, D - .3);
+
+  /* ================= D · one air-gapped box, drafts only ================= */
+  // station server: the blueprint plate (appliance on the engineering desk, air gap), cropped to the drawing
+  $('#server').innerHTML = window.PHX_ILL.srv + '<div class="tagD" id="tagD">STATION · GB10 · gpt-oss-20b resident</div><div class="gapD" id="gapD"><b>Air-gapped</b><span>no network port · every service local</span></div>';
+  { const sv = $('#server svg'); sv.setAttribute('viewBox', '500 240 720 470'); sv.setAttribute('width', '800'); sv.setAttribute('height', '522');
+    ['#srv-bg', '#srv-slots', '#srv-sheet', '#srv-titleblock'].forEach(q => { const e = $(q); if (e) e.style.display = 'none'; });
+    $$('#server svg text').forEach(t => t.style.display = 'none'); }
+  const tagD = $('#tagD'), gapD = $('#gapD'); Object.assign(tagD.style, { left: '96px', top: '0px' }); Object.assign(gapD.style, { left: '734px', top: '452px' });
+  tl.fromTo('#sD', { opacity: 0 }, { opacity: 1, duration: .25 }, D - .1);
+  tl.fromTo('#kD', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, D);
+  // draw the desk and the appliance on, fills settle in behind the strokes
+  const srvDraw = $$('#srv-desk .draw, #srv-appliance .draw');
+  tl.fromTo(['#srv-desk', '#srv-appliance'], { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out', stagger: .08 }, D + .02);
+  PHXF.draw(tl, srvDraw, D + .05, .9, .012, 'power2.inOut');
+  tl.fromTo(srvDraw, { fillOpacity: 0 }, { fillOpacity: 1, duration: .5, ease: 'power1.out' }, D + .55);
+  tl.fromTo(['#srv-ports', '#srv-power-cord'], { opacity: 0 }, { opacity: 1, duration: .4 }, D + .7);
+  tl.fromTo(tagD, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, D + .8);
+  { const led = $('#srv-status-led'); if (led) { led.setAttribute('fill', '#1F8A4C'); tl.fromTo(led, { opacity: .25 }, { opacity: 1, duration: .45, yoyo: true, repeat: 9, ease: 'sine.inOut' }, D + .9); } }
+  // the air gap lands on "air-gapped": the unplugged cable draws, the broken link and the shield pop
+  tl.fromTo('#srv-airgap', { opacity: 0 }, { opacity: 1, duration: .3 }, vo.D + 1.0);
+  { const cab = $('#srv-lan-cable'); if (cab) PHXF.draw(tl, [cab], vo.D + 1.0, .5, 0, 'power2.out'); }
+  { const g = $('#srv-gap'); if (g) PHXF.draw(tl, [g], vo.D + 1.35, .3, 0, 'power2.out'); }
+  { const sh = $('#srv-shield'); if (sh) PHXF.draw(tl, [sh], vo.D + 1.25, .5, 0, 'power2.out'); }
+  tl.fromTo(gapD, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: .4, ease: 'power3.out' }, vo.D + 1.45);
+  $$('#strip .stg').forEach((el, i) => tl.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, D + .35 + i * .3));
+  const mem = { v: 0 }; tl.fromTo(mem, { v: 0 }, { v: 15.3, duration: 1, ease: 'power2.out', onUpdate: () => { $('#memv').textContent = mem.v.toFixed(1); $('#memb').style.width = (mem.v / 128 * 100) + '%'; } }, D + 1.0);
+  const tt = { v: 0 }; tl.fromTo(tt, { v: 0 }, { v: 1.1, duration: 1.1, ease: 'none', onUpdate: () => { $('#ttft').textContent = tt.v.toFixed(1); } }, vo.D + 2.35);
+  const tp2 = { v: 0 }; tl.fromTo(tp2, { v: 0 }, { v: 70, duration: .8, ease: 'power2.out', onUpdate: () => { $('#tps').textContent = Math.round(tp2.v); } }, vo.D + 3.45);
+  tl.fromTo('#submit', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .3, ease: 'power3.out' }, vo.D + 4.2);
+  tl.fromTo('#wall', { opacity: 0, scaleY: .2 }, { opacity: 1, scaleY: 1, duration: .35, ease: 'power3.out' }, vo.D + 4.25);
+  tl.fromTo('#walllbl', { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: .3 }, vo.D + 4.45);
+  tl.to('#submit', { x: 230, duration: .35, ease: 'power2.in' }, vo.D + 4.55);
+  tl.to('#submit', { x: 110, rotation: -5, duration: .35, ease: 'back.out(2.5)' }, vo.D + 4.9);
+  tl.to('#submit', { opacity: 0, scale: .9, duration: .2 }, vo.D + 5.25);
+  tl.fromTo('#draft', { opacity: 0, scale: .88, x: 110 }, { opacity: 1, scale: 1, x: 110, duration: .35, ease: 'back.out(2)' }, vo.D + 5.25);
+  tl.to(['#wall', '#walllbl'], { opacity: 0, duration: .3 }, vo.D + 5.7);
+  tl.to('#draft', { x: 400, y: -110, scale: .7, opacity: 0, duration: .5, ease: 'power3.in' }, vo.D + 5.85);
+  tl.fromTo('#sign', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, vo.D + 5.95);
+  drawOn($('#sig path'), vo.D + 6.45, 1.3, 'power1.inOut');
+  tl.to('#sD', { opacity: 0, duration: .35 }, E - .3);
+
+  /* ================= E · result ================= */
+  tl.fromTo('#sE', { opacity: 0 }, { opacity: 1, duration: .25 }, E - .1);
+  tl.fromTo(['#kE', '#tE'], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, stagger: .08, ease: 'power3.out' }, E);
+  tl.fromTo(['#heroL', '#heroC'], { opacity: 0 }, { opacity: 1, duration: .5, stagger: .1 }, E + .4);
+  const hn = { v: 0 }; tl.fromTo(hn, { v: 0 }, { v: 21.7, duration: 1.7, ease: 'power3.out', onUpdate: () => { $('#heroN').textContent = '+' + hn.v.toFixed(1); } }, vo.E + 3.3);
+  (function () {
+    const x0 = 40, x1 = 790, lo = -0.2, hi = 0.6, X = v => x0 + (v - lo) / (hi - lo) * (x1 - x0);
+    let s = `<line x1="${x0}" x2="${x1}" y1="250" y2="250" stroke="#D6D6D1" stroke-width="1.5"/>`;
+    [-0.2, 0, 0.2, 0.4, 0.6].forEach(v => s += `<line x1="${X(v)}" x2="${X(v)}" y1="244" y2="256" stroke="#B9BDC2"/><text x="${X(v)}" y="282" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="#8E939A">${v > 0 ? '+' : ''}${(v * 100).toFixed(0)}</text>`);
+    s += `<line x1="${X(0)}" x2="${X(0)}" y1="36" y2="250" stroke="#0B0D10" stroke-width="1.5" stroke-dasharray="4 5"/><text x="${X(0) + 8}" y="48" font-family="JetBrains Mono" font-size="15" fill="#62676F">doing nothing</text>`;
+    s += `<rect id="ciband" x="${X(.1667)}" y="60" width="${X(.268) - X(.1667)}" height="190" fill="#EAF6EF"/><line id="meanl" x1="${X(.2173)}" x2="${X(.2173)}" y1="60" y2="250" stroke="#1F8A4C" stroke-width="2.5"/><text id="meant" x="${X(.2173) + 8}" y="76" font-family="JetBrains Mono" font-size="15" fill="#1F8A4C">mean +21.7</text>`;
+    const sorted = S1M.diff.map((d, i) => [d, i]).sort((a, b) => a[0] - b[0]); const stack = {};
+    sorted.forEach(([d]) => { const b = Math.round(X(d) / 16); stack[b] = (stack[b] || 0) + 1; const y = 238 - (stack[b] - 1) * 18;
+      s += `<circle class="pd" cx="${X(d).toFixed(1)}" cy="${y}" r="7.5" fill="${d >= 0 ? '#1F8A4C' : '#D4492A'}"/>`; });
+    s += `<text x="${x1}" y="318" text-anchor="end" font-family="JetBrains Mono" font-size="15" fill="#8E939A">each dot = one paired future · difference in mission-capable points</text>`;
+    $('#dots').innerHTML = s;
+  })();
+  tl.fromTo('#dots .pd', { opacity: 0, y: -50 }, { opacity: .92, y: 0, duration: .35, stagger: .055, ease: 'power3.out' }, E + .7);
+  tl.fromTo(['#ciband', '#meanl', '#meant'], { opacity: 0 }, { opacity: 1, duration: .45, stagger: .1 }, E + 2.6);
+  tl.fromTo('#side', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, vo.E + 7.6);
+  const mh = { v: 0 }; tl.fromTo(mh, { v: 0 }, { v: 116, duration: 1.0, ease: 'power3.out', onUpdate: () => { $('#mhN').textContent = '−' + Math.round(mh.v); } }, vo.E + 8.5);
+  const ag = { v: 0 }; tl.fromTo(ag, { v: 0 }, { v: 3.7, duration: 1.0, ease: 'power3.out', onUpdate: () => { $('#aogN').textContent = '−' + ag.v.toFixed(1); } }, vo.E + 8.7);
+  tl.fromTo('#m1', { opacity: 0, x: 26 }, { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, vo.E + 9.2);
+  tl.fromTo('#m2', { opacity: 0, x: 26 }, { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, vo.E + 9.45);
+  tl.to('#sE', { opacity: 0, duration: .35 }, F - .3);
+
+  /* ================= F · close ================= */
+  (function () {
+    // blueprint planform with stations and dimension line (geometry from aircraft.js)
+    const s = 56, pad = 60, P = ([x, y]) => [pad + (4.1 + y) * s, 40 + x * s];
+    const ring = PHX_AC.ring(), d = 'M' + ring.map(p => P(p).map(v => v.toFixed(1)).join(' ')).join(' L') + 'Z';
+    const c = PHX_AC.CANOPY, cx = pad + 4.1 * s;
+    let g = `<path id="bpo" d="${d}" fill="none" stroke="#62676F" stroke-width="2" stroke-linejoin="round"/>`;
+    g += `<ellipse cx="${cx}" cy="${40 + (c.x0 + c.x1) / 2 * s}" rx="${c.w * s}" ry="${(c.x1 - c.x0) / 2 * s}" fill="none" stroke="#8E939A" stroke-width="1.6"/>`;
+    g += `<path id="bpc" d="M${cx} ${40 + .2 * s} V ${40 + 13.3 * s}" stroke="#B9BDC2" stroke-width="1.2" stroke-dasharray="14 5 3 5"/>`;
+    [1.6, 3.0, 4.6, 7.29, 9.32, 11.22].forEach((x, i) => g += `<line class="bst" x1="${pad - 34}" x2="${pad - 18}" y1="${40 + x * s}" y2="${40 + x * s}" stroke="#B9BDC2" stroke-width="1.4"/>`);
+    g += `<path id="bpd" d="M${pad - 26} 40 V ${40 + 13.2 * s}" stroke="#8E939A" stroke-width="1.4"/><text x="${pad - 40}" y="${40 + 6.6 * s}" transform="rotate(-90 ${pad - 40} ${40 + 6.6 * s})" text-anchor="middle" font-family="JetBrains Mono" font-size="16" fill="#62676F">13.2 m</text>`;
+    g += `<circle cx="${pad + (4.1 + .42) * s}" cy="${40 + 7.55 * s}" r="11" fill="#E8743B" id="bpdot" opacity="0"/>`;
+    $('#bp').setAttribute('viewBox', `0 0 760 ${40 + 13.6 * s}`); $('#bp').innerHTML = g;
+  })();
+  $('#logo').innerHTML = window.PHX_LOGO;
+  tl.fromTo('#sF', { opacity: 0 }, { opacity: 1, duration: .25 }, F - .1);
+  ['#bpo', '#bpc', '#bpd'].forEach((id, i) => drawOn($(id), F + i * .2, 2.2));
+  tl.fromTo('#bp .bst', { opacity: 0 }, { opacity: 1, duration: .3, stagger: .08 }, F + .8);
+  tl.fromTo('#bpdot', { opacity: 0, scale: 0, transformOrigin: 'center' }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(3)' }, F + 2.4);
+  [['#w1', 1.17], ['#w2', 1.86], ['#w3', 2.53]].forEach(([id, t]) => tl.fromTo(id, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, vo.F + t - .15));
+  tl.fromTo('#logo', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, vo.F + 3.4);
+  tl.fromTo('#tagline', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, vo.F + 3.85);
+  tl.fromTo('#credit', { opacity: 0 }, { opacity: 1, duration: .6 }, vo.F + 4.3);
+  tl.to({}, { duration: .01 }, END - .01);
+  window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+})();
+</script>
+</body></html>

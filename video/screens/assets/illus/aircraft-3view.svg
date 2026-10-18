@@ -1,0 +1,408 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-ac" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-ac-title ill-ac-desc">
+  <title id="ill-ac-title">General arrangement — three view</title>
+  <desc id="ill-ac-desc">Blueprint plate of the Phalanx Twin schematic delta-wing aircraft: top, side and front views with dimensions, station ticks and numbered equipment zones.</desc>
+  <defs><pattern id="ac-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="ac-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="ac-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="ac-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="ac-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="ac-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="ac-plan" class="view">
+    <path id="ac-plan-outline" class="draw outline" d="M128 296 L145.5 293.5 L173 285 L208 278 L243 273.5 L278 270 L313 265 L330.5 247 L358 245 L492.5 176 L594 91 L664 91 L689 245 L723 256 L755.5 267 L759 271 L788 274 L788 296 L788 318 L759 321 L755.5 325 L723 336 L689 347 L664 501 L594 501 L492.5 416 L358 347 L330.5 345 L313 327 L278 322 L243 318.5 L208 314 L173 307 L145.5 298.5 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="ac-plan-hidden" class="hidden">
+      <path id="ac-plan-engine" class="draw" d="M570.5 274 L759 274 M570.5 318 L759 318 M570.5 274.0 Q563.0 274.0 563.0 296.0 Q563.0 318.0 570.5 318.0" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M343.0 256.0 C438.0 256.0 488.0 276.0 563.0 276.0" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M343.0 276.0 C428.0 276.0 488.0 291.0 563.0 291.0" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M343.0 336.0 C438.0 336.0 488.0 316.0 563.0 316.0" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M343.0 316.0 C428.0 316.0 488.0 301.0 563.0 301.0" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect class="draw" x="524" y="219.5" width="33" height="11" rx="3" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linejoin="round"/>
+      <rect class="draw" x="524" y="361.5" width="33" height="11" rx="3" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linejoin="round"/>
+      <line x1="180.5" y1="278" x2="180.5" y2="314" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round"/>
+    </g>
+    <g id="ac-plan-detail" class="detail">
+      <line class="cl" x1="110.5" y1="296" x2="805.5" y2="296" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+      <ellipse id="ac-plan-canopy" class="draw" cx="305.5" cy="296" rx="50" ry="17" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9"/>
+      <line x1="289.5" y1="280.02" x2="289.5" y2="311.98" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M313 265 L330.5 265 L428 263" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="330.5" y1="265" x2="330.5" y2="247" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M313 327 L330.5 327 L428 329" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="330.5" y1="327" x2="330.5" y2="345" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path class="draw" d="M502.13 187.5 L597.63 102.5" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="526.33" y1="147.67" x2="533.96" y2="159.17" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="560.17" y1="119.33" x2="565.8" y2="130.83" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path class="draw" d="M637 97 L661 242" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="649.66" y1="173.5" x2="677.39" y2="173.5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="661" y1="242" x2="688.51" y2="242" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M695.5 286 L730.5 286 L730.5 271 L695.5 268 Z" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M502.13 404.5 L597.63 489.5" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="526.33" y1="444.33" x2="533.96" y2="432.83" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="560.17" y1="472.67" x2="565.8" y2="461.17" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path class="draw" d="M637 495 L661 350" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="649.66" y1="418.5" x2="677.39" y2="418.5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <line x1="661" y1="350" x2="688.51" y2="350" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M695.5 306 L730.5 306 L730.5 321 L695.5 324 Z" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="ac-plan-fin" class="draw" d="M598 296 L648 292.25 L738 293 L765.5 294.5 M598 296 L648 299.75 L738 299 L765.5 297.5" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="730.5" y1="292.5" x2="730.5" y2="299.5" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="759" y1="288.65" x2="788" y2="289.7" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="759" y1="303.35" x2="788" y2="302.3" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="759" y1="280.77" x2="788" y2="282.95" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="759" y1="311.23" x2="788" y2="309.05" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    </g>
+    <g id="ac-plan-zones" class="zones">
+      <circle id="ac-zone-radar" cx="180.5" cy="296" r="21" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5"/>
+      <circle id="ac-zone-chute" cx="765.5" cy="296" r="12" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5"/>
+      <rect id="ac-zone-avionics" x="349" y="271" width="78" height="50" rx="4" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5" stroke-linejoin="round"/>
+      <ellipse id="ac-zone-cockpit" cx="305.5" cy="296" rx="59" ry="24" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5"/>
+      <circle id="ac-zone-mlg-r" cx="540.5" cy="225" r="21" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5"/>
+      <circle id="ac-zone-mlg-l" cx="540.5" cy="367" r="21" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5"/>
+      <rect id="ac-zone-engine" x="559" y="268" width="204" height="56" rx="14" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-dasharray="3 2.5" stroke-linejoin="round"/>
+      <g id="ac-zone-amagb" class="subject">
+        <circle cx="490.5" cy="296" r="31" fill="none" stroke="#E8743B" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <rect x="480.5" y="285" width="20" height="22" rx="3" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="505.5" cy="275" r="8.5" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5"/>
+        <circle cx="505.5" cy="275" r="3" fill="#E8743B" stroke="none"/>
+        <circle cx="505.5" cy="317" r="8.5" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5"/>
+        <circle cx="505.5" cy="317" r="3" fill="#E8743B" stroke="none"/>
+      </g>
+    </g>
+    <text id="ac-plan-title" class="kicker" x="128" y="548" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">TOP VIEW</text>
+  </g>
+  <g id="ac-stations" class="stations">
+    <line class="draw" x1="128" y1="66" x2="788" y2="66" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <line class="tick" x1="128" y1="66" x2="128" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="128" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">0</text>
+    <line class="tick" x1="153" y1="66" x2="153" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="178" y1="66" x2="178" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="178" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">1</text>
+    <line class="tick" x1="203" y1="66" x2="203" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="228" y1="66" x2="228" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="228" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">2</text>
+    <line class="tick" x1="253" y1="66" x2="253" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="278" y1="66" x2="278" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="278" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">3</text>
+    <line class="tick" x1="303" y1="66" x2="303" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="328" y1="66" x2="328" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="328" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">4</text>
+    <line class="tick" x1="353" y1="66" x2="353" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="378" y1="66" x2="378" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="378" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">5</text>
+    <line class="tick" x1="403" y1="66" x2="403" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="428" y1="66" x2="428" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="428" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">6</text>
+    <line class="tick" x1="453" y1="66" x2="453" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="478" y1="66" x2="478" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="478" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">7</text>
+    <line class="tick" x1="503" y1="66" x2="503" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="528" y1="66" x2="528" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="528" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">8</text>
+    <line class="tick" x1="553" y1="66" x2="553" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="578" y1="66" x2="578" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="578" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">9</text>
+    <line class="tick" x1="603" y1="66" x2="603" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="628" y1="66" x2="628" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="628" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">10</text>
+    <line class="tick" x1="653" y1="66" x2="653" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="678" y1="66" x2="678" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="678" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">11</text>
+    <line class="tick" x1="703" y1="66" x2="703" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="728" y1="66" x2="728" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="728" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">12</text>
+    <line class="tick" x1="753" y1="66" x2="753" y2="70" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line class="tick" x1="778" y1="66" x2="778" y2="73" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="778" y="60" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#31353B" text-anchor="middle">13</text>
+    <line class="tick" x1="788" y1="62" x2="788" y2="75" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round"/>
+    <text x="798" y="70" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">STA m</text>
+    <line class="construction" x1="128" y1="76" x2="128" y2="286" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+    <line class="construction" x1="788" y1="76" x2="788" y2="264" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+  </g>
+  <g id="ac-side" class="view">
+    <g id="ac-side-gear" class="gear">
+      <path class="draw" d="M311 754 L305.5 780.5" fill="none" stroke="#0B0D10" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M317 755 L309 768" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="draw" cx="305.5" cy="780.5" r="11.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <circle cx="305.5" cy="780.5" r="5" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9"/>
+      <path class="draw" d="M534 752 L540.5 775.5" fill="none" stroke="#0B0D10" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M559 752.5 L538 764.5" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle id="ac-side-mlg-tyre" class="draw" cx="540.5" cy="775.5" r="16.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <circle cx="540.5" cy="775.5" r="8.5" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9"/>
+      <circle cx="540.5" cy="775.5" r="2" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    </g>
+    <path id="ac-side-outline" class="draw outline" d="M128 744.5 L158 741 L208 728 L248 718 L263 711 L293 689.5 L338 686 L368 697 L428 701 L558 700 L598 672 L690.5 574.5 L738 573 L763 684.5 L788 699 L788 733 L758 738 L698 746 L578 753 L428 757 L348 761 L323 755 L248 751 L188 749 L128 744.5 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="ac-side-hidden" class="hidden">
+      <path id="ac-side-engine" class="draw" d="M563 745.5 L758 745.5 M563 702.5 L758 702.5 M563 745.5 L563 702.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M363.0 725.0 C448.0 724.0 498.0 702.5 563.0 702.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="draw" d="M408.0 743.0 C458.0 750.0 508.0 745.5 563.0 745.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M178 761 L184 744.5 L178 728" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="349" y="699" width="78" height="18" rx="3" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linejoin="round"/>
+      <path id="ac-side-chute" d="M777 697 L751 697 L748 694 L748 687 L751 684 L764 685.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="ac-side-detail" class="detail">
+      <path id="ac-side-canopy" class="draw" d="M259.0 712.0 C278.0 673.0 323.0 672.0 365.5 696.0" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M259 712 L365.5 696" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="ac-side-intake" class="draw" d="M330.5 756 L330.5 726 L363 724 L418 743 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M358 733 L689 736" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M724 678 L734 573.5" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M759 738 L759 696" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="761" y1="728.5" x2="787" y2="724.8" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="761" y1="718" x2="787" y2="716" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="761" y1="707.5" x2="787" y2="707.2" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M209 748.5 L209 727.5" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M777 698 L777 692.5" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="ac-side-amagb" class="subject">
+        <rect x="479" y="736" width="23" height="16" rx="3" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="505.5" cy="743" r="7.5" fill="#FFFFFF" stroke="#E8743B" stroke-width="1.5"/>
+        <circle cx="505.5" cy="743" r="2.5" fill="#E8743B" stroke="none"/>
+        <path d="M502 744 L563 732" fill="none" stroke="#E8743B" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+    <g id="ac-ground" class="ground">
+      <line class="draw" x1="98" y1="792" x2="818" y2="792" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="98" y="792" width="720" height="7" fill="url(#ac-hatch)" stroke="none" stroke-linejoin="round"/>
+      <line class="draw" x1="862.5" y1="792" x2="1337.5" y2="792" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="862.5" y="792" width="475" height="7" fill="url(#ac-hatch)" stroke="none" stroke-linejoin="round"/>
+    </g>
+    <text id="ac-side-title" class="kicker" x="128" y="860" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">SIDE VIEW · PORT</text>
+  </g>
+  <g id="ac-front" class="view">
+    <path id="ac-front-fin" class="draw" d="M1096.25 697 L1098.5 573 L1101.5 573 L1103.75 697 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="ac-front-wing" class="draw" d="M1305 731.25 L1200 728.75 L1100 726.5 L1000 728.75 L895 731.25 L895 734.25 L1000 737 L1100 739 L1200 737 L1305 734.25 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="draw" d="M1029 738 L1029 775.5" fill="none" stroke="#0B0D10" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1029 753 L1069 742" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="draw" d="M1171 738 L1171 775.5" fill="none" stroke="#0B0D10" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1171 753 L1131 742" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="draw" d="M1100 757 L1100 780.5" fill="none" stroke="#0B0D10" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="ac-front-fuselage" class="draw" d="M1070 727 L1070.09 722.41 L1070.35 719.2 L1070.79 716.39 L1071.4 713.86 L1072.19 711.53 L1073.14 709.4 L1074.27 707.44 L1075.56 705.65 L1077.02 704.02 L1078.65 702.56 L1080.44 701.27 L1082.4 700.14 L1084.53 699.19 L1086.86 698.4 L1089.39 697.79 L1092.2 697.35 L1095.41 697.09 L1100 697 L1104.59 697.09 L1107.8 697.35 L1110.61 697.79 L1113.14 698.4 L1115.47 699.19 L1117.6 700.14 L1119.56 701.27 L1121.35 702.56 L1122.98 704.02 L1124.44 705.65 L1125.73 707.44 L1126.86 709.4 L1127.81 711.53 L1128.6 713.86 L1129.21 716.39 L1129.65 719.2 L1129.91 722.41 L1130 727 L1129.91 731.82 L1129.65 735.19 L1129.21 738.14 L1128.6 740.8 L1127.81 743.24 L1126.86 745.48 L1125.73 747.54 L1124.44 749.42 L1122.98 751.13 L1121.35 752.66 L1119.56 754.02 L1117.6 755.2 L1115.47 756.2 L1113.14 757.03 L1110.61 757.67 L1107.8 758.13 L1104.59 758.41 L1100 758.5 L1095.41 758.41 L1092.2 758.13 L1089.39 757.67 L1086.86 757.03 L1084.53 756.2 L1082.4 755.2 L1080.44 754.02 L1078.65 752.66 L1077.02 751.13 L1075.56 749.42 L1074.27 747.54 L1073.14 745.48 L1072.19 743.24 L1071.4 740.8 L1070.79 738.14 L1070.35 735.19 L1070.09 731.82 L1070 727 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="draw" d="M1072 755 L1054 755 L1049 750 L1049 727 L1053 723.5 L1072 723.5 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1068 751 L1055 751 L1052.5 748 L1052.5 728.5 L1055 727 L1068 727 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="draw" d="M1128 755 L1146 755 L1151 750 L1151 727 L1147 723.5 L1128 723.5 Z" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1132 751 L1145 751 L1147.5 748 L1147.5 728.5 L1145 727 L1132 727 Z" fill="#EFEFEC" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="ac-front-canopy" class="draw" d="M1083 700 L1083.06 698.34 L1083.26 696.7 L1083.58 695.08 L1084.03 693.5 L1084.59 691.97 L1085.28 690.5 L1086.07 689.1 L1086.98 687.79 L1087.98 686.56 L1089.07 685.45 L1090.25 684.44 L1091.5 683.55 L1092.82 682.78 L1094.19 682.15 L1095.6 681.65 L1097.05 681.29 L1098.52 681.07 L1100 681 L1101.48 681.07 L1102.95 681.29 L1104.4 681.65 L1105.81 682.15 L1107.18 682.78 L1108.5 683.55 L1109.75 684.44 L1110.93 685.45 L1112.02 686.56 L1113.02 687.79 L1113.93 689.1 L1114.72 690.5 L1115.41 691.97 L1115.97 693.5 L1116.42 695.08 L1116.74 696.7 L1116.94 698.34 L1117 700 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1100" cy="739" r="20" fill="none" stroke="#0B0D10" stroke-width="0.6"/>
+    <circle cx="1100" cy="743" r="2.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+    <line class="cl" x1="1100" y1="802" x2="1100" y2="561" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <rect class="draw" x="1023.5" y="759" width="11" height="33" rx="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+    <line x1="1029" y1="761" x2="1029" y2="790" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <rect class="draw" x="1165.5" y="759" width="11" height="33" rx="4" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+    <line x1="1171" y1="761" x2="1171" y2="790" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <rect class="draw" x="1096" y="769" width="8" height="23" rx="3" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+    <text id="ac-front-title" class="kicker" x="862.5" y="860" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">FRONT VIEW</text>
+  </g>
+  <g id="ac-proj" class="construction">
+    <line x1="128" y1="306" x2="128" y2="734.5" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+    <line x1="358" y1="357" x2="358" y2="683.33" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+    <line x1="594" y1="511" x2="594" y2="664.8" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+    <line x1="788" y1="328" x2="788" y2="689" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+    <line x1="750" y1="573" x2="1069" y2="573" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+    <line x1="800" y1="699" x2="1041" y2="699" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="1.5 3" stroke-linecap="round"/>
+  </g>
+  <g id="ac-dims" class="dims">
+    <g id="ac-dim-length" class="dim">
+      <line x1="128" y1="802" x2="128" y2="827" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="788" y1="802" x2="788" y2="827" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line class="draw" x1="128" y1="822" x2="788" y2="822" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M128 822 L135.5 820.3 L135.5 823.7 Z" fill="#0B0D10" stroke="none"/>
+      <path d="M788 822 L780.5 823.7 L780.5 820.3 Z" fill="#0B0D10" stroke="none"/>
+      <text x="458" y="817" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="600" fill="#0B0D10" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">13.2 m</text>
+    </g>
+    <g id="ac-dim-span" class="dim">
+      <line class="draw" x1="668" y1="91" x2="838" y2="91" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line class="draw" x1="668" y1="501" x2="838" y2="501" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line class="draw" x1="833" y1="91" x2="833" y2="501" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M833 91 L834.7 98.5 L831.3 98.5 Z" fill="#0B0D10" stroke="none"/>
+      <path d="M833 501 L831.3 493.5 L834.7 493.5 Z" fill="#0B0D10" stroke="none"/>
+      <text class="dim-label" x="839" y="296" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10" text-anchor="middle" transform="rotate(-90 839 296)" dominant-baseline="hanging" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">8.2 m</text>
+    </g>
+    <g id="ac-dim-height" class="dim">
+      <line class="draw" x1="1107.5" y1="573" x2="1349" y2="573" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line class="draw" x1="1107.5" y1="792" x2="1349" y2="792" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line class="draw" x1="1344" y1="573" x2="1344" y2="792" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <path d="M1344 573 L1345.7 580.5 L1342.3 580.5 Z" fill="#0B0D10" stroke="none"/>
+      <path d="M1344 792 L1342.3 784.5 L1345.7 784.5 Z" fill="#0B0D10" stroke="none"/>
+      <text class="dim-label" x="1350" y="682.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="12.5" font-weight="500" fill="#0B0D10" text-anchor="middle" transform="rotate(-90 1350 682.5)" dominant-baseline="hanging" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">4.4 m</text>
+    </g>
+  </g>
+  <g id="ac-callouts" class="callouts">
+    <g id="ac-c1" class="callout">
+      <path class="leader draw" d="M152.59 186.18 L180.5 296" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="180.5" cy="296" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="150" cy="176" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="150" y="176.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+    </g>
+    <g id="ac-c2" class="callout">
+      <path class="leader draw" d="M265.31 159.96 L305.5 281" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="305.5" cy="281" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="262" cy="150" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="262" y="150.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">2</text>
+    </g>
+    <g id="ac-c3" class="callout">
+      <path class="leader draw" d="M373.17 138.43 L388 271" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="388" cy="271" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="372" cy="128" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="372" y="128.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g id="ac-c4" class="callout">
+      <path class="leader draw" d="M441.53 464.11 L490.5 327" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="490.5" cy="327" r="1.9" fill="#E8743B" stroke="none"/>
+      <circle class="bubble" cx="438" cy="474" r="10.5" fill="#E8743B" stroke="none"/>
+      <text x="438" y="474.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+    </g>
+    <g id="ac-c5" class="callout">
+      <path class="leader draw" d="M531.22 467.57 L540.5 388" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="540.5" cy="388" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="530" cy="478" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="530" y="478.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+    </g>
+    <g id="ac-c6" class="callout">
+      <path class="leader draw" d="M736.34 176.84 L678 268" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="678" cy="268" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="742" cy="168" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="742" y="168.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">6</text>
+    </g>
+    <g id="ac-c7" class="callout">
+      <path class="leader draw" d="M793.24 409.87 L765.5 308" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="765.5" cy="308" r="1.9" fill="#0B0D10" stroke="none"/>
+      <circle class="bubble" cx="796" cy="420" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+      <text x="796" y="420.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+    </g>
+  </g>
+  <g id="ac-legend" class="legend">
+    <text class="kicker" x="980" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">EQUIPMENT ZONES</text>
+    <line x1="980" y1="88" x2="1540" y2="88" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <g id="ac-legend-1" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="116" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+        <text x="991" y="116.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">1</text>
+      </g>
+      <text x="1012" y="114" font-size="14" font-weight="650" fill="#0B0D10">Radar</text>
+      <text x="1012" y="130" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">RADAR · 1553 RT 12</text>
+    </g>
+    <g id="ac-legend-2" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="156" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+        <text x="991" y="156.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">2</text>
+      </g>
+      <text x="1012" y="154" font-size="14" font-weight="650" fill="#0B0D10">Cockpit</text>
+      <text x="1012" y="170" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">CWS displays · DVR</text>
+    </g>
+    <g id="ac-legend-3" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="196" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+        <text x="991" y="196.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">3</text>
+      </g>
+      <text x="1012" y="194" font-size="14" font-weight="650" fill="#0B0D10">Avionics bay</text>
+      <text x="1012" y="210" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">DFCC ×4 · ADC ×4 · BHEEM EU · INS/GPS · AHRS</text>
+    </g>
+    <g id="ac-legend-4" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="236" r="10.5" fill="#E8743B" stroke="none"/>
+        <text x="991" y="236.5" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">4</text>
+      </g>
+      <text x="1012" y="234" font-size="14" font-weight="650" fill="#E8743B">AMAGB + hydraulic pumps</text>
+      <text x="1012" y="250" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">AMAGB · HYD pump SYS1 / SYS2 · GEN · JFS</text>
+    </g>
+    <g id="ac-legend-5" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="276" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+        <text x="991" y="276.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">5</text>
+      </g>
+      <text x="1012" y="274" font-size="14" font-weight="650" fill="#0B0D10">Main gear</text>
+      <text x="1012" y="290" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">MLG L / R · wheel brakes · ANTISKID · tyres</text>
+    </g>
+    <g id="ac-legend-6" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="316" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+        <text x="991" y="316.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">6</text>
+      </g>
+      <text x="1012" y="314" font-size="14" font-weight="650" fill="#0B0D10">F404 engine</text>
+      <text x="1012" y="330" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">FADEC ×2 · ECMS</text>
+    </g>
+    <g id="ac-legend-7" class="legend-row">
+      <g class="callout">
+        <circle class="bubble" cx="991" cy="356" r="10.5" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9"/>
+        <text x="991" y="356.5" font-size="11.5" font-weight="700" fill="#0B0D10" text-anchor="middle" dominant-baseline="central">7</text>
+      </g>
+      <text x="1012" y="354" font-size="14" font-weight="650" fill="#0B0D10">Brake chute</text>
+      <text x="1012" y="370" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">canister at the fin base</text>
+    </g>
+    <line x1="980" y1="392" x2="1540" y2="392" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="980" y1="412" x2="1014" y2="412" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="5 3" stroke-linecap="round"/>
+    <text x="1022" y="416" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">hidden detail</text>
+    <line x1="1140" y1="412" x2="1174" y2="412" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+    <text x="1182" y="416" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">centre line</text>
+    <g id="ac-scalebar" class="scalebar">
+      <rect x="1276" y="408" width="50" height="6" fill="#0B0D10" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+      <rect x="1326" y="408" width="50" height="6" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+      <rect x="1376" y="408" width="50" height="6" fill="#0B0D10" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+      <rect x="1426" y="408" width="50" height="6" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+      <rect x="1476" y="408" width="50" height="6" fill="#0B0D10" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+      <text x="1276" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">0</text>
+      <text x="1326" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">1</text>
+      <text x="1376" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">2</text>
+      <text x="1426" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">3</text>
+      <text x="1476" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">4</text>
+      <text x="1526" y="428" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10" font-weight="500" fill="#62676F" text-anchor="middle">5 m</text>
+    </g>
+    <g id="ac-projection-symbol">
+      <path d="M1490 65 L1506 68 L1506 76 L1490 79 Z" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <line class="cl" x1="1484" y1="72" x2="1534" y2="72" stroke="#0B0D10" stroke-width="0.6" stroke-dasharray="16 3 2 3" stroke-linecap="round"/>
+      <circle cx="1522" cy="72" r="7" fill="none" stroke="#0B0D10" stroke-width="0.9"/>
+      <circle cx="1522" cy="72" r="4" fill="none" stroke="#0B0D10" stroke-width="0.9"/>
+    </g>
+  </g>
+  <g id="ac-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="ac-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">General arrangement — three views</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">delta-wing · single F404 · fleet TJ101–TJ108</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-01</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 1 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">UNITS m</text>
+    </g>
+  </g>
+</svg>

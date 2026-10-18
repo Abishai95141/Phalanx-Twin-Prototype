@@ -1,0 +1,219 @@
+# M12 channel map (structure only; every number is in ../M12.yaml with provenance).
+#
+# classes: sensor class -> H_sensor source, D_sensor dynamics, the M12.yaml parameter set, and how the set's
+#   parameters map onto the kernel (`map`: kernel parameter -> set parameter).
+# channels: dictionary channel -> class, truth input signal (catalogue key in configs/interfaces/w1_ports.yaml)
+#   and element index within that signal. Channels that share `element` read one physical element (a vane read
+#   by four pick-offs). `probes: n` builds a harness of n probe elements whose open probes drop out of the
+#   average. `axis` is the installed sensitive axis in body axes (x fwd, y right, z down); NZ reads -f_z.
+#   `transform` derives gain/offset from set parameters (a8_fraction: percent stroke linear in area; arm: stroke
+#   per radian). `index_note` flags an index map owned by another module (W2.1 binds it from that module).
+#   A class with `trip` is a discrete: source `discrete` (1 when the truth state code reaches `level`), then its
+#   dynamics, then the LRU's input comparator at `trip` (W2.2: the UV flame detector on eng.ab_state).
+format: phalanx.sensors.channel_map/1
+platform: tejas
+classes:
+  shaft_speed: {source: linear, dynamics: none}
+  rtd_inlet: {source: linear, dynamics: lag1_flux, params: rtd_inlet, flow: eng.w2,
+              map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac, pattern: deice_bias}}
+  tc_t5: {source: linear, dynamics: lag1_flux, params: tc_t5, flow: eng.w2,
+          map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac, pattern: pattern}}
+  tc_t25: {source: linear, dynamics: lag1_flux, params: tc_t25, flow: eng.w2,
+           map: {tau: tau, wref: w_ref, nexp: n_exp, wminf: w_min_frac}}
+  ps3_transducer: {source: linear, dynamics: lag1, params: ps3_transducer, map: {tau: tau}}
+  p5_transducer: {source: linear, dynamics: lag1, params: p5_transducer, map: {tau: tau}}
+  oil_pressure: {source: linear, dynamics: lag1, params: oil_pressure, map: {tau: tau}}
+  oil_temperature: {source: linear, dynamics: lag1, params: oil_temperature, map: {tau: tau}}
+  fuel_flowmeter_main: {source: linear, dynamics: lag1, params: fuel_flowmeter_main, map: {tau: tau},
+                        hold: update_interval}
+  fuel_flowmeter_ab: {source: linear, dynamics: lag1, params: fuel_flowmeter_ab, map: {tau: tau}}
+  lvdt: {source: linear, dynamics: none}
+  reservoir_level: {source: linear, dynamics: none}
+  fuel_inlet_rtd: {source: linear, dynamics: lag1, params: fuel_inlet_rtd, map: {tau: tau}}
+  ecs_duct_rtd: {source: linear, dynamics: lag1, params: ecs_duct_rtd, map: {tau: tau}}
+  ecs_compartment_rtd: {source: linear, dynamics: lag1, params: ecs_compartment_rtd, map: {tau: tau}}
+  ecs_pressure: {source: linear, dynamics: lag1, params: ecs_pressure, map: {tau: tau}}
+  uv_flame_detector: {source: discrete, dynamics: lag1, params: uv_flame_detector,
+                      map: {tau: tau, level: flame_level}, trip: trip}
+  a8_lvdt: {source: linear, dynamics: none, params: a8_lvdt, transform: a8_fraction}
+  airbrake_rvdt: {source: linear, dynamics: none, params: airbrake_rvdt, transform: arm}
+  static_pressure: {source: pstatic, dynamics: lag1_pneu, params: static_pressure, map: {tau: lambda_sl},
+                    tables: {tab0: [pe_mach, pe_k]}}
+  total_pressure: {source: ptotal, dynamics: lag1_pneu, params: total_pressure, map: {tau: lambda_sl}}
+  vane_aoa: {source: vane, dynamics: lag2_eas, params: vane_aoa,
+             map: {kf: kf, zeta: zeta, ku: ku, kbend: kbend, easmin: eas_min}, tables: {tab0: [bias_mach, bias]}}
+  vane_aoss: {source: vane, dynamics: lag2_eas, params: vane_aoss,
+              map: {kf: kf, zeta: zeta, ku: ku, easmin: eas_min}, tables: {tab0: [bias_mach, bias]}, no_bending: true}
+  tat_probe: {source: tat, dynamics: lag1_flux, params: tat_probe, flux: rho_tas, heater_input: util.probe_heat,
+              map: {tau: tau, wref: flux_ref, nexp: n_exp, wminf: w_min_frac},
+              tables: {tab0: [rec_mach, recovery], tab1: [dhe_z, dhe]}}
+  boom_vane_alpha: {source: vane, dynamics: lag2_eas, params: boom_vane_alpha,
+                    map: {kf: kf, zeta: zeta, ku: ku, kbend: kbend, easmin: eas_min}, tables: {tab0: [bias_mach, bias]}}
+  boom_vane_beta: {source: vane, dynamics: lag2_eas, params: boom_vane_beta,
+                   map: {kf: kf, zeta: zeta, ku: ku, easmin: eas_min}, tables: {tab0: [bias_mach, bias]}, no_bending: true}
+  boom_static: {source: pstatic, dynamics: lag1_pneu, params: boom_static, map: {tau: lambda_sl},
+                tables: {tab0: [pe_mach, pe_k]}}
+  boom_total: {source: ptotal, dynamics: lag1_pneu, params: boom_total, map: {tau: lambda_sl}}
+  rate_gyro: {source: axis3, dynamics: lag2, params: rate_gyro, map: {wn: wn, zeta: zeta}}
+  accelerometer: {source: axis3, dynamics: lag2, params: accelerometer, map: {wn: wn, zeta: zeta}}
+  hyd_pressure: {source: linear, dynamics: lag1, params: hyd_pressure, map: {tau: tau}}
+  hyd_temperature: {source: linear, dynamics: lag1, params: hyd_temperature, map: {tau: tau}}
+  wheel_speed: {source: linear, dynamics: none}
+  bus_voltage: {source: linear, dynamics: none}
+  fuel_gauge: {source: fuel_gauge, dynamics: lag1, params: fuel_gauge,
+               map: {tau: tau, att: att, unwet: unwet, dead: dead}}
+channels:
+  # --- engine (FADEC acquisition, FADEC-INT) ---
+  ENG.N1.A: {class: shaft_speed, input: eng.n1, index: 0}
+  ENG.N1.B: {class: shaft_speed, input: eng.n1, index: 0}
+  ENG.N2.A: {class: shaft_speed, input: eng.n2, index: 0}
+  ENG.N2.B: {class: shaft_speed, input: eng.n2, index: 0}
+  ENG.T1.A: {class: rtd_inlet, input: eng.t2, index: 0}
+  ENG.T1.B: {class: rtd_inlet, input: eng.t2, index: 0}
+  ENG.PS3.A: {class: ps3_transducer, input: eng.ps3, index: 0}
+  ENG.PS3.B: {class: ps3_transducer, input: eng.ps3, index: 0}
+  ENG.T25: {class: tc_t25, input: eng.t25, index: 0}
+  ENG.T5.HARNESS_A: {class: tc_t5, input: eng.t5, index: 0, probes: 4}
+  ENG.T5.HARNESS_B: {class: tc_t5, input: eng.t5, index: 0, probes: 4}
+  ENG.P5: {class: p5_transducer, input: eng.p5, index: 0}
+  ENG.OIL_P: {class: oil_pressure, input: eng.oil_p, index: 0}
+  ENG.OIL_T: {class: oil_temperature, input: eng.oil_t, index: 0}
+  ENG.WFM: {class: fuel_flowmeter_main, input: eng.wf, index: 0}
+  ENG.WFAB: {class: fuel_flowmeter_ab, input: eng.wf_ab, index: 0}
+  ENG.AB_LIT: {class: uv_flame_detector, input: eng.ab_state, index: 0}
+  ENG.FUEL_INLET_T: {class: fuel_inlet_rtd, input: util.fuel_inlet_t, index: 0}
+  ENG.A8.A: {class: a8_lvdt, input: eng.a8, index: 0}
+  ENG.A8.B: {class: a8_lvdt, input: eng.a8, index: 0}
+  ENG.CVG: {class: lvdt, input: eng.vg_vsv, index: 0}
+  ENG.FVG: {class: lvdt, input: eng.vg_igv, index: 0}
+  ENG.PLA.A: {class: lvdt, input: pilot.pla, index: 0}
+  ENG.PLA.B: {class: lvdt, input: pilot.pla, index: 0}
+  # --- air data (ADC acquisition, FCS80) ---
+  AD.PS.A: {class: static_pressure, input: env.p_s, index: 0}
+  AD.PS.B: {class: static_pressure, input: env.p_s, index: 0}
+  AD.PS.C: {class: static_pressure, input: env.p_s, index: 0}
+  AD.PS.D: {class: static_pressure, input: env.p_s, index: 0}
+  AD.PT.A: {class: total_pressure, input: env.p_s, index: 0}
+  AD.PT.B: {class: total_pressure, input: env.p_s, index: 0}
+  AD.PT.C: {class: total_pressure, input: env.p_s, index: 0}
+  AD.PT.D: {class: total_pressure, input: env.p_s, index: 0}
+  AD.AOA_VANE_L.A: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_L}
+  AD.AOA_VANE_L.B: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_L}
+  AD.AOA_VANE_L.C: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_L}
+  AD.AOA_VANE_L.D: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_L}
+  AD.AOA_VANE_R.A: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_R}
+  AD.AOA_VANE_R.B: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_R}
+  AD.AOA_VANE_R.C: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_R}
+  AD.AOA_VANE_R.D: {class: vane_aoa, input: af.alpha, index: 0, element: VANE_AOA_R}
+  AD.AOSS_VANE.A: {class: vane_aoss, input: af.beta, index: 0, element: VANE_AOSS}
+  AD.AOSS_VANE.B: {class: vane_aoss, input: af.beta, index: 0, element: VANE_AOSS}
+  AD.AOSS_VANE.C: {class: vane_aoss, input: af.beta, index: 0, element: VANE_AOSS}
+  AD.AOSS_VANE.D: {class: vane_aoss, input: af.beta, index: 0, element: VANE_AOSS}
+  AD.TAT: {class: tat_probe, input: env.t_s, index: 0}
+  # --- FTI noseboom (FTI_DAS) ---
+  AD.BOOM.ALPHA: {class: boom_vane_alpha, input: af.alpha, index: 0}
+  AD.BOOM.BETA: {class: boom_vane_beta, input: af.beta, index: 0}
+  AD.BOOM.PS: {class: boom_static, input: env.p_s, index: 0}
+  AD.BOOM.PT: {class: boom_total, input: env.p_s, index: 0}
+  # --- FCS inertial sensors (DFCC acquisition, FCS80) ---
+  FCS.RSA.P.A: {class: rate_gyro, input: af.omega_body, index: 0, axis: [1, 0, 0]}
+  FCS.RSA.P.B: {class: rate_gyro, input: af.omega_body, index: 0, axis: [1, 0, 0]}
+  FCS.RSA.P.C: {class: rate_gyro, input: af.omega_body, index: 0, axis: [1, 0, 0]}
+  FCS.RSA.P.D: {class: rate_gyro, input: af.omega_body, index: 0, axis: [1, 0, 0]}
+  FCS.RSA.Q.A: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 1, 0]}
+  FCS.RSA.Q.B: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 1, 0]}
+  FCS.RSA.Q.C: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 1, 0]}
+  FCS.RSA.Q.D: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 1, 0]}
+  FCS.RSA.R.A: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 0, 1]}
+  FCS.RSA.R.B: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 0, 1]}
+  FCS.RSA.R.C: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 0, 1]}
+  FCS.RSA.R.D: {class: rate_gyro, input: af.omega_body, index: 0, axis: [0, 0, 1]}
+  FCS.ASA.NY.A: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 1, 0]}
+  FCS.ASA.NY.B: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 1, 0]}
+  FCS.ASA.NY.C: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 1, 0]}
+  FCS.ASA.NY.D: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 1, 0]}
+  FCS.ASA.NZ.A: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 0, -1]}
+  FCS.ASA.NZ.B: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 0, -1]}
+  FCS.ASA.NZ.C: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 0, -1]}
+  FCS.ASA.NZ.D: {class: accelerometer, input: af.f_spec_body, index: 0, axis: [0, 0, -1]}
+  # --- surface positions (W1_interfaces §2 M05 order: elevon LO, LI, RI, RO; rudder; slats 1-6; airbrake L, R) ---
+  FCS.ELEVON.LOB.POS.A: {class: lvdt, input: fcs.surf_pos, index: 0}
+  FCS.ELEVON.LOB.POS.B: {class: lvdt, input: fcs.surf_pos, index: 0}
+  FCS.ELEVON.LOB.POS.C: {class: lvdt, input: fcs.surf_pos, index: 0}
+  FCS.ELEVON.LOB.POS.D: {class: lvdt, input: fcs.surf_pos, index: 0}
+  FCS.ELEVON.LIB.POS.A: {class: lvdt, input: fcs.surf_pos, index: 1}
+  FCS.ELEVON.LIB.POS.B: {class: lvdt, input: fcs.surf_pos, index: 1}
+  FCS.ELEVON.LIB.POS.C: {class: lvdt, input: fcs.surf_pos, index: 1}
+  FCS.ELEVON.LIB.POS.D: {class: lvdt, input: fcs.surf_pos, index: 1}
+  FCS.ELEVON.RIB.POS.A: {class: lvdt, input: fcs.surf_pos, index: 2}
+  FCS.ELEVON.RIB.POS.B: {class: lvdt, input: fcs.surf_pos, index: 2}
+  FCS.ELEVON.RIB.POS.C: {class: lvdt, input: fcs.surf_pos, index: 2}
+  FCS.ELEVON.RIB.POS.D: {class: lvdt, input: fcs.surf_pos, index: 2}
+  FCS.ELEVON.ROB.POS.A: {class: lvdt, input: fcs.surf_pos, index: 3}
+  FCS.ELEVON.ROB.POS.B: {class: lvdt, input: fcs.surf_pos, index: 3}
+  FCS.ELEVON.ROB.POS.C: {class: lvdt, input: fcs.surf_pos, index: 3}
+  FCS.ELEVON.ROB.POS.D: {class: lvdt, input: fcs.surf_pos, index: 3}
+  FCS.RUDDER.POS.A: {class: lvdt, input: fcs.surf_pos, index: 4}
+  FCS.RUDDER.POS.B: {class: lvdt, input: fcs.surf_pos, index: 4}
+  FCS.RUDDER.POS.C: {class: lvdt, input: fcs.surf_pos, index: 4}
+  FCS.RUDDER.POS.D: {class: lvdt, input: fcs.surf_pos, index: 4}
+  FCS.SLAT.POS.OB_L.A: {class: lvdt, input: fcs.surf_pos, index: 5, index_note: "slat 1-6 order assumed spanwise OB_L..OB_R (A-W1.6-16)"}
+  FCS.SLAT.POS.OB_L.B: {class: lvdt, input: fcs.surf_pos, index: 5}
+  FCS.SLAT.POS.MB_L.A: {class: lvdt, input: fcs.surf_pos, index: 6}
+  FCS.SLAT.POS.MB_L.B: {class: lvdt, input: fcs.surf_pos, index: 6}
+  FCS.SLAT.POS.IB_L.A: {class: lvdt, input: fcs.surf_pos, index: 7}
+  FCS.SLAT.POS.IB_L.B: {class: lvdt, input: fcs.surf_pos, index: 7}
+  FCS.SLAT.POS.IB_R.A: {class: lvdt, input: fcs.surf_pos, index: 8}
+  FCS.SLAT.POS.IB_R.B: {class: lvdt, input: fcs.surf_pos, index: 8}
+  FCS.SLAT.POS.MB_R.A: {class: lvdt, input: fcs.surf_pos, index: 9}
+  FCS.SLAT.POS.MB_R.B: {class: lvdt, input: fcs.surf_pos, index: 9}
+  FCS.SLAT.POS.OB_R.A: {class: lvdt, input: fcs.surf_pos, index: 10}
+  FCS.SLAT.POS.OB_R.B: {class: lvdt, input: fcs.surf_pos, index: 10}
+  FCS.AIRBRAKE.POS.L.A: {class: airbrake_rvdt, input: fcs.surf_pos, index: 11}
+  FCS.AIRBRAKE.POS.L.B: {class: airbrake_rvdt, input: fcs.surf_pos, index: 11}
+  FCS.AIRBRAKE.POS.R.A: {class: airbrake_rvdt, input: fcs.surf_pos, index: 12}
+  FCS.AIRBRAKE.POS.R.B: {class: airbrake_rvdt, input: fcs.surf_pos, index: 12}
+  FCS.STICK.PITCH.A: {class: lvdt, input: pilot.stick_pitch, index: 0}
+  FCS.STICK.PITCH.B: {class: lvdt, input: pilot.stick_pitch, index: 0}
+  FCS.STICK.PITCH.C: {class: lvdt, input: pilot.stick_pitch, index: 0}
+  FCS.STICK.PITCH.D: {class: lvdt, input: pilot.stick_pitch, index: 0}
+  FCS.STICK.ROLL.A: {class: lvdt, input: pilot.stick_roll, index: 0}
+  FCS.STICK.ROLL.B: {class: lvdt, input: pilot.stick_roll, index: 0}
+  FCS.STICK.ROLL.C: {class: lvdt, input: pilot.stick_roll, index: 0}
+  FCS.STICK.ROLL.D: {class: lvdt, input: pilot.stick_roll, index: 0}
+  FCS.PEDAL.A: {class: lvdt, input: pilot.pedal, index: 0}
+  FCS.PEDAL.B: {class: lvdt, input: pilot.pedal, index: 0}
+  FCS.PEDAL.C: {class: lvdt, input: pilot.pedal, index: 0}
+  FCS.PEDAL.D: {class: lvdt, input: pilot.pedal, index: 0}
+  # --- utilities (BHEEM_EU / ECFM_C acquisition) ---
+  HYD.SYS1.P: {class: hyd_pressure, input: util.hyd_p, index: 0}
+  HYD.SYS2.P: {class: hyd_pressure, input: util.hyd_p, index: 1}
+  HYD.SYS1.T: {class: hyd_temperature, input: util.hyd_t, index: 0}
+  HYD.SYS2.T: {class: hyd_temperature, input: util.hyd_t, index: 1}
+  # --- W2.2 item 2: sensors on M09 truth that had none (BHEEM-EU and ECFM-C acquisition; slip per A-W1.6-24)
+  HYD.SYS1.LEVEL.LEVEL: {class: reservoir_level, input: util.hyd_res_level, index: 0}
+  HYD.SYS2.LEVEL.LEVEL: {class: reservoir_level, input: util.hyd_res_level, index: 1}
+  BRK.PRESS.L: {class: hyd_pressure, input: util.brake_p, index: 0}
+  BRK.PRESS.R: {class: hyd_pressure, input: util.brake_p, index: 1}
+  # util.ecs_t / util.ecs_p points (M09 utilities.layout.ECS_POINTS): BLEED, PHX_OUT, TURBINE_OUT, COCKPIT,
+  # AVIONICS_BAY; the ACM turbine outlet is the cockpit supply side's ACM out
+  ECS.BLEED_T.PHX_IN: {class: ecs_duct_rtd, input: util.ecs_t, index: 0}
+  ECS.BLEED_T.PHX_OUT: {class: ecs_duct_rtd, input: util.ecs_t, index: 1}
+  ECS.COCKPIT_T.ACM_OUT: {class: ecs_duct_rtd, input: util.ecs_t, index: 2}
+  ECS.COCKPIT_T.COCKPIT: {class: ecs_compartment_rtd, input: util.ecs_t, index: 3}
+  ECS.AVIONICS_T.TEMP: {class: ecs_compartment_rtd, input: util.ecs_t, index: 4}
+  ECS.BLEED_P: {class: ecs_pressure, input: util.ecs_p, index: 0}
+  ECS.CABIN_P.PRESS: {class: ecs_pressure, input: util.ecs_p, index: 3}
+  BRK.WHEEL_SPEED.SPEED_L: {class: wheel_speed, input: af.wheel_speed, index: 0}
+  BRK.WHEEL_SPEED.SPEED_R: {class: wheel_speed, input: af.wheel_speed, index: 1}
+  FUEL.QTY.TANK.F1: {class: fuel_gauge, input: util.fuel_mass, index: 0, capacity: fuel_tanks.cap_internal, index_note: "tank order assumed (A-W1.6-16); M09 publishes the map"}
+  FUEL.QTY.TANK.F1A: {class: fuel_gauge, input: util.fuel_mass, index: 1, capacity: fuel_tanks.cap_internal}
+  FUEL.QTY.TANK.F2: {class: fuel_gauge, input: util.fuel_mass, index: 2, capacity: fuel_tanks.cap_internal}
+  FUEL.QTY.TANK.WING_L: {class: fuel_gauge, input: util.fuel_mass, index: 3, capacity: fuel_tanks.cap_internal}
+  FUEL.QTY.TANK.WING_R: {class: fuel_gauge, input: util.fuel_mass, index: 4, capacity: fuel_tanks.cap_internal}
+  FUEL.QTY.TANK.DT_CL: {class: fuel_gauge, input: util.fuel_mass, index: 5, capacity: fuel_tanks.cap_dt_cl}
+  FUEL.QTY.TANK.DT_IB_L: {class: fuel_gauge, input: util.fuel_mass, index: 6, capacity: fuel_tanks.cap_dt_ib}
+  FUEL.QTY.TANK.DT_IB_R: {class: fuel_gauge, input: util.fuel_mass, index: 7, capacity: fuel_tanks.cap_dt_ib}
+  ELEC.DCBUS.V.MAIN: {class: bus_voltage, input: util.bus_v, index: 0, index_note: "bus order assumed (A-W1.6-16); M09 publishes the map"}
+  ELEC.DCBUS.V.ESSENTIAL: {class: bus_voltage, input: util.bus_v, index: 1}
+  ELEC.DCBUS.V.EMERGENCY: {class: bus_voltage, input: util.bus_v, index: 2}

@@ -1,0 +1,172 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "in",
+      "type": "inputNode",
+      "name": "issue",
+      "position": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "id": "dt",
+      "type": "decisionTableNode",
+      "name": "P-DEC-01 recurring deferred BIT",
+      "position": {
+        "x": 320,
+        "y": 120
+      },
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          {
+            "id": "sev",
+            "name": "Severity",
+            "field": "severity"
+          },
+          {
+            "id": "job",
+            "name": "Job status",
+            "field": "job.status"
+          },
+          {
+            "id": "n10",
+            "name": "Occurrences 10 d",
+            "field": "occ_10d"
+          },
+          {
+            "id": "cons",
+            "name": "Consecutive flights",
+            "field": "consec_flights"
+          },
+          {
+            "id": "co",
+            "name": "Corroborated",
+            "field": "corroborated"
+          },
+          {
+            "id": "cnd",
+            "name": "Code no-fault rate",
+            "field": "code.nofault_rate"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "act",
+            "name": "Action",
+            "field": "rec.action"
+          },
+          {
+            "id": "band",
+            "name": "Band",
+            "field": "rec.band"
+          },
+          {
+            "id": "why",
+            "name": "Rationale",
+            "field": "rec.rationale_id"
+          }
+        ],
+        "rules": [
+          {
+            "_id": "r1",
+            "sev": "'WARNING'",
+            "job": "",
+            "n10": ">= 2",
+            "cons": "",
+            "co": "",
+            "cnd": "",
+            "act": "'TROUBLESHOOT'",
+            "band": "'P1'",
+            "why": "'PFL_WARNING_RECURS'"
+          },
+          {
+            "_id": "r2",
+            "sev": "",
+            "job": "'DEFERRED'",
+            "n10": ">= 2",
+            "cons": "",
+            "co": "true",
+            "cnd": "",
+            "act": "'TROUBLESHOOT'",
+            "band": "'P2'",
+            "why": "'RECUR_CORROBORATED'"
+          },
+          {
+            "_id": "r3",
+            "sev": "",
+            "job": "'DEFERRED'",
+            "n10": "",
+            "cons": ">= 3",
+            "co": "",
+            "cnd": "",
+            "act": "'TROUBLESHOOT'",
+            "band": "'P2'",
+            "why": "'PERSIST_3_FLIGHTS'"
+          },
+          {
+            "_id": "r4",
+            "sev": "",
+            "job": "'DEFERRED'",
+            "n10": ">= 2",
+            "cons": "",
+            "co": "",
+            "cnd": "< 0.6",
+            "act": "'TROUBLESHOOT'",
+            "band": "'P3'",
+            "why": "'RECUR_LOW_NOFAULT_CODE'"
+          },
+          {
+            "_id": "r5",
+            "sev": "",
+            "job": "'DEFERRED'",
+            "n10": ">= 2",
+            "cons": "",
+            "co": "",
+            "cnd": "",
+            "act": "'MONITOR'",
+            "band": "'P4'",
+            "why": "'RECUR_NOFAULT_DOMINATED_REVIEW'"
+          },
+          {
+            "_id": "r6",
+            "sev": "",
+            "job": "",
+            "n10": "",
+            "cons": "",
+            "co": "",
+            "cnd": "",
+            "act": "'NONE'",
+            "band": "'P4'",
+            "why": "'NO_RULE'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "out",
+      "type": "outputNode",
+      "name": "rec",
+      "position": {
+        "x": 640,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceId": "in",
+      "targetId": "dt",
+      "type": "edge"
+    },
+    {
+      "id": "e2",
+      "sourceId": "dt",
+      "targetId": "out",
+      "type": "edge"
+    }
+  ]
+}

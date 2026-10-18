@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Data foundation — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .pg { display: grid; grid-template-rows: auto minmax(0,1fr); row-gap: 24px; height: 100%; }
+  .tabbar { display: flex; align-items: flex-end; }
+  .tabbar .tabs2 { flex: 1; }
+  .tabbar a { text-decoration: none; }
+  .tabbar .div { width: 1px; height: 16px; background: var(--line-strong); margin: 0 2px 16px; }
+  .v2 { grid-template-rows: minmax(0,1fr) minmax(0,1fr); }
+  .hero { grid-row: 1 / span 2; }
+  .hd { display: flex; align-items: flex-start; gap: 24px; }
+  .hd .num { margin-left: auto; text-align: right; flex: none; }
+  .gate { grid-template-columns: 112px minmax(0,1fr) auto; min-height: 84px; padding: 0 16px; }
+  .gate .n { font-size: 22px; font-weight: 650; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gate .why { font-size: 13px; }
+  .stp { font: 700 11.5px var(--mono); letter-spacing: .06em; padding: 6px 10px; border-radius: 8px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+  .stp svg { width: 13px; height: 13px; }
+  .stp.ok { background: var(--ok-wash); color: #17693A; }
+  .stp.warn { background: var(--warn-wash); color: #8A5A12; }
+  .stp.info { background: var(--wire-wash); color: var(--wire); }
+  .steps { margin-top: 26px; padding: 0 4px; }
+  .steps .st { font-size: 13px; }
+  .steps .st span b { display: block; font: 500 13px var(--mono); color: var(--ink-4); margin-top: 2px; }
+  .kv2.h > span:nth-child(even) { font: 600 13px var(--mono); }
+  .focus .big { color: var(--accent-ink); }
+  /* compact layout (tablet + phone); desktop above is unchanged */
+  @media (max-width: 1199px) {
+    .window { justify-self: stretch; }
+    .pg { height: auto; grid-template-columns: minmax(0, 1fr); }
+    .hero { grid-row: auto; }
+    .v2 > .c4 { grid-column: span 3; }
+    [data-shot] .push { margin-top: 20px; }
+    .gate { min-height: 76px; }
+  }
+  @media (max-width: 699px) {
+    .v2 > .c4 { grid-column: 1 / -1; }
+    .hd { flex-direction: column; gap: 14px; }
+    .hd .num { margin-left: 0; text-align: left; }
+    .gate { grid-template-columns: minmax(0,1fr) auto; row-gap: 8px; padding: 14px 12px; min-height: 0; }
+    .gate > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+    .kv2.h { column-gap: 12px; }
+  }
+</style>
+</head>
+<body data-page="assurance">
+<div id="content">
+<div class="pg">
+  <div class="tabbar" id="tabbar"></div>
+  <div class="v2">
+
+    <section class="panel2 c8 hero" data-shot="gate">
+      <div class="hd">
+        <div>
+          <div class="kick">G0 gate · release v0.9</div>
+          <div class="t2">Every file was checked before a single row was read</div>
+          <div class="sub2">Cheapest checks first. A failure quarantines; nothing is silently dropped.</div>
+        </div>
+        <div class="num"><div class="mid" id="gn"></div><div class="ci" id="gci" style="margin-top:8px"></div></div>
+      </div>
+      <div class="steps" id="steps"></div>
+      <div class="rows2" id="gate" style="margin-top:22px"></div>
+    </section>
+
+    <section class="panel2 c4" data-shot="release">
+      <div class="kick">Release identity</div>
+      <div class="t2">Reproducible from five hashes</div>
+      <div class="kv2 h" id="rel" style="margin-top:22px"></div>
+      <div class="ci push" id="relci"></div>
+    </section>
+
+    <section class="panel2 c4 focus" data-shot="denylist">
+      <div class="kick acc">Evaluation labels</div>
+      <div class="t2">Truth labels are never opened</div>
+      <div style="margin-top:20px"><span class="big" id="dn"></span><span class="t3" style="color:var(--ink-3);margin-left:10px">paths denied</span></div>
+      <div class="ci" id="dci" style="margin-top:8px"></div>
+      <div class="sub2 push">They exist only to score the twin offline. The read path refuses them before any file is opened, and a test proves it on every build.</div>
+    </section>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/data-data.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+const DF = window.PHX_DF;
+const $ = id => document.getElementById('content').querySelector('#' + id);
+const N = x => Number(x).toLocaleString('en-IN');
+const f1 = (x, d = 1) => Number(x).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
+const TABS = [['Release and gate', 'data.html'], ['Ingest and as-of', 'data-ingest.html'], ['Telemetry streams', 'data-telemetry.html'], null, ['Models', 'assurance.html']];
+const here = location.pathname.split('/').pop() || 'data.html';
+$('tabbar').innerHTML = '<div class="tabs2">' + TABS.map(t => t ? `<a href="${t[1]}"><span class="${t[1] === here ? 'on' : ''}">${t[0]}</span></a>` : '<i class="div"></i>').join('') + '</div>';
+
+(function () {
+  const G = DF.gate_summary, R = DF.release, RI = DF.row_invariants, T = DF.telemetry;
+  $('gn').textContent = N(G.discovered);
+  $('gci').textContent = `of ${N(G.manifest_consumer_entries)} files admitted · ${f1(G.bytes / 1e9, 2)} GB`;
+  const steps = [['Discovered', G.discovered], ['Checksum ok', G.sha_ok], ['Schema ok', G.schema_ok + (G.discovered - G.parquet)], ['Content valid', G.discovered], ['Admitted', G.discovered]];
+  $('steps').innerHTML = steps.map((s, i) => `${i ? '<span class="bar done"></span>' : ''}<span class="st ${i === steps.length - 1 ? 'now' : 'done'}"><i></i><span>${s[0]}<b>${N(s[1])}</b></span></span>`).join('');
+  // rows checked for invariants (all consumer rows incl. the 166 M telemetry readings)
+  const rowsAll = Object.values(RI).reduce((a, r) => a + r.rows, 0) + T.telemetry.rows + T.telemetry_full_path.rows;
+  const viol = Object.values(RI).reduce((a, r) => a + r.ingest_before_event + r.reserved_flag_bits + r.nan_inf, 0)
+             + ['telemetry', 'telemetry_full_path'].reduce((a, k) => a + T[k].ingest_before_event + T[k].reserved_flag_bits + T[k].nan_inf, 0);
+  const mr = RI['fleet/maint.records'], os = RI['fleet/orders.status'];
+  const linked = mr.link.SHOP_FINDING.linked + mr.link.SUPPLY_DEMAND.linked + os.link.ORDER_STATUS.linked;
+  const glob = mr.global_duplicates + RI['fleet/orders.commands'].global_duplicates + os.global_duplicates;
+  const quar = mr.scoped_conflict_rows + os.scoped_conflict_rows;
+  const ok = '<i data-i="check" class="ico-sm"></i>';
+  const rows = [
+    [N(G.sha_ok), 'Checksums match the release manifest', `of ${N(G.discovered)} files · sha256 · 0 missing, 0 unlisted`, 'ok', ok + 'PASS'],
+    [N(G.contract_ok), 'Contract hash is on the allowlist', `of ${N(G.parquet)} Parquet files · contract ${R.contract}`, 'ok', ok + 'PASS'],
+    [N(G.schema_ok), 'Schema equals the pinned contract schema', 'Schema hash recomputed from the contract and matched', 'ok', ok + 'PASS'],
+    [f1(rowsAll / 1e6, 1) + ' M', 'Row invariants hold', `Ingest after event, reserved flag bits clear, no NaN · ${viol} violations`, 'ok', ok + 'PASS'],
+    [N(glob), 'Record ids shared across aircraft, resolved', `Identity scoped to each aircraft · ${N(linked)} rows without a tail linked by job, serial or time`, 'info', 'SCOPED'],
+    [N(quar), 'Rows held: same id, different content', 'Base-level supply demands whose aircraft cannot be told apart', 'warn', 'QUARANTINED']];
+  $('gate').innerHTML = rows.map(([n, t, w, k, st], i) => `<div class="r2 gate"><div class="n">${n}</div><div><div class="ttl">${t}</div><div class="why">${w}</div></div><span class="stp ${k}">${st}</span></div>`).join('');
+
+  const short = h => h.slice(0, 8) + '…' + h.slice(-4);
+  $('rel').innerHTML = `<span>Release id · sha256 of manifest</span><span>${short(R.release_id)}</span>
+    <span>Contract ${R.contract}</span><span>${short(R.contract_hash)}</span>
+    <span>Schema</span><span>${short(R.schema_hash)}</span>
+    <span>Dictionary tejas ${T.telemetry.dict[0][0]}</span><span>${short(T.telemetry.dict[0][1])}</span>
+    <span>Code commit</span><span>${R.code_commit.slice(0, 7)}</span>
+    <span>Seeds · fleet, telemetry</span><span>${R.seeds.fleet.root} · ${R.seeds.telemetry.root}</span>`;
+  const la = Object.values(R.leak_audit).reduce((a, b) => a + b, 0);
+  $('relci').textContent = `Leak audit ${la} findings · re-run of ${R.determinism.files_compared} files ${R.determinism.identical ? 'identical' : 'differs'}`;
+  $('dn').textContent = N(R.restricted_manifest_entries);
+  $('dci').textContent = `listed in the manifest, never opened · deny-list test ${R.deny_list_test ? 'passes' : 'fails'}`;
+})();
+
+PHX.mount({
+  page: 'assurance', title: 'Data foundation', sub: 'Assurance · can we trust what the twin was built from?',
+  chips: [{ t: 'As of <b>Mon 22 Jun 06:00 IST</b>', i: 'clock' }, { k: 'ok', i: 'shield', t: 'Release v0.9 admitted' }]
+});
+</script>
+</body></html>

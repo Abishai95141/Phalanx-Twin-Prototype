@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Recommendation — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: auto 148px 228px minmax(0, 1fr); }
+  .tabs-row { grid-column: 1 / -1; margin-top: -6px; }
+  .hero { flex-direction: row; align-items: center; gap: 40px; padding: 30px 32px; }
+  .hero h2 { font-size: 30px; font-weight: 650; letter-spacing: -0.028em; line-height: 1.2; margin-top: 10px; }
+  .hero .acts { display: flex; gap: 10px; flex: none; }
+  .hero .acts .btn { height: 46px; padding: 0 20px; font-size: 15px; border-radius: 12px; }
+  .fact .big { margin-top: 16px; }
+  .fact .sub2 { font-size: 14px; }
+  .fact .sub2 { margin-top: 12px; }
+  .ord .r2 { grid-template-columns: minmax(0, 1fr) auto; min-height: 84px; }
+  .ord .r2 .ttl { font: 650 15px var(--mono); letter-spacing: -0.01em; }
+  .ord .r2 .why { font-size: 14px; }
+  .imp .kv2 { margin-top: 18px; font-size: 14.5px; row-gap: 12px; }
+  .status-ok { display: none; }
+  body.approved .status-ok { display: inline-flex; }
+  body.approved .hero .acts { display: none; }
+  @media (max-width: 1199px) {
+    .tabs-row { margin-top: -4px; }
+    .hero { flex-direction: column; align-items: stretch; gap: 22px; padding: 24px; }
+    .hero h2 { font-size: 26px; }
+    .hero .acts { flex-wrap: wrap; }
+    .fact { grid-column: span 2; }
+    .fact .big { font-size: 40px; }
+  }
+  @media (max-width: 699px) {
+    .hero { padding: 20px; gap: 18px; }
+    .hero h2 { font-size: 23px; }
+    .hero .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hero .acts .btn { justify-content: center; height: 46px; }
+    .fact { grid-column: 1 / -1; }
+    .ord .r2 { grid-template-columns: minmax(0, 1fr); row-gap: 8px; padding-top: 14px; padding-bottom: 14px; }
+    .ord .r2 > :last-child { justify-self: start; }
+    .ord .r2 .ttl { overflow-wrap: anywhere; }
+  }
+</style>
+</head>
+<body data-page="decision">
+<div id="content">
+<div class="v2">
+  <div class="tabs-row" id="tabs"></div>
+
+  <!-- hero recommendation -->
+  <div class="panel2 c12 focus hero" data-shot="reco">
+    <div class="grow">
+      <span class="kick acc" id="reco-kick"></span>
+      <h2 id="reco-h"></h2>
+      <div class="sub2" id="reco-t"></div>
+    </div>
+    <div class="acts" data-shot="approve">
+      <button class="btn primary" data-act="approve"><i data-i="check" class="ico-sm"></i>Approve</button>
+      <button class="btn" data-act="modify"><i data-i="pen" class="ico-sm"></i>Modify</button>
+      <button class="btn" data-act="reject"><i data-i="x" class="ico-sm"></i>Reject</button>
+      <button class="btn ghost" data-act="snooze"><i data-i="snooze" class="ico-sm"></i>Snooze</button>
+    </div>
+    <span class="chip ok status-ok" style="height:44px;font-size:15px"><i data-i="check" class="ico-sm"></i><span id="status-t"></span></span>
+  </div>
+
+  <!-- state / why / forecast -->
+  <div class="panel2 c4 fact" data-shot="state" id="f-state"></div>
+  <div class="panel2 c4 fact" data-shot="why" id="f-why"></div>
+  <div class="panel2 c4 fact" data-shot="forecast" id="f-forecast"></div>
+
+  <!-- orders + impact -->
+  <div class="panel2 c7 ord" data-shot="orders">
+    <span class="kick">Orders</span>
+    <div class="t2" id="ord-t2"></div>
+    <div class="rows2" style="margin-top:14px" id="ord-rows"></div>
+  </div>
+  <div class="panel2 c5 imp" data-shot="impact" id="impact"></div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+const DONE = { APPROVED: 'Approved', MODIFIED: 'Modified', REJECTED: 'Rejected', SNOOZED: 'Snoozed' };
+const decided = d => `${DONE[d.action] || esc(d.action)}${d.until ? ' until ' + esc(PHX.asofLabel(d.until).split(' ').slice(0, 3).join(' ')) : ''} · ${esc(d.by)} · ${esc(d.at)}`;
+const fact = (key, f) => `<div class="row"><span class="kick">${{ state: 'State', why: 'Why', forecast: 'Forecast' }[key]}</span><div class="grow"></div><span class="tier ${f.tier.toLowerCase()}">${esc(f.tier)}</span></div>
+    <div class="big">${esc(f.big)}<small>${esc(f.unit)}</small></div>
+    <div class="sub2">${esc(f.text)}</div>${f.ci ? `\n    <div class="ci" style="margin-top:6px">${esc(f.ci)}</div>` : ''}`;
+PHX_API.boot({ page: 'decision', title: 'Recommendation',
+  async load(A) {
+    const [, id] = await Promise.all([A.want('epoch'), PHX_API.boardItem(A)]);
+    await A.need('issue', id);
+  },
+  notFound: PHX_API.notOnBoard,
+  render() {
+    const I = PHX_ISSUE, C = PHX.clock();
+    $('tabs').innerHTML = PHX.issueTabs('reco', I.id, I.workbench);
+    $('reco-kick').textContent = `Recommendation · ${I.band} · for ${C.issue}`;
+    $('reco-h').textContent = I.reco.headline; $('reco-t').textContent = I.reco.text;
+    if (I.decision) { document.body.classList.add('approved'); $('status-t').innerHTML = decided(I.decision); }
+    ['state', 'why', 'forecast'].forEach(k => { $('f-' + k).innerHTML = fact(k, I.facts[k]); });
+    ordTitle();
+    const SP = { COMPLETED: 'fmc', ACCEPTED: 'fmc', IN_WORK: 'nmcm', QUEUED: 'grey', REJECTED: 'nmcs', CANCELLED: 'grey' };
+    const cap = t => String(t || '').toLowerCase().replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
+    $('ord-rows').innerHTML = I.orders.map(o => o.prior
+      // an order issued on an earlier epoch: when it went out and where the data layer has it now
+      ? `<div class="r2"><div style="min-width:0"><div class="ttl">${esc(o.action)}</div><div class="why" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(o.text)}${o.signed_by ? ` · signed ${esc(o.signed_by)}` : ''} · Issued ${esc(o.issued || '')}${o.status_at ? ` · ${esc(cap(o.status))} ${esc(o.status_at)}` : ''}</div></div><span class="pill ${SP[o.status] || 'grey'}">${esc(String(o.status || 'ISSUED').replace(/_/g, ' '))}</span></div>`
+      : `<div class="r2"><div><div class="ttl">${esc(o.action)}</div><div class="why">${esc(o.text)}</div></div>${o.authority === 'HUMAN'
+      ? `<span class="auth human" data-sign="${esc(o.order_id)}" style="cursor:pointer"><i data-i="signature" class="ico-sm"></i>HUMAN · ${o.signed_by ? 'signed' : 'sign'}</span>`
+      : `<span class="auth agent"><i data-i="cpu" class="ico-sm"></i>AGENT · ${esc(o.mode)}</span>`}</div>`).join('');
+    const M = I.impact;
+    $('impact').innerHTML = `<div class="row"><span class="kick">Impact · next ${M ? M.horizon_days : 30} days</span><div class="grow"></div><span class="tier presc">PRESC</span></div>` + (M
+      ? `<div class="big" style="margin-top:18px;color:${M.d_mc[1] > 0 ? 'var(--fmc)' : M.d_mc[2] < 0 ? 'var(--nmcs)' : 'var(--ink)'}">${M.d_mc[0] >= 0 ? '+' : '−'}${Math.abs(M.d_mc[0]).toFixed(1)}<small>pts mission capable</small></div>
+    <div class="ci" style="margin-top:8px">95 % CI [${M.d_mc[1].toFixed(1)}, ${M.d_mc[2].toFixed(1)}] · ${M.pairs} paired simulations vs doing nothing${M.d_mc[1] <= 0 && M.d_mc[2] >= 0 ? ' · not significant' : ''}</div>
+    <div class="kv2">${M.rows.map(r => `<span>${esc(r.k)}</span><span${r.muted ? ' style="color:var(--ink-3)"' : ''}>${esc(r.v)}</span>`).join('')}</div>`
+      : `<div class="big" style="margin-top:18px">—<small>no paired simulation result yet</small></div><div class="ci" style="margin-top:8px">The fork gate runs candidates against doing nothing after the board opens; items with no availability effect are not simulated.</div><a class="lnk" style="margin-top:14px;text-decoration:none" href="${esc(PHX_API.href('assurance.html', { tab: 'forks' }))}">See paired simulations <i data-i="arrowRight"></i></a>`);
+    return { page: 'decision', title: I.title, sub: `${I.standing} · the board item for epoch ${C.day} ${C.issue}`, chips: PHX.clockChips(), after: wire };
+  } });
+
+function ordTitle() {
+  const all = PHX_ISSUE.orders, prior = all.filter(o => o.prior), O = all.filter(o => !o.prior), n = O.length, h = O.filter(o => o.authority === 'HUMAN' && !o.signed_by).length;
+  if (!n && prior.length) { $('ord-t2').textContent = `No new order · ${PHX.words(prior.length, false)} issued ${(prior[0].issued || '').replace(/ \d\d:\d\d$/, '')}`; return; }
+  $('ord-t2').textContent = n ? `${PHX.words(n)} order${n === 1 ? '' : 's'}${h ? `, ${PHX.words(h, false)} need${h === 1 ? 's' : ''} a signature` : O.some(o => o.authority === 'HUMAN') ? ', signed' : ''}` : 'No order for 08:00';
+}
+function wire() {
+  PHX.links();
+  const I = PHX_ISSUE;
+  document.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', async () => {
+    const act = b.dataset.act, extra = {};
+    if (act === 'modify') { const p = prompt('Modified order parameters (JSON)', JSON.stringify((I.orders[0] || {}).parameters || {})); if (p === null) return; try { extra.params = JSON.parse(p); } catch (e) { PHX.notice('Parameters must be JSON'); return; } }
+    if (act === 'reject') { const r = prompt('Reason for rejecting'); if (r === null) return; extra.reason = r; }
+    if (act === 'snooze') { const e = PHX.clock().epoch || '', base = /^\d{8}/.test(e) ? Date.UTC(+e.slice(0, 4), +e.slice(4, 6) - 1, +e.slice(6, 8)) : Date.now();
+      const d = new Date(base + 864e5).toISOString().slice(0, 10), u = prompt('Snooze until (simulated date)', d); if (u === null) return; extra.until = u; }
+    const res = await PHX_API.decide(I.id, act, extra);
+    if (!res.ok) { PHX.notice(PHX_API.explain(res)); return; }
+    const d = (res.data && res.data.decision) || { action: act.toUpperCase() + 'D', by: PHX_API.by, at: '' };
+    document.body.classList.add('approved'); $('status-t').innerHTML = decided(d);
+    PHX.notice('Logged on the event log', 'ok', 'check');
+  }));
+  document.querySelectorAll('[data-sign]').forEach(el => el.addEventListener('click', async () => {
+    const res = await PHX_API.sign(el.dataset.sign);
+    if (!res.ok) { PHX.notice(PHX_API.explain(res)); return; }
+    el.innerHTML = `${PHX.icon('signature', 'ico-sm')}HUMAN · signed`; PHX.notice(`Signed by ${PHX.esc(PHX_API.signer)}`, 'ok', 'signature');
+    const o = I.orders.find(x => x.order_id === el.dataset.sign); if (o) o.signed_by = PHX_API.signer; ordTitle();
+  }));
+}
+</script>
+</body></html>

@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" id="ill-loop" class="phx-ill" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" text-rendering="geometricPrecision" role="img" aria-labelledby="ill-loop-title ill-loop-desc">
+  <title id="ill-loop-title">The daily loop — MAPE-K</title>
+  <desc id="ill-loop-desc">The daily decision loop as a ring of eight stages around one shared state, with the hash-chained event log of the epoch underneath.</desc>
+  <defs><pattern id="loop-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="loop-hatchf" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="#F7F7F5"/><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="loop-hatchb" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#0B0D10" stroke-width="0.6"/></pattern><pattern id="loop-hatcha" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#E8743B" stroke-width="0.6"/></pattern><pattern id="loop-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.75" fill="#0B0D10"/></pattern></defs>
+  <rect id="loop-bg" width="1600" height="900" fill="#FFFFFF"/>
+  <g id="loop-ring" class="subject ring">
+    <circle cx="800" cy="384" r="260" fill="none" stroke="#B9BDC2" stroke-width="0.6" stroke-dasharray="2 4"/>
+    <circle cx="800" cy="384" r="144" fill="none" stroke="#B9BDC2" stroke-width="0.6" stroke-dasharray="2 4"/>
+    <path id="loop-seg-1" class="draw seg" d="M836.82 173.19 A214 214 0 0 1 923.03 208.9" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M923.03 208.9 L912.84 206.38 L916.2 200.93 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-2" class="draw seg" d="M975.1 260.97 A214 214 0 0 1 1010.81 347.18" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1010.81 347.18 L1005.39 338.19 L1011.61 336.72 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-3" class="draw seg" d="M1010.81 420.82 A214 214 0 0 1 975.1 507.03" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M975.1 507.03 L977.62 496.84 L983.07 500.2 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-4" class="draw seg" d="M923.03 559.1 A214 214 0 0 1 836.82 594.81" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M836.82 594.81 L845.81 589.39 L847.28 595.61 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-5" class="draw seg" d="M763.18 594.81 A214 214 0 0 1 676.97 559.1" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M676.97 559.1 L687.16 561.62 L683.8 567.07 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-6" class="draw seg" d="M624.9 507.03 A214 214 0 0 1 589.19 420.82" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M589.19 420.82 L594.61 429.81 L588.39 431.28 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-7" class="draw seg" d="M589.19 347.18 A214 214 0 0 1 624.9 260.97" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M624.9 260.97 L622.38 271.16 L616.93 267.8 Z" fill="#E8743B" stroke="none"/>
+    <path id="loop-seg-8" class="draw seg" d="M676.97 208.9 A214 214 0 0 1 763.18 173.19" fill="none" stroke="#E8743B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M763.18 173.19 L754.19 178.61 L752.72 172.39 Z" fill="#E8743B" stroke="none"/>
+  </g>
+  <g id="loop-sectors" class="sectors">
+    <text x="800" y="240" font-size="10" font-weight="700" fill="#8E939A" text-anchor="middle" letter-spacing="0.14em">MONITOR</text>
+    <text x="904.65" y="283.35" font-size="10" font-weight="700" fill="#8E939A" text-anchor="middle" letter-spacing="0.14em">ANALYSE</text>
+    <text x="936.73" y="444.64" font-size="10" font-weight="700" fill="#8E939A" text-anchor="middle" letter-spacing="0.14em">PLAN</text>
+    <text x="695.35" y="492.65" font-size="10" font-weight="700" fill="#8E939A" text-anchor="middle" letter-spacing="0.14em">EXECUTE</text>
+  </g>
+  <g id="loop-knowledge" class="knowledge">
+    <path id="loop-twin" class="draw" d="M800 332 L800.38 334.66 L801.67 338.84 L802.74 344.16 L803.42 349.48 L803.95 354.8 L804.71 360.12 L807.45 362.78 L807.75 366.96 L818.24 387.4 L831.16 402.83 L831.16 413.47 L807.75 417.27 L806.08 422.44 L804.41 427.38 L803.8 427.91 L803.34 432.32 L800 432.32 L796.66 432.32 L796.2 427.91 L795.59 427.38 L793.92 422.44 L792.25 417.27 L768.84 413.47 L768.84 402.83 L781.76 387.4 L792.25 366.96 L792.55 362.78 L795.29 360.12 L796.05 354.8 L796.58 349.48 L797.26 344.16 L798.33 338.84 L799.62 334.66 Z" fill="#F7F7F5" stroke="#0B0D10" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="800" y="456" font-size="15" font-weight="700" fill="#0B0D10" text-anchor="middle">K · one state</text>
+    <text x="800" y="474" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">twin · engines · one log</text>
+  </g>
+  <g id="loop-nodes" class="nodes">
+    <g id="loop-node-snapshot" class="node">
+      <circle class="draw" cx="800" cy="170" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(787 157) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g>
+      <text x="800" y="94" font-size="15" font-weight="700" fill="#0B0D10" text-anchor="middle">06:00 · Snapshot</text>
+      <text x="800" y="111" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">state sealed as of t_ingest</text>
+    </g>
+    <g id="loop-node-analyse" class="node">
+      <circle class="draw" cx="951.32" cy="232.68" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(938.32 219.68) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><rect x="5.5" y="11" width="3" height="6" rx="1"/><rect x="10.5" y="6" width="3" height="11" rx="1"/><rect x="15.5" y="9" width="3" height="8" rx="1"/></g>
+      <text x="985.26" y="190.74" font-size="15" font-weight="700" fill="#0B0D10">06:04 · Analyse</text>
+      <text x="985.26" y="207.74" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">engines read the state</text>
+    </g>
+    <g id="loop-node-plan" class="node">
+      <circle class="draw" cx="1014" cy="384" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(1001 371) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9h17"/><path d="M8 3v3M16 3v3"/><path d="M7 12.6h5M10 16h7"/></g>
+      <text x="1062" y="376" font-size="15" font-weight="700" fill="#0B0D10">Plan</text>
+      <text x="1062" y="393" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">versioned policies · optimisers</text>
+    </g>
+    <g id="loop-node-forkgate" class="node">
+      <circle class="draw" cx="951.32" cy="535.32" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(938.32 522.32) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="5.5" r="2"/><circle cx="6.5" cy="18.5" r="2"/><circle cx="17.5" cy="8.5" r="2"/><path d="M6.5 7.5v9M17.5 10.5c0 4-4 4-11 6"/></g>
+      <text x="985.26" y="561.26" font-size="15" font-weight="700" fill="#0B0D10">Fork gate</text>
+      <text x="985.26" y="578.26" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">paired simulations vs status quo</text>
+    </g>
+    <g id="loop-node-board" class="node">
+      <circle class="draw" cx="800" cy="598" r="30" fill="#F7F7F5" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(787 585) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18c3-1 4-9 6-9s-1 8 1 8 3-5 4.5-5 .5 4 2 4 2-1 4.5-1"/><path d="M3 21h18"/></g>
+      <text x="800" y="650" font-size="15" font-weight="700" fill="#0B0D10" text-anchor="middle">06:05 · Board</text>
+      <text x="800" y="667" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="middle">a person approves · human gate</text>
+      <text x="800" y="683" font-size="9.5" font-weight="700" fill="#0B0D10" text-anchor="middle" letter-spacing="0.12em">HUMAN</text>
+    </g>
+    <g id="loop-node-freeze" class="node">
+      <circle class="draw" cx="648.68" cy="535.32" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(635.68 522.32) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></g>
+      <text x="614.74" y="561.26" font-size="15" font-weight="700" fill="#0B0D10" text-anchor="end">07:45 · Freeze</text>
+      <text x="614.74" y="578.26" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">board locked</text>
+    </g>
+    <g id="loop-node-orders" class="node">
+      <circle class="draw" cx="586" cy="384" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(573 371) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></g>
+      <text x="538" y="376" font-size="15" font-weight="700" fill="#0B0D10" text-anchor="end">08:00 · Orders</text>
+      <text x="538" y="393" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">only via orders.commands</text>
+    </g>
+    <g id="loop-node-reconcile" class="node">
+      <circle class="draw" cx="648.68" cy="232.68" r="30" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5"/>
+      <g transform="translate(635.68 219.68) scale(1.08)" fill="none" stroke="#0B0D10" stroke-width="1.57" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5A8 8 0 0 0 5.6 7M4 4v4h4M4 12.5A8 8 0 0 0 18.4 17M20 20v-4h-4"/></g>
+      <text x="614.74" y="190.74" font-size="15" font-weight="700" fill="#0B0D10" text-anchor="end">Reconcile</text>
+      <text x="614.74" y="207.74" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">outcomes come back as records</text>
+    </g>
+  </g>
+  <g id="loop-learning" class="learning">
+    <path d="M672.68 252.68 Q704 324 754 344" fill="none" stroke="#E8743B" stroke-width="0.9" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M754 344 L744.65 343.37 L746.43 338.48 Z" fill="#E8743B" stroke="none"/>
+    <text x="696" y="366" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#E8743B" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">outcomes → labels</text>
+    <text x="696" y="380" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#E8743B" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">→ learning</text>
+  </g>
+  <g id="loop-ribbon" class="ribbon">
+    <text class="kicker" x="92" y="698" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">EVENT LOG · HASH-CHAINED · EPOCH 22 JUN 08:00</text>
+    <g id="loop-log-1" class="log-block">
+      <rect class="draw" x="92" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="102" y="732" font-size="11" font-weight="700" fill="#0B0D10">SNAPSHOT_SEALED</text>
+      <text x="102" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">06:00</text>
+      <text x="102" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">fb379854…</text>
+    </g>
+    <g id="loop-log-2" class="log-block">
+      <rect class="draw" x="245" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="255" y="732" font-size="11" font-weight="700" fill="#0B0D10">ANALYZED</text>
+      <text x="255" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">06:04</text>
+      <text x="255" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">6b4ddcbf…</text>
+    </g>
+    <rect x="231.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="236.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-3" class="log-block">
+      <rect class="draw" x="398" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="408" y="732" font-size="11" font-weight="700" fill="#0B0D10">BOARD_OPEN</text>
+      <text x="408" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">06:05</text>
+      <text x="408" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">ed9fd6c8…</text>
+    </g>
+    <rect x="384.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="389.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-4" class="log-block">
+      <rect class="draw" x="551" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="561" y="732" font-size="11" font-weight="700" fill="#0B0D10">APPROVED ×6</text>
+      <text x="561" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">06:24–07:10</text>
+      <text x="561" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">0ac026ed…</text>
+    </g>
+    <rect x="537.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="542.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-5" class="log-block">
+      <rect class="draw" x="704" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="714" y="732" font-size="11" font-weight="700" fill="#0B0D10">ACKNOWLEDGED</text>
+      <text x="714" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">07:14</text>
+      <text x="714" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">b95d7876…</text>
+    </g>
+    <rect x="690.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="695.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-6" class="log-block">
+      <rect class="draw" x="857" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="867" y="732" font-size="11" font-weight="700" fill="#0B0D10">FROZEN</text>
+      <text x="867" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">07:45</text>
+      <text x="867" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">e14a5d43…</text>
+    </g>
+    <rect x="843.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="848.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-7" class="log-block">
+      <rect class="draw" x="1010" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="1020" y="732" font-size="11" font-weight="700" fill="#0B0D10">HUMAN_SIGNED</text>
+      <text x="1020" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">07:57</text>
+      <text x="1020" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">5531af78…</text>
+    </g>
+    <rect x="996.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="1001.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-8" class="log-block">
+      <rect class="draw" x="1163" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <text x="1173" y="732" font-size="11" font-weight="700" fill="#0B0D10">SUBMITTED</text>
+      <text x="1173" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">08:00</text>
+      <text x="1173" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">20231ada…</text>
+    </g>
+    <rect x="1149.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="1154.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <g id="loop-log-9" class="log-block">
+      <rect class="draw" x="1316" y="712" width="140" height="58" rx="8" fill="#FFFFFF" stroke="#0B0D10" stroke-width="1.5" stroke-linejoin="round"/>
+      <text x="1326" y="732" font-size="11" font-weight="750" fill="#0B0D10">ACCEPTED ×7</text>
+      <text x="1326" y="748" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">08:00</text>
+      <text x="1326" y="763" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#2563C9">afd2fdab…</text>
+    </g>
+    <rect x="1302.5" y="737" width="9" height="8" rx="4" fill="#FFFFFF" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <rect x="1307.5" y="737" width="9" height="8" rx="4" fill="none" stroke="#2563C9" stroke-width="0.9" stroke-linejoin="round"/>
+    <text x="1456" y="788" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F" text-anchor="end">head afd2fdab… · 20 events</text>
+  </g>
+  <text x="64" y="76" font-size="11" font-weight="700" fill="#0B0D10" letter-spacing="0.14em">ONE LOOP · EVERY MORNING BEFORE 08:00</text>
+  <text x="64" y="94" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="11" font-weight="500" fill="#62676F">monitor · analyse · plan · execute over one shared state (MAPE-K)</text>
+  <g id="loop-sheet" class="sheet">
+    <rect x="12" y="12" width="1576" height="876" fill="none" stroke="#0B0D10" stroke-width="0.6" stroke-linejoin="round"/>
+    <rect x="28" y="28" width="1544" height="844" fill="none" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+    <line x1="221" y1="12" x2="221" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="221" y1="872" x2="221" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="12" x2="414" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="414" y1="872" x2="414" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="12" x2="607" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="607" y1="872" x2="607" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="12" x2="800" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="800" y1="872" x2="800" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="12" x2="993" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="993" y1="872" x2="993" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="12" x2="1186" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1186" y1="872" x2="1186" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="12" x2="1379" y2="28" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1379" y1="872" x2="1379" y2="888" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="124.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="124.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">1</text>
+    <text x="317.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="317.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">2</text>
+    <text x="510.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="510.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">3</text>
+    <text x="703.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="703.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">4</text>
+    <text x="896.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="896.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">5</text>
+    <text x="1089.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1089.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">6</text>
+    <text x="1282.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1282.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">7</text>
+    <text x="1475.5" y="23.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <text x="1475.5" y="883.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">8</text>
+    <line x1="12" y1="239" x2="28" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="239" x2="1588" y2="239" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="450" x2="28" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="450" x2="1588" y2="450" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="12" y1="661" x2="28" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <line x1="1572" y1="661" x2="1588" y2="661" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+    <text x="20" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="1580" y="136.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">A</text>
+    <text x="20" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="1580" y="347.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">B</text>
+    <text x="20" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="1580" y="558.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">C</text>
+    <text x="20" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <text x="1580" y="769.5" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="8.5" font-weight="500" fill="#8E939A" text-anchor="middle">D</text>
+    <g id="loop-titleblock" class="titleblock">
+      <rect x="1152" y="806" width="420" height="66" fill="#FFFFFF" stroke="#0B0D10" stroke-width="0.9" stroke-linejoin="round"/>
+      <line x1="1460" y1="806" x2="1460" y2="872" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1152" y1="828" x2="1572" y2="828" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <line x1="1460" y1="850" x2="1572" y2="850" stroke="#0B0D10" stroke-width="0.6" stroke-linecap="round"/>
+      <text x="1162" y="821" font-size="10" font-weight="700" fill="#0B0D10" letter-spacing="0.12em">PHALANX TWIN · SCHEMATIC</text>
+      <text x="1162" y="846" font-size="14" font-weight="650" fill="#0B0D10">The daily loop — MAPE-K</text>
+      <text x="1162" y="863" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">06:00 snapshot → 08:00 orders → reconcile</text>
+      <text x="1469" y="821" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="600" fill="#0B0D10">PHX-ILL-12</text>
+      <text x="1469" y="843" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">SHEET 12 / 13</text>
+      <text x="1469" y="865" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace" font-size="10.5" font-weight="500" fill="#62676F">REV A · NTS</text>
+    </g>
+  </g>
+</svg>

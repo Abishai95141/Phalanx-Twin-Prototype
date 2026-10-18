@@ -1,0 +1,26 @@
+research_sources/
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+# Large regenerable DASHlink intermediates (re-create with analysis/dashlink_texture/README.md)
+analysis/dashlink_texture/results/inventory_params.csv
+analysis/dashlink_texture/results/hetero_blocks.csv
+analysis/dashlink_texture/results/engines_windows.csv
+analysis/dashlink_texture/results/texture_windows.csv
+analysis/dashlink_texture/results/engines_corrected_blocks.csv
+analysis/dashlink_texture/results/engines_crosssensor.csv
+analysis/dashlink_texture/results/transients_steps.csv
+.venv-settling/
+.venv-build/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+# build outputs (regenerable; manifests are committed where a WP says so)
+runs/
+
+# Solution-context kit: generated on request only (make solution-context), not maintained in git (owner, 2026-10-15)
+solution_context/
+
+# Preview datasets (generated; README/MANIFEST under docs/previews/)
+previews/

@@ -1,0 +1,2278 @@
+{
+ "asof": "2026-06-22 06:00 IST",
+ "epoch": "2026-06-22 08:00 IST",
+ "snapshot": {
+  "hash": "4c6fcd226afddaffc254e7879fa69ae9583fe0f29bfe9920e7b0a22640ec13f8",
+  "algo": "sha256(canonical_json({topic: sorted('tail:record_id')}))",
+  "counts": {
+   "events.bit_faults": 921,
+   "events.cautions": 271,
+   "maint.records": 8908,
+   "orders.commands": 6,
+   "orders.status": 20,
+   "usage.counters": 19404
+  },
+  "records": 29530
+ },
+ "load": {
+  "bit_events": 921,
+  "cautions": 271,
+  "alert_rows": 1192,
+  "issues": 326,
+  "open": 33,
+  "items": 7,
+  "budget": 10,
+  "bands": {
+   "P1": 2,
+   "P2": 2,
+   "P3": 2,
+   "P4": 1
+  },
+  "p4_issues": 13,
+  "p4_inhibited": []
+ },
+ "code_outcomes": {
+  "HYD-101": {
+   "n": 122,
+   "cnd": 85,
+   "rr": 35,
+   "ts": 1,
+   "adm": 0,
+   "def": 0,
+   "open": 2,
+   "confirmed": 0
+  },
+  "LGB-501": {
+   "n": 31,
+   "cnd": 19,
+   "rr": 12,
+   "ts": 0,
+   "adm": 0,
+   "def": 0,
+   "open": 0,
+   "confirmed": 0
+  },
+  "SPS-501": {
+   "n": 25,
+   "cnd": 18,
+   "rr": 7,
+   "ts": 0,
+   "adm": 0,
+   "def": 0,
+   "open": 0,
+   "confirmed": 0
+  },
+  "ENG-201": {
+   "n": 120,
+   "cnd": 75,
+   "rr": 3,
+   "ts": 0,
+   "adm": 37,
+   "def": 4,
+   "open": 5,
+   "confirmed": 0
+  },
+  "AVI-201": {
+   "n": 88,
+   "cnd": 49,
+   "rr": 0,
+   "ts": 0,
+   "adm": 37,
+   "def": 1,
+   "open": 2,
+   "confirmed": 0
+  },
+  "AVI-203": {
+   "n": 77,
+   "cnd": 18,
+   "rr": 0,
+   "ts": 0,
+   "adm": 53,
+   "def": 5,
+   "open": 6,
+   "confirmed": 0
+  },
+  "AVI-204": {
+   "n": 55,
+   "cnd": 54,
+   "rr": 0,
+   "ts": 0,
+   "adm": 1,
+   "def": 0,
+   "open": 0,
+   "confirmed": 0
+  },
+  "ADC-002": {
+   "n": 21,
+   "cnd": 7,
+   "rr": 0,
+   "ts": 0,
+   "adm": 10,
+   "def": 4,
+   "open": 4,
+   "confirmed": 0
+  },
+  "ELE-405": {
+   "n": 19,
+   "cnd": 8,
+   "rr": 0,
+   "ts": 0,
+   "adm": 10,
+   "def": 1,
+   "open": 1,
+   "confirmed": 0
+  }
+ },
+ "confirmed_shop_findings_fleet": 0,
+ "items": [
+  {
+   "id": "TJ103-LGB-501",
+   "band": "P1",
+   "tail": "TJ103",
+   "code": "LGB-501",
+   "title": "Gear unsafe",
+   "sev": "WARNING",
+   "reason": "WARNING recurred \u00b7 15 Jun and 19 Jun",
+   "basis": "Gate G1 \u00b7 WARNING recurs \u2264 10 d",
+   "C": 3,
+   "U": 3,
+   "u_basis": "2nd WARNING in 4 d",
+   "p": [
+    0.015625,
+    1.5712479537001892e-05,
+    0.07723003565348102
+   ],
+   "p_n": 31,
+   "conf": "med",
+   "action": "TROUBLESHOOT",
+   "params": {
+    "code": "LGB-501"
+   },
+   "rule": "P-DEC-01",
+   "row": "r1",
+   "rationale": "PFL_WARNING_RECURS",
+   "evidence": [
+    {
+     "rid": "1723553b2db663fe4eaa564c5884b2f6",
+     "sortie": "TJ103-20260615T1430",
+     "t_occ": "15 Jun 20:19",
+     "t_ingest": "15 Jun 21:54",
+     "sev": "WARNING"
+    },
+    {
+     "rid": "3cf5b70af2f8b8c7350cb1224b8c6672",
+     "sortie": "TJ103-20260619T1430",
+     "t_occ": "19 Jun 20:15",
+     "t_ingest": "19 Jun 21:16",
+     "sev": "WARNING"
+    }
+   ],
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ103",
+   "target_base": null,
+   "auth": "AGENT",
+   "mode": "consent",
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ103:TROUBLESHOOT:54d7fe500658cf7d"
+  },
+  {
+   "id": "TJ106-LGB-501",
+   "band": "P1",
+   "tail": "TJ106",
+   "code": "LGB-501",
+   "title": "Gear unsafe",
+   "sev": "WARNING",
+   "reason": "WARNING recurred \u00b7 10 Jun and 18 Jun",
+   "basis": "Gate G1 \u00b7 WARNING recurs \u2264 10 d",
+   "C": 3,
+   "U": 3,
+   "u_basis": "2nd WARNING in 8 d",
+   "p": [
+    0.015625,
+    1.5712479537001892e-05,
+    0.07723003565348102
+   ],
+   "p_n": 31,
+   "conf": "med",
+   "action": "TROUBLESHOOT",
+   "params": {
+    "code": "LGB-501"
+   },
+   "rule": "P-DEC-01",
+   "row": "r1",
+   "rationale": "PFL_WARNING_RECURS",
+   "evidence": [
+    {
+     "rid": "b593780f1875cc284f2fef1f56f86076",
+     "sortie": "TJ106-20260610T0630",
+     "t_occ": "10 Jun 12:52",
+     "t_ingest": "10 Jun 13:36",
+     "sev": "WARNING"
+    },
+    {
+     "rid": "2b836e258950e340c5e993af8c4e3fa2",
+     "sortie": "TJ106-20260618T1430",
+     "t_occ": "18 Jun 20:27",
+     "t_ingest": "18 Jun 21:08",
+     "sev": "WARNING"
+    }
+   ],
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ106",
+   "target_base": null,
+   "auth": "AGENT",
+   "mode": "consent",
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ106:TROUBLESHOOT:98e5d97f15d4d9c7"
+  },
+  {
+   "id": "TJ107-HYD-101",
+   "band": "P2",
+   "tail": "TJ107",
+   "code": "HYD-101",
+   "title": "Standing alarm",
+   "sev": "CAUTION",
+   "reason": "34 consecutive flights \u00b7 28 removals, 0 confirmed",
+   "basis": "P-DEC-01 r3 \u00b7 D8 nuisance review",
+   "C": 3,
+   "U": 0,
+   "u_basis": "FMC \u00b7 0 of 107 confirmed",
+   "p": [
+    0.0040650406504065045,
+    4.0166261379511e-06,
+    0.020337815909792945
+   ],
+   "p_n": 122,
+   "conf": "high",
+   "action": "TROUBLESHOOT",
+   "params": {
+    "code": "HYD-101"
+   },
+   "rule": "P-DEC-01",
+   "row": "r3",
+   "rationale": "PERSIST_3_FLIGHTS",
+   "evidence": [
+    {
+     "rid": "849f5403e7e040e1ba77b45889e55be0",
+     "sortie": "TJ107-20260611T0630",
+     "t_occ": "11 Jun 12:08",
+     "t_ingest": "11 Jun 13:25",
+     "persistence": 4,
+     "mech": "PBIT"
+    },
+    {
+     "rid": "661fc9d5c15a7723531708c3b2bb2b86",
+     "sortie": "TJ107-20260611T1430",
+     "t_occ": "11 Jun 20:15",
+     "t_ingest": "11 Jun 21:20",
+     "persistence": 4,
+     "mech": "CBIT"
+    },
+    {
+     "rid": "3ca4c8db6267cbecefeb5f9031aa64eb",
+     "sortie": "TJ107-20260615T0630",
+     "t_occ": "15 Jun 12:09",
+     "t_ingest": "15 Jun 13:45",
+     "persistence": 4,
+     "mech": "PBIT"
+    },
+    {
+     "rid": "b8b089f9b054b6f9b79ba808957f5e7e",
+     "sortie": "TJ107-20260615T1430",
+     "t_occ": "15 Jun 20:14",
+     "t_ingest": "15 Jun 21:54",
+     "persistence": 4,
+     "mech": "PBIT"
+    },
+    {
+     "rid": "2b73925cc495e29f0609c6899c2168a0",
+     "sortie": "TJ107-20260618T0630",
+     "t_occ": "18 Jun 12:12",
+     "t_ingest": "18 Jun 13:31",
+     "persistence": 4,
+     "mech": "CBIT"
+    },
+    {
+     "rid": "fcf0b94962735ffc27d5f5664c2c4d02",
+     "sortie": "TJ107-20260618T1430",
+     "t_occ": "18 Jun 20:08",
+     "t_ingest": "18 Jun 21:08",
+     "persistence": 12,
+     "mech": "PBIT"
+    }
+   ],
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ107",
+   "target_base": null,
+   "auth": "AGENT",
+   "mode": "consent",
+   "second": {
+    "action": "CHANGE_MONITORING_CONFIG",
+    "params": {
+     "filter_codes_add": [
+      "HYD-101"
+     ]
+    },
+    "auth": "HUMAN",
+    "mode": "HUMAN-only draft",
+    "rule": "P-DEC-01",
+    "row": "D8",
+    "rationale": "STANDING_NUISANCE_REVIEW",
+    "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ107:CHANGE_MONITORING_CONFIG:6c744e071d8445f0"
+   },
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ107:TROUBLESHOOT:748653aa6bcf4544"
+  },
+  {
+   "id": "TJ108-AOG-CHUTE",
+   "band": "P2",
+   "tail": "TJ108",
+   "code": "SYN-PN-CHUTE",
+   "title": "AOG brake chute",
+   "sev": "NMCS",
+   "reason": "Grounded 80 d \u00b7 oldest open AOG demand",
+   "basis": "AP lookup \u00b7 C3 \u00d7 U3",
+   "C": 3,
+   "U": 3,
+   "u_basis": "NMCS 80 d",
+   "p": null,
+   "p_note": "observed",
+   "conf": "high",
+   "action": "EXPEDITE_SPARES",
+   "params": {
+    "demand_no": "D-sulur-26093-0002"
+   },
+   "rule": "P-ORG-02",
+   "row": "r2",
+   "rationale": "AOG_NO_DONOR_EXPEDITE",
+   "evidence": [
+    {
+     "rid": "9531749ae89a0cc67c771e3f8c6803fb",
+     "t_ingest": "03 Apr 10:30"
+    },
+    {
+     "rid": "538009832804198691b4a8a246f0ae2d",
+     "t_ingest": "03 Apr 13:39"
+    },
+    {
+     "rid": "5c24ba776ce2bb1d588e6fc61e4ec084",
+     "t_ingest": "11 Jun 11:49"
+    }
+   ],
+   "priority": "AOG",
+   "target_tail_no": "TJ108",
+   "target_base": "sulur",
+   "auth": "AGENT",
+   "mode": "consent",
+   "order_id": "phx:P-ORG-02:1.2.0:20260622T0800:TJ108:EXPEDITE_SPARES:c98851c5b4a8256b"
+  },
+  {
+   "id": "TJ105-TYRE",
+   "band": "P3",
+   "tail": "TJ105",
+   "code": "SYN-PN-TYRE",
+   "title": "Tyre at limit",
+   "sev": "LIFE",
+   "reason": "7 of 8 landings \u00b7 next landing reaches limit",
+   "basis": "AP lookup \u00b7 C2 \u00d7 U3",
+   "C": 2,
+   "U": 3,
+   "u_basis": "1 landing left \u00b7 0.87 ldg/d",
+   "p": null,
+   "p_note": "counted",
+   "conf": "high",
+   "action": "REQUISITION_SPARES",
+   "params": {
+    "part_no": "SYN-PN-TYRE",
+    "quantity": 2
+   },
+   "rule": "P-SPR-01",
+   "row": "r1",
+   "rationale": "LIFE_LANDINGS_REORDER",
+   "evidence": [
+    {
+     "rid": "5c6b07c27b7aaeebc11923c313ee33ec",
+     "t_ingest": "19 Jun 10:54"
+    },
+    {
+     "rid": "e05999a98367ee3af85c86c4598a0bfd",
+     "t_ingest": "10 Jun 10:17"
+    },
+    {
+     "rid": "72260e735c197742696b12a953e0a547",
+     "t_ingest": "12 Jun 13:52"
+    },
+    {
+     "rid": "0adf6ad884bdd7487e845dd618a1a0ba",
+     "t_ingest": "15 Jun 13:45"
+    },
+    {
+     "rid": "257b288af732947465ae434e627c14d0",
+     "t_ingest": "15 Jun 21:54"
+    },
+    {
+     "rid": "1dbebf4255b9efc25d700e8196ee1d83",
+     "t_ingest": "18 Jun 21:08"
+    },
+    {
+     "rid": "b8d779e5dc3de275964ea8f28d8862ee",
+     "t_ingest": "19 Jun 21:21"
+    }
+   ],
+   "priority": "MCM",
+   "target_tail_no": null,
+   "target_base": "sulur",
+   "auth": "AGENT",
+   "mode": "consent",
+   "order_id": "phx:P-SPR-01:1.0.0:20260622T0800:TJ105:REQUISITION_SPARES:b786353ebcdad872"
+  },
+  {
+   "id": "TJ105-SPS-501",
+   "band": "P3",
+   "tail": "TJ105",
+   "code": "SPS-501",
+   "title": "JFS start fail",
+   "sev": "CAUTION",
+   "reason": "4\u00d7 in 10 d \u00b7 10 Jun to 19 Jun",
+   "basis": "AP lookup \u00b7 C3 \u00d7 U1",
+   "C": 3,
+   "U": 1,
+   "u_basis": "4 in 10 d \u00b7 starts recovered",
+   "p": [
+    0.019230769230769232,
+    1.9445770898159023e-05,
+    0.09468276410958315
+   ],
+   "p_n": 25,
+   "conf": "med",
+   "action": "TROUBLESHOOT",
+   "params": {
+    "code": "SPS-501"
+   },
+   "rule": "P-DEC-01",
+   "row": "AP",
+   "rationale": "AP_C3_U1",
+   "evidence": [
+    {
+     "rid": "3291df42240a33ae03e3ac0cbea6f80e",
+     "sortie": "TJ105-20260610T0300",
+     "t_occ": "10 Jun 08:52",
+     "t_ingest": "10 Jun 10:17",
+     "sev": "CAUTION"
+    },
+    {
+     "rid": "9b9e53ca6919be67a87a11c7f60274b2",
+     "sortie": "TJ105-20260612T0630",
+     "t_occ": "12 Jun 12:39",
+     "t_ingest": "12 Jun 13:52",
+     "sev": "CAUTION"
+    },
+    {
+     "rid": "3e220ce770a05b0071c6e5413efec712",
+     "sortie": "TJ105-20260615T1430",
+     "t_occ": "15 Jun 20:14",
+     "t_ingest": "15 Jun 21:54",
+     "sev": "CAUTION"
+    },
+    {
+     "rid": "0890dcc9104cd289fc186876c4cb6d19",
+     "sortie": "TJ105-20260619T1430",
+     "t_occ": "19 Jun 20:15",
+     "t_ingest": "19 Jun 21:21",
+     "sev": "CAUTION"
+    }
+   ],
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ105",
+   "target_base": null,
+   "auth": "AGENT",
+   "mode": "consent",
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ105:TROUBLESHOOT:e9403bb76d4e79da"
+  },
+  {
+   "id": "P4-ADVISORY",
+   "band": "P4",
+   "tail": "6 tails",
+   "code": "ADC-002 \u00b7 AVI-201 \u00b7 AVI-203 \u00b7 AVI-204 \u00b7 ELE-405 \u00b7 ENG-201",
+   "title": "13 advisory issues",
+   "sev": "ADVISORY",
+   "reason": "CND-dominated codes \u00b7 grouped by root cause",
+   "basis": "P-DEC-01 r5 \u00b7 RECUR_NOFAULT_DOMINATED",
+   "C": 1,
+   "U": 0,
+   "u_basis": "advisory \u00b7 no mission effect",
+   "p": [
+    0.0013123359580052493,
+    1.291345523678926e-06,
+    0.0065842548448205584
+   ],
+   "p_n": 380,
+   "conf": "high",
+   "action": "MONITOR",
+   "params": null,
+   "rule": "P-DEC-01",
+   "row": "r5",
+   "group": [
+    {
+     "tail": "TJ102",
+     "code": "ENG-201",
+     "occ10": 3,
+     "n": 6
+    },
+    {
+     "tail": "TJ103",
+     "code": "AVI-201",
+     "occ10": 2,
+     "n": 2
+    },
+    {
+     "tail": "TJ103",
+     "code": "AVI-203",
+     "occ10": 3,
+     "n": 3
+    },
+    {
+     "tail": "TJ103",
+     "code": "ENG-201",
+     "occ10": 3,
+     "n": 5
+    },
+    {
+     "tail": "TJ104",
+     "code": "ADC-002",
+     "occ10": 3,
+     "n": 3
+    },
+    {
+     "tail": "TJ104",
+     "code": "ELE-405",
+     "occ10": 3,
+     "n": 3
+    },
+    {
+     "tail": "TJ104",
+     "code": "ENG-201",
+     "occ10": 3,
+     "n": 3
+    },
+    {
+     "tail": "TJ105",
+     "code": "AVI-201",
+     "occ10": 3,
+     "n": 5
+    },
+    {
+     "tail": "TJ105",
+     "code": "AVI-203",
+     "occ10": 3,
+     "n": 3
+    },
+    {
+     "tail": "TJ106",
+     "code": "AVI-201",
+     "occ10": 2,
+     "n": 2
+    },
+    {
+     "tail": "TJ106",
+     "code": "AVI-204",
+     "occ10": 6,
+     "n": 26
+    },
+    {
+     "tail": "TJ106",
+     "code": "ENG-201",
+     "occ10": 4,
+     "n": 4
+    },
+    {
+     "tail": "TJ107",
+     "code": "AVI-203",
+     "occ10": 2,
+     "n": 2
+    }
+   ],
+   "auth": null,
+   "mode": "monitor"
+  }
+ ],
+ "orders": [
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ103:TROUBLESHOOT:54d7fe500658cf7d",
+   "digest": "54d7fe500658cf7d",
+   "item": "TJ103-LGB-501",
+   "band": "P1",
+   "action": "TROUBLESHOOT",
+   "parameters": {
+    "code": "LGB-501"
+   },
+   "issuer_kind": "AGENT",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "policy_version": "P-DEC-01/1.4.0+jdm.3f9c0d7a",
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ103",
+   "target_base": null,
+   "evidence": [
+    "1723553b2db663fe4eaa564c5884b2f6",
+    "3cf5b70af2f8b8c7350cb1224b8c6672"
+   ],
+   "rule": "P-DEC-01",
+   "row": "r1",
+   "tail": "TJ103",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "19 Jun 21:16",
+   "evidence_all_ingested": true
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ106:TROUBLESHOOT:98e5d97f15d4d9c7",
+   "digest": "98e5d97f15d4d9c7",
+   "item": "TJ106-LGB-501",
+   "band": "P1",
+   "action": "TROUBLESHOOT",
+   "parameters": {
+    "code": "LGB-501"
+   },
+   "issuer_kind": "AGENT",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "policy_version": "P-DEC-01/1.4.0+jdm.3f9c0d7a",
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ106",
+   "target_base": null,
+   "evidence": [
+    "b593780f1875cc284f2fef1f56f86076",
+    "2b836e258950e340c5e993af8c4e3fa2"
+   ],
+   "rule": "P-DEC-01",
+   "row": "r1",
+   "tail": "TJ106",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "18 Jun 21:08",
+   "evidence_all_ingested": true
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ107:TROUBLESHOOT:748653aa6bcf4544",
+   "digest": "748653aa6bcf4544",
+   "item": "TJ107-HYD-101",
+   "band": "P2",
+   "action": "TROUBLESHOOT",
+   "parameters": {
+    "code": "HYD-101"
+   },
+   "issuer_kind": "AGENT",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "policy_version": "P-DEC-01/1.4.0+jdm.3f9c0d7a",
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ107",
+   "target_base": null,
+   "evidence": [
+    "849f5403e7e040e1ba77b45889e55be0",
+    "661fc9d5c15a7723531708c3b2bb2b86",
+    "3ca4c8db6267cbecefeb5f9031aa64eb",
+    "b8b089f9b054b6f9b79ba808957f5e7e",
+    "2b73925cc495e29f0609c6899c2168a0",
+    "fcf0b94962735ffc27d5f5664c2c4d02"
+   ],
+   "rule": "P-DEC-01",
+   "row": "r3",
+   "tail": "TJ107",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "18 Jun 21:08",
+   "evidence_all_ingested": true
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ107:CHANGE_MONITORING_CONFIG:6c744e071d8445f0",
+   "digest": "6c744e071d8445f0",
+   "item": "TJ107-HYD-101",
+   "band": "P2",
+   "action": "CHANGE_MONITORING_CONFIG",
+   "parameters": {
+    "filter_codes_add": [
+     "HYD-101"
+    ]
+   },
+   "issuer_kind": "HUMAN",
+   "issuer_id": "HUMAN-ENGG-OFFICER",
+   "policy_version": null,
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ107",
+   "target_base": null,
+   "evidence": [
+    "849f5403e7e040e1ba77b45889e55be0",
+    "661fc9d5c15a7723531708c3b2bb2b86",
+    "3ca4c8db6267cbecefeb5f9031aa64eb",
+    "b8b089f9b054b6f9b79ba808957f5e7e",
+    "2b73925cc495e29f0609c6899c2168a0",
+    "fcf0b94962735ffc27d5f5664c2c4d02"
+   ],
+   "rule": "P-DEC-01",
+   "row": "D8",
+   "tail": "TJ107",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "18 Jun 21:08",
+   "evidence_all_ingested": true
+  },
+  {
+   "order_id": "phx:P-ORG-02:1.2.0:20260622T0800:TJ108:EXPEDITE_SPARES:c98851c5b4a8256b",
+   "digest": "c98851c5b4a8256b",
+   "item": "TJ108-AOG-CHUTE",
+   "band": "P2",
+   "action": "EXPEDITE_SPARES",
+   "parameters": {
+    "demand_no": "D-sulur-26093-0002"
+   },
+   "issuer_kind": "AGENT",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "policy_version": "P-ORG-02/1.2.0+jdm.71b0e4c2",
+   "priority": "AOG",
+   "target_tail_no": "TJ108",
+   "target_base": "sulur",
+   "evidence": [
+    "9531749ae89a0cc67c771e3f8c6803fb",
+    "538009832804198691b4a8a246f0ae2d",
+    "5c24ba776ce2bb1d588e6fc61e4ec084"
+   ],
+   "rule": "P-ORG-02",
+   "row": "r2",
+   "tail": "TJ108",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "11 Jun 11:49",
+   "evidence_all_ingested": true
+  },
+  {
+   "order_id": "phx:P-SPR-01:1.0.0:20260622T0800:TJ105:REQUISITION_SPARES:b786353ebcdad872",
+   "digest": "b786353ebcdad872",
+   "item": "TJ105-TYRE",
+   "band": "P3",
+   "action": "REQUISITION_SPARES",
+   "parameters": {
+    "part_no": "SYN-PN-TYRE",
+    "quantity": 2
+   },
+   "issuer_kind": "AGENT",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "policy_version": "P-SPR-01/1.0.0+jdm.c5a91d08",
+   "priority": "MCM",
+   "target_tail_no": null,
+   "target_base": "sulur",
+   "evidence": [
+    "5c6b07c27b7aaeebc11923c313ee33ec",
+    "e05999a98367ee3af85c86c4598a0bfd",
+    "72260e735c197742696b12a953e0a547",
+    "0adf6ad884bdd7487e845dd618a1a0ba",
+    "257b288af732947465ae434e627c14d0",
+    "1dbebf4255b9efc25d700e8196ee1d83",
+    "b8d779e5dc3de275964ea8f28d8862ee"
+   ],
+   "rule": "P-SPR-01",
+   "row": "r1",
+   "tail": "TJ105",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "19 Jun 21:21",
+   "evidence_all_ingested": true
+  },
+  {
+   "order_id": "phx:P-DEC-01:1.4.0:20260622T0800:TJ105:TROUBLESHOOT:e9403bb76d4e79da",
+   "digest": "e9403bb76d4e79da",
+   "item": "TJ105-SPS-501",
+   "band": "P3",
+   "action": "TROUBLESHOOT",
+   "parameters": {
+    "code": "SPS-501"
+   },
+   "issuer_kind": "AGENT",
+   "issuer_id": "PHALANX-PDM-AGENT",
+   "policy_version": "P-DEC-01/1.4.0+jdm.3f9c0d7a",
+   "priority": "ROUTINE",
+   "target_tail_no": "TJ105",
+   "target_base": null,
+   "evidence": [
+    "3291df42240a33ae03e3ac0cbea6f80e",
+    "9b9e53ca6919be67a87a11c7f60274b2",
+    "3e220ce770a05b0071c6e5413efec712",
+    "0890dcc9104cd289fc186876c4cb6d19"
+   ],
+   "rule": "P-DEC-01",
+   "row": "AP",
+   "tail": "TJ105",
+   "evidence_max_ingest": null,
+   "evidence_latest_ingest": "19 Jun 21:21",
+   "evidence_all_ingested": true
+  }
+ ],
+ "tj107": {
+  "sorties": 61,
+  "fired": 59,
+  "runs": [
+   15,
+   10,
+   34
+  ],
+  "events": 63,
+  "gr_events": [
+   "TJ107-20260105-GR",
+   "TJ107-20260311-GR",
+   "TJ107-20260323-GR",
+   "TJ107-20260521-GR"
+  ],
+  "jobs": 64,
+  "mh": 792.3,
+  "actions": {
+   "AT-CND": 33,
+   "AT-RR": 29,
+   "nan": 1,
+   "AT-TS": 1
+  },
+  "removal_records": 28,
+  "rr_jobs": 29,
+  "rr_jobs_without_cl": [
+   "sulur-26061-0002",
+   "sulur-26156-0002"
+  ],
+  "serials_on_record": [
+   "HYDP-000001",
+   "HYDP-000002",
+   "HYDP-000003",
+   "HYDP-000004",
+   "HYDP-000005",
+   "HYDP-000006",
+   "HYDP-000007",
+   "HYDP-000008",
+   "HYDP-000009",
+   "HYDP-000010",
+   "HYDP-000012"
+  ],
+  "serial_values_on_remove": [
+   "HYDP-000001",
+   "HYDP-000003",
+   "HYDP-000004",
+   "HYDP-000005",
+   "HYDP-000006",
+   "HYDP-000007",
+   "HYDP-000008",
+   "HYDP-000009",
+   "HYDP-000010",
+   "HYDP-000012",
+   "XXX"
+  ],
+  "sys1_serials": [
+   "HYDP-000001",
+   "HYDP-000003",
+   "HYDP-000004",
+   "HYDP-000005",
+   "HYDP-000006",
+   "HYDP-000007",
+   "HYDP-000008",
+   "HYDP-000009",
+   "HYDP-000010",
+   "HYDP-000012"
+  ],
+  "shop": {
+   "n": 29,
+   "rtok": 29,
+   "matched_tj107": 28
+  },
+  "p_confirmed": [
+   0.0040650406504065045,
+   4.0166261379511e-06,
+   0.020337815909792945
+  ],
+  "p_rtok": [
+   0.9833333333333333,
+   0.9177135170761765,
+   0.9999832132478752
+  ],
+  "evidence": [
+   {
+    "rid": "849f5403e7e040e1ba77b45889e55be0",
+    "sortie": "TJ107-20260611T0630",
+    "t_occ": "11 Jun 12:08",
+    "t_ingest": "11 Jun 13:25",
+    "persistence": 4,
+    "mech": "PBIT"
+   },
+   {
+    "rid": "661fc9d5c15a7723531708c3b2bb2b86",
+    "sortie": "TJ107-20260611T1430",
+    "t_occ": "11 Jun 20:15",
+    "t_ingest": "11 Jun 21:20",
+    "persistence": 4,
+    "mech": "CBIT"
+   },
+   {
+    "rid": "3ca4c8db6267cbecefeb5f9031aa64eb",
+    "sortie": "TJ107-20260615T0630",
+    "t_occ": "15 Jun 12:09",
+    "t_ingest": "15 Jun 13:45",
+    "persistence": 4,
+    "mech": "PBIT"
+   },
+   {
+    "rid": "b8b089f9b054b6f9b79ba808957f5e7e",
+    "sortie": "TJ107-20260615T1430",
+    "t_occ": "15 Jun 20:14",
+    "t_ingest": "15 Jun 21:54",
+    "persistence": 4,
+    "mech": "PBIT"
+   },
+   {
+    "rid": "2b73925cc495e29f0609c6899c2168a0",
+    "sortie": "TJ107-20260618T0630",
+    "t_occ": "18 Jun 12:12",
+    "t_ingest": "18 Jun 13:31",
+    "persistence": 4,
+    "mech": "CBIT"
+   },
+   {
+    "rid": "fcf0b94962735ffc27d5f5664c2c4d02",
+    "sortie": "TJ107-20260618T1430",
+    "t_occ": "18 Jun 20:08",
+    "t_ingest": "18 Jun 21:08",
+    "persistence": 12,
+    "mech": "PBIT"
+   }
+  ],
+  "inferred_install_jobs": [
+   "sulur-26169-0006"
+  ],
+  "strip": [
+   {
+    "sid": "TJ107-20260106T0930",
+    "d": "06 Jan",
+    "t": 1.625,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260107T0630",
+    "d": "07 Jan",
+    "t": 2.5,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260108T0300",
+    "d": "08 Jan",
+    "t": 3.354,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260108T0930",
+    "d": "08 Jan",
+    "t": 3.625,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260114T0300",
+    "d": "14 Jan",
+    "t": 9.354,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260115T0930",
+    "d": "15 Jan",
+    "t": 10.625,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260116T0630",
+    "d": "16 Jan",
+    "t": 11.5,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260119T0630",
+    "d": "19 Jan",
+    "t": 14.5,
+    "fired": true,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260121T0300",
+    "d": "21 Jan",
+    "t": 16.354,
+    "fired": true,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260122T0630",
+    "d": "22 Jan",
+    "t": 17.5,
+    "fired": true,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260123T0300",
+    "d": "23 Jan",
+    "t": 18.354,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260126T0300",
+    "d": "26 Jan",
+    "t": 21.354,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260128T0300",
+    "d": "28 Jan",
+    "t": 23.354,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260128T0930",
+    "d": "28 Jan",
+    "t": 23.625,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260202T0300",
+    "d": "02 Feb",
+    "t": 28.354,
+    "fired": true,
+    "serial": "HYDP-000003",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260202T1430",
+    "d": "02 Feb",
+    "t": 28.833,
+    "fired": false,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260206T0630",
+    "d": "06 Feb",
+    "t": 32.5,
+    "fired": true,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260209T0630",
+    "d": "09 Feb",
+    "t": 35.5,
+    "fired": true,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260211T0300",
+    "d": "11 Feb",
+    "t": 37.354,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260216T0300",
+    "d": "16 Feb",
+    "t": 42.354,
+    "fired": true,
+    "serial": "HYDP-000004",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260302T0300",
+    "d": "02 Mar",
+    "t": 56.354,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260304T0930",
+    "d": "04 Mar",
+    "t": 58.625,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260311T0930",
+    "d": "11 Mar",
+    "t": 65.625,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260313T0930",
+    "d": "13 Mar",
+    "t": 67.625,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260313T1430",
+    "d": "13 Mar",
+    "t": 67.833,
+    "fired": true,
+    "serial": "HYDP-000001",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260323T0930",
+    "d": "23 Mar",
+    "t": 77.625,
+    "fired": true,
+    "serial": "HYDP-000006",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260325T1430",
+    "d": "25 Mar",
+    "t": 79.833,
+    "fired": false,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260326T1430",
+    "d": "26 Mar",
+    "t": 80.833,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260330T0630",
+    "d": "30 Mar",
+    "t": 84.5,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260331T0930",
+    "d": "31 Mar",
+    "t": 85.625,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260409T0300",
+    "d": "09 Apr",
+    "t": 94.354,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260409T0930",
+    "d": "09 Apr",
+    "t": 94.625,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260413T1430",
+    "d": "13 Apr",
+    "t": 98.833,
+    "fired": true,
+    "serial": "HYDP-000007",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260416T0300",
+    "d": "16 Apr",
+    "t": 101.354,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260416T0930",
+    "d": "16 Apr",
+    "t": 101.625,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260417T0300",
+    "d": "17 Apr",
+    "t": 102.354,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260420T0630",
+    "d": "20 Apr",
+    "t": 105.5,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260421T0930",
+    "d": "21 Apr",
+    "t": 106.625,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260427T0630",
+    "d": "27 Apr",
+    "t": 112.5,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260504T0300",
+    "d": "04 May",
+    "t": 119.354,
+    "fired": true,
+    "serial": "HYDP-000009",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260506T0300",
+    "d": "06 May",
+    "t": 121.354,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260507T1430",
+    "d": "07 May",
+    "t": 122.833,
+    "fired": true,
+    "serial": "HYDP-000005",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260513T0630",
+    "d": "13 May",
+    "t": 128.5,
+    "fired": true,
+    "serial": "HYDP-000009",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260515T0630",
+    "d": "15 May",
+    "t": 130.5,
+    "fired": true,
+    "serial": "HYDP-000010",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260518T0930",
+    "d": "18 May",
+    "t": 133.625,
+    "fired": true,
+    "serial": "HYDP-000010",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260520T0930",
+    "d": "20 May",
+    "t": 135.625,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260522T0300",
+    "d": "22 May",
+    "t": 137.354,
+    "fired": true,
+    "serial": "HYDP-000012",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260522T1430",
+    "d": "22 May",
+    "t": 137.833,
+    "fired": true,
+    "serial": "HYDP-000012",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260525T0300",
+    "d": "25 May",
+    "t": 140.354,
+    "fired": true,
+    "serial": "HYDP-000012",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260527T0930",
+    "d": "27 May",
+    "t": 142.625,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260601T0300",
+    "d": "01 Jun",
+    "t": 147.354,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260601T0930",
+    "d": "01 Jun",
+    "t": 147.625,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260603T0300",
+    "d": "03 Jun",
+    "t": 149.354,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260604T0300",
+    "d": "04 Jun",
+    "t": 150.354,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260605T0630",
+    "d": "05 Jun",
+    "t": 151.5,
+    "fired": true,
+    "serial": "HYDP-000010",
+    "inferred": false
+   },
+   {
+    "sid": "TJ107-20260611T0630",
+    "d": "11 Jun",
+    "t": 157.5,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260611T1430",
+    "d": "11 Jun",
+    "t": 157.833,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260615T0630",
+    "d": "15 Jun",
+    "t": 161.5,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260615T1430",
+    "d": "15 Jun",
+    "t": 161.833,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260618T0630",
+    "d": "18 Jun",
+    "t": 164.5,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": true
+   },
+   {
+    "sid": "TJ107-20260618T1430",
+    "d": "18 Jun",
+    "t": 164.833,
+    "fired": true,
+    "serial": "HYDP-000008",
+    "inferred": true
+   }
+  ],
+  "removal_marks": [
+   {
+    "t": 0.765,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000003",
+    "job": "sulur-26005-0001",
+    "cl": true
+   },
+   {
+    "t": 8.347,
+    "removed": "HYDP-000003",
+    "installed": "HYDP-000001",
+    "job": "sulur-26008-0002",
+    "cl": true
+   },
+   {
+    "t": 12.322,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000004",
+    "job": "sulur-26016-0003",
+    "cl": true
+   },
+   {
+    "t": 17.855,
+    "removed": "HYDP-000004",
+    "installed": "HYDP-000001",
+    "job": "sulur-26022-0001",
+    "cl": true
+   },
+   {
+    "t": 22.365,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000003",
+    "job": "sulur-26026-0001",
+    "cl": true
+   },
+   {
+    "t": 28.734,
+    "removed": "HYDP-000003",
+    "installed": "HYDP-000004",
+    "job": "sulur-26033-0002",
+    "cl": true
+   },
+   {
+    "t": 36.393,
+    "removed": "HYDP-000004",
+    "installed": "HYDP-000001",
+    "job": "sulur-26040-0001",
+    "cl": true
+   },
+   {
+    "t": 38.591,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000004",
+    "job": "sulur-26042-0002",
+    "cl": true
+   },
+   {
+    "t": 52.281,
+    "removed": "HYDP-000004",
+    "installed": "HYDP-000001",
+    "job": "sulur-26047-0001",
+    "cl": true
+   },
+   {
+    "t": 57.25,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000005",
+    "job": "sulur-26061-0002",
+    "cl": false
+   },
+   {
+    "t": 66.456,
+    "removed": "HYDP-000005",
+    "installed": "HYDP-000001",
+    "job": "sulur-26070-0002",
+    "cl": true
+   },
+   {
+    "t": 76.567,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000006",
+    "job": "sulur-26072-0003",
+    "cl": true
+   },
+   {
+    "t": 78.518,
+    "removed": "HYDP-000006",
+    "installed": "HYDP-000005",
+    "job": "sulur-26082-0003",
+    "cl": true
+   },
+   {
+    "t": 93.412,
+    "removed": "HYDP-000001",
+    "installed": "HYDP-000005",
+    "job": "sulur-26090-0003",
+    "cl": true
+   },
+   {
+    "t": 95.251,
+    "removed": "HYDP-000005",
+    "installed": "HYDP-000007",
+    "job": "sulur-26099-0002",
+    "cl": true
+   },
+   {
+    "t": 99.573,
+    "removed": "HYDP-000007",
+    "installed": "HYDP-000005",
+    "job": "sulur-26103-0002",
+    "cl": true
+   },
+   {
+    "t": 105.78,
+    "removed": "HYDP-000005",
+    "installed": "HYDP-000008",
+    "job": "sulur-26110-0003",
+    "cl": true
+   },
+   {
+    "t": 111.49,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000005",
+    "job": "sulur-26111-0001",
+    "cl": true
+   },
+   {
+    "t": 117.828,
+    "removed": "HYDP-000005",
+    "installed": "HYDP-000009",
+    "job": "sulur-26117-0002",
+    "cl": true
+   },
+   {
+    "t": 119.824,
+    "removed": "HYDP-000009",
+    "installed": "HYDP-000008",
+    "job": "sulur-26124-0001",
+    "cl": true
+   },
+   {
+    "t": 121.805,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000005",
+    "job": "sulur-26126-0001",
+    "cl": true
+   },
+   {
+    "t": 123.569,
+    "removed": "HYDP-000005",
+    "installed": "HYDP-000009",
+    "job": "sulur-26127-0002",
+    "cl": true
+   },
+   {
+    "t": 129.309,
+    "removed": "HYDP-000009",
+    "installed": "HYDP-000010",
+    "job": "sulur-26133-0001",
+    "cl": true
+   },
+   {
+    "t": 134.387,
+    "removed": "HYDP-000010",
+    "installed": "HYDP-000008",
+    "job": "sulur-26138-0001",
+    "cl": true
+   },
+   {
+    "t": 136.757,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000012",
+    "job": "sulur-26141-0002",
+    "cl": true
+   },
+   {
+    "t": 141.484,
+    "removed": "HYDP-000012",
+    "installed": "HYDP-000008",
+    "job": "sulur-26145-0001",
+    "cl": true
+   },
+   {
+    "t": 150.775,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000010",
+    "job": "sulur-26155-0003",
+    "cl": true
+   },
+   {
+    "t": 156.711,
+    "removed": "HYDP-000010",
+    "installed": "HYDP-000008",
+    "job": "sulur-26156-0002",
+    "cl": false
+   },
+   {
+    "t": 165.571,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000010",
+    "job": "sulur-26169-0006",
+    "cl": true
+   }
+  ],
+  "lanes": [
+   {
+    "event": {
+     "rid": "0a823ac42ae530c802383594258e0625",
+     "sortie": "TJ107-20260525T0300",
+     "t_occ": "25 May 08:41",
+     "t_ingest": "25 May 09:48"
+    },
+    "job": "sulur-26145-0001",
+    "opened": "25 May 10:08",
+    "closed": "26 May 11:36",
+    "mh": 19.1,
+    "ts_mh": 4.5,
+    "awp": true,
+    "removed": "HYDP-000012",
+    "installed": "HYDP-000008",
+    "cl_record": true,
+    "shop": {
+     "finding": "RTOK",
+     "serial": "HYDP-000012",
+     "t": "30 May 03:11",
+     "t_ingest": "02 Jun 02:11"
+    },
+    "down_h": {
+     "NMCM_U": 6.0,
+     "NMCS": 19.5
+    },
+    "down_total_h": 25.5,
+    "steps": [
+     "OPEN",
+     "IN_WORK",
+     "IN_WORK",
+     "AWAITING_PARTS\u00b7AT-TS",
+     "IN_WORK\u00b7AT-TS",
+     "CLOSED\u00b7AT-RR"
+    ]
+   },
+   {
+    "event": {
+     "rid": "d738081fa5e116078618bb8b015d1705",
+     "sortie": "TJ107-20260604T0300",
+     "t_occ": "04 Jun 08:43",
+     "t_ingest": "04 Jun 09:57"
+    },
+    "job": "sulur-26155-0003",
+    "opened": "04 Jun 10:17",
+    "closed": "04 Jun 18:35",
+    "mh": 18.9,
+    "ts_mh": null,
+    "awp": false,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000010",
+    "cl_record": true,
+    "shop": {
+     "finding": "RTOK",
+     "serial": "HYDP-000008",
+     "t": "10 Jun 12:22",
+     "t_ingest": "10 Jun 12:22"
+    },
+    "down_h": {
+     "NMCM_U": 8.3
+    },
+    "down_total_h": 8.3,
+    "steps": [
+     "OPEN",
+     "IN_WORK",
+     "IN_WORK",
+     "CLOSED\u00b7AT-RR"
+    ]
+   },
+   {
+    "event": {
+     "rid": "db90aa6f4cad93add820f7b18c1d77ac",
+     "sortie": "TJ107-20260605T0630",
+     "t_occ": "05 Jun 12:37",
+     "t_ingest": "05 Jun 13:16"
+    },
+    "job": "sulur-26156-0002",
+    "opened": "05 Jun 13:36",
+    "closed": "10 Jun 17:03",
+    "mh": 31.3,
+    "ts_mh": 17.2,
+    "awp": true,
+    "removed": "HYDP-000010",
+    "installed": "HYDP-000008",
+    "cl_record": false,
+    "shop": {
+     "finding": "RTOK",
+     "serial": "HYDP-000010",
+     "t": "13 Jun 22:06",
+     "t_ingest": "13 Jun 22:06"
+    },
+    "down_h": {
+     "NMCM_U": 10.2,
+     "NMCS": 113.2
+    },
+    "down_total_h": 123.5,
+    "steps": [
+     "OPEN",
+     "IN_WORK",
+     "AWAITING_PARTS\u00b7AT-TS",
+     "IN_WORK\u00b7AT-TS"
+    ]
+   },
+   {
+    "event": {
+     "rid": "fcf0b94962735ffc27d5f5664c2c4d02",
+     "sortie": "TJ107-20260618T1430",
+     "t_occ": "18 Jun 20:08",
+     "t_ingest": "18 Jun 21:08"
+    },
+    "job": "sulur-26169-0006",
+    "opened": "18 Jun 21:27",
+    "closed": "19 Jun 13:41",
+    "mh": 18.7,
+    "ts_mh": null,
+    "awp": false,
+    "removed": "HYDP-000008",
+    "installed": "HYDP-000010",
+    "cl_record": true,
+    "shop": null,
+    "down_h": {
+     "NMCM_U": 16.2
+    },
+    "down_total_h": 16.2,
+    "steps": [
+     "OPEN",
+     "IN_WORK",
+     "IN_WORK",
+     "CLOSED\u00b7AT-RR"
+    ]
+   }
+  ],
+  "mh_stats": {
+   "fim_hyd_cnd": {
+    "median": 7.3,
+    "n": 33,
+    "p25": 5.5,
+    "p75": 9.2
+   },
+   "task_hydp_rr": {
+    "median": 18.7,
+    "n": 29,
+    "p25": 14.3,
+    "p75": 22.0
+   },
+   "fim_sps_cnd": {
+    "median": 8.3,
+    "n": 21
+   }
+  },
+  "posterior": {
+   "prior": {
+    "HYD_PUMP": 0.6400000000000001,
+    "AMAGB": 0.16000000000000003,
+    "IND": 0.2
+   },
+   "post": {
+    "HYD_PUMP": 5.124095576004183e-12,
+    "AMAGB": 0.4444444444421671,
+    "IND": 0.5555555555527087
+   },
+   "d": 0.6,
+   "leak": 0.2,
+   "iso": {
+    "HYD_PUMP": 0.8,
+    "AMAGB": 0.2
+   },
+   "grid": [
+    [
+     {
+      "d": 0.3,
+      "leak": 0.05,
+      "p": {
+       "HYD_PUMP": 0.00010195328673488241,
+       "AMAGB": 0.7915859536480016,
+       "IND": 0.20831209306526358
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.45,
+      "leak": 0.05,
+      "p": {
+       "HYD_PUMP": 9.356648296793349e-08,
+       "AMAGB": 0.7916665925932009,
+       "IND": 0.20833331384031606
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.6,
+      "leak": 0.05,
+      "p": {
+       "HYD_PUMP": 9.127295244720912e-12,
+       "AMAGB": 0.791666666659441,
+       "IND": 0.20833333333143184
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.75,
+      "leak": 0.05,
+      "p": {
+       "HYD_PUMP": 1.0986582014519778e-17,
+       "AMAGB": 0.7916666666666666,
+       "IND": 0.20833333333333331
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.9,
+      "leak": 0.05,
+      "p": {
+       "HYD_PUMP": 3.166666666666646e-29,
+       "AMAGB": 0.7916666666666666,
+       "IND": 0.20833333333333331
+      },
+      "top": "AMAGB"
+     }
+    ],
+    [
+     {
+      "d": 0.3,
+      "leak": 0.1,
+      "p": {
+       "HYD_PUMP": 8.279072170693256e-05,
+       "AMAGB": 0.6428039202503313,
+       "IND": 0.3571132890279618
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.45,
+      "leak": 0.1,
+      "p": {
+       "HYD_PUMP": 7.597879953581611e-08,
+       "AMAGB": 0.6428570940136288,
+       "IND": 0.3571428300075716
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.6,
+      "leak": 0.1,
+      "p": {
+       "HYD_PUMP": 7.411638243846239e-12,
+       "AMAGB": 0.6428571428523782,
+       "IND": 0.3571428571402101
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.75,
+      "leak": 0.1,
+      "p": {
+       "HYD_PUMP": 8.921435019309294e-18,
+       "AMAGB": 0.6428571428571429,
+       "IND": 0.35714285714285715
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.9,
+      "leak": 0.1,
+      "p": {
+       "HYD_PUMP": 2.5714285714285547e-29,
+       "AMAGB": 0.6428571428571429,
+       "IND": 0.35714285714285715
+      },
+      "top": "AMAGB"
+     }
+    ],
+    [
+     {
+      "d": 0.3,
+      "leak": 0.15,
+      "p": {
+       "HYD_PUMP": 6.84183159247834e-05,
+       "AMAGB": 0.5312136527696649,
+       "IND": 0.4687179289144102
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.45,
+      "leak": 0.15,
+      "p": {
+       "HYD_PUMP": 6.278803655573688e-08,
+       "AMAGB": 0.5312499666438556,
+       "IND": 0.4687499705681078
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.6,
+      "leak": 0.15,
+      "p": {
+       "HYD_PUMP": 6.1248954931863704e-12,
+       "AMAGB": 0.5312499999967462,
+       "IND": 0.4687499999971289
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.75,
+      "leak": 0.15,
+      "p": {
+       "HYD_PUMP": 7.37257477290143e-18,
+       "AMAGB": 0.53125,
+       "IND": 0.46875
+      },
+      "top": "AMAGB"
+     },
+     {
+      "d": 0.9,
+      "leak": 0.15,
+      "p": {
+       "HYD_PUMP": 2.124999999999986e-29,
+       "AMAGB": 0.53125,
+       "IND": 0.46875
+      },
+      "top": "AMAGB"
+     }
+    ],
+    [
+     {
+      "d": 0.3,
+      "leak": 0.2,
+      "p": {
+       "HYD_PUMP": 5.723949244519094e-05,
+       "AMAGB": 0.44441900467002443,
+       "IND": 0.5555237558375304
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.45,
+      "leak": 0.2,
+      "p": {
+       "HYD_PUMP": 5.252855399731005e-08,
+       "AMAGB": 0.4444444210984205,
+       "IND": 0.5555555263730255
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.6,
+      "leak": 0.2,
+      "p": {
+       "HYD_PUMP": 5.124095576004183e-12,
+       "AMAGB": 0.4444444444421671,
+       "IND": 0.5555555555527087
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.75,
+      "leak": 0.2,
+      "p": {
+       "HYD_PUMP": 6.167905692361981e-18,
+       "AMAGB": 0.4444444444444445,
+       "IND": 0.5555555555555555
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.9,
+      "leak": 0.2,
+      "p": {
+       "HYD_PUMP": 1.7777777777777666e-29,
+       "AMAGB": 0.4444444444444445,
+       "IND": 0.5555555555555555
+      },
+      "top": "IND"
+     }
+    ],
+    [
+     {
+      "d": 0.3,
+      "leak": 0.3,
+      "p": {
+       "HYD_PUMP": 4.097893936806009e-05,
+       "AMAGB": 0.3181687794283829,
+       "IND": 0.6817902416322491
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.45,
+      "leak": 0.3,
+      "p": {
+       "HYD_PUMP": 3.760566990016841e-08,
+       "AMAGB": 0.31818180621637776,
+       "IND": 0.6818181561779524
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.6,
+      "leak": 0.3,
+      "p": {
+       "HYD_PUMP": 3.668386605553789e-12,
+       "AMAGB": 0.31818181818065094,
+       "IND": 0.6818181818156807
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.75,
+      "leak": 0.3,
+      "p": {
+       "HYD_PUMP": 4.415659757031872e-18,
+       "AMAGB": 0.3181818181818181,
+       "IND": 0.6818181818181818
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.9,
+      "leak": 0.3,
+      "p": {
+       "HYD_PUMP": 1.2727272727272645e-29,
+       "AMAGB": 0.3181818181818181,
+       "IND": 0.6818181818181818
+      },
+      "top": "IND"
+     }
+    ],
+    [
+     {
+      "d": 0.3,
+      "leak": 0.4,
+      "p": {
+       "HYD_PUMP": 2.972132359340552e-05,
+       "AMAGB": 0.23076237200224764,
+       "IND": 0.7692079066741588
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.45,
+      "leak": 0.4,
+      "p": {
+       "HYD_PUMP": 2.727444218739513e-08,
+       "AMAGB": 0.2307692244751287,
+       "IND": 0.769230748250429
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.6,
+      "leak": 0.4,
+      "p": {
+       "HYD_PUMP": 2.6605880875471874e-12,
+       "AMAGB": 0.23076923076861675,
+       "IND": 0.7692307692287226
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.75,
+      "leak": 0.4,
+      "p": {
+       "HYD_PUMP": 3.2025664171879514e-18,
+       "AMAGB": 0.23076923076923075,
+       "IND": 0.7692307692307693
+      },
+      "top": "IND"
+     },
+     {
+      "d": 0.9,
+      "leak": 0.4,
+      "p": {
+       "HYD_PUMP": 9.23076923076917e-30,
+       "AMAGB": 0.23076923076923075,
+       "IND": 0.7692307692307693
+      },
+      "top": "IND"
+     }
+    ]
+   ],
+   "sweep_d": [
+    0.3,
+    0.45,
+    0.6,
+    0.75,
+    0.9
+   ],
+   "sweep_leak": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4
+   ],
+   "pump_max_over_sweep": 0.00010195328673488241,
+   "flip_leak": 0.16666666666666669,
+   "seq_pump": [
+    0.64,
+    0.4155844155844156,
+    0.2214532871972319,
+    0.10215482841181169,
+    0.04353001190273764,
+    0.01787896776897022,
+    0.007229136810002192,
+    0.002904251864436104,
+    0.0011637286023522895,
+    0.0004658166914653025,
+    0.0001863787675906481,
+    7.455984485945723e-05,
+    2.9825272204383965e-05,
+    1.1930322376821011e-05,
+    4.772163110795013e-06,
+    1.9088707099834366e-06,
+    7.635491585033492e-07,
+    3.0541980332316003e-07,
+    1.2216794371676962e-07,
+    4.886718106870966e-08,
+    1.9546873000604218e-08,
+    7.818749291940946e-09,
+    3.12749973144826e-09,
+    1.2509998949268054e-09,
+    5.003999583463224e-10,
+    2.00159983398625e-10,
+    8.006399336906536e-11,
+    3.2025597349164604e-11,
+    1.2810238939911994e-11,
+    5.124095576004183e-12
+   ]
+  },
+  "nbt": [
+   {
+    "id": "T1",
+    "name": "Indication-path isolation",
+    "detail": "BHEEM EU channel \u00b7 pressure switch \u00b7 harness continuity",
+    "proc": "PHX-FIM-HYD",
+    "mh": 7.3,
+    "mh_n": 33,
+    "mh_src": "TJ107 PHX-FIM-HYD troubleshooting jobs",
+    "eig": 0.3601866311493691,
+    "p_pos": 0.4111111111092607,
+    "eig_per_mh": 0.04934063440402316
+   },
+   {
+    "id": "T2",
+    "name": "AMAGB drive check",
+    "detail": "pad spline \u00b7 oil \u00b7 drive to SYS1 pump",
+    "proc": "start-system FIM",
+    "mh": 8.3,
+    "mh_n": 21,
+    "mh_src": "fleet PHX-FIM-SPS jobs (AMAGB sits in the start ambiguity group; no AMAGB jobs on record)",
+    "eig": 0.3729572125794226,
+    "p_pos": 0.3388888888874086,
+    "eig_per_mh": 0.04493460392523164
+   },
+   {
+    "id": "T3",
+    "name": "Remove and replace pump again",
+    "detail": "status-quo response \u00b7 bench test of removed unit",
+    "proc": "PHX-TASK-HYDP",
+    "mh": 18.7,
+    "mh_n": 29,
+    "mh_src": "TJ107 PHX-TASK-HYDP R/R jobs",
+    "eig": 1.1703626956460766e-10,
+    "p_pos": 3.07445734560251e-12,
+    "eig_per_mh": 6.2586240408881105e-12
+   }
+  ],
+  "nbt_top_counts": {
+   "T1": 19,
+   "T2": 5
+  },
+  "nbt_sens": 0.7,
+  "nbt_fp": 0.05,
+  "similar": [
+   {
+    "tail": "TJ107",
+    "run": 15,
+    "from": "06 Jan",
+    "to": "02 Feb",
+    "break": "TJ107-20260202T1430",
+    "break_d": "02 Feb",
+    "jobs": 15,
+    "rr": 5,
+    "cnd": 10,
+    "mh": 143.6
+   },
+   {
+    "tail": "TJ107",
+    "run": 10,
+    "from": "06 Feb",
+    "to": "23 Mar",
+    "break": "TJ107-20260325T1430",
+    "break_d": "25 Mar",
+    "jobs": 13,
+    "rr": 7,
+    "cnd": 5,
+    "mh": 181.2
+   },
+   {
+    "tail": "TJ107",
+    "run": 34,
+    "from": "26 Mar",
+    "to": "18 Jun",
+    "break": null,
+    "break_d": null,
+    "jobs": 35,
+    "rr": 16,
+    "cnd": 18,
+    "mh": 445.2
+   }
+  ],
+  "tj102": {
+   "tail": "TJ102",
+   "since": "09 Apr",
+   "events": 24,
+   "sorties": 41,
+   "jobs": 9,
+   "rr": 3,
+   "cnd": 6,
+   "adm": 0,
+   "mh": 94.8,
+   "removals_on_record": 4,
+   "removals_since": 3,
+   "shop_findings_matched": 0
+  },
+  "refs": {
+   "PHX-TASK-HYDP": {
+    "n": 28,
+    "last_job": "sulur-26169-0006",
+    "last": "19 Jun"
+   },
+   "PHX-FIM-HYD": {
+    "n": 33,
+    "last_job": "sulur-26169-0004",
+    "last": "18 Jun"
+   }
+  }
+ },
+ "tj108": {
+  "demand_open": "03 Apr 08:00",
+  "age_d": 79.9
+ },
+ "tj105": {
+  "tyre_landings": 7,
+  "ldg_per_day": 0.87
+ }
+}

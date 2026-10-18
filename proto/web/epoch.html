@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Orders · 08:00 — Phalanx Twin</title>
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  .v2 { grid-template-rows: 92px minmax(0, 1fr); }
+  .epoch2 { flex-direction: row; align-items: center; padding: 0 32px; gap: 32px; }
+  .epoch2 .steps { flex: 1; }
+  .ords .r2 { grid-template-columns: 76px minmax(0, 1fr) 120px 170px; min-height: 78px; }
+  .ords .rows2 { overflow: auto; min-height: 0; flex: 1; }
+  .ords .rows2.dense .r2 { min-height: 58px; }
+  .ords .ttl { font: 650 14.5px var(--mono); letter-spacing: -0.01em; }
+  .ords .st { justify-self: end; }
+  .ords .auth { justify-self: start; }
+  .gate .kv2 { margin-top: 22px; }
+  .gate .kv2 > span:nth-child(even) { color: var(--ok); }
+  .s-sub { display: none; } body.submitted .s-sub { display: inline-flex; } body.submitted .s-pre { display: none; }
+  .lel .r { display: grid; grid-template-columns: 1fr auto; padding: 11px 0; border-top: 1px solid var(--line-2); font-size: 14px; }
+  .lel .r:first-child { border-top: 0; }
+  .lel .h { font: 500 12.5px var(--mono); color: var(--wire); }
+  body:not(.submitted) .lel-card { display: none; } body.submitted .gate { display: none; }
+  .sheet .kv2 { margin: 22px 0 26px; font-size: 14.5px; }
+  .sheet .kv2 > span:nth-child(even) { font-weight: 600; }
+  .sheet .btns { display: flex; gap: 10px; }
+  .sheet .btns .btn { height: 48px; padding: 0 22px; font-size: 15px; border-radius: 12px; }
+  .key { width: 46px; height: 46px; border-radius: 14px; background: var(--accent-wash); color: var(--accent-ink); display: grid; place-items: center; }
+  body:not(.sign) .frost { display: none; }
+
+  /* ---- tablet + phone (below 1200 px) ---- */
+  @media (max-width: 1199px) {
+    .epoch2 { flex-direction: column; align-items: stretch; padding: 18px 22px; gap: 14px; }
+    .epoch2 .steps { flex: none; }
+    .ords .r2 { grid-template-columns: 70px minmax(0, 1fr) 92px 150px; min-height: 64px; }
+    .ords .ttl { overflow-wrap: anywhere; }
+    .ords .rows2 { overflow: visible; }
+    .gate .kv2 { margin-top: 18px; }
+    .sheet .btns { flex-wrap: wrap; }
+    .sheet .kv2 { font-size: 14px; }
+    .sheet .kv2 > span:nth-child(even) { overflow-wrap: anywhere; min-width: 0; }
+  }
+  @media (max-width: 699px) {
+    .epoch2 { padding: 16px 18px; }
+    /* order row: tail | action + what, then the authority and status under the text */
+    .ords .r2 { grid-template-columns: 58px minmax(0, 1fr) auto; grid-template-areas: "tail main main" "tail auth st";
+      column-gap: 10px; row-gap: 8px; min-height: 0; padding-top: 12px; padding-bottom: 12px; align-items: start; }
+    .ords .rows2.dense .r2 { min-height: 0; }
+    .ords .r2 > :nth-child(1) { grid-area: tail; font-size: 14px; padding-top: 1px; }
+    .ords .r2 > :nth-child(2) { grid-area: main; }
+    .ords .r2 > :nth-child(3) { grid-area: auth; justify-self: start; }
+    .ords .r2 > :nth-child(4) { grid-area: st; justify-self: end; }
+    .ords .ttl { font-size: 13.5px; }
+    .ords .why { white-space: normal !important; }
+    .ords .row .tier { flex: none; }
+    .gate .kv2 { font-size: 14px; }
+    #prev .r2 { grid-template-columns: 52px minmax(0, 1fr) auto !important; }
+    .sheet .btns .btn { flex: 1 1 auto; justify-content: center; }
+  }
+</style>
+</head>
+<body data-page="epoch">
+<div id="content">
+<div class="v2">
+  <div class="panel2 c12 epoch2" data-shot="epoch">
+    <span class="kick" id="ep-kick"></span>
+    <div class="steps" id="steps"></div>
+  </div>
+
+  <div class="panel2 c8 ords" data-shot="orders">
+    <div class="row"><div><span class="kick" id="ord-kick"></span><div class="t2 s-pre" id="t2-pre"></div><div class="t2 s-sub" id="t2-sub"></div></div><div class="grow"></div><span class="tier presc">PRESC</span></div>
+    <div class="rows2" style="margin-top:16px" id="ordrows"></div>
+    <div class="note" style="margin-top:14px" id="dropped"></div>
+  </div>
+
+  <div class="panel2 c4 gate" data-shot="gateway">
+    <span class="kick">Gateway check</span>
+    <div class="t2">Every order passes before it is sent</div>
+    <div class="big" style="margin-top:22px" id="g-big"></div>
+    <div class="kv2" id="g-kv"></div>
+    <div id="prev"></div>
+    <div class="note push">Re-running the epoch gives the same order ids, so a retry can never issue twice.</div>
+  </div>
+  <div class="panel2 c4 lel-card" data-shot="log">
+    <span class="kick">Event log</span>
+    <div class="t2">Written to the one log</div>
+    <div class="lel" style="margin-top:16px" id="lel"></div>
+    <div class="lnk push" style="cursor:pointer" data-href="">Why was each order issued? <i data-i="arrowRight"></i></div>
+  </div>
+</div>
+</div>
+<script src="assets/logo.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/api.js"></script>
+<script>
+const $ = id => document.getElementById(id), esc = s => PHX.esc(s);
+PHX_API.boot({ page: 'epoch', title: 'Orders · 08:00',
+  load: A => A.need('epoch'),
+  render() {
+    const E = PHX_EP, C = E.clock, sub = PHX.submitted(C), st = PHX_API.q.get('state');
+    if (sub) document.body.classList.add('submitted');
+    if (st === 'sign') document.body.classList.add('sign');
+    const O = E.orders.filter(o => !o.dropped), n = O.length;
+    const sends = O.filter(o => o.status !== 'NOT_ISSUED' && o.status !== 'SNOOZED');                       // what the gateway will see at 08:00
+    const needSig = o => o.status !== 'NOT_ISSUED' && o.status !== 'SNOOZED' && (o.status === 'NEEDS_SIGNATURE' || (o.authority === 'HUMAN' && !o.signed_by));
+    const h = O.filter(needSig).length, wait = O.filter(o => o.status === 'AWAITING_APPROVAL').length, ni = O.filter(o => o.status === 'NOT_ISSUED').length, sn = O.filter(o => o.status === 'SNOOZED').length;
+    $('ep-kick').textContent = `Epoch · ${C.day}`;
+    $('steps').innerHTML = PHX.steps(['SNAPSHOT', 'FREEZE', 'SIGN', 'SUBMIT']);
+    $('ord-kick').textContent = `Orders for ${C.issue}`;
+    const parts = [wait && (wait === n && n > 1 ? 'all awaiting approval' : `${PHX.words(wait, false)} awaiting approval`), h && `${PHX.words(h, false)} ${wait ? (h === 1 ? 'needs' : 'need') : 'waiting for'} a signature`, sn && `${PHX.words(sn, false)} snoozed`, ni && `${PHX.words(ni, false)} not issued`].filter(Boolean);
+    $('t2-pre').textContent = !n ? `No orders for ${C.issue}` : `${PHX.words(n)} order${n === 1 ? '' : 's'}, ${parts.length ? parts.join(', ') : 'ready to issue'}`;
+    const acc = O.filter(o => o.status === 'ACCEPTED').length;
+    $('t2-sub').textContent = !n ? `No orders issued at ${C.issue}` : acc === n ? `${PHX.words(n)} orders issued and accepted` : `${PHX.words(acc)} of ${n} orders accepted`;
+    const PILL = { ACCEPTED: 'fmc', NEEDS_SIGNATURE: 'nmcm', AWAITING_APPROVAL: 'grey', SNOOZED: 'grey', REJECTED: 'nmcs', NOT_ISSUED: 'grey', READY: 'grey' };
+    const day = iso => PHX.asofLabel(iso).split(' ').slice(0, 3).join(' ');
+    $('ordrows').classList.toggle('dense', n > 6);
+    $('ordrows').innerHTML = !n ? `<div class="note" style="margin-top:6px;font-size:14.5px;color:var(--ink-3);line-height:1.5">${C.phase === 'BOARD_OPEN'
+      ? `The board is open until ${esc(C.freeze)}. Orders appear here as recommendations are approved; nothing is issued without a person.`
+      : `Nothing was approved before the freeze, so no orders go out at ${esc(C.issue)} and today runs as the status quo.`}</div>` : O.map(o => {
+      const sg = needSig(o) ? ` data-sign="${esc(o.order_id)}" style="cursor:pointer" title="Sign this order"` : '';
+      const status = `<span class="pill ${PILL[o.status] || 'grey'} st"${o.status === 'NEEDS_SIGNATURE' ? sg : ''}>${esc(o.status.replace(/_/g, ' '))}</span>`;
+      const auth = o.authority === 'HUMAN' ? `<span class="auth human"${sg}><i data-i="signature" class="ico-sm"></i>${o.signed_by ? 'SIGNED' : 'HUMAN'}</span>` : '<span class="auth agent">AGENT</span>';
+      const extra = o.status === 'SNOOZED' ? ` · snoozed${o.snooze_until ? ' until ' + day(o.snooze_until) : ''}`
+        : o.desk_state === 'REJECTED' ? ` · rejected${o.note ? ': ' + o.note : ''}` : '';
+      return `<div class="r2"><span class="tailtag">${esc(o.target_tail_no || o.tail)}</span><div style="min-width:0"><div class="ttl">${esc(o.action)}</div><div class="why" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(o.what + extra)}">${esc(o.what)}${esc(extra)}</div></div>${auth}${status}</div>`;
+    }).join('');
+    $('dropped').textContent = E.orders.filter(o => o.dropped).map(o => `${o.dropped.label} for ${o.target_tail_no || o.tail} was dropped by the fork gate — ${o.dropped.reason}.`).join(' ');
+    const dry = sends.map(o => o.dry || {}), all = f => dry.length && dry.every(f), ck = ok => (ok ? '✓' : '✗'), m = sends.length;
+    const pre = d => d.schema_ok && d.contract_ok && d.t_issued_ok && d.authority_ok && d.evidence_ok, verdicts = dry.some(d => d.verdict && d.verdict !== 'PENDING');
+    $('g-big').innerHTML = !m ? '—<small>no orders to check</small>' : verdicts ? `${dry.filter(d => d.verdict === 'ACCEPTED').length}<small>of ${m} pass</small>`
+      : `${dry.filter(pre).length}<small>of ${m} pass the pre-check</small>`;
+    $('g-kv').innerHTML = [['Schema', all(d => d.schema_ok && d.contract_ok)], [`Issued at session time ${C.issue}`, all(d => d.t_issued_ok)], ['Authority (AGENT / HUMAN)', all(d => d.authority_ok)], ['Evidence ingested before issue', all(d => d.evidence_ok)]]
+      .map(([k, ok]) => {
+        // an unsigned HUMAN order fails authority only until it is signed: say so instead of a red cross
+        const unsigned = k.startsWith('Authority') && !ok && sends.filter(o => !(o.dry || {}).authority_ok).every(needSig);
+        const v = !m ? '<span style="color:var(--ink-4)">—</span>' : unsigned ? `<span style="color:var(--warn)">${h} awaiting signature</span>` : `<span${ok ? '' : ' style="color:var(--nmcs)"'}>${ck(ok)}</span>`;
+        return `<span>${esc(k)}</span>${v}`; }).join('');
+    // the previous epoch's orders: gateway verdict and where the data layer has them now
+    const PV = E.previous, PS = { COMPLETED: 'fmc', ACCEPTED: 'fmc', IN_WORK: 'nmcm', QUEUED: 'grey', REJECTED: 'nmcs' };
+    if (PV && (PV.orders || []).length) {
+      const cnt = k => PV.orders.filter(o => o.status === k).length, acc = PV.accepted ?? PV.orders.filter(o => o.verdict === 'ACCEPTED').length;
+      const sum = [`${acc} accepted`, ...['COMPLETED', 'IN_WORK', 'QUEUED'].filter(cnt).map(k => `${cnt(k)} ${k.toLowerCase().replace('_', ' ')}`)].join(' · ');
+      $('prev').innerHTML = `<div class="sep2"></div><span class="kick">Previous epoch · ${esc(PV.day)}</span>
+      <div class="sub2" style="margin-top:6px">${esc(sum)}</div>
+      <div class="rows2" style="margin-top:10px;max-height:250px;overflow:auto">${PV.orders.map(o => `<div class="r2" style="grid-template-columns:56px minmax(0,1fr) auto;min-height:34px;column-gap:10px" title="${esc(o.order_id)}${o.status_at ? ' · ' + esc(o.status_at) : ''}${o.signed_by ? ' · signed ' + esc(o.signed_by) : ''}"><span class="tailtag" style="font-size:12.5px">${esc(o.target_tail_no)}</span><span class="why" style="margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(o.action)}</span><span class="pill ${PS[o.status] || (o.verdict === 'ACCEPTED' ? 'fmc' : 'grey')}" style="height:22px">${esc(String(o.status || o.verdict || '').replace(/_/g, ' '))}</span></div>`).join('')}</div>`;
+    }
+    $('lel').innerHTML = !(E.log_summary || []).length ? '<div class="note">Nothing written for this epoch yet.</div>' : E.log_summary.map(r => `<div class="r"><span>${esc(r.label)}</span><span class="h">${esc(r.hash.slice(0, 8))}…</span></div>`).join('');
+    document.querySelector('.lel-card .lnk').dataset.href = PHX_API.href('provenance.html');
+    const sg = (E.signatures || []).find(x => O.some(o => o.order_id === x.order_id && !o.signed_by)) || (E.signatures || [])[0];
+    const overlay = sg ? `<div class="frost"><div class="sheet" data-shot="sign">
+  <div class="row gap16"><span class="key"><i data-i="signature" class="ico"></i></span><div><span class="kick acc">Signature required · human-only action</span><div class="t2" style="margin-top:6px">${esc(sg.title)}</div></div></div>
+  <div class="sub2" style="margin-top:16px">${esc(sg.text)}</div>
+  <div class="kv2">${sg.rows.map(r => `<span>${esc(r.k)}</span><span${r.mono ? ' class="mono" style="font-size:13px"' : r.muted ? ' style="color:var(--ink-3)"' : ''}>${esc(r.v)}</span>`).join('')}</div>
+  <div class="btns"><button class="btn primary" id="do-sign" data-order="${esc(sg.order_id)}"><i data-i="signature" class="ico-sm"></i>Sign with station key</button><button class="btn" id="not-now">Not now</button></div>
+</div></div>` : '';
+    return { page: 'epoch', title: `Orders · ${C.issue}`, sub: 'The frozen board becomes typed, evidence-cited orders',
+      chips: [{ i: 'clock', t: `Session <b>${esc(C.now)}${sub ? ':00' : ''}</b>` }, sub ? { k: 'ok', i: 'check', t: 'Issued' } : h ? { k: 'warn', i: 'signature', t: `${h} signature${h === 1 ? '' : 's'} needed` } : wait ? { k: 'warn', i: 'decisions', t: `${wait} awaiting approval` } : n ? { i: 'check', t: 'Ready' } : { i: 'info', t: 'No orders' }],
+      headExtra: '<button class="btn sm" id="adv"><i data-i="play" class="ico-sm"></i>Advance epoch</button><button class="btn sm" id="auto"><i data-i="refresh" class="ico-sm"></i>Autoplay</button>',
+      overlay, after: wire };
+  } });
+function wire() {
+  PHX.links();
+  document.querySelectorAll('[data-sign]').forEach(el => el.addEventListener('click', () => { const b = document.getElementById('do-sign'); if (b) b.dataset.order = el.dataset.sign; document.body.classList.add('sign'); }));
+  document.getElementById('not-now')?.addEventListener('click', () => document.body.classList.remove('sign'));
+  document.getElementById('do-sign')?.addEventListener('click', async e => {
+    const res = await PHX_API.sign(e.currentTarget.dataset.order); document.body.classList.remove('sign');
+    if (!res.ok) { PHX.notice(PHX_API.explain(res)); return; }
+    PHX.notice(`Signed by ${esc(PHX_API.signer)}`, 'ok', 'signature'); setTimeout(() => location.reload(), 600);
+  });
+  // Advance / Autoplay run the whole cycle on the server (10–60 s a day): lock both, count the seconds, reload
+  const adv = document.getElementById('adv'), auto = document.getElementById('auto');
+  const run = async (btn, busy, label, call) => {
+    const keep = [adv.innerHTML, auto.innerHTML];
+    [adv, auto].forEach(b => { b.disabled = true; b.style.opacity = '.55'; b.style.cursor = 'progress'; });
+    btn.innerHTML = `${PHX.icon('refresh', 'ico-sm')}${busy}`; btn.style.opacity = '1';
+    const t0 = Date.now(), tick = () => PHX.notice(`${label} · <b>${Math.round((Date.now() - t0) / 1000)} s</b>`, 'accent', 'pulse');
+    tick(); const iv = setInterval(tick, 1000);
+    const res = await call(); clearInterval(iv);
+    if (!res.ok) { [adv.innerHTML, auto.innerHTML] = keep; [adv, auto].forEach(b => { b.disabled = false; b.style.opacity = ''; b.style.cursor = ''; }); PHX.notice(PHX_API.explain(res)); return; }
+    PHX.notice(`Done in ${Math.round((Date.now() - t0) / 1000)} s · loading the new epoch`, 'ok', 'check'); location.reload();
+  };
+  adv.addEventListener('click', () => run(adv, 'Advancing…', 'Advancing to the next 06:00 snapshot', () => PHX_API.advance()));
+  auto.addEventListener('click', () => { const v = prompt('Autoplay how many days?', '5'); if (v === null) return;
+    const n = Math.max(1, Math.min(30, parseInt(v, 10) || 1)); run(auto, `Autoplay · ${n} day${n === 1 ? '' : 's'}…`, `Autoplaying ${n} day${n === 1 ? '' : 's'}`, () => PHX_API.autoplay(n)); });
+}
+</script>
+</body></html>

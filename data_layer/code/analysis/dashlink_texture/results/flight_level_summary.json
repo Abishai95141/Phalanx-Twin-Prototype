@@ -1,0 +1,96 @@
+{
+ "n_records_nondup": 641,
+ "n_complete_eligible": 381,
+ "record_h_pct": {
+  "p0": 0.001,
+  "p5": 0.174,
+  "p25": 0.857,
+  "p50": 1.209,
+  "p75": 1.657,
+  "p95": 2.607,
+  "p100": 3.579
+ },
+ "airborne_h_pct_eligible": {
+  "p5": 0.663,
+  "p25": 0.87,
+  "p50": 1.152,
+  "p75": 1.542,
+  "p95": 2.422
+ },
+ "n_records_no_airborne": 82,
+ "total_record_h": 819.22,
+ "total_airborne_h": 606.9819444444445,
+ "phase_Unknown_min_pct": {
+  "p5": 0.0,
+  "p25": 0.0,
+  "p50": 0.0,
+  "p75": 0.0,
+  "p95": 0.0
+ },
+ "phase_Preflight_min_pct": {
+  "p5": 0.37,
+  "p25": 0.42,
+  "p50": 0.45,
+  "p75": 1.43,
+  "p95": 1.53
+ },
+ "phase_Taxi_min_pct": {
+  "p5": 11.27,
+  "p25": 15.23,
+  "p50": 18.45,
+  "p75": 23.0,
+  "p95": 32.72
+ },
+ "phase_Takeoff_min_pct": {
+  "p5": 0.4,
+  "p25": 0.47,
+  "p50": 0.52,
+  "p75": 0.55,
+  "p95": 0.62
+ },
+ "phase_Climb_min_pct": {
+  "p5": 8.35,
+  "p25": 13.97,
+  "p50": 20.53,
+  "p75": 23.83,
+  "p95": 30.3
+ },
+ "phase_Cruise_min_pct": {
+  "p5": 11.47,
+  "p25": 16.38,
+  "p50": 25.8,
+  "p75": 47.4,
+  "p95": 97.97
+ },
+ "phase_Approach_min_pct": {
+  "p5": 14.65,
+  "p25": 18.72,
+  "p50": 21.88,
+  "p75": 24.68,
+  "p95": 31.17
+ },
+ "phase_Rollout_min_pct": {
+  "p5": 0.23,
+  "p25": 0.3,
+  "p50": 0.37,
+  "p75": 0.48,
+  "p95": 0.62
+ },
+ "pla_cycles_ge5deg_per_flight_med": 22.0,
+ "pla_cycles_ge5deg_per_airborne_h_pooled": 18.687235520747805,
+ "pla_cycles_ge10deg_per_flight_med": 11.0,
+ "pla_cycles_ge10deg_per_airborne_h_pooled": 8.851314163004934,
+ "pla_cycles_ge20deg_per_flight_med": 5.0,
+ "pla_cycles_ge20deg_per_airborne_h_pooled": 4.098808095208019,
+ "pla_cycles_ge40deg_per_flight_med": 1.0,
+ "pla_cycles_ge40deg_per_airborne_h_pooled": 1.000848138156292,
+ "n1_cycles_ge10pct_per_flight_med": 11.0,
+ "n1_cycles_ge10pct_per_airborne_h_pooled": 9.330421993846487,
+ "n1_cycles_ge20pct_per_flight_med": 6.0,
+ "n1_cycles_ge20pct_per_airborne_h_pooled": 5.316878851584845,
+ "n1_cycles_ge40pct_per_flight_med": 1.0,
+ "n1_cycles_ge40pct_per_airborne_h_pooled": 1.1368660392850376,
+ "n1_cycles_ge60pct_per_flight_med": 1.0,
+ "n1_cycles_ge60pct_per_airborne_h_pooled": 0.7755050482265792,
+ "frac_airborne_AT_engaged_med": 0.962143928035982
+}
